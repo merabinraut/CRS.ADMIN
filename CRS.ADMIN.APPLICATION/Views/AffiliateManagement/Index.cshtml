@@ -519,7 +519,14 @@
                                             </td>
                                             <td class="p-[12px]">
                                                 <div class="round-image-text gap-[12px] items-center">
-                                                    <img class="w-[32px] h-[32px] rounded-full" src="@item.CustomerImage" />
+                                                    @if (!string.IsNullOrEmpty(item.CustomerImage))
+                                                    {
+                                                        <img class="w-[32px] h-[32px] rounded-full" src="@item.CustomerImage" />
+                                                    }
+                                                    else
+                                                    {
+                                                        <img class="w-[32px] h-[32px] rounded-full" src="~/Content/assets_new/images/demo-image.jpeg" />
+                                                    }
                                                     <div class="text-image">
                                                         @item.CustomerUserName
                                                     </div>
@@ -532,7 +539,14 @@
                                             </td>
                                             <td class="p-[12px]">
                                                 <div class="round-image-text gap-[12px] items-center">
-                                                    <img class="w-[32px] h-[32px] rounded-full" src="@item.AffiliateImaeg" />
+                                                    @if (!string.IsNullOrEmpty(item.AffiliateImaeg))
+                                                    {
+                                                        <img class="w-[32px] h-[32px] rounded-full" src="@item.AffiliateImaeg" />
+                                                    }
+                                                    else
+                                                    {
+                                                        <img class="w-[32px] h-[32px] rounded-full" src="~/Content/assets_new/images/demo-image.jpeg" />
+                                                    }
                                                     <div class="text-image">
                                                         @item.AffiliateFullName
                                                     </div>

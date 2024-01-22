@@ -41,16 +41,18 @@
                             <div class="dashboardManagement pt-2">
                                 @foreach (var item in MenuName)
                                 {
-                                    <div class="list-data cursor-pointer text-xs flex items-center gap-1 text-[#667085] inline-flex mr-[40px]  mb-2 menu-class" data-info="@item.FunctionId">
-                                        @if (item.Status)
-                                        {
+                                    if (item.Status)
+                                    {
+                                        <div class="list-data cursor-pointer text-xs flex items-center gap-1 text-[#667085] inline-flex mr-[40px]  mb-2 menu-class active" data-info="@item.FunctionId">
                                             <i class="las text-base la-check-square text-[#D75A8B]"></i> @item.FunctionName
-                                        }
-                                        else
-                                        {
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="list-data cursor-pointer text-xs flex items-center gap-1 text-[#667085] inline-flex mr-[40px]  mb-2 menu-class" data-info="@item.FunctionId">
                                             <i class="las la-stop text-base"></i> @item.FunctionName
-                                        }
-                                    </div>
+                                        </div>
+                                    }
                                 }
                             </div>
                         </div>
@@ -134,8 +136,8 @@
         });
     </script>
     <script>
-         $('.save-class').on('click', function () {
-             var elements = document.getElementsByClassName('menu-class');
+        $('.save-class').on('click', function () {
+             var elements = document.getElementsByClassName('menu-class active');
              const FunctionIdList = [];
              for (var i = 0; i < elements.length; i++) {
                  var dataInfo = elements[i].getAttribute('data-info');

@@ -1,5 +1,7 @@
-﻿using System;
+﻿using CRS.ADMIN.APPLICATION.Resources;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -24,10 +26,13 @@ namespace CRS.ADMIN.APPLICATION.Models.StaffManagement
     public class ManageStaff
     {
         public string Id { get; set; }
+        [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Required")]
+        [MaxLength(30, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Maximum_length_is_30_characters")]
         public string UserName { get; set; }
+        [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Required")]
         public string EmailAddress { get; set; }
+        [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Required")]
         public string MobileNumber { get; set; }
         public string RoleId { get; set; }
     }
-    
 }

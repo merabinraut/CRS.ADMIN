@@ -69,7 +69,10 @@ namespace CRS.ADMIN.REPOSITORY.PlanManagement
                     ActionPlatform = dataTable.Rows[0]["ActionPlatform"].ToString(),
                     ActionDate = dataTable.Rows[0]["ActionDate"].ToString(),
                     PlanImage = dataTable.Rows[0]["PlanImage"].ToString(),
-                    PlanImage2 = dataTable.Rows[0]["PlanImage2"].ToString()
+                    PlanImage2 = dataTable.Rows[0]["PlanImage2"].ToString(),
+                    ExtraField1 = dataTable.Rows[0]["AdditionalValue1"].ToString(),
+                    ExtraField2 = dataTable.Rows[0]["AdditionalValue2"].ToString(),
+                    ExtraField3 = dataTable.Rows[0]["AdditionalValue3"].ToString()
                 };
             }
             return new PlanManagementCommon();

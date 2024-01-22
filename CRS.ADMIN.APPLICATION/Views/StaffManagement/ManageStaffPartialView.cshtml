@@ -9,7 +9,7 @@
                     @CRS.ADMIN.APPLICATION.Resources.Resource.Manage_Staff
                 </div>
                 <button type="button" data-drawer-hide="add-new-host-staff" aria-controls="add-new-host-staff"
-                        class="text-[20px]">
+                        class="text-[20px]" onclick="CancelFunction()">
                     <i class="las la-window-close text-white"></i>
                 </button>
             </div>
@@ -41,20 +41,27 @@
                         </label>
                         @if (Model.UserName != null)
                         {
-                            <input type="text" class="w-full rounded-[4px]" style="border-radius:4px !important"
-                                   placeholder="@CRS.ADMIN.APPLICATION.Resources.Resource.Username"
-                                   name="Username"
-                                   required
-                                   value="@Model.UserName"
-                                   disabled>
+                            @Html.TextBoxFor(model => model.UserName, new
+                            {
+                                @class = "w-full rounded-[4px]",
+                                @style = "border-radius:4px !important",
+                                @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.Username,
+                                @maxlength = "30",
+                                @disabled = "disabled"
+                            })
                         }
                         else
                         {
-                            <input type="text" class="w-full rounded-[4px]" style="border-radius:4px !important"
-                                   placeholder="@CRS.ADMIN.APPLICATION.Resources.Resource.Username"
-                                   name="Username"
-                                   required
-                                   value="@Model.UserName">
+                            @Html.TextBoxFor(model => model.UserName, new
+                            {
+                                @class = "w-full rounded-[4px]",
+                                @style = "border-radius:4px !important",
+                                @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.Username,
+                                @maxlength = "30"
+                            })
+                            <span class="error">
+                                @Html.ValidationMessageFor(m => m.UserName)
+                            </span>
                         }
                     </div>
                     <div class="input-field-common">
@@ -63,20 +70,27 @@
                         </label>
                         @if (Model.EmailAddress != null)
                         {
-                            <input type="email" class="w-full rounded-[4px]" style="border-radius:4px !important"
-                                   placeholder="@CRS.ADMIN.APPLICATION.Resources.Resource.User_Email"
-                                   name="EmailAddress"
-                                   required
-                                   value="@Model.EmailAddress"
-                                   disabled>
+                            @Html.TextBoxFor(model => model.EmailAddress, new
+                            {
+                                @class = "w-full rounded-[4px]",
+                                @style = "border-radius:4px !important",
+                                @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.User_Email,
+                                @maxlength = "100",
+                                @disabled = "disabled"
+                            })
                         }
                         else
                         {
-                            <input type="email" class="w-full rounded-[4px]" style="border-radius:4px !important"
-                                   placeholder="@CRS.ADMIN.APPLICATION.Resources.Resource.User_Email"
-                                   name="EmailAddress"
-                                   required
-                                   value="@Model.EmailAddress">
+                            @Html.TextBoxFor(model => model.EmailAddress, new
+                            {
+                                @class = "w-full rounded-[4px]",
+                                @style = "border-radius:4px !important",
+                                @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.User_Email,
+                                @maxlength = "100"
+                            })
+                            <span class="error">
+                                @Html.ValidationMessageFor(m => m.EmailAddress)
+                            </span>
                         }
 
                     </div>
@@ -84,27 +98,30 @@
                         <label class="block mb-4 text-sm font-medium text-secondary-100 ">
                             @CRS.ADMIN.APPLICATION.Resources.Resource.Phone_Number
                         </label>
-                        <div class="number-input w-full">
-                            <div class="flag-section">
-                                <div class="japan-flag">
-                                    <div></div>
-                                </div>
-                                <div>
-                                    +81
-                                </div>
-                                <div class="line-y">
-                                </div>
-                            </div>
-                            @if (Model.MobileNumber != null)
+                        @if (Model.MobileNumber != null)
+                        {
+                            @Html.TextBoxFor(model => model.MobileNumber, new
+                               {
+                                   @class = "w-full",
+                                   @style = "border-radius:4px !important",
+                                   @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.Phone_Number,
+                                   @maxlength = "11",
+                                   @disabled = "disabled"
+                               })
+                        }
+                        else
+                        {
+                            @Html.TextBoxFor(model => model.MobileNumber, new
                             {
-                                <input type="text" class="w-full" placeholder="090 - 6490 - 3254" name="MobileNumber" required value="@Model.MobileNumber" disabled>
-                            }
-                            else
-                            {
-                                <input type="text" class="w-full" placeholder="090 - 6490 - 3254" name="MobileNumber" required value="@Model.MobileNumber">
-                            }
-                        </div>
-                        <span class="error">Validation msg</span>
+                                @class = "w-full",
+                                @style = "border-radius:4px !important",
+                                @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.Phone_Number,
+                                @maxlength = "11"
+                            })
+                            <span class="error">
+                                @Html.ValidationMessageFor(m => m.MobileNumber)
+                            </span>
+                        }
                     </div>
                     <div class="h-[2px] w-full bg-[#EBEBEB]"></div>
                     <div class="input-field-common">
@@ -113,36 +130,36 @@
                         </label>
                         <select id="useRole" name="roleIdSelect" class=" default_select select-common block w-full "
                                 style="width: 100%;">
-                            @foreach (KeyValuePair<string, string> item in ViewBag.RoleDDL as Dictionary<string, string>)
+                            @foreach (var item in ViewBag.RoleDDL as IEnumerable<SelectListItem>)
                             {
                                 var selectedId = ViewBag.RoleIdKey as string;
-                                if (item.Key == selectedId)
+                                if (item.Value == selectedId)
                                 {
-                                    <option value="@item.Key" selected>
-                                        @item.Value
+                                    <option value="@item.Value" selected>
+                                        @item.Text
                                     </option>
                                 }
                                 else
                                 {
-                                    <option value="@item.Key">
-                                        @item.Value
+                                    <option value="@item.Value">
+                                        @item.Text
                                     </option>
                                 }
                             }
                         </select>
+                        <span class="error">
+                            @Html.ValidationMessageFor(m => m.RoleId)
+                        </span>
                     </div>
 
                 </div>
 
                 <div class="flex justify-end mt-6 ">
                     <div class="flex gap-6">
-                        <button class="resetForm btn btn-gray-white h-[40px] rounded-[4px] px-8 text-sm"
-                                data-drawer-hide="add-new-host-staff" onclick="CancelFunction()">
+                        <button class="resetForm btn btn-gray-white h-[40px] rounded-[4px] px-8 text-sm" onclick="CancelFunction()" type="">
                             @CRS.ADMIN.APPLICATION.Resources.Resource.Cancel
                         </button>
-                        <button class="resetForm btn btn-primary-default h-[40px] px-8 rounded-[4px]  text-sm leading-[10px]"
-                                data-drawer-hide="add-new-host-staff" data-modal-target="add-new-host-modal-save"
-                                data-modal-toggle="add-new-host-modal-save" id="saveData" onclick="AddStaff()">
+                        <button class="resetForm btn btn-primary-default h-[40px] px-8 rounded-[4px]  text-sm leading-[10px]" id="saveData" type="submit">
                             @CRS.ADMIN.APPLICATION.Resources.Resource.Create
                         </button>
                     </div>

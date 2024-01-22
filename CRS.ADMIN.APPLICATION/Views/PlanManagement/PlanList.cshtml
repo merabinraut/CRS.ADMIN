@@ -18,7 +18,7 @@
                 </div>
             </div>
             <div class="flex gap-6">
-                <div class="export-button h-[40px]">
+                <div class="export-button h-[40px]" onclick="exportExcel('table-id', 'Plan')">
                     <img src="~/Content/assets_new/images/club/download-solid.svg"> @CRS.ADMIN.APPLICATION.Resources.Resource.Export
                 </div>
                 <div class="btn btn-primary gap-[8px] h-[40px]" data-drawer-target="add-new-host-club"
@@ -52,8 +52,7 @@
                                class="input-search block w-full "
                                placeholder="@CRS.ADMIN.APPLICATION.Resources.Resource.Search"
                                value="@ViewBag.SearchFilter"
-                               name="SearchFilter"
-                               required>
+                               name="SearchFilter">
                     </div>
                 </form>
                 <div class="flex gap-6">
@@ -77,7 +76,7 @@
                         </div>
                     </div>*@
                 <div class="relative overflow-x-auto">
-                    <table class="w-full text-left club-table">
+                    <table class="w-full text-left club-table" id="table-id">
                         <thead class="club-table-thead">
                             <tr>
                                 <th scope="col" class="p-[12px]">

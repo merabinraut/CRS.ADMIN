@@ -50,12 +50,12 @@
                         <option value="20">100</option>
                     </select>&nbsp;@CRS.ADMIN.APPLICATION.Resources.Resource.Entries*@
             </div>
-            <div class="export-button h-[40px]" id="btnExport">
+            <div class="export-button h-[40px]" onclick="exportExcel('table-id', 'Staff')">
                 <img src="~/Content/assets_new/images/club/download-solid.svg"> @CRS.ADMIN.APPLICATION.Resources.Resource.Export
             </div>
         </div>
         <div class="relative overflow-x-auto">
-            <table class="w-full  text-left club-table">
+            <table class="w-full  text-left club-table" id="table-id">
                 <thead class="club-table-thead">
                     <tr>
                         <th scope="col" class="p-[12px]">
@@ -138,14 +138,14 @@
                             </td>
                             <td class="p-[12px]">
                                 <div class="round-image-text gap-[12px] w-max">
-                                    @if (stafflist.ProfileImage != null)
+                                    @if (!string.IsNullOrEmpty(stafflist.ProfileImage))
                                     {
                                         <img class="w-[32px] h-[32px] rounded-full object-cover"
                                              src="~@stafflist.ProfileImage" />
                                     }
                                     else
                                     { <img class="w-[32px] h-[32px] rounded-full object-cover"
-                                           src="~/Content/assets_new/images/superadmin/fu-kaze.png" />
+                                           src="~/Content/assets_new/images/demo-image.jpeg" />
                                     }
                                     <div class="text-image">
                                         @stafflist.FullName
@@ -165,14 +165,17 @@
                                 </div>
                             </td>
                             <td class="p-[12px]">
-                                <div class="flex gap-[7px] justify-center text-[16px] ">
-                                    <div>
-                                        <i class="fa-regular fa-pen-to-square text-[#989898] cursor-pointer" onclick="editStaffDetail('@stafflist.Id')"></i>
+                                @if (!string.IsNullOrEmpty(stafflist.RoleName) && stafflist.RoleName.Trim().ToLower() != "superadmin")
+                                {
+                                    <div class="flex gap-[7px] justify-center text-[16px] ">
+                                        <div>
+                                            <i class="fa-regular fa-pen-to-square text-[#989898] cursor-pointer" onclick="editStaffDetail('@stafflist.Id')"></i>
+                                        </div>
+                                        <div>
+                                            <i class="fa-solid fa-trash-can text-primary-100 cursor-pointer" onclick="deleteStaff('@stafflist.Id')"></i>
+                                        </div>
                                     </div>
-                                    <div>
-                                        <i class="fa-solid fa-trash-can text-primary-100 cursor-pointer" onclick="deleteStaff('@stafflist.Id')"></i>
-                                    </div>
-                                </div>
+                                }
                             </td>
                         </tr>
                     }
@@ -275,9 +278,9 @@
             element.classList.remove('translate-x-full');
         }
     });
-    function AddStaff() {
-        document.getElementById("ManageStaffForm").submit();
-    }
+    //function AddStaff() {
+    //    document.getElementById("ManageStaffForm").submit();
+    //}
     function CancelFunction() {
         location.reload();
     }
@@ -302,16 +305,4 @@
             }
         });
     }
-    //export html table to excel jQuery code section
-    $(document).ready(function () {
-        $("#btnExport").click(function () {
-            let table = document.getElementsByTagName("table");
-            TableToExcel.convert(table[0], {
-                name: `AllStaff.xlsx`,
-                sheet: {
-                    name: 'AllStaff'
-                }
-            });
-        });
-    });
 </script>

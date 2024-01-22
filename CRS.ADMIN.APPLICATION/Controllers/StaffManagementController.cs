@@ -32,8 +32,9 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 item.ActionDate = DateTime.Parse(item.ActionDate).ToString("MMM d, yyyy HH:mm:ss");
             }
             ViewBag.PopUpRenderValue = !string.IsNullOrEmpty(RenderId) ? RenderId : null;
-            ViewBag.RoleDDL = ApplicationUtilities.LoadDropdownList("ROLEDDL", "2", "") as Dictionary<string, string>;
-            ViewBag.RoleIdKey = responseInfo.ManageStaffModel.RoleId;
+            ViewBag.RoleDDL = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("ROLEDDL", "2", "") as Dictionary<string, string>, null, "--- Select ---");
+            //ViewBag.RoleDDL = ApplicationUtilities.LoadDropdownList("ROLEDDL", "2", "") as Dictionary<string, string>;
+            ViewBag.RoleIdKey = responseInfo.ManageStaffModel.RoleId.EncryptParameter();
             return View(responseInfo);
         }
         [HttpGet]

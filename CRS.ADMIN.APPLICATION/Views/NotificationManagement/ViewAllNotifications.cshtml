@@ -20,14 +20,14 @@
                     <option value="20">100</option>
                 </select>&nbsp;entries
             </div>
-            <div class="export-button">
-                <img src="~/Content/assets_new/images/club/download-solid.svg"> export
+            <div class="export-button" onclick="exportExcel('table-id', 'Notification')">
+                <img src="~/Content/assets_new/images/club/download-solid.svg"> @CRS.ADMIN.APPLICATION.Resources.Resource.Export
             </div>
 
         </div>
 
         <div class="relative overflow-x-auto">
-            <table class="w-full  text-left club-table">
+            <table class="w-full  text-left club-table" id="table-id">
                 <thead class="club-table-thead">
                     <tr>
                         <th scope="col" class="p-[12px]">
