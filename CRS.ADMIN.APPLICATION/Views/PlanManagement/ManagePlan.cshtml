@@ -1,0 +1,100 @@
+﻿@model CRS.ADMIN.APPLICATION.Models.PlanManagement.PlanManagementModel
+
+@{
+    ViewBag.Title = "Manage Plan";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Styles.Render("~/UI/Style")
+
+<div class="card">
+    <div class="card-header header-elements-inline">
+        <h6 class="card-title">
+            <b style="color:red">*</b><b> Note: Please fill out all the field stating *(Mandatory) </b>
+        </h6>
+    </div>
+    <div class="card-body">
+        @using (Html.BeginForm("ManagePlan", "PlanManagement", FormMethod.Post, new { @role = "form", enctype = "multipart/form-data" }))
+        {
+            @Html.HiddenFor(model => model.PlanId)
+            @Html.HiddenFor(model => model.PlanImage)
+            @Html.AntiForgeryToken()
+            <fieldset class="md-3">
+                <div class="row">
+                    @Html.NTextBoxFor(model => model.PlanName, new { @class = "form-control", autocomplete = "off", @onkeypress = "return isAlphabateOnly(event)", @maxlength = "50", @placeholder = "Enter plan name" }, 2)
+                    @Html.NDropDownListFor(model => model.PlanType, new SelectList(ViewBag.PlanList, "Value", "Text"), new { @class = "form-control select2", @id = "AgentId", autocomplete = "off" }, 2)
+                    @Html.NDropDownListFor(model => model.PlanTime, new SelectList(ViewBag.TimeList, "Value", "Text"), new { @class = "form-control select2", @id = "AgentId", autocomplete = "off" }, 2)
+                    @Html.NTextBoxFor(model => model.Price, new { @class = "form-control", autocomplete = "off", @onkeypress = "return isDecimalWith2DecimalPlace(event,this)", @maxlength = "300", @placeholder = "Enter Price" }, 2)
+                    @Html.NDropDownListFor(model => model.Liquor, new SelectList(ViewBag.LiquorList, "Value", "Text"), new { @class = "form-control select2", autocomplete = "off" }, 2)
+                    @Html.NTextBoxFor(model => model.Nomination, new { @class = "form-control", autocomplete = "off", @maxlength = "3", @placeholder = "Enter nomination" }, 2)
+                    <div class="row">
+                        <div class="col-md-4">
+                            @Html.LabelFor(model => model.PlanImage, "Image", new { @class = "label", autocomplete = "off" })
+                            <span class='text-danger'>*</span>
+                            @if (!string.IsNullOrEmpty(Model.PlanImage))
+                            {
+                                <div><img id="Plan_Image" height="200" width="200" style="border: solid" src="@Model.PlanImage" /></div>
+                                @Html.ValidationMessageFor(model => model.PlanImage, null, new { @class = "form-text text-danger" })
+                            }
+                            else
+                            {
+                                <div>
+                                    <img id="Plan_Image" style="width: 250px; height: 250px" src="~/Content/assets/images/Documnet_Image_icone.png" />
+                                </div>
+                                @Html.ValidationMessageFor(model => model.PlanImage, null, new { @class = "form-text text-danger" })
+                            }
+                            <div class="mt-1">
+                                <input type="file" title="Promotion" id="Plan_Image" style="overflow: hidden" name="Plan_Image" accept="image/x-png,image/jpeg,image/jpg" onchange="ShowLogo(this)" class="imgValidate" />
+                                <p class="form-text text-primary">[ Max 2MB ]</p>
+                            </div>
+                            <p class="form-text text-primary">[Image must be in jpeg, jpg or png format]</p>
+                        </div>
+                    </div>
+                    <div class="col-12 mt-2">
+                        <button type="button" class="btn btn-primary btn-sm bg-primary" onclick="window.history.back();"><i class="fa fa-arrow-left mr-2 "></i>Back</button>
+                        <button type="submit" class="btn btn-success btn-sm  ml-2"> <i class="fa fa-save mr-2"></i>Save</button>
+                    </div>
+                </div>
+            </fieldset>
+        }
+    </div>
+</div>
+
+@section scripts
+{
+    <script>
+        function isDecimalWith2DecimalPlace(evt, obj) {
+            evt = (evt) ? evt : window.event;
+            var charCode = (evt.which) ? evt.which : evt.keyCode
+            var value = obj.value;
+            if (value.includes('.')) if (value.split(".")[1].length > 1) return false;
+            var dotcontains = value.indexOf(".") != -1;
+            if (dotcontains) if (charCode == 46) return false;
+            if (charCode == 46) return true;
+            if (charCode > 31 && (charCode < 48 || charCode > 57)) return false;
+            return true;
+        }
+        //alphabet and whitespace
+        function isAlphabateOnly(evt) {
+            evt = (evt) ? evt : window.event;
+            var charCode = (evt.which) ? evt.which : evt.keyCode;
+            if ((charCode > 64 && charCode < 91) || (charCode > 96 && charCode < 123) || (charCode == 32) || (charCode == 46)) {
+                return true;
+            }
+            return false;
+        }
+    </script>
+    <script>
+     function ShowLogo(input) {
+         if (input.files && input.files[0]) {
+             var filerdr = new FileReader();
+             filerdr.onload = function (e) {
+                 $('#Plan_Image').attr('src', e.target.result);
+             }
+             filerdr.readAsDataURL(input.files[0]);
+         }
+         else $('#Plan_Image').attr('src','@Model.PlanImage');
+     }
+
+    </script>
+}

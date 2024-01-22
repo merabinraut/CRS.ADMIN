@@ -1,0 +1,437 @@
+﻿@model CRS.ADMIN.APPLICATION.Models.PlanManagement.PlansManagementModel
+@{
+    ViewBag.Title = "Plan List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var _PlanModel = Model.PlanMgmt as CRS.ADMIN.APPLICATION.Models.PlanManagement.PlanManagementModel;
+}
+
+<div class="px-8 py-4">
+    @Html.AntiForgeryToken()
+    <div class="flex flex-col  gap-6">
+        <div class="flex justify-between items-center">
+            <div>
+                <div class="heading-title">
+                    @CRS.ADMIN.APPLICATION.Resources.Resource.Plan_Management
+                </div>
+                <div class="span-title-light-gray">
+                    @CRS.ADMIN.APPLICATION.Resources.Resource.Plan_Management_Supporting_Text
+                </div>
+            </div>
+            <div class="flex gap-6">
+                <div class="export-button h-[40px]">
+                    <img src="~/Content/assets_new/images/club/download-solid.svg"> @CRS.ADMIN.APPLICATION.Resources.Resource.Export
+                </div>
+                <div class="btn btn-primary gap-[8px] h-[40px]" data-drawer-target="add-new-host-club"
+                     data-drawer-show="add-new-host-club" data-drawer-placement="right" data-drawer-backdrop="false"
+                     aria-controls="drawer-disabled-backdrop">
+                    <img src="~/Content/assets_new/images/plus-circle-solid.svg" />
+                    @CRS.ADMIN.APPLICATION.Resources.Resource.Add_New
+                </div>
+            </div>
+        </div>
+        @*<div class="flex gap-[24px]" style="border-bottom: 1px solid #f4f4f4;">
+                <div class="flex tab-container-plane bg-white gap-[16px]">
+                    <button id="tab1Button" class="tab-button-plane tab-link active">@CRS.ADMIN.APPLICATION.Resources.Resource.All</button>
+                    <button id="tab2Button" class="tab-button-plane tab-link">@CRS.ADMIN.APPLICATION.Resources.Resource.Basic</button>
+                    <button id="tab2Button" class="tab-button-plane tab-link">@CRS.ADMIN.APPLICATION.Resources.Resource.Premium</button>
+                </div>
+            </div>*@
+        <!-- container  -->
+        <div id="tab1" class="tab-content-plane ">
+            <div class="flex justify-between pb-[24px]">
+                <form action="/PlanManagement/PlanList" method="get">
+                    <div class="relative input-search-wrapper">
+                        <div class="absolute inset-y-0 left-0 flex items-center pl-[16px] pointer-events-none">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21" fill="none">
+                                <path d="M17.5 18L13.875 14.375M15.8333 9.66667C15.8333 13.3486 12.8486 16.3333 9.16667 16.3333C5.48477 16.3333 2.5 13.3486 2.5 9.66667C2.5 5.98477 5.48477 3 9.16667 3C12.8486 3 15.8333 5.98477 15.8333 9.66667Z"
+                                      stroke="#667085" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                        </div>
+                        <input type="search"
+                               id="default-search"
+                               class="input-search block w-full "
+                               placeholder="@CRS.ADMIN.APPLICATION.Resources.Resource.Search"
+                               value="@ViewBag.SearchFilter"
+                               name="SearchFilter"
+                               required>
+                    </div>
+                </form>
+                <div class="flex gap-6">
+                    @*<div class="custom-date " data-drawer-target="custom-date-drawer" data-drawer-show="custom-date-drawer"
+                             data-drawer-placement="right" aria-controls="custom-date-drawer">
+                            <img src="~/Content/assets_new/images/club/calendar-week-solid.svg" alt="date">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Custom_Date
+                        </div>*@
+                </div>
+            </div>
+            <div class="table-tab">
+                @*<div class="px-[12px] py-[16px] flex justify-between entry-export-container">
+                        <div class="flex items-center select-entries">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Show&nbsp;
+                            <select id="countries" class="w-full select-entires " style="width: 100%; ">
+                                <option value="5" selected>5</option>
+                                <option value="10">10</option>
+                                <option value="15">15</option>
+                                <option value="20">100</option>
+                            </select>&nbsp;@CRS.ADMIN.APPLICATION.Resources.Resource.Entries
+                        </div>
+                    </div>*@
+                <div class="relative overflow-x-auto">
+                    <table class="w-full text-left club-table">
+                        <thead class="club-table-thead">
+                            <tr>
+                                <th scope="col" class="p-[12px]">
+                                    <div class="flex w-max">
+                                        S.N
+                                        <div class="relative pl-[5px]">
+                                            <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                            <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                        </div>
+                                    </div>
+                                </th>
+                                <th scope="col" class="p-[12px]">
+                                    <div class="flex w-max">
+                                        @CRS.ADMIN.APPLICATION.Resources.Resource.Plan_Title
+                                        <div class="relative pl-[5px]">
+                                            <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                            <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                        </div>
+                                    </div>
+                                </th>
+                                <th scope="col" class="p-[12px]">
+                                    <div class="flex w-max">
+                                        @CRS.ADMIN.APPLICATION.Resources.Resource.Type
+                                        <div class="relative pl-[5px]">
+                                            <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                            <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                        </div>
+                                    </div>
+                                </th>
+                                @*<th scope="col" class="p-[12px]">
+                                        <div class="flex">
+                                            @CRS.ADMIN.APPLICATION.Resources.Resource.Status
+                                            <div class="relative pl-[5px]">
+                                                <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                                <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                            </div>
+                                        </div>
+                                    </th>*@
+                                <th scope="col" class="p-[12px]">
+                                    <div class="flex w-max">
+                                        @CRS.ADMIN.APPLICATION.Resources.Resource.Time
+                                        <div class="relative pl-[5px]">
+                                            <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                            <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                        </div>
+                                    </div>
+                                </th>
+                                @*<th scope="col" class="p-[12px]">
+                                        <div class="flex w-max">
+                                            @CRS.ADMIN.APPLICATION.Resources.Resource.Image 1
+                                            <div class="relative pl-[5px]">
+                                                <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                                <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                            </div>
+                                        </div>
+                                    </th>
+                                    <th scope="col" class="p-[12px]">
+                                        <div class="flex w-max">
+                                            @CRS.ADMIN.APPLICATION.Resources.Resource.Image 2
+                                            <div class="relative pl-[5px]">
+                                                <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                                <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                            </div>
+                                        </div>
+                                    </th>*@
+                                <th scope="col" class="p-[12px]">
+                                    <div class="flex w-max">
+                                        @CRS.ADMIN.APPLICATION.Resources.Resource.Image
+                                        <div class="relative pl-[5px]">
+                                            <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                            <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                        </div>
+                                    </div>
+                                </th>
+                                <th scope="col" class="p-[12px]">
+                                    <div class="flex w-max">
+                                        @CRS.ADMIN.APPLICATION.Resources.Resource.Image
+                                        <div class="relative pl-[5px]">
+                                            <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                            <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                        </div>
+                                    </div>
+                                </th>
+                                <th scope="col" class="p-[12px]">
+                                    <div class="flex w-max">
+                                        @CRS.ADMIN.APPLICATION.Resources.Resource.Price
+                                        <div class="relative pl-[5px]">
+                                            <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                            <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                        </div>
+                                    </div>
+                                </th>
+                                <th scope="col" class="p-[12px]">
+                                    <div class="flex w-max">
+                                        @CRS.ADMIN.APPLICATION.Resources.Resource.Nomination
+                                        <div class="relative pl-[5px]">
+                                            <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                            <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                        </div>
+                                    </div>
+                                </th>
+                                <th scope="col" class="p-[12px]">
+                                    <div class="flex w-max">
+                                        @CRS.ADMIN.APPLICATION.Resources.Resource.Updated_On
+                                        <div class="relative pl-[5px]">
+                                            <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                            <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                        </div>
+                                    </div>
+                                </th>
+                                <th scope="col" class="p-[12px] flex justify-center">
+                                    <div class="flex w-max justify-center">
+                                        @CRS.ADMIN.APPLICATION.Resources.Resource.Action
+                                        <div class="relative pl-[5px]">
+                                            <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                            <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                        </div>
+                                    </div>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                int i = 1;
+                                foreach (var item in Model.PlanManagementModel)
+                                {
+                                    <tr class="bg-white border-b ">
+                                        <td class="p-[12px]">
+                                            @i
+                                        </td>
+                                        <td class="p-[12px]">
+                                            @item.PlanName
+                                        </td>
+                                        <td class="p-[12px]">
+                                            @if (!string.IsNullOrEmpty(item.PlanType) && item.PlanType.ToUpper().Trim() == "BASIC")
+                                            {
+                                                <div class="pending">
+                                                    @item.PlanType
+                                                </div>
+                                            }
+                                            else if (!string.IsNullOrEmpty(item.PlanType) && item.PlanType.ToUpper().Trim() == "PREMIUM")
+                                            {
+                                                <div class="approved">
+                                                    @item.PlanType
+                                                </div>
+                                            }
+                                            else
+                                            {
+                                                <div>
+                                                    @item.PlanType
+                                                </div>
+                                            }
+                                        </td>
+                                        @*<td class="p-[12px]">
+                                                @if (!string.IsNullOrEmpty(item.PlanStatus) && item.PlanStatus.ToUpper() == "A")
+                                                {
+                                                    <span class="badge badge-success">Active</span>
+                                                }
+                                                else if (!string.IsNullOrEmpty(item.PlanStatus) && item.PlanStatus.ToUpper() == "B")
+                                                {
+                                                    <span class="badge badge-danger">Blocked</span>
+                                                }
+                                            </td>*@
+                                        <td class="p-[12px]">
+                                            @item.PlanTime
+                                        </td>
+                                        <td class="p-[12px]">
+                                            @if (!string.IsNullOrEmpty(item.PlanImage))
+                                            {
+                                                <img class="table-image h-[36px] w-[88px]" src="@item.PlanImage">
+                                            }
+                                            else
+                                            {
+                                                <img class="table-image h-[36px] w-[88px]" src="~/Content/assets_new/images/demo-image.jpeg">
+                                            }
+                                        </td>
+                                        <td class="p-[12px]">
+                                            @if (!string.IsNullOrEmpty(item.PlanImage2))
+                                            {
+                                                <img class="table-image h-[36px] w-[88px]" src="@item.PlanImage2">
+                                            }
+                                            else
+                                            {
+                                                <img class="table-image h-[36px] w-[88px]" src="~/Content/assets_new/images/demo-image.jpeg">
+                                            }
+                                        </td>
+                                        <td class="p-[12px]">
+                                            <div class="">
+                                                @item.Price
+                                            </div>
+                                        </td>
+                                        <td class="p-[12px]">
+                                            @item.Nomination
+                                        </td>
+                                        <td class="p-[12px]">
+                                            @item.ActionDate
+                                        </td>
+                                        <td class="p-[12px]">
+                                            <div class="flex gap-[7px] justify-center text-[16px] ">
+                                                <div>
+                                                    <i class="fa-regular fa-pen-to-square text-[#989898] cursor-pointer" onclick="editPlanDetail('@item.PlanId')"></i>
+                                                </div>
+                                                <div>
+                                                    <i class="fa-solid fa-trash-can text-primary-100 cursor-pointer" onclick="deletePlan('@item.PlanId')"></i>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    i++;
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                @*<div class="pagination-club">
+                        <div class="show-entry">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Showing 1 to 5 of 301 @CRS.ADMIN.APPLICATION.Resources.Resource.Entries
+                        </div>
+                        <div class="flex gap-[12px]">
+                            <div class="btn btn-secondary-box-shadow ">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Previous
+                            </div>
+                            <div class="flex gap-[12px]">
+                                <div class="pagination-number active">
+                                    1
+                                </div>
+                                <div class="pagination-number">
+                                    2
+                                </div>
+                                <div class="pagination-number">
+                                    3
+                                </div>
+                                <div class="pagination-number">
+                                    ..
+                                </div>
+                                <div class="pagination-number">
+                                    10
+                                </div>
+                            </div>
+                            <div class="btn btn-secondary-box-shadow ">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Next
+                            </div>
+                        </div>
+                    </div>*@
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Confirmation  -->
+<div id="add-new-host-modal-save" tabindex="-1" aria-hidden="true"
+     class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
+    <div class="relative max-w-2xl max-h-full w-[412px] px-4 pt-[40px] pb-[46px]">
+        <!-- Modal content -->
+        <div class="relative bg-white rounded-lg shadow">
+            <!-- Modal header -->
+
+            <button type="button"
+                    class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center absolute top-[24px] right-[20px] "
+                    data-modal-hide="add-new-host-modal-save">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="25" viewBox="0 0 24 25" fill="none">
+                    <rect y="0.621094" width="24" height="24" rx="12" fill="#FAFAFA" />
+                    <path d="M5.41406 4.95703L4.33594 6.03516L10.9219 12.6211L4.33594 19.207L5.41406 20.2852L12 13.6992L18.5859 20.2852L19.6641 19.207L13.0781 12.6211L19.6641 6.03516L18.5859 4.95703L12 11.543L5.41406 4.95703Z"
+                          fill="#7A7A7A" />
+                </svg>
+            </button>
+            <!-- Modal body -->
+            <div class="grid gap-6 px-[20px] py-8">
+                <div class="flex justify-center mb-4">
+                    <img src="~/Content/assets_new/images/save-check.svg" />
+                </div>
+                <div class="grid gap-[20px] text-[#062937] mb-[44px]">
+                    <div class="text-base text-secondary-text-2 text-center font-semibold">
+                        Success
+                    </div>
+                    <div class="text-[14px] text-secondary-text-2 text-center">
+                        Congratulations, you just added a new plan.
+                    </div>
+                </div>
+                <div class="flex justify-end">
+                    <div class="flex gap-8">
+                        <button data-modal-hide="add-new-host-modal-save"
+                                class="btn btn-primary-normal rounded-[4px] text-sm gap-2 w-[130px]"
+                                data-drawer-target="add-new-host-club" data-drawer-show="add-new-host-club"
+                                data-drawer-placement="right" data-drawer-backdrop="false"
+                                aria-controls="drawer-disabled-backdrop">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16"
+                                 height="16" viewBox="0 0 16 16" fill="none">
+                                <path d="M8 1.5C4.41602 1.5 1.5 4.41602 1.5 8C1.5 11.584 4.41602 14.5 8 14.5C11.584 14.5 14.5 11.584 14.5 8C14.5 4.41602 11.584 1.5 8 1.5ZM8 2.5C11.043 2.5 13.5 4.95703 13.5 8C13.5 11.043 11.043 13.5 8 13.5C4.95703 13.5 2.5 11.043 2.5 8C2.5 4.95703 4.95703 2.5 8 2.5ZM7.5 5V7.5H5V8.5H7.5V11H8.5V8.5H11V7.5H8.5V5H7.5Z"
+                                      fill="#D75A8B" />
+                            </svg>Add New
+                        </button>
+
+                        <button class="btn btn-primary-default rounded-[4px] px-4 w-max gap-2"
+                                data-modal-hide="add-new-host-modal-save">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="17"
+                                 height="16" viewBox="0 0 17 16" fill="none">
+                                <path d="M5.71997 7.33117H13.8346V8.6645H5.71997L9.29597 12.2405L8.3533 13.1832L3.16797 7.99783L8.3533 2.8125L9.29597 3.75517L5.71997 7.33117Z"
+                                      fill="white" />
+                            </svg>Back
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Manage Plan-->
+@Html.Partial("_ManagePlan", _PlanModel)
+<!--Manage Plan-->
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            $('select').select2({
+                minimumResultsForSearch: Infinity
+            })
+            var PopUpRenderValue = '@ViewBag.PopUpRenderValue';
+            if (PopUpRenderValue != null && PopUpRenderValue != "" && PopUpRenderValue == "Manage") {
+            var element = document.getElementById('add-new-host-club');
+            element.classList.remove('translate-x-full');
+            }
+        });
+
+        document.getElementById('CloseId').addEventListener('click',
+            function (event) {
+                event.preventDefault();
+                window.location.reload();
+            });
+        document.getElementById('CancelId').addEventListener('click',
+            function (event) {
+                event.preventDefault();
+                window.location.reload();
+            });
+
+        function editPlanDetail(id) {
+            window.location.href = '/PlanManagement/ManagePlan?planId=' + id;
+        }
+        function deletePlan(id) {
+            $.ajax({
+                type: 'POST',
+                async: true,
+                url: "/PlanManagement/EnableDisablePlans?id=" + id,
+                dataType: 'json',
+                data: {
+                    __RequestVerificationToken: $('input[name="__RequestVerificationToken"]').val(),
+                },
+                success: function () {
+                    window.location.reload();
+                },
+                error: function (ex) {
+
+                }
+            });
+        }
+    </script>
+}

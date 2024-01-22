@@ -1,0 +1,17 @@
+CREATE TABLE [tbl_menus]
+(
+	Sno BIGINT NOT NULL IDENTITY(1,2) PRIMARY KEY,
+	MenuId BIGINT NOT NULL,
+	MenuName VARCHAR(100) NOT NULL,
+	MenuUrl VARCHAR(200) NOT NULL,
+	MenuGroup VARCHAR(50) NULL,
+	ParentGroup VARCHAR(50) NULL,
+	MenuOrderPosition INT NULL,
+	GroupOrderPosition INT NULL,
+	CssClass VARCHAR(200) NULL,
+	Status CHAR(1) NULL,
+	MenuAccessCategory VARCHAR(50) NULL,
+	ActionUser VARCHAR(200) NULL,
+	ActionIP VARCHAR(50) NULL,
+	ActionDate DATETIME NULL
+)

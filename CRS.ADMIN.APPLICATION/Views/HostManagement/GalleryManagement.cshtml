@@ -1,0 +1,242 @@
+﻿@model CRS.ADMIN.APPLICATION.Models.HostManagement.CommonHostGalleryManagementModel
+@{
+    ViewBag.Title = "Gallery Management";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var _HostManageGalleryImageModel = Model.HostManageGalleryImageModel as CRS.ADMIN.APPLICATION.Models.HostManagement.HostManageGalleryImageModel;
+}
+
+<div class="px-8 py-4">
+    @Html.AntiForgeryToken()
+    <div class="flex flex-col">
+        <div class="mb-8">
+            <div class="heading-title">Gallery Management</div>
+            @*<div class="span-title-light-gray">Supporting Texts</div>*@
+        </div>
+
+        <div class="flex justify-between pb-[24px]">
+            <form action="/HostManagement/GalleryManagement" method="get">
+                <div class="relative input-search-wrapper">
+                    <div class="absolute inset-y-0 left-0 flex items-center pl-[16px] pointer-events-none">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21" fill="none">
+                            <path d="M17.5 18L13.875 14.375M15.8333 9.66667C15.8333 13.3486 12.8486 16.3333 9.16667 16.3333C5.48477 16.3333 2.5 13.3486 2.5 9.66667C2.5 5.98477 5.48477 3 9.16667 3C12.8486 3 15.8333 5.98477 15.8333 9.66667Z"
+                                  stroke="#667085" stroke-width="1.66667" stroke-linecap="round"
+                                  stroke-linejoin="round" />
+                        </svg>
+                    </div>
+                    <input name="AgentId" hidden value="@ViewBag.AgentId" />
+                    <input name="HostId" hidden value="@ViewBag.HostId" />
+                    <input type="search" name="SearchFilter" value="@ViewBag.SearchFilter" class="input-search block w-full " placeholder="Search">
+                    <input type="submit" value="Submit" hidden>
+                </div>
+            </form>
+        </div>
+        <div class="table-tab">
+            <div class="px-[16px] py-[12px] flex justify-between entry-export-container">
+                <div class="flex items-center select-entries">
+                    @*show&nbsp;
+                        <select id="countries" class="w-full select-entires " style="width: 100%; ">
+                            <option value="5" selected>5</option>
+                            <option value="10">10</option>
+                            <option value="15">15</option>
+                            <option value="20">100</option>
+                        </select>&nbsp;entries*@
+                </div>
+                <div class="btn btn-primary gap-[8px]" data-drawer-target="add-new-gallery"
+                     data-drawer-show="add-new-gallery" data-drawer-placement="right" data-drawer-backdrop="false"
+                     aria-controls="drawer-disabled-backdrop">
+                    <img src="~/Content/assets_new/images/plus-circle-solid.svg" />
+                    Add New
+                </div>
+
+            </div>
+
+            <div class="relative overflow-x-auto">
+                <table class="w-full  text-left club-table">
+                    <thead class="club-table-thead">
+                        <tr>
+                            <th scope="col" class="p-[12px]">
+                                <div class="flex">
+                                    S.N
+                                    <div class="relative pl-[5px]">
+                                        <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                        <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                    </div>
+                                </div>
+                            </th>
+                            <th scope="col" class="p-[12px]">
+                                <div class="flex">
+                                    Title
+                                    <div class="relative pl-[5px]">
+                                        <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                        <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                    </div>
+                                </div>
+                            </th>
+                            <th scope="col" class="p-[12px]">
+                                <div class="flex">
+                                    Image
+                                    <div class="relative pl-[5px]">
+                                        <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                        <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                    </div>
+                                </div>
+                            </th>
+                            <th scope="col" class="p-[12px]">
+                                <div class="flex">
+                                    Created On
+                                    <div class="relative pl-[5px]">
+                                        <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                        <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                    </div>
+                                </div>
+                            </th>
+                            <th scope="col" class="p-[12px]">
+                                <div class="flex">
+                                    Updated On <div class="relative pl-[5px]">
+                                        <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                        <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                    </div>
+                                </div>
+                            </th>
+                            <th scope="col" class="p-[12px]">
+                                <div class="flex justify-center">
+                                    Action
+                                    <div class="relative pl-[5px]">
+                                        <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                        <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                    </div>
+                                </div>
+                            </th>
+
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            int i = 1;
+                            foreach (var item in Model.HostGalleryManagementModel)
+                            {
+                                <tr class="bg-white border-b ">
+                                    <td class="p-[12px]">
+                                        @i
+                                    </td>
+                                    <td class="p-[12px]">
+                                        @item.ImageTitle
+                                    </td>
+                                    <td class="p-[12px]">
+                                        <img class="table-image h-[36px] w-[88px]"
+                                             src="@item.ImagePath" />
+                                    </td>
+                                    <td class="p-[12px]">
+                                        @item.CreatedDate
+                                    </td>
+                                    <td class="p-[12px]">
+                                        @item.UpdatedDate
+                                    </td>
+                                    <td class="p-[12px]">
+                                        <div class="flex gap-[7px] justify-center ">
+                                            <div>
+                                                <i class="fa-regular fa-pen-to-square text-[#989898] cursor-pointer" onclick="ManageGalleryFunction('@item.AgentId','@item.HostId', '@item.GalleryId');"></i>
+                                            </div>
+                                            <div>
+                                                <i class="fa-solid fa-trash-can text-primary-100 cursor-pointer" onclick="ManageStatusFunction('@item.AgentId','@item.HostId', '@item.GalleryId');"></i>
+                                            </div>
+
+                                        </div>
+                                    </td>
+                                </tr>
+                                i++;
+                            }
+                        }
+                    </tbody>
+                </table>
+
+            </div>
+            @*<div class="pagination-club">
+                    <div class="show-entry">Showing 1 to 5 of 301 Entries</div>
+                    <div class="flex gap-[12px]">
+                        <div class="btn btn-secondary-box-shadow ">Previous</div>
+                        <div class="flex gap-[12px]">
+                            <div class="pagination-number active">
+
+                                1
+                            </div>
+                            <div class="pagination-number">
+                                2
+                            </div>
+                            <div class="pagination-number">
+                                3
+                            </div>
+                            <div class="pagination-number">
+                                ..
+                            </div>
+                            <div class="pagination-number">
+                                10
+                            </div>
+
+                        </div>
+                        <div class="btn btn-secondary-box-shadow ">Next</div>
+                    </div>
+                </div>*@
+        </div>
+    </div>
+</div>
+@Html.Partial("_ManageHostGalleryPartialView", _HostManageGalleryImageModel)
+@section scripts
+{
+    <script>
+        // Get references to the file input and file name display element
+        const fileInput = document.getElementById("file_input-gallery");
+        const fileNameDisplay = document.getElementById("file_name_display-gallery");
+
+        // Add an event listener to the file input
+        fileInput.addEventListener("change", function () {
+            // Check if a file has been selected
+            if (fileInput.files.length > 0) {
+                // Display the name of the selected file
+                fileNameDisplay.textContent = ` ${fileInput.files[0].name}`;
+            } else {
+                // No file selected
+                fileNameDisplay.textContent = "";
+            }
+        });
+    </script>
+    <script>
+        function CancelFunction() {
+            location.reload();
+        }
+
+        function HostGallerySubmitFunction() {
+            document.getElementById("ManageHostGalleryForm").submit();
+        }
+
+        function ManageGalleryFunction(i, j, k) {
+            window.location.href = '/HostManagement/ManageGallery?AgentId=' + i + '&&HostId=' + j+ '&&GalleryId=' + k;
+        }
+
+        function ManageStatusFunction(i,j,k) {
+        var RequestVerificationToken = $('input[name="__RequestVerificationToken"]').val();
+        $.ajax({
+             type: "POST",
+             url: '@Url.Action("ManageGalleryStatus", "HostManagement")',
+             data: {
+                 '__RequestVerificationToken': RequestVerificationToken, 'AgentId': i,'HostId': j, 'GalleryId' : k},
+            success: function (response) {
+                window.location.reload();
+             },
+            error: function (error) {
+                window.location.reload();
+             }
+             })
+        }
+    </script>
+    <script>
+         $(document).ready(function () {
+              var PopUpRenderValue = '@ViewBag.PopUpRenderValue';
+             if (PopUpRenderValue != null && PopUpRenderValue != "" && PopUpRenderValue == "ManageHostGallery") {
+                 var element = document.getElementById('add-new-gallery');
+                  element.classList.remove('translate-x-full');
+              }
+         });
+    </script>
+}

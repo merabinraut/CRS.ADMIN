@@ -1,0 +1,66 @@
+﻿
+@model List<CRS.ADMIN.APPLICATION.Models.RecommendationManagementV2.ShufflingTimeListModel>
+<div id="configure-setting" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 hidden w-full
+     p-4 overflow-x-hidden overflow-y-auto
+     md:inset-0 h-[calc(100%-1rem)] max-h-full " style="align-items: flex-start;">
+    <div class="relative max-w-2xl max-h-full w-[412px] px-4 pt-[40px] pb-[46px] mt-24">
+        <!-- Modal content -->
+        <div class="relative bg-white rounded-lg shadow">
+            <!-- Modal header -->
+            <button type="button"
+                    class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center absolute top-[24px] right-[20px] "
+                    data-modal-hide="configure-setting" id="CancelId">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="25" viewBox="0 0 24 25" fill="none">
+                    <rect y="0.621094" width="24" height="24" rx="12" fill="#FAFAFA" />
+                    <path d="M5.41406 4.95703L4.33594 6.03516L10.9219 12.6211L4.33594 19.207L5.41406 20.2852L12 13.6992L18.5859 20.2852L19.6641 19.207L13.0781 12.6211L19.6641 6.03516L18.5859 4.95703L12 11.543L5.41406 4.95703Z"
+                          fill="#7A7A7A" />
+                </svg>
+            </button>
+            <!-- Modal body -->
+            @using (Html.BeginForm("ManageShufflingTime", "RecommendationManagementV2", FormMethod.Post, new { @id = "ManageShuffleForm", enctype = "multipart/form-data" }))
+            {
+                @Html.AntiForgeryToken()
+                <input hidden id="dataStringId" name="dataString" value="" />
+                <div class="grid gap-6 px-[20px] py-8">
+
+                    <div class="grid gap-3 text-[#062937] mb-[45px]">
+                        @for (int i = 0; i < Model.Count; i++)
+                        {
+                            @Html.HiddenFor(model => Model[i].DisplayId)
+                            @Html.HiddenFor(model => Model[i].DisplayName)
+                            @Html.HiddenFor(model => Model[i].DisplayTime)
+                        }
+                        <div class="text-[#333] font-semibold pb-[11px] border-b border-[#eeeeee]">@CRS.ADMIN.APPLICATION.Resources.Resource.Set_Shuffling_Time</div>
+                        @foreach (var item in ViewBag.SetShufflingTime)
+                        {
+                            <div class="flex justify-between py-1">
+                                <div class="w-[100px]" id="@item.DisplayId">@item.DisplayName </div>
+                                <input class="btn btn-gray-white rounded-[4px] h-[36px] px-4 w-max  gap-2" placeholder="Enter Minute" name="DisplayTime" value="@item.DisplayTime" maxlength="3" />
+                            </div>
+                        }
+                        <div class="text-[#333] font-semibold pb-[11px] border-b border-[#eeeeee]">Group Shuffling</div>
+                        @foreach (var item in ViewBag.GroupShuffling)
+                        {
+                            <div class="flex justify-between py-1">
+                                <div class="w-[100px]" id="@item.DisplayId">@item.DisplayName </div>
+                                <input class="btn btn-gray-white rounded-[4px] h-[36px] px-4 w-max  gap-2" placeholder="Enter Minute" name="DisplayTime" value="@item.DisplayTime" maxlength="3" />
+                            </div>
+                        }
+                    </div>
+                    <div class="flex justify-end">
+                        <div class="flex gap-4">
+                            <button class="btn btn-gray-white  rounded-[4px] px-6 w-max gap-2"
+                                    data-modal-hide="configure-setting" id="CancelId">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Cancel
+                            </button>
+                            <button class="btn btn-primary-default rounded-[4px] px-6 w-max gap-2"
+                                    data-modal-hide="configure-setting" id="UpdateShuffleTimeId">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Confirm
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>

@@ -1,0 +1,45 @@
+﻿@model CRS.ADMIN.APPLICATION.Models.RoleManagement.ManageRole
+@{
+    ViewBag.Title = "Add Role";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@Styles.Render("~/UI/Style")
+<div class="card">
+    <div class="card-body">
+        @using (Html.BeginForm("AddRoleType", "RoleManagement", new { }, FormMethod.Post, new { }))
+        {
+            @Html.AntiForgeryToken()
+            <div class="row">
+                @Html.HiddenFor(model => model.RoleType)
+                @Html.NTextBoxFor(model => model.RoleName, new { @class = "form-control names_capitalize", placeholder = "Enter Role Name", @onkeypress = "return isAlphabet(event)", @maxlength = "20", autocomplete = "off" }, 3)
+                @Html.NTextBoxFor(model => model.Description, new { @class = "form-control ", placeholder = "Maximum 100 characters allowed", @onkeypress = "return isAlphabetDot(event)", @maxlength = "100", autocomplete = "off" }, 3)
+                @Html.NTextBoxFor(model => model.RoleTypeName, new { @class = "form-control", autocomplete = "off", @readonly = "readonly" }, 3)
+                <div class="col-lg-12">
+                    <button type="button" class="btn btn-primary btn-sm bg-primary" onclick="window.history.back();"><i class="fa fa-arrow-left mr-1"></i> Back</button>
+                    <button type="submit" class="btn btn-success btn-sm" id="save" style="margin-left:5px"><i class="fa fas fa-save mr-1"></i> Save</button>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+@section Scripts{
+    <script>
+        function isAlphabet(evt) {
+            evt = (evt) ? evt : window.event;
+            var charCode = (evt.which) ? evt.which : evt.keyCode;
+            if ((charCode > 64 && charCode < 91) || (charCode > 96 && charCode < 123) || (charCode == 32)) {
+                return true;
+            }
+            return false;
+        }
+        function isAlphabetDot(evt) {
+            evt = (evt) ? evt : window.event;
+            var charCode = (evt.which) ? evt.which : evt.keyCode;
+            console.log(charCode)
+            if ((charCode > 64 && charCode < 91) || (charCode > 96 && charCode < 123) || (charCode == 32) || (charCode == 46) || (48 <= charCode && charCode <= 57)) {
+                return true;
+            }
+            return false;
+        }
+    </script>
+}

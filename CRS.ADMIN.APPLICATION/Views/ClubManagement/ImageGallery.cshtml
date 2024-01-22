@@ -1,0 +1,276 @@
+﻿@model IEnumerable<CRS.ADMIN.APPLICATION.Models.ClubManagement.ClubGallaryDBResponseModel>
+@{
+    ViewBag.Title = "Image Gallery Management";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}ClubManagement
+@section BreadCum{
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1> @ViewBag.Title</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="~/Home">Home</a></li>
+                        <li class="breadcrumb-item"><a href="~/ClubManagement/ClubList">Club List</a></li>
+                        <li class="breadcrumb-item active">@ViewBag.Title</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </section>
+}
+<style>
+    .commission-action {
+        display: flex;
+        gap: 4px;
+    }
+</style>
+@Html.AntiForgeryToken()
+<div class="card">
+    @{
+        bool addPageRightFlag = false;
+        bool deletePageRightFlag = false;
+        bool updatePageRightFlag = false;
+        bool blockPageRightFlag = false;
+        //if (ApplicationUtilities.HasPageRight("/commission/AddImage"))
+        {
+            addPageRightFlag = true;
+        }
+        //if (ApplicationUtilities.HasPageRight("/commission/DeleteImage"))
+        {
+            deletePageRightFlag = true;
+        }
+        //if (ApplicationUtilities.HasPageRight("/commission/BlockImage"))
+        {
+            blockPageRightFlag = true;
+        }
+        //if (ApplicationUtilities.HasPageRight("/commission/ManageCommissionCategoryProduct"))
+        {
+            updatePageRightFlag = true;
+        }
+    }
+    <div class="card-body">
+        <div class="row" style="float:right;margin-bottom:10px;">
+            @if (addPageRightFlag)
+            {
+                <input type="hidden" id="addcatid" name="addcatid" value="@ViewBag.ClubID" />
+                <input type="hidden" id="agentID" name="addcatid" value="@ViewBag.AgentID" />
+                <a class="btn-primary btn-lg AddDetail" style="align-content: center; cursor: pointer;"><i class='fas fa-plus'></i>&nbsp; Add New</a>
+            }
+        </div>
+        <br />
+        <br />
+        <div class="manual-table">
+            <table class="table datatable-total dataTable no-footer">
+                <thead>
+                    <tr>
+                        <th>S.N</th>
+                        <th>Title</th>
+                        <th>Image</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        var i = 1;
+                    }
+                    @foreach (var item in Model)
+                    {
+                        <tr class="DetailRow_@i">
+                            @Html.HiddenFor(model => item.AgentID)
+                            @Html.HiddenFor(model => item.ClubId)
+                            <td>@i</td>
+                            <td>@Html.NTextBoxFor(model => item.ImageTitle, new { @class = "form-control charges-form", autocomplete = "off" }, 1, showLabel: false, disable: true)</td>
+                            @if (!string.IsNullOrWhiteSpace(item.ImagePath?.ToString()))
+                            {
+                                <td>
+                                    <img class="uploadedImage_@i" height="200" width="200" style="border: solid" src=@item.ImagePath alt="User Uploaded Image" />
+                                    <input type="file" class="imageInput" accept="image/*" style="display:none">
+                                </td>
+                            }
+                            else
+                            {
+                                <td>
+                                    <img class="uploadedImage_@i" class="imgValidate" style="width: 250px; height: 250px; overflow: hidden" src="~/Content/assets/images/admin-image.jpg" alt="Uploaded Image">
+                                    <input type="file" class="imageInput" accept="image/*" style="display:none">
+                                </td>
+                            }
+                            <td class="commission-action">
+                                @if (updatePageRightFlag)
+                                {
+                                    <button class="btn-info btn-sm EditDetail" id="@i" data-val="@item.ClubId" data-placement="bottom" data-toggle="tooltip" data-original-title="Edit"><i class='fas fa-edit'></i></button>
+                                }
+                                @if (blockPageRightFlag)
+                                {
+                                    <button class="btn-secondary btn-sm UpdateDetail" id="@i" data-val="@item.ClubId" data-placement="bottom" data-toggle="tooltip" data-original-title="Update"><i class='fas fa-file-upload'></i></button>
+                                }
+                                @if (deletePageRightFlag)
+                                {
+                                    <button class="btn-danger btn-sm DeleteDetail" id="@i" data-val="@item.ClubId" data-placement="bottom" data-toggle="tooltip" data-original-title="Delete"><i class='fas fa-trash-alt'></i></button>
+                                }
+                            </td>
+                        </tr>
+                        i++;
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div class="row mr-2">
+            <button type="button" class="btn btn-primary bg-primary btn-sm ml-2" onclick="window.history.back();"><i class="fa fa-arrow-left mr-2"></i>Back</button>
+        </div>
+    </div>
+</div>
+@section Scripts
+{
+    <script>
+        function isNumberDot(evt, obj) {
+            evt = (evt) ? evt : window.event;
+            var charCode = (evt.which) ? evt.which : evt.keyCode
+            var value = obj.value;
+            var dotcontains = value.indexOf(".") != -1;
+            if (dotcontains) if (charCode == 46) return false;
+            if (charCode == 46) return true;
+            if (charCode > 31 && (charCode < 48 || charCode > 57)) return false;
+            return true;
+        }
+
+        $('.AddDetail').on('click', function (e) {
+            var ClubID = $("#addcatid").val(); //ClubID
+            var agentID = $("#agentID").val(); //AgentId
+            jsonData = "{" +
+                "__RequestVerificationToken: '" +
+                $('input[name="__RequestVerificationToken"]').val() +
+                "'," +
+                "ClubId:'" +
+                ClubID +
+                "'," +
+                "AgentID:'" +
+                agentID +
+                "'}";
+            var funcText = "CallAjaxDbResponse(" +
+                jsonData +
+                ",'/ClubManagement/AddImage','POST',true,'')";
+            showConfirmationModal("Are you sure you want to add new Image Slab?", funcText);
+        });
+
+        $('.DeleteDetail').on('click', function (e) {
+            debugger
+            var t = $(this);
+            var id = t.attr('id');
+            var AgentID = t.closest('.DetailRow_' + id).find("#item_AgentID").val();
+            var ClubID = t.closest('.DetailRow_' + id).find("#item_ClubId").val();
+            jsonData = "{" +
+                "__RequestVerificationToken: '" +
+                $('input[name="__RequestVerificationToken"]').val() +
+                "'," +
+                "ClubID:'" +
+                ClubID +
+                "'," +
+                "AgentID:'" +
+                AgentID +
+                "'}";
+            var funcText = "CallAjaxDbResponse(" +
+                jsonData +
+                ",'/ClubManagement/DeleteImage','POST',true,'')";
+            showConfirmationModal("Are you sure you want to delete Image Slab?", funcText);
+        });
+    </script>
+
+    <script>
+        $('.imageInput').on('change', function (e) {
+            //debugger
+            var rowNumber = $(this).data('row');
+            $('.DetailRow_' + rowNumber).find('.imageInput').click();
+            var rowNumber = $(this).closest('tr').attr('class').match(/DetailRow_(\d+)/)[1];
+            var selectedFileName = $(this).val();
+            var file = e.target.files[0];
+
+            if (file) {
+                var imageUrl = URL.createObjectURL(file);
+                $('.uploadedImage_' + rowNumber).attr('src', imageUrl);
+            } else {
+                alert('No image selected');
+            }
+        });
+
+        $(".EditDetail").on("click", function (e) {
+            var x = $(this);
+            var name = x.attr('id');
+            var d = x.closest('.DetailRow_' + name).find('#item_ImageTitle');
+            var e = x.closest('.DetailRow_' + name).find('.imageInput');
+
+            if (d[0].disabled == true) {
+                d.prop('disabled', false);
+                e.css('display', 'block')
+            }
+            else {
+                d.prop('disabled', true);
+                e.css('display', 'none')
+            }
+        });
+
+        $(".UpdateDetail").on("click", function (e) {
+            debugger;
+            var t = $(this);
+            var id = t.attr('id');
+            var AgentID = t.closest('.DetailRow_' + id).find("#item_AgentID").val();
+            var ClubID = t.closest('.DetailRow_' + id).find("#item_ClubId").val();
+            var ImageTitle = t.closest('.DetailRow_' + id).find("#item_ImageTitle").val();
+            var d = t.closest('.DetailRow_' + id).find('#item_ImageTitle');
+            var e = t.closest('.DetailRow_' + id).find('.imageInput');
+
+            var jsonData = new FormData();
+            var fileInput = $('.imageInput')[0];
+            var check = fileInput.files[0];
+            if (fileInput.files.length > 0) {
+                jsonData.append('imageFile', fileInput.files[0]);
+                jsonData.append('agentID', AgentID);
+                jsonData.append('clubID', ClubID);
+                jsonData.append('Title', ImageTitle);
+
+                //jsonData = "{" +
+                //    "__RequestVerificationToken: '" +
+                //    $('input[name="__RequestVerificationToken"]').val() +
+                //    "'," +
+                //    "clubID:'" +
+                //    ClubID +
+                //    "'," +
+                //    "agentID:'" +
+                //    AgentID +
+                //    "'," +
+                //    "Title:'" +
+                //    ImageTitle +
+                //    "'," +
+                //    "data:'" +
+                //    jsonData +
+                //    "'}";
+
+                //var funcText = "CallAjaxDbResponse(" +
+                //    jsonData +
+                //    ",'/ClubManagement/UploadImage','POST',true,'')";
+                //showConfirmationModal("Are you sure you want to add new Image Slab?", funcText);
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/ClubManagement/UploadImage',
+                    data: jsonData,
+                    contentType: false,
+                    processData: false,
+                    success: function (response) {
+                        console.log(response);
+                    },
+                    error: function (error) {
+                        console.error('Error:', error);
+                    }
+                });
+                d.prop('disabled', true);
+                e.css('display', 'none');
+
+            } else {
+                alert('Please select an image first.');
+            }
+        });
+    </script>
+}

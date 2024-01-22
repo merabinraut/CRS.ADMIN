@@ -1,0 +1,12 @@
+USE CRS
+GO
+
+CREATE TABLE tbl_application_functions_role
+(
+	Sno BIGINT IDENTITY(1,2) PRIMARY KEY,
+	RoleId BIGINT NULL,
+	FunctionId BIGINT NULL,
+	ActionUser VARCHAR(200) NULL,
+	ActionIP VARCHAR(50) NULL,
+	ActionDate DATETIME NULL
+)

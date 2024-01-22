@@ -1,0 +1,216 @@
+﻿@model List<CRS.ADMIN.APPLICATION.Models.ErrorLog.ErrorLogModel>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="px-8 py-4">
+    <!-- title  -->
+    <div class="flex flex-col  gap-8">
+        <div class="flex justify-between items-center">
+            <div>
+                <div class="heading-title">Error Log</div>
+                <div class="span-title-light-gray">Supporting Texts</div>
+            </div>
+        </div>
+        <div class="flex flex-col  gap-4">
+            <div class="flex justify-between ">
+                <form>
+                </form>
+                <div class="flex gap-6">
+                    <div class="export-button h-[40px]">
+                        <img src="/Content/assets_new/images/club/download-solid.svg">
+                        export
+                    </div>
+                </div>
+            </div>
+            <!-- filter  -->
+            <div class="">
+                <div id="filter" class="export-button h-[40px] text-[#3E3E3E] w-max" onclick="showFilterContainer()">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21" fill="none">
+                        <path d="M5 10.5H15M2.5 5.5H17.5M7.5 15.5H12.5" stroke="#3E3E3E" stroke-width="1.67"
+                              stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                    Filter By
+                </div>
+                <div id="filter-container" class="px-6 py-5 rounded-[5px] border border-[#D0D5DD]"
+                     style="display: none;">
+                    <div class="flex flex-col gap-4">
+                        <div class="flex text-[#3E3E3E] gap-1 items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg"
+                                 width="20" height="21" viewBox="0 0 20 21" fill="none">
+                                <path d="M5 10.5H15M2.5 5.5H17.5M7.5 15.5H12.5" stroke="#3E3E3E" stroke-width="1.67"
+                                      stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                            Filter By
+                        </div>
+                        <div class="grid grid-cols-3 gap-[27px]">
+                            <div class="input-field-common">
+                                <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
+                                    Error Id
+                                </label>
+                                <input type="search" id="default-search" class="input-search block w-full " placeholder="Search"
+                                       required="">
+                            </div>
+                            <div class="input-field-common">
+                                <label class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                                    From Date
+                                </label>
+                                <input type="date" class="w-full" placeholder="YYYY/MM/DD" name="FromDate" required>
+                            </div>
+                            <div class="input-field-common">
+                                <label class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                                    To Date
+                                </label>
+                                <input type="date" class="w-full" placeholder="YYYY/MM/DD" name="ToDate" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class=" flex gap-4 mt-4">
+                        <button id="cancelFilter" class="btn btn-primary-normal gap-1 rounded-[4px]"
+                                onclick="hideFilterContainer()">
+                            <i class="las la-times"></i> Cancel
+                        </button>
+                        <button id="cancelFilter" class="btn btn-primary-default gap-1 rounded-[4px]"
+                                onclick="hideFilterContainer()">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18"
+                                 height="19" viewBox="0 0 18 19" fill="none">
+                                <path d="M5.25 14.75V10.25H12.75V14.75H14.25V6.371L12.129 4.25H3.75V14.75H5.25ZM3 2.75H12.75L15.75 5.75V15.5C15.75 15.6989 15.671 15.8897 15.5303 16.0303C15.3897 16.171 15.1989 16.25 15 16.25H3C2.80109 16.25 2.61032 16.171 2.46967 16.0303C2.32902 15.8897 2.25 15.6989 2.25 15.5V3.5C2.25 3.30109 2.32902 3.11032 2.46967 2.96967C2.61032 2.82902 2.80109 2.75 3 2.75ZM6.75 11.75V14.75H11.25V11.75H6.75Z"
+                                      fill="white" />
+                            </svg>Apply
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <!-- table  -->
+            <div class="table-tab">
+                <div class="px-[12px] py-[16px] flex justify-between entry-export-container">
+                    <div class="flex items-center select-entries">
+                        show&nbsp;
+                        <select id="countries" class="w-full select-entires " style="width: 100%; ">
+                            <option value="5" selected>5</option>
+                            <option value="10">10</option>
+                            <option value="15">15</option>
+                            <option value="20">100</option>
+                        </select>&nbsp;entries
+                    </div>
+                </div>
+                <div class="relative overflow-x-auto">
+                    <table class="w-full  text-left club-table">
+                        <thead class="club-table-thead">
+                            <tr>
+                                <th scope="col" class="p-[12px]">
+                                    <div class="flex">
+                                        S.N
+                                        <div class="relative pl-[5px]">
+                                            <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                            <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                        </div>
+                                    </div>
+                                </th>
+                                <th scope="col" class="p-[12px]">
+                                    <div class="flex">
+                                        ErrorId
+                                        <div class="relative pl-[5px]">
+                                            <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                            <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                        </div>
+                                    </div>
+                                </th>
+                                <th scope="col" class="p-[12px]">
+                                    <div class="flex">
+                                        Error Decription
+                                        <div class="relative pl-[5px]">
+                                            <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                            <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                        </div>
+                                    </div>
+                                </th>
+                                <th scope="col" class="p-[12px]">
+                                    <div class="flex">
+                                        Error Category
+                                        <div class="relative pl-[5px]">
+                                            <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                            <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                        </div>
+                                    </div>
+                                </th>
+                                <th scope="col" class="p-[12px]">
+                                    <div class="flex">
+                                        Error Source
+                                        <div class="relative pl-[5px]">
+                                            <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                            <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                        </div>
+                                    </div>
+                                </th>
+                                <th scope="col" class="p-[12px]">
+                                    <div class="flex">
+                                        Generated Date
+                                        <div class="relative pl-[5px]">
+                                            <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                            <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                        </div>
+                                    </div>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                int sno = 1;
+                                foreach (var item in Model)
+                                {
+                                    <tr class="bg-white border-b ">
+                                        <td class="p-[12px]">
+                                            @sno
+                                        </td>
+                                        <td class="p-[12px]">
+                                            @item.ErrorId
+                                        </td>
+                                        <td class="p-[12px]">
+                                            @item.ErrorDescription
+                                        </td>
+                                        <td class="p-[12px]">
+                                            @item.ErrorCategory
+                                        </td>
+                                        <td class="p-[12px]">
+                                            @item.ErrorSource
+                                        </td>
+                                        <td class="p-[12px]">
+                                            @item.ActionDate
+                                        </td>
+                                    </tr>
+                                    sno++;
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <div class="pagination-club">
+                    <div class="show-entry">Showing 1 to 5 of 301 Entries</div>
+                    <div class="flex gap-[12px]">
+                        <div class="btn btn-secondary-box-shadow ">Previous</div>
+                        <div class="flex gap-[12px]">
+                            <div class="pagination-number active">
+                                1
+                            </div>
+                            <div class="pagination-number">
+                                2
+                            </div>
+                            <div class="pagination-number">
+                                3
+                            </div>
+                            <div class="pagination-number">
+                                ..
+                            </div>
+                            <div class="pagination-number">
+                                10
+                            </div>
+                        </div>
+                        <div class="btn btn-secondary-box-shadow ">Next</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

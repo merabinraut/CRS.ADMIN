@@ -1,0 +1,375 @@
+.buttons-excel {
+    background-color: #144399;
+}
+
+.buttons-colvis {
+    background-color: #144399;
+}
+
+.MyModelBody {
+    text-align: center !important;
+}
+
+.dt-buttons {
+    float: right;
+}
+
+.buttons-colvis:hover {
+    background-color: #ffa6a7;
+}
+
+.buttons-excel:hover {
+    background-color: #ffa6a7;
+}
+
+.buttons-pdf {
+    background-color: #144399;
+}
+
+    .buttons-pdf:hover {
+        background-color: #ffa6a7;
+    }
+
+.main-sidebar {
+    width: 270px;
+}
+
+@media only screen and (max-width: 1020px) {
+    .main-header {
+        height: 80px !important;
+    }
+}
+
+@media (min-width: 768px) {
+    body:not(.sidebar-mini-md) .main-header,
+    body:not(.sidebar-mini-md) .main-footer,
+    body:not(.sidebar-mini-md) .content-wrapper {
+        margin-left: 270px;
+    }
+
+    .sidebar-collapse .main-header, .sidebar-collapse .main-footer, .sidebar-collapse .content-wrapper {
+        margin-left: 0px !important;
+    }
+}
+
+.drop_resp {
+    width: auto !important;
+}
+
+/* table.dataTable th {
+        white-space: nowrap
+    }*/
+
+.sidebar-collapse .main-sidebar {
+    margin-left: -295px;
+}
+
+.sync-nm {
+    margin-left: 15px
+}
+
+.display-blnc {
+    display: flex;
+    align-items: center
+}
+
+    .display-blnc .blc-view {
+        margin-left: 15px
+    }
+
+.mobile-blc-view {
+    display: none
+}
+
+.card-box {
+    position: relative;
+    padding-bottom: 60px;
+}
+
+#DataTables_Table_0_wrapper .dt-buttons {
+    position: absolute;
+    right: 10px;
+}
+
+#DataTables_Table_0_wrapper #DataTables_Table_0_length {
+    position: absolute;
+    left: 20px;
+}
+
+#DataTables_Table_0_wrapper #DataTables_Table_0_filter {
+    position: absolute;
+    right: 10px;
+    margin-top: 47px;
+}
+
+#DataTables_Table_0_wrapper #DataTables_Table_0 {
+    padding-top: 85px !important;
+}
+
+#DataTables_Table_0_wrapper #DataTables_Table_0_paginate {
+    position: absolute;
+    right: 10px;
+    bottom: 7px;
+}
+
+#DataTables_Table_0_wrapper #DataTables_Table_0_info {
+    position: absolute;
+    left: 10px;
+    bottom: 8px;
+}
+
+#DataTables_Table_0_wrapper #DataTables_Table_0 {
+    padding-bottom: 15px;
+}
+
+.editrow {
+    display: flex;
+}
+
+.user-header b {
+    LINE-HEIGHT: 0;
+    WORD-BREAK: break-all;
+}
+
+.manual-table {
+    overflow: hidden;
+    overflow-x: scroll;
+    width: 100%;
+}
+
+@media only screen and (max-width: 1365px) {
+    .editrow {
+        display: grid !important;
+    }
+}
+
+@media only screen and (max-width: 767px) {
+    #DataTables_Table_0_wrapper .dt-buttons {
+        width: auto;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    .web-blc-view {
+        display: none;
+    }
+
+    .mobile-blc-view {
+        display: inline-block
+    }
+}
+
+@media only screen and (max-width: 480px) {
+
+    .card-box {
+        position: relative;
+        padding-bottom: 80px;
+    }
+
+    #DataTables_Table_0_wrapper .dt-buttons {
+        position: absolute;
+        left: 10px;
+        width: 95%;
+        margin-top: 40px;
+    }
+
+    #DataTables_Table_0_wrapper #DataTables_Table_0 {
+        padding-top: 125px !important;
+    }
+
+    #DataTables_Table_0_wrapper #DataTables_Table_0_filter {
+        position: absolute;
+        left: 10px;
+        width: 95%;
+        margin-top: 84px;
+        text-align: left
+    }
+
+    #DataTables_Table_0_wrapper #DataTables_Table_0_info {
+        position: absolute;
+        left: 10px;
+        bottom: 50px;
+    }
+
+    #DataTables_Table_0_wrapper #DataTables_Table_0_paginate {
+        position: absolute;
+        left: 10px;
+        bottom: 7px;
+        text-align: left
+    }
+
+        #DataTables_Table_0_wrapper #DataTables_Table_0_paginate .pagination {
+            justify-content: start !important;
+        }
+}
+
+@media only screen and (max-width: 320px) {
+    .navbar-nav > .user-menu > .dropdown-menu > li.user-header {
+        height: 210px;
+        padding: 10px;
+        text-align: center;
+    }
+
+    .navbar-nav > .user-menu > .dropdown-menu {
+        width: 260px;
+    }
+}
+/* nirajan css */
+.charges-form {
+    width: 100px !important;
+    margin-left: -7.5px !important;
+    overflow-y: scroll;
+}
+
+.charges-form-lg {
+    width: 220px !important;
+    margin-left: -7.5px !important;
+    overflow-y: scroll;
+}
+
+.charges-form-auto {
+    width: auto !important;
+    margin-left: -7.5px !important;
+    overflow-y: scroll;
+}
+
+.ml-minus-form {
+    margin-left: -7.5px !important;
+}
+
+.pl-plus-form {
+    padding-left: 19px !important;
+}
+
+
+.dataTables_wrapper {
+    padding-top: 90px !important;
+}
+
+    .dataTables_wrapper .dt-buttons {
+        position: absolute;
+        top: 75px;
+        right: 10px;
+    }
+
+    .dataTables_wrapper .dataTables_length {
+        position: absolute;
+        top: 75px;
+        left: 10px;
+    }
+
+.dataTables_filter {
+    position: absolute;
+    top: 123px;
+    right: 10px;
+}
+
+div.dataTables_wrapper div.dataTables_paginate {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+}
+
+div.dataTables_wrapper div.dataTables_info {
+    position: absolute;
+    bottom: 15px;
+    left: 10px;
+}
+
+.table-log .dataTables_wrapper .dataTables_length {
+    top: 82px;
+}
+
+.table-log .dataTables_filter {
+    top: 82px;
+}
+
+.table-log .dataTables_wrapper {
+    padding-top: 35px !important;
+}
+
+.table-log .col-sm-12, .table-log col-md-6 {
+    position: inherit !important;
+}
+
+.table-responsive {
+    scrollbar-width: none;
+}
+
+
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+    scrollbar-width: thin;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 2px grey;
+    border-radius: 5px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #144399;
+    border-radius: 5px;
+}
+
+    /* Handle on hover */
+    ::-webkit-scrollbar-thumb:hover {
+        background: #4A91C6;
+    }
+
+.card-header {
+    height: 63px;
+}
+
+.field-validation-error {
+    color: #dc3545;
+}
+
+.validationMessage {
+    position: absolute;
+    bottom: -23px;
+    left: 5px;
+    font-size: 12px;
+}
+
+.my-pf {
+    padding: 10px 0
+}
+
+    .my-pf img {
+        width: 250px;
+        border-radius: 10px;
+        display: block;
+        margin: 0 auto
+    }
+
+.profile-details-view {
+    width: 100%
+}
+
+.edit-btn {
+    display: flex;
+    margin-bottom: 10px;
+    float: right;
+}
+
+    .edit-btn .btn {
+        margin-right: 10px;
+    }
+
+.editrow .form-group {
+    margin-left: -7px;
+}
+
+.btn-edit-pm {
+    height: calc(2.25rem + 2px);
+    z-index: 10
+}
+
+.full-width {
+    width: 100%;
+    height: auto;
+}

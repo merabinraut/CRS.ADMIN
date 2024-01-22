@@ -1,0 +1,416 @@
+﻿@{
+    ViewBag.Title = "Manage Club Recommendation Request";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    string[] allSelectedValues = null;
+    string[] staticSelectedValue = null;
+}
+<style>
+    .select2-search--dropdown {
+        display: none !important;
+    }
+</style>
+<div class="px-8 py-4 flex flex-col gap-8">
+    @Html.AntiForgeryToken()
+    <!-- booking information  -->
+    <div class="flex justify-between items-center">
+        <div>
+            <div class="heading-title">Recommendation Request</div>
+            <div class="span-title-light-gray">Supporting Texts</div>
+        </div>
+    </div>
+    <div class="flex flex-col gap-8">
+        <div class=" grid gap-[24px] grid-cols-3">
+            <div class="input-field-common">
+                <label for="" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                    Club Location
+                </label>
+                <select id="default_select" style="width: 100%;" class="text-[#B7B7B7] h-[44px] clubLocationDDL" name="ClubLocationId">
+                    @foreach (KeyValuePair<string, string> item in ViewBag.ClubLocation as Dictionary<string, string>)
+                    {
+                        var selectedId = ViewBag.ClubLocation as string;
+                        if (item.Key == selectedId)
+                        {
+                            <option value="@item.Key" selected>
+                                @item.Value
+                            </option>
+                        }
+                        else
+                        {
+                            <option value="@item.Key">
+                                @item.Value
+                            </option>
+                        }
+                    }
+                </select>
+            </div>
+            <div class="input-field-common">
+                <label for="" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                    Group
+                </label>
+                <select id="default_select1" style="width: 100%;" class="text-[#B7B7B7] h-[44px]" name="GroupDDLId">
+                    @foreach (KeyValuePair<string, string> item in ViewBag.GroupDDLByLocationId as Dictionary<string, string>)
+                    {
+                        var selectedId = ViewBag.GroupDDLByLocationId as string;
+                        if (item.Key == selectedId)
+                        {
+                            <option value="@item.Key" selected>
+                                @item.Value
+                            </option>
+                        }
+                        else
+                        {
+                            <option value="@item.Key">
+                                @item.Value
+                            </option>
+                        }
+                    }
+                </select>
+            </div>
+            <div class="input-field-common">
+                <label for="" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                    Club
+                </label>
+                <select id="default_select3" style="width: 100%;" class="text-[#B7B7B7] h-[44px]" name="ClubId">
+                    @foreach (var item in ViewBag.ClubDDL as IEnumerable<SelectListItem>)
+                    {
+                        var selectedId = ViewBag.ClubDDL as string;
+                        if (item.Value == selectedId)
+                        {
+                            <option value="@item.Value" selected>
+                                @item.Text
+                            </option>
+                        }
+                        else
+                        {
+                            <option value="@item.Value">
+                                @item.Text
+                            </option>
+                        }
+                    }
+                </select>
+            </div>
+            <div>
+                <label for="" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                    Display Page
+                </label>
+                <div id="toggle" class="text-[#667085] display-page cursor-pointer">
+                    Display Page
+                    <div class="display-page-arrow">
+                        <b></b>
+                    </div>
+                </div>
+                <div class="toggleDiv" id="toggleDiv">
+                    @foreach (var item in ViewBag.DisplayPageOrderDDL as IEnumerable<SelectListItem>)
+                    {
+                        <div class="flex items-center justify-between checkbox-common  py-[8px] px-[16px] clubLocationDDL">
+                            <label for="all-checkbok"
+                                   class="ml-2 text-sm font-medium flex items-center justify-between w-full text-secondary-100 ">
+                                @item.Text
+                                <input id="all-checkbok" type="checkbox" value="@item.Text"
+                                       class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300   ">
+                            </label>
+                        </div>
+                    }
+                </div>
+                <!-- Dropdown menu -->
+            </div>
+            <div class="input-field-common">
+                <label for="" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                    Display Order
+                </label>
+                <select id="default_select4" style="width: 100%;" class="text-[#B7B7B7] h-[44px]" name="DisplayOrder">
+                    @foreach (var item in ViewBag.DisplayOrderDDL as IEnumerable<SelectListItem>)
+                    {
+                        var selectedId = ViewBag.DisplayOrderDDL as string;
+                        if (item.Value == selectedId)
+                        {
+                            <option value="@item.Value" selected>
+                                @item.Text
+                            </option>
+                        }
+                        else
+                        {
+                            <option value="@item.Value">
+                                @item.Text
+                            </option>
+                        }
+                    }
+                </select>
+            </div>
+        </div>
+        <!-- table  -->
+        <div class=" grid gap-[24px]">
+            <div class="relative overflow-x-auto">
+                <table class="w-full  text-left club-table bordered" id="componentContainer">
+                    <thead class="club-table-thead bg-[#F3F3F3]">
+                        <tr>
+                            <th scope="col" class="p-[12px]">
+                                <div class="flex">
+                                    S.N
+                                </div>
+                            </th>
+                            <th scope="col" class="p-[12px]">
+                                <div class="flex">
+                                    Host
+                                </div>
+                            </th>
+                            <th scope="col" class="p-[12px]">
+                                <div class="flex">
+                                    Display Order
+                                </div>
+                            </th>
+                            <th scope="col" class="p-[12px]">
+                                <div class="flex justify-center">
+                                    Action
+                                </div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="bg-white border-b" id="templateRow">
+                            <td class="p-[12px]">
+                                1
+                            </td>
+                            <td class="p-[12px]">
+                                <div class="input-field-common add-new-select-rm">
+                                    <select id="" style="width: 100%;"
+                                            class="default_select text-[#B7B7B7] h-[44px]" name="HostDDLByClubId">
+                                        @foreach (var item in ViewBag.HostDDLBYClubId as IEnumerable<SelectListItem>)
+                                        {
+                                            var selectedId = ViewBag.HostDDLBYClubId as string;
+                                            if (item.Value == selectedId)
+                                            {
+                                                <option value="@item.Value" selected>
+                                                    @item.Text
+                                                </option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@item.Value">
+                                                    @item.Text
+                                                </option>
+                                            }
+                                        }
+                                    </select>
+                                </div>
+                            </td>
+                            <td class="p-[12px]">
+                                <div class="input-field-common add-new-select-rm">
+                                    <select id="" style="width: 100%;"
+                                            class=" default_select text-[#B7B7B7] h-[44px]" name="DisplayOrderDDL">
+                                        @foreach (var item in ViewBag.DisplayOrderDDL as IEnumerable<SelectListItem>)
+                                        {
+                                            var selectedId = ViewBag.DisplayOrderDDL as string;
+                                            if (item.Value == selectedId)
+                                            {
+                                                <option value="@item.Value" selected>
+                                                    @item.Text
+                                                </option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@item.Value">
+                                                    @item.Text
+                                                </option>
+                                            }
+                                        }
+                                    </select>
+                                </div>
+                            </td>
+                            <td class="p-[12px]">
+                                <div class="flex gap-[7px] justify-center ">
+                                    <div>
+                                        <i class="fa-regular fa-pen-to-square text-[#989898] cursor-pointer"></i>
+                                    </div>
+                                    <div>
+                                        <i class="fa-solid fa-trash-can text-primary-100 cursor-pointer"></i>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <button onclick="addNewComponent()" class="btn btn-primary-normal gap-1 mt-[24px]" id="addNewRow">
+                    <i class="las la-plus-circle"></i> Add New
+                </button>
+            </div>
+            <div class="flex justify-end">
+                <div class="flex gap-[24px]">
+                    <div class="btn btn-secondary w-[96px]">Cancel</div>
+                    <div class="btn btn-primary w-[96px]" data-modal-target="popup-modal"
+                         data-modal-toggle="popup-modal" onclick="saveForm()">
+                        Save
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@section scripts{
+    <script>
+        // JavaScript to handle the toggle functionality
+        var toggle = document.getElementById('toggle');
+        var toggleDiv = document.getElementById('toggleDiv');
+
+        toggle.addEventListener('click', function () {
+            if (toggleDiv.style.display === 'none' || toggleDiv.style.display === '') {
+                toggleDiv.style.display = 'block';
+            } else {
+                toggleDiv.style.display = 'none';
+            }
+        });
+    </script>
+    <script>
+        var multiselectedValue = '';
+        $(document).ready(function () {
+            $('#toggleDiv :checkbox').on('change', function () {
+                var selectedCheckboxes = $('input[type="checkbox"]:checked');
+                var selectedValues = selectedCheckboxes.map(function () {
+                    return $(this).val();
+                }).get();
+                multiselectedValue = (selectedValues.join(',') || 'None');
+            });
+        });
+    </script>
+    <script>
+    var rowCount = 2;
+    function addNewComponent() {
+        // Create a new row
+        var newRow = document.createElement('tr');
+        newRow.classList.add('bg-white', 'border-b');
+        newRow.innerHTML = `
+            <td class="p-[12px]">${rowCount}</td>
+            <td class="p-[12px]">
+                <div class="input-field-common add-new-select-rm">
+                 <select id="" style="width: 100%;"
+                         class="default_select text-[#B7B7B7] h-[44px]" name="HostDDLByClubId">
+                     @foreach (var item in ViewBag.HostDDLBYClubId as IEnumerable<SelectListItem>)
+                     {
+                         var selectedId = ViewBag.HostDDLBYClubId as string;
+                         if (item.Value == selectedId)
+                         {
+                             <option value="@item.Value" selected>
+                                 @item.Text
+                             </option>
+                         }
+                         else
+                         {
+                             <option value="@item.Value">
+                                 @item.Text
+                             </option>
+                         }
+                     }
+                 </select>
+               </div>
+            </td>
+            <td class="p-[12px]">
+         <div class="input-field-common add-new-select-rm">
+             <select id="" style="width: 100%;"
+                    class=" default_select text-[#B7B7B7] h-[44px]" name="DisplayOrderDDL">
+                @foreach (var item in ViewBag.DisplayOrderDDL as IEnumerable<SelectListItem>)
+                {
+                    var selectedId = ViewBag.DisplayOrderDDL as string;
+                    if (item.Value == selectedId)
+                    {
+                        <option value="@item.Value" selected>
+                            @item.Text
+                        </option>
+                    }
+                    else
+                    {
+                        <option value="@item.Value">
+                            @item.Text
+                        </option>
+                    }
+                }
+            </select>
+         </div>
+            </td>
+            <td class="p-[12px]">
+                <div class="flex gap-[7px] justify-center ">
+                    <div>
+                        <i class="fa-regular fa-pen-to-square text-[#989898] cursor-pointer"></i>
+                    </div>
+                    <div>
+                        <!-- Add an event listener to remove the clicked row -->
+                        <i class="fa-solid fa-trash-can text-primary-100 cursor-pointer" onclick="removeRow(this)"></i>
+                    </div>
+                </div>
+            </td>
+        `;
+        document.getElementById('componentContainer').appendChild(newRow);
+        $(newRow).find('select').select2();
+        rowCount++;
+        $(newRow).find('select').select2().on('change', function (e) {
+            var SelectedValues = getAllSelectedValues();
+            allSelectedValues = SelectedValues;
+            console.log(allSelectedValues);
+        });
+    }
+    // Function to remove the clicked row
+    function removeRow(icon) {
+        var rowToRemove = icon.closest('tr');
+        rowToRemove.remove();
+        rowCount--;
+    }
+        //custom code
+
+    function getAllSelectedValues() {
+        var selectedValues = [];
+        $('#componentContainer tr').each(function (index, row) {
+            var selects = $(row).find('select');
+            selects.each(function (i, select) {
+                var selectedValue = $(select).val();
+                selectedValues.push(selectedValue);
+            });
+        });
+        return selectedValues;
+    }
+    </script>
+    <script>
+        $('tr').find('select').select2().on('change', function (e) {
+            var selectedValues = [];
+            $('#componentContainer tr').each(function (index, row) {
+                var selects = $(row).find('select');
+                selects.each(function (i, select) {
+                    var selectedValue = $(select).val();
+                    selectedValues.push(selectedValue);
+                });
+            });
+            staticSelectedValue = selectedValues;
+            console.log(staticSelectedValue);
+        });
+    </script>
+    <script>
+     var RequestVerificationToken = $('input[name="__RequestVerificationToken"]').val();
+     debugger
+        function saveForm() {
+           $.ajax({
+                type: 'POST',
+                async: true,
+                url: '@Url.Action("ManageClubRecommendationRequest")',
+                dataType: 'json',
+                data: { '__RequestVerificationToken': RequestVerificationToken, staticSelectDDLValue: '@staticSelectedValue', allSelectedDDLValue: '@allSelectedValues' },
+                      success: function (data) {
+                          console.log('Data saved successfully!');
+                      },
+               error: function (ex) {
+                   console.error('Failed to save data.');
+                       toastr.info('Failed.');
+                      }
+           });
+     }
+    </script>
+    <script>
+        $(document).ready(function () {
+            $('select').select2({
+                minimumResultsForSearch: Infinity
+            });
+        });
+    </script>
+}
+
+

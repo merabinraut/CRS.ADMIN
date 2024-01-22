@@ -1,0 +1,87 @@
+﻿@model CRS.ADMIN.APPLICATION.Models.HostManagement.HostManageGalleryImageModel
+<div id="add-new-gallery"
+     class="drawer-close-disable  flex justify-end fixed top-0 right-0 z-40 h-screen overflow-y-auto transition-transform translate-x-full "
+     tabindex="-1" aria-labelledby="drawer-right-label">
+
+    <div class="bg-white w-[574px] drawer-container relative">
+        <div class="drawer-form-container sticky top-0 z-[5] ">
+            <div class="drawer-form flex justify-between bg-secondary-color-pink py-[16px] px-[24px] h-[56px]">
+                <div>Manage Gallery</div>
+                <button type="button" data-drawer-hide="add-new-gallery" aria-controls="add-new-gallery"
+                        class="text-[20px]">
+                    <i class="las la-window-close text-white" onclick="CancelFunction();"></i>
+                </button>
+            </div>
+        </div>
+        <div class="p-[24px]">
+            @using (Html.BeginForm("ManageGallery", "HostManagement", FormMethod.Post, new { @id = "ManageHostGalleryForm", enctype = "multipart/form-data" }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.HiddenFor(model => model.AgentId);
+                @Html.HiddenFor(model => model.HostId);
+                if (!string.IsNullOrEmpty(Model.GalleryId))
+                {
+                    @Html.HiddenFor(model => model.GalleryId);
+                    @Html.HiddenFor(model => model.ImagePath);
+                }
+                <div class="grid grid-cols-1 gap-x-[20px] gap-y-[16px]">
+                    <div class="input-field-common">
+                        <label for="email" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                            Title
+                        </label>
+
+                        @*<input type="text" class="w-full" placeholder="Banner" name="ImageTitle" value="@Model.ImageTitle" required>*@
+                        @Html.TextBoxFor(model => model.ImageTitle, new
+                        {
+                           @class = "w-full",
+                           @placeholder = "Banner",
+                           autocomplete = "off",
+                           maxLength = "50"
+                        })
+                        <span class="error">
+                            @Html.ValidationMessageFor(m => m.ImageTitle)
+                        </span>
+                    </div>
+
+
+                    <div>
+                        <label for="email" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                            Gallery/Banner
+                        </label>
+                        <div class="file-upload-common">
+
+                            <label for="file_input-gallery" class="custom-file-upload w-[128px] flex-none text-ellipsis-customer">
+                                <span>Custom Upload</span>
+                            </label>
+                            <input id="file_input-gallery" type="file" style="display:none;" name="Image_Path" required>
+                            <p id="file_name_display-gallery"
+                               class="w-max h-[23px] overflow-hidden pl-2 text-[#686868]">
+                                No
+                                File Choosen
+                            </p>
+                        </div>
+                        <div class="text-xs text-error mt-[8px]">
+                            Note: Image should be in HEIF format and Maximum file
+                            size
+                            is 5 MB.
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="flex justify-end py-[16px] ">
+                    <div class="flex gap-[24px]">
+                        <div class="btn btn-secondary rounded-[4px] px-4" data-drawer-hide="add-new-gallery"
+                             aria-controls="add-new-gallery" onclick="CancelFunction();">Cancel</div>
+                        <div class="btn btn-primary rounded-[4px] px-4">
+                            <button type="submit">Create</button>
+                        </div>
+                    </div>
+
+                </div>
+            }
+        </div>
+
+    </div>
+
+</div>

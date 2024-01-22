@@ -1,0 +1,93 @@
+﻿@{
+    ViewBag.Title = "Payment Management";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var overViewModel = Model.PaymentOverview as CRS.ADMIN.APPLICATION.Models.PaymentManagement.PaymentOverviewModel;
+    var paymentLog = Model.PaymentLogs as List<CRS.ADMIN.APPLICATION.Models.PaymentManagement.PaymentLogsModel>;
+}
+
+<div class="px-8 py-4 flex flex-col gap-8">
+    <!-- booking information  -->
+    <div class="flex justify-between items-center">
+        <div>
+            <div class="heading-title">
+                @CRS.ADMIN.APPLICATION.Resources.Resource.Payment_Management
+            </div>
+            <div class="span-title-light-gray">
+                @CRS.ADMIN.APPLICATION.Resources.Resource.Payment_Management_Supporting_Text
+            </div>
+        </div>
+        @*<div class="section-to-hide">
+                <div class="btn btn-primary-normal flex gap-2 items-center h-[40px] px-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                        <path d="M5.625 2.5V3.125H3.125V16.875H16.875V3.125H14.375V2.5H13.125V3.125H6.875V2.5H5.625ZM4.375 4.375H5.625V5H6.875V4.375H13.125V5H14.375V4.375H15.625V5.625H4.375V4.375ZM4.375 6.875H15.625V15.625H4.375V6.875ZM8.125 8.125V9.375H9.375V8.125H8.125ZM10.625 8.125V9.375H11.875V8.125H10.625ZM13.125 8.125V9.375H14.375V8.125H13.125ZM5.625 10.625V11.875H6.875V10.625H5.625ZM8.125 10.625V11.875H9.375V10.625H8.125ZM10.625 10.625V11.875H11.875V10.625H10.625ZM13.125 10.625V11.875H14.375V10.625H13.125ZM5.625 13.125V14.375H14.375V13.125H5.625Z"
+                              fill="#D75A8B" />
+                    </svg>@CRS.ADMIN.APPLICATION.Resources.Resource.August 9 - @CRS.ADMIN.APPLICATION.Resources.Resource.August 21
+                </div>
+            </div>*@
+    </div>
+
+    <div class="flex flex-col gap-4">
+        <div class="">
+            <div class="flex gap-[24px]" style="border-bottom: 1px solid #f4f4f4;">
+                <div class="flex tab-container-plane bg-white gap-[16px]">
+                    <div onclick="getActiveButtonValue()">
+
+                        <button id=" tab1Button" class="tab-button-plane tab-link active"
+                                onclick="getActiveButtonValue()">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Overview
+                        </button>
+                    </div>
+                    <div onclick="getActiveButtonValue()">
+                        <button id=" tab2Button" class="tab-button-plane tab-link ">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Payment_Logs
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="">
+            <div class="bg-white">
+                <div id="tab1" class="tab-content-plane ">
+                    @Html.Partial("_Overview", overViewModel)
+                </div>
+                <div id="tab2" class="tab-content-plane hidden ">
+                    @Html.Partial("_PaymentLog", paymentLog)
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts
+{
+    <script>
+        function getActiveButtonValue() {
+            const activeButton = document.querySelector('.tab-link.active');
+            const sectionToHide = document.querySelector('.section-to-hide');
+
+            if (activeButton) {
+                const activeButtonValue = activeButton.textContent;
+
+                if (activeButtonValue === "Overview") {
+                    if (sectionToHide) {
+                        sectionToHide.style.display = 'none';
+                    }
+                } else {
+                    if (sectionToHide) {
+                        sectionToHide.style.display = 'block';
+                    }
+                }
+            }
+        }
+
+        // Run the function when the page is loaded
+        document.addEventListener('DOMContentLoaded', getActiveButtonValue);
+    </script>
+    <script>
+        $('.ddlPaymentClubList').change(function () {
+            var ClubId = document.getElementsByClassName("ddlPaymentClubList")[0].value;
+            $('#clubId').val(ClubId);
+            document.getElementById("PaymentLogForm").submit();
+        });
+    </script>
+}

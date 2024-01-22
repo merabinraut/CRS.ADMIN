@@ -1,0 +1,62 @@
+﻿@model CRS.ADMIN.APPLICATION.Models.PromotionManagement.PromotionManagementModel
+
+@{
+    ViewBag.Title = "AddPromotionalImage";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Styles.Render("~/UI/Style")
+
+<div class="card" style="zoom: 1;">
+
+    <div class="card-body" style="">
+        @using (Html.BeginForm("AddPromotionalImage", "PromotionManagement", new { }, FormMethod.Post, new { @role = "form", @id = "addNew", enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="row">
+                        @Html.NTextBoxFor(model => model.Title, new { @class = "form-control", autocomplete = "off", @maxlength = "50", @placeholder = "Enter title" }, 3)
+                    </div>
+                    @Html.NTextAreaFor(model => model.Description, new { @class = "form-control", autocomplete = "off", @maxlength = "75", @placeholder = "Enter description" }, 3)
+                </div>
+                <div class="col-md-3">
+                    @Html.LabelFor(model => model.ImagePath, "Promotional Image", new { @class = "label", autocomplete = "off" })
+                    <span class='text-danger'>*</span>
+                    <div>
+                        <img id="pro_view" height="150" width="150" style="border: none" />
+                    </div>
+                    <div class="mt-1">
+                        <input type="file" title="Promotional Image" id="PromoImage" style="overflow: hidden" name="PromoImage" accept="image/x-png,image/jpeg,image/jpg" onchange="showAreg(this)" class="imgValidate" />
+                        <p class="form-text text-primary">[ Max 2MB ]</p>
+                    </div>
+                    <p class="form-text text-primary">[Image must be in jpeg, jpg or png format]</p>
+                    @Html.ValidationMessageFor(model => model.ImagePath, null, new { @class = "form-text text-danger" })
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <button type="button" class="btn btn-primary btn-sm bg-primary" onclick="window.history.back();"><i class="fa fa-arrow-left mr-2"></i> Back </button>
+                    <button type="submit" class="btn btn-success btn-sm ml-2"><i class="far fa-save mr-2"></i> Save </button>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+@section scripts{
+    <script>
+        function showAreg(input) {
+
+            if (input.files && input.files[0]) {
+                var filerdr = new FileReader();
+                filerdr.onload = function (e) {
+                    $('#pro_view').attr('src', e.target.result);
+                    $("#PromoImage").val(e.target.result);
+
+                }
+                filerdr.readAsDataURL(input.files[0]);
+            }
+        }
+    </script>
+}

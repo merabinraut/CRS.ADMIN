@@ -1,0 +1,65 @@
+﻿@model CRS.ADMIN.APPLICATION.Models.CommissionManagement.ManageCommissionCategoryModel
+<!-- add Manage Category from -->
+<div id="add-new-commision"
+     class="drawer-close-disable  flex justify-end fixed top-0 right-0 z-40 h-screen overflow-y-auto transition-transform translate-x-full "
+     tabindex="-1" aria-labelledby="drawer-right-label">
+    <div class="bg-white w-[616px] drawer-container relative">
+        <div class="drawer-form-container sticky top-0 z-[5] ">
+            <div class="drawer-form flex justify-between bg-secondary-color-pink py-[16px] px-[24px] h-[56px]">
+                <div>
+                    @CRS.ADMIN.APPLICATION.Resources.Resource.Manage_Commission
+                </div>
+                <button type="button" data-drawer-hide="add-new-commision" aria-controls="add-new-commision"
+                        class="text-[20px]"
+                        onclick="handleCancelClick()">
+                    <i class="las la-window-close text-white"></i>
+                </button>
+            </div>
+        </div>
+        <div class="p-[24px]">
+            @using (Html.BeginForm("ManageCategory", "CommissionManagement", FormMethod.Post, new { @id = "ManageCommissionDetail" }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.HiddenFor(model => model.CategoryId)
+                <div class="pb-[16px] grid gap-4">
+                    <div class="input-field-common">
+                        <label class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Category_Name
+                        </label>
+
+                        @Html.TextBoxFor(model => model.CategoryName, new { @class = "w-full rounded-[4px]", @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.Category_Name, @style = "border-radius:4px !important", @onkeypress = "return isAlphabetNumSpace(event)", autocomplete = "off", @maxLength = "50" })
+                        <span class="error">
+                            @Html.ValidationMessageFor(model => model.CategoryName)
+                        </span>
+                    </div>
+
+                    <div class="input-field-common">
+                        <label class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Category_Description
+                        </label>
+
+                        @Html.TextBoxFor(model => model.Description, new { @class = "w-full rounded-[4px]", @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.Category_Description, @style = "border-radius:4px !important", @onkeypress = "return isAlphabetNumSpace(event)", autocomplete = "off", @maxLength = "50" })
+                        <span class="error">
+                            @Html.ValidationMessageFor(model => model.Description)
+                        </span>
+                    </div>
+
+                </div>
+                <div class="flex justify-end py-4">
+                    <div class="flex gap-6">
+                        <button class="resetForm btn btn-gray-white h-[40px] rounded-[4px] px-8 text-sm"
+                                data-drawer-hide="add-new-commision"
+                                onclick="handleCancelClick()">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Cancel
+                        </button>
+                        <button class="resetForm btn btn-primary-default h-[40px] px-8 rounded-[4px]  text-sm leading-[10px]"
+                                data-drawer-hide="add-new-commision" data-modal-target="add-new-host-modal-save"
+                                data-modal-toggle="add-new-host-modal-save" id="saveData">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Create
+                        </button>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>

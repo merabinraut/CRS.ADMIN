@@ -1,0 +1,102 @@
+﻿@model CRS.ADMIN.APPLICATION.Models.LocationManagement.LocationModel
+<div id="add-new-host-location"
+     class="drawer-close-disable  flex justify-end fixed top-0 right-0 z-40 h-screen overflow-y-auto transition-transform translate-x-full "
+     tabindex="-1" aria-labelledby="drawer-right-label">
+    <div class="bg-white w-[616px] drawer-container relative">
+        <div class="drawer-form-container sticky top-0 z-[5] ">
+            <div class="drawer-form flex justify-between bg-secondary-color-pink py-[16px] px-[24px] h-[56px]">
+                <div>
+                    @CRS.ADMIN.APPLICATION.Resources.Resource.Manage_Location
+                </div>
+                <button type="button" class="text-[20px]" id="CloseId">
+                    <i class="las la-window-close text-white"></i>
+                </button>
+            </div>
+        </div>
+        @using (Html.BeginForm("ManageLocation", "LocationManagement", FormMethod.Post, new { @id = "ManageLocationForm", enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+            if (!string.IsNullOrEmpty(Model.LocationId))
+            {
+                @Html.HiddenFor(model => model.LocationId)
+            }
+            if (!string.IsNullOrEmpty(Model.LocationImage))
+            {
+                @Html.HiddenFor(model => model.LocationImage)
+            }
+            <div class="p-[24px]">
+                <div class="pb-[16px] grid gap-4">
+                    <div class="input-field-common">
+                        <label class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Location_Title
+                        </label>
+                        @Html.TextBoxFor(model => model.LocationName, new { @class = "w-full rounded-[4px]", @placeholder = CRS.ADMIN.APPLICATION.Resources.Resource.Location_Title, @style = "border-radius:4px !important", @onkeypress = "return isAlphabetWithSpace(event)", autocomplete = "off", @maxLength = "50" })
+                        <span class="validationMessage">
+                            @Html.ValidationMessageFor(m => m.LocationName)
+                        </span>
+                    </div>
+                    <div>
+                        <label for="gallery" class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Gallery
+                        </label>
+                        <div class="file-upload-common bg-gray-gallery">
+                            <label for="file_input_logo" class="custom-file-upload w-[128px] flex-none text-ellipsis-customer">
+                                <span>
+                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Choose_Images
+                                </span>
+                            </label>
+                            <input id="file_input_logo" class="file-input" name="LocationImageFile" type="file" style="display:none;">
+                            <p id="file_name_logo"
+                               class="file-name w-max h-[23px] overflow-hidden pl-2 text-xs text-[#686868] leading-[25px]">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.No_File_Choosen
+                        </div>
+                        <div class="text-xs text-error mt-[8px]">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Note:
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Image_should_be_in_HEIF_format
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.and_Maximum_file_size_is_5_MB.
+                        </div>
+                    </div>
+                    <div class="input-field-common">
+                        <label class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Map_Link
+                        </label>
+                        @Html.TextAreaFor(model => model.LocationURL, new { @class = "w-full", @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.Map_Link, autocomplete = "off" })
+                        <span class="validationMessage">
+                            @Html.ValidationMessageFor(m => m.LocationURL)
+                        </span>
+
+                    </div>
+                    <div class="input-field-common">
+                        <label class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Latitude
+                        </label>
+                        @Html.TextBoxFor(model => model.Latitude, new { @class = "w-full rounded-[4px]", @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.Latitude, @style = "border-radius:4px !important", @onkeypress = "return isNumberWithDot(event)", autocomplete = "off", @maxLength = "30" })
+                        <span class="validationMessage">
+                            @Html.ValidationMessageFor(m => m.Latitude)
+                        </span>
+                    </div>
+                    <div class="input-field-common">
+                        <label class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Longitude
+                        </label>
+                        @Html.TextBoxFor(model => model.Longitude, new { @class = "w-full rounded-[4px]", @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.Longitude, @style = "border-radius:4px !important", @onkeypress = "return isNumberWithDot(event)", autocomplete = "off", @maxLength = "30" })
+                        <span class="validationMessage">
+                            @Html.ValidationMessageFor(m => m.Longitude)
+                        </span>
+                    </div>
+                </div>
+                <div class="flex justify-end py-4">
+                    <div class="flex gap-6">
+                        <button class="resetForm btn btn-gray-white h-[40px] rounded-[4px] px-8 text-sm" id="CancelId">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Cancel
+                        </button>
+
+                        <button class="resetForm btn btn-primary-default h-[40px] px-8 rounded-[4px]  text-sm leading-[10px]" id="saveData">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Submit
+                        </button>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

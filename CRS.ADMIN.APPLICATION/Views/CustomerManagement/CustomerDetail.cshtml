@@ -1,0 +1,73 @@
+﻿@model CRS.ADMIN.APPLICATION.Models.CustomerManagement.ManageCustomerModel
+@{
+    ViewBag.Title = "Customer Detail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@Styles.Render("~/UI/Style")
+
+<style>
+    .input-group {
+        display: block;
+    }
+</style>
+<div class="card">
+    <div class="card-body">
+        <div class="row">
+            @if (!string.IsNullOrEmpty(Model.NickName))
+            {
+                @Html.NLabelFor(model => model.NickName, new { @class = "form-control", autocomplete = "off" }, 4)
+            }
+            @if (!string.IsNullOrEmpty(Model.FirstName))
+            {
+                @Html.NLabelFor(model => model.FirstName, new { @class = "form-control", autocomplete = "off" }, 4)
+            }
+            @if (!string.IsNullOrEmpty(Model.LastName))
+            {
+                @Html.NLabelFor(model => model.LastName, new { @class = "form-control", autocomplete = "off" }, 4)
+            }
+            @if (!string.IsNullOrEmpty(Model.EmailAddress))
+            {
+                @Html.NLabelFor(model => model.EmailAddress, new { @class = "form-control", autocomplete = "off" }, 4)
+            }
+            @if (!string.IsNullOrEmpty(Model.MobileNumber))
+            {
+                @Html.NLabelFor(model => model.MobileNumber, new { @class = "form-control", autocomplete = "off" }, 4)
+            }
+            @if (!string.IsNullOrEmpty(Model.DOB))
+            {
+                @Html.NLabelFor(model => model.DOB, new { @class = "form-control", autocomplete = "off" }, 4)
+            }
+            @if (!string.IsNullOrEmpty(Model.Gender))
+            {
+                @Html.NLabelFor(model => model.Gender, new { @class = "form-control", autocomplete = "off" }, 4)
+            }
+            @if (!string.IsNullOrEmpty(Model.PreferredLocation))
+            {
+                @Html.NLabelFor(model => model.PreferredLocation, new { @class = "form-control", autocomplete = "off" }, 4)
+            }
+            @if (!string.IsNullOrEmpty(Model.PostalCode))
+            {
+                @Html.NLabelFor(model => model.PostalCode, new { @class = "form-control", autocomplete = "off" }, 4)
+            }
+            @if (!string.IsNullOrEmpty(Model.Prefecture))
+            {
+                @Html.NLabelFor(model => model.Prefecture, new { @class = "form-control", autocomplete = "off" }, 4)
+            }
+            @if (!string.IsNullOrEmpty(Model.City))
+            {
+                @Html.NLabelFor(model => model.City, new { @class = "form-control", autocomplete = "off" }, 4)
+            }
+            @if (!string.IsNullOrEmpty(Model.Street))
+            {
+                @Html.NLabelFor(model => model.Street, new { @class = "form-control", autocomplete = "off" }, 4)
+            }
+            @if (!string.IsNullOrEmpty(Model.ResidenceNumber))
+            {
+                @Html.NLabelFor(model => model.ResidenceNumber, new { @class = "form-control", autocomplete = "off" }, 4)
+            }
+        </div>
+        <div class="row">
+            <button type="button" class="btn btn-light btn-sm bg-primary" onclick="window.history.back();"><i class="fa fa-arrow-left"></i> Back</button>
+        </div>
+    </div>
+</div>

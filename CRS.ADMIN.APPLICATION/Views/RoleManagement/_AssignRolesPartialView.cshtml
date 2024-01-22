@@ -1,0 +1,87 @@
+﻿@model CRS.ADMIN.APPLICATION.Models.RoleManagement.ManageAgentRoleModel
+@using (Html.BeginForm("AssignRole", "RoleManagement", new { }, FormMethod.Post, new { @id = "AssignRole" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="border border-[#D0D5DD] rounded-[5px] p-[20px]">
+        <div class="mb-4 text-[#3E3E3E] text-sm font-semibold">
+            @CRS.ADMIN.APPLICATION.Resources.Resource.Assign_Roles
+        </div>
+        <div class=" grid gap-[24px] grid-cols-3">
+
+            <div class="input-field-common">
+                <label for="" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                    @CRS.ADMIN.APPLICATION.Resources.Resource.User_Type
+                </label>
+                <select id="default_select4" style="width: 100%;" class="text-[#B7B7B7] h-[44px] UserTypeDDL" name="UserTypeDDL">
+                    @foreach (var item in ViewBag.UserTypeDDL as IEnumerable<SelectListItem>)
+                    {
+                        if (item.Value == Model.AgentType)
+                        {
+                            <option value="@item.Value" selected>@item.Text</option>
+                        }
+                        else
+                        {
+                            <option value="@item.Value">@item.Text</option>
+                        }
+                    }
+                </select>
+            </div>
+
+            <div class="input-field-common">
+                <label for="" class="block mb-[12px] text-sm font-medium text-secondary-100">
+                    @CRS.ADMIN.APPLICATION.Resources.Resource.User_Name
+                </label>
+                <select id="default_select4" style="width: 100%;" class="text-[#B7B7B7] h-[44px] disabled-select UserListViaTypeDDL" name="UserListViaTypeDDL" disabled>
+                    @foreach (var item in ViewBag.UserListViaTypeDDL as IEnumerable<SelectListItem>)
+                    {
+                        if (item.Value == Model.AgentId)
+                        {
+                            <option value="@item.Value" selected>@item.Text</option>
+                        }
+                        else
+                        {
+                            <option value="@item.Value">@item.Text</option>
+                        }
+                    }
+                </select>
+            </div>
+            <div class="input-field-common">
+                @Html.NTextBoxFor(model => model.CurrentRole, new { @class = "form-control mt-[8px]", @style = "height:40px;", @id = "CurrentRole", autocomplete = "off", @placeholder = CRS.ADMIN.APPLICATION.Resources.Resource.Current_Role }, disable: true)
+            </div>
+            <div class="input-field-common">
+                <label for="" class="block mb-[12px] text-sm font-medium text-secondary-100">
+                    @CRS.ADMIN.APPLICATION.Resources.Resource.New_Role
+                </label>
+                <select id="default_select4" style="width: 100%;" class="text-[#B7B7B7] h-[44px] RoleDDL" name="RoleDDL">
+                    @foreach (var item in ViewBag.RoleDDL as IEnumerable<SelectListItem>)
+                    {
+                        if (item.Value == Model.RoleId)
+                        {
+                            <option value="@item.Value" selected>@item.Text</option>
+                        }
+                        else
+                        {
+                            <option value="@item.Value">@item.Text</option>
+                        }
+                    }
+                </select>
+            </div>
+        </div>
+        <div class="mt-4">
+            <button class="btn btn-primary rounded-[4px] px-5" id="AssignRoleSubmitBtn">
+                @CRS.ADMIN.APPLICATION.Resources.Resource.Save
+            </button>
+        </div>
+    </div>
+}
+
+<script>
+    $(document).ready(function () {
+        $('.js-example-basic-multiple').select2();
+    });
+    $(document).ready(function () {
+        $('select').select2({
+            minimumResultsForSearch: Infinity
+        });
+    });
+</script>

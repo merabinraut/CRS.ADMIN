@@ -1,0 +1,275 @@
+﻿@model CRS.ADMIN.APPLICATION.Models.UserProfileModel
+@{
+    ViewBag.Title = "Admin User Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .field-validation-error {
+        color: #dc3545;
+    }
+
+    .validationMessage {
+        position: absolute;
+        bottom: -23px;
+        left: 5px;
+        font-size: 12px;
+    }
+</style>
+
+@section BreadCum{
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>@ViewBag.Title</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="~/Home">Home</a></li>
+                        <li class="breadcrumb-item active">@ViewBag.Title</li>
+                    </ol>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+}
+<div class="card">
+    <div class="card-header p-2">
+        <ul class="nav nav-pills">
+            <li class="nav-item"><a class="nav-link active" href="#activity" data-toggle="tab">Profile</a></li>
+            <li class="nav-item"><a class="nav-link" href="#timeline" data-toggle="tab">Change Password</a></li>
+        </ul>
+    </div><!-- /.card-header -->
+    <div class="card-body">
+        <div class="tab-content">
+            <div class="active tab-pane" id="activity">
+                @Html.Partial("_UserProfile")
+            </div>
+            <!-- /.tab-pane -->
+            <div class="tab-pane" id="timeline">
+                @Html.Partial("_ChangePassword")
+            </div>
+            <!-- /.tab-pane -->
+            <!-- /.tab-pane -->
+        </div>
+        <!-- /.tab-content -->
+    </div><!-- /.card-body -->
+</div>
+
+<div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="confirmModalLabel"> Are you sure you want make this your profile image? </h5>
+            </div>
+            <div class="modal-body">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" id="closeModal">Cancel</button>
+                <button type="button" class="btn btn-light btn-group-lg bg-primary ml-3" id="confirmBUtton"><i class="fa fas fa-save"></i> Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts{
+    <script>
+        //Admin logo and profile update section
+        var file = document.getElementById('imgupload');
+        var formData = null;
+        var UnchangedName = ""; //using this variable to store name before changing
+        $('#OpenImgUpload').click(function () {
+            $('#imgupload').trigger('click');
+        });
+
+        function uploadImg(input) {
+
+            if (input.files && input.files[0]) {
+                var validExtensions = ['jpg', 'png', 'jpeg']; //array of valid extensions
+                var fileName = input.files[0].name;
+                var fileNameExt = fileName.substr(fileName.lastIndexOf('.') + 1);
+                var size = input.files[0].size;
+                var imgSizeInMB = size / (1000000);
+
+                //checking for image file extension 
+                if ($.inArray(fileNameExt, validExtensions) == -1) {
+                    $('.modal-body').empty();
+                    $('.modal-body').prepend('Image must be in jpeg, jpg or png format');
+                    $("#confirmModalLabel").html("<span class='text-danger'>Invalid image</span");
+                    $("#closeModal").html('Close');
+                    $("#confirmBUtton").hide();
+                    $("#confirmModal").modal('show');
+                   
+                }
+                //checking if image size in greater than 2MB 
+                else if (imgSizeInMB > 2) {
+                    $('.modal-body').empty();
+                    /*$('.modal-body').prepend("<span class='text-danger'> Image size must be maximum of 2MB </span>");*/
+                    $('.modal-body').prepend('Image size must be maximum of 2MB');
+                    $("#confirmModalLabel").html("<span class='text-danger'> Invalid image </span>");
+                    /*$("#confirmModalLabel").html('Invalid image');*/
+                    $("#closeModal").html('Close');
+                    $("#confirmBUtton").hide();
+                    $("#confirmModal").modal('show');
+
+                }
+                else {
+
+                    formData = new FormData();
+                    formData.append('file', input.files[0])
+                    var tmppath = URL.createObjectURL(input.files[0]);
+                    $('.modal-body').empty();
+                    $("#confirmModalLabel").html('Are you sure you want make this picture your profile image?');
+                    $('.modal-body').prepend("<img src='" + tmppath + "'  style='height: 350px;width: 300px;margin-left:19%;' class='modal-content'/>");
+                    $("#closeModal").html('Cancel');
+                    $("#confirmBUtton").show();
+                    $("#confirmModal").modal('show');
+                    $('#imgupload').val('');
+                }
+            }
+        }
+
+        $("#showModal").click(function () {
+            $("#confirmModal").modal({
+                backdrop: 'static',
+                keyboard: false
+            });
+        });
+
+        $('#confirmBUtton').click(function () {
+            $.ajax({
+                type: 'POST',
+                async: false,
+                url: '/Home/UploadImage',
+                dataType: 'json',
+                contentType: false,
+                processData: false,
+                data: formData,
+                success: function (result) {
+                    if (result.Code == 0) {
+                        window.location.href = window.location.href;
+                    }
+                },
+                error: function (ex) {
+                    window.location.href = window.location.href;
+                }
+            });
+        });
+
+        $('#closeModal').click(function () {
+            formData = null;
+            $('#imgupload').val('');
+            $('.modal-body').empty();
+        });
+
+
+        $(document).ready(function () {
+            $('#edsave').hide();
+            $('#edcancel').hide();
+        });
+
+        $('#editsp').on('click', function (e) {
+            var d = $(this);
+            var e = d.closest('.editrow').find('#user');
+            if (e[0].disabled == true) {
+                UnchangedName = $('#user').val();
+                e.prop('disabled', false);
+                $('#edsave').show();
+                $('#edcancel').show();
+                $('#editsp').hide();
+            }
+        });
+
+        $('#edcancel').on('click', function (e) {
+            $('span[data-valmsg-for="FullName"]').addClass("field-validation-error text-danger").html("");
+            var d = $(this);
+            var e = d.closest('.editrow').find('#user');
+            if (e[0].disabled == false) {
+                e.prop('disabled', true);
+            }
+            $('#user').val(UnchangedName);
+            $('#editsp').show();
+            $('#edsave').hide();
+            $('#edcancel').hide();
+        });
+
+        $('#user').on('keyup', function () {
+            var name = $('#user').val();
+            /*var regex = /^[A-Z][a-z]*(\s[A-Za-z]+)+$/;*/
+            var regex = /^[A-Za-z]+(\s\({0,1}[A-Za-z]+\.{0,1}[A-Za-z]*\.{0,1}\){0,1})+$/;
+            var valid = regex.test(name);
+            if (valid) {
+                $('[data-valmsg-for="FullName"]').html('');
+            }
+            else {
+                $('[data-valmsg-for="FullName"]').html('Invalid full name');
+            }
+        });
+
+        $('#edsave').on('click', function (e) {
+            var name = $('#user').val();
+            /*var regex = /^[A-Z][a-z]*(\s[A-Za-z]+)+$/;*/
+            var regex = /^[A-Za-z]+(\s\({0,1}[A-Za-z]+\.{0,1}[A-Za-z]*\.{0,1}\){0,1})+$/;
+            var valid = regex.test(name);
+            if (valid) {
+                jsonData = "{" +
+                    "__RequestVerificationToken: '" +
+                    $('input[name="__RequestVerificationToken"]').val() +
+                    "'," +
+                    "FullName:'" +
+                    name +
+                    "'}";
+                var funcText = "CallAjaxDbResponse(" +
+                    jsonData +
+                    ",'/Home/UpdateUserName','POST',true,'')";
+                showConfirmationModal("Are you sure you want to update the name?", funcText);
+            }
+            else {
+                $('[data-valmsg-for="FullName"]').html('Invalid full name');
+            }
+        });
+
+        // toggle passwords
+        function toggleOldPassword() {
+            var input = document.getElementById("OldPassword");
+            var eyecon = document.getElementById("passEye1");
+            if (input.type === "password") {
+                input.type = "text";
+                eyecon.classList.remove("fa-eye")
+                eyecon.classList.add("fa-eye-slash")
+
+            } else {
+                input.type = "password";
+                eyecon.classList.remove("fa-eye-slash")
+                eyecon.classList.add("fa-eye")
+            }
+        }
+        function toggleNewPassword() {
+            var input = document.getElementById("NewPassword");
+            var eyecon = document.getElementById("passEye2");
+            if (input.type === "password") {
+                input.type = "text";
+                eyecon.classList.remove("fa-eye")
+                eyecon.classList.add("fa-eye-slash")
+
+            } else {
+                input.type = "password";
+                eyecon.classList.remove("fa-eye-slash")
+                eyecon.classList.add("fa-eye")
+            }
+        }
+        function toggleConfirmPassword() {
+            var input = document.getElementById("ConfirmPassword");
+            var eyecon = document.getElementById("passEye3");
+            if (input.type === "password") {
+                input.type = "text";
+                eyecon.classList.remove("fa-eye")
+                eyecon.classList.add("fa-eye-slash")
+
+            } else {
+                input.type = "password";
+                eyecon.classList.remove("fa-eye-slash")
+                eyecon.classList.add("fa-eye")
+            }
+        }
+    </script>
+}

@@ -1,0 +1,13 @@
+USE [CRS]
+GO
+
+CREATE TABLE [dbo].[tbl_roles]
+(
+	Id BIGINT PRIMARY KEY NOT NULL IDENTITY(1,2),
+	RoleType VARCHAR(20) NULL,
+	RoleName VARCHAR(50) NULL,
+	RoleDescription VARCHAR(512) NULL,
+	Status CHAR(1) NULL,
+	ActionDate DATETIME NULL,
+	ActionUser VARCHAR(200) NULL
+)

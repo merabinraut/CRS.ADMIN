@@ -1,0 +1,239 @@
+﻿@model CRS.ADMIN.APPLICATION.Models.LocationManagement.LocationManagementModel
+@{
+    ViewBag.Title = "Location Management";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var _LocationModel = Model.LocationModel as CRS.ADMIN.APPLICATION.Models.LocationManagement.LocationModel;
+}
+
+<script src="~/Content/js/NotificationMessageToaster.js"></script>
+<style>
+    .file-upload-common.bg-gray-gallery {
+        background: #F5F5F5;
+    }
+</style>
+<div class="px-8 py-4">
+    <div>
+        <div class="heading-title">
+            @CRS.ADMIN.APPLICATION.Resources.Resource.Location_Management
+        </div>
+        <div class="span-title-light-gray">
+            @CRS.ADMIN.APPLICATION.Resources.Resource.Manage_Location
+        </div>
+    </div>
+
+    <!-- container  -->
+    <div class="flex justify-between pt-[24px] pb-[24px]">
+        @*<form action="/LocationManagement/LocationList" method="get">
+                <div class="relative input-search-wrapper">
+                    <div class="absolute inset-y-0 left-0 flex items-center pl-[16px] pointer-events-none">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21" fill="none">
+                            <path d="M17.5 18L13.875 14.375M15.8333 9.66667C15.8333 13.3486 12.8486 16.3333 9.16667 16.3333C5.48477 16.3333 2.5 13.3486 2.5 9.66667C2.5 5.98477 5.48477 3 9.16667 3C12.8486 3 15.8333 5.98477 15.8333 9.66667Z"
+                                  stroke="#667085" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round">
+                            </path>
+                        </svg>
+                    </div>
+                    <input type="search" , name="SearchFilter"
+                           class="input-search block w-full "
+                           placeholder="@CRS.ADMIN.APPLICATION.Resources.Resource.Search" value="@Model.SearchFilter">
+                </div>
+            </form>*@
+        @*<div class="btn btn-primary gap-[8px] h-[40px]" data-drawer-target="add-new-host-location"
+                 data-drawer-show="add-new-host-location" data-drawer-placement="right" data-drawer-backdrop="false"
+                 aria-controls="drawer-disabled-backdrop">
+                <img src="~/Content/assets_new/images/plus-circle-solid.svg">
+                @CRS.ADMIN.APPLICATION.Resources.Resource.Add_New
+            </div>*@
+    </div>
+    <div class="table-tab mt-8">
+        <div class="px-[16px] py-[12px] flex justify-between entry-export-container">
+            <div class="flex items-center select-entries">
+                @*<div class="flex-none">@CRS.ADMIN.APPLICATION.Resources.Resource.Show&nbsp;</div>
+                    <select id="countries" class="w-full select-entires " style="width: 100%; ">
+                        <option value="5" selected>5</option>
+                        <option value="10">10</option>
+                        <option value="15">15</option>
+                        <option value="20">100</option>
+                    </select>&nbsp;
+                    <div class="flex-none">@CRS.ADMIN.APPLICATION.Resources.Resource.Entries</div>*@
+            </div>
+            <div class="export-button" onclick="exportExcel('table-id', 'Location');">
+                <img src="~/Content/assets_new/images/club/download-solid.svg">@CRS.ADMIN.APPLICATION.Resources.Resource.Export
+            </div>
+        </div>
+
+        <div class="relative overflow-x-auto">
+            <table class="w-full  text-left club-table" id="table-id">
+                <thead class="club-table-thead">
+                    <tr>
+                        <th scope="col" class="p-[12px]">
+                            <div class="flex">
+                                S.N
+                                <div class="relative pl-[5px]">
+                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                </div>
+                            </div>
+                        </th>
+                        <th scope="col" class="p-[12px]">
+                            <div class="flex">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Location_Title
+                                <div class="relative pl-[5px]">
+                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                </div>
+                            </div>
+                        </th>
+                        <!--<th scope="col" class="p-[12px]">
+                            <div class="flex">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Image
+                                <div class="relative pl-[5px]">
+                                    <svg class="svg-inline--fa fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="chevron-up" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M233.4 105.4c12.5-12.5 32.8-12.5 45.3 0l192 192c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L256 173.3 86.6 342.6c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3l192-192z"></path></svg>-->
+                        <!-- <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i> Font Awesome fontawesome.com -->
+                        <!--<svg class="svg-inline--fa fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="chevron-down" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"></path></svg>--><!-- <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i> Font Awesome fontawesome.com -->
+                        <!--</div>
+                            </div>
+                        </th>-->
+                        <th scope="col" class="p-[12px]">
+                            <div class="flex">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Total_Clubs
+                                <div class="relative pl-[5px]">
+                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                </div>
+                            </div>
+                        </th>
+                        <th scope="col" class="p-[12px]">
+                            <div class="flex justify-center">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Action
+                                <div class="relative pl-[5px]">
+                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                </div>
+                            </div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        int i = 1;
+                        foreach (var item in Model.LocationListModel)
+                        {
+                            <tr class="bg-white border-b ">
+                                <td class="p-[12px]">
+                                    @i
+                                </td>
+                                <td class="p-[12px]">
+                                    <div class="round-image-text gap-[12px]">
+                                        @item.LocationName
+                                    </div>
+                                </td>
+                                @*<td class="p-[12px]">
+                                        @if (!string.IsNullOrEmpty(item.LocationImage))
+                                        {
+                                            <img class="table-image h-[36px] w-[88px]" src="@item.LocationImage">
+                                        }
+                                        else
+                                        {
+                                            <img class="table-image h-[36px] w-[88px]" src="~/Content/assets_new/images/demo-image.jpeg">
+                                        }
+                                    </td>*@
+                                <td class="p-[12px]">
+                                    @item.TotalClubs
+                                </td>
+
+                                <td class="p-[12px]">
+                                    <div class="flex gap-[7px] justify-center text-[16px] ">
+                                        @if (!string.IsNullOrEmpty(item.LocationStatus) && item.LocationStatus.ToLower() == "a")
+                                        {
+                                            <div onclick="ManageLocation('@item.LocationId');">
+                                                <svg class="svg-inline--fa fa-pen-to-square text-[#989898] cursor-pointer"
+                                                     aria-hidden="true" focusable="false" data-prefix="far" data-icon="pen-to-square"
+                                                     role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
+                                                     data-fa-i2svg="">
+                                                    <path fill="currentColor"
+                                                          d="M441 58.9L453.1 71c9.4 9.4 9.4 24.6 0 33.9L424 134.1 377.9 88 407 58.9c9.4-9.4 24.6-9.4 33.9 0zM209.8 256.2L344 121.9 390.1 168 255.8 302.2c-2.9 2.9-6.5 5-10.4 6.1l-58.5 16.7 16.7-58.5c1.1-3.9 3.2-7.5 6.1-10.4zM373.1 25L175.8 222.2c-8.7 8.7-15 19.4-18.3 31.1l-28.6 100c-2.4 8.4-.1 17.4 6.1 23.6s15.2 8.5 23.6 6.1l100-28.6c11.8-3.4 22.5-9.7 31.1-18.3L487 138.9c28.1-28.1 28.1-73.7 0-101.8L474.9 25C446.8-3.1 401.2-3.1 373.1 25zM88 64C39.4 64 0 103.4 0 152V424c0 48.6 39.4 88 88 88H360c48.6 0 88-39.4 88-88V312c0-13.3-10.7-24-24-24s-24 10.7-24 24V424c0 22.1-17.9 40-40 40H88c-22.1 0-40-17.9-40-40V152c0-22.1 17.9-40 40-40H200c13.3 0 24-10.7 24-24s-10.7-24-24-24H88z">
+                                                    </path>
+                                                </svg>
+                                            </div>
+                                            <div onclick="ManageStatus('@item.LocationId')">
+                                                <i class="fa-solid fa-lock"></i>
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div onclick="ManageStatus('@item.LocationId')">
+                                                <i class="fa-solid fa-unlock"></i>
+                                            </div>
+                                        }
+                                    </div>
+                                </td>
+                            </tr>
+                            i++;
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+        @*<div class="pagination-club">
+                <div class="show-entry">@CRS.ADMIN.APPLICATION.Resources.Resource.Showing 1 to 5 of 5 @CRS.ADMIN.APPLICATION.Resources.Resource.Entries</div>
+            </div>*@
+    </div>
+</div>
+<!--Manage Location-->
+@Html.Partial("_ManageLocation", _LocationModel)
+<!--Manage Location-->
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+            var PopUpRenderValue = '@ViewBag.PopUpRenderValue';
+            if (PopUpRenderValue != null && PopUpRenderValue != "" && PopUpRenderValue == "ManageLocation") {
+                var element = document.getElementById('add-new-host-location');
+                element.classList.remove('translate-x-full');
+            }
+        });
+
+        function ManageLocation(i) {
+            window.location.href = '/LocationManagement/ManageLocation?LocationId=' + i;
+        }
+
+        function ManageStatus(i) {
+             var RequestVerificationToken = $('input[name="__RequestVerificationToken"]').val();
+             $.ajax({
+                  type: "POST",
+                  url: '@Url.Action("EnableDisableLocation", "LocationManagement")',
+                  data: {
+                      '__RequestVerificationToken': RequestVerificationToken, 'Id': i},
+                 success: function (response) {
+                     window.location.reload();
+                  },
+                 error: function (error) {
+                     window.location.reload();
+                  }
+              })
+        }
+
+
+        document.getElementById('CloseId').addEventListener('click',
+            function (event) {
+                event.preventDefault();
+                window.location.reload();
+            });
+        document.getElementById('CancelId').addEventListener('click',
+            function (event) {
+                event.preventDefault();
+                window.location.reload();
+            });
+        //function exportCSVExcel() {
+        //    const currentDateTimeString = new Date().toISOString().replace('T', ' ').replace(/\.\d{3}Z$/, '');
+        //    $('#table-id').table2excel({
+        //        exclude: ".no-export",
+        //        filename: currentDateTimeString+"_hoslog.xls",
+        //        fileext: ".xls",
+        //        exclude_img: false,
+        //        exclude_links: true,
+        //        exclude_inputs: true
+        //    });
+        //}
+    </script>
+}

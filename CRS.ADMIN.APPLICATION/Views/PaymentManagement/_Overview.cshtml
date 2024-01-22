@@ -1,0 +1,81 @@
+﻿<div class="overall-payment mt-8">
+    <div class="payment-details flex gap-[45px]">
+        <div class="payment-details-card w-[268px]">
+            <div class="title flex gap-[8px] mb-[12px] items-center">
+                <div class="logo h-[32px] w-[32px] flex justify-center
+                    items-center rounded-full bg-[#C4F7C6]">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="23" height="22" viewBox="0 0 23 22" fill="none">
+                        <path d="M2.22266 5V16.3333H20.8893V5H2.22266ZM4.88932 6.33333H18.2227C18.2227 7.07 18.8193 7.66667 19.556 7.66667V13.6667C18.8193 13.6667 18.2227 14.2633 18.2227 15H4.88932C4.88932 14.2633 4.29266 13.6667 3.55599 13.6667V7.66667C4.29266 7.66667 4.88932 7.07 4.88932 6.33333ZM11.556 7.66667C10.082 7.66667 8.88932 9.01067 8.88932 10.6667C8.88932 12.3227 10.082 13.6667 11.556 13.6667C13.03 13.6667 14.2227 12.3227 14.2227 10.6667C14.2227 9.01067 13.03 7.66667 11.556 7.66667ZM11.556 9C12.2907 9 12.8893 9.74733 12.8893 10.6667C12.8893 11.586 12.2907 12.3333 11.556 12.3333C10.8213 12.3333 10.2227 11.586 10.2227 10.6667C10.2227 9.74733 10.8213 9 11.556 9ZM6.55599 9.66667C6.00399 9.66667 5.55599 10.1147 5.55599 10.6667C5.55599 11.2187 6.00399 11.6667 6.55599 11.6667C7.10799 11.6667 7.55599 11.2187 7.55599 10.6667C7.55599 10.1147 7.10799 9.66667 6.55599 9.66667ZM16.556 9.66667C16.004 9.66667 15.556 10.1147 15.556 10.6667C15.556 11.2187 16.004 11.6667 16.556 11.6667C17.108 11.6667 17.556 11.2187 17.556 10.6667C17.556 10.1147 17.108 9.66667 16.556 9.66667Z"
+                              fill="#28A745" />
+                    </svg>
+                </div>
+                <div class="text-lg font-semibold">
+                    @CRS.ADMIN.APPLICATION.Resources.Resource.Received_Payments
+                </div>
+            </div>
+            <div class="text-2xl font-semibold mb-[30px]">
+                ¥@Model.ReceivedPayments
+            </div>
+
+            @*<hr class="bg-[#F4F4F4] mb-[12px]" />
+
+                <div class="text-center text-xs cursor-pointer text-[#1C2434]">
+                    @CRS.ADMIN.APPLICATION.Resources.Resource.View_All
+                    <i class="las la-angle-right"></i>
+                </div>*@
+        </div>
+        <div class="payment-details-card w-[268px] flex justify-between flex-col ">
+            <div>
+                <div class="title flex gap-[8px] mb-[12px] items-center">
+                    <div class="logo h-[32px] w-[32px] flex justify-center
+                    items-center rounded-full bg-[#FEE5CD ]">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="23" height="22" viewBox="0 0 23 22" fill="none">
+                            <path d="M2.22266 5V16.3333H20.8893V5H2.22266ZM4.88932 6.33333H18.2227C18.2227 7.07 18.8193 7.66667 19.556 7.66667V13.6667C18.8193 13.6667 18.2227 14.2633 18.2227 15H4.88932C4.88932 14.2633 4.29266 13.6667 3.55599 13.6667V7.66667C4.29266 7.66667 4.88932 7.07 4.88932 6.33333ZM11.556 7.66667C10.082 7.66667 8.88932 9.01067 8.88932 10.6667C8.88932 12.3227 10.082 13.6667 11.556 13.6667C13.03 13.6667 14.2227 12.3227 14.2227 10.6667C14.2227 9.01067 13.03 7.66667 11.556 7.66667ZM11.556 9C12.2907 9 12.8893 9.74733 12.8893 10.6667C12.8893 11.586 12.2907 12.3333 11.556 12.3333C10.8213 12.3333 10.2227 11.586 10.2227 10.6667C10.2227 9.74733 10.8213 9 11.556 9ZM6.55599 9.66667C6.00399 9.66667 5.55599 10.1147 5.55599 10.6667C5.55599 11.2187 6.00399 11.6667 6.55599 11.6667C7.10799 11.6667 7.55599 11.2187 7.55599 10.6667C7.55599 10.1147 7.10799 9.66667 6.55599 9.66667ZM16.556 9.66667C16.004 9.66667 15.556 10.1147 15.556 10.6667C15.556 11.2187 16.004 11.6667 16.556 11.6667C17.108 11.6667 17.556 11.2187 17.556 10.6667C17.556 10.1147 17.108 9.66667 16.556 9.66667Z"
+                                  fill="#F89336" />
+                        </svg>
+                    </div>
+                    <div class="text-lg font-semibold">
+                        @CRS.ADMIN.APPLICATION.Resources.Resource.Due_Payments
+                    </div>
+                </div>
+                <div class="text-2xl font-semibold mb-[30px]">
+                    ¥@Model.DuePayments
+                </div>
+            </div>
+            <div>
+                @*<hr class="bg-[#F4F4F4] mb-[12px]" />
+
+                    <div class="text-center text-xs cursor-pointer text-[#1C2434]">
+                        @CRS.ADMIN.APPLICATION.Resources.Resource.View_All <i class="las la-angle-right"></i>
+                    </div>*@
+            </div>
+        </div>
+        <div class="payment-details-card w-[268px] flex justify-between flex-col ">
+            <div>
+                <div class="title flex gap-[8px] mb-[12px] items-center">
+                    <div class="logo h-[32px] w-[32px] flex justify-center
+                    items-center rounded-full bg-[#FFCACA ]">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="23" height="22" viewBox="0 0 23 22" fill="none">
+                            <path d="M2.22266 5V16.3333H20.8893V5H2.22266ZM4.88932 6.33333H18.2227C18.2227 7.07 18.8193 7.66667 19.556 7.66667V13.6667C18.8193 13.6667 18.2227 14.2633 18.2227 15H4.88932C4.88932 14.2633 4.29266 13.6667 3.55599 13.6667V7.66667C4.29266 7.66667 4.88932 7.07 4.88932 6.33333ZM11.556 7.66667C10.082 7.66667 8.88932 9.01067 8.88932 10.6667C8.88932 12.3227 10.082 13.6667 11.556 13.6667C13.03 13.6667 14.2227 12.3227 14.2227 10.6667C14.2227 9.01067 13.03 7.66667 11.556 7.66667ZM11.556 9C12.2907 9 12.8893 9.74733 12.8893 10.6667C12.8893 11.586 12.2907 12.3333 11.556 12.3333C10.8213 12.3333 10.2227 11.586 10.2227 10.6667C10.2227 9.74733 10.8213 9 11.556 9ZM6.55599 9.66667C6.00399 9.66667 5.55599 10.1147 5.55599 10.6667C5.55599 11.2187 6.00399 11.6667 6.55599 11.6667C7.10799 11.6667 7.55599 11.2187 7.55599 10.6667C7.55599 10.1147 7.10799 9.66667 6.55599 9.66667ZM16.556 9.66667C16.004 9.66667 15.556 10.1147 15.556 10.6667C15.556 11.2187 16.004 11.6667 16.556 11.6667C17.108 11.6667 17.556 11.2187 17.556 10.6667C17.556 10.1147 17.108 9.66667 16.556 9.66667Z"
+                                  fill="#CB3F3F" />
+                        </svg>
+                    </div>
+                    <div class="text-lg font-semibold">
+                        @CRS.ADMIN.APPLICATION.Resources.Resource.Affiliate_Payments
+                    </div>
+                </div>
+                <div class="text-2xl font-semibold mb-[30px]">
+                    ¥ @Model.AffiliatePayments
+                </div>
+            </div>
+            <div>
+                @*<hr class="bg-[#F4F4F4] mb-[12px]" />
+
+                    <div class="text-center text-xs cursor-pointer text-[#1C2434]">
+                        @CRS.ADMIN.APPLICATION.Resources.Resource.View_All <i class="las la-angle-right"></i>
+                    </div>*@
+            </div>
+        </div>
+
+    </div>
+</div>

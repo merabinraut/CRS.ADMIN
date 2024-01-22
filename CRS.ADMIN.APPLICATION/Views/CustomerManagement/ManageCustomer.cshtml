@@ -1,0 +1,87 @@
+﻿@model CRS.ADMIN.APPLICATION.Models.CustomerManagement.ManageCustomerModel
+@{
+    ViewBag.Title = "Customer Management";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Styles.Render("~/UI/Style")
+<div class="card">
+    <div class="card-header header-elements-inline">
+        <h6 class="card-title">
+            <b style="color:red">*</b><b> Note: Please fill out all the field stating *(Mandatory) </b>
+        </h6>
+    </div>
+    <div class="card-body">
+        @using (Html.BeginForm("ManageCustomer", "CustomerManagement", FormMethod.Post, new { @id = "ManageCustomerForm", enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true)
+            @Html.HiddenFor(model => model.AgentId)
+            if (!string.IsNullOrEmpty(Model.AgentId))
+            {
+                @Html.HiddenFor(model => model.EmailAddress)
+                @Html.HiddenFor(model => model.MobileNumber)
+            }
+            <div class="row">
+                @Html.NTextBoxFor(model => model.NickName, new { @class = "form-control names_capitalize", @onkeypress = "return isAlphabateOnly(event)", autocomplete = "off", @maxlength = 50, @placeholder = "Enter nick name" }, 3)
+                @Html.NTextBoxFor(model => model.FirstName, new { @class = "form-control names_capitalize", @onkeypress = "return isAlphabateOnly(event)", autocomplete = "off", @maxlength = 50, @placeholder = "Enter first name" }, 3)
+                @Html.NTextBoxFor(model => model.LastName, new { @class = "form-control names_capitalize", @onkeypress = "return isAlphabateOnly(event)", autocomplete = "off", @maxlength = 50, @placeholder = "Enter last name" }, 3)
+                @Html.NTextBoxFor(model => model.Gender, new { @class = "form-control names_capitalize", @onkeypress = "return isAlphabateOnly(event)", autocomplete = "off", @maxlength = 50, @placeholder = "Enter gender" }, 3)
+            </div>
+            <div class="row">
+                @Html.NTextBoxFor(model => model.DOB, new { @class = "form-control names_capitalize", @onkeypress = "return isAlphabateOnly(event)", autocomplete = "off", @maxlength = 10, @placeholder = "Enter date of birth" }, 3)
+                @if (!string.IsNullOrEmpty(Model.AgentId))
+                {
+                    @Html.NTextBoxFor(model => model.EmailAddress, new { @class = "form-control", autocomplete = "off", @placeholder = "Enter email address", @readonly = "readonly", @disabled = "disabled" }, 3)
+                    @Html.NTextBoxFor(model => model.MobileNumber, new { @class = "form-control", autocomplete = "off", @placeholder = "Enter contact number", @disabled = "disabled", @readonly = "readonly" }, 3)
+                }
+                else
+                {
+                    @Html.NTextBoxFor(model => model.EmailAddress, new { @class = "form-control", autocomplete = "off", @maxlength = 50, @placeholder = "Enter email address" }, 3)
+                    @Html.NTextBoxFor(model => model.MobileNumber, new { @class = "form-control", @onkeypress = "return isNumber(event)", autocomplete = "off", @maxlength = 11, @placeholder = "Enter contact number" }, 3)
+                }
+            </div>
+            <div class="row">
+                @Html.NTextBoxFor(model => model.PreferredLocation, new { @class = "form-control names_capitalize", @onkeypress = "return isAlphabateOnly(event)", autocomplete = "off", @maxlength = 100, @placeholder = "Enter preferred location" }, 3)
+                @Html.NTextBoxFor(model => model.PostalCode, new { @class = "form-control", @onkeypress = "return isNumber(event)", autocomplete = "off", @maxlength = 50, @placeholder = "Enter postal code" }, 3)
+                @Html.NTextBoxFor(model => model.Prefecture, new { @class = "form-control names_capitalize", @onkeypress = "return isAlphabateOnly(event)", autocomplete = "off", @maxlength = 100, @placeholder = "Enter prefecture" }, 3)
+            </div>
+            <div class="row">
+                @Html.NTextBoxFor(model => model.City, new { @class = "form-control names_capitalize", @onkeypress = "return isAlphabateOnly(event)", autocomplete = "off", @maxlength = 50, @placeholder = "Enter city" }, 3)
+                @Html.NTextBoxFor(model => model.Street, new { @class = "form-control names_capitalize", @onkeypress = "return isAlphabateOnly(event)", autocomplete = "off", @maxlength = 50, @placeholder = "Enter street" }, 3)
+                @Html.NTextBoxFor(model => model.ResidenceNumber, new { @class = "form-control names_capitalize", @onkeypress = "return isAlphabateOnly(event)", autocomplete = "off", @maxlength = 50, @placeholder = "Enter residence number" }, 3)
+            </div>
+            <div class="row mt-2">
+                <button type="button" class="btn btn-primary btn-sm " onclick="window.history.back();"><i class="fa fa-arrow-left"></i> Back</button>
+                <button type="submit" class="btn btn-success btn-sm ml-2" id="FormSubmit"><i class="fa fas fa-save"></i> Save</button>
+            </div>
+        }
+    </div>
+</div>
+@section scripts
+{
+    <script>
+        function isNumber(evt) {
+            evt = (evt) ? evt : window.event;
+            var charCode = (evt.which) ? evt.which : evt.keyCode;
+            if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+                return false;
+            }
+            return true;
+        }
+        //alphabet and whitespace
+        function isAlphabateOnly(evt) {
+            evt = (evt) ? evt : window.event;
+            var charCode = (evt.which) ? evt.which : evt.keyCode;
+            if ((charCode > 64 && charCode < 91) || (charCode > 96 && charCode < 123) || (charCode == 32) || (charCode == 46)) {
+                return true;
+            }
+            return false;
+        }
+    </script>
+    <script>
+        $("#FormSubmit").click(function () {
+            $("#ManageCustomerForm").submit();
+        });
+    </script>
+}

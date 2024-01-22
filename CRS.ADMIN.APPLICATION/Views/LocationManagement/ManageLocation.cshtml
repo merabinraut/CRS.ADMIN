@@ -1,0 +1,94 @@
+﻿@model CRS.ADMIN.APPLICATION.Models.LocationManagement.LocationModel
+
+@{
+    ViewBag.Title = "Manage Location";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Styles.Render("~/UI/Style")
+
+<div class="card">
+    <div class="card-header header-elements-inline">
+        <h6 class="card-title">
+            <b style="color:red">*</b><b> Note: Please fill out all the field stating *(Mandatory) </b>
+        </h6>
+    </div>
+    <div class="card-body">
+        @using (Html.BeginForm("ManageLocation", "LocationManagement", new { }, FormMethod.Post, new { @role = "form", @id = "addNew", enctype = "multipart/form-data" }))
+        {
+            @Html.HiddenFor(model => model.LocationId)
+            @Html.HiddenFor(model => model.LocationImage)
+            @Html.AntiForgeryToken()
+            <fieldset class="md-3">
+                <div class="row">
+                    @Html.NTextBoxFor(model => model.LocationName, new { @class = "form-control", autocomplete = "off", @onkeypress = "return isAlphabateOnly(event)", @maxlength = "50", @placeholder = "Enter plan name" }, 2)
+                    @Html.NTextBoxFor(model => model.LocationURL, new { @class = "form-control", autocomplete = "off", @onkeypress = "return isDecimalWith2DecimalPlace(event,this)", @maxlength = "300", @placeholder = "Enter Location URL" }, 2)
+                    @Html.NTextBoxFor(model => model.Latitude, new { @class = "form-control", autocomplete = "off", @onkeypress = "return isNumber(event)", @maxlength = "300", @placeholder = "Enter Latitude" }, 2)
+                    @Html.NTextBoxFor(model => model.Longitude, new { @class = "form-control", autocomplete = "off", @onkeypress = "return isNumber(event)", @maxlength = "300", @placeholder = "Enter Longitude" }, 2)
+
+                    <div class="col-md-3">
+                        @Html.LabelFor(model => model.LocationImage, "Location Image", new { @class = "label", autocomplete = "off" })
+                        <span class='text-danger'>*</span>
+                        <div>
+                            <img id="locationView" height="150" width="150" style="border: none" />
+                        </div>
+                        <div class="mt-1">
+                            <input type="file" title="Location Image" id="LocationImage" style="overflow: hidden" name="LocationImage" accept="image/x-png,image/jpeg,image/jpg" onchange="showLocationReg(this)" class="imgValidate" />
+                            <p class="form-text text-primary">[ Max 50MB ]</p>
+                        </div>
+                        <p class="form-text text-primary">[Image must be in jpeg, jpg or png format]</p>
+                        @Html.ValidationMessageFor(model => model.LocationImage, null, new { @class = "form-text text-danger" })
+                    </div>
+
+                    <div class="col-12 mt-2">
+                        <button type="button" class="btn btn-primary btn-sm bg-primary" onclick="window.history.back();"><i class="fa fa-arrow-left mr-2 "></i>Back</button>
+                        <button type="submit" class="btn btn-success btn-sm  ml-2"> <i class="fa fa-save mr-2"></i>Save</button>
+                    </div>
+                </div>
+            </fieldset>
+        }
+    </div>
+</div>
+
+@section scripts
+{
+    <script>
+
+        $(document).ready(function () {
+            if ($("#LocationImage").val() != "") {
+                document.getElementById("locationView").src = $("#LocationImage").val();
+            }
+        });
+
+        //alphabet and whitespace
+        function isAlphabateOnly(evt) {
+            evt = (evt) ? evt : window.event;
+            var charCode = (evt.which) ? evt.which : evt.keyCode;
+            if ((charCode > 64 && charCode < 91) || (charCode > 96 && charCode < 123) || (charCode == 32) || (charCode == 46)) {
+                return true;
+            }
+            return false;
+        }
+
+        function isNumber(evt) {
+            evt = (evt) ? evt : window.event;
+            var charCode = (evt.which) ? evt.which : evt.keyCode;
+            if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+                return false;
+            }
+            return true;
+        }
+
+        function showLocationReg(input) {
+            if (input.files && input.files[0]) {
+                var filerdr = new FileReader();
+                filerdr.onload = function (e) {
+                    $('#locationView').attr('src', e.target.result);
+                    $("#LocationImage").val(e.target.result);
+
+                }
+                filerdr.readAsDataURL(input.files[0]);
+            }
+        }
+    </script>
+}

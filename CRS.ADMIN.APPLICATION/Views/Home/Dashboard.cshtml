@@ -1,0 +1,564 @@
+﻿@model IEnumerable<CRS.ADMIN.APPLICATION.Models.AdminDashboardModel>
+@{
+    ViewBag.Title = "Dashboard";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var dashboardinfo = ViewBag.DashboardInfo;
+    var hostList = ViewBag.HostList;
+    var chartInfo = ViewBag.ChartInfo;
+    var topBookedHostList = ViewBag.TopBookedHost;
+    var recievedAountList = ViewBag.RecievedAount;
+}
+
+<!-- booking information  -->
+<div class="title-info  flex justify-between gap-[20px] items-end">
+    <div>
+        @*<div class="heading-title ">歓迎  @dashboardinfo.Username</div>*@
+        <div class="heading-title">
+            @CRS.ADMIN.APPLICATION.Resources.Resource.Welcome_back 👋
+        </div>
+    </div>
+
+</div>
+<div class="flex flex-col px-[32px] pb-4 ">
+    <div class="text-primary-300 pb-3">
+        @CRS.ADMIN.APPLICATION.Resources.Resource.Overview
+    </div>
+    <!-- top section  -->
+    <div class="flex gap-4">
+        <div class="flex gap-[10px]">
+            <div class="booking-card border border-[#E4E4E7] ">
+                <div class="booking-card-title">
+                    @CRS.ADMIN.APPLICATION.Resources.Resource.Total_Clubs
+                </div>
+                <div class="booking-card-total">
+                    @dashboardinfo.TotalClubs
+                    <span>+ 36% <img src="~/Content/assets_new/images/club/arrow-up.svg" /> </span>
+                </div>
+            </div>
+
+            <div class="booking-card border border-[#E4E4E7]">
+                <div class="booking-card-title">
+                    @CRS.ADMIN.APPLICATION.Resources.Resource.Total_Visitors
+                </div>
+                <div class="booking-card-total">
+                    @dashboardinfo.TotalVisitors
+                    <span>+ 36% <img src="~/Content/assets_new/images/club/arrow-up.svg" /> </span>
+                </div>
+            </div>
+            <div class="booking-card border border-[#E4E4E7]">
+                <div class="booking-card-title">
+                    @CRS.ADMIN.APPLICATION.Resources.Resource.Total_Sales
+                </div>
+                <div class="booking-card-total">
+                    ¥ @dashboardinfo.TotalSales
+                    <span>+ 36% <img src="~/Content/assets_new/images/club/arrow-up.svg" /> </span>
+                </div>
+            </div>
+        </div>
+        <div class="pb-[24px]">
+            <div class="flex gap-[10px]">
+                <div class=" flex gap-4  ">
+                    <div class="calender-card h-[91px] ">
+                        <div class="text-xs font-medium text-center">
+                            <div class="uppercase">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Sunday
+                            </div>
+                            <div> 30</div>
+                        </div>
+                        <div class="calender-number">
+                            12
+                        </div>
+                    </div>
+                    <div class="calender-card h-[91px] ">
+                        <div class="text-xs font-medium text-center">
+                            <div class="uppercase">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Monday
+                            </div>
+                            <div> 31</div>
+                        </div>
+                        <div class="calender-number">
+                            12
+                        </div>
+                    </div>
+                    <div class="calender-card h-[91px]">
+                        <div class="text-xs font-medium text-center">
+                            <div class="uppercase">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Tuesday
+                            </div>
+                            <div> 1</div>
+                        </div>
+                        <div class="calender-number">
+                            12
+                        </div>
+                    </div>
+                    <div class="calender-card h-[91px]">
+                        <div class="text-xs font-medium text-center">
+                            <div class="uppercase">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Wednesday
+                            </div>
+                            <div> 2</div>
+                        </div>
+                        <div class="calender-number">
+                            12
+                        </div>
+                    </div>
+                    <div class="calender-card h-[91px]">
+                        <div class="text-xs font-medium text-center">
+                            <div class="uppercase">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Thursday
+                            </div>
+                            <div> 3</div>
+                        </div>
+                        <div class="calender-number">
+                            12
+                        </div>
+                    </div>
+                </div>
+                <div class="flex flex-col justify-between">
+                    <div id="preview"
+                         class="calender-change h-[32px] w-[32px] flex justify-center items-center border rounded-[4px]  cursor-pointer">
+                        <i class="las la-angle-left text-lg  font-bold"></i>
+                    </div>
+                    <div id="next"
+                         class="calender-change h-[32px] w-[32px] flex justify-center items-center border rounded-[4px]  cursor-pointer ">
+                        <i class="las la-angle-right text-lg  font-bold"></i>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- Received Payment -->
+    <div class="flex gap-9  mb-4">
+        <div class=" border border-[#E4E4E7] rounded-[10px] p-4 w-[688px]">
+            <div class="bg-white ">
+                <div class=" flex justify-between items-center">
+                    <div class=" flex  items-center gap-[55px] w-max">
+                        <div class="font-bold text-[#18181B] w-max flex-none">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Sales_Report
+                        </div>
+                        <div class="flex tab-container-chart ">
+                            <button id="tab1Button" class="tab-button-chart tab-link active">
+                                12 @CRS.ADMIN.APPLICATION.Resources.Resource.Months
+                            </button>
+                            <button id="tab2Button" class="tab-button-chart tab-link">
+                                6 @CRS.ADMIN.APPLICATION.Resources.Resource.Months
+                            </button>
+                            <button id="tab3Button" class="tab-button-chart tab-link">
+                                1 @CRS.ADMIN.APPLICATION.Resources.Resource.Days
+                            </button>
+                            <button id="tab3Button" class="tab-button-chart tab-link">
+                                1 @CRS.ADMIN.APPLICATION.Resources.Resource.Week
+                            </button>
+                        </div>
+                    </div>
+                    <div class="font-bold text-[11px] cursor-pointer flex gap-[6px] w-max justify-center items-center border border-[#D4D4D8] rounded-[5px] p-[6px] ">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="16" viewBox="0 0 15 16" fill="none">
+                            <path d="M7.4023 7.10983V10.7857M7.4023 10.7857L5.63195 8.94777M7.4023 10.7857L9.17265 8.94777M10.3529 13.849H4.45172C3.79989 13.849 3.27148 13.3004 3.27148 12.6237V4.04659C3.27148 3.36987 3.79989 2.82129 4.45172 2.82129H7.74798C7.90449 2.82129 8.05459 2.88584 8.16526 3.00073L11.3603 6.31774C11.4709 6.43263 11.5331 6.58846 11.5331 6.75095V12.6237C11.5331 13.3004 11.0047 13.849 10.3529 13.849Z"
+                                  stroke="#18181B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                        <div class="w-max leading-[16px]" id="export">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Export_Pdf
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="" id="html2pdf">
+                <div id="tab1" class="tab-content-chart">
+                    <div class="w-full">
+                        <canvas class="w-full h-[200px] cursor-pointer" id="Month12"></canvas>
+                    </div>
+                </div>
+                <div id="tab2" class="tab-content-chart hidden">
+                    <div class="w-full">
+                        <canvas class="w-full" id="Month6"></canvas>
+                    </div>
+                </div>
+                <div id="tab2" class="tab-content-chart hidden">
+                    3
+                </div>
+                <div id="tab2" class="tab-content-chart hidden">
+                    4
+                </div>
+
+            </div>
+        </div>
+
+
+
+        <script>
+            // Your data object
+            var dataList =@Html.Raw(Json.Encode(chartInfo));
+            const labels = dataList.map(entry => entry.Month);
+            const values = dataList.map(entry => entry.TotalSales);
+
+            const dataMonth12 = {
+                labels: labels,
+                datasets: [{
+                    label: "¥",
+                    data: values,
+                    fill: true,
+                    border: "1px solid",
+                    borderColor: '#EC4899',
+                    backgroundColor: '#FFB6C1',
+                    tension: 0.1,
+                    pointStyle: 'circle',
+                    pointRadius: 5,
+                    pointHoverRadius: 7
+                }]
+            };
+
+            // Configuration object
+            const configMonth12 = {
+                type: 'line',
+                data: dataMonth12,
+            };
+
+            // Create a chart
+            const Month12 = new Chart(document.getElementById('Month12'), configMonth12);
+        </script>
+
+        <div class="p-4 rounded-[10px] border border-[#E4E4E7]  flex flex-col gap-[20px] w-[368px] h-[394px] overflow-hidden "">
+            
+                <div class="flex gap-[24px] h-6">
+                    <div class="flex tab-container-plane bg-white gap-[16px] text-[#A1A1AA]">
+                        <button id="tab1Button" class="tab-button-plane tab-link active">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Received_Payment
+                        </button>
+                        <button id="tab2Button" class="tab-button-plane tab-link">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Affiliate_Payment
+                        </button>
+                    </div>
+                </div>
+
+            <div id="tab1" class="tab-content-plane "> 
+                <div class="grid gap-1  overflow-hidden no-scrollbar overflow-y-scroll" style=" height: calc(100% - 113px); " >
+                    <!-- Received Payment  -->
+                    <div class="round-image-text flex gap-[12px] border border-[#aeaeae1f] p-[10px] rounded-[4px]">
+                        <img class="border w-[33px] rounded-[4px] h-[36px] border-[#aeaeae1f]"
+                             src="~/Content/assets_new/images/demo-image.jpeg" />
+                        <div class="flex justify-between w-full">
+                            <div class="text-image grid leading-[15px] ">
+                                <div class="text-[15px] font-semibold text-primary-300 ">
+                                    @recievedAountList[0].PaymentMethod
+                                </div>
+                                <div class="text-[12px]  text-gray-500 ">
+                                    @recievedAountList[0].TodayDate
+                                </div>
+                            </div>
+                            <div class="text-image grid gap-1">
+                                <div class="text-xs font-semibold text-primary-300 text-end ">
+                                    ¥@recievedAountList[0].TotalAmount
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Received Payment  -->
+                    <div class="round-image-text flex gap-[12px] border border-[#aeaeae1f] p-[10px] rounded-[4px]">
+                        <img class="border w-[33px] rounded-[4px]  h-[36px] border-[#aeaeae1f]"
+                             src="~/Content/assets_new/images/demo-image.jpeg" />
+                        <div class="flex justify-between w-full">
+                            <div class="text-image grid leading-[15px] ">
+                                <div class="text-[15px] font-semibold text-primary-300 ">
+                                    @recievedAountList[1].PaymentMethod
+                                </div>
+                                <div class="text-[12px]  text-gray-500 ">@recievedAountList[1].TodayDate</div>
+                            </div>
+                            <div class="text-image grid gap-1">
+                                <div class="text-xs font-semibold text-primary-300 text-end ">¥@recievedAountList[1].TotalAmount</div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Received Payment  -->
+                    <div class="round-image-text flex gap-[12px] border border-[#aeaeae1f] p-[10px] rounded-[4px]">
+                        <img class="border w-[33px] rounded-[4px]  h-[36px] border-[#aeaeae1f]"
+                             src="~/Content/assets_new/images/demo-image.jpeg" />
+                        <div class="flex justify-between w-full">
+                            <div class="text-image grid leading-[15px] ">
+                                <div class="text-[15px] font-semibold text-primary-300 ">
+                                    @recievedAountList[1].PaymentMethod
+                                </div>
+                                <div class="text-[12px]  text-gray-500 ">@recievedAountList[1].TodayDate</div>
+                            </div>
+                            <div class="text-image grid gap-1">
+                                <div class="text-xs font-semibold text-primary-300 text-end ">¥@recievedAountList[1].TotalAmount</div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Received Payment  -->
+                    <div class="round-image-text flex gap-[12px] border border-[#aeaeae1f] p-[10px] rounded-[4px]">
+                        <img class="border w-[33px] rounded-[4px]  h-[36px] border-[#aeaeae1f]"
+                             src="~/Content/assets_new/images/demo-image.jpeg" />
+                        <div class="flex justify-between w-full">
+                            <div class="text-image grid leading-[15px] ">
+                                <div class="text-[15px] font-semibold text-primary-300 ">
+                                    @recievedAountList[1].PaymentMethod
+                                </div>
+                                <div class="text-[12px]  text-gray-500 ">@recievedAountList[1].TodayDate</div>
+                            </div>
+                            <div class="text-image grid gap-1">
+                                <div class="text-xs font-semibold text-primary-300 text-end ">¥@recievedAountList[1].TotalAmount</div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Received Payment  -->
+                    <div class="round-image-text flex gap-[12px] border border-[#aeaeae1f] p-[10px] rounded-[4px]">
+                        <img class="border w-[33px] rounded-[4px]  h-[36px] border-[#aeaeae1f]"
+                             src="~/Content/assets_new/images/demo-image.jpeg" />
+                        <div class="flex justify-between w-full">
+                            <div class="text-image grid leading-[15px] ">
+                                <div class="text-[15px] font-semibold text-primary-300 ">
+                                    @recievedAountList[1].PaymentMethod
+                                </div>
+                                <div class="text-[12px]  text-gray-500 ">@recievedAountList[1].TodayDate</div>
+                            </div>
+                            <div class="text-image grid gap-1">
+                                <div class="text-xs font-semibold text-primary-300 text-end ">¥@recievedAountList[1].TotalAmount</div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Received Payment  -->
+                    <div class="round-image-text flex gap-[12px] border border-[#aeaeae1f] p-[10px] rounded-[4px]">
+                        <img class="border w-[33px] rounded-[4px]  h-[36px] border-[#aeaeae1f]"
+                             src="~/Content/assets_new/images/demo-image.jpeg" />
+                        <div class="flex justify-between w-full">
+                            <div class="text-image grid leading-[15px] ">
+                                <div class="text-[15px] font-semibold text-primary-300 ">
+                                    @recievedAountList[1].PaymentMethod
+                                </div>
+                                <div class="text-[12px]  text-gray-500 ">@recievedAountList[1].TodayDate</div>
+                            </div>
+                            <div class="text-image grid gap-1">
+                                <div class="text-xs font-semibold text-primary-300 text-end ">¥@recievedAountList[1].TotalAmount</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center text-primary-100 mt-[9px]">
+                    <a href="#" class="underline text-xs">
+                        @CRS.ADMIN.APPLICATION.Resources.Resource.View_All
+                    </a>
+                </div>
+            </div>
+            <div id="tab2" class="tab-content-plane  hidden">
+                <div class="grid gap-1  overflow-hidden no-scrollbar overflow-y-scroll" style=" height: calc(100% - 113px); ">
+                    <!-- Affiliate Payment  -->
+                    <div class="round-image-text flex gap-[12px] border border-[#aeaeae1f] p-[10px] rounded-[4px]">
+                        <img class="border w-[33px] rounded-[4px]  h-[36px] border-[#aeaeae1f]"
+                             src="~/Content/assets_new/images/demo-image.jpeg" />
+                        <div class="flex justify-between w-full">
+                            <div class="text-image grid leading-[15px] ">
+                                <div class="text-[15px] font-semibold text-primary-300 ">
+                                    @CRS.ADMIN.APPLICATION.Resources.Resource.On_Arrival
+                                </div>
+                                <div class="text-[12px]  text-gray-500 ">17 Oct, 2023 12:02:12</div>
+                            </div>
+                            <div class="text-image grid gap-1">
+                                <div class="text-xs font-semibold text-primary-300 text-end ">¥11,234</div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Affiliate Payment  -->
+                    <div class="round-image-text flex gap-[12px] border border-[#aeaeae1f] p-[10px] rounded-[4px]">
+                        <img class="border w-[33px] rounded-[4px] h-[36px] border-[#aeaeae1f]"
+                             src="~/Content/assets_new/images/demo-image.jpeg" />
+                        <div class="flex justify-between w-full">
+                            <div class="text-image grid leading-[15px] ">
+                                <div class="text-[15px] font-semibold text-primary-300 ">
+                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Stripe
+                                </div>
+                                <div class="text-[12px]  text-gray-500 ">17 Oct, 2023 12:02:12</div>
+                            </div>
+                            <div class="text-image grid gap-1">
+                                <div class="text-xs font-semibold text-primary-300 text-end ">¥11,234</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center text-primary-100 mt-[9px]">
+                    <a href="#" class="underline text-xs">
+                        @CRS.ADMIN.APPLICATION.Resources.Resource.View_All
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Top Booked Ranking Clubs   Hosts -->
+    <div class="flex gap-[22px]">
+        <!-- Booked section  -->
+
+        <div class="">
+            <div class="p-4 rounded-[10px] border border-[#E4E4E7]  grid gap-[24px] w-[368px] ">
+                <div class="grid gap-1">
+                    <div class="text-base font-bold text-primary-300 ">
+                        @CRS.ADMIN.APPLICATION.Resources.Resource.Top_Ranking_Clubs
+                    </div>
+                    <div class="text-sm  text-gray-500 ">
+                        @CRS.ADMIN.APPLICATION.Resources.Resource.Our_top_booked_clubs
+                    </div>
+                </div>
+
+                @foreach (var item in hostList)
+                {<div class="round-image-text flex gap-[12px]">
+                        <img class="w-[36px] h-[36px] rounded-full" src="@item.HostImage" />
+                        <div class="flex justify-between w-full">
+                            <div class="text-image grid gap-1">
+                                <div class="text-sm font-semibold text-primary-300 ">@item.HostName</div>
+                                <div class="text-sm  text-gray-500 ">@item.EmailAddress</div>
+                            </div>
+                            <div class="text-image grid gap-1">
+                                <div class="text-sm font-semibold text-primary-300 text-end ">¥@item.HostCharge</div>
+                                <div class="text-sm  text-gray-500 text-end ">@item.HostAddress</div>
+                            </div>
+                        </div>
+                    </div>
+                }
+                <a href="#" class="text-[11px] font-semibold text-secondary-text-2 text-center">
+                    @CRS.ADMIN.APPLICATION.Resources.Resource.See_All @CRS.ADMIN.APPLICATION.Resources.Resource.Hosts
+                    <i class="las la-angle-right"></i>
+                </a>
+            </div>
+        </div>
+        <!-- table section  -->
+        <div class="relative p-4 rounded-[10px] border border-[#E4E4E7]  grid gap-[20px] overflow-x-auto rounded-[10px] border border-[#E4E4E7]">
+            <div class="grid gap-1">
+                <div class="text-base font-bold text-primary-300 ">
+                    @CRS.ADMIN.APPLICATION.Resources.Resource.Top_Ranking_Hosts
+                </div>
+                <div class="text-sm  text-gray-500 ">
+                    @CRS.ADMIN.APPLICATION.Resources.Resource.Our_Top_Booked_Ranking_Hosts
+                </div>
+            </div>
+            <div class="border border-[#F4F4F4] rounded-[5px] overflow-hidden">
+                <table class="w-full  text-left club-table ">
+                    <thead class="club-table-thead ">
+                        <tr>
+                            <th scope="col" class="p-[12px]">
+                                <div class="flex">
+                                    S.N
+                                    <div class="relative pl-[5px]">
+                                        <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                        <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                    </div>
+                                </div>
+                            </th>
+                            <th scope="col" class="p-[12px]">
+                                <div class="flex">
+                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Host_Info
+                                    <div class="relative pl-[5px]">
+                                        <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                        <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                    </div>
+                                </div>
+                            </th>
+                            <th scope="col" class="p-[12px]">
+                                <div class="flex">
+                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Club_Profile
+                                    <div class="relative pl-[5px]">
+                                        <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                        <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                    </div>
+                                </div>
+                            </th>
+                            <th scope="col" class="p-[12px]">
+                                <div class="flex">
+                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Price
+                                    <div class="relative pl-[5px]">
+                                        <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                        <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                    </div>
+                                </div>
+                            </th>
+                            <th scope="col" class="p-[12px]">
+                                <div class="flex">
+                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Reservations
+                                    <div class="relative pl-[5px]">
+                                        <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                        <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                    </div>
+                                </div>
+                            </th>
+
+                        </tr>
+                    </thead>
+                    <tbody class="text-xs">
+                        @{
+                            int sn = 1;
+                            foreach (var item in topBookedHostList)
+                            {
+                                <tr class="bg-white border-b ">
+                                    <td class="p-[12px]">
+                                        @sn
+                                    </td>
+                                    <td class="p-[12px]">
+                                        <div class="round-image-text flex gap-[12px]">
+                                            <img class="w-[32px] h-[32px] rounded-full"
+                                                 src="@item.HostImage" />
+
+                                            <div class="flex justify-between w-full">
+                                                <div class="text-image grid">
+                                                    <div class="text-sm font-semibold text-[#101828] ">@item.HostName</div>
+                                                    <div class="text-sm  text-[#667085] ">@item.HostUsername</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="p-[12px]">
+                                        <div class="round-image-text flex gap-[12px]">
+                                            <img class="w-[32px] h-[32px] rounded-full"
+                                                 src="@item.ClubImage" />
+
+                                            <div class="flex justify-between w-full">
+                                                <div class="text-image grid ">
+                                                    <div class="text-sm font-semibold text-[#101828] ">@item.ClubName</div>
+                                                    <div class="gold ">@item.PlanName</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="p-[12px]">
+                                        ¥@item.Price
+                                    </td>
+                                    <td class="p-[12px]">
+                                        <div class="text-[#245EDC] underline text-center ">@item.HostCount</div>
+                                    </td>
+
+                                </tr>
+                                sn++;
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <!-- Top Booked Ranking Clubs   Hosts end -->
+</div>
+
+
+<script>
+    const preview = document.getElementById("preview");
+    const next = document.getElementById("next");
+
+    preview.addEventListener("click", function () {
+        if (!preview.classList.contains("active")) {
+            preview.classList.add("active");
+            next.classList.remove("active");
+        }
+    });
+
+    next.addEventListener("click", function () {
+        if (!next.classList.contains("active")) {
+            next.classList.add("active");
+            preview.classList.remove("active");
+        }
+    });
+    $('#export').click(function () {
+        var currentdate = new Date().toJSON();
+        var element = document.getElementById('html2pdf');
+        html2pdf().from(element).set({
+            margin: [30, 10, 5, 10],
+            jsPDF: { orientation: 'landscape', unit: 'pt', format: 'letter', compressPDF: true }
+        }).save('CRS_' + currentdate + '.pdf');
+    });
+</script>

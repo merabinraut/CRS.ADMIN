@@ -1,0 +1,1 @@
+﻿UPDATE tbl_static_data SET AdditionalValue2 = 'Good', AdditionalValue3= N'良い' WHERE StaticDataType = 24 

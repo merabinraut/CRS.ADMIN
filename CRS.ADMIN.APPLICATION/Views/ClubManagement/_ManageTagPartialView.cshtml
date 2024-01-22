@@ -1,0 +1,183 @@
+﻿@model CRS.ADMIN.APPLICATION.Models.TagManagement.ManageTag
+<div id="add-new-host-tag"
+     class="drawer-close-disable  flex justify-end fixed top-0 right-0 z-40 h-screen overflow-y-auto transition-transform translate-x-full"
+     tabindex="-1" aria-labelledby="drawer-right-label">
+
+    <div class="bg-white w-[616px] drawer-container relative">
+        <div class="drawer-form-container sticky top-0 z-[5] ">
+            <div class="drawer-form flex justify-between bg-secondary-color-pink py-[16px] px-[24px] h-[56px]">
+                <div>
+                    @CRS.ADMIN.APPLICATION.Resources.Resource.Manage_Tag
+                </div>
+                <button type="button" data-drawer-hide="add-new-host-tag" aria-controls="add-new-host-tag"
+                        class="text-[20px]">
+                    <i class="las la-window-close text-white" onclick="CancelFunction();"></i>
+                </button>
+            </div>
+        </div>
+        <div class="p-[24px]">
+            @using (Html.BeginForm("ManageTag", "ClubManagement", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken();
+                @Html.HiddenFor(model => model.ClubId)
+                @Html.HiddenFor(model => model.TagId)
+                <div class="grid gap-4">
+                    <div class="grid gap-3">
+                        <div class="toogle-common">
+                            <label class="relative inline-flex items-center cursor-pointer">
+                                <input type="checkbox" value="" name="tag1Checkbox" class="sr-only peer" id="tag1">
+                                <div class="w-7 h-4 bg-white rounded-full border border-[#A6A6A6] peer peer-focus:ring-4 peer-focus:ring-blue-300 peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[3.8px] after:left-[2px] after:border-[#A6A6A6] after:bg-[#A6A6A6] after:border after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:after:border-white peer-checked:border-secondary-color-pink peer-checked:bg-secondary-color-pink peer-checked:after:bg-white">
+                                </div>
+                                <span class="pl-2 text-sm font-medium text-secondary-100">
+                                    位置タグ
+                                </span>
+                            </label>
+                        </div>
+                        <div class="input-field-common" id="tagInput" style="display: none;">
+                            @Html.HiddenFor(model => model.Tag1Status)
+                            <select id="large" name="tag1Select" class=" default_select select-common block w-full "
+                                    style="width: 100%;">
+                                @foreach (var item in ViewBag.LocationDDLList as IEnumerable<SelectListItem>)
+                                {
+                                    var selectedId = ViewBag.LocationIdKey as string;
+                                    if (item.Value == selectedId)
+                                    {
+                                        <option value="@item.Value" selected>@item.Text</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@item.Value">
+                                            @item.Text
+                                        </option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="grid gap-3">
+                        <div class="toogle-common">
+                            <label class="relative inline-flex items-center cursor-pointer">
+                                <input type="checkbox" name="tag2Checkbox" value="" class="sr-only peer" id="tag2">
+                                <div class="w-7 h-4 bg-white rounded-full border border-[#A6A6A6] peer peer-focus:ring-4 peer-focus:ring-blue-300 peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[3.8px] after:left-[2px] after:border-[#A6A6A6] after:bg-[#A6A6A6] after:border after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:after:border-white peer-checked:border-secondary-color-pink peer-checked:bg-secondary-color-pink peer-checked:after:bg-white">
+                                </div>
+                                <span class="pl-2 text-sm font-medium text-secondary-100">
+                                    ランクタグ
+                                </span>
+                            </label>
+                        </div>
+                        <div class="input-field-common" id="tagInput2" style="display: none;">
+                            @Html.HiddenFor(model => model.Tag2Status)
+                            <select id="large" name="tag2Select" class=" default_select select-common block w-full "
+                                    style="width: 100%;">
+                                @foreach (var item in ViewBag.RankDDL as IEnumerable<SelectListItem>)
+                                {
+                                    var selectedId = ViewBag.RankDDLKey as string;
+                                    if (item.Value == selectedId)
+                                    {
+                                        <option value="@item.Value" selected>@item.Text</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@item.Value">
+                                            @item.Text
+                                        </option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="grid gap-3">
+                        <div class="toogle-common">
+                            <label class="relative inline-flex items-center cursor-pointer">
+                                <input type="checkbox" name="tag3Checkbox" value="" class="sr-only peer" id="tag3">
+                                <div class="w-7 h-4 bg-white rounded-full border border-[#A6A6A6] peer peer-focus:ring-4 peer-focus:ring-blue-300 peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[3.8px] after:left-[2px] after:border-[#A6A6A6] after:bg-[#A6A6A6] after:border after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:after:border-white peer-checked:border-secondary-color-pink peer-checked:bg-secondary-color-pink peer-checked:after:bg-white">
+                                </div>
+                                <span class="pl-2 text-sm font-medium text-secondary-100">
+                                    カテゴリータグ
+                                </span>
+                            </label>
+                        </div>
+                        <div class="input-field-common" id="tagInput3" style="display: none;">
+                            @Html.HiddenFor(model => model.Tag3Status)
+                            <select id="large" name="tag3Select" class=" default_select select-common block w-full "
+                                    style="width: 100%;">
+                                @foreach (var item in ViewBag.ClubCategoryDDL as IEnumerable<SelectListItem>)
+                                {
+                                    var selectedId = ViewBag.ClubCategoryDDLKey as string;
+                                    if (item.Value == selectedId)
+                                    {
+                                        <option value="@item.Value" selected>@item.Text</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@item.Value">
+                                            @item.Text
+                                        </option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="grid gap-3">
+                        <div class="toogle-common">
+                            <label class="relative inline-flex items-center cursor-pointer">
+                                <input type="checkbox" name="tag4Checkbox" value="" class="sr-only peer" id="tag4">
+                                <div class="w-7 h-4 bg-white rounded-full border border-[#A6A6A6] peer peer-focus:ring-4 peer-focus:ring-blue-300 peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[3.8px] after:left-[2px] after:border-[#A6A6A6] after:bg-[#A6A6A6] after:border after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:after:border-white peer-checked:border-secondary-color-pink peer-checked:bg-secondary-color-pink peer-checked:after:bg-white">
+                                </div>
+                                <span class="pl-2 text-sm font-medium text-secondary-100">
+                                    優良店タグ
+                                </span>
+                            </label>
+                        </div>
+                        <div class="input-field-common" id="tagInput4" style="display: none;">
+                            @Html.HiddenFor(model => model.Tag4Status)
+                        </div>
+                    </div>
+                    <div class="grid gap-3">
+                        <div class="toogle-common">
+                            <label class="relative inline-flex items-center cursor-pointer">
+                                <input type="checkbox" name="tag5Checkbox" value="" class="sr-only peer" id="tag5">
+                                <div class="w-7 h-4 bg-white rounded-full border border-[#A6A6A6] peer peer-focus:ring-4 peer-focus:ring-blue-300 peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[3.8px] after:left-[2px] after:border-[#A6A6A6] after:bg-[#A6A6A6] after:border after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:after:border-white peer-checked:border-secondary-color-pink peer-checked:bg-secondary-color-pink peer-checked:after:bg-white">
+                                </div>
+                                <span class="pl-2 text-sm font-medium text-secondary-100">
+                                    大型店タグ
+                                </span>
+                            </label>
+                        </div>
+                        <div class="input-field-common" id="tagInput5" style="display: none;">
+                            @Html.HiddenFor(model => model.Tag5Status)
+                            <select id="large" name="tag5Select" class=" default_select select-common block w-full "
+                                    style="width: 100%;">
+                                @foreach (var item in ViewBag.ClubStoreDDL as IEnumerable<SelectListItem>)
+                                {
+                                    var selectedId = ViewBag.ClubStoreDDLKey as string;
+                                    if (item.Value == selectedId)
+                                    {
+                                        <option value="@item.Value" selected>@item.Text</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@item.Value">
+                                            @item.Text
+                                        </option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="py-4 flex justify-end">
+                    <div class="flex gap-6">
+                        <button class="btn btn-secondary rounded-[4px]" type="button"
+                                data-drawer-hide="add-new-host-tag" aria-controls="add-new-host-tag" onclick="CancelFunction();">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Cancel
+                        </button>
+                        <button class="btn btn-primary-default rounded-[4px]" type="submit">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Submit
+                        </button>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>

@@ -1,0 +1,75 @@
+﻿@model CRS.ADMIN.APPLICATION.Models.RecommendationManagement.ManageGroup
+<!-- add manage-groupfrom -->
+<div id="manage-group"
+     class="drawer-close-disable  flex justify-end fixed top-0 right-0 z-40 h-screen overflow-y-auto transition-transform translate-x-full "
+     tabindex="-1" aria-labelledby="drawer-right-label">
+    <div class="bg-white w-[616px] drawer-container relative">
+        <div class="drawer-form-container sticky top-0 z-[5] ">
+            <div class="drawer-form flex justify-between bg-secondary-color-pink py-[16px] px-[24px] h-[56px]">
+                <div>Manage Group</div>
+                <button type="button" data-drawer-hide="manage-group" aria-controls="manage-group" class="text-[20px]">
+                    <i class="las la-window-close text-white"></i>
+                </button>
+            </div>
+        </div>
+        @using (Html.BeginForm("ManageGroup", "RecommendationManagement", FormMethod.Post, new { @id = "ManageGroupForm", enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+            <div class="p-[24px]">
+                <div class=" py-4 grid gap-5">
+                    <div class="input-field-common">
+                        <label class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                            Group Name
+                        </label>
+                        <input type="text" class="w-full rounded-[4px]" style="border-radius:4px !important"
+                               placeholder="Enter Group Name" name="GroupName" value="@Model.GroupName" required>
+                    </div>
+                    <div class="input-field-common">
+                        <label class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                            Description
+                        </label>
+                        <input type="text" class="w-full rounded-[4px]" style="border-radius:4px !important"
+                               placeholder="Write group Description" name="Description" value="@Model.Description" required>
+                    </div>
+                    <div class="input-field-common">
+                        <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
+                            Display Order
+                        </label>
+                        <select id="large" name="DisplayOrder" class=" default_select select-common block w-full "
+                                style="width: 100%;">
+                            @foreach (KeyValuePair<string, string> item in ViewBag.DisplayOrderDDL as Dictionary<string, string>)
+                            {
+                                var selectedId = ViewBag.DisplayOrderDDL as string;
+                                if (item.Key == selectedId)
+                                {
+                                    <option value="@item.Key" selected>
+                                        @item.Value
+                                    </option>
+                                }
+                                else
+                                {
+                                    <option value="@item.Key">
+                                        @item.Value
+                                    </option>
+                                }
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="flex justify-end mt-6">
+                    <div class="flex gap-6">
+                        <button class="resetForm btn btn-gray-white rounded-[4px] px-8 text-sm"
+                                data-drawer-hide="manage-group" onclick="CancelFunction()">
+                            cancel
+                        </button>
+                        <button class="resetForm btn btn-primary-default px-8 rounded-[4px]  text-sm leading-[10px]"
+                                data-drawer-hide="manage-group" data-modal-target=""
+                                data-modal-toggle="" id="saveData" onclick="AddGroup()">
+                            Submit
+                        </button>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

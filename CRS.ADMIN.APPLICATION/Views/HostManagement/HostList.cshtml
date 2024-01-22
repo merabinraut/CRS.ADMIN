@@ -1,0 +1,313 @@
+﻿@model CRS.ADMIN.APPLICATION.Models.HostManagement.ManageHostCommonModel
+@{
+    ViewBag.Title = "Host List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var _ManageHostModel = Model.ManageHostModel as CRS.ADMIN.APPLICATION.Models.HostManagement.ManageHostModel;
+}
+
+<div class="px-8 py-4">
+    @Html.AntiForgeryToken()
+    <!-- title  -->
+    <div class="flex flex-col  gap-6">
+        <div>
+            <div class="heading-title">
+                @CRS.ADMIN.APPLICATION.Resources.Resource.Host_Management
+            </div>
+            <div class="span-title-light-gray">
+                @CRS.ADMIN.APPLICATION.Resources.Resource.Host_Management_Supporting_Text
+            </div>
+        </div>
+        <div class="flex justify-between pb-[24px]">
+            <form action="/HostManagement/HostList" method="get">
+                <div class="relative input-search-wrapper">
+                    <div class="absolute inset-y-0 left-0 flex items-center pl-[16px] pointer-events-none">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21" fill="none">
+                            <path d="M17.5 18L13.875 14.375M15.8333 9.66667C15.8333 13.3486 12.8486 16.3333 9.16667 16.3333C5.48477 16.3333 2.5 13.3486 2.5 9.66667C2.5 5.98477 5.48477 3 9.16667 3C12.8486 3 15.8333 5.98477 15.8333 9.66667Z"
+                                  stroke="#667085" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                    </div>
+                    <input name="AgentId" value="@ViewBag.AgentId" hidden />
+                    <input type="search" class="input-search block w-full " placeholder="@CRS.ADMIN.APPLICATION.Resources.Resource.Search" value="@ViewBag.SearchFilter" name="SearchFilter">
+                    <input type="submit" value="Submit" hidden>
+                </div>
+            </form>
+            <div class="flex gap-6">
+                <div class="export-button h-[40px]" onclick="exportCSVExcel();">
+                    <img src="~/Content/assets_new/images/club/download-solid.svg"> @CRS.ADMIN.APPLICATION.Resources.Resource.Export
+                </div>
+                <div class="btn btn-primary gap-[8px] h-[40px]" data-drawer-target="add-new-host" data-drawer-show="add-new-host"
+                     data-drawer-placement="right" data-drawer-backdrop="false" aria-controls="drawer-disabled-backdrop">
+                    <img src="~/Content/assets_new/images/plus-circle-solid.svg" />
+                    @CRS.ADMIN.APPLICATION.Resources.Resource.New_Host
+                </div>
+            </div>
+
+        </div>
+        <div class="table-tab">
+            <!--<div class="px-[12px] py-[12px] flex justify-between entry-export-container">
+                <div class="flex items-center select-entries">-->
+            @*@CRS.ADMIN.APPLICATION.Resources.Resource.Show&nbsp;
+                <select id="countries" class="w-full select-entires " style="width: 100%; ">
+                    <option value="5" selected>5</option>
+                    <option value="10">10</option>
+                    <option value="15">15</option>
+                    <option value="20">100</option>
+                </select>&nbsp;@CRS.ADMIN.APPLICATION.Resources.Resource.Entries*@
+            <!--</div>
+
+
+            </div>-->
+
+            <div class="relative overflow-x-auto">
+                <table class="w-full  text-left club-table" id="table-id">
+                    <thead class="club-table-thead">
+                        <tr>
+                            <th scope="col" class="p-[12px]">
+                                <div class="flex  w-max">
+                                    S.N
+                                    <div class="relative pl-[5px]">
+                                        <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                        <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                    </div>
+                                </div>
+                            </th>
+                            <th scope="col" class="p-[12px]">
+                                <div class="flex  w-max">
+                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Host_Info
+                                    <div class="relative pl-[5px]">
+                                        <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                        <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                    </div>
+                                </div>
+                            </th>
+                            <th scope="col" class="p-[12px]">
+                                <div class="flex  w-max">
+                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Ratings
+                                    <div class="relative pl-[5px]">
+                                        <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                        <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                    </div>
+                                </div>
+                            </th>
+
+                            <th scope="col" class="p-[12px]">
+                                <div class="flex  w-max">
+                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Total_Visitors
+                                    <div class="relative pl-[5px]">
+                                        <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                        <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                    </div>
+                                </div>
+                            </th>
+                            <th scope="col" class="p-[12px]">
+                                <div class="flex  w-max">
+                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Created_On
+                                    <div class="relative pl-[5px]">
+                                        <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                        <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                    </div>
+                                </div>
+                            </th>
+                            <th scope="col" class="p-[12px]">
+                                <div class="flex  w-max">
+                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Updated_On
+                                    <div class="relative pl-[5px]">
+                                        <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                        <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                    </div>
+                                </div>
+                            </th>
+
+                            <th scope="col" class="p-[12px]">
+                                <div class="flex  w-max justify-center">
+                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Action
+                                    <div class="relative pl-[5px]">
+                                        <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                        <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                    </div>
+                                </div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            int i = 1;
+                            foreach (var item in Model.HostListModel)
+                            {
+                                <tr class="bg-white border-b ">
+                                    <td class="p-[12px]">
+                                        @i
+                                    </td>
+                                    <td class="p-[12px]">
+                                        <div class="round-image-text flex gap-[12px] w-max">
+                                            <img class="w-[32px] h-[32px] rounded-full" src="@item.HostImage" />
+
+                                            <div class="flex justify-between w-full">
+                                                <div class="text-image grid flex-none ">
+                                                    <div class="text-sm font-semibold text-[#101828] ">@item.HostName</div>
+                                                    <div class='text-xs  text-[#404040] '>@item.HostName</div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="p-[12px]">
+                                        @item.Ratings
+
+                                    </td>
+                                    <td class="p-[12px]">
+                                        @item.TotalVisitors
+
+                                    </td>
+                                    <td class="p-[12px]">
+                                        @item.CreatedDate
+                                    </td>
+                                    <td class="p-[12px]">
+                                        @item.UpdatedDate
+                                    </td>
+                                    <td class="p-[12px]">
+                                        <div class="flex gap-[9px] justify-center text-[16px] ">
+                                            @if (item.Status.Trim().ToUpper() == "A")
+                                            {
+                                                <div>
+                                                    <i class="fa-regular fa-pen-to-square text-[#989898] cursor-pointer" onclick="ManageHostGetDetailsFunction('@item.AgentId', '@item.HostId');"></i>
+                                                </div>
+                                                <div>
+                                                    <i class="las la-lock cursor-pointer text-[#697DBF] text-[18px]" onclick="BlockFunction('@item.AgentId', '@item.HostId')"></i>
+                                                </div>
+                                                <div>
+                                                    <a onclick="HostGalleryRedirectFunction('@item.AgentId', '@item.HostId');">
+                                                        <i class="las la-image text-[#C8B477] text-[20px] mt-[1px] cursor-pointer"></i>
+                                                    </a>
+                                                </div>
+                                            }
+                                            else if (item.Status.Trim().ToUpper() == "B")
+                                            {
+                                                <div>
+                                                    <i class="las la-unlock cursor-pointer text-[#697DBF] text-[18px]" onclick="UnBlockFunction('@item.AgentId', '@item.HostId')"></i>
+                                                </div>
+                                            }
+
+                                        </div>
+                                    </td>
+                                </tr>
+                                i++;
+                            }
+                        }
+
+                    </tbody>
+                </table>
+
+            </div>
+            @*<div class="pagination-club">
+                    <div class="show-entry">
+                        @CRS.ADMIN.APPLICATION.Resources.Resource.Showing
+                        1 to 5 of 301
+                        @CRS.ADMIN.APPLICATION.Resources.Resource.Entries
+                    </div>
+                    <div class="flex gap-[12px]">
+                        <div class="btn btn-secondary-box-shadow ">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Previous
+                        </div>
+                        <div class="flex gap-[12px]">
+                            <div class="pagination-number active">
+                                1
+                            </div>
+                            <div class="pagination-number">
+                                2
+                            </div>
+                            <div class="pagination-number">
+                                3
+                            </div>
+                            <div class="pagination-number">
+                                ..
+                            </div>
+                            <div class="pagination-number">
+                                10
+                            </div>
+
+                        </div>
+                        <div class="btn btn-secondary-box-shadow ">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Next
+                        </div>
+                    </div>
+                </div>*@
+        </div>
+
+        <!-- drawer component -->
+        @Html.Partial("_ManageHostPartialView", _ManageHostModel)
+    </div>
+</div>
+@section scripts
+{
+    <script>
+     $(document).ready(function () {
+         $('select').select2({
+             minimumResultsForSearch: Infinity
+         });
+          var PopUpRenderValue = '@ViewBag.PopUpRenderValue';
+         if (PopUpRenderValue != null && PopUpRenderValue != "" && PopUpRenderValue == "ManageHost") {
+              var element = document.getElementById('add-new-host');
+              element.classList.remove('translate-x-full');
+          }
+     });
+    </script>
+    <script>
+        function BlockFunction(i, j) {
+            var RequestVerificationToken = $('input[name="__RequestVerificationToken"]').val();
+            $.ajax({
+                     type: "POST",
+                     url: '@Url.Action("BlockHost", "HostManagement")',
+                     data: {
+                         '__RequestVerificationToken': RequestVerificationToken, 'AgentId': i, 'HostId' : j},
+                    success: function (response) {
+                        window.location.reload();
+                     },
+                    error: function (error) {
+                        window.location.reload();
+                     }
+                 })
+        }
+        function UnBlockFunction(i, j) {
+        var RequestVerificationToken = $('input[name="__RequestVerificationToken"]').val();
+        $.ajax({
+                 type: "POST",
+                 url: '@Url.Action("UnBlockHost", "HostManagement")',
+                 data: {
+                     '__RequestVerificationToken': RequestVerificationToken, 'AgentId': i, 'HostId' : j},
+                success: function (response) {
+                    window.location.reload();
+                 },
+                error: function (error) {
+                    window.location.reload();
+                 }
+             })
+        }
+        function HostGalleryRedirectFunction(i, j) {
+            window.location.href = '/HostManagement/GalleryManagement?AgentId=' + i + '&&HostId=' + j;
+        }
+    </script>
+    <script>
+        function CancelFunction() {
+            location.reload();
+        }
+        //function ManageClubSubmitFunction() {
+        //    document.getElementById("ManageHostForm").submit();
+        //}
+        function ManageHostGetDetailsFunction(i, j) {
+            window.location.href = '/HostManagement/ManageHost?AgentId=' + i + '&&HostId=' + j;
+        }
+
+        function exportCSVExcel() {
+            const currentDateTimeString = new Date().toISOString().replace('T', ' ').replace(/\.\d{3}Z$/, '');
+            $('#table-id').table2excel({
+                exclude: ".no-export",
+                filename: currentDateTimeString + "_hoslog.xls",
+                fileext: ".xls",
+                exclude_img: false,
+                exclude_links: true,
+                exclude_inputs: true
+            });
+        }
+    </script>
+}

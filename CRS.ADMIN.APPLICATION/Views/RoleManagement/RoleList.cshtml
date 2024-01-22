@@ -1,0 +1,276 @@
+﻿@model CRS.ADMIN.APPLICATION.Models.RoleManagement.RoleManagementCommonModel
+@{
+    ViewBag.Title = "Role List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var _ManageAgentRoleModel = Model.ManageAgentRoleModel as CRS.ADMIN.APPLICATION.Models.RoleManagement.ManageAgentRoleModel;
+}
+<div class="px-8 py-4">
+    @Html.AntiForgeryToken()
+    <div>
+        <div class="heading-title">
+            @CRS.ADMIN.APPLICATION.Resources.Resource.Roles_and_Privileges
+        </div>
+        <div class="span-title-light-gray">
+            @CRS.ADMIN.APPLICATION.Resources.Resource.Manage_user_roles_and_their_privileges.
+        </div>
+    </div>
+    <div class="flex gap-[24px] mt-7 my-8" style="border-bottom: 1px solid #f4f4f4;">
+        <div class="flex tab-container-plane bg-white gap-[16px]">
+            <button id="tab1Button" class="tab-button-plane tab-link active">
+                @CRS.ADMIN.APPLICATION.Resources.Resource.Roles
+            </button>
+            <button id="tab2Button" class="tab-button-plane tab-link">
+                @CRS.ADMIN.APPLICATION.Resources.Resource.Assign_Roles
+            </button>
+        </div>
+    </div>
+    <!-- container  -->
+    <div id="tab1" class="tab-content-plane ">
+        <div class="grid gap-8">
+            <div id="tab1" class="tab-content">
+                @*<div class="flex justify-between pb-[24px]">
+                        <form>
+                            <div class="relative input-search-wrapper">
+                                <div class="absolute inset-y-0 left-0 flex items-center pl-[16px] pointer-events-none">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21" fill="none">
+                                        <path d="M17.5 18L13.875 14.375M15.8333 9.66667C15.8333 13.3486 12.8486 16.3333 9.16667 16.3333C5.48477 16.3333 2.5 13.3486 2.5 9.66667C2.5 5.98477 5.48477 3 9.16667 3C12.8486 3 15.8333 5.98477 15.8333 9.66667Z"
+                                              stroke="#667085" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"></path>
+                                    </svg>
+                                </div>
+                                <input type="search"
+                                       class="input-search block w-full "
+                                       placeholder="@CRS.ADMIN.APPLICATION.Resources.Resource.Search"
+                                       required="">
+                            </div>
+                        </form>
+                    </div>*@
+                <div class="table-tab">
+                    @*<div class="px-[16px] py-[12px] flex justify-between entry-export-container">
+                            <div class="flex items-center select-entries">
+                                    <div class="flex-none">@CRS.ADMIN.APPLICATION.Resources.Resource.Show&nbsp;</div>
+                                    <select id="countries" class="w-full select-entires " style="width: 100%; ">
+                                        <option value="5" selected>5</option>
+                                        <option value="10">10</option>
+                                        <option value="15">15</option>
+                                        <option value="20">100</option>
+                                    </select>&nbsp;
+                                    <div class="flex-none">@CRS.ADMIN.APPLICATION.Resources.Resource.Entries</div>
+                                </div>
+                            <div class="export-button">
+                                <img src="~/Content/assets_new/images/club/download-solid.svg">@CRS.ADMIN.APPLICATION.Resources.Resource.Export
+                            </div>
+                        </div>*@
+                    <div class="relative overflow-x-auto ">
+                        <table class="w-full  text-left club-table">
+                            <thead class="club-table-thead">
+                                <tr>
+                                    <th scope="col" class="p-[12px]">
+                                        <div class="flex">
+                                            S.N
+                                            <div class="relative pl-[5px]">
+                                                <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                                <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                            </div>
+                                        </div>
+                                    </th>
+                                    <th scope="col" class="p-[12px]">
+                                        <div class="flex">
+                                            @CRS.ADMIN.APPLICATION.Resources.Resource.Role_Type
+                                            <div class="relative pl-[5px]">
+                                                <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                                <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                            </div>
+                                        </div>
+                                    </th>
+                                    <th scope="col" class="p-[12px]">
+                                        <div class="flex">
+                                            @CRS.ADMIN.APPLICATION.Resources.Resource.Role_Description
+                                            <div class="relative pl-[5px]">
+                                                <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                                <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                            </div>
+                                        </div>
+                                    </th>
+                                    <th scope="col" class="p-[12px]">
+                                        <div class="flex">
+                                            Created By
+                                            <div class="relative pl-[5px]">
+                                                <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                                <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                            </div>
+                                        </div>
+                                    </th>
+
+                                    <th scope="col" class="p-[12px]">
+                                        <div class="flex">
+                                            Created On
+                                            <div class="relative pl-[5px]">
+                                                <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                                <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                            </div>
+                                        </div>
+                                    </th>
+                                    <th scope="col" class="p-[12px]">
+                                        <div class="flex justify-center">
+                                            @CRS.ADMIN.APPLICATION.Resources.Resource.Action
+                                            <div class="relative pl-[5px]">
+                                                <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                                <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                            </div>
+                                        </div>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{
+                                    int i = 1;
+                                    foreach (var item in Model.RoleListModel)
+                                    {
+                                        <tr class="bg-white border-b ">
+                                            <td class="p-[12px]">
+                                                @i
+                                            </td>
+                                            <td class="p-[12px]">
+                                                <div class="round-image-text gap-[12px]">
+                                                    @item.RoleName
+                                                </div>
+                                            </td>
+                                            <td class="p-[12px]">
+                                                @item.RoleDescription
+                                            </td>
+                                            <td class="p-[12px]">
+                                                @item.ActionUser
+                                            </td>
+                                            <td class="p-[12px]">
+                                                @item.ActionDate
+                                            </td>
+                                            <td class="p-[12px]">
+                                                <div class="flex gap-[7px] justify-center text-[16px] ">
+                                                    <a href="@Url.Action("RoleTypeList","RoleManagement", new {RoleId = item.RoleId, RoleName = item.RoleName})" class="cursor-pointer">
+                                                        <i class="las la-eye text-[24px] text-[#A6A6A6]"></i>
+                                                    </a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        i++;
+                                    }
+                                }
+
+                            </tbody>
+                        </table>
+                    </div>
+                    @*<div class="pagination-club">
+                            <div class="show-entry">@CRS.ADMIN.APPLICATION.Resources.Resource.Showing 1 to 3 of 3 @CRS.ADMIN.APPLICATION.Resources.Resource.Entries</div>
+                        </div>*@
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="tab2" class="tab-content-plane hidden">
+        @Html.Partial("_AssignRolesPartialView", _ManageAgentRoleModel)
+    </div>
+</div>
+
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+            var PopUpRenderValue = '@ViewBag.PopUpRenderValue';
+            if (PopUpRenderValue != null && PopUpRenderValue != "" && PopUpRenderValue == "AssignRole") {
+                document.getElementById("tab1").classList.add("hidden");
+                document.getElementById("tab2").classList.remove("hidden");
+                document.getElementById("tab1Button").classList.remove("active");
+                document.getElementById("tab2Button").classList.add("active");
+            }
+        });
+    </script>
+    <script>
+        function AssignRoleSubmit() {
+            var UserTypeDDL = document.getElementsByName("UserTypeDDL")[0].value;
+            var RoleDDL = document.getElementsByName("RoleDDL")[0].value;
+            var UserListViaTypeDDL = document.getElementsByName("UserListViaTypeDDL")[0].value;
+            if (UserTypeDDL === "" || UserTypeDDL == null) {
+                toastr.info('Agent type is required');
+                return false;
+            }
+
+            if (RoleDDL === "" || RoleDDL == null) {
+                toastr.info('Role is required');
+                return false;
+            }
+            return false;
+        }
+        var RequestVerificationToken = $('input[name="__RequestVerificationToken"]').val();
+        $('.UserTypeDDL').change(function () {
+            $(".UserListViaTypeDDL").empty().prepend("<option value='' disabled selected>--- Select ---</option>");
+            $(".RoleDDL").empty().prepend("<option value='' disabled selected>--- Select ---</option>");
+            $("#CurrentRole").val('');
+            var AgentType = document.getElementsByName("UserTypeDDL")[0].value;
+            if (AgentType === "" || AgentType == null) {
+                toastr.info('Agent type required');
+                return false;
+            }
+            $.ajax({
+                 type: 'POST',
+                 async: true,
+                 url: '@Url.Action("GetAgentListAndRoleByAgentType")',
+                 dataType: 'json',
+                 data: { '__RequestVerificationToken': RequestVerificationToken, AgentType },
+                success: function (data) {
+                    $.each(data.RoleDDL, function (i, RoleDDL) {
+                        $(".RoleDDL").append('<option value="' + RoleDDL.Value + '">' + RoleDDL.Text + '</option>');
+                    });
+                    $('.UserListViaTypeDDL').prop('disabled', false);
+                    $.each(data.UserListViaTypeDDL, function (i, UserListViaTypeDDL) {
+                        $(".UserListViaTypeDDL").append('<option value="' + UserListViaTypeDDL.Value + '">' + UserListViaTypeDDL.Text + '</option>');
+                     });
+                 },
+                 error: function (ex) {
+                    toastr.info('Failed to retrive role.');
+                 }
+             });
+             return false;
+        });
+
+        $('.UserListViaTypeDDL').change(function () {
+            $("#CurrentRole").val('');
+            var AgentType = document.getElementsByName("UserTypeDDL")[0].value;
+            var AgentId = document.getElementsByName("UserListViaTypeDDL")[0].value;
+             $.ajax({
+                 type: 'POST',
+                 async: true,
+                 url: '@Url.Action("GetAgentCurrentRole")',
+                 dataType: 'json',
+                 data: { '__RequestVerificationToken': RequestVerificationToken, AgentId, AgentType },
+                 success: function (response) {
+                     $("#CurrentRole").val(response.RoleName);
+                 },
+                 error: function (ex) {
+                     toastr.info('Failed to retrive current role.');
+                 }
+             });
+             return false;
+        });
+
+        document.getElementById('AssignRoleSubmitBtn').addEventListener('click',
+            function (event) {
+                event.preventDefault();
+                var AgentType = document.getElementsByName("UserTypeDDL")[0].value;
+                //var AgentId = document.getElementsByName("UserListViaTypeDDL")[0].value;
+                var RoleId = document.getElementsByName("RoleDDL")[0].value;
+                if (AgentType === "" || AgentType == null) {
+                    event.preventDefault();
+                    toastr.info('Agent type required');
+                    return false;
+                }
+                else if (RoleId === "" || RoleId == null) {
+                    event.preventDefault();
+                    toastr.info('Role required');
+                    return false;
+                }
+                else {
+                    document.getElementById("AssignRole").submit();
+                }
+            });
+    </script>
+}

@@ -1,0 +1,35 @@
+﻿@model CRS.ADMIN.APPLICATION.Models.LocationManagement.LocationModel
+
+@{
+    ViewBag.Title = "Location Detail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Styles.Render("~/UI/Style")
+
+<div class="card">
+    <div class="card-body">
+        <div class="row">
+            @if (!string.IsNullOrEmpty(Model.LocationName))
+            {
+                @Html.NLabelFor(model => model.LocationName, new { @class = "form-control", autocomplete = "off" }, 2)
+            }
+            @if (!string.IsNullOrEmpty(Model.LocationURL))
+            {
+                @Html.NLabelFor(model => model.LocationURL, new { @class = "form-control", autocomplete = "off" }, 2)
+            }
+            @if (!string.IsNullOrEmpty(Model.Latitude))
+            {
+                @Html.NLabelFor(model => model.Latitude, new { @class = "form-control", autocomplete = "off" }, 2)
+            }
+            @if (!string.IsNullOrEmpty(Model.Longitude))
+            {
+                @Html.NLabelFor(model => model.Longitude, new { @class = "form-control", autocomplete = "off" }, 2)
+            }
+
+        </div>
+        <div class="row">
+            <button type="button" class="btn btn-light btn-sm bg-primary" onclick="window.history.back();"><i class="fa fa-arrow-left"></i> Back</button>
+        </div>
+    </div>
+</div>

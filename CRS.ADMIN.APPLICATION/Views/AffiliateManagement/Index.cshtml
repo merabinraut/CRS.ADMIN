@@ -1,0 +1,704 @@
+﻿@model CRS.ADMIN.APPLICATION.Models.AffiliateManagement.ReferalCommonModel
+@{
+    ViewBag.Title = "Affiliate Management";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="px-8 py-4 flex flex-col gap-8">
+    @Html.AntiForgeryToken()
+    <div class="flex justify-between items-center">
+        <div>
+            <div class="heading-title">@CRS.ADMIN.APPLICATION.Resources.Resource.Affiliate_Management</div>
+            <div class="span-title-light-gray">@CRS.ADMIN.APPLICATION.Resources.Resource.AffiliateManagementSupportMsg</div>
+        </div>
+    </div>
+    <div class="">
+        <div class="flex gap-[24px]" style="border-bottom: 1px solid #f4f4f4;">
+            <div class="flex tab-container-plane bg-white gap-[16px]">
+                <button id="tab1Button" class="tab-button-plane tab-link active">@CRS.ADMIN.APPLICATION.Resources.Resource.Overview</button>
+                <button id="tab2Button" class="tab-button-plane tab-link ">@CRS.ADMIN.APPLICATION.Resources.Resource.Affiliates</button>
+                <button id="tab3Button" class="tab-button-plane tab-link ">@CRS.ADMIN.APPLICATION.Resources.Resource.Converted_Customers</button>
+            </div>
+        </div>
+    </div>
+    <div class="">
+        <div class="bg-white">
+            <div id="tab1" class="tab-content-plane ">
+                <div class="grid gap-[32px]">
+                    <div class="payment-details flex gap-[45px]">
+                        <div class="payment-details-card w-[268px]">
+                            <div class="title flex gap-[8px] mb-[12px] items-center">
+                                <div class="logo h-[32px] w-[32px] flex justify-center
+                    items-center rounded-full bg-[#fde0eb]">
+                                    <i class="las la-hand-pointer text-lg text-[#CC527A]"></i>
+                                </div>
+                                <div class="text-lg font-semibold">@CRS.ADMIN.APPLICATION.Resources.Resource.Total_Clicks</div>
+                            </div>
+                            <div class="text-2xl font-semibold mb-[30px]">
+                                @Model.AffiliatePageAnalyticModel.TotalClick
+                            </div>
+
+                            @*<hr class="bg-[#F4F4F4] mb-[12px]" />*@
+
+                            <div class="text-center text-xs cursor-pointer text-[#1C2434]">
+                                @*@CRS.ADMIN.APPLICATION.Resources.Resource.View_All
+                                    <i class="las la-angle-right"></i>*@
+                            </div>
+                        </div>
+                        <div class="payment-details-card w-[268px] flex justify-between flex-col ">
+                            <div>
+                                <div class="title flex gap-[8px] mb-[12px] items-center">
+                                    <div class="logo h-[32px] w-[32px] flex justify-center
+                    items-center rounded-full bg-[#FEEAD8]">
+                                        <i class="las la-user-friends text-lg text-[#F89336]"></i>
+                                    </div>
+                                    <div class="text-lg font-semibold">@CRS.ADMIN.APPLICATION.Resources.Resource.Total_Affiliates</div>
+                                </div>
+                                <div class="text-2xl font-semibold mb-[30px]">
+                                    @Model.AffiliatePageAnalyticModel.TotalAffiliates
+                                </div>
+                            </div>
+                            <div>
+                                @*<hr class="bg-[#F4F4F4] mb-[12px]" />*@
+
+                                <div class="text-center text-xs cursor-pointer text-[#1C2434]">
+                                    @*@CRS.ADMIN.APPLICATION.Resources.Resource.View_All <i class="las la-angle-right"></i>*@
+                                </div>
+                            </div>
+                        </div>
+                        <div class="payment-details-card w-[268px] flex justify-between flex-col ">
+                            <div>
+                                <div class="title flex gap-[8px] mb-[12px] items-center">
+                                    <div class="logo h-[32px] w-[32px] flex justify-center
+                    items-center rounded-full bg-[#FEEAD8]">
+                                        <i class="las la-user-friends text-lg text-[#F89336]"></i>
+                                    </div>
+                                    <div class="text-lg font-semibold"> @CRS.ADMIN.APPLICATION.Resources.Resource.Total_Visitors</div>
+                                </div>
+                                <div class="text-2xl font-semibold mb-[30px]">
+                                    @Model.AffiliatePageAnalyticModel.TotalConvertedCustomer
+                                </div>
+                            </div>
+                            <div>
+                                @*<hr class="bg-[#F4F4F4] mb-[12px]" />*@
+
+                                <div class="text-center text-xs cursor-pointer text-[#1C2434]">
+                                    @*@CRS.ADMIN.APPLICATION.Resources.Resource.View_All <i class="las la-angle-right"></i>*@
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex gap-9">
+                        <div>
+                            <div class="flex justify-between mb-4">
+                                <div class="text-gray-900 font-bold"> @CRS.ADMIN.APPLICATION.Resources.Resource.Affiliate_Expenses</div>
+                            </div>
+                            <div class=" border border-[#E4E4E7] rounded-[10px] p-4">
+                                <div class="bg-white ">
+                                    <div class=" flex justify-between items-center">
+                                        <div class="flex tab-container-chart ">
+                                            <button id="tab1Button" class="tab-button-chart tab-link active">12 @CRS.ADMIN.APPLICATION.Resources.Resource.Months</button>
+                                            <button id="tab2Button" class="tab-button-chart tab-link">6 @CRS.ADMIN.APPLICATION.Resources.Resource.Months</button>
+                                            <button id="tab3Button" class="tab-button-chart tab-link">30 @CRS.ADMIN.APPLICATION.Resources.Resource.Days</button>
+                                            <button id="tab3Button" class="tab-button-chart tab-link">7 @CRS.ADMIN.APPLICATION.Resources.Resource.Days</button>
+
+                                        </div>
+                                        <div class="font-bold text-[11px] cursor-pointer flex gap-[6px] w-max justify-center items-center border border-[#D4D4D8] rounded-[5px] p-[6px] ">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="16" viewBox="0 0 15 16" fill="none">
+                                                <path d="M7.4023 7.10983V10.7857M7.4023 10.7857L5.63195 8.94777M7.4023 10.7857L9.17265 8.94777M10.3529 13.849H4.45172C3.79989 13.849 3.27148 13.3004 3.27148 12.6237V4.04659C3.27148 3.36987 3.79989 2.82129 4.45172 2.82129H7.74798C7.90449 2.82129 8.05459 2.88584 8.16526 3.00073L11.3603 6.31774C11.4709 6.43263 11.5331 6.58846 11.5331 6.75095V12.6237C11.5331 13.3004 11.0047 13.849 10.3529 13.849Z"
+                                                      stroke="#18181B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                            </svg>
+                                            <div class="w-max leading-[16px]">@CRS.ADMIN.APPLICATION.Resources.Resource.Export_Pdf</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="w-[610px]">
+                                    <div id="tab1" class="tab-content-chart">
+                                        <div class="w-full">
+                                            <canvas class="w-full h-[200px]" id="Month12"></canvas>
+                                        </div>
+                                    </div>
+                                    <div id="tab2" class="tab-content-chart hidden">
+                                        <div class="w-full">
+                                            <canvas class="w-full" id="Month6"></canvas>
+                                        </div>
+                                    </div>
+                                    <div id="tab2" class="tab-content-chart hidden">
+                                        3
+                                    </div>
+                                    <div id="tab2" class="tab-content-chart hidden">
+                                        4
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="w-[449px]">
+                            <div class="flex justify-between mb-4">
+                                <div class="text-gray-900 font-bold">@CRS.ADMIN.APPLICATION.Resources.Resource.Platforms</div>
+                                @*<div class="text-gray-500 text-xs">@CRS.ADMIN.APPLICATION.Resources.Resource.Last_7_Days<span><i class="las la-angle-down"></i></span></div>*@
+                            </div>
+                            <div class="border border-[#E4E4E7] rounded-[10px] px-[27px] pt-[37px] pb-[37px] flex flex-col gap-8">
+                                <div>
+                                    <div class="mb-2 flex justify-between text-[#18181B] text-[13px]">@CRS.ADMIN.APPLICATION.Resources.Resource.Line <span>@Model.AffiliatePageAnalyticModel.Line</span></div>
+                                    <div class="w-full bg-[#F4F4F5] rounded-full h-[5px]">
+                                        <div class="bg-primary-100  h-[5px] rounded-full" style="width: @Model.AffiliatePageAnalyticModel.LinePercentage%"></div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="mb-2 flex justify-between text-[#18181B] text-[13px]">@CRS.ADMIN.APPLICATION.Resources.Resource.Facebook <span>@Model.AffiliatePageAnalyticModel.Facebook</span></div>
+                                    <div class="w-full bg-[#F4F4F5] rounded-full h-[5px]">
+                                        <div class="bg-primary-100  h-[5px] rounded-full" style="width: @Model.AffiliatePageAnalyticModel.FacebookPercentage%"></div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="mb-2 flex justify-between text-[#18181B] text-[13px]">@CRS.ADMIN.APPLICATION.Resources.Resource.Tiktok <span>@Model.AffiliatePageAnalyticModel.Tiktok</span></div>
+                                    <div class="w-full bg-[#F4F4F5] rounded-full h-[5px]">
+                                        <div class="bg-primary-100  h-[5px] rounded-full" style="width: @Model.AffiliatePageAnalyticModel.TiktokPercentage%"></div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="mb-2 flex justify-between text-[#18181B] text-[13px]">@CRS.ADMIN.APPLICATION.Resources.Resource.Twitter <span>@Model.AffiliatePageAnalyticModel.Twitter</span></div>
+                                    <div class="w-full bg-[#F4F4F5] rounded-full h-[5px]">
+                                        <div class="bg-primary-100  h-[5px] rounded-full" style="width: @Model.AffiliatePageAnalyticModel.TwitterPercentage%"></div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="mb-2 flex justify-between text-[#18181B] text-[13px]">@CRS.ADMIN.APPLICATION.Resources.Resource.Instagram <span>@Model.AffiliatePageAnalyticModel.Instagram</span></div>
+                                    <div class="w-full bg-[#F4F4F5] rounded-full h-[5px]">
+                                        <div class="bg-primary-100  h-[5px] rounded-full" style="width: @Model.AffiliatePageAnalyticModel.InstagramPercentage%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div id="tab2" class="tab-content-plane hidden ">
+                <div class="flex justify-between mb-4">
+                    <form action="/AffiliateManagement/Index" method="get">
+                        <div class="relative input-search-wrapper">
+                            <div class="absolute inset-y-0 left-0 flex items-center pl-[16px] pointer-events-none">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21" fill="none">
+                                    <path d="M17.5 18L13.875 14.375M15.8333 9.66667C15.8333 13.3486 12.8486 16.3333 9.16667 16.3333C5.48477 16.3333 2.5 13.3486 2.5 9.66667C2.5 5.98477 5.48477 3 9.16667 3C12.8486 3 15.8333 5.98477 15.8333 9.66667Z"
+                                          stroke="#667085" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round">
+                                    </path>
+                                </svg>
+                            </div>
+                            <input type="search" id="default-search" class="input-search block w-full " placeholder="@CRS.ADMIN.APPLICATION.Resources.Resource.Search"
+                                   name="SearchFilter1" value="@ViewBag.SearchFilter1">
+                        </div>
+                    </form>
+                </div>
+                <div class="table-tab">
+                    <div class="px-[12px] py-[16px] flex justify-between entry-export-container">
+                        <div class="flex items-center select-entries">
+                            @*@CRS.ADMIN.APPLICATION.Resources.Resource.Show&nbsp;
+                                <select id="countries" class="w-full select-entires " style="width: 100%; ">
+                                    <option value="5" selected>5</option>
+                                    <option value="10">10</option>
+                                    <option value="15">15</option>
+                                    <option value="20">100</option>
+                                </select>&nbsp;@CRS.ADMIN.APPLICATION.Resources.Resource.Entries*@
+                        </div>
+                        <div class="export-button  h-[40px]" onclick="exportExcel('table-id', 'Affiliate')">
+                            <img src="~/Content/assets_new/images/club/download-solid.svg" /> @CRS.ADMIN.APPLICATION.Resources.Resource.Export
+                        </div>
+                    </div>
+                    <div class="relative overflow-x-auto">
+                        <table class="w-full  text-left club-table" id="table-id">
+                            <thead class="club-table-thead">
+                                <tr>
+                                    <th scope="col" class="p-[12px]">
+                                        <div class="flex">
+                                            S.N
+                                            <div class="relative pl-[5px]">
+                                                <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                                <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                            </div>
+                                        </div>
+                                    </th>
+                                    <th scope="col" class="p-[12px]">
+                                        <div class="flex">
+                                            @CRS.ADMIN.APPLICATION.Resources.Resource.User_Info
+                                            <div class="relative pl-[5px]">
+                                                <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                                <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                            </div>
+                                        </div>
+                                    </th>
+                                    <th scope="col" class="p-[12px]">
+                                        <div class="flex">
+                                            @CRS.ADMIN.APPLICATION.Resources.Resource.Email_Address
+                                            <div class="relative pl-[5px]">
+                                                <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                                <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                            </div>
+                                        </div>
+                                    </th>
+                                    <th scope="col" class="p-[12px]">
+                                        <div class="flex">
+                                            @CRS.ADMIN.APPLICATION.Resources.Resource.Requested_Date
+                                            <div class="relative pl-[5px]">
+                                                <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                                <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                            </div>
+                                        </div>
+                                    </th>
+
+                                    <th scope="col" class="p-[12px]">
+                                        <div class="flex">
+                                            @CRS.ADMIN.APPLICATION.Resources.Resource.Status
+                                            <div class="relative pl-[5px]">
+                                                <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                                <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                            </div>
+                                        </div>
+                                    </th>
+                                    <th scope="col" class="p-[12px]">
+                                        <div class="flex">
+                                            @CRS.ADMIN.APPLICATION.Resources.Resource.Approved_Status
+                                            <div class="relative pl-[5px]">
+                                                <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                                <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                            </div>
+                                        </div>
+                                    </th>
+                                    <th scope="col" class="p-[12px]">
+                                        <div class="flex">
+                                            @CRS.ADMIN.APPLICATION.Resources.Resource.Social_Links
+                                            <div class="relative pl-[5px]">
+                                                <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                                <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                            </div>
+                                        </div>
+                                    </th>
+                                    <th scope="col" class="p-[12px]">
+                                        <div class="flex">
+                                            @CRS.ADMIN.APPLICATION.Resources.Resource.Action
+                                            <div class="relative pl-[5px]">
+                                                <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                                <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                            </div>
+                                        </div>
+                                    </th>
+
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{
+                                    int i = 1;
+                                    foreach (var item in Model.GetAffiliateList)
+                                    {
+                                        <tr class="bg-white border-b ">
+                                            <td class="p-[12px]">
+                                                @i
+                                            </td>
+                                            <td class="p-[12px]">
+                                                <div class="round-image-text gap-[12px] items-center">
+                                                    @if (!string.IsNullOrEmpty(item.AffiliateImage))
+                                                    {
+                                                        <img class="w-[32px] h-[32px] rounded-full" src="@item.AffiliateImage" />
+                                                    }
+                                                    else
+                                                    {
+                                                        <img class="w-[32px] h-[32px] rounded-full" src="~/Content/assets_new/images/demo-image.jpeg" />
+                                                    }
+                                                    <div class="text-image">
+                                                        @item.AffiliateFullName
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="p-[12px]">
+                                                <div class="w-max ">
+                                                    @item.EmailAddress
+                                                </div>
+                                            </td>
+                                            <td class="p-[12px]">
+                                                @item.RequestedDate
+                                            </td>
+                                            <td class="p-[12px]">
+                                                @if (!string.IsNullOrEmpty(item.Status) && item.Status.Trim().ToUpper() == "ACTIVE")
+                                                {
+                                                    <div class="approved">
+                                                        Active
+                                                    </div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="blocked">
+                                                        Blocked
+                                                    </div>
+                                                }
+                                            </td>
+                                            <td class="p-[12px]">
+                                                @if (!string.IsNullOrEmpty(item.ApprovedStatus) && item.ApprovedStatus.Trim().ToUpper() == "APPROVED")
+                                                {
+                                                    <div class="approved">
+                                                        Approved
+                                                    </div>
+                                                }
+                                                else if (!string.IsNullOrEmpty(item.ApprovedStatus) && item.ApprovedStatus.Trim().ToUpper() == "PENDING")
+                                                {
+                                                    <div class="pending">
+                                                        Pending
+                                                    </div>
+                                                }
+                                                else if (!string.IsNullOrEmpty(item.ApprovedStatus) && item.ApprovedStatus.Trim().ToUpper() == "REJECTED")
+                                                {
+                                                    <div class="blocked">
+                                                        Rejected
+                                                    </div>
+                                                }
+                                            </td>
+                                            <td class="p-[12px] cursor-pointer" onclick="redirectToURL('@item.SnsURLLink')">
+                                                @item.SnsURLLink
+                                            </td>
+                                            <td class="p-[12px]">
+                                                <div class="flex gap-2 items-center">
+                                                    @if (!string.IsNullOrEmpty(item.AffiliateType) && item.AffiliateType.Trim().ToUpper() == "HOLD"
+                                                        && !string.IsNullOrEmpty(item.ApprovedStatus) && item.ApprovedStatus.Trim().ToUpper() == "PENDING")
+                                                    {
+                                                        <i class="las la-window-close text-[24px] text-[#CB3F3F] cursor-pointer" onclick="ApproveRejectFunction('@item.HoldAffiliateId', 'R');"></i>
+                                                        <img src="~/Content/assets_new/images/check-square.svg" alt="" class="cursor-pointer" onclick="ApproveRejectFunction('@item.HoldAffiliateId', 'A');">
+                                                    }
+                                                    else
+                                                    {
+                                                        if (string.IsNullOrEmpty(item.AffiliateType) && item.AffiliateType.Trim().ToUpper() != "HOLD")
+                                                        {
+                                                            if (!string.IsNullOrEmpty(item.Status) && item.Status.Trim().ToUpper() == "BLOCKED")
+                                                            {
+                                                                <i class="las la-unlock cursor-pointer text-[#697DBF] text-[18px]" onclick="ManageStatusFunction('@item.AffiliateId', 'A');"></i>
+                                                            }
+                                                            else
+                                                            {
+                                                                <i class="las la-lock cursor-pointer text-[#697DBF] text-[18px]" onclick="ManageStatusFunction('@item.AffiliateId', 'B');"></i>
+                                                            }
+                                                        }
+                                                    }
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        i++;
+                                    }
+                                }
+                            </tbody>
+                        </table>
+
+                    </div>
+                    @*<div class="pagination-club">
+                            <div class="show-entry">@CRS.ADMIN.APPLICATION.Resources.Resource.Showing 1 to 5 of 301 @CRS.ADMIN.APPLICATION.Resources.Resource.Entries</div>
+                            <div class="flex gap-[12px]">
+                                <div class="btn btn-secondary-box-shadow ">@CRS.ADMIN.APPLICATION.Resources.Resource.Previous</div>
+                                <div class="flex gap-[12px]">
+                                    <div class="pagination-number active">
+                                        1
+                                    </div>
+                                    <div class="pagination-number">
+                                        2
+                                    </div>
+                                    <div class="pagination-number">
+                                        3
+                                    </div>
+                                    <div class="pagination-number">
+                                        ..
+                                    </div>
+                                    <div class="pagination-number">
+                                        10
+                                    </div>
+                                </div>
+                                <div class="btn btn-secondary-box-shadow ">@CRS.ADMIN.APPLICATION.Resources.Resource.Next</div>
+                            </div>
+                        </div>*@
+                </div>
+            </div>
+            <div id="tab3" class="tab-content-plane hidden ">
+                <div class="flex justify-between mb-4">
+                    <form action="/AffiliateManagement/Index" method="get">
+                        <div class="relative input-search-wrapper">
+                            <div class="absolute inset-y-0 left-0 flex items-center pl-[16px] pointer-events-none">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21" fill="none">
+                                    <path d="M17.5 18L13.875 14.375M15.8333 9.66667C15.8333 13.3486 12.8486 16.3333 9.16667 16.3333C5.48477 16.3333 2.5 13.3486 2.5 9.66667C2.5 5.98477 5.48477 3 9.16667 3C12.8486 3 15.8333 5.98477 15.8333 9.66667Z"
+                                          stroke="#667085" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round">
+                                    </path>
+                                </svg>
+                            </div>
+                            <input type="search" id="default-search" class="input-search block w-full " placeholder="@CRS.ADMIN.APPLICATION.Resources.Resource.Search" name="SearchFilter2"
+                                   value="@ViewBag.SearchFilter2">
+                        </div>
+                    </form>
+                </div>
+                <div class="table-tab">
+                    <div class="px-[12px] py-[16px] flex justify-between entry-export-container">
+                        <div class="flex items-center select-entries">
+                            @*@CRS.ADMIN.APPLICATION.Resources.Resource.Show&nbsp;
+                                <select id="countries" class="w-full select-entires " style="width: 100%; ">
+                                    <option value="5" selected>5</option>
+                                    <option value="10">10</option>
+                                    <option value="15">15</option>
+                                    <option value="20">100</option>
+                                </select>&nbsp;@CRS.ADMIN.APPLICATION.Resources.Resource.Entries*@
+                        </div>
+                        <div class="export-button  h-[40px]" onclick="exportExcel('table-id2', 'Customer')">
+                            <img src="~/Content/assets_new/images/club/download-solid.svg" /> @CRS.ADMIN.APPLICATION.Resources.Resource.Export
+                        </div>
+                    </div>
+                    <div class="relative overflow-x-auto">
+                        <table class="w-full  text-left club-table" id="table-id2">
+                            <thead class="club-table-thead">
+                                <tr>
+                                    <th scope="col" class="p-[12px]">
+                                        <div class="flex">
+                                            S.N
+                                            <div class="relative pl-[5px]">
+                                                <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                                <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                            </div>
+                                        </div>
+                                    </th>
+                                    <th scope="col" class="p-[12px]">
+                                        <div class="flex">
+                                            @CRS.ADMIN.APPLICATION.Resources.Resource.Customer
+                                            <div class="relative pl-[5px]">
+                                                <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                                <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                            </div>
+                                        </div>
+                                    </th>
+                                    <th scope="col" class="p-[12px]">
+                                        <div class="flex">
+                                            @CRS.ADMIN.APPLICATION.Resources.Resource.Converted_Date
+                                            <div class="relative pl-[5px]">
+                                                <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                                <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                            </div>
+                                        </div>
+                                    </th>
+                                    <th scope="col" class="p-[12px]">
+                                        <div class="flex">
+                                            @CRS.ADMIN.APPLICATION.Resources.Resource.Associated_Affiliate
+                                            <div class="relative pl-[5px]">
+                                                <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                                <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                            </div>
+                                        </div>
+                                    </th>
+
+                                    <th scope="col" class="p-[12px]">
+                                        <div class="flex">
+                                            @CRS.ADMIN.APPLICATION.Resources.Resource.Affiliate_Amount
+                                            <div class="relative pl-[5px]">
+                                                <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                                <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                            </div>
+                                        </div>
+                                    </th>
+                                    @*<th scope="col" class="p-[12px]">
+                                            <div class="flex">
+                                                @CRS.ADMIN.APPLICATION.Resources.Resource.Action
+                                                <div class="relative pl-[5px]">
+                                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                                </div>
+                                            </div>
+                                        </th>*@
+
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{
+                                    int sno = 1;
+                                    foreach (var item in Model.GetReferalConvertedCustomerList)
+                                    {
+                                        <tr class="bg-white border-b ">
+                                            <td class="p-[12px]">
+                                                @sno
+                                            </td>
+                                            <td class="p-[12px]">
+                                                <div class="round-image-text gap-[12px] items-center">
+                                                    <img class="w-[32px] h-[32px] rounded-full" src="@item.CustomerImage" />
+                                                    <div class="text-image">
+                                                        @item.CustomerUserName
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="p-[12px]">
+                                                <div class="w-max ">
+                                                    @item.CustomerConvertedDate
+                                                </div>
+                                            </td>
+                                            <td class="p-[12px]">
+                                                <div class="round-image-text gap-[12px] items-center">
+                                                    <img class="w-[32px] h-[32px] rounded-full" src="@item.AffiliateImaeg" />
+                                                    <div class="text-image">
+                                                        @item.AffiliateFullName
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="p-[12px]">
+                                                ¥ @item.AffiliateAmount
+                                            </td>
+                                            @*<td class="p-[12px]">
+                                                    <div class="flex gap-2 items-center">
+                                                        <i class="las la-eye text-[24px] text-[#A6A6A6]"></i>
+                                                    </div>
+                                                </td>*@
+                                        </tr>
+                                        sno++;
+                                    }
+                                }
+                            </tbody>
+                        </table>
+
+                    </div>
+                    @*<div class="pagination-club">
+                            <div class="show-entry">@CRS.ADMIN.APPLICATION.Resources.Resource.Showing 1 to 5 of 301 @CRS.ADMIN.APPLICATION.Resources.Resource.Entries</div>
+                            <div class="flex gap-[12px]">
+                                <div class="btn btn-secondary-box-shadow ">@CRS.ADMIN.APPLICATION.Resources.Resource.Previous</div>
+                                <div class="flex gap-[12px]">
+                                    <div class="pagination-number active">
+                                        1
+                                    </div>
+                                    <div class="pagination-number">
+                                        2
+                                    </div>
+                                    <div class="pagination-number">
+                                        3
+                                    </div>
+                                    <div class="pagination-number">
+                                        ..
+                                    </div>
+                                    <div class="pagination-number">
+                                        10
+                                    </div>
+                                </div>
+                                <div class="btn btn-secondary-box-shadow ">@CRS.ADMIN.APPLICATION.Resources.Resource.Next</div>
+                            </div>
+                        </div>*@
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts
+{
+    <script>
+        // Your data object
+        const labelsMonth12 = ["Oct", "Nov", "Dec", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul ", "Aug", "Sep",];
+        const dataMonth12 = {
+            labels: labelsMonth12,
+            datasets: [{
+                label: "¥",
+                data: [65, 59, 80, 81, 56, 55, 40, 65, 59, 80, 81, 56, 55, 40],
+                fill: true,
+                border: "1px solid",
+                borderColor: '#EC4899',
+                backgroundColor: '#FFB6C1',
+                tension: 0.1,
+                pointStyle: 'circle',
+                pointRadius: 5,
+                pointHoverRadius: 7
+            }]
+        };
+
+        // Configuration object
+        const configMonth12 = {
+            type: 'line',
+            data: dataMonth12,
+        };
+
+        // Create a chart
+        const Month12 = new Chart(document.getElementById('Month12'), configMonth12);
+
+
+        // Your data object
+        const labelsMonth6 = ["Oct", "Nov", "Dec", "Jan", "Feb", "Mar"];
+        const dataMonth6 = {
+            labels: labelsMonth6,
+            datasets: [{
+                label: "¥",
+                data: [65, 59, 80, 81, 56, 55, 40],
+                fill: true,
+                border: "1px solid",
+                borderColor: '#EC4899',
+                backgroundColor: '#FFB6C1',
+                tension: 0.1,
+                pointStyle: 'circle',
+                pointRadius: 5,
+                pointHoverRadius: 7
+            }]
+        };
+
+        // Configuration object
+        const configMonth6 = {
+            type: 'line',
+            data: dataMonth6,
+        };
+
+        // Create a chart
+        const Month6 = new Chart(document.getElementById('Month6'), configMonth6);
+    </script>
+    <script>
+        function redirectToURL(url) {
+            window.open(url, '_blank');
+        }
+    </script>
+    <script>
+         function ManageStatusFunction(i,j) {
+             var RequestVerificationToken = $('input[name="__RequestVerificationToken"]').val();
+             $.ajax({
+                 type: "POST",
+                 url: '@Url.Action("ManageAffiliateStatus", "AffiliateManagement")',
+                 data: {
+                     '__RequestVerificationToken': RequestVerificationToken, 'AgentId': i, 'Status': j
+                 },
+                 success: function (response) {
+                     window.location.reload();
+                 },
+                 error: function (error) {
+                     window.location.reload();
+                 }
+             });
+        }
+
+        function ApproveRejectFunction(i, j) {
+             var RequestVerificationToken = $('input[name="__RequestVerificationToken"]').val();
+             $.ajax({
+                 type: "POST",
+                 url: '@Url.Action("ApproveRejectAffiliateRequest", "AffiliateManagement")',
+                 data: {
+                     '__RequestVerificationToken': RequestVerificationToken, 'HoldAgentId': i, 'Status': j
+                 },
+                 success: function (response) {
+                     window.location.reload();
+                 },
+                 error: function (error) {
+                     window.location.reload();
+                 }
+             });
+        }
+        $(document).ready(function () {
+            document.querySelectorAll('.tab-link').forEach(function (button) {
+                button.classList.remove('active');
+            });
+            document.querySelectorAll('.tab-content-plane').forEach(function (button) {
+                button.classList.add('hidden');
+            });
+            var tabNumber = 1;
+            var activeTab = '@ViewBag.ActiveTab';
+            if (activeTab != null && activeTab != '' && activeTab === 'Affiliates') {
+                tabNumber = 2
+            }
+            else if (activeTab != null && activeTab != '' && activeTab === 'Converted Customers') {
+                tabNumber = 3
+            }
+            document.getElementById('tab' + tabNumber + 'Button').classList.add('active');
+            $('.bg-white #tab' + tabNumber).removeClass("hidden");
+            //document.getElementById('tab' + tabNumber).classList.remove("hidden");
+        });
+
+    </script>
+}

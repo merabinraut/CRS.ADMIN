@@ -1,0 +1,630 @@
+﻿@model List<CRS.ADMIN.APPLICATION.Models.PaymentManagement.PaymentLogsModel>
+<div class="py-4">
+    <div class="flex flex-col  gap-8">
+
+        <div class="flex justify-between ">
+            @using (Html.BeginForm("GetPaymentLogs", "PaymentManagement", FormMethod.Get, new { @id = "PaymentLogForm" }))
+            {
+                <div class="relative input-search-wrapper">
+                    <div class="absolute inset-y-0 left-0 flex items-center pl-[16px] pointer-events-none">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21" fill="none">
+                            <path d="M17.5 18L13.875 14.375M15.8333 9.66667C15.8333 13.3486 12.8486 16.3333 9.16667 16.3333C5.48477 16.3333 2.5 13.3486 2.5 9.66667C2.5 5.98477 5.48477 3 9.16667 3C12.8486 3 15.8333 5.98477 15.8333 9.66667Z"
+                                  stroke="#667085" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round">
+                            </path>
+                        </svg>
+                    </div>
+                    <input type="hidden" id="clubId" name="clubId" />
+                    <input type="search"
+                           id="default-search"
+                           class="input-search block w-full "
+                           placeholder="@CRS.ADMIN.APPLICATION.Resources.Resource.Search"
+                           name="searchText">
+                </div>
+            }
+            <div class="flex gap-4">
+                <div class="input-field-common payment-select-club w-[140px]">
+                    <select id="large" name="clubId" class="default_select select-common block w-full ddlPaymentClubList"
+                            style="width: 100%; border-radius:8px;">
+                        @foreach (var item in ViewBag.ClubDDL as IEnumerable<SelectListItem>)
+                        {
+                            var selectedId = ViewBag.ClubDDL as string;
+                            if (item.Value == selectedId)
+                            {
+                                <option value="@item.Value" selected>
+                                    @item.Text
+                                </option>
+                            }
+                            else
+                            {
+                                <option value="@item.Value">
+                                    @item.Text
+                                </option>
+                            }
+                        }
+                    </select>
+                </div>
+
+                @*<div class="bg-white ">
+                        <div class="flex tab-container">
+                            <button id="tab1Button" class="tab-button tab-link active">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Today
+                            </button>
+                            <button id="tab2Button" class="tab-button tab-link">
+                                Tomorrow
+                            </button>
+                            <button id="tab3Button" class="tab-button tab-link">
+                                Day After Tomorrow
+                            </button>
+                        </div>
+                    </div>*@
+                <div class="custom-date " data-drawer-target="custom-date-drawer" data-drawer-show="custom-date-drawer"
+                     data-drawer-placement="right" aria-controls="custom-date-drawer">
+                    <img src="~/Content/assets_new/images/club/calendar-week-solid.svg" alt="date">
+                    @CRS.ADMIN.APPLICATION.Resources.Resource.Custom_Date
+                </div>
+            </div>
+
+        </div>
+
+        <div class="bg-white  ">
+            <div id="tab1" class="tab-content">
+                <!-- Content for Tab 1 -->
+                <!-- table  -->
+                <div class="table-tab">
+                    <div class="px-[12px] py-[16px] flex justify-between entry-export-container">
+                        @*<div class="flex items-center select-entries">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Show&nbsp;
+                                <select id="countries" class="w-full select-entires " style="width: 100%; ">
+                                    <option value="5" selected>5</option>
+                                    <option value="10">10</option>
+                                    <option value="15">15</option>
+                                    <option value="20">100</option>
+                                </select>&nbsp;@CRS.ADMIN.APPLICATION.Resources.Resource.Entries
+                            </div>*@
+                        <div class="export-button h-[40px]">
+                            <img src="~/Content/assets_new/images/club/download-solid.svg">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Export
+                        </div>
+                    </div>
+
+                    <div class="relative overflow-x-auto">
+                        <table class="w-full  text-left club-table">
+                            <thead class="club-table-thead">
+                                <tr>
+                                    <th scope="col" class="p-[12px]">
+                                        <div class="flex w-max">
+                                            S.N
+                                            <div class="relative pl-[5px]">
+                                                <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                                <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                            </div>
+                                        </div>
+                                    </th>
+                                    <th scope="col" class="p-[12px]">
+                                        <div class="flex w-max">
+                                            @CRS.ADMIN.APPLICATION.Resources.Resource.Club_Profile
+                                            <div class="relative pl-[5px]">
+                                                <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                                <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                            </div>
+                                        </div>
+                                    </th>
+                                    <th scope="col" class="p-[12px]">
+                                        <div class="flex w-max">
+                                            @CRS.ADMIN.APPLICATION.Resources.Resource.Location
+                                            <div class="relative pl-[5px]">
+                                                <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                                <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                            </div>
+                                        </div>
+                                    </th>
+                                    <th scope="col" class="p-[12px]">
+                                        <div class="flex w-max">
+                                            @CRS.ADMIN.APPLICATION.Resources.Resource.Date
+                                            <div class="relative pl-[5px]">
+                                                <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                                <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                            </div>
+                                        </div>
+                                    </th>
+
+                                    @*<th scope="col" class="p-[12px]">
+                                            <div class="flex w-max">
+                                                @CRS.ADMIN.APPLICATION.Resources.Resource.Payment_Status
+                                                <div class="relative pl-[5px]">
+                                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                                </div>
+                                            </div>
+                                        </th>*@
+                                    <th scope="col" class="p-[12px]">
+                                        <div class="flex w-max">
+                                            @CRS.ADMIN.APPLICATION.Resources.Resource.Total_Amount
+                                            <div class="relative pl-[5px]">
+                                                <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                                <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                            </div>
+                                        </div>
+                                    </th>
+                                    <th scope="col" class="p-[12px]">
+                                        <div class="flex w-max">
+                                            @CRS.ADMIN.APPLICATION.Resources.Resource.Total_Commission
+                                            <div class="relative pl-[5px]">
+                                                <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                                <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                            </div>
+                                        </div>
+                                    </th>
+                                    <th scope="col" class="p-[12px]">
+                                        <div class="flex w-max">
+                                            @CRS.ADMIN.APPLICATION.Resources.Resource.Grand_Total
+                                            <div class="relative pl-[5px]">
+                                                <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                                <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                            </div>
+                                        </div>
+                                    </th>
+                                    <th scope="col" class="p-[12px]">
+                                        <div class="flex w-max justify-center">
+                                            @CRS.ADMIN.APPLICATION.Resources.Resource.Action
+                                            <div class="relative pl-[5px]">
+                                                <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                                <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                            </div>
+                                        </div>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{
+                                    int rowCount = 1;
+
+                                    foreach (var paymentLog in Model)
+                                    {
+                                        var paymentLogModel = paymentLog as CRS.ADMIN.APPLICATION.Models.PaymentManagement.PaymentLogsModel;
+                                        <tr class="bg-white border-b ">
+                                            <td class="p-[12px] w-max">
+                                                @rowCount
+                                            </td>
+                                            <td class="p-[12px] w-max">
+                                                <div class="round-image-text flex gap-[12px] w-max ">
+                                                    <img class="w-[32px] h-[32px] rounded-full"
+                                                         src="@paymentLogModel.ClubLogo" />
+
+                                                    <div class="flex justify-between w-full">
+                                                        <div class="text-image grid flex-none">
+                                                            <div class="text-sm font-semibold text-[#101828] ">
+                                                                @paymentLogModel.ClubName
+                                                            </div>
+                                                            <div class="@GetClubCategoryClassName(paymentLogModel.ClubCategory)">@paymentLogModel.ClubCategory</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="p-[12px] w-max">
+                                                @paymentLogModel.Location
+                                            </td>
+                                            <td class="p-[12px] w-max">
+                                                <div class=" w-max">
+                                                    @paymentLogModel.TransactionFormattedDate
+                                                </div>
+                                            </td>
+
+                                            @*<td class="p-[12px] w-max">
+                                                    <div class="approved w-max">
+                                                        @paymentLogModel.PaymentStatus
+                                                    </div>
+                                                </td>*@
+                                            <td class="p-[12px] w-max">
+                                                <div class="w-max ">¥@paymentLogModel.TotalAmount</div>
+
+                                            </td>
+                                            <td class="p-[12px] w-max">
+                                                <div class="w-max ">¥@paymentLogModel.TotalCommission</div>
+
+                                            </td>
+                                            <td class="p-[12px] w-max">
+                                                <div class="w-max ">¥@paymentLogModel.GrandTotal</div>
+                                            </td>
+                                            <td class="p-[12px] w-max">
+                                                <div class="flex justify-center items-center gap-3 w-full">
+                                                    <a href="@Url.Action("/GetPaymentLedger", new { clubId = paymentLog.ClubId, Date = paymentLog.Date })">
+                                                        <i class="las la-eye text-[20px] cursor-pointer text-[#A6A6A6]"></i>
+                                                    </a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        rowCount++;
+                                    }
+                                }
+                            </tbody>
+                        </table>
+
+                    </div>
+                    @*<div class="pagination-club">
+                            <div class="show-entry">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Showing 1 to 5 of 301 @CRS.ADMIN.APPLICATION.Resources.Resource.Entries
+                            </div>
+                            <div class="flex gap-[12px]">
+                                <div class="btn btn-secondary-box-shadow ">
+                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Previous
+                                </div>
+                                <div class="flex gap-[12px]">
+                                    <div class="pagination-number active">
+
+                                        1
+                                    </div>
+                                    <div class="pagination-number">
+                                        2
+                                    </div>
+                                    <div class="pagination-number">
+                                        3
+                                    </div>
+                                    <div class="pagination-number">
+                                        ..
+                                    </div>
+                                    <div class="pagination-number">
+                                        10
+                                    </div>
+
+                                </div>
+                                <div class="btn btn-secondary-box-shadow ">
+                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Next
+                                </div>
+                            </div>
+                        </div>*@
+                </div>
+            </div>
+            <div id="tab2" class="tab-content hidden">
+                <!-- Content for Tab 2 -->
+                <div class="table-tab">
+                    <div class="px-[12px] py-[16px] flex justify-between entry-export-container">
+                        <div class="flex items-center select-entries">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Show&nbsp;
+                            <select id="countries" class="w-full select-entires " style="width: 100%; ">
+                                <option value="5" selected>5</option>
+                                <option value="10">10</option>
+                                <option value="15">15</option>
+                                <option value="20">100</option>
+                            </select>&nbsp;@CRS.ADMIN.APPLICATION.Resources.Resource.Entries
+                        </div>
+                        <div class="export-button h-[40px]">
+                            <img src="~/Content/assets_new/images/club/download-solid.svg">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Export
+                        </div>
+                    </div>
+
+                    <div class="relative overflow-x-auto">
+                        <table class="w-full  text-left club-table">
+                            <thead class="club-table-thead">
+                                <tr>
+                                    <th scope="col" class="p-[12px]">
+                                        <div class="flex w-max">
+                                            S.N
+                                            <div class="relative pl-[5px]">
+                                                <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                                <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                            </div>
+                                        </div>
+                                    </th>
+                                    <th scope="col" class="p-[12px]">
+                                        <div class="flex w-max">
+                                            @CRS.ADMIN.APPLICATION.Resources.Resource.Club_Profile
+                                            <div class="relative pl-[5px]">
+                                                <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                                <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                            </div>
+                                        </div>
+                                    </th>
+                                    <th scope="col" class="p-[12px]">
+                                        <div class="flex w-max">
+                                            @CRS.ADMIN.APPLICATION.Resources.Resource.Location
+                                            <div class="relative pl-[5px]">
+                                                <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                                <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                            </div>
+                                        </div>
+                                    </th>
+                                    <th scope="col" class="p-[12px]">
+                                        <div class="flex w-max">
+                                            @CRS.ADMIN.APPLICATION.Resources.Resource.Date
+                                            <div class="relative pl-[5px]">
+                                                <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                                <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                            </div>
+                                        </div>
+                                    </th>
+
+                                    <th scope="col" class="p-[12px]">
+                                        <div class="flex w-max">
+                                            @CRS.ADMIN.APPLICATION.Resources.Resource.Payment_Status
+                                            <div class="relative pl-[5px]">
+                                                <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                                <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                            </div>
+                                        </div>
+                                    </th>
+                                    <th scope="col" class="p-[12px]">
+                                        <div class="flex w-max">
+                                            @CRS.ADMIN.APPLICATION.Resources.Resource.Total_Amount
+                                            <div class="relative pl-[5px]">
+                                                <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                                <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                            </div>
+                                        </div>
+                                    </th>
+                                    <th scope="col" class="p-[12px]">
+                                        <div class="flex w-max">
+                                            @CRS.ADMIN.APPLICATION.Resources.Resource.Total_Commission
+                                            <div class="relative pl-[5px]">
+                                                <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                                <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                            </div>
+                                        </div>
+                                    </th>
+                                    <th scope="col" class="p-[12px]">
+                                        <div class="flex w-max">
+                                            @CRS.ADMIN.APPLICATION.Resources.Resource.Grand_Total
+                                            <div class="relative pl-[5px]">
+                                                <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                                <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                            </div>
+                                        </div>
+                                    </th>
+                                    <th scope="col" class="p-[12px]">
+                                        <div class="flex w-max justify-center">
+                                            @CRS.ADMIN.APPLICATION.Resources.Resource.Action
+                                            <div class="relative pl-[5px]">
+                                                <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                                <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                            </div>
+                                        </div>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @*<tr class="bg-white border-b ">
+                                        <td class="p-[12px] w-max">
+                                            1
+                                        </td>
+                                        <td class="p-[12px] w-max">
+                                            <div class="round-image-text flex gap-[12px] w-max ">
+                                                <img class="w-[32px] h-[32px] rounded-full"
+                                                     src="../../../assets/images/demo-image.jpeg" />
+
+                                                <div class="flex justify-between w-full">
+                                                    <div class="text-image grid flex-none">
+                                                        <div class="text-sm font-semibold text-[#101828] ">
+                                                            Club Earth
+                                                        </div>
+                                                        <div class="platinum ">platinum</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="p-[12px] w-max">
+
+                                            Collins 37 Building B1 , 2-17-4 Kabukicho, Shinjuku-ku, Tokyo
+
+
+                                        </td>
+                                        <td class="p-[12px] w-max">
+                                            <div class=" w-max">
+                                                2023-06-01
+                                            </div>
+                                        </td>
+
+                                        <td class="p-[12px] w-max">
+                                            <div class="approved w-max">
+                                                Received
+                                            </div>
+                                        </td>
+                                        <td class="p-[12px] w-max">
+                                            <div class="w-max ">¥11,234</div>
+
+                                        </td>
+                                        <td class="p-[12px] w-max">
+                                            <div class="w-max ">¥11,234</div>
+
+                                        </td>
+                                        <td class="p-[12px] w-max">
+                                            <div class="w-max ">¥11,234</div>
+
+                                        </td>
+                                        <td class="p-[12px] w-max">
+                                            <div class="flex justify-center items-center gap-3 w-full">
+                                                <a href="./paymemt-ledger.php">
+                                                    <i class="las la-eye text-[20px] cursor-pointer text-[#A6A6A6]"></i>
+                                                </a>
+                                                <div class="btn btn-green-border h-[22px] text-[10px] rounded-[16px] w-max">
+                                                    Make Paid
+                                                </div>
+                                            </div>
+                                        </td>
+
+
+
+                                    </tr>
+                                    <tr class="bg-white border-b ">
+                                        <td class="p-[12px] w-max">
+                                            1
+                                        </td>
+                                        <td class="p-[12px] w-max">
+                                            <div class="round-image-text flex gap-[12px] w-max ">
+                                                <img class="w-[32px] h-[32px] rounded-full"
+                                                     src="../../../assets/images/demo-image.jpeg" />
+
+                                                <div class="flex justify-between w-full">
+                                                    <div class="text-image grid flex-none">
+                                                        <div class="text-sm font-semibold text-[#101828] ">
+                                                            Club Earth
+                                                        </div>
+                                                        <div class="gold ">gold</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="p-[12px] w-max">
+
+                                            Collins 37 Building B1 , 2-17-4 Kabukicho, Shinjuku-ku, Tokyo
+
+
+                                        </td>
+                                        <td class="p-[12px] w-max">
+                                            <div class=" w-max">
+                                                2023-06-01
+                                            </div>
+                                        </td>
+
+                                        <td class="p-[12px] w-max">
+                                            <div class="pending w-max">
+                                                Processing
+                                            </div>
+                                        </td>
+                                        <td class="p-[12px] w-max">
+                                            <div class="w-max ">¥11,234</div>
+
+                                        </td>
+                                        <td class="p-[12px] w-max">
+                                            <div class="w-max ">¥11,234</div>
+
+                                        </td>
+                                        <td class="p-[12px] w-max">
+                                            <div class="w-max ">¥11,234</div>
+
+                                        </td>
+                                        <td class="p-[12px] w-max">
+                                            <div class="flex justify-center items-center gap-3 w-full">
+                                                <div class="btn btn-green-border h-[22px] text-[10px] rounded-[16px] w-max">
+                                                    Make Paid
+                                                </div>
+                                            </div>
+                                        </td>
+
+
+
+                                    </tr>
+                                    <tr class="bg-white border-b ">
+                                        <td class="p-[12px] w-max">
+                                            1
+                                        </td>
+                                        <td class="p-[12px] w-max">
+                                            <div class="round-image-text flex gap-[12px] w-max ">
+                                                <img class="w-[32px] h-[32px] rounded-full"
+                                                     src="../../../assets/images/demo-image.jpeg" />
+
+                                                <div class="flex justify-between w-full">
+                                                    <div class="text-image grid flex-none">
+                                                        <div class="text-sm font-semibold text-[#101828] ">
+                                                            Club Earth
+                                                        </div>
+                                                        <div class="silver ">Silver</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="p-[12px] w-max">
+
+                                            Collins 37 Building B1 , 2-17-4 Kabukicho, Shinjuku-ku, Tokyo
+
+
+                                        </td>
+                                        <td class="p-[12px] w-max">
+                                            <div class=" w-max">
+                                                2023-06-01
+                                            </div>
+                                        </td>
+
+                                        <td class="p-[12px] w-max">
+                                            <div class="rejected w-max">
+                                                Due
+                                            </div>
+                                        </td>
+                                        <td class="p-[12px] w-max">
+                                            <div class="w-max ">¥11,234</div>
+
+                                        </td>
+                                        <td class="p-[12px] w-max">
+                                            <div class="w-max ">¥11,234</div>
+
+                                        </td>
+                                        <td class="p-[12px] w-max">
+                                            <div class="w-max ">¥11,234</div>
+
+                                        </td>
+                                        <td class="p-[12px] w-max">
+                                            <div class="flex justify-center items-center gap-3 w-full">
+                                                <a href="./paymemt-ledger.php">
+                                                    <i class="las la-eye text-[20px] cursor-pointer text-[#A6A6A6]"></i>
+                                                </a>
+                                                <div class="btn btn-green-border h-[22px] text-[10px] rounded-[16px] w-max">
+                                                    Make Paid
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>*@
+                            </tbody>
+                        </table>
+
+                    </div>
+                    @*<div class="pagination-club">
+                            <div class="show-entry">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Showing 1 to 5 of 301 @CRS.ADMIN.APPLICATION.Resources.Resource.Entries
+                            </div>
+                            <div class="flex gap-[12px]">
+                                <div class="btn btn-secondary-box-shadow ">
+                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Previous
+                                </div>
+                                <div class="flex gap-[12px]">
+                                    <div class="pagination-number active">
+
+                                        1
+                                    </div>
+                                    <div class="pagination-number">
+                                        2
+                                    </div>
+                                    <div class="pagination-number">
+                                        3
+                                    </div>
+                                    <div class="pagination-number">
+                                        ..
+                                    </div>
+                                    <div class="pagination-number">
+                                        10
+                                    </div>
+
+                                </div>
+                                <div class="btn btn-secondary-box-shadow ">
+                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Next
+                                </div>
+                            </div>
+                        </div>*@
+                </div>
+            </div>
+            <div id="tab3" class="tab-content hidden">
+                <!-- Content for Tab 3 -->
+            </div>
+        </div>
+
+    </div>
+</div>
+
+@Html.Partial("_CustomDate")
+
+@functions {
+    string GetClubCategoryClassName(string clubCategory)
+    {
+        switch (clubCategory)
+        {
+            case "Platinum":
+                return "platinum";
+            case "Gold":
+                return "gold";
+            case "Silver":
+                return "silver";
+            default:
+                return string.Empty;
+        }
+    }
+}
+

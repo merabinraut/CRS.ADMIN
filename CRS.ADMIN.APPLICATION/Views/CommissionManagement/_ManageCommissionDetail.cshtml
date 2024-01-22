@@ -1,0 +1,125 @@
+﻿@model CRS.ADMIN.APPLICATION.Models.CommissionManagement.ManageCommissionDetailModel
+
+<!-- add Manage slabs from -->
+<div id="add-new-slabs"
+     class="drawer-close-disable  flex justify-end fixed top-0 right-0 z-40 h-screen overflow-y-auto transition-transform translate-x-full "
+     tabindex="-1" aria-labelledby="drawer-right-label">
+    <div class="bg-white w-[616px] drawer-container relative">
+        <div class="drawer-form-container sticky top-0 z-[5] ">
+            <div class="drawer-form flex justify-between bg-secondary-color-pink py-[16px] px-[24px] h-[56px]">
+                <div>
+                    @CRS.ADMIN.APPLICATION.Resources.Resource.Manage_Commission_Slabs
+                </div>
+                <button type="button" data-drawer-hide="add-new-slabs" aria-controls="add-new-slabs"
+                        class="text-[20px]"
+                        onclick="handleCancelClick()">
+                    <i class="las la-window-close text-white"></i>
+                </button>
+            </div>
+        </div>
+        <div class="p-[24px]">
+            @using (Html.BeginForm("ManageCommissionDetail", "CommissionManagement", FormMethod.Post, new { @id = "ManageCommissionDetail" }))
+            {
+                @Html.HiddenFor(model => model.CategoryId)
+                @Html.HiddenFor(model => model.CategoryDetailId)
+                @Html.HiddenFor(model => model.CategoryName)
+
+                @Html.AntiForgeryToken()
+                <div class="pb-[16px] grid gap-4">
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="input-field-common">
+                            <label class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.From_Amount
+                            </label>
+                            @Html.TextBoxFor(model => model.FromAmount, new { @class = "w-full rounded-[4px]", @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.From_Amount, @style = "border-radius:4px !important", @onkeypress = "return isNumberWithDot(event)", autocomplete = "off", @maxLength = "50" })
+                            <span class="error">
+                                @Html.ValidationMessageFor(model => model.FromAmount)
+                            </span>
+                        </div>
+                        <div class="input-field-common">
+                            <label class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.To_Amount
+                            </label>
+                            @Html.TextBoxFor(model => model.ToAmount, new { @class = "w-full rounded-[4px]", @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.To_Amount, @style = "border-radius:4px !important", @onkeypress = "return isNumberWithDot(event)", autocomplete = "off", @maxLength = "50" })
+                            <span class="error">
+                                @Html.ValidationMessageFor(model => model.ToAmount)
+                            </span>
+                        </div>
+                    </div>
+                    <div class="input-field-common">
+                        <label class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Commission_Type
+                        </label>
+                        <select id="large" name="CommissionPercentageType" class=" default_select select-common block w-full "
+                                style="width: text-2%;">
+                            @foreach (var item in Model.CommissionPercentageTypeList as IEnumerable<SelectListItem>)
+                            {
+                                var selectedId = ViewBag.CommissionPercentTypeIdKey as string;
+                                if (item.Value == selectedId)
+                                {
+                                    <option value="@item.Value" selected>
+                                        @item.Text
+                                    </option>
+                                }
+                                else
+                                {
+                                    <option value="@item.Value">
+                                        @item.Text
+                                    </option>
+                                }
+                            }
+                        </select>
+                        <span class="error">
+                            @Html.ValidationMessageFor(model => model.CommissionType)
+                        </span>
+                    </div>
+                    <div class="input-field-common">
+                        <label class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Value
+                        </label>
+
+                        @Html.TextBoxFor(model => model.CommissionValue, new { @class = "w-full rounded-[4px]", @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.Value, @style = "border-radius:4px !important", @onkeypress = "return isNumberWithDot(event)", autocomplete = "off", @maxLength = "50" })
+                        <span class="error">
+                            @Html.ValidationMessageFor(model => model.CommissionValue)
+                        </span>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="input-field-common">
+                            <label class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Min_Value
+                            </label>
+                            @Html.TextBoxFor(model => model.MinCommissionValue, new { @class = "w-full rounded-[4px]", @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.Min_Value, @style = "border-radius:4px !important", @onkeypress = "return isNumberWithDot(event)", autocomplete = "off", @maxLength = "50" })
+                            <span class="error">
+                                @Html.ValidationMessageFor(model => model.MinCommissionValue)
+                            </span>
+                        </div>
+                        <div class="input-field-common">
+                            <label class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Max_Value
+                            </label>
+                            @Html.TextBoxFor(model => model.MaxCommissionValue, new { @class = "w-full rounded-[4px]", @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.Max_Value, @style = "border-radius:4px !important", @onkeypress = "return isNumberWithDot(event)", autocomplete = "off", @maxLength = "50" })
+                            <span class="error">
+                                @Html.ValidationMessageFor(model => model.MaxCommissionValue)
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex justify-end py-4">
+                    <div class="flex gap-6">
+                        <button class="resetForm btn btn-gray-white h-[40px] rounded-[4px] px-8 text-sm"
+                                data-drawer-hide="add-new-slabs"
+                                onclick="handleCancelClick()">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Cancel
+                        </button>
+                        <button class="resetForm btn btn-primary-default h-[40px] px-8 rounded-[4px]  text-sm leading-[10px]"
+                                data-drawer-hide="add-new-slabs" data-modal-target="add-new-host-modal-save"
+                                data-modal-toggle="add-new-host-modal-save" id="saveData" type="submit">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Create
+                        </button>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>

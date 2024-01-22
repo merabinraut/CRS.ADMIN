@@ -1,0 +1,58 @@
+﻿
+@{
+    Layout = null;
+    ViewBag.Title = "SuccessPage";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>CRS | Set Password</title>
+
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    @Styles.Render("~/UI/LoginStyle")
+    <style>
+        .login-page {
+            height: 90vh;
+        }
+
+        .login-box {
+            width: 400px;
+        }
+
+        .in {
+            color: #48dd61
+        }
+
+        .out {
+            color: #F15656
+        }
+    </style>
+</head>
+<body class="hold-transition login-page">
+    <div class="login-box">
+        <!-- /.login-logo -->
+        <div class="card card-outline card-danger">
+            <div class="card-header text-center">
+                <a href="#" class="h1">
+                    <img src="~/Content/assets/images/logo.svg" alt="" style="height: 75px;">
+                </a>
+            </div>
+            <div class="card-body">
+                <p class="center" style="text-align:center;font-weight:bold">Congratulations</p>
+                <p class="" style="text-align:center;font-weight:bold">@ViewBag.SuccessMessage</p>
+                <div class="text-center">
+                    <a href="/Home/Index" class="btn btn-primary">Back to Login</a>
+                </div>
+               
+            </div>
+            <!-- /.card-body -->
+        </div>
+        <!-- /.card -->
+    </div>
+    <!-- /.login-box -->
+    @Scripts.Render("~/LoginJS")
+</body>

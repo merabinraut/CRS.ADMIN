@@ -1,0 +1,15 @@
+CREATE TABLE tbl_recommendation_group
+(
+	Sno BIGINT IDENTITY(1,2) PRIMARY KEY,
+	GroupId BIGINT NULL,
+	GroupName NVARCHAR(200) NULL,
+	Description NVARCHAR(512) NULL,
+	DisplayOrderId VARCHAR(10) NULL,
+	Status CHAR(1) NULL,
+	CreatedBy VARCHAR(200) NULL,
+	CreatedDate DATETIME NULL DEFAULT GETDATE(),
+	CreatedIP VARCHAR(50) NULL,
+	UpdatedBy VARCHAR(200) NULL,
+	UpdatedDate DATETIME NULL,
+	UpdatedIP VARCHAR(50) NULL
+)

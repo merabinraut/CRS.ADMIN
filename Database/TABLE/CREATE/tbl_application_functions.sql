@@ -1,0 +1,15 @@
+USE CRS
+GO
+
+CREATE TABLE tbl_application_functions
+(
+	Sno BIGINT NOT NULL PRIMARY KEY IDENTITY(1,2),
+	FunctionId BIGINT NOT NULL,
+	MenuId BIGINT NOT NULL,
+	FunctionName VARCHAR(100) NULL,
+	FunctionURL VARCHAR(200) NULL,
+	Status CHAR(1) NULL,
+	ActionUser VARCHAR(100) NULL,
+	ActionIP VARCHAR(50) NULL,
+	ActionDate DATETIME NULL
+)

@@ -1,0 +1,468 @@
+﻿@model CRS.ADMIN.APPLICATION.Models.HostManagement.ManageHostModel
+<div id="add-new-host"
+     class="drawer-close-disable  flex justify-end fixed top-0 right-0 z-40 h-screen overflow-y-auto transition-transform translate-x-full "
+     tabindex="-1" aria-labelledby="drawer-right-label">
+
+    <div class="bg-white w-[574px] drawer-container relative">
+        <div class="drawer-form-container sticky top-0 z-[5] ">
+            <div class="drawer-form flex justify-between bg-secondary-color-pink py-[16px] px-[24px] h-[56px]">
+                <div>
+                    @CRS.ADMIN.APPLICATION.Resources.Resource.Manage_Host
+                </div>
+                <button type="button" data-drawer-hide="add-new-host" aria-controls="add-new-host" class="text-[20px]">
+                    <i class="las la-window-close text-white" onclick="CancelFunction();"></i>
+                </button>
+            </div>
+        </div>
+        <div class="p-[24px]">
+            @using (Html.BeginForm("ManageHost", "HostManagement", FormMethod.Post, new { @id = "ManageHostForm", enctype = "multipart/form-data" }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.HiddenFor(model => model.AgentId)
+                @Html.HiddenFor(model => model.HostLogo)
+                if (!string.IsNullOrEmpty(Model.HostId))
+                {
+                    @Html.HiddenFor(model => model.HostId)
+                }
+                <div class="grid grid-cols-2 gap-x-[20px] gap-y-[16px]">
+                    <div class="input-field-common">
+                        <label for="email" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Host_Name
+                        </label>
+                        @Html.TextBoxFor(model => model.HostName, new
+                       {
+                           @class = "w-full",
+                           @placeholder = CRS.ADMIN.APPLICATION.Resources.Resource.Host_Name,
+                           //@onkeypress = "return isAlphabetWithSpace(event)",
+                           autocomplete = "off",
+                           @maxLength = "100"
+                       })
+                        @*<input type="text" class="w-full" placeholder="@CRS.ADMIN.APPLICATION.Resources.Resource.Host_Name" name="HostName" value="@Model.HostName" required>*@
+                        <span class="error">
+                            @Html.ValidationMessageFor(m => m.HostName)
+                        </span>
+                    </div>
+                    <div class="input-field-common">
+                        <label for="email" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Position
+                        </label>
+                        @Html.TextBoxFor(model => model.Position, new
+                        {
+                           @class = "w-full",
+                           @placeholder = CRS.ADMIN.APPLICATION.Resources.Resource.Position,
+                           //@onkeypress = "return isAlphabetWithSpace(event)",
+                           autocomplete = "off",
+                           @maxLength = "100"
+                        })
+                        <span class="error">
+                            @Html.ValidationMessageFor(m => m.Position)
+                        </span>
+                        @*<input type="text" class="w-full " placeholder="@CRS.ADMIN.APPLICATION.Resources.Resource.Position" name="@CRS.ADMIN.APPLICATION.Resources.Resource.Position" value="@Model.Position" required>*@
+                    </div>
+                    <div class="input-field-common">
+                        <label for="email" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Rank
+                        </label>
+                        @Html.TextBoxFor(model => model.Rank, new
+                       {
+                           @class = "w-full",
+                           @placeholder = CRS.ADMIN.APPLICATION.Resources.Resource.Rank,
+                           @onkeypress = "return isNumber(event)",
+                           autocomplete = "off",
+                           @maxLength = "3"
+                       })
+                        <span class="error">
+                            @Html.ValidationMessageFor(m => m.Rank)
+                        </span>
+                        @*<select id="large" class="select-common block w-full " name="RankDDLKey">
+                                @foreach (var item in ViewBag.RankDDL as IEnumerable<SelectListItem>)
+                                {
+                                    var selectedId = ViewBag.RankDDLKey as string;
+                                    if (item.Value == selectedId)
+                                    {
+                                        <option value="@item.Value" selected>
+                                            @item.Text
+                                        </option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@item.Value">
+                                            @item.Text
+                                        </option>
+                                    }
+                                }
+                            </select>*@
+                    </div>
+                </div>
+                <div class="divider-common"></div>
+                <div class="social-links-form grid gap-[16px]">
+
+                    <div class="flex items-center justify-end checkbox-common py-[8px]">
+                        <input id="default-checkbox" type="checkbox" value=""
+                               class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300">
+                        <label for="default-checkbox" class="ml-2 text-sm font-medium text-secondary-100 ">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Hide_Host_Info
+                        </label>
+                    </div>
+                    <div class="font-semibold text-base">
+                        @CRS.ADMIN.APPLICATION.Resources.Resource.Social_Links
+                    </div>
+                    <div class="input-field-common">
+                        <label for="email" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Twitter
+                        </label>
+                        @Html.TextBoxFor(model => model.TwitterLink, new
+                        {
+                           @class = "w-full",
+                           @placeholder = CRS.ADMIN.APPLICATION.Resources.Resource.Twitter,
+                           //@onkeypress = "return isAlphabetWithSpace(event)",
+                           autocomplete = "off"
+                        })
+                        <span class="error">
+                            @Html.ValidationMessageFor(m => m.TwitterLink)
+                        </span>
+                        @*<input type="text" class="w-full" placeholder="@CRS.ADMIN.APPLICATION.Resources.Resource.Twitter" name="TwitterLink" value="@Model.TwitterLink" required>*@
+                    </div>
+                    <div class="input-field-common">
+                        <label for="email" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Instagram
+                        </label>
+                        @Html.TextBoxFor(model => model.InstagramLink, new
+                        {
+                           @class = "w-full",
+                           @placeholder = CRS.ADMIN.APPLICATION.Resources.Resource.Instagram,
+                           //@onkeypress = "return isAlphabetWithSpace(event)",
+                           autocomplete = "off"
+                        })
+                        <span class="error">
+                            @Html.ValidationMessageFor(m => m.InstagramLink)
+                        </span>
+                        @*<input type="text" class="w-full" placeholder="@CRS.ADMIN.APPLICATION.Resources.Resource.Instagram" name="InstagramLink" value="@Model.InstagramLink" required>*@
+                    </div>
+                    <div class="input-field-common">
+                        <label for="email" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Tiktok
+                        </label>
+                        @Html.TextBoxFor(model => model.TiktokLink, new
+                        {
+                           @class = "w-full",
+                           @placeholder = CRS.ADMIN.APPLICATION.Resources.Resource.Tiktok,
+                           //@onkeypress = "return isAlphabetWithSpace(event)",
+                           autocomplete = "off"
+                        })
+                        <span class="error">
+                            @Html.ValidationMessageFor(m => m.TiktokLink)
+                        </span>
+                        @*<input type="text" class="w-full" placeholder="@CRS.ADMIN.APPLICATION.Resources.Resource.Tiktok" name="TiktokLink" value="@Model.TiktokLink" required>*@
+                    </div>
+                    <div class="input-field-common">
+                        <label for="email" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Line
+                        </label>
+                        @Html.TextBoxFor(model => model.Line, new
+                        {
+                           @class = "w-full",
+                           @placeholder = CRS.ADMIN.APPLICATION.Resources.Resource.Line,
+                           autocomplete = "off"
+                        })
+                        <span class="error">
+                            @Html.ValidationMessageFor(m => m.Line)
+                        </span>
+                    </div>
+                </div>
+                <div class="divider-common"></div>
+                <div class="social-links-form grid gap-[16px]">
+
+                    <div class="flex items-center justify-end checkbox-common py-[8px]">
+                        <input id="default-checkbox" type="checkbox" value=""
+                               class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300   ">
+                        <label for="default-checkbox" class="ml-2 text-sm font-medium text-secondary-100 ">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Hide_Host_Info
+                        </label>
+                    </div>
+                </div>
+                <div>
+                    <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
+                        Host Image
+                    </label>
+                    <div class="file-upload-common">
+                        <label for="file_input_business_certificate" class="custom-file-upload w-[128px] flex-none text-ellipsis-customer ">
+                            <span>
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Choose_Images
+                            </span>
+                        </label>
+                        <input id="file_input_business_certificate" class="file-input" type="file" name="HostLogoFile" value="@Model.HostLogo"
+                               style="display:none;">
+                        <p id="file_name_bussiness_certificate"
+                           class="file-name w-max h-[23px] overflow-hidden pl-2 text-xs text-[#686868] leading-[25px]">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.No_File_Choosen
+                    </div>
+                    <div class="text-xs text-error mt-[8px]">
+                        @CRS.ADMIN.APPLICATION.Resources.Resource.Note:
+                        @CRS.ADMIN.APPLICATION.Resources.Resource.Image_should_be_in_HEIF_format
+                        @CRS.ADMIN.APPLICATION.Resources.Resource.and_Maximum_file_size_is_5_MB .
+                    </div>
+                </div>
+                <div class="divider-common"></div>
+                <div class="grid gap-[16px]">
+                    <div class="input-field-common">
+                        <label for="email" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Birth_Date
+                        </label>
+                        <div class="select-date-common flex gap-[16px]">
+                            @{
+                                DateTime date = Convert.ToDateTime(Model.DOB);
+                                int SplitYear = date.Year;
+                                int SplitMonth = date.Month;
+                                int SplitDay = date.Day;
+                            }
+                            <select id="large" class="select-common block w-[100px]" name="BirthYearKey">
+                                <option selected>YYYY</option>
+                                @{
+                                    DateTime currentDate = DateTime.Now;
+                                    int currentYear = currentDate.Year;
+                                    List<int> last100Years = new List<int>();
+                                    int startYear = currentYear - 100;
+                                    for (int year = currentYear; year >= startYear; year--)
+                                    {
+                                        last100Years.Add(year);
+                                    }
+                                    foreach (var item in last100Years)
+                                    {
+                                        if (SplitYear == item)
+                                        {
+                                            <option value="@item" selected>@item</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@item">@item</option>
+                                        }
+                                    }
+                                }
+                            </select>
+                            <select id="large" class="select-common block w-[100px] " name="BirthMonthKey">
+                                <option selected>MM</option>
+                                @for (int i = 1; i < 13; i++)
+                                {
+                                    if (SplitMonth == i)
+                                    {
+                                        <option value="@i" selected>@i</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@i">@i</option>
+                                    }
+                                }
+                            </select>
+                            <select id="large" class="select-common block w-[100px] " name="BirthDayKey">
+                                <option selected>DD</option>
+                                @for (int i = 1; i < 33; i++)
+                                {
+                                    if (SplitDay == i)
+                                    {
+                                        <option value="@i" selected>@i</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@i">@i</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+
+                    </div>
+                    <div class="toogle-common">
+                        <label class="relative inline-flex items-center cursor-pointer">
+                            <input type="checkbox" value="" class="sr-only peer" checked>
+                            <div class="w-11 h-6 bg-gray-200 rounded-full peer peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-secondary-color-pink">
+                            </div>
+                            <span class=" pl-2 text-sm font-medium text-secondary-100">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Hide
+                            </span>
+                        </label>
+                    </div>
+                    <div class="flex gap-[24px]">
+                        <div class="flex items-center checkbox-common py-[8px]">
+                            <input id="default-checkbox-year" type="checkbox" value=""
+                                   class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300   ">
+                            <label for="default-checkbox-year" class="ml-2 text-sm font-medium text-secondary-100 ">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Year
+                            </label>
+                        </div>
+                        <div class="flex items-center checkbox-common py-[8px]">
+                            <input id="default-checkbox-month" type="checkbox" value=""
+                                   class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300   ">
+                            <label for="default-checkbox-month" class="ml-2 text-sm font-medium text-secondary-100 ">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Month
+                            </label>
+                        </div>
+                        <div class="flex items-center checkbox-common py-[8px]">
+                            <input id="default-checkbox-date" type="checkbox" value=""
+                                   class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300   ">
+                            <label for="default-checkbox-date" class="ml-2 text-sm font-medium text-secondary-100 ">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Date
+                            </label>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-end checkbox-common py-[8px]">
+                        <input id="default-checkbox" type="checkbox" value=""
+                               class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300   ">
+                        <label for="default-checkbox" class="ml-2 text-sm font-medium text-secondary-100 ">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Hide_Host_Info
+                        </label>
+                    </div>
+                </div>
+                <div class="grid gap-[16px]">
+                    <div class="grid grid-cols-2 gap-x-[20px] gap-y-[16px]">
+                        <div class="input-field-common">
+                            <label for="email" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Constellation_Group
+                            </label>
+
+                            <select id="large" class="select-common block w-full " name="ZodiacSignsDDLKey">
+                                @foreach (var item in ViewBag.ZodiacSignsDDL as IEnumerable<SelectListItem>)
+                                {
+                                    var selectedId = ViewBag.ZodiacSignsDDLKey as string;
+                                    if (item.Value == selectedId)
+                                    {
+                                        <option value="@item.Value" selected>
+                                            @item.Text
+                                        </option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@item.Value">
+                                            @item.Text
+                                        </option>
+                                    }
+                                }
+                            </select>
+                            <span class="error">
+                                @Html.ValidationMessageFor(m => m.ConstellationGroup)
+                            </span>
+                        </div>
+                        <div class="input-field-common">
+                            <label for="email" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Address
+                            </label>
+
+                            <input type="text" class="w-full" placeholder="@CRS.ADMIN.APPLICATION.Resources.Resource.Address" name="Address" value="@Model.Address">
+                        </div>
+                        <div class="input-field-common">
+                            <label for="email" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Height
+                            </label>
+                            @Html.TextBoxFor(model => model.Height, new
+                            {
+                               @class = "w-full",
+                               @placeholder = CRS.ADMIN.APPLICATION.Resources.Resource.Height,
+                               @onkeypress = "return isNumber(event)",
+                               autocomplete = "off",
+                               maxLength = "3"
+                            })
+                            <span class="error">
+                                @Html.ValidationMessageFor(m => m.Height)
+                            </span>
+                            @*<input type="text" class="w-full" placeholder="@CRS.ADMIN.APPLICATION.Resources.Resource.Height" name="Height" value="@Model.Height" required>*@
+                        </div>
+                        <div class="input-field-common">
+                            <label for="email" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Blood_Type
+                            </label>
+
+                            <select id="large" class="select-common block w-full " name="BloodGroupDDLKey">
+                                @foreach (var item in ViewBag.BloodGroupDDL as IEnumerable<SelectListItem>)
+                                {
+                                    var selectedId = ViewBag.BloodGroupDDLKey as string;
+                                    if (item.Value == selectedId)
+                                    {
+                                        <option value="@item.Value" selected>
+                                            @item.Text
+                                        </option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@item.Value">
+                                            @item.Text
+                                        </option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-end checkbox-common py-[8px]">
+                        <input id="default-checkbox" type="checkbox" value=""
+                               class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300   ">
+                        <label for="default-checkbox" class="ml-2 text-sm font-medium text-secondary-100 ">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Hide_Host_Info
+                        </label>
+                    </div>
+                    <div class="grid grid-cols-2 gap-x-[20px] gap-y-[16px]">
+                        <div class="input-field-common">
+                            <label for="email" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Previous_Occupation
+                            </label>
+
+                            <select id="large" class="select-common block w-full " name="OccupationDDLKey">
+                                @foreach (var item in ViewBag.OccupationDDL as IEnumerable<SelectListItem>)
+                                {
+                                    var selectedId = ViewBag.OccupationDDLKey as string;
+                                    if (item.Value == selectedId)
+                                    {
+                                        <option value="@item.Value" selected>
+                                            @item.Text
+                                        </option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@item.Value">
+                                            @item.Text
+                                        </option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                        <div class="input-field-common">
+                            <label for="email" class="block mb-[12px] text-sm font-medium text-secondary-100">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Liquor_Strength
+                            </label>
+
+                            <select id="large" class="select-common block w-full" name="LiquorStrengthDDLKey">
+                                @foreach (var item in ViewBag.LiquorStrengthDDL as IEnumerable<SelectListItem>)
+                                {
+                                    var selectedId = ViewBag.LiquorStrengthDDLKey as string;
+                                    if (item.Value == selectedId)
+                                    {
+                                        <option value="@item.Value" selected>
+                                            @item.Text
+                                        </option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@item.Value">
+                                            @item.Text
+                                        </option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex justify-end py-[16px] ">
+                    <div class="flex gap-[24px]">
+                        <div class="btn btn-secondary" data-drawer-hide="add-new-host" aria-controls="add-new-host" onclick="CancelFunction();">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Cancel
+                        </div>
+                        @*<div class="btn btn-primary" onclick="ManageClubSubmitFunction();">*@
+                        <div class="btn btn-primary">
+                            <button type="submit">@CRS.ADMIN.APPLICATION.Resources.Resource.Submit</button>
+
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+
+    </div>
+
+</div>

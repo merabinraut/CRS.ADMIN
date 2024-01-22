@@ -1,0 +1,116 @@
+﻿@model List<CRS.ADMIN.APPLICATION.Models.NotificationManagement.NotificationDetailModel>
+@{
+    ViewBag.Title = "Notification Management";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="px-8 py-4">
+    <div>
+        <div class="heading-title">Notification Management</div>
+        <div class="span-title-light-gray">Manage Notification</div>
+    </div>
+
+    <div class="table-tab">
+        <div class="px-[16px] py-[12px] flex justify-between entry-export-container">
+            <div class="flex items-center select-entries">
+                show&nbsp;
+                <select id="countries" class="w-full select-entires " style="width: 100%; ">
+                    <option value="5" selected>5</option>
+                    <option value="10">10</option>
+                    <option value="15">15</option>
+                    <option value="20">100</option>
+                </select>&nbsp;entries
+            </div>
+            <div class="export-button">
+                <img src="~/Content/assets_new/images/club/download-solid.svg"> export
+            </div>
+
+        </div>
+
+        <div class="relative overflow-x-auto">
+            <table class="w-full  text-left club-table">
+                <thead class="club-table-thead">
+                    <tr>
+                        <th scope="col" class="p-[12px]">
+                            <div class="flex">
+                                S.N
+                                <div class="relative pl-[5px]">
+                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                </div>
+                            </div>
+                        </th>
+                        <th scope="col" class="p-[12px]">
+                            <div class="flex">
+                                Notification Subject
+                                <div class="relative pl-[5px]">
+                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                </div>
+                            </div>
+                        </th>
+                        <th scope="col" class="p-[12px]">
+                            <div class="flex">
+                                Notification Body
+                                <div class="relative pl-[5px]">
+                                    <svg class="svg-inline--fa fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="chevron-up" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M233.4 105.4c12.5-12.5 32.8-12.5 45.3 0l192 192c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L256 173.3 86.6 342.6c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3l192-192z"></path></svg><!-- <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i> Font Awesome fontawesome.com -->
+                                    <svg class="svg-inline--fa fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="chevron-down" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"></path></svg><!-- <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i> Font Awesome fontawesome.com -->
+                                </div>
+                            </div>
+                        </th>
+                        <th scope="col" class="p-[12px]">
+                            <div class="flex">
+                                Created Date
+                                <div class="relative pl-[5px]">
+                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                </div>
+                            </div>
+                        </th>
+                        <th scope="col" class="p-[12px]">
+                            <div class="flex">
+                                Updated Date
+                                <div class="relative pl-[5px]">
+                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                </div>
+                            </div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        int i = 1;
+                        foreach (var item in Model)
+                        {
+                            <tr class="bg-white border-b ">
+                                <td class="p-[12px]">
+                                    @i
+                                </td>
+                                <td class="p-[12px]">
+                                    <div class="round-image-text gap-[12px]">
+                                        @item.NotificationSubject
+                                    </div>
+                                </td>
+                                <td class="p-[12px]">
+                                    <div class="round-image-text gap-[12px]">
+                                        @item.NotificationBody
+                                    </div>
+                                </td>
+                                <td class="p-[12px]">
+                                    @item.CreatedDate
+                                </td>
+                                <td class="p-[12px]">
+                                    @item.UpdatedDate
+                                </td>
+                            </tr>
+                            i++;
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div class="pagination-club">
+            <div class="show-entry">Showing 1 to 5 of 5 Entries</div>
+        </div>
+    </div>
+</div>

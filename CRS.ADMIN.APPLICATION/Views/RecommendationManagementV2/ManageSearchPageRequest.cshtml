@@ -1,0 +1,137 @@
+﻿@model CRS.ADMIN.APPLICATION.Models.RecommendationManagementV2.ManageSearchPageRequest
+@{
+    ViewBag.Title = "ManageSearchPageRequest";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="px-8 py-4 flex flex-col gap-8">
+    <div class="flex justify-between items-center">
+        <div>
+            <div class="heading-title">@CRS.ADMIN.APPLICATION.Resources.Resource.Recommendation_Requests</div>
+            <div class="span-title-light-gray">@CRS.ADMIN.APPLICATION.Resources.Resource.RecommendationConfigSupportMsg</div>
+        </div>
+    </div>
+    <div class="flex flex-col gap-8">
+        @using (Html.BeginForm("ManageSearchPageRequest", "RecommendationManagementV2", FormMethod.Post, new { @id = "ManageSearchPageRequest", enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+            <input name="LocationId" value="@Model.LocationId" hidden />
+            <div class=" grid gap-[24px] grid-cols-3" style="padding-bottom: 24px;">
+                <div class="input-field-common">
+                    <label for="" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                        @CRS.ADMIN.APPLICATION.Resources.Resource.Club_Location
+                    </label>
+                    <select id="default_select1" style="width: 100%;" class="text-[#B7B7B7] h-[44px] clubLocationDDL">
+                        @foreach (KeyValuePair<string, string> item in ViewBag.ClubLocation as Dictionary<string, string>)
+                        {
+                            var selectedId = Model.LocationId as string;
+                            if (item.Key == selectedId)
+                            {
+                                <option value="@item.Key" selected>
+                                    @item.Value
+                                </option>
+                            }
+                            else
+                            {
+                                <option value="@item.Key">
+                                    @item.Value
+                                </option>
+                            }
+                        }
+                    </select>
+                </div>
+                <div class="input-field-common">
+                    <label for="" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                        @CRS.ADMIN.APPLICATION.Resources.Resource.Club
+                    </label>
+                    <select id="default_select2" style="width: 100%;" class="text-[#B7B7B7] h-[44px] clubDDL" name="ClubId">
+                        @foreach (var item in ViewBag.ClubDDL as IEnumerable<SelectListItem>)
+                        {
+                            var selectedId = Model.ClubId as string;
+                            if (item.Value == selectedId)
+                            {
+                                <option value="@item.Value" selected>
+                                    @item.Text
+                                </option>
+                            }
+                            else
+                            {
+                                <option value="@item.Value">
+                                    @item.Text
+                                </option>
+                            }
+                        }
+                    </select>
+                </div>
+                <div class="input-field-common">
+                    <label for="" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                        @CRS.ADMIN.APPLICATION.Resources.Resource.Hosts
+                    </label>
+                    <select id="default_select3" style="width: 100%;" class="text-[#B7B7B7] h-[44px] hostDDL" name="HostId">
+                        @foreach (var item in ViewBag.HostDDLBYClubId as IEnumerable<SelectListItem>)
+                        {
+                            var selectedId = Model.HostId as string;
+                            if (item.Value == selectedId)
+                            {
+                                <option value="@item.Value" selected>
+                                    @item.Text
+                                </option>
+                            }
+                            else
+                            {
+                                <option value="@item.Value">
+                                    @item.Text
+                                </option>
+                            }
+                        }
+                    </select>
+                </div>
+            </div>
+            <div class="flex justify-end">
+                <div class="flex gap-[24px]">
+                    <div class="btn btn-secondary w-[96px]" onclick="window.location.href='@Url.Action("ClubListForSearchPageView", "RecommendationManagementV2", new {locationid = Model.LocationId})'">@CRS.ADMIN.APPLICATION.Resources.Resource.Cancel</div>
+                    <div class="btn btn-primary w-[96px]" data-modal-target="popup-modal"
+                         data-modal-toggle="popup-modal" onclick="saveForm()">
+                        @CRS.ADMIN.APPLICATION.Resources.Resource.Save
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+@section scripts{
+    <script>
+    var RequestVerificationToken = $('input[name="__RequestVerificationToken"]').val();
+        $('#default_select3').prop('disabled', true);
+        $('.clubDDL').change(function () {
+            $(".hostDDL").empty().prepend("<option value='' disabled selected>--- Select ---</option>");
+            $(".displayOrderDDL").empty().prepend("<option value='' disabled selected>--- Select ---</option>");
+            var clubid = document.getElementsByName("ClubId")[0].value;
+            if (clubid === "" || clubid == null) {
+                toastr.info('Please select club');
+                return false;
+            }
+            $.ajax({
+                type: 'POST',
+                async: true,
+                url: '@Url.Action("GetHostListByClubId")',
+                dataType: 'json',
+                data: { '__RequestVerificationToken': RequestVerificationToken, clubid },
+                success: function (data) {
+                    $('.hostDDL').prop('disabled', false);
+                    $('.displayOrderDDL').prop('disabled', false);
+                    $.each(data.hostdDDL, function (i, hostdDDL) {
+                        $(".hostDDL").append('<option value="' + hostdDDL.Value + '">' + hostdDDL.Text + '</option>');
+                    });
+                },
+                error: function (ex) {
+                    toastr.info('Failed to retrive details.');
+                }
+            });
+            return false;
+        });
+        function saveForm() {
+            document.getElementById("ManageSearchPageRequest").submit();
+        }
+    </script>
+}
+

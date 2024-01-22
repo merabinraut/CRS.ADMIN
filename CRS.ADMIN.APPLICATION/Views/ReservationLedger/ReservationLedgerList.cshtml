@@ -1,0 +1,744 @@
+﻿
+@{
+    ViewBag.Title = "Reservation Ledger List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="px-8 py-4">
+    <!-- title  -->
+    <div class="flex flex-col  gap-8">
+        <div class="flex justify-between items-center">
+            <div>
+                <div class="heading-title">
+                    @CRS.ADMIN.APPLICATION.Resources.Resource.Reservation_Ledger
+                </div>
+                <div class="span-title-light-gray">
+                    Manage club's reservation informations.
+                </div>
+            </div>
+            <div class="flex gap-6">
+                <div class="btn btn-primary-normal h-[40px] gap-1 font-semibold px-4"
+                     data-drawer-target="custom-date-drawer" data-drawer-show="custom-date-drawer"
+                     data-drawer-placement="right" aria-controls="custom-date-drawer">
+                    <i class="las la-calendar"></i>
+                    @CRS.ADMIN.APPLICATION.Resources.Resource.View_Calendar
+                </div>
+            </div>
+        </div>
+        <div class="flex flex-col  gap-4">
+            <div class="flex justify-between ">
+                <form>
+                    <div class="relative input-search-wrapper">
+                        <div class="absolute inset-y-0 left-0 flex items-center pl-[16px] pointer-events-none">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21"
+                                 fill="none">
+                                <path d="M17.5 18L13.875 14.375M15.8333 9.66667C15.8333 13.3486 12.8486 16.3333 9.16667 16.3333C5.48477 16.3333 2.5 13.3486 2.5 9.66667C2.5 5.98477 5.48477 3 9.16667 3C12.8486 3 15.8333 5.98477 15.8333 9.66667Z"
+                                      stroke="#667085" stroke-width="1.66667" stroke-linecap="round"
+                                      stroke-linejoin="round">
+                                </path>
+                            </svg>
+                        </div>
+                        <input type="search"
+                               id="default-search"
+                               class="input-search block w-full "
+                               placeholder="@CRS.ADMIN.APPLICATION.Resources.Resource.Search"
+                               required="">
+                    </div>
+                </form>
+                <div class="flex gap-6">
+                    <div class="export-button h-[40px]">
+                        <img src="/Content/assets_new/images/club/download-solid.svg">
+                        @CRS.ADMIN.APPLICATION.Resources.Resource.Export
+                    </div>
+                </div>
+            </div>
+            <!-- filter  -->
+            <div class="">
+                <div id="filter" class="export-button h-[40px] text-[#3E3E3E] w-max" onclick="showFilterContainer()">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21" fill="none">
+                        <path d="M5 10.5H15M2.5 5.5H17.5M7.5 15.5H12.5" stroke="#3E3E3E" stroke-width="1.67"
+                              stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                    @CRS.ADMIN.APPLICATION.Resources.Resource.Filter_By
+                </div>
+                <div id="filter-container" class="px-6 py-5 rounded-[5px] border border-[#D0D5DD]"
+                     style="display: none;">
+                    <div class="flex flex-col gap-4">
+                        <div class="flex text-[#3E3E3E] gap-1 items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg"
+                                 width="20" height="21" viewBox="0 0 20 21" fill="none">
+                                <path d="M5 10.5H15M2.5 5.5H17.5M7.5 15.5H12.5" stroke="#3E3E3E" stroke-width="1.67"
+                                      stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Filter_By
+                        </div>
+
+                        <div class="grid grid-cols-3 gap-[27px]">
+                            <div class="input-field-common">
+                                <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
+                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Club
+                                </label>
+                                <select id="large" name="Club" class=" default_select select-common block w-full "
+                                        style="width: 100%;">
+                                    <option>Select Club Type</option>
+                                    <option value="CA">club</option>
+                                    <option value="FR">club</option>
+                                    <option value="DE">club</option>
+                                </select>
+                            </div>
+                            <div class="input-field-common">
+                                <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
+                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Hosts
+                                </label>
+                                <select id="large" name="Host" class=" default_select select-common block w-full "
+                                        style="width: 100%;">
+                                    <option>Select Host</option>
+                                    <option value="CA">club</option>
+                                    <option value="FR">club</option>
+                                    <option value="DE">club</option>
+                                </select>
+                            </div>
+                            <div class="input-field-common">
+                                <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
+                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Club_Status
+                                </label>
+                                <select id="large" name="ClubStatus" class=" default_select select-common block w-full "
+                                        style="width: 100%;">
+                                    <option>Select Club Status</option>
+                                    <option value="CA">club</option>
+                                    <option value="FR">club</option>
+                                    <option value="DE">club</option>
+                                </select>
+                            </div>
+                            <div class="input-field-common">
+                                <label class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                                    @CRS.ADMIN.APPLICATION.Resources.Resource.From_Date
+                                </label>
+
+                                <input type="date" class="w-full" placeholder="YYYY/MM/DD" name="FromDate" required>
+                            </div>
+                            <div class="input-field-common">
+                                <label class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                                    @CRS.ADMIN.APPLICATION.Resources.Resource.To_Date
+                                </label>
+
+                                <input type="date" class="w-full" placeholder="YYYY/MM/DD" name="ToDate" required>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class=" flex gap-4 mt-4">
+                        <button id="cancelFilter" class="btn btn-primary-normal gap-1 rounded-[4px]"
+                                onclick="hideFilterContainer()">
+                            <i class="las la-times"></i> @CRS.ADMIN.APPLICATION.Resources.Resource.Cancel
+                        </button>
+
+                        <button id="cancelFilter" class="btn btn-primary-default gap-1 rounded-[4px]"
+                                onclick="hideFilterContainer()">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18"
+                                 height="19" viewBox="0 0 18 19" fill="none">
+                                <path d="M5.25 14.75V10.25H12.75V14.75H14.25V6.371L12.129 4.25H3.75V14.75H5.25ZM3 2.75H12.75L15.75 5.75V15.5C15.75 15.6989 15.671 15.8897 15.5303 16.0303C15.3897 16.171 15.1989 16.25 15 16.25H3C2.80109 16.25 2.61032 16.171 2.46967 16.0303C2.32902 15.8897 2.25 15.6989 2.25 15.5V3.5C2.25 3.30109 2.32902 3.11032 2.46967 2.96967C2.61032 2.82902 2.80109 2.75 3 2.75ZM6.75 11.75V14.75H11.25V11.75H6.75Z"
+                                      fill="white" />
+                            </svg>@CRS.ADMIN.APPLICATION.Resources.Resource.Apply
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <!-- table  -->
+            <div class="table-tab">
+                <div class="px-[12px] py-[16px] flex justify-between entry-export-container">
+                    @*<div class="flex items-center select-entries">
+                        @CRS.ADMIN.APPLICATION.Resources.Resource.Show&nbsp;
+                        <select id="countries" class="w-full select-entires " style="width: 100%; ">
+                            <option value="5" selected>5</option>
+                            <option value="10">10</option>
+                            <option value="15">15</option>
+                            <option value="20">100</option>
+                        </select>&nbsp;@CRS.ADMIN.APPLICATION.Resources.Resource.Entries
+                    </div>*@
+                </div>
+                <div class="relative overflow-x-auto">
+                    <table class="w-full  text-left club-table">
+                        <thead class="club-table-thead">
+                            <tr>
+                                <th scope="col" class="p-[12px]">
+                                    <div class="flex">
+                                        S.N
+                                        <div class="relative pl-[5px]">
+                                            <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                            <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                        </div>
+                                    </div>
+                                </th>
+                                <th scope="col" class="p-[12px]">
+                                    <div class="flex">
+                                        @CRS.ADMIN.APPLICATION.Resources.Resource.Club_Profile
+                                        <div class="relative pl-[5px]">
+                                            <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                            <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                        </div>
+                                    </div>
+                                </th>
+                                <th scope="col" class="p-[12px]">
+                                    <div class="flex">
+                                        @CRS.ADMIN.APPLICATION.Resources.Resource.Total_Visitors
+                                        <div class="relative pl-[5px]">
+                                            <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                            <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                        </div>
+                                    </div>
+                                </th>
+                                <th scope="col" class="p-[12px]">
+                                    <div class="flex">
+                                        @CRS.ADMIN.APPLICATION.Resources.Resource.Admin_Payment
+                                        <div class="relative pl-[5px]">
+                                            <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                            <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                        </div>
+                                    </div>
+                                </th>
+                                <th scope="col" class="p-[12px]">
+                                    <div class="flex">
+                                        @CRS.ADMIN.APPLICATION.Resources.Resource.Date
+                                        <div class="relative pl-[5px]">
+                                            <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                            <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                        </div>
+                                    </div>
+                                </th>
+                                <th scope="col" class="p-[12px]">
+                                    <div class="flex justify-center">
+                                        @CRS.ADMIN.APPLICATION.Resources.Resource.Action
+                                        <div class="relative pl-[5px]">
+                                            <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                            <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                        </div>
+                                    </div>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                int i = 1;
+                                foreach (var item in ViewBag.LedgerList)
+                                {
+                                    <tr class="bg-white border-b ">
+                                        <td class="p-[12px]">
+                                            @i
+                                        </td>
+                                        <td class="p-[12px] w-max">
+                                            <div class="round-image-text w-max flex gap-[12px]">
+                                                <img class="w-[32px] h-[32px] rounded-full"
+                                                     src="@item.ClubLogo">
+
+                                                <div class="flex justify-between w-full">
+                                                    <div class="text-image grid flex-none ">
+                                                        <div class="text-sm font-semibold text-[#101828] ">@item.ClubName</div>
+                                                        <div class="platinum ">@item.ClubCategory</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="p-[12px]">
+                                            @item.TotalVisitors
+                                        </td>
+                                        <td class="p-[12px]">
+                                            <div class="text-[#245EDC]">
+                                                ¥@item.AdminPayment
+                                            </div>
+                                        </td>
+                                        <td class="p-[12px]">
+                                            @item.TransactionFormattedDate
+                                        </td>
+                                        <td class="p-[12px]">
+                                            <div class="text-[#E3AB00] text-center text-[20px]"
+                                                 onclick="window.location.href='@Url.Action("ReservationLedgerDetail","ReservationLedger", new {ClubId = item.ClubId, Date = item.TransactionDate})'">
+                                                <i class="las la-eye"></i>
+                                            </div>
+                                        </td>
+
+                                    </tr>
+                                    i++;
+                                }
+                            }
+                    </table>
+                </div>
+                @*<div class="pagination-club">
+                    <div class="show-entry">
+                        @CRS.ADMIN.APPLICATION.Resources.Resource.Showing 1 to 5 of 301 @CRS.ADMIN.APPLICATION.Resources.Resource.Entries
+                    </div>
+                    <div class="flex gap-[12px]">
+                        <div class="btn btn-secondary-box-shadow ">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Previous
+                        </div>
+                        <div class="flex gap-[12px]">
+                            <div class="pagination-number active">
+
+                                1
+                            </div>
+                            <div class="pagination-number">
+                                2
+                            </div>
+                            <div class="pagination-number">
+                                3
+                            </div>
+                            <div class="pagination-number">
+                                ..
+                            </div>
+                            <div class="pagination-number">
+                                10
+                            </div>
+                        </div>
+                        <div class="btn btn-secondary-box-shadow ">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Next
+                        </div>
+                    </div>
+                </div>*@
+            </div>
+        </div>
+    </div>
+</div>
+<!--Custom date picker section-->
+<!-- drawer component -->
+<div id="custom-date-drawer"
+     class="fixed top-0 right-0 z-40 h-screen px-[32px] py-[48px] overflow-y-auto transition-transform translate-x-full bg-white w-[629px] "
+     tabindex="-1" aria-labelledby="drawer-right-label">
+
+    <div class="flex items-center justify-end">
+        <button type="button" data-drawer-hide="custom-date-drawer" aria-controls="custom-date-drawer" class=" ">
+            <img src="/Content/assets_new/images/drawer-close.svg" />
+        </button>
+    </div>
+    <!--- calender --->
+
+    <div class="py-[32px] ">
+        <div class="flex justify-between pb-[24px] items-center text-base font-medium">
+            <div class="">
+                @CRS.ADMIN.APPLICATION.Resources.Resource.Calendar
+            </div>
+            <div class="flex gap-[12px] items-center">
+                <div class="flex h-[32px] w-[40px] justify-center items-center border border-[#D9D9D9] rounded-[4px]">
+                    <i class="fa-solid fa-chevron-left"></i>
+                </div>
+                <div class="flex text-base font-medium">
+                    @CRS.ADMIN.APPLICATION.Resources.Resource.August - @CRS.ADMIN.APPLICATION.Resources.Resource.September
+                </div>
+                <div class="flex h-[32px] w-[40px] justify-center items-center border border-[#D9D9D9] rounded-[4px]">
+                    <i class="fa-solid fa-chevron-right"></i>
+                </div>
+            </div>
+
+        </div>
+        <div class="grid gap-[12px]">
+            <div class="flex justify-between calender-card-container  ">
+                <div class="calender-card disabled">
+                    <div class="text-xs font-medium text-center">
+                        <div>
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Sunday
+                        </div>
+                        <div> 30</div>
+                    </div>
+                    <div class="calender-number">
+                        12
+                    </div>
+
+                </div>
+                <div class="calender-card disabled">
+                    <div class="text-xs font-medium text-center">
+                        <div>
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Monday
+                        </div>
+                        <div> 31</div>
+                    </div>
+                    <div class="calender-number">
+                        12
+                    </div>
+                </div>
+                <div class="calender-card">
+                    <div class="text-xs font-medium text-center">
+                        <div>
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Tuesday
+                        </div>
+                        <div> 1</div>
+                    </div>
+                    <div class="calender-number">
+                        12
+                    </div>
+                </div>
+                <div class="calender-card">
+                    <div class="text-xs font-medium text-center">
+                        <div>
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Wednesday
+                        </div>
+                        <div> 2</div>
+                    </div>
+                    <div class="calender-number">
+                        12
+                    </div>
+                </div>
+                <div class="calender-card">
+                    <div class="text-xs font-medium text-center">
+                        <div>
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Thursday
+                        </div>
+                        <div> 3</div>
+                    </div>
+                    <div class="calender-number">
+                        12
+                    </div>
+                </div>
+                <div class="calender-card active">
+                    <div class="text-xs font-medium text-center">
+                        <div>
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Friday
+                        </div>
+                        <div> 4</div>
+                    </div>
+                    <div class="calender-number">
+                        12
+                    </div>
+                </div>
+                <div class="calender-card">
+                    <div class="text-xs font-medium text-center">
+                        <div>
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Saturday
+                        </div>
+                        <div> 5</div>
+                    </div>
+                    <div class="calender-number">
+                        12
+                    </div>
+                </div>
+            </div>
+            <div class="flex justify-between calender-card-container  ">
+                <div class="calender-card ">
+                    <div class="text-xs font-medium text-center">
+                        <div>
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Sunday
+                        </div>
+                        <div> 6</div>
+                    </div>
+                    <div class="calender-number">
+                        12
+                    </div>
+
+                </div>
+                <div class="calender-card ">
+                    <div class="text-xs font-medium text-center">
+                        <div>
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Monday
+                        </div>
+                        <div>7</div>
+                    </div>
+                    <div class="calender-number">
+                        12
+                    </div>
+                </div>
+                <div class="calender-card">
+                    <div class="text-xs font-medium text-center">
+                        <div>
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Tuesday
+                        </div>
+                        <div>8</div>
+                    </div>
+                    <div class="calender-number">
+                        12
+                    </div>
+                </div>
+                <div class="calender-card">
+                    <div class="text-xs font-medium text-center">
+                        <div>
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Wednesday
+                        </div>
+                        <div>9</div>
+                    </div>
+                    <div class="calender-number">
+                        12
+                    </div>
+                </div>
+                <div class="calender-card">
+                    <div class="text-xs font-medium text-center">
+                        <div>
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Thursday
+                        </div>
+                        <div>10</div>
+                    </div>
+                    <div class="calender-number">
+                        12
+                    </div>
+                </div>
+                <div class="calender-card ">
+                    <div class="text-xs font-medium text-center">
+                        <div>
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Friday
+                        </div>
+                        <div>11</div>
+                    </div>
+                    <div class="calender-number">
+                        12
+                    </div>
+                </div>
+                <div class="calender-card">
+                    <div class="text-xs font-medium text-center">
+                        <div>
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Saturday
+                        </div>
+                        <div>12</div>
+                    </div>
+                    <div class="calender-number">
+                        12
+                    </div>
+                </div>
+            </div>
+            <div class="flex justify-between calender-card-container  ">
+                <div class="calender-card ">
+                    <div class="text-xs font-medium text-center">
+                        <div>
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Sunday
+                        </div>
+                        <div>13</div>
+                    </div>
+                    <div class="calender-number">
+                        12
+                    </div>
+
+                </div>
+                <div class="calender-card ">
+                    <div class="text-xs font-medium text-center">
+                        <div>
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Monday
+                        </div>
+                        <div>14</div>
+                    </div>
+                    <div class="calender-number">
+                        12
+                    </div>
+                </div>
+                <div class="calender-card">
+                    <div class="text-xs font-medium text-center">
+                        <div>
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Tuesday
+                        </div>
+                        <div>15</div>
+                    </div>
+                    <div class="calender-number">
+                        12
+                    </div>
+                </div>
+                <div class="calender-card">
+                    <div class="text-xs font-medium text-center">
+                        <div>
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Wednesday
+                        </div>
+                        <div>16</div>
+                    </div>
+                    <div class="calender-number">
+                        12
+                    </div>
+                </div>
+                <div class="calender-card">
+                    <div class="text-xs font-medium text-center">
+                        <div>
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Thursday
+                        </div>
+                        <div>17</div>
+                    </div>
+                    <div class="calender-number">
+                        12
+                    </div>
+                </div>
+                <div class="calender-card ">
+                    <div class="text-xs font-medium text-center">
+                        <div>
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Friday
+                        </div>
+                        <div>18</div>
+                    </div>
+                    <div class="calender-number">
+                        12
+                    </div>
+                </div>
+                <div class="calender-card">
+                    <div class="text-xs font-medium text-center">
+                        <div>
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Saturday
+                        </div>
+                        <div>19</div>
+                    </div>
+                    <div class="calender-number">
+                        12
+                    </div>
+                </div>
+            </div>
+            <div class="flex justify-between calender-card-container  ">
+                <div class="calender-card ">
+                    <div class="text-xs font-medium text-center">
+                        <div>
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Sunday
+                        </div>
+                        <div>20</div>
+                    </div>
+                    <div class="calender-number">
+                        12
+                    </div>
+
+                </div>
+                <div class="calender-card ">
+                    <div class="text-xs font-medium text-center">
+                        <div>
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Monday
+                        </div>
+                        <div>21</div>
+                    </div>
+                    <div class="calender-number">
+                        12
+                    </div>
+                </div>
+                <div class="calender-card">
+                    <div class="text-xs font-medium text-center">
+                        <div>
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Tuesday
+                        </div>
+                        <div>22</div>
+                    </div>
+                    <div class="calender-number">
+                        12
+                    </div>
+                </div>
+                <div class="calender-card">
+                    <div class="text-xs font-medium text-center">
+                        <div>
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Wednesday
+                        </div>
+                        <div>23</div>
+                    </div>
+                    <div class="calender-number">
+                        12
+                    </div>
+                </div>
+                <div class="calender-card">
+                    <div class="text-xs font-medium text-center">
+                        <div>
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Thursday
+                        </div>
+                        <div>24</div>
+                    </div>
+                    <div class="calender-number">
+                        12
+                    </div>
+                </div>
+                <div class="calender-card ">
+                    <div class="text-xs font-medium text-center">
+                        <div>
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Friday
+                        </div>
+                        <div>25</div>
+                    </div>
+                    <div class="calender-number">
+                        12
+                    </div>
+                </div>
+                <div class="calender-card">
+                    <div class="text-xs font-medium text-center">
+                        <div>
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Saturday
+                        </div>
+                        <div>26</div>
+                    </div>
+                    <div class="calender-number">
+                        12
+                    </div>
+                </div>
+            </div>
+            <div class="flex justify-between calender-card-container  ">
+                <div class="calender-card ">
+                    <div class="text-xs font-medium text-center">
+                        <div>
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Sunday
+                        </div>
+                        <div>27</div>
+                    </div>
+                    <div class="calender-number">
+                        12
+                    </div>
+
+                </div>
+                <div class="calender-card ">
+                    <div class="text-xs font-medium text-center">
+                        <div>
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Monday
+                        </div>
+                        <div>28</div>
+                    </div>
+                    <div class="calender-number">
+                        12
+                    </div>
+                </div>
+                <div class="calender-card">
+                    <div class="text-xs font-medium text-center">
+                        <div>
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Tuesday
+                        </div>
+                        <div>29</div>
+                    </div>
+                    <div class="calender-number">
+                        12
+                    </div>
+                </div>
+                <div class="calender-card">
+                    <div class="text-xs font-medium text-center">
+                        <div>
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Wednesday
+                        </div>
+                        <div>30</div>
+                    </div>
+                    <div class="calender-number">
+                        12
+                    </div>
+                </div>
+                <div class="calender-card">
+                    <div class="text-xs font-medium text-center">
+                        <div>
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Thursday
+                        </div>
+                        <div>31</div>
+                    </div>
+                    <div class="calender-number">
+                        12
+                    </div>
+                </div>
+                <div class="calender-card disabled">
+                    <div class="text-xs font-medium text-center">
+                        <div>
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Friday
+                        </div>
+                        <div>1</div>
+                    </div>
+                    <div class="calender-number">
+                        12
+                    </div>
+                </div>
+                <div class="calender-card disabled">
+                    <div class="text-xs font-medium text-center">
+                        <div>
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Saturday
+                        </div>
+                        <div>2</div>
+                    </div>
+                    <div class="calender-number">
+                        12
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="flex justify-end">
+        <div class="flex gap-[24px]">
+            <button class="btn btn-secondary ">
+                @CRS.ADMIN.APPLICATION.Resources.Resource.Cancel
+            </button>
+            <button class="btn btn-primary">
+                @CRS.ADMIN.APPLICATION.Resources.Resource.Confirm
+            </button>
+        </div>
+    </div>
+</div>

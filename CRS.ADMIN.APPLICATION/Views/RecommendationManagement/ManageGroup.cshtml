@@ -1,0 +1,310 @@
+﻿@model CRS.ADMIN.APPLICATION.Models.RecommendationManagement.ManageGroupCommonModel
+@{
+    ViewBag.Title = "ManageGroup";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var _ManageGroupModel = Model.ManageGroupModel as CRS.ADMIN.APPLICATION.Models.RecommendationManagement.ManageGroup;
+    var _ManageShufflingTimeModel = Model.ShufflingTimeListModels as List<CRS.ADMIN.APPLICATION.Models.RecommendationManagement.ShufflingTimeListModel>;
+    int sno = 1;
+}
+<div class="px-8 py-4 flex flex-col gap-8">
+    <!-- booking information  -->
+    <div class="flex justify-between items-center">
+        <div>
+            <div class="heading-title">Manage Group</div>
+            <div class="span-title-light-gray"></div>
+        </div>
+    </div>
+    <div class="flex justify-between mb-4">
+        <form>
+            <div class="relative input-search-wrapper">
+                <div class="absolute inset-y-0 left-0 flex items-center pl-[16px] pointer-events-none">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21" fill="none">
+                        <path d="M17.5 18L13.875 14.375M15.8333 9.66667C15.8333 13.3486 12.8486 16.3333 9.16667 16.3333C5.48477 16.3333 2.5 13.3486 2.5 9.66667C2.5 5.98477 5.48477 3 9.16667 3C12.8486 3 15.8333 5.98477 15.8333 9.66667Z"
+                              stroke="#667085" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round">
+                        </path>
+                    </svg>
+                </div>
+                <input type="search" id="default-search" class="input-search block w-full " placeholder="Search"
+                       required="">
+            </div>
+        </form>
+        <div class="flex gap-3">
+            <div class="export-button h-[40px] gap-2" data-modal-target="configure-setting"
+                 data-modal-toggle="configure-setting">
+                <i class="las la-cog text-[#B7B7B7]"></i> Setting
+            </div>
+            <div class="btn btn-primary-default h-[40px] gap-2" data-drawer-target="manage-group"
+                 data-drawer-show="manage-group" data-drawer-placement="right" aria-controls="manage-group">
+                <i class="las la-plus-circle"></i> Add Group
+            </div>
+        </div>
+    </div>
+    <div class="table-tab">
+        <div class="px-[12px] py-[16px] flex justify-between entry-export-container">
+            <div class="flex items-center select-entries">
+                show&nbsp;
+                <select id="countries" class="w-full select-entires " style="width: 100%; ">
+                    <option value="5" selected>5</option>
+                    <option value="10">10</option>
+                    <option value="15">15</option>
+                    <option value="20">100</option>
+                </select>&nbsp;entries
+            </div>
+        </div>
+        <div class="relative overflow-x-auto">
+            <table class="w-full  text-left club-table">
+                <thead class="club-table-thead">
+                    <tr>
+                        <th scope="col" class="p-[12px]">
+                            <div class="flex">
+                                S.N
+                                <div class="relative pl-[5px]">
+                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                </div>
+                            </div>
+                        </th>
+                        <th scope="col" class="p-[12px]">
+                            <div class="flex">
+                                Group Info
+                                <div class="relative pl-[5px]">
+                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                </div>
+                            </div>
+                        </th>
+                        <th scope="col" class="p-[12px]">
+                            <div class="flex">
+                                Total Clubs <div class="relative pl-[5px]">
+                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                </div>
+                            </div>
+                        </th>
+                        <th scope="col" class="p-[12px]">
+                            <div class="flex">
+                                Requested Date <div class="relative pl-[5px]">
+                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                </div>
+                            </div>
+                        </th>
+                        <th scope="col" class="p-[12px]">
+                            <div class="flex">
+                                Remarks<div class="relative pl-[5px]">
+                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                </div>
+                            </div>
+                        </th>
+                        <th scope="col" class="p-[12px]">
+                            <div class="flex justify-center">
+                                Action<div class="relative pl-[5px]">
+                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                </div>
+                            </div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+
+                        foreach (var item in Model.GroupListModel)
+                        {
+                            <tr class="bg-white border-b ">
+                                <td class="p-[12px]">
+                                    @sno
+                                </td>
+                                <td class="p-[12px]">
+                                    @item.GroupName
+                                </td>
+                                <td class="p-[12px]">
+                                    <div class="text-[#1976D2] underline ">
+                                        @item.TotalClubs
+                                    </div>
+                                </td>
+                                <td class="p-[12px]">
+                                    @item.RequestedDate
+                                </td>
+                                <td class="p-[12px]">
+                                    @item.Descriptions
+                                </td>
+                                <td class="p-[12px]">
+                                    <div class="flex gap-2 items-center justify-center">
+                                        <img src="/Content/assets_new/images/frame.svg" alt=""
+                                             class="cursor-pointer" onclick="GotoClubRecommendation('@item.GroupId','@ViewBag.LocationId')">
+                                        <i class="las la-window-close text-[24px] text-[#CB3F3F] cursor-pointer"></i>
+                                        <img src="/Content/assets_new/images/check-square.svg" alt="" class="cursor-pointer">
+                                    </div>
+                                </td>
+                            </tr>
+                            sno++;
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div class="pagination-club">
+            <div class="show-entry">Showing 1 to 5 of 301 Entries</div>
+            <div class="flex gap-[12px]">
+                <div class="btn btn-secondary-box-shadow ">Previous</div>
+                <div class="flex gap-[12px]">
+                    <div class="pagination-number active">
+                        1
+                    </div>
+                    <div class="pagination-number">
+                        2
+                    </div>
+                    <div class="pagination-number">
+                        3
+                    </div>
+                    <div class="pagination-number">
+                        ..
+                    </div>
+                    <div class="pagination-number">
+                        10
+                    </div>
+                </div>
+                <div class="btn btn-secondary-box-shadow ">Next</div>
+            </div>
+        </div>
+    </div>
+    <!-- add manage-groupfrom -->
+    @Html.Partial("ManageGroupPartialView", _ManageGroupModel)
+    <!-- configure-setting  -->
+    @Html.Partial("ManageShufflingTimePView", _ManageShufflingTimeModel)
+    <!-- Confirmation  -->
+    <div id="add-new-host-modal-save" tabindex="-1" aria-hidden="true"
+         class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
+        <div class="relative max-w-2xl max-h-full w-[412px] px-4 pt-[40px] pb-[46px]">
+            <!-- Modal content -->
+            <div class="relative bg-white rounded-lg shadow">
+                <!-- Modal header -->
+                <button type="button"
+                        class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center absolute top-[24px] right-[20px] "
+                        data-modal-hide="add-new-host-modal-save">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="25" viewBox="0 0 24 25" fill="none">
+                        <rect y="0.621094" width="24" height="24" rx="12" fill="#FAFAFA" />
+                        <path d="M5.41406 4.95703L4.33594 6.03516L10.9219 12.6211L4.33594 19.207L5.41406 20.2852L12 13.6992L18.5859 20.2852L19.6641 19.207L13.0781 12.6211L19.6641 6.03516L18.5859 4.95703L12 11.543L5.41406 4.95703Z"
+                              fill="#7A7A7A" />
+                    </svg>
+                </button>
+                <!-- Modal body -->
+                <div class="grid gap-6 px-[20px] py-8">
+                    <div class="flex justify-center mb-4">
+                        <img src="/Content/assets_new/images/save-check.svg" />
+                    </div>
+                    <div class="grid gap-[20px] text-[#062937] mb-[44px]">
+                        <div class="text-base text-secondary-text-2 text-center font-semibold">
+                            Update Profile
+                        </div>
+                        <div class="text-[14px] text-secondary-text-2 text-center">
+                            Congratulations, you just added a new club.
+                        </div>
+                    </div>
+                    <div class="flex justify-end">
+                        <div class="flex gap-8">
+                            <button data-modal-hide="add-new-host-modal-save"
+                                    class="btn btn-primary-normal rounded-[4px] text-sm gap-2 w-[130px]"
+                                    data-drawer-target="manage-group" data-drawer-show="manage-group"
+                                    data-drawer-placement="right" data-drawer-backdrop="false"
+                                    aria-controls="drawer-disabled-backdrop">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16"
+                                     height="16" viewBox="0 0 16 16" fill="none">
+                                    <path d="M8 1.5C4.41602 1.5 1.5 4.41602 1.5 8C1.5 11.584 4.41602 14.5 8 14.5C11.584 14.5 14.5 11.584 14.5 8C14.5 4.41602 11.584 1.5 8 1.5ZM8 2.5C11.043 2.5 13.5 4.95703 13.5 8C13.5 11.043 11.043 13.5 8 13.5C4.95703 13.5 2.5 11.043 2.5 8C2.5 4.95703 4.95703 2.5 8 2.5ZM7.5 5V7.5H5V8.5H7.5V11H8.5V8.5H11V7.5H8.5V5H7.5Z"
+                                          fill="#D75A8B" />
+                                </svg>Add New
+                            </button>
+                            <button class="btn btn-primary-default rounded-[4px] w-max gap-2"
+                                    data-modal-hide="add-new-host-modal-save">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="17"
+                                     height="16" viewBox="0 0 17 16" fill="none">
+                                    <path d="M5.71997 7.33117H13.8346V8.6645H5.71997L9.29597 12.2405L8.3533 13.1832L3.16797 7.99783L8.3533 2.8125L9.29597 3.75517L5.71997 7.33117Z"
+                                          fill="white" />
+                                </svg>Back
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts{
+    <script>
+    function getActiveButtonValue() {
+        const activeButton = document.querySelector('.tab-link.active');
+        const overallRecommendationDiv = document.querySelector('.overall-recommendation');
+        if (activeButton) {
+            const activeButtonValue = activeButton.textContent;
+
+            if (activeButtonValue === "Configure") {
+                overallRecommendationDiv.style.display = 'none';
+            } else {
+                overallRecommendationDiv.style.display = 'block';
+            }
+        }
+    }
+    // Run the function when the page is loaded
+    document.addEventListener('DOMContentLoaded', getActiveButtonValue);
+    $(document).ready(function () {
+        $('select').select2({
+            minimumResultsForSearch: Infinity
+        })
+        var popUpRenderValue = '@ViewBag.PopUpRenderValue';
+        if (popUpRenderValue != null && popUpRenderValue != "" && popUpRenderValue == "Manage") {
+            var element = document.getElementById('manage-group');
+            element.classList.remove('translate-x-full');
+        } else if (popUpRenderValue != null && popUpRenderValue != "" && popUpRenderValue == "ManageShufflingTime") {
+            var element = document.getElementById('configure-setting');
+            element.classList.remove('translate-x-full');
+        }
+    });
+    function AddGroup(){
+         document.getElementById("ManageGroupForm").submit();
+    }    
+     function CancelFunction() {
+     location.reload();
+    }
+    </script>
+    <script>
+        document.getElementById('UpdateShuffleTimeId').addEventListener('click',
+            function (event) {
+                event.preventDefault();
+                var dataToUpdate = [];
+                $(".btn-gray-white").each(function () {
+                    var displayId = $(this).prev().attr('id');
+                    var displayTime = $(this).val();
+                    var inputData = {
+                        DisplayId: displayId,
+                        DisplayTime: displayTime
+                    };
+                    dataToUpdate.push(inputData);
+                });
+                // Convert the array to a colon-separated string
+                var dataString = dataToUpdate.map(function (item) {
+                    if (item.DisplayId === undefined && item.DisplayTime === '') {
+
+                    } else {
+                        return item.DisplayId + ':' + item.DisplayTime;
+                    }
+
+                }).join(',');
+                dataString = dataString.slice(1, -1);
+                $('#dataStringId').val(dataString);
+                $("#ManageShuffleForm").submit();
+            });
+        document.getElementById('CancelId').addEventListener('click',
+            function (event) {
+                event.preventDefault();
+                window.location.reload();
+            });
+    </script>
+    <script>
+        function GotoClubRecommendation(groupId, locationId) {
+            window.location.href = "/RecommendationManagement/ClubRequestView?GroupId=" + groupId + '&locationId=' + locationId;
+        }
+    </script>
+}
+

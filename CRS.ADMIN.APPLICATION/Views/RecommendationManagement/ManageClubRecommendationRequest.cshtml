@@ -1,0 +1,677 @@
+﻿@model CRS.ADMIN.APPLICATION.Models.RecommendationManagement.RecommendationDetailCommonModel
+@{
+    ViewBag.Title = "Manage Club Recommendation Request";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    int rowCount = 1;
+}
+<style>
+    .select2-search--dropdown {
+        display: none !important;
+    }
+</style>
+<div class="px-8 py-4 flex flex-col gap-8">
+    <div class="flex justify-between items-center">
+        <div>
+            <div class="heading-title">Recommendation Request</div>
+            <div class="span-title-light-gray">Supporting Texts</div>
+        </div>
+    </div>
+    <div class="flex flex-col gap-8">
+        @using (Html.BeginForm("ManageClubRecommendationRequest", "RecommendationManagement", FormMethod.Post, new { @id = "ManageClubRecommendationRequest", enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(model => model.GetRecommendationDetailModel.RecommendationId)
+            @Html.HiddenFor(model => model.GetRecommendationDetailModel.ClubId)
+            @Html.HiddenFor(model => model.GetRecommendationDetailModel.LocationId)
+            @Html.HiddenFor(model => model.GetRecommendationDetailModel.GroupId)
+            @Html.HiddenFor(model => model.GetRecommendationDetailModel)
+            <input id="hiddenDDL" name="recommendationId" value="@Model.GetRecommendationDetailModel.RecommendationId" style="display:none" />
+            <div class=" grid gap-[24px] grid-cols-3" style="padding-bottom:20px">
+                <div class="input-field-common">
+                    <label for="" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                        Club Location
+                    </label>
+                    @if (Model.GetRecommendationDetailModel.LocationId == null)
+                    {
+                        <select id="default_select" style="width: 100%;" class="text-[#B7B7B7] h-[44px] clubLocationDDL" name="ClubLocationId">
+                            @foreach (KeyValuePair<string, string> item in ViewBag.ClubLocation as Dictionary<string, string>)
+                            {
+                                var selectedId = ViewBag.ClubLocation as string;
+                                if (item.Key == selectedId)
+                                {
+                                    <option value="@item.Key" selected>
+                                        @item.Value
+                                    </option>
+                                }
+                                else
+                                {
+                                    <option value="@item.Key">
+                                        @item.Value
+                                    </option>
+                                }
+                            }
+                        </select>}
+                    else
+                    {
+                        <input id="hiddenDDL" name="ClubLocationId" value="@Model.GetRecommendationDetailModel.LocationId" style="display:none" />
+                        <select id="default_select" style="width: 100%;" class="text-[#B7B7B7] h-[44px] clubLocationDDL" name="ClubLocationId" disabled>
+                            @foreach (KeyValuePair<string, string> item in ViewBag.ClubLocation as Dictionary<string, string>)
+                            {
+                                if (item.Key == Model.GetRecommendationDetailModel.LocationId)
+                                {
+                                    <option value="@item.Key" selected>
+                                        @item.Value
+                                    </option>
+                                }
+                                else
+                                {
+                                    <option value="@item.Key">
+                                        @item.Value
+                                    </option>
+                                }
+                            }
+                        </select>
+                    }
+                </div>
+                <div class="input-field-common">
+                    <label for="" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                        Group
+                    </label>
+                    @if (Model.GetRecommendationDetailModel.GroupId == null)
+                    {
+                        <select id="default_select1" style="width: 100%;" class="text-[#B7B7B7] h-[44px]" name="GroupDDLId">
+                            @foreach (KeyValuePair<string, string> item in ViewBag.GroupDDLByLocationId as Dictionary<string, string>)
+                            {
+                                var selectedId = ViewBag.GroupDDLByLocationId as string;
+                                if (item.Key == selectedId)
+                                {
+                                    <option value="@item.Key" selected>
+                                        @item.Value
+                                    </option>
+                                }
+                                else
+                                {
+                                    <option value="@item.Key">
+                                        @item.Value
+                                    </option>
+                                }
+                            }
+                        </select>
+                    }
+                    else
+                    {
+                        <input id="hiddenDDL" name="GroupDDLId" value="@Model.GetRecommendationDetailModel.GroupId" style="display:none" />
+                        <select id="default_select1" style="width: 100%;" class="text-[#B7B7B7] h-[44px]" name="GroupDDLId" disabled>
+                            @foreach (KeyValuePair<string, string> item in ViewBag.GroupDDLByLocationId as Dictionary<string, string>)
+                            {
+                                if (item.Key == Model.GetRecommendationDetailModel.GroupId)
+                                {
+                                    <option value="@item.Key" selected>
+                                        @item.Value
+                                    </option>
+                                }
+                                else
+                                {
+                                    <option value="@item.Key">
+                                        @item.Value
+                                    </option>
+                                }
+                            }
+                        </select>
+                    }
+                </div>
+                <div class="input-field-common">
+                    <label for="" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                        Club
+                    </label>
+                    @if (Model.GetRecommendationDetailModel.ClubId == null)
+                    {
+                        <select id="default_select3" style="width: 100%;" class="text-[#B7B7B7] h-[44px] clubDDL" name="ClubId">
+                            @foreach (var item in ViewBag.ClubDDL as IEnumerable<SelectListItem>)
+                            {
+                                var selectedId = ViewBag.ClubDDL as string;
+                                if (item.Value == selectedId)
+                                {
+                                    <option value="@item.Value" selected>
+                                        @item.Text
+                                    </option>
+                                }
+                                else
+                                {
+                                    <option value="@item.Value">
+                                        @item.Text
+                                    </option>
+                                }
+                            }
+                        </select>
+                    }
+                    else
+                    {
+                        <input id="hiddenDDL" name="ClubId" value="@Model.GetRecommendationDetailModel.ClubId" style="display:none" />
+                        <select id="default_select3_disabled" style="width: 100%;" class="text-[#B7B7B7] h-[44px] clubDDL" name="ClubId" disabled>
+                            @foreach (var item in ViewBag.ClubDDL as IEnumerable<SelectListItem>)
+                            {
+
+                                if (item.Value == Model.GetRecommendationDetailModel.ClubId)
+                                {
+                                    <option value="@item.Value" selected>
+                                        @item.Text
+                                    </option>
+                                }
+                                else
+                                {
+                                    <option value="@item.Value">
+                                        @item.Text
+                                    </option>
+                                }
+                            }
+                        </select>
+                    }
+
+                </div>
+                <div>
+                    <label for="" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                        Display Page
+                    </label>
+                    <div id="toggle" class="text-[#667085] display-page cursor-pointer">
+                        Display Page
+                        <div class="display-page-arrow">
+                            <b></b>
+                        </div>
+                    </div>
+                    @if (Model.GetDisplayPOrderDetailModel == null)
+                    {
+                        <div class="toggleDiv" id="toggleDiv">
+                            @foreach (var item in ViewBag.DisplayPageOrderDDL as IEnumerable<SelectListItem>)
+                            {
+                                <div class="flex items-center justify-between checkbox-common  py-[8px] px-[16px] ">
+                                    <label for="all-checkbok"
+                                           class="ml-2 text-sm font-medium flex items-center justify-between w-full text-secondary-100 ">
+                                        @item.Text
+                                        <input id="all-checkbok" type="checkbox" value="@item.Value" name="DisplayPageOrderId"
+                                               class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300   ">
+                                    </label>
+                                </div>
+                            }
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="toggleDiv" id="toggleDiv">
+
+                            @{
+                                bool isChecked = false;
+                                foreach (var item in ViewBag.DisplayPageOrderDDL as IEnumerable<SelectListItem>)
+                                {
+                                    foreach (var displayPageOrder in Model.GetDisplayPOrderDetailModel)
+                                    {
+                                        if (item.Value == displayPageOrder.DisplayPageId)
+                                        {
+                                            isChecked = true;
+                                        }
+                                    }
+                                    if (isChecked)
+                                    {
+                                        <div class="flex items-center justify-between checkbox-common  py-[8px] px-[16px] ">
+                                            <label for="all-checkbok"
+                                                   class="ml-2 text-sm font-medium flex items-center justify-between w-full text-secondary-100 ">
+                                                @item.Text
+                                                <input id="all-checkbok" type="checkbox" value="@item.Value" name="DisplayPageOrderId"
+                                                       class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300" checked>
+                                            </label>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="flex items-center justify-between checkbox-common  py-[8px] px-[16px] ">
+                                            <label for="all-checkbok"
+                                                   class="ml-2 text-sm font-medium flex items-center justify-between w-full text-secondary-100 ">
+                                                @item.Text
+                                                <input id="all-checkbok" type="checkbox" value="@item.Value" name="DisplayPageOrderId"
+                                                       class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300">
+                                            </label>
+                                        </div>
+                                    }
+                                }
+                            }
+                        </div>
+                    }
+                    <!-- Dropdown menu -->
+                </div>
+                <div class="input-field-common">
+                    <label for="" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                        Display Order
+                    </label>
+                    @if (Model.GetRecommendationDetailModel.DisplayOrderId == null)
+                    {
+                        <select id="default_select4" style="width: 100%;" class="text-[#B7B7B7] h-[44px]" name="DisplayOrder">
+                            @foreach (var item in ViewBag.DisplayOrderDDL as IEnumerable<SelectListItem>)
+                            {
+                                var selectedId = ViewBag.DisplayOrderDDL as string;
+                                if (item.Value == selectedId)
+                                {
+                                    <option value="@item.Value" selected>
+                                        @item.Text
+                                    </option>
+                                }
+                                else
+                                {
+                                    <option value="@item.Value">
+                                        @item.Text
+                                    </option>
+                                }
+                            }
+                        </select>
+                    }
+                    else
+                    {
+                        <input id="hiddenDDL" name="DisplayOrder" value="@Model.GetRecommendationDetailModel.DisplayOrderId" style="display:none" />
+                        <select id="default_select4" style="width: 100%;" class="text-[#B7B7B7] h-[44px]" name="DisplayOrder">
+                            @foreach (var item in ViewBag.DisplayOrderDDL as IEnumerable<SelectListItem>)
+                            {
+
+                                if (item.Value == Model.GetRecommendationDetailModel.DisplayOrderId)
+                                {
+                                    <option value="@item.Value" selected>
+                                        @item.Text
+                                    </option>
+                                }
+                                else
+                                {
+                                    <option value="@item.Value">
+                                        @item.Text
+                                    </option>
+                                }
+                            }
+                        </select>
+                    }
+
+                </div>
+            </div><!-- table  --><div class=" grid gap-[24px]">
+                <div class="relative overflow-x-auto">
+                    <table class="w-full  text-left club-table bordered" id="componentContainer">
+                        <thead class="club-table-thead bg-[#F3F3F3]">
+                            <tr>
+                                <th scope="col" class="p-[12px]">
+                                    <div class="flex">
+                                        S.N
+                                    </div>
+                                </th>
+                                <th scope="col" class="p-[12px]">
+                                    <div class="flex">
+                                        Host
+                                    </div>
+                                </th>
+                                <th scope="col" class="p-[12px]">
+                                    <div class="flex">
+                                        Display Order
+                                    </div>
+                                </th>
+                                <th scope="col" class="p-[12px]">
+                                    <div class="flex justify-center">
+                                        Action
+                                    </div>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model.GetHostRecommendationDetailModel == null)
+                            {
+                                <tr class="bg-white border-b" id="templateRow">
+                                    <td class="p-[12px]">
+                                        @rowCount
+                                    </td>
+
+                                    <td class="p-[12px]">
+                                        <div class="input-field-common add-new-select-rm">
+                                            <select id="" style="width: 100%;"
+                                                    class="default_select text-[#B7B7B7] h-[44px] hostDDL" name="HostDDLByClubId">
+                                                @foreach (var item in ViewBag.HostDDLBYClubId as IEnumerable<SelectListItem>)
+                                                {
+                                                    var selectedId = ViewBag.HostDDLBYClubId as string;
+                                                    if (item.Value == selectedId)
+                                                    {
+                                                        <option value="@item.Value" selected>
+                                                            @item.Text
+                                                        </option>
+                                                    }
+                                                    else
+                                                    {
+                                                        <option value="@item.Value">
+                                                            @item.Text
+                                                        </option>
+                                                    }
+                                                }
+                                            </select>
+                                        </div>
+                                    </td>
+                                    <td class="p-[12px]">
+                                        <div class="input-field-common add-new-select-rm">
+                                            <select id="" style="width: 100%;"
+                                                    class=" default_select text-[#B7B7B7] h-[44px] displayOrderDDL" name="DisplayOrderDDL">
+                                                @foreach (var item in ViewBag.DisplayOrderDDL as IEnumerable<SelectListItem>)
+                                                {
+                                                    var selectedId = ViewBag.DisplayOrderDDL as string;
+                                                    if (item.Value == selectedId)
+                                                    {
+                                                        <option value="@item.Value" selected>
+                                                            @item.Text
+                                                        </option>
+                                                    }
+                                                    else
+                                                    {
+                                                        <option value="@item.Value">
+                                                            @item.Text
+                                                        </option>
+                                                    }
+                                                }
+                                            </select>
+                                        </div>
+                                    </td>
+                                    <td class="p-[12px]">
+                                        <div class="flex gap-[7px] justify-center ">
+                                            <div>
+                                                <i class="fa-regular fa-pen-to-square text-[#989898] cursor-pointer"></i>
+                                            </div>
+                                            <div>
+                                                <i class="fa-solid fa-trash-can text-primary-100 cursor-pointer"></i>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                rowCount++;
+                            }
+                            else
+                            {
+                                foreach (var hostlist in Model.GetHostRecommendationDetailModel)
+                                {
+                                    <tr class="bg-white border-b" id="templateRow">
+                                        <td class="p-[12px]">
+                                            @rowCount
+                                        </td>
+                                        <td class="p-[12px]">
+                                            <div class="input-field-common add-new-select-rm">
+                                                <select id="" style="width: 100%;"
+                                                        class="default_select text-[#B7B7B7] h-[44px] hostDDL" name="HostDDLByClubId">
+                                                    @foreach (var item in ViewBag.HostDDLBYClubId as IEnumerable<SelectListItem>)
+                                                    {
+                                                        if (item.Value == hostlist.HostId)
+                                                        {
+                                                            <option value="@item.Value" selected>
+                                                                @item.Text
+                                                            </option>
+                                                        }
+                                                        else
+                                                        {
+                                                            <option value="@item.Value">
+                                                                @item.Text
+                                                            </option>
+                                                        }
+                                                    }
+                                                </select>
+                                            </div>
+                                        </td>
+                                        <td class="p-[12px]">
+                                            <div class="input-field-common add-new-select-rm">
+                                                <select id="" style="width: 100%;"
+                                                        class=" default_select text-[#B7B7B7] h-[44px] displayOrderDDL" name="DisplayOrderDDL">
+                                                    @{
+                                                        foreach (var item in ViewBag.DisplayOrderDDL as IEnumerable<SelectListItem>)
+                                                        {
+
+                                                            if (item.Value == hostlist.OrderId)
+                                                            {
+                                                                <option value="@item.Value" selected>
+                                                                    @item.Text
+                                                                </option>
+                                                            }
+                                                            else
+                                                            {
+                                                                <option value="@item.Value">
+                                                                    @item.Text
+                                                                </option>
+                                                            }
+
+                                                        }
+                                                    }
+                                                </select>
+                                            </div>
+                                        </td>
+                                        <td class="p-[12px]">
+                                            <div class="flex gap-[7px] justify-center ">
+                                                <div>
+                                                    <i class="fa-regular fa-pen-to-square text-[#989898] cursor-pointer"></i>
+                                                </div>
+                                                <div>
+                                                    <i class="fa-solid fa-trash-can text-primary-100 cursor-pointer"></i>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    rowCount++;
+                                }
+                            }
+                        </tbody>
+                    </table>
+                    <button class="btn btn-primary-normal gap-1 mt-[24px]" id="addNewRow">
+                        <i class="las la-plus-circle"></i> Add New
+                    </button>
+                </div>
+                <div class="flex justify-end">
+                    <div class="flex gap-[24px]">
+                        <div class="btn btn-secondary w-[96px]" onclick="window.history.go(-1); return false;">Cancel</div>
+                        <div class="btn btn-primary w-[96px]" data-modal-target="popup-modal"
+                             data-modal-toggle="popup-modal" onclick="saveForm()">
+                            Save
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+@section scripts{
+    <!--toggle button event-->
+    <script>
+        // JavaScript to handle the toggle functionality
+        var toggle = document.getElementById('toggle');
+        var toggleDiv = document.getElementById('toggleDiv');
+
+        toggle.addEventListener('click', function () {
+            if (toggleDiv.style.display === 'none' || toggleDiv.style.display === '') {
+                toggleDiv.style.display = 'block';
+            } else {
+                toggleDiv.style.display = 'none';
+            }
+        });
+    </script>
+    <!-- Create a new row dynamically -->
+    <script>
+
+        function addNewComponent() {
+        let newRowCount = @rowCount;
+        var newRow = document.createElement('tr');
+        newRow.classList.add('bg-white', 'border-b');
+        newRow.innerHTML = `
+            <td class="p-[12px]">${newRowCount}</td>
+            <td class="p-[12px]">
+                <div class="input-field-common add-new-select-rm">
+                 <select id="" style="width: 100%;"
+                         class="default_select text-[#B7B7B7] h-[44px] hostDDL" name="HostDDLByClubId">
+                     @foreach (var item in ViewBag.HostDDLBYClubId as IEnumerable<SelectListItem>)
+                     {
+                         var selectedId = ViewBag.HostDDLBYClubId as string;
+                         if (item.Value == selectedId)
+                         {
+                             <option value="@item.Value" selected>
+                                 @item.Text
+                             </option>
+                         }
+                         else
+                         {
+                             <option value="@item.Value">
+                                 @item.Text
+                             </option>
+                         }
+                     }
+                 </select>
+               </div>
+            </td>
+            <td class="p-[12px]">
+         <div class="input-field-common add-new-select-rm">
+             <select id="" style="width: 100%;"
+                    class=" default_select text-[#B7B7B7] h-[44px]"  name="DisplayOrderDDL">
+                @foreach (var item in ViewBag.DisplayOrderDDL as IEnumerable<SelectListItem>)
+                {
+                    var selectedId = ViewBag.DisplayOrderDDL as string;
+                    if (item.Value == selectedId)
+                    {
+                        <option value="@item.Value" selected>
+                            @item.Text
+                        </option>
+                    }
+                    else
+                    {
+                        <option value="@item.Value">
+                            @item.Text
+                        </option>
+                    }
+                }
+            </select>
+         </div>
+            </td>
+            <td class="p-[12px]">
+                <div class="flex gap-[7px] justify-center ">
+                    <div>
+                        <i class="fa-regular fa-pen-to-square text-[#989898] cursor-pointer"></i>
+                    </div>
+                    <div>
+                        <!-- Add an event listener to remove the clicked row -->
+                        <i class="fa-solid fa-trash-can text-primary-100 cursor-pointer" onclick="removeRow(this)"></i>
+                    </div>
+                </div>
+            </td>
+        `;
+        document.getElementById('componentContainer').appendChild(newRow);
+        $(newRow).find('select').select2();
+            newRowCount++;
+    }
+    // Function to remove the clicked row
+    function removeRow(icon) {
+        var rowToRemove = icon.closest('tr');
+        rowToRemove.remove();
+        newRowCount--;
+        }
+        var RequestVerificationToken = $('input[name="__RequestVerificationToken"]').val();
+         $('#addNewRow').click(function () {
+               var clubid = document.getElementsByName("ClubId")[0].value;
+                if (clubid === "" || clubid == null) {
+                    toastr.info('Please select club');
+                return false;
+            }
+                 $.ajax({
+                      type: 'POST',
+                      async: true,
+                      url: '@Url.Action("GetHostListByClubId")',
+                      dataType: 'json',
+                      data: { '__RequestVerificationToken': RequestVerificationToken, clubid },
+                      success: function (data) {
+                         $('.hostDDL').prop('disabled', false);
+                         $('.displayOrderDDL').prop('disabled', false);
+                         $.each(data.hostdDDL, function (i, hostdDDL) {
+                             $(".hostDDL").append('<option value="' + hostdDDL.Value + '">' + hostdDDL.Text + '</option>');
+                         });
+                         $.each(data.displayOrder, function (i, displayOrder) {
+                             $(".hostDDL").append('<option value="' + displayOrder.Value + '">' + displayOrder.Text + '</option>');
+                         });
+                      },
+                      error: function (ex) {
+                         toastr.info('Failed to retrive details.');
+                      }
+                  });
+             return false;
+        });
+    </script>
+    <!--disabled the drop down-->
+    <script>
+        document.getElementById('addNewRow').disabled = true;
+        $('.default_select').prop('disabled', true);
+        var isDisabled = $('#default_select3_disabled').prop('disabled');
+        $(document).ready(function () {
+            $('select').change(function () {
+                var selectedValue = $('#default_select3').val();
+                if (selectedValue != "") {
+                    document.getElementById('addNewRow').disabled = false;
+                    $('.default_select').prop('disabled', false);
+                } else {
+                    document.getElementById('addNewRow').disabled = true;
+                    $('.default_select').prop('disabled', true);
+                }
+            });
+        });
+        if (isDisabled) {
+            document.getElementById('addNewRow').disabled = false;
+            $('.default_select').prop('disabled', false);
+        }
+    </script>
+    <!--dynamically trigged host ddl -->
+    <script>
+        var RequestVerificationToken = $('input[name="__RequestVerificationToken"]').val();
+        var isDisabled = $('.default_select').prop('disabled');
+            $('.clubDDL').change(function () {
+                $(".hostDDL").empty().prepend("<option value='' disabled selected>--- Select ---</option>");
+                $(".displayOrderDDL").empty().prepend("<option value='' disabled selected>--- Select ---</option>");
+                var clubid = document.getElementsByName("ClubId")[0].value;
+                if (clubid === "" || clubid == null) {
+                    toastr.info('Please select club');
+                    return false;
+                }
+                $.ajax({
+                    type: 'POST',
+                    async: true,
+                    url: '@Url.Action("GetHostListByClubId")',
+                    dataType: 'json',
+                    data: { '__RequestVerificationToken': RequestVerificationToken, clubid },
+                    success: function (data) {
+                        $('.hostDDL').prop('disabled', false);
+                        $('.displayOrderDDL').prop('disabled', false);
+                        $.each(data.hostdDDL, function (i, hostdDDL) {
+                            $(".hostDDL").append('<option value="' + hostdDDL.Value + '">' + hostdDDL.Text + '</option>');
+                        });
+                        $.each(data.displayOrder, function (i, displayOrder) {
+                            $(".displayOrderDDL").append('<option value="' + displayOrder.Value + '">' + displayOrder.Text + '</option>');
+                        });
+                    },
+                    error: function (ex) {
+                        toastr.info('Failed to retrive details.');
+                    }
+                });
+                return false;
+            });
+    </script>
+    <!--summit form-->
+    <script>
+        function saveForm() {
+            document.getElementById("ManageClubRecommendationRequest").submit();
+        }
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            $('select').select2({
+                minimumResultsForSearch: Infinity
+            });
+        });
+    </script>
+    <!--stop un-neccesary summit -->
+    <script>
+        document.getElementById('addNewRow').addEventListener('click',
+            function (event) {
+                event.preventDefault();
+                addNewComponent();
+            });
+    </script>
+}
+
+

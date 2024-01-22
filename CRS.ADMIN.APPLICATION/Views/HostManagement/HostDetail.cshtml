@@ -1,0 +1,81 @@
+﻿@model CRS.ADMIN.APPLICATION.Models.HostManagement.ManageHostModel
+@{
+    ViewBag.Title = "Host Detail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="card">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-8">
+                <h5 class="font-weight-bold">Personal Information</h5>
+                <hr />
+                <div class="row">
+                    @if (!string.IsNullOrEmpty(Model.HostName))
+                    {
+                        @Html.NLabelFor(model => model.HostName, new { @class = "form-control", autocomplete = "off" }, 4)
+                    }
+                    @if (!string.IsNullOrEmpty(Model.Position))
+                    {
+                        @Html.NLabelFor(model => model.Position, new { @class = "form-control", autocomplete = "off" }, 4)
+
+                    }
+                    @if (!string.IsNullOrEmpty(Model.Rank))
+                    {
+                        @Html.NLabelFor(model => model.Rank, new { @class = "form-control", autocomplete = "off" }, 4)
+                    }
+                </div>
+                <hr />
+                <h5 class="font-weight-bold">Social Link</h5>
+                <hr />
+                <div class="row">
+                    @if (!string.IsNullOrEmpty(Model.TiktokLink))
+                    {
+                        @Html.NLabelFor(model => model.TiktokLink, new { @class = "form-control", autocomplete = "off" }, 4)
+                    }
+                    @if (!string.IsNullOrEmpty(Model.TwitterLink))
+                    {
+                        @Html.NLabelFor(model => model.TwitterLink, new { @class = "form-control", autocomplete = "off" }, 4)
+                    }
+                    @if (!string.IsNullOrEmpty(Model.InstagramLink))
+                    {
+                        @Html.NLabelFor(model => model.InstagramLink, new { @class = "form-control", autocomplete = "off" }, 4)
+                    }
+                </div>
+                <hr />
+                <h5 class="font-weight-bold">Information</h5>
+                <hr />
+                <div class="row">
+                    @if (!string.IsNullOrEmpty(Model.DOB))
+                    {
+                        @Html.NLabelFor(model => model.DOB, new { @class = "form-control", autocomplete = "off" }, 4)
+                    }
+                    @if (!string.IsNullOrEmpty(Model.ConstellationGroup))
+                    {
+                        @Html.NLabelFor(model => model.ConstellationGroup, new { @class = "form-control", autocomplete = "off" }, 4)
+                    }
+                    @if (!string.IsNullOrEmpty(Model.Height))
+                    {
+                        @Html.NLabelFor(model => model.Height, new { @class = "form-control", autocomplete = "off" }, 4)
+                    }
+                    @if (!string.IsNullOrEmpty(Model.BloodType))
+                    {
+                        @Html.NLabelFor(model => model.BloodType, new { @class = "form-control", autocomplete = "off" }, 4)
+                    }
+                    @if (!string.IsNullOrEmpty(Model.PreviousOccupation))
+                    {
+                        @Html.NLabelFor(model => model.PreviousOccupation, new { @class = "form-control", autocomplete = "off" }, 4)
+                    }
+                    @if (!string.IsNullOrEmpty(Model.LiquorStrength))
+                    {
+                        @Html.NLabelFor(model => model.LiquorStrength, new { @class = "form-control", autocomplete = "off" }, 4)
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <button type="button" class="btn btn-light btn-sm bg-primary" onclick="window.history.back();"><i class="fa fa-arrow-left"></i> Back</button>
+        </div>
+    </div>
+</div>

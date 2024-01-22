@@ -1,0 +1,103 @@
+﻿@model CRS.ADMIN.APPLICATION.Models.CommissionManagement.AssignCommissionModel
+@{
+    ViewBag.Title = "Assign Commission";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@Styles.Render("~/UI/Style")
+<div class="card">
+    @using (Html.BeginForm("AssignCommission", "CommissionManagement", new { }, FormMethod.Post, new { @id = "form" }))
+    {
+        @Html.AntiForgeryToken()
+        <div class="card-body">
+            <div class="row">
+                @Html.NDropDownListFor(model => model.AgentId, new SelectList(ViewBag.ClubList, "Value", "Text"), new { @class = "form-control select2", @id = "AgentId", autocomplete = "off" }, 4)
+                @Html.NTextBoxFor(model => model.CurrentCategory, new { @class = "form-control", disabled = "disabled", @id = "CurrentCategory", autocomplete = "off" }, 4)
+                @Html.NDropDownListFor(model => model.CategoryId, new SelectList(ViewBag.CommissionCategoryList, "Value", "Text"), new { @class = "form-control select2", autocomplete = "off" }, 4)
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-md-12">
+                    <button type="button" class="btn btn-sm bg-primary mr-2" onclick="window.history.back();"><i class="fa fa-arrow-left mr-2"></i>Back</button>
+                    <button type="button" class="btn btn-success btn-sm" onclick="SubmitFunction()"><i class="fa fas fa-save mr-1"></i> Update </button>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+<div class="modal fade" id="ConfirmModal" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title " id="ModalLabel">Are you sure?</h5>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+            </div>
+            <div class="modal-body" id="modalBody">
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" id="CloseModal">No</button>
+                <button type="button" class="btn btn-light btn-group-lg bg-primary ml-3" id="ConfirmButton">Yes</button>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <script>
+        $("#AgentId").change(function () {
+            var AgentId = $("#AgentId").val();
+            $.ajax({
+                type: 'POST',
+                async: true,
+                url: '@Url.Action("GetClubListByAgentId")',
+                dataType: 'json',
+                data: { __RequestVerificationToken: $('input[name="__RequestVerificationToken"]').val(), AgentId: AgentId },
+                success: function (response) {
+                    if (response.length > 0) {
+                        $.each(response, function (i, value) {
+                            $("#CurrentCategory").val(value.Text);
+                        });
+                    }
+                    else {
+                        $("#CurrentCategory").val('');
+                    }
+                },
+                error: function (ex) {
+                    alert('Failed to retrive details.' + ex);
+                }
+            });
+            return false;
+        });
+    </script>
+    <script>
+        function SubmitFunction(e) {
+            const Agent = $('#AgentId').val();
+            const CategoryId = $('#CategoryId').val();
+            var valid = true;
+            if (Agent === null || Agent === "") {
+                $('#form [data-valmsg-for="AgentId"]').html("Required");
+                valid = false;
+            }
+
+            if (CategoryId === null || CategoryId === "") {
+                $('#form [data-valmsg-for="CategoryId"]').html("Required");
+                valid = false;
+
+            }
+            if (valid) {
+                var AgentDetail = $("#AgentId option:selected").text();
+                var CategoryDetail = $("#CategoryId option:selected").text();
+                $("#modalBody").html(`You want to assign  commission category : ${CategoryDetail}  to selected club ${AgentDetail.toLocaleLowerCase()}?`)
+                $("#ConfirmModal").modal('show');
+            }
+        }
+
+        $("#ConfirmButton").click(function () {
+            $("#ConfirmButton").attr('disabled', true);
+            $("#CloseModal").attr('disabled', true);
+            $("#form").submit();
+        })
+    </script>
+}

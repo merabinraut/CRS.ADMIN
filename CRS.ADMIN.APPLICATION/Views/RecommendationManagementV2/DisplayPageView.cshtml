@@ -1,0 +1,140 @@
+﻿@model CRS.ADMIN.APPLICATION.Models.RecommendationManagementV2.CommonRecommendationModel
+@{
+    ViewBag.Title = "DisplayPageView";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="px-8 py-4 flex flex-col gap-8">
+    <div class="flex justify-between items-center">
+        <div>
+            <div class="heading-title">@CRS.ADMIN.APPLICATION.Resources.Resource.Pages</div>
+            <div class="span-title-light-gray">@CRS.ADMIN.APPLICATION.Resources.Resource.PagesSupportMsg</div>
+        </div>
+    </div>
+    <div class="table-tab">
+        <!--<div class="px-[12px] py-[16px] flex justify-between entry-export-container">-->
+        @*<div class="flex items-center select-entries">
+                @CRS.ADMIN.APPLICATION.Resources.Resource.Show&nbsp;
+                <select id="countries" class="w-full select-entires " style="width: 100%; ">
+                    <option value="5" selected>5</option>
+                    <option value="10">10</option>
+                    <option value="15">15</option>
+                    <option value="20">100</option>
+                </select>&nbsp;@CRS.ADMIN.APPLICATION.Resources.Resource.Entries
+            </div>*@
+        <!--</div>-->
+        <div class="relative overflow-x-auto">
+            <table class="w-full  text-left club-table">
+                <thead class="club-table-thead">
+                    <tr>
+                        <th scope="col" class="p-[12px]">
+                            <div class="flex">
+                                S.N
+                                <div class="relative pl-[5px]">
+                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                </div>
+                            </div>
+                        </th>
+                        <th scope="col" class="p-[12px]">
+                            <div class="flex">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Pages
+                                <div class="relative pl-[5px]">
+                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                </div>
+                            </div>
+                        </th>
+                        <th scope="col" class="p-[12px]">
+                            <div class="flex justify-center">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Action
+                                <div class="relative pl-[5px]">
+                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                </div>
+                            </div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        int sno = 1;
+                        foreach (var item in Model.GetDisplayPageList)
+                        {
+                            <tr class="bg-white border-b ">
+                                <td class="p-[12px]">
+                                    @sno
+                                </td>
+                                <td class="p-[12px]">
+                                    @item.PageLabel
+                                </td>
+                                @if (item.PageLabel == "Main Page")
+                                {
+                                    <td class="p-[12px]">
+                                        <div class="flex gap-2 items-center justify-center">
+                                            <i class="las la-eye text-[24px] text-[#e3ab00] cursor-pointer" onclick="GotoGroupView('@item.PageId')"></i>
+                                        </div>
+                                    </td>
+                                }
+                                else if (item.PageLabel == "Home Page")
+                                {
+                                    <td class="p-[12px]">
+                                        <div class="flex gap-2 items-center justify-center">
+                                            <i class="las la-eye text-[24px] text-[#e3ab00] cursor-pointer" onclick="GotoClubListView('@item.PageId')"></i>
+                                        </div>
+                                    </td>
+                                }
+                                else
+                                {
+                                    <td class="p-[12px]">
+                                        <div class="flex gap-2 items-center justify-center">
+                                            <i class="las la-eye text-[24px] text-[#e3ab00] cursor-pointer" onclick="GotoClubSearchPageView('@item.PageId')"></i>
+                                        </div>
+                                    </td>
+                                }
+                            </tr>
+                            sno++;
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+        @*<div class="pagination-club">
+                <div class="show-entry">@CRS.ADMIN.APPLICATION.Resources.Resource.Showing 1 to 5 of 301 @CRS.ADMIN.APPLICATION.Resources.Resource.Entries</div>
+                <div class="flex gap-[12px]">
+                    <div class="btn btn-secondary-box-shadow ">@CRS.ADMIN.APPLICATION.Resources.Resource.Previous</div>
+                    <div class="flex gap-[12px]">
+                        <div class="pagination-number active">
+                            1
+                        </div>
+                        <div class="pagination-number">
+                            2
+                        </div>
+                        <div class="pagination-number">
+                            3
+                        </div>
+                        <div class="pagination-number">
+                            ..
+                        </div>
+                        <div class="pagination-number">
+                            10
+                        </div>
+                    </div>
+                    <div class="btn btn-secondary-box-shadow ">@CRS.ADMIN.APPLICATION.Resources.Resource.Next</div>
+                </div>
+            </div>*@
+    </div>
+</div>
+@section scripts{
+    <script>
+        function GotoGroupView(pageid) {
+            window.location.href = "/RecommendationManagementV2/GroupView?pageid=" + pageid + "&locationid=" + '@ViewBag.LocationId';
+        }
+        function GotoClubListView(pageid) {
+            window.location.href = "/RecommendationManagementV2/ClubListView?locationid=" + '@ViewBag.LocationId';
+        }
+        function GotoClubSearchPageView(pageid) {
+            window.location.href = "/RecommendationManagementV2/ClubListForSearchPageView?locationid=" + '@ViewBag.LocationId';
+        }
+    </script>
+}
+

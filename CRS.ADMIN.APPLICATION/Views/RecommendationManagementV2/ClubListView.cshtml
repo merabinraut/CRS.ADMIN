@@ -1,0 +1,248 @@
+﻿@model CRS.ADMIN.APPLICATION.Models.RecommendationManagementV2.CommonRecommendationModel
+@{
+    ViewBag.Title = "ClubListView";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="px-8 py-4 flex flex-col gap-8">
+    @Html.AntiForgeryToken()
+    <div class="flex justify-between items-center">
+        <div>
+            <div class="heading-title">@CRS.ADMIN.APPLICATION.Resources.Resource.Club_List</div>
+            <div class="span-title-light-gray">@CRS.ADMIN.APPLICATION.Resources.Resource.ClubListSuppportMsg</div>
+        </div>
+    </div>
+    <div class="flex flex-col gap-8">
+        <div class="flex justify-between ">
+            <form action="/RecommendationManagementV2/ClubListView" method="get">
+                <div class="relative input-search-wrapper">
+                    <div class="absolute inset-y-0 left-0 flex items-center pl-[16px] pointer-events-none">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21" fill="none">
+                            <path d="M17.5 18L13.875 14.375M15.8333 9.66667C15.8333 13.3486 12.8486 16.3333 9.16667 16.3333C5.48477 16.3333 2.5 13.3486 2.5 9.66667C2.5 5.98477 5.48477 3 9.16667 3C12.8486 3 15.8333 5.98477 15.8333 9.66667Z"
+                                  stroke="#667085" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round">
+                            </path>
+                        </svg>
+                    </div>
+                    <input name="locationid" value="@ViewBag.LocationId" hidden />
+                    <input type="search" id="default-search" class="input-search block w-full " placeholder="@CRS.ADMIN.APPLICATION.Resources.Resource.Search" name="SearchFilter" value="@ViewBag.SearchFilter">
+                    <input type="submit" hidden />
+                </div>
+            </form>
+            <div class="flex gap-3">
+                <div class="export-button h-[40px]" onclick="exportCSVExcel()">
+                    <img src="/Content/assets_new/images/club/download-solid.svg" /> @CRS.ADMIN.APPLICATION.Resources.Resource.Export
+                </div>
+                <div class="btn btn-primary-default h-[40px] gap-2" onclick="ManageHomePageRequest()">
+                    <i class="las la-plus-circle"></i> @CRS.ADMIN.APPLICATION.Resources.Resource.Add_New
+                </div>
+            </div>
+        </div>
+        <div class="table-tab">
+            @*<div class="px-[12px] py-[16px] flex justify-between entry-export-container">
+                    <div class="flex items-center select-entries">
+                        @CRS.ADMIN.APPLICATION.Resources.Resource.Show&nbsp;
+                        <select id="countries" class="w-full select-entires " style="width: 100%; ">
+                            <option value="5" selected>5</option>
+                            <option value="10">10</option>
+                            <option value="15">15</option>
+                            <option value="20">100</option>
+                        </select>&nbsp;@CRS.ADMIN.APPLICATION.Resources.Resource.Entries
+                    </div>
+                </div>*@
+            <div class="relative overflow-x-auto">
+                <table class="w-full  text-left club-table" id="table-id">
+                    <thead class="club-table-thead">
+                        <tr>
+                            <th scope="col" class="p-[12px]">
+                                <div class="flex">
+                                    S.N
+                                    <div class="relative pl-[5px]">
+                                        <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                        <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                    </div>
+                                </div>
+                            </th>
+                            <th scope="col" class="p-[12px]">
+                                <div class="flex">
+                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Club_Profile
+                                    <div class="relative pl-[5px]">
+                                        <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                        <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                    </div>
+                                </div>
+                            </th>
+                            <th scope="col" class="p-[12px]">
+                                <div class="flex">
+                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Display_Page
+                                    <div class="relative pl-[5px]">
+                                        <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                        <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                    </div>
+                                </div>
+                            </th>
+                            <th scope="col" class="p-[12px]">
+                                <div class="flex">
+                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Requested_Date
+                                    <div class="relative pl-[5px]">
+                                        <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                        <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                    </div>
+                                </div>
+                            </th>
+                            <th scope="col" class="p-[12px]">
+                                <div class="flex">
+                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Status
+                                    <div class="relative pl-[5px]">
+                                        <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                        <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                    </div>
+                                </div>
+                            </th>
+                            <th scope="col" class="p-[12px]">
+                                <div class="flex">
+                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Hosts
+                                    <div class="relative pl-[5px]">
+                                        <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                        <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                    </div>
+                                </div>
+                            </th>
+                            <th scope="col" class="p-[12px]">
+                                <div class="flex">
+                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Updated_Date
+                                    <div class="relative pl-[5px]">
+                                        <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                        <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                    </div>
+                                </div>
+                            </th>
+                            <th scope="col" class="p-[12px]">
+                                <div class="flex justify-center">
+                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Action
+                                    <div class="relative pl-[5px]">
+                                        <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                        <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                    </div>
+                                </div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            int sno = 1;
+                            foreach (var item in Model.GetClubRequestListByHomePage)
+                            {
+                                <tr class="bg-white border-b ">
+                                    <td class="p-[12px]">
+                                        @sno
+                                    </td>
+                                    <td class="p-[12px]">
+                                        <div class="round-image-text flex gap-[12px] w-max ">
+                                            <img class="w-[32px] h-[32px] rounded-full"
+                                                 src="@item.ClubLogo" />
+                                            <div class="flex justify-between w-full">
+                                                <div class="text-image grid flex-none">
+                                                    <div class="text-sm font-semibold text-[#101828] ">@item.ClubName</div>
+                                                    <div class="platinum ">@item.ClubCategory</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="p-[12px]">
+                                        @item.DisplayPageLabel
+                                    </td>
+                                    <td class="p-[12px]">
+                                        <div class="w-max">
+                                            @item.RequestedDate
+                                        </div>
+                                    </td>
+                                    <td class="p-[12px]">
+                                        <div class="w-max">
+                                            @item.Status
+                                        </div>
+                                    </td>
+                                    <td class="p-[12px]">
+                                        <div class="w-max">
+                                            @item.HostName
+                                        </div>
+                                    </td>
+                                    <td class="p-[12px]">
+                                        <div class="w-max">
+                                            @item.UpdatedDate
+                                        </div>
+                                    </td>
+                                    <td class="p-[12px]">
+                                        <div class="flex gap-2 items-center justify-center">
+                                            <i class="las la-trash-alt text-[#CB3F3F] text-[24px] cursor-pointer" onclick="DeleteRequest('@item.RecommendationId','@item.DisplayId','@item.ClubId')"></i>
+                                        </div>
+                                    </td>
+                                </tr>
+                                sno++;
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+            @*<div class="pagination-club">
+                    <div class="show-entry">@CRS.ADMIN.APPLICATION.Resources.Resource.Showing 1 to 5 of 301 @CRS.ADMIN.APPLICATION.Resources.Resource.Entries</div>
+                    <div class="flex gap-[12px]">
+                        <div class="btn btn-secondary-box-shadow ">@CRS.ADMIN.APPLICATION.Resources.Resource.Previous</div>
+                        <div class="flex gap-[12px]">
+                            <div class="pagination-number active">
+                                1
+                            </div>
+                            <div class="pagination-number">
+                                2
+                            </div>
+                            <div class="pagination-number">
+                                3
+                            </div>
+                            <div class="pagination-number">
+                                ..
+                            </div>
+                            <div class="pagination-number">
+                                10
+                            </div>
+                        </div>
+                        <div class="btn btn-secondary-box-shadow ">@CRS.ADMIN.APPLICATION.Resources.Resource.Next</div>
+                    </div>
+                </div>*@
+        </div>
+    </div>
+</div>
+@section scripts{
+    <script>
+        function ManageHomePageRequest() {
+            window.location.href = "/RecommendationManagementV2/ManageHomePageRequest?locationid=" + '@ViewBag.LocationId';
+        }
+
+        function DeleteRequest(recommendationid, displayid, clubid) {
+            $.ajax({
+                type: 'POST',
+                async: true,
+                url: "/RecommendationManagementV2/DeleteHomePageRequest?recommendationid=" + recommendationid + "&displayid=" + displayid + "&clubid=" + clubid + "&locationid=" + '@ViewBag.LocationId',
+                dataType: 'json',
+                data: {
+                    __RequestVerificationToken: $('input[name="__RequestVerificationToken"]').val(),
+                },
+                success: function (responseData) {
+                    window.location.reload();
+                },
+                error: function (ex) {
+
+                }
+            });
+        }
+
+        function exportCSVExcel() {
+            const currentDateTimeString = new Date().toISOString().replace('T', ' ').replace(/\.\d{3}Z$/, '');
+            $('#table-id').table2excel({
+                exclude: ".no-export",
+                filename: currentDateTimeString + "_hoslog_homepage.xls",
+                fileext: ".xls",
+                exclude_img: false,
+                exclude_links: true,
+                exclude_inputs: true
+            });
+        }
+    </script>
+}

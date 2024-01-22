@@ -1,0 +1,472 @@
+﻿@model CRS.ADMIN.APPLICATION.Models.RecommendationManagementV2.ManageClubRecommendationRequest
+@{
+    ViewBag.Title = "ManageMainPageRequest";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    int rowCount = 1;
+}
+
+<style>
+    .select2-search--dropdown {
+        display: none !important;
+    }
+</style>
+<span id="rowCountDisplay" hidden>@rowCount</span>
+<div class="px-8 py-4 flex flex-col gap-8">
+    <div class="flex justify-between items-center">
+        <div>
+            <div class="heading-title">@CRS.ADMIN.APPLICATION.Resources.Resource.Recommendation_Requests</div>
+            <div class="span-title-light-gray">@CRS.ADMIN.APPLICATION.Resources.Resource.RecommendationConfigSupportMsg</div>
+        </div>
+    </div>
+    <div class="flex flex-col gap-8">
+        @using (Html.BeginForm("ManageMainPageRequest", "RecommendationManagementV2", FormMethod.Post, new { @id = "ManageClubRecommendationRequest", enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(model => model.LocationId)
+            @Html.HiddenFor(model => model.GroupId)
+            @Html.HiddenFor(model => model.DisplayId)
+            <div class=" grid gap-[24px] grid-cols-3" style="padding-bottom:20px">
+                <div class="input-field-common">
+                    <label for="" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                        @CRS.ADMIN.APPLICATION.Resources.Resource.Club_Location
+                    </label>
+                    @if (Model.LocationId == null)
+                    {
+                        <select id="default_select" style="width: 100%;" class="text-[#B7B7B7] h-[44px] clubLocationDDL">
+                            @foreach (KeyValuePair<string, string> item in ViewBag.ClubLocation as Dictionary<string, string>)
+                            {
+                                var selectedId = Model.LocationId as string;
+                                if (item.Key == selectedId)
+                                {
+                                    <option value="@item.Key" selected>
+                                        @item.Value
+                                    </option>
+                                }
+                                else
+                                {
+                                    <option value="@item.Key">
+                                        @item.Value
+                                    </option>
+                                }
+                            }
+                        </select>}
+                    else
+                    {
+                        <select id="default_select" style="width: 100%;" class="text-[#B7B7B7] h-[44px] clubLocationDDL" disabled>
+                            @foreach (KeyValuePair<string, string> item in ViewBag.ClubLocation as Dictionary<string, string>)
+                            {
+                                if (item.Key == Model.LocationId)
+                                {
+                                    <option value="@item.Key" selected>
+                                        @item.Value
+                                    </option>
+                                }
+                                else
+                                {
+                                    <option value="@item.Key">
+                                        @item.Value
+                                    </option>
+                                }
+                            }
+                        </select>
+                    }
+                </div>
+                <div class="input-field-common">
+                    <label for="" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                        @CRS.ADMIN.APPLICATION.Resources.Resource.Group
+                    </label>
+                    <select id="default_select1" style="width: 100%;" class="text-[#B7B7B7] h-[44px]" disabled>
+                        @foreach (KeyValuePair<string, string> item in ViewBag.GroupDDLByLocationId as Dictionary<string, string>)
+                        {
+                            if (item.Key == Model.GroupId)
+                            {
+                                <option value="@item.Key" selected>
+                                    @item.Value
+                                </option>
+                            }
+                            else
+                            {
+                                <option value="@item.Key">
+                                    @item.Value
+                                </option>
+                            }
+                        }
+                    </select>
+                </div>
+                <div class="input-field-common">
+                    <label for="" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                        @CRS.ADMIN.APPLICATION.Resources.Resource.Club
+                    </label>
+                    <select id="default_select3" style="width: 100%;" class="text-[#B7B7B7] h-[44px] clubDDL" name="ClubId">
+                        @foreach (var item in ViewBag.ClubDDL as IEnumerable<SelectListItem>)
+                        {
+                            var selectedId = Model.ClubId as string;
+                            if (item.Value == selectedId)
+                            {
+                                <option value="@item.Value" selected>
+                                    @item.Text
+                                </option>
+                            }
+                            else
+                            {
+                                <option value="@item.Value">
+                                    @item.Text
+                                </option>
+                            }
+                        }
+                    </select>
+                </div>
+                <div class="input-field-common">
+                    <label for="" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                        @CRS.ADMIN.APPLICATION.Resources.Resource.Display_Order
+                    </label>
+                    <select id="default_select4" style="width: 100%;" class="text-[#B7B7B7] h-[44px]" name="DisplayOrderId">
+                        @foreach (var item in ViewBag.DisplayOrderDDL as IEnumerable<SelectListItem>)
+                        {
+                            var selectedId = Model.DisplayOrderId as string;
+                            if (item.Value == selectedId)
+                            {
+                                <option value="@item.Value" selected>
+                                    @item.Text
+                                </option>
+                            }
+                            else
+                            {
+                                <option value="@item.Value">
+                                    @item.Text
+                                </option>
+                            }
+                        }
+                    </select>
+                </div>
+            </div>
+            <!-- table  -->
+            <div class=" grid gap-[24px]">
+                <div class="relative overflow-x-auto">
+                    <table class="w-full  text-left club-table bordered" id="componentContainer">
+                        <thead class="club-table-thead bg-[#F3F3F3]">
+                            <tr>
+                                <th scope="col" class="p-[12px]">
+                                    <div class="flex">
+                                        S.N
+                                    </div>
+                                </th>
+                                <th scope="col" class="p-[12px]">
+                                    <div class="flex">
+                                        @CRS.ADMIN.APPLICATION.Resources.Resource.Hosts
+                                    </div>
+                                </th>
+                                <th scope="col" class="p-[12px]">
+                                    <div class="flex">
+                                        @CRS.ADMIN.APPLICATION.Resources.Resource.Display_Order
+                                    </div>
+                                </th>
+                                <th scope="col" class="p-[12px]">
+                                    <div class="flex justify-center">
+                                        @CRS.ADMIN.APPLICATION.Resources.Resource.Action
+                                    </div>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                <tr class="bg-white border-b" id="templateRow">
+                                    <td class="p-[12px]">
+                                        @rowCount
+                                    </td>
+
+                                    <td class="p-[12px]">
+                                        <div class="input-field-common add-new-select-rm">
+                                            <select id="" style="width: 100%;"
+                                                    class="default_select text-[#B7B7B7] h-[44px] hostDDL" name="HostDDLByClubId">
+                                                @*@foreach (var item in ViewBag.HostDDLBYClubId as IEnumerable<SelectListItem>)
+                                                    {
+                                                        var selectedId = ViewBag.HostDDLBYClubId as string;
+                                                        if (item.Value == selectedId)
+                                                        {
+                                                            <option value="@item.Value" selected>
+                                                                @item.Text
+                                                            </option>
+                                                        }
+                                                        else
+                                                        {
+                                                            <option value="@item.Value">
+                                                                @item.Text
+                                                            </option>
+                                                        }
+                                                    }*@
+                                            </select>
+                                        </div>
+                                    </td>
+                                    <td class="p-[12px]">
+                                        <div class="input-field-common add-new-select-rm">
+                                            <select id="" style="width: 100%;"
+                                                    class=" default_select text-[#B7B7B7] h-[44px] displayOrderDDL" name="DisplayOrderDDL">
+                                                @foreach (var item in ViewBag.DisplayOrderDDL as IEnumerable<SelectListItem>)
+                                                {
+                                                    var selectedId = ViewBag.DisplayOrderDDL as string;
+                                                    if (item.Value == selectedId)
+                                                    {
+                                                        <option value="@item.Value" selected>
+                                                            @item.Text
+                                                        </option>
+                                                    }
+                                                    else
+                                                    {
+                                                        <option value="@item.Value">
+                                                            @item.Text
+                                                        </option>
+                                                    }
+                                                }
+                                            </select>
+                                        </div>
+                                    </td>
+                                    <td class="p-[12px]">
+                                        <div class="flex gap-[7px] justify-center ">
+                                            @*<div>
+                                                    <i class="fa-regular fa-pen-to-square text-[#989898] cursor-pointer"></i>
+                                                </div>*@
+                                            <div>
+                                                <i class="fa-solid fa-trash-can text-primary-100 cursor-pointer"></i>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                rowCount++;
+                            }
+                        </tbody>
+                    </table>
+                    <button class="btn btn-primary-normal gap-1 mt-[24px]" id="addNewRow">
+                        <i class="las la-plus-circle"></i> @CRS.ADMIN.APPLICATION.Resources.Resource.Add_New
+                    </button>
+                </div>
+                <div class="flex justify-end">
+                    <div class="flex gap-[24px]">
+                        <div class="btn btn-secondary w-[96px]" onclick="window.history.go(-1); return false;">@CRS.ADMIN.APPLICATION.Resources.Resource.Cancel</div>
+                        <div class="btn btn-primary w-[96px]" data-modal-target="popup-modal"
+                             data-modal-toggle="popup-modal" onclick="saveForm()">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Save
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+@section scripts{
+    <!--toggle button event-->
+    <script>
+        // JavaScript to handle the toggle functionality
+        var toggle = document.getElementById('toggle');
+        var toggleDiv = document.getElementById('toggleDiv');
+
+        toggle.addEventListener('click', function () {
+            if (toggleDiv.style.display === 'none' || toggleDiv.style.display === '') {
+                toggleDiv.style.display = 'block';
+            } else {
+                toggleDiv.style.display = 'none';
+            }
+        });
+    </script>
+    <!-- Create a new row dynamically -->
+    <script>
+        function increaseRowCount() {
+            var rowCountElement = document.getElementById("rowCountDisplay");
+            var currentRowCount = parseInt(rowCountElement.innerText);
+            rowCountElement.innerText = currentRowCount + 1;
+        }
+        function decreaseRowCount() {
+            var rowCountElement = document.getElementById("rowCountDisplay");
+            var currentRowCount = parseInt(rowCountElement.innerText);
+            rowCountElement.innerText = Math.max(0, currentRowCount - 1);
+        }
+        function currentRowCount() {
+            var rowCountElement = document.getElementById("rowCountDisplay");
+            var currentRowCount = parseInt(rowCountElement.innerText);
+            return currentRowCount;
+        }
+        function addNewComponent() {
+            increaseRowCount();
+            let newRowCount = currentRowCount();
+        var newRow = document.createElement('tr');
+            newRow.classList.add('bg-white', 'border-b');
+            var clubid = document.getElementsByName("ClubId")[0].value;
+            if (clubid === "" || clubid == null) {
+                toastr.info('Please select club');
+                return false;
+            }
+                $.ajax({
+         type: 'POST',
+         async: true,
+         url: '@Url.Action("GetHostListByClubId")',
+         dataType: 'json',
+         data: { '__RequestVerificationToken': RequestVerificationToken, clubid },
+                    success: function (data) {
+                        
+                        newRow.innerHTML = `
+                <td class="p-[12px]">${newRowCount}</td>
+                <td class="p-[12px]">
+                    <div class="input-field-common add-new-select-rm">
+                     <select id="" style="width: 100%;"
+                             class="default_select text-[#B7B7B7] h-[44px] hostDDL${newRowCount}" name="HostDDLByClubId">
+                     </select>
+                   </div>
+                </td>
+                <td class="p-[12px]">
+             <div class="input-field-common add-new-select-rm">
+                 <select id="" style="width: 100%;"
+                        class=" default_select text-[#B7B7B7] h-[44px] displayDDL${newRowCount}"  name="DisplayOrderDDL">
+                  </select>
+             </div>
+                </td>
+                <td class="p-[12px]">
+                    <div class="flex gap-[7px] justify-center ">
+                        <div>
+                            <i class="fa-regular fa-pen-to-square text-[#989898] cursor-pointer"></i>
+                        </div>
+                        <div>
+                            <!-- Add an event listener to remove the clicked row -->
+                            <i class="fa-solid fa-trash-can text-primary-100 cursor-pointer" onclick="removeRow(this)"></i>
+                        </div>
+                    </div>
+                </td>
+            `;
+
+                        document.getElementById('componentContainer').appendChild(newRow);
+                        $(newRow).find('select').select2();
+                        var hostClassName = `.hostDDL${newRowCount}`;
+                        var displayClassName = `.displayDDL${newRowCount}`;
+                        $.each(data.hostdDDL, function (i, hostdDDL) {
+                            $(hostClassName).append('<option value="' + hostdDDL.Value + '">' + hostdDDL.Text + '</option>');
+                        });
+                        $.each(data.displayOrder, function (i, displayOrder) {
+                            $(displayClassName).append('<option value="' + displayOrder.Value + '">' + displayOrder.Text + '</option>');
+                        });
+         },
+         error: function (ex) {
+            toastr.info('Failed to retrive details.');
+         }
+     });
+return false;
+    }
+    // Function to remove the clicked row
+    function removeRow(icon) {
+        var rowToRemove = icon.closest('tr');
+        rowToRemove.remove();
+        decreaseRowCount();
+        }
+        var RequestVerificationToken = $('input[name="__RequestVerificationToken"]').val();
+        @*$('#addNewRow').click(function () {
+            
+               var clubid = document.getElementsByName("ClubId")[0].value;
+                if (clubid === "" || clubid == null) {
+                    toastr.info('Please select club');
+                return false;
+            }
+                 $.ajax({
+                      type: 'POST',
+                      async: true,
+                      url: '@Url.Action("GetHostListByClubId")',
+                      dataType: 'json',
+                      data: { '__RequestVerificationToken': RequestVerificationToken, clubid },
+                     success: function (data) {
+                         
+                         $('.hostDDL').prop('disabled', false);
+                         $('.displayOrderDDL').prop('disabled', false);
+                         $.each(data.hostdDDL, function (i, hostdDDL) {
+                             $(".hostDDL").append('<option value="' + hostdDDL.Value + '">' + hostdDDL.Text + '</option>');
+                         });
+                         $.each(data.displayOrder, function (i, displayOrder) {
+                             $(".displayOrderDDL").append('<option value="' + displayOrder.Value + '">' + displayOrder.Text + '</option>');
+                         });
+                      },
+                      error: function (ex) {
+                         toastr.info('Failed to retrive details.');
+                      }
+                  });
+             return false;
+        });*@
+    </script>
+    <!--disabled the drop down-->
+    <script>
+        document.getElementById('addNewRow').disabled = true;
+        $('.default_select').prop('disabled', true);
+        var isDisabled = $('#default_select3_disabled').prop('disabled');
+        $(document).ready(function () {
+            $('select').change(function () {
+                var selectedValue = $('#default_select3').val();
+                if (selectedValue != "") {
+                    document.getElementById('addNewRow').disabled = false;
+                    $('.default_select').prop('disabled', false);
+                } else {
+                    document.getElementById('addNewRow').disabled = true;
+                    $('.default_select').prop('disabled', true);
+                }
+            });
+        });
+        if (isDisabled) {
+            document.getElementById('addNewRow').disabled = false;
+            $('.default_select').prop('disabled', false);
+        }
+    </script>
+    <!--dynamically trigged host ddl -->
+    <script>
+        var RequestVerificationToken = $('input[name="__RequestVerificationToken"]').val();
+        var isDisabled = $('.default_select').prop('disabled');
+            $('.clubDDL').change(function () {
+                $(".hostDDL").empty().prepend("<option value='' disabled selected>--- Select ---</option>");
+                $(".displayOrderDDL").empty().prepend("<option value='' disabled selected>--- Select ---</option>");
+                var clubid = document.getElementsByName("ClubId")[0].value;
+                if (clubid === "" || clubid == null) {
+                    toastr.info('Please select club');
+                    return false;
+                }
+                $.ajax({
+                    type: 'POST',
+                    async: true,
+                    url: '@Url.Action("GetHostListByClubId")',
+                    dataType: 'json',
+                    data: { '__RequestVerificationToken': RequestVerificationToken, clubid },
+                    success: function (data) {
+                        $('.hostDDL').prop('disabled', false);
+                        $('.displayOrderDDL').prop('disabled', false);
+                        $.each(data.hostdDDL, function (i, hostdDDL) {
+                            $(".hostDDL").append('<option value="' + hostdDDL.Value + '">' + hostdDDL.Text + '</option>');
+                        });
+                        $.each(data.displayOrder, function (i, displayOrder) {
+                            $(".displayOrderDDL").append('<option value="' + displayOrder.Value + '">' + displayOrder.Text + '</option>');
+                        });
+                    },
+                    error: function (ex) {
+                        toastr.info('Failed to retrive details.');
+                    }
+                });
+                return false;
+            });
+    </script>
+    <!--summit form-->
+    <script>
+        function saveForm() {
+            document.getElementById("ManageClubRecommendationRequest").submit();
+        }
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            $('select').select2({
+                minimumResultsForSearch: Infinity
+            });
+        });
+    </script>
+    <!--stop un-neccesary summit -->
+    <script>
+        document.getElementById('addNewRow').addEventListener('click',
+            function (event) {
+                event.preventDefault();
+                addNewComponent();
+            });
+    </script>
+}
+
+

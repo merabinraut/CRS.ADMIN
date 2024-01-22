@@ -1,0 +1,223 @@
+﻿@model CRS.ADMIN.APPLICATION.Models.TagManagement.ManageTag
+@{
+    ViewBag.Title = "Manage Tag";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section BreadCum{
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>Manage Tag</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="~/Home">Home</a></li>
+                        <li class="breadcrumb-item">Club List</li>
+                        <li class="breadcrumb-item active">Manage Tag</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </section>
+}
+<div>
+    <div class="card-body">
+        @using (Html.BeginForm("ManageTag", "ClubManagement", FormMethod.Post, new { }))
+        {
+
+            if (ViewData["TagDetails"] != null)
+            {
+                @Html.AntiForgeryToken()
+                @Html.HiddenFor(model => model.ClubId)
+
+                <label class="switch" id="tag1">
+                    <input type="checkbox" id="tag1-checked" class="switch-tag1" value="A" onclick="toggle1(this)">
+                    <span class="slider round"></span>
+                </label>
+                <div class="tag1">Location Tag</div>
+                <style>
+                    .switch {
+                        position: relative;
+                        display: inline-block;
+                        width: 60px;
+                        height: 34px;
+                    }
+
+                        .switch input {
+                            opacity: 0;
+                            width: 0;
+                            height: 0;
+                        }
+
+                    .slider {
+                        position: absolute;
+                        cursor: pointer;
+                        top: 0;
+                        left: 0;
+                        right: 0;
+                        bottom: 0;
+                        background-color: #ccc;
+                        -webkit-transition: .4s;
+                        transition: .4s;
+                    }
+
+                        .slider:before {
+                            position: absolute;
+                            content: "";
+                            height: 26px;
+                            width: 26px;
+                            left: 4px;
+                            bottom: 4px;
+                            background-color: white;
+                            -webkit-transition: .4s;
+                            transition: .4s;
+                        }
+
+                    input:checked + .slider {
+                        background-color: #E21C90;
+                    }
+
+                        input:checked + .slider:before {
+                            -webkit-transform: translateX(26px);
+                            -ms-transform: translateX(26px);
+                            transform: translateX(26px);
+                        }
+
+                    /* Rounded sliders */
+                    .slider.round {
+                        border-radius: 34px;
+                    }
+
+                        .slider.round:before {
+                            border-radius: 50%;
+                        }
+
+                    #secondary_content {
+                        display: none;
+                    }
+                </style>
+
+
+                <div class="row" id="tag1_content" style="display:none">
+                    @Html.NDropDownListFor(model => model.Tag1Location, new SelectList(ViewBag.LocationDDL, "Value", "Text"), new { @class = "form-control select2", autocomplete = "off" }, 4)
+                    @Html.NSwitchBoxFor(model => model.Tag1Status, Model.Tag1Status == "A" ? true : false, "A")
+                </div>
+                <label class="switch">
+                    <input type="checkbox" id="tag2-checked" class="switch-tag2" value="A" onclick="toggle2(this)">
+                    <span class="slider round"></span>
+                </label>
+                <div class="tag2">Rank Tag</div>
+                <div class="row" id="tag2_content" style="display:none">
+                    @Html.NTextBoxFor(model => model.Tag2RankName, new { @class = "form-control", placeholder = "Enter tag rank name", autocomplete = "off" }, 3)
+                    @Html.NTextBoxFor(model => model.Tag2RankDescription, new { @class = "form-control", placeholder = "Enter tag rank decription", autocomplete = "off" }, 3)
+                    @Html.NSwitchBoxFor(model => model.Tag2Status, Model.Tag2Status == "A" ? true : false, "A")
+                </div>
+                <label class="switch switch-tag3">
+                    <input type="checkbox" id="tag3-checked" class="switch-tag3" value="A" onclick="toggle3(this)">
+                    <span class="slider round"></span>
+                </label>
+                <div class="tag2">Categories Tag </div>
+                <div class="row" id="tag3_content" style="display:none">
+                    @Html.NTextBoxFor(model => model.Tag3CategoryName, new { @class = "form-control", placeholder = "Enter category name", autocomplete = "off" }, 3)
+                    @Html.NTextBoxFor(model => model.Tag3CategoryDescription, new { @class = "form-control", placeholder = "Enter category description", autocomplete = "off" }, 3)
+                    @Html.NSwitchBoxFor(model => model.Tag3Status, Model.Tag3Status == "A" ? true : false, "A")
+                </div>
+                <label class="switch switch-tag4">
+                    <input type="checkbox" id="tag4-checked" class="switch-tag4" value="A" onclick="toggle4(this)">
+                    <span class="slider round"></span>
+                </label>
+                <div class="tag2">Excellent Store Tag </div>
+                <div class="row" id="tag4_content" style="display:none">
+                    @Html.NTextBoxFor(model => model.Tag4ExcellencyName, new { @class = "form-control", placeholder = "Enter excellency name", autocomplete = "off" }, 3)
+                    @Html.NTextBoxFor(model => model.Tag4ExcellencyDescription, new { @class = "form-control", placeholder = "Enter excellency description", autocomplete = "off" }, 3)
+                    @Html.NSwitchBoxFor(model => model.Tag4Status, Model.Tag4Status == "A" ? true : false, "A")
+                </div>
+                <label class="switch switch-tag5">
+                    <input type="checkbox" id="tag5-checked" class="switch-tag5" value="A" onclick="toggle5(this)">
+                    <span class="slider round"></span>
+                </label>
+                <div class="tag2">Large Store Tag </div>
+                <div class="row" id="tag5_content" style="display:none">
+                    @Html.NTextBoxFor(model => model.Tag5StoreName, new { @class = "form-control", placeholder = "Enter store name", autocomplete = "off" }, 3)
+                    @Html.NTextBoxFor(model => model.Tag5StoreDescription, new { @class = "form-control", placeholder = "Enter store description", autocomplete = "off" }, 3)
+                    @Html.NSwitchBoxFor(model => model.Tag5Status, Model.Tag5Status == "A" ? true : false, "A")
+                </div>
+                <div class="col-lg-12">
+                    <button type="button" class="btn btn-primary btn-sm bg-primary" onclick="window.history.back();"><i class="fa fa-arrow-left mr-1"></i> Back</button>
+                    <button type="submit" class="btn btn-success btn-sm" id="save" style="margin-left:5px"><i class="fa fas fa-save mr-1"></i> Save</button>
+                </div>}
+
+
+        }
+
+    </div>
+</div>
+@section scripts
+{
+    <script>
+        function toggle1(ele) {
+            var cont = document.getElementById('tag1_content');
+            if (cont.style.display == 'none') {
+                cont.style.display = 'block';
+                document.getElementById(ele.id).value = 'A';
+                var checkedValue = $("#tag1-checked").is(":checked");
+                // if (!checkedValue)
+
+            }
+            else {
+                cont.style.display = 'none';
+                document.getElementById(ele.id).value = 'I';
+            }
+        }
+        function toggle2(ele) {
+            var cont = document.getElementById('tag2_content');
+            if (cont.style.display == 'none') {
+                cont.style.display = 'block';
+                document.getElementById(ele.id).value = 'A';
+
+            }
+            else {
+                cont.style.display = 'none';
+                document.getElementById(ele.id).value = 'I';
+            }
+        }
+        function toggle3(ele) {
+            var cont = document.getElementById('tag3_content');
+            if (cont.style.display == 'none') {
+                cont.style.display = 'block';
+                document.getElementById(ele.id).value = 'A';
+            }
+            else {
+                cont.style.display = 'none';
+                document.getElementById(ele.id).value = 'I';
+            }
+        }
+        function toggle4(ele) {
+            var cont = document.getElementById('tag4_content');
+            if (cont.style.display == 'none') {
+                cont.style.display = 'block';
+                document.getElementById(ele.id).value = 'A';
+            }
+            else {
+                cont.style.display = 'none';
+                document.getElementById(ele.id).value = 'I';
+            }
+        }
+        function toggle5(ele) {
+            var cont = document.getElementById('tag5_content');
+            if (cont.style.display == 'none') {
+                cont.style.display = 'block';
+                document.getElementById(ele.id).value = 'A';
+
+            }
+            else {
+                cont.style.display = 'none';
+                document.getElementById(ele.id).value = 'I';
+            }
+        }
+    </script>
+
+}
+

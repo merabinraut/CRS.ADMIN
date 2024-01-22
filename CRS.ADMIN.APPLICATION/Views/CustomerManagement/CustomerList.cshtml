@@ -1,0 +1,227 @@
+﻿@{
+    ViewBag.Title = "Customer List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var customerList = Model as CRS.ADMIN.APPLICATION.Models.CustomerManagement.CustomerListCommonModel;
+}
+
+@Html.AntiForgeryToken()
+
+<div class="px-8 py-4">
+    <!-- title  -->
+    <div class="flex flex-col  gap-6">
+        <div class="flex justify-between items-center">
+            <div>
+                <div class="heading-title">
+                    @CRS.ADMIN.APPLICATION.Resources.Resource.Customer_Management
+                </div>
+                <div class="span-title-light-gray">
+                    @CRS.ADMIN.APPLICATION.Resources.Resource.Customer_Management_Supporting_Texts
+                </div>
+            </div>
+
+        </div>
+        <!--<div class="flex gap-[24px]" style="border-bottom: 1px solid #f4f4f4;">
+            <div class="flex tab-container-plane bg-white gap-[16px]">
+                <button id="tab1Button" class="tab-button-plane tab-link active">
+                    @CRS.ADMIN.APPLICATION.Resources.Resource.All
+                </button>-->
+        @*<button id="tab2Button" class="tab-button-plane tab-link">
+                @CRS.ADMIN.APPLICATION.Resources.Resource.Basic
+            </button>
+            <button id="tab2Button" class="tab-button-plane tab-link">
+                @CRS.ADMIN.APPLICATION.Resources.Resource.Premium
+            </button>*@
+        <!--</div>
+
+        </div>-->
+        <!-- container  -->
+        <div id="tab1" class="tab-content-plane ">
+            @Html.Partial("_CustomerList", customerList)
+        </div>
+        @*<div id="tab2" class="tab-content-plane hidden">
+                @Html.Partial("_CustomerList", customerList)
+            </div>
+            <div id="tab3" class="tab-content-plane hidden">
+                @Html.Partial("_CustomerList", customerList)
+            </div>*@
+    </div>
+
+</div>
+
+<!-- drawer component -->
+<!--<div id="customer-date"
+     class="fixed top-0 right-0 z-40 h-screen px-[32px] py-[48px] overflow-y-auto transition-transform translate-x-full bg-white w-[629px] "
+     tabindex="-1" aria-labelledby="drawer-right-label">
+
+    <div class="flex items-center justify-end">
+        <button type="button" data-drawer-hide="customer-date" aria-controls="customer-date" class=" ">
+            <img src="~/Content/assets_new/images/drawer-close.svg" />
+        </button>
+    </div>-->
+<!--- calender --->
+<!--<div class="py-[32px] ">
+        <div class="flex justify-between pb-[24px] items-center text-base font-medium">
+            <div class="">
+                @CRS.ADMIN.APPLICATION.Resources.Resource.Calendar
+            </div>
+            <div class="flex gap-[12px] items-center">
+                <div class="flex h-[32px] w-[40px] justify-center items-center border border-[#D9D9D9] rounded-[4px]" id="prev-id">
+                    <i class="fa-solid fa-chevron-left"></i>
+                </div>
+                <div class="flex text-base font-medium current-date">
+                </div>
+                <div class="flex h-[32px] w-[40px] justify-center items-center border border-[#D9D9D9] rounded-[4px]" id="next-id">
+                    <i class="fa-solid fa-chevron-right"></i>
+                </div>
+            </div>
+
+        </div>
+        <div class="grid gap-[12px]">
+            <div class="flex justify-between calender-card-container  grid grid-cols-7 days-class">
+            </div>
+        </div>
+    </div>
+    <div class="flex justify-end">
+        <div class="flex gap-[24px]">
+            <button class="btn btn-secondary ">
+                @CRS.ADMIN.APPLICATION.Resources.Resource.Cancel
+            </button>
+            <button class="btn btn-primary">
+                @CRS.ADMIN.APPLICATION.Resources.Resource.Confirm
+            </button>
+        </div>
+    </div>
+</div>-->
+
+@section scripts{
+    <script src="~/Content/assets_new/js/calendar-management.js"></script>
+    <script>
+
+        function ResetPasswordEvent(id) {
+            jsonData = "{" +
+                "__RequestVerificationToken: '" + $('input[name="__RequestVerificationToken"]').val() + "'," +
+                "AgentId:'" + id + "'}";
+            var funcText = "CallAjaxDbResponse(" + jsonData + ",'/CustomerManagement/ResetCustomerPassword','POST',true,'')";
+            showConfirmationModal("Are you sure you want to reset this user password?", funcText);
+        }
+        function BlockEvent(id) {
+            var jsonData = {
+                __RequestVerificationToken: $('input[name="__RequestVerificationToken"]').val(),
+                AgentId: id
+            };
+            $.ajax({
+                url: '/CustomerManagement/BlockCustomer',
+                type: 'POST',
+                data: jsonData,
+                success: function (response) {
+                    // Display success toast
+                    showNotification(response.message, 'Success', 'SUCCESS');
+                    window.location.reload();
+                },
+                error: function (error) {
+                    // Display error toast
+                    showNotification(error.responseJSON.message, 'Error', 'ERROR');
+                }
+            });
+        }
+        function UnblockEvent(id) {
+            var jsonData = {
+                __RequestVerificationToken: $('input[name="__RequestVerificationToken"]').val(),
+                AgentId: id
+            };
+
+            $.ajax({
+                url: '/CustomerManagement/UnBlockCustomer',
+                type: 'POST',
+                data: jsonData,
+                success: function (response) {
+                    window.location.reload();
+                },
+                error: function (error) {
+                    window.location.reload();
+                }
+            });
+        }
+
+    </script>
+
+    <script>
+        const checkbox = document.getElementById('tag1');
+        const tagInput = document.getElementById('tagInput');
+
+        if (checkbox.checked) {
+            tagInput.style.display = 'block';
+        }
+
+        checkbox.addEventListener('change', function () {
+            if (this.checked) {
+                tagInput.style.display = 'block';
+            } else {
+                tagInput.style.display = 'none';
+            }
+        });
+    </script>
+
+    <script>
+        const checkbox2 = document.getElementById('tag2');
+        const tagInput2 = document.getElementById('tagInput2');
+
+        checkbox2.addEventListener('change', function () {
+            if (this.checked) {
+                tagInput2.style.display = 'block';
+            } else {
+                tagInput2.style.display = 'none';
+            }
+        });
+    </script>
+
+    <script>
+        // Get references to the file input and file name display element
+        const fileInput = document.getElementById("file_input");
+        const fileNameDisplay = document.getElementById("file_name_display");
+
+        // Add an event listener to the file input
+        fileInput.addEventListener("change", function () {
+            // Check if a file has been selected
+            if (fileInput.files.length > 0) {
+                // Display the name of the selected file
+                fileNameDisplay.textContent = `${fileInput.files[0].name}`;
+            } else {
+                // No file selected
+                fileNameDisplay.textContent = "";
+            }
+        });
+
+        //function exportCSVExcel() {
+        //    const currentDateTimeString = new Date().toISOString().replace('T', ' ').replace(/\.\d{3}Z$/, '');
+        //    $('#table-id').table2excel({
+        //        exclude: ".no-export",
+        //        filename: currentDateTimeString + "_hoslog_customer.xls",
+        //        fileext: ".xls",
+        //        exclude_img: false,
+        //        exclude_links: true,
+        //        exclude_inputs: true
+        //    });
+        //}
+        function hideFilterContainerCustom() {
+            var filterDiv = document.getElementById("filter");
+            var filterContainer = document.getElementById("filter-container");
+
+            // Hide the filter container
+            filterContainer.style.display = "none";
+
+            // Show the filter div
+            filterDiv.style.display = "flex";
+
+            // Add animation classes
+            filterDiv.classList.add("slide-in-animation");
+            $('#MobileNumber').val('');
+            $('#FromDate').val('');
+            $('#ToDate').val('');
+            var dropdown = document.getElementById('large');
+            dropdown.value = dropdown.options[0].value;
+        }
+
+    </script>
+}

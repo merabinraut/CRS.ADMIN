@@ -1,0 +1,41 @@
+﻿@model CRS.ADMIN.APPLICATION.Models.PlanManagement.PlanDetailModel
+
+@{
+    ViewBag.Title = "Plan Detail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@Styles.Render("~/UI/Style")
+<div class="card">
+    <div class="card-body">
+        <div class="row">
+            @if (!string.IsNullOrEmpty(Model.PlanName))
+            {
+                @Html.NLabelFor(model => model.PlanName, new { @class = "form-control", autocomplete = "off" }, 4)
+            }
+            @if (!string.IsNullOrEmpty(Model.PlanTime))
+            {
+                @Html.NLabelFor(model => model.PlanTime, new { @class = "form-control", autocomplete = "off" }, 4)
+            }
+            @if (!string.IsNullOrEmpty(Model.PlanType))
+            {
+                @Html.NLabelFor(model => model.PlanType, new { @class = "form-control", autocomplete = "off" }, 4)
+            }
+            @if (!string.IsNullOrEmpty(Model.Price))
+            {
+                @Html.NLabelFor(model => model.Price, new { @class = "form-control", autocomplete = "off" }, 4)
+            }
+            @if (!string.IsNullOrEmpty(Model.Nomination))
+            {
+                @Html.NLabelFor(model => model.Nomination, new { @class = "form-control", autocomplete = "off" }, 4)
+            }
+            @if (!string.IsNullOrEmpty(Model.PlanStatus))
+            {
+                @Html.NLabelFor(model => model.PlanStatus, new { @class = "form-control", autocomplete = "off" }, 4)
+            }
+
+        </div>
+        <div class="row">
+            <button type="button" class="btn btn-light btn-sm bg-primary" onclick="window.history.back();"><i class="fa fa-arrow-left"></i> Back</button>
+        </div>
+    </div>
+</div>

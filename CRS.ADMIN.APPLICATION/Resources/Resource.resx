@@ -1,0 +1,1448 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Action" xml:space="preserve">
+    <value>Action</value>
+  </data>
+  <data name="Add Group" xml:space="preserve">
+    <value>Add Group</value>
+    <comment>Recommendation Management</comment>
+  </data>
+  <data name="Add New" xml:space="preserve">
+    <value>Add New</value>
+  </data>
+  <data name="Additional Field" xml:space="preserve">
+    <value>Additional Field</value>
+    <comment>Plan Management</comment>
+  </data>
+  <data name="Address" xml:space="preserve">
+    <value>Address</value>
+    <comment>Club Management</comment>
+  </data>
+  <data name="Admin Payment" xml:space="preserve">
+    <value>Admin Payment</value>
+    <comment>Reservation Ledger</comment>
+  </data>
+  <data name="Affiliate" xml:space="preserve">
+    <value>Affiliate</value>
+    <comment>Dashboard</comment>
+  </data>
+  <data name="Affiliate Amount" xml:space="preserve">
+    <value>Affiliate Amount</value>
+    <comment>Affiliate Management</comment>
+  </data>
+  <data name="Affiliate Expenses" xml:space="preserve">
+    <value>Affiliate Expenses</value>
+    <comment>Affiliate Management</comment>
+  </data>
+  <data name="Affiliate Management" xml:space="preserve">
+    <value>Affiliate Management</value>
+    <comment>Affiliate Management</comment>
+  </data>
+  <data name="Affiliate Payment" xml:space="preserve">
+    <value>Affiliate Payment</value>
+    <comment>Dashboard</comment>
+  </data>
+  <data name="Affiliate Payments" xml:space="preserve">
+    <value>Affiliate Payments</value>
+    <comment>Payment Management</comment>
+  </data>
+  <data name="AffiliateManagementSupportMsg" xml:space="preserve">
+    <value>Manage affiliate’s information, converted customers and their payments.</value>
+    <comment>Affiliate Management</comment>
+  </data>
+  <data name="Affiliates" xml:space="preserve">
+    <value>Affiliates</value>
+    <comment>Affiliate Management</comment>
+  </data>
+  <data name="Age" xml:space="preserve">
+    <value>Age</value>
+    <comment>Customer Management</comment>
+  </data>
+  <data name="Agent Name" xml:space="preserve">
+    <value>Agent Name</value>
+    <comment>Roles &amp; Privileges</comment>
+  </data>
+  <data name="Agent Type" xml:space="preserve">
+    <value>Agent Type</value>
+    <comment>Roles &amp; Privileges</comment>
+  </data>
+  <data name="All" xml:space="preserve">
+    <value>All</value>
+    <comment>Customer Management</comment>
+  </data>
+  <data name="and Maximum file size is 5 MB" xml:space="preserve">
+    <value>and Maximum file size is 5 MB</value>
+    <comment>Location Management</comment>
+  </data>
+  <data name="Apply" xml:space="preserve">
+    <value>Apply</value>
+    <comment>Reservation Ledger</comment>
+  </data>
+  <data name="Approve" xml:space="preserve">
+    <value>Approve</value>
+    <comment>Recommendation Management</comment>
+  </data>
+  <data name="Approved Requests" xml:space="preserve">
+    <value>Approved Requests</value>
+    <comment>Recommendation Management</comment>
+  </data>
+  <data name="Approved Status" xml:space="preserve">
+    <value>Approved Status</value>
+    <comment>Affiliate Management</comment>
+  </data>
+  <data name="April" xml:space="preserve">
+    <value>Apr</value>
+    <comment>Dashboard</comment>
+  </data>
+  <data name="Are you sure you want to change the language" xml:space="preserve">
+    <value>Are you sure you want to change the language</value>
+    <comment>Language Preference</comment>
+  </data>
+  <data name="Assign" xml:space="preserve">
+    <value>Assign</value>
+    <comment>Roles &amp; Privileges</comment>
+  </data>
+  <data name="Assign Commission" xml:space="preserve">
+    <value>Assign Commission</value>
+    <comment>Commission Management</comment>
+  </data>
+  <data name="Assign Functions for" xml:space="preserve">
+    <value>Assign Functions for</value>
+    <comment>Roles Management</comment>
+  </data>
+  <data name="Assign Privileges for" xml:space="preserve">
+    <value>Assign Privileges for</value>
+    <comment>Roles Management</comment>
+  </data>
+  <data name="Assign Roles" xml:space="preserve">
+    <value>Assign Roles</value>
+    <comment>Roles &amp; Privileges</comment>
+  </data>
+  <data name="Associated Affiliate" xml:space="preserve">
+    <value>Associated Affiliate</value>
+    <comment>Affiliate Management</comment>
+  </data>
+  <data name="August" xml:space="preserve">
+    <value>Aug</value>
+    <comment>Dashboard</comment>
+  </data>
+  <data name="Back" xml:space="preserve">
+    <value>Back</value>
+    <comment>Dashboard</comment>
+  </data>
+  <data name="Basic" xml:space="preserve">
+    <value>Basic</value>
+    <comment>Customer Management</comment>
+  </data>
+  <data name="Basic Info" xml:space="preserve">
+    <value>Basic Info</value>
+    <comment>Club Management</comment>
+  </data>
+  <data name="Basic Information" xml:space="preserve">
+    <value>Basic Information</value>
+    <comment>Club Management</comment>
+  </data>
+  <data name="Birth Date" xml:space="preserve">
+    <value>Birth Date</value>
+    <comment>Host Management</comment>
+  </data>
+  <data name="Blood Type" xml:space="preserve">
+    <value>Blood Type</value>
+    <comment>Host Management</comment>
+  </data>
+  <data name="Booked" xml:space="preserve">
+    <value>Booked</value>
+    <comment>Dashboard</comment>
+  </data>
+  <data name="Business Cerfificate" xml:space="preserve">
+    <value>Business Certificate</value>
+    <comment>Club Management</comment>
+  </data>
+  <data name="Business Type" xml:space="preserve">
+    <value>Business Type</value>
+    <comment>Club Management</comment>
+  </data>
+  <data name="Calendar" xml:space="preserve">
+    <value>Calendar</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="Category Description" xml:space="preserve">
+    <value>Category Description</value>
+    <comment>Commission Management</comment>
+  </data>
+  <data name="Category Name" xml:space="preserve">
+    <value>Category Name</value>
+    <comment>Commission Management</comment>
+  </data>
+  <data name="Choose Images" xml:space="preserve">
+    <value>Choose Images</value>
+    <comment>Location Management</comment>
+  </data>
+  <data name="Clear All" xml:space="preserve">
+    <value>Clear All</value>
+    <comment>Roles Management</comment>
+  </data>
+  <data name="Club" xml:space="preserve">
+    <value>Club</value>
+    <comment>Dashboard</comment>
+  </data>
+  <data name="Club List" xml:space="preserve">
+    <value>Club List</value>
+    <comment>Recommendation Management</comment>
+  </data>
+  <data name="Club Location" xml:space="preserve">
+    <value>Club Location</value>
+    <comment>Recommendation Management</comment>
+  </data>
+  <data name="Club Management Supporting Text" xml:space="preserve">
+    <value>Manage your club detail informations</value>
+    <comment>Club Management</comment>
+  </data>
+  <data name="Club Name English" xml:space="preserve">
+    <value>Club Name (English)</value>
+    <comment>Club Management</comment>
+  </data>
+  <data name="Club Name English Placeholder" xml:space="preserve">
+    <value>English</value>
+    <comment>Club Management</comment>
+  </data>
+  <data name="Club Name Katakana" xml:space="preserve">
+    <value>Club Name (Katakana)</value>
+    <comment>Club Management</comment>
+  </data>
+  <data name="Club Name Katakana Placeholder" xml:space="preserve">
+    <value>Katakana</value>
+    <comment>Club Management</comment>
+  </data>
+  <data name="Club Profile" xml:space="preserve">
+    <value>Club Profile</value>
+    <comment>Reservation Ledger</comment>
+  </data>
+  <data name="Club Status" xml:space="preserve">
+    <value>Club Status</value>
+    <comment>Reservation Ledger</comment>
+  </data>
+  <data name="ClubListSuppportMsg" xml:space="preserve">
+    <value>Manage club’s recommendation informations.</value>
+    <comment>Recommendation Management</comment>
+  </data>
+  <data name="ClubManagement" xml:space="preserve">
+    <value>Club Management</value>
+    <comment>Club Management</comment>
+  </data>
+  <data name="Clubs" xml:space="preserve">
+    <value>Clubs</value>
+    <comment>Dashboard</comment>
+  </data>
+  <data name="Commission" xml:space="preserve">
+    <value>Commission</value>
+    <comment>Commission Management</comment>
+  </data>
+  <data name="Commission Management" xml:space="preserve">
+    <value>Commission Management</value>
+    <comment>Commission Management</comment>
+  </data>
+  <data name="Commission Management Supporting Text" xml:space="preserve">
+    <value>Manage Commission</value>
+    <comment>Commission Management</comment>
+  </data>
+  <data name="Commission Type" xml:space="preserve">
+    <value>Commission Type</value>
+    <comment>Commission Management</comment>
+  </data>
+  <data name="Company Name" xml:space="preserve">
+    <value>Company Name</value>
+    <comment>Club Management</comment>
+  </data>
+  <data name="Company Name Placeholder" xml:space="preserve">
+    <value>Enter company name</value>
+    <comment>Club Management</comment>
+  </data>
+  <data name="Configure" xml:space="preserve">
+    <value>Configure</value>
+    <comment>Recommendation Management</comment>
+  </data>
+  <data name="Confirm" xml:space="preserve">
+    <value>Confirm</value>
+    <comment>Language Preference</comment>
+  </data>
+  <data name="Confirm New Password" xml:space="preserve">
+    <value>Confirm New Password</value>
+    <comment>Security</comment>
+  </data>
+  <data name="Confirmation" xml:space="preserve">
+    <value>Confirmation</value>
+    <comment>Recommendation Management</comment>
+  </data>
+  <data name="Constellation Group" xml:space="preserve">
+    <value>Constellation Group</value>
+    <comment>Host Management</comment>
+  </data>
+  <data name="Converted Customers" xml:space="preserve">
+    <value>Converted Customers</value>
+    <comment>Affiliate Management</comment>
+  </data>
+  <data name="Converted Date" xml:space="preserve">
+    <value>Converted Date</value>
+    <comment>Affiliate Management</comment>
+  </data>
+  <data name="Cover Photo" xml:space="preserve">
+    <value>Cover Photo</value>
+    <comment>Club Management</comment>
+  </data>
+  <data name="Create" xml:space="preserve">
+    <value>Create</value>
+    <comment>Staff Management</comment>
+  </data>
+  <data name="Created By" xml:space="preserve">
+    <value>Created By</value>
+    <comment>Commission Management</comment>
+  </data>
+  <data name="Created On" xml:space="preserve">
+    <value>Created On</value>
+    <comment>Roles &amp; Privileges</comment>
+  </data>
+  <data name="Current Commission Category" xml:space="preserve">
+    <value>Current Commission Category</value>
+    <comment>Commission Management</comment>
+  </data>
+  <data name="Current Password" xml:space="preserve">
+    <value>Current Password</value>
+    <comment>Security</comment>
+  </data>
+  <data name="Current Role" xml:space="preserve">
+    <value>Current Role</value>
+    <comment>Roles &amp; Privileges</comment>
+  </data>
+  <data name="Custom Date" xml:space="preserve">
+    <value>Custom Date</value>
+  </data>
+  <data name="Customer" xml:space="preserve">
+    <value>Customer</value>
+    <comment>Payment Management</comment>
+  </data>
+  <data name="Customer Management" xml:space="preserve">
+    <value>Customer Management</value>
+    <comment>Customer Management</comment>
+  </data>
+  <data name="Customer Management Supporting Texts" xml:space="preserve">
+    <value>Manage Customers</value>
+    <comment>Customer Management</comment>
+  </data>
+  <data name="Dashboard" xml:space="preserve">
+    <value>Dashboard</value>
+    <comment>Side Bar Menu</comment>
+  </data>
+  <data name="Date" xml:space="preserve">
+    <value>Date</value>
+    <comment>Payment Management</comment>
+  </data>
+  <data name="Days" xml:space="preserve">
+    <value>Days</value>
+    <comment>Dashboard</comment>
+  </data>
+  <data name="December" xml:space="preserve">
+    <value>Dec</value>
+    <comment>Dashboard</comment>
+  </data>
+  <data name="Description" xml:space="preserve">
+    <value>Description</value>
+    <comment>Club Management</comment>
+  </data>
+  <data name="Description Placeholder" xml:space="preserve">
+    <value>eg. Description about club</value>
+    <comment>Club Management</comment>
+  </data>
+  <data name="Display Order" xml:space="preserve">
+    <value>Display Order</value>
+    <comment>Recommendation Management-&gt;Manage group</comment>
+  </data>
+  <data name="Display Page" xml:space="preserve">
+    <value>Display Page</value>
+    <comment>Recommendation Management</comment>
+  </data>
+  <data name="Due Payments" xml:space="preserve">
+    <value>Due Payments</value>
+    <comment>Payment Management</comment>
+  </data>
+  <data name="Edit Plan" xml:space="preserve">
+    <value>Edit Plan</value>
+    <comment>Plan Management</comment>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>Email</value>
+    <comment>Club Management</comment>
+  </data>
+  <data name="Email Address" xml:space="preserve">
+    <value>Email Address</value>
+    <comment>Affiliate Management</comment>
+  </data>
+  <data name="EmailLog" xml:space="preserve">
+    <value>Email Log</value>
+    <comment>Email Log</comment>
+  </data>
+  <data name="Enter Additional Information" xml:space="preserve">
+    <value>Enter Additional Information</value>
+    <comment>Plan Management</comment>
+  </data>
+  <data name="Enter your credentials to continue." xml:space="preserve">
+    <value>Enter your credentials to continue.</value>
+    <comment>Login Page</comment>
+  </data>
+  <data name="Entries" xml:space="preserve">
+    <value>Entries</value>
+  </data>
+  <data name="Export" xml:space="preserve">
+    <value>Export</value>
+  </data>
+  <data name="Export Pdf" xml:space="preserve">
+    <value>Export PDF</value>
+    <comment>Dashboard</comment>
+  </data>
+  <data name="Facebook" xml:space="preserve">
+    <value>Facebook</value>
+    <comment>Affiliate Management</comment>
+  </data>
+  <data name="February" xml:space="preserve">
+    <value>Feb</value>
+    <comment>Dashboard</comment>
+  </data>
+  <data name="Filter By" xml:space="preserve">
+    <value>Filter By</value>
+  </data>
+  <data name="First Name" xml:space="preserve">
+    <value>First Name</value>
+    <comment>Club Management</comment>
+  </data>
+  <data name="Firstname Placeholder" xml:space="preserve">
+    <value>Enter first name</value>
+    <comment>Club Management</comment>
+  </data>
+  <data name="Friday" xml:space="preserve">
+    <value>Fri</value>
+    <comment>Dashboard</comment>
+  </data>
+  <data name="From Amount" xml:space="preserve">
+    <value>From Amount</value>
+    <comment>Commission Management</comment>
+  </data>
+  <data name="From Date" xml:space="preserve">
+    <value>From Date</value>
+    <comment>Reservation Ledger</comment>
+  </data>
+  <data name="Gallery" xml:space="preserve">
+    <value>Gallery</value>
+    <comment>Location Management</comment>
+  </data>
+  <data name="Gold" xml:space="preserve">
+    <value>Gold</value>
+    <comment>Dashboard</comment>
+  </data>
+  <data name="Grand Total" xml:space="preserve">
+    <value>Grand Total</value>
+    <comment>Payment Management</comment>
+  </data>
+  <data name="Group" xml:space="preserve">
+    <value>Group</value>
+    <comment>Recommendation Management</comment>
+  </data>
+  <data name="Group Info" xml:space="preserve">
+    <value>Group Info</value>
+    <comment>Recommendation Management</comment>
+  </data>
+  <data name="Group Name" xml:space="preserve">
+    <value>Group Name</value>
+    <comment>Club Management</comment>
+  </data>
+  <data name="Group Name Placeholder" xml:space="preserve">
+    <value>Enter group name</value>
+    <comment>Club Management</comment>
+  </data>
+  <data name="GroupSupportMsg" xml:space="preserve">
+    <value>Manage the requests according to the groups.</value>
+    <comment>Rcommendation Management</comment>
+  </data>
+  <data name="Height" xml:space="preserve">
+    <value>Height</value>
+    <comment>Host Management</comment>
+  </data>
+  <data name="Hide" xml:space="preserve">
+    <value>Hide</value>
+    <comment>Host Management</comment>
+  </data>
+  <data name="Hide Host Info" xml:space="preserve">
+    <value>Hide Host Info</value>
+    <comment>Host Management</comment>
+  </data>
+  <data name="Host Info" xml:space="preserve">
+    <value>Host Info</value>
+    <comment>Host Management</comment>
+  </data>
+  <data name="Host Management" xml:space="preserve">
+    <value>Host Management</value>
+    <comment>Host Management</comment>
+  </data>
+  <data name="Host Management Supporting Text" xml:space="preserve">
+    <value>Manage club's host detailed informations.</value>
+    <comment>Host Management</comment>
+  </data>
+  <data name="Host Name" xml:space="preserve">
+    <value>Host Name</value>
+    <comment>Host Management</comment>
+  </data>
+  <data name="Hosts" xml:space="preserve">
+    <value>Hosts</value>
+    <comment>Dashboard</comment>
+  </data>
+  <data name="HostSupportMsg" xml:space="preserve">
+    <value>Manage host recommendation order.</value>
+    <comment>Recommendation Management-&gt;Host List</comment>
+  </data>
+  <data name="Image" xml:space="preserve">
+    <value>Image</value>
+    <comment>Location Management</comment>
+  </data>
+  <data name="Image Description" xml:space="preserve">
+    <value>Image Description</value>
+    <comment>Promotion Management</comment>
+  </data>
+  <data name="Image should be in HEIF format" xml:space="preserve">
+    <value>Image should be in HEIF format</value>
+    <comment>Location Management</comment>
+  </data>
+  <data name="Image Titile" xml:space="preserve">
+    <value>Image Title</value>
+    <comment>Promotion Management</comment>
+  </data>
+  <data name="Info" xml:space="preserve">
+    <value>Info</value>
+    <comment>Dashboard</comment>
+  </data>
+  <data name="Instagram" xml:space="preserve">
+    <value>Instagram</value>
+    <comment>Club Management</comment>
+  </data>
+  <data name="January" xml:space="preserve">
+    <value>Jan</value>
+    <comment>Dashboard</comment>
+  </data>
+  <data name="July" xml:space="preserve">
+    <value>Jul</value>
+    <comment>Dashboard</comment>
+  </data>
+  <data name="June" xml:space="preserve">
+    <value>Jun</value>
+    <comment>Dashboard</comment>
+  </data>
+  <data name="Language" xml:space="preserve">
+    <value>Language</value>
+    <comment>Language Preference</comment>
+  </data>
+  <data name="Language Preference" xml:space="preserve">
+    <value>Language Preference</value>
+    <comment>Language Preference</comment>
+  </data>
+  <data name="Last 7 Days" xml:space="preserve">
+    <value>Last 7 Days</value>
+    <comment>Affiliate Management</comment>
+  </data>
+  <data name="Last Name" xml:space="preserve">
+    <value>Last Name</value>
+    <comment>Club Management</comment>
+  </data>
+  <data name="Last updated on" xml:space="preserve">
+    <value>Last updated on</value>
+    <comment>Security</comment>
+  </data>
+  <data name="Lastname Placeholder" xml:space="preserve">
+    <value>Enter last name</value>
+    <comment>Club Management</comment>
+  </data>
+  <data name="Latitude" xml:space="preserve">
+    <value>Latitude</value>
+    <comment>Location Management</comment>
+  </data>
+  <data name="Latitude Placeholder" xml:space="preserve">
+    <value>Enter Latitude</value>
+    <comment>Club Management</comment>
+  </data>
+  <data name="Line" xml:space="preserve">
+    <value>Line</value>
+    <comment>Affiliate Management</comment>
+  </data>
+  <data name="Liquor" xml:space="preserve">
+    <value>Liquor</value>
+    <comment>Plan Management</comment>
+  </data>
+  <data name="Liquor Strength" xml:space="preserve">
+    <value>Liquor Strength</value>
+    <comment>Host Management</comment>
+  </data>
+  <data name="Location" xml:space="preserve">
+    <value>Location</value>
+    <comment>Customer Management</comment>
+  </data>
+  <data name="Location Management" xml:space="preserve">
+    <value>Location Management</value>
+    <comment>Location Management</comment>
+  </data>
+  <data name="Location Title" xml:space="preserve">
+    <value>Location Title</value>
+    <comment>Location Management</comment>
+  </data>
+  <data name="Log out" xml:space="preserve">
+    <value>Log out</value>
+  </data>
+  <data name="Login" xml:space="preserve">
+    <value>Login</value>
+    <comment>Login Page</comment>
+  </data>
+  <data name="LoginMessage" xml:space="preserve">
+    <value>Welcome to Hoslog Admin Panel</value>
+    <comment>Login Page</comment>
+  </data>
+  <data name="Logo" xml:space="preserve">
+    <value>Logo</value>
+    <comment>Club Management</comment>
+  </data>
+  <data name="Longitude" xml:space="preserve">
+    <value>Longitude</value>
+    <comment>Location Management</comment>
+  </data>
+  <data name="Longitude Placeholder" xml:space="preserve">
+    <value>Enter Longitude</value>
+    <comment>Club Management</comment>
+  </data>
+  <data name="Main Menu" xml:space="preserve">
+    <value>Main Menu</value>
+    <comment>Side Bar Menu</comment>
+  </data>
+  <data name="Manage Club Profile" xml:space="preserve">
+    <value>Manage Club Profile</value>
+    <comment>Club Management</comment>
+  </data>
+  <data name="Manage Commission" xml:space="preserve">
+    <value>Manage Commission</value>
+    <comment>Commission Management</comment>
+  </data>
+  <data name="Manage Commission Slabs" xml:space="preserve">
+    <value>Manage Commission Slabs</value>
+    <comment>Commission Management</comment>
+  </data>
+  <data name="Manage Group" xml:space="preserve">
+    <value>Manage Group</value>
+    <comment>Recommendation Management-&gt;Manage group</comment>
+  </data>
+  <data name="Manage Host" xml:space="preserve">
+    <value>Manage Host</value>
+    <comment>Host Management</comment>
+  </data>
+  <data name="Manage Location" xml:space="preserve">
+    <value>Manage Location</value>
+    <comment>Location Management</comment>
+  </data>
+  <data name="Manage Promotion" xml:space="preserve">
+    <value>Manage Promotion</value>
+    <comment>Promotion Management</comment>
+  </data>
+  <data name="Manage Role" xml:space="preserve">
+    <value>Manage Role</value>
+    <comment>Roles Management</comment>
+  </data>
+  <data name="Manage Staff" xml:space="preserve">
+    <value>Manage Staff</value>
+    <comment>Staff Management</comment>
+  </data>
+  <data name="Manage Tag" xml:space="preserve">
+    <value>Manage Tag</value>
+    <comment>Club Management</comment>
+  </data>
+  <data name="Manage user roles and their privileges" xml:space="preserve">
+    <value>Manage user roles and their privileges</value>
+    <comment>Roles &amp; Privileges</comment>
+  </data>
+  <data name="Manage your profile security" xml:space="preserve">
+    <value>Manage your profile security</value>
+    <comment>Security</comment>
+  </data>
+  <data name="Map Link" xml:space="preserve">
+    <value>Map Link</value>
+    <comment>Location Management</comment>
+  </data>
+  <data name="March" xml:space="preserve">
+    <value>Mar</value>
+    <comment>Dashboard</comment>
+  </data>
+  <data name="Max Value" xml:space="preserve">
+    <value>Max Value</value>
+    <comment>Commission Management</comment>
+  </data>
+  <data name="Maximum length is 16 characters" xml:space="preserve">
+    <value>Maximum length is 16 characters</value>
+  </data>
+  <data name="Maximum length is 30 characters" xml:space="preserve">
+    <value>Maximum length is 30 characters</value>
+  </data>
+  <data name="May" xml:space="preserve">
+    <value>May</value>
+    <comment>Dashboard</comment>
+  </data>
+  <data name="Menu Management" xml:space="preserve">
+    <value>Menu Management</value>
+    <comment>Roles Management</comment>
+  </data>
+  <data name="Min Value" xml:space="preserve">
+    <value>Min Value</value>
+    <comment>Commission Management</comment>
+  </data>
+  <data name="Monday" xml:space="preserve">
+    <value>Mon</value>
+    <comment>Dashboard</comment>
+  </data>
+  <data name="Month" xml:space="preserve">
+    <value>Month</value>
+    <comment>Host Management</comment>
+  </data>
+  <data name="Months" xml:space="preserve">
+    <value>Months</value>
+    <comment>Dashboard</comment>
+  </data>
+  <data name="New Commission Category" xml:space="preserve">
+    <value>New Commission Category</value>
+    <comment>Commission Management</comment>
+  </data>
+  <data name="New Host" xml:space="preserve">
+    <value>New Host</value>
+    <comment>Host Management</comment>
+  </data>
+  <data name="New Password" xml:space="preserve">
+    <value>New Password</value>
+    <comment>Security</comment>
+  </data>
+  <data name="New Role" xml:space="preserve">
+    <value>New Role</value>
+    <comment>Roles &amp; Privileges</comment>
+  </data>
+  <data name="Next" xml:space="preserve">
+    <value>Next</value>
+  </data>
+  <data name="No File Choosen" xml:space="preserve">
+    <value>No File Choosen</value>
+    <comment>Location Management</comment>
+  </data>
+  <data name="Nomination" xml:space="preserve">
+    <value>Nomination</value>
+    <comment>Plan Management</comment>
+  </data>
+  <data name="Note" xml:space="preserve">
+    <value>Note</value>
+    <comment>Location Management</comment>
+  </data>
+  <data name="Notifications" xml:space="preserve">
+    <value>Notifications</value>
+    <comment>Dashboard</comment>
+  </data>
+  <data name="November" xml:space="preserve">
+    <value>Nov</value>
+    <comment>Dashboard</comment>
+  </data>
+  <data name="October" xml:space="preserve">
+    <value>Oct</value>
+    <comment>Dashboard</comment>
+  </data>
+  <data name="On Arrival" xml:space="preserve">
+    <value>On Arrival</value>
+    <comment>Dashboard</comment>
+  </data>
+  <data name="Order" xml:space="preserve">
+    <value>Order</value>
+    <comment>Recommendation Management-&gt;Host List</comment>
+  </data>
+  <data name="Our top booked clubs" xml:space="preserve">
+    <value>Our top booked clubs.</value>
+    <comment>Dashboard</comment>
+  </data>
+  <data name="Our Top Booked Ranking Hosts" xml:space="preserve">
+    <value>Our Top Booked Ranking Hosts.</value>
+    <comment>Dashboard</comment>
+  </data>
+  <data name="Overview" xml:space="preserve">
+    <value>Overview</value>
+    <comment>Dashboard</comment>
+  </data>
+  <data name="Pages" xml:space="preserve">
+    <value>Pages</value>
+    <comment>Recommendation Management</comment>
+  </data>
+  <data name="PagesSupportMsg" xml:space="preserve">
+    <value>Manage recommendation according to pages.</value>
+    <comment>Recommendation Management</comment>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>PASSWORD</value>
+    <comment>Login Page</comment>
+  </data>
+  <data name="Payment" xml:space="preserve">
+    <value>Payment</value>
+    <comment>Dashboard</comment>
+  </data>
+  <data name="Payment Ledger" xml:space="preserve">
+    <value>Payment Ledger</value>
+    <comment>Payment Management</comment>
+  </data>
+  <data name="Payment Ledger Supporting Text" xml:space="preserve">
+    <value>Manage Payment Ledger</value>
+    <comment>Payment Management</comment>
+  </data>
+  <data name="Payment Logs" xml:space="preserve">
+    <value>Payment Logs</value>
+    <comment>Payment Management</comment>
+  </data>
+  <data name="Payment Management" xml:space="preserve">
+    <value>Payment Management</value>
+    <comment>Payment Management</comment>
+  </data>
+  <data name="Payment Management Supporting Text" xml:space="preserve">
+    <value>Manage Payments</value>
+    <comment>Payment Management</comment>
+  </data>
+  <data name="Payment Option" xml:space="preserve">
+    <value>Payment Option</value>
+    <comment>Reservation Ledger</comment>
+  </data>
+  <data name="Payment Status" xml:space="preserve">
+    <value>Payment Status</value>
+    <comment>Payment Management</comment>
+  </data>
+  <data name="Pending Requests" xml:space="preserve">
+    <value>Pending Requests</value>
+    <comment>Recommendation Management</comment>
+  </data>
+  <data name="People" xml:space="preserve">
+    <value>People</value>
+    <comment>Payment Management</comment>
+  </data>
+  <data name="Personal Documents" xml:space="preserve">
+    <value>Personal Documents</value>
+    <comment>Club Management</comment>
+  </data>
+  <data name="Phone Number" xml:space="preserve">
+    <value>Phone Number</value>
+    <comment>Customer Management</comment>
+  </data>
+  <data name="Plan" xml:space="preserve">
+    <value>Plan</value>
+    <comment>Payment Management</comment>
+  </data>
+  <data name="Plan Management" xml:space="preserve">
+    <value>Plan Management</value>
+    <comment>Plan Management</comment>
+  </data>
+  <data name="Plan Management Supporting Text" xml:space="preserve">
+    <value>Manage Plans</value>
+    <comment>Plan Management</comment>
+  </data>
+  <data name="Plan Name" xml:space="preserve">
+    <value>Plan Name</value>
+    <comment>Plan Management</comment>
+  </data>
+  <data name="Plan Title" xml:space="preserve">
+    <value>Plan Title</value>
+    <comment>Plan Management</comment>
+  </data>
+  <data name="Plan Type" xml:space="preserve">
+    <value>Plan Type</value>
+    <comment>Plan Management</comment>
+  </data>
+  <data name="Platforms" xml:space="preserve">
+    <value>Platforms</value>
+    <comment>Affiliate Management</comment>
+  </data>
+  <data name="Platinum" xml:space="preserve">
+    <value>Platinum</value>
+    <comment>Club Management</comment>
+  </data>
+  <data name="Position" xml:space="preserve">
+    <value>Position</value>
+    <comment>Host Management</comment>
+  </data>
+  <data name="Premium" xml:space="preserve">
+    <value>Premium</value>
+    <comment>Customer Management</comment>
+  </data>
+  <data name="Previous" xml:space="preserve">
+    <value>Previous</value>
+  </data>
+  <data name="Previous Occupation" xml:space="preserve">
+    <value>Previous Occupation</value>
+    <comment>Host Management</comment>
+  </data>
+  <data name="Price" xml:space="preserve">
+    <value>Price</value>
+    <comment>Dashboard</comment>
+  </data>
+  <data name="Profile" xml:space="preserve">
+    <value>Profile</value>
+    <comment>Dashboard</comment>
+  </data>
+  <data name="Promotion Management" xml:space="preserve">
+    <value>Promotion Management</value>
+    <comment>Promotion Management</comment>
+  </data>
+  <data name="Promotion Management Supporting Text" xml:space="preserve">
+    <value>Manage Promotional Images</value>
+    <comment>Promotion Management</comment>
+  </data>
+  <data name="Promotional Image" xml:space="preserve">
+    <value>Promotional Image</value>
+    <comment>Promotion Management</comment>
+  </data>
+  <data name="Rank" xml:space="preserve">
+    <value>Rank</value>
+    <comment>Club Management</comment>
+  </data>
+  <data name="Ranking" xml:space="preserve">
+    <value>Ranking</value>
+    <comment>Dashboard</comment>
+  </data>
+  <data name="Rated On" xml:space="preserve">
+    <value>Rated On</value>
+    <comment>Review And Rating Management</comment>
+  </data>
+  <data name="Ratings" xml:space="preserve">
+    <value>Ratings</value>
+    <comment>Club Management</comment>
+  </data>
+  <data name="Ratings By" xml:space="preserve">
+    <value>Ratings By</value>
+    <comment>Review And Rating Management</comment>
+  </data>
+  <data name="Received" xml:space="preserve">
+    <value>Received</value>
+    <comment>Dashboard</comment>
+  </data>
+  <data name="Received Payment" xml:space="preserve">
+    <value>Received Payment</value>
+    <comment>Dashboard</comment>
+  </data>
+  <data name="Received Payments" xml:space="preserve">
+    <value>Received Payments</value>
+    <comment>Payment Management</comment>
+  </data>
+  <data name="Recommendation Configurations" xml:space="preserve">
+    <value>Recommendation Configurations</value>
+    <comment>Recommendation Management</comment>
+  </data>
+  <data name="Recommendation Requests" xml:space="preserve">
+    <value>Recommendation Requests</value>
+    <comment>Recommendation Management</comment>
+  </data>
+  <data name="RecommendationAcceptWarnMsg" xml:space="preserve">
+    <value>Are you sure you want to confirm the Recommendation Request?</value>
+    <comment>Recommendation Management</comment>
+  </data>
+  <data name="RecommendationConfigSupportMsg" xml:space="preserve">
+    <value>Manage club and their host’s recommendation informations.</value>
+    <comment>Recommendation Management</comment>
+  </data>
+  <data name="RecommendationSupportMsg" xml:space="preserve">
+    <value>Manage club and their host’s recommendation informations.</value>
+    <comment>Recommendation Management</comment>
+  </data>
+  <data name="Reject" xml:space="preserve">
+    <value>Reject</value>
+    <comment>Recommendation Management</comment>
+  </data>
+  <data name="Rejected Requests" xml:space="preserve">
+    <value>Rejected Requests</value>
+    <comment>Recommendation Management</comment>
+  </data>
+  <data name="Remarks" xml:space="preserve">
+    <value>Remarks</value>
+    <comment>Plan Management</comment>
+  </data>
+  <data name="Remember me" xml:space="preserve">
+    <value>Remember me</value>
+    <comment>Login Page</comment>
+  </data>
+  <data name="Report" xml:space="preserve">
+    <value>Report</value>
+    <comment>Dashboard</comment>
+  </data>
+  <data name="Requested Date" xml:space="preserve">
+    <value>Requested Date</value>
+    <comment>Affiliate Management</comment>
+  </data>
+  <data name="Requests" xml:space="preserve">
+    <value>Requests</value>
+    <comment>Recommendation Management</comment>
+  </data>
+  <data name="Required" xml:space="preserve">
+    <value>Required</value>
+  </data>
+  <data name="Reservation Ledger" xml:space="preserve">
+    <value>Reservation Ledger</value>
+    <comment>Reservation Ledger</comment>
+  </data>
+  <data name="Reservations" xml:space="preserve">
+    <value>Reservations</value>
+    <comment>Dashboard</comment>
+  </data>
+  <data name="Reset" xml:space="preserve">
+    <value>Reset</value>
+    <comment>Roles Management</comment>
+  </data>
+  <data name="Review and rating supporting text" xml:space="preserve">
+    <value>Manage club’s and their host’s review &amp; ratings.</value>
+    <comment>Review And Rating Management</comment>
+  </data>
+  <data name="Review and Ratings" xml:space="preserve">
+    <value>Review &amp; Ratings</value>
+    <comment>Review And Rating Management</comment>
+  </data>
+  <data name="Reviewed By" xml:space="preserve">
+    <value>Reviewed By</value>
+    <comment>Review And Rating Management</comment>
+  </data>
+  <data name="Reviewed On" xml:space="preserve">
+    <value>Reviewed On</value>
+    <comment>Review And Rating Management</comment>
+  </data>
+  <data name="Reviews" xml:space="preserve">
+    <value>Reviews</value>
+    <comment>Review And Rating Management</comment>
+  </data>
+  <data name="Role" xml:space="preserve">
+    <value>Role</value>
+    <comment>Profile</comment>
+  </data>
+  <data name="Role Description" xml:space="preserve">
+    <value>Role Description</value>
+    <comment>Roles &amp; Privileges</comment>
+  </data>
+  <data name="Role Description Placeholder" xml:space="preserve">
+    <value>Enter Role Description</value>
+    <comment>Roles Management</comment>
+  </data>
+  <data name="Role Title" xml:space="preserve">
+    <value>Role Title</value>
+    <comment>Roles Management</comment>
+  </data>
+  <data name="Role Title Placeholder" xml:space="preserve">
+    <value>Enter Role Title</value>
+    <comment>Roles Management</comment>
+  </data>
+  <data name="Role Type" xml:space="preserve">
+    <value>Role Type</value>
+    <comment>Roles &amp; Privileges</comment>
+  </data>
+  <data name="Role Type List" xml:space="preserve">
+    <value>Role Type List</value>
+    <comment>Roles Management</comment>
+  </data>
+  <data name="Role Type List Supporting Text" xml:space="preserve">
+    <value>Manage role type privileges and functions.</value>
+    <comment>Roles Management</comment>
+  </data>
+  <data name="Roles" xml:space="preserve">
+    <value>Roles</value>
+    <comment>Roles &amp; Privileges</comment>
+  </data>
+  <data name="Roles and Privileges" xml:space="preserve">
+    <value>Roles and Privileges</value>
+    <comment>Roles &amp; Privileges</comment>
+  </data>
+  <data name="Sales" xml:space="preserve">
+    <value>Sales</value>
+    <comment>Dashboard</comment>
+  </data>
+  <data name="Sales Report" xml:space="preserve">
+    <value>Sales Report</value>
+    <comment>Dashboard</comment>
+  </data>
+  <data name="Saturday" xml:space="preserve">
+    <value>Sat</value>
+    <comment>Dashboard</comment>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="Save Changes" xml:space="preserve">
+    <value>Save Changes</value>
+    <comment>Club Management</comment>
+  </data>
+  <data name="Search" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="Security" xml:space="preserve">
+    <value>Security</value>
+    <comment>Security</comment>
+  </data>
+  <data name="See All" xml:space="preserve">
+    <value>See All</value>
+    <comment>Dashboard</comment>
+  </data>
+  <data name="See All Hosts" xml:space="preserve">
+    <value>See All Hosts</value>
+    <comment>Dashboard</comment>
+  </data>
+  <data name="Select All" xml:space="preserve">
+    <value>Select All</value>
+    <comment>Roles Management</comment>
+  </data>
+  <data name="Select business Type" xml:space="preserve">
+    <value>Select Business Type</value>
+    <comment>Club Management</comment>
+  </data>
+  <data name="Select Language" xml:space="preserve">
+    <value>Select Language</value>
+    <comment>Language Preference</comment>
+  </data>
+  <data name="Select Location" xml:space="preserve">
+    <value>Select Location</value>
+    <comment>Club Management</comment>
+  </data>
+  <data name="September" xml:space="preserve">
+    <value>Sep</value>
+    <comment>Dashboard</comment>
+  </data>
+  <data name="Set Shuffling Time" xml:space="preserve">
+    <value>Set Shuffling Time</value>
+    <comment>Recommendation Management-&gt;Shuffling time</comment>
+  </data>
+  <data name="Setting" xml:space="preserve">
+    <value>Setting</value>
+    <comment>Recommendation Management</comment>
+  </data>
+  <data name="Show" xml:space="preserve">
+    <value>Show</value>
+  </data>
+  <data name="Showing" xml:space="preserve">
+    <value>Showing</value>
+  </data>
+  <data name="Silver" xml:space="preserve">
+    <value>Silver</value>
+    <comment>Dashboard</comment>
+  </data>
+  <data name="SMSLog" xml:space="preserve">
+    <value>SMS Log</value>
+    <comment>SMS Log</comment>
+  </data>
+  <data name="Social Link" xml:space="preserve">
+    <value>Social Link</value>
+    <comment>Affiliate Management</comment>
+  </data>
+  <data name="Social Links" xml:space="preserve">
+    <value>Social Links</value>
+    <comment>Club Management</comment>
+  </data>
+  <data name="Staff Management" xml:space="preserve">
+    <value>Staff Management</value>
+    <comment>Staff Management</comment>
+  </data>
+  <data name="Staff Management Supporting Text" xml:space="preserve">
+    <value>Manage club booking request</value>
+    <comment>Staff Management</comment>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>Status</value>
+    <comment>Customer Management</comment>
+  </data>
+  <data name="Stripe" xml:space="preserve">
+    <value>Stripe</value>
+    <comment>Dashboard</comment>
+  </data>
+  <data name="Submit" xml:space="preserve">
+    <value>Submit</value>
+  </data>
+  <data name="Sunday" xml:space="preserve">
+    <value>Sun</value>
+    <comment>Dashboard</comment>
+  </data>
+  <data name="Tag" xml:space="preserve">
+    <value>Tag</value>
+    <comment>Club Management</comment>
+  </data>
+  <data name="Thursday" xml:space="preserve">
+    <value>Thu</value>
+    <comment>Dashboard</comment>
+  </data>
+  <data name="Tiktok" xml:space="preserve">
+    <value>Tiktok</value>
+    <comment>Club Management</comment>
+  </data>
+  <data name="Time" xml:space="preserve">
+    <value>Time</value>
+    <comment>Plan Management</comment>
+  </data>
+  <data name="To Amount" xml:space="preserve">
+    <value>To Amount</value>
+    <comment>Commission Management</comment>
+  </data>
+  <data name="To Date" xml:space="preserve">
+    <value>To Date</value>
+    <comment>Reservation Ledger</comment>
+  </data>
+  <data name="Today" xml:space="preserve">
+    <value>Today</value>
+    <comment>Payment Management</comment>
+  </data>
+  <data name="Top" xml:space="preserve">
+    <value>Top</value>
+    <comment>Dashboard</comment>
+  </data>
+  <data name="Top Ranking Clubs" xml:space="preserve">
+    <value>Top Ranking Clubs</value>
+    <comment>Dashboard</comment>
+  </data>
+  <data name="Top Ranking Hosts" xml:space="preserve">
+    <value>Top Ranking Hosts</value>
+    <comment>Dashboard</comment>
+  </data>
+  <data name="Total" xml:space="preserve">
+    <value>Total</value>
+    <comment>Dashboard</comment>
+  </data>
+  <data name="Total Affiliates" xml:space="preserve">
+    <value>Total Affiliates</value>
+    <comment>Affiliate Management</comment>
+  </data>
+  <data name="Total Amount" xml:space="preserve">
+    <value>Total Amount</value>
+    <comment>Payment Management</comment>
+  </data>
+  <data name="Total Clicks" xml:space="preserve">
+    <value>Total Clicks</value>
+    <comment>Affiliate Management</comment>
+  </data>
+  <data name="Total Clubs" xml:space="preserve">
+    <value>Total Clubs</value>
+    <comment>Location Management</comment>
+  </data>
+  <data name="Total Commission" xml:space="preserve">
+    <value>Total Commission</value>
+    <comment>Payment Management</comment>
+  </data>
+  <data name="Total Requests" xml:space="preserve">
+    <value>Total Requests</value>
+    <comment>Recommendation Management</comment>
+  </data>
+  <data name="Total Sales" xml:space="preserve">
+    <value>Total Sales</value>
+    <comment>Dashboard</comment>
+  </data>
+  <data name="Total Visitors" xml:space="preserve">
+    <value>Total Visitors</value>
+    <comment>Reservation Ledger</comment>
+  </data>
+  <data name="Tuesday" xml:space="preserve">
+    <value>Tue</value>
+    <comment>Dashboard</comment>
+  </data>
+  <data name="Twitter" xml:space="preserve">
+    <value>Twitter</value>
+    <comment>Club Management</comment>
+  </data>
+  <data name="Type" xml:space="preserve">
+    <value>Type</value>
+    <comment>Customer Management</comment>
+  </data>
+  <data name="Update Profile" xml:space="preserve">
+    <value>Update Profile</value>
+    <comment>Recommendation Management</comment>
+  </data>
+  <data name="Updated Date" xml:space="preserve">
+    <value>Updated Date</value>
+    <comment>Recommendation Management</comment>
+  </data>
+  <data name="Updated On" xml:space="preserve">
+    <value>Updated On</value>
+  </data>
+  <data name="User Email" xml:space="preserve">
+    <value>User Email</value>
+    <comment>Staff Management</comment>
+  </data>
+  <data name="User Info" xml:space="preserve">
+    <value>User Info</value>
+    <comment>Customer Management</comment>
+  </data>
+  <data name="User Name" xml:space="preserve">
+    <value>User Name</value>
+    <comment>Roles Management</comment>
+  </data>
+  <data name="User Type" xml:space="preserve">
+    <value>User Type</value>
+    <comment>Roles Management</comment>
+  </data>
+  <data name="Username" xml:space="preserve">
+    <value>USERNAME</value>
+    <comment>Profile</comment>
+  </data>
+  <data name="Value" xml:space="preserve">
+    <value>Value</value>
+    <comment>Commission Management</comment>
+  </data>
+  <data name="View All" xml:space="preserve">
+    <value>View All</value>
+    <comment>Dashboard</comment>
+  </data>
+  <data name="View Calendar" xml:space="preserve">
+    <value>View Calendar</value>
+    <comment>Reservation Ledger</comment>
+  </data>
+  <data name="View your personal informations" xml:space="preserve">
+    <value>View your personal informations</value>
+    <comment>Profile</comment>
+  </data>
+  <data name="Visit Date" xml:space="preserve">
+    <value>Visit Date</value>
+    <comment>Reservation Ledger</comment>
+  </data>
+  <data name="Visit Time" xml:space="preserve">
+    <value>Visit Time</value>
+    <comment>Payment Management</comment>
+  </data>
+  <data name="Visitors" xml:space="preserve">
+    <value>Visitors</value>
+    <comment>Dashboard</comment>
+  </data>
+  <data name="Website" xml:space="preserve">
+    <value>Website</value>
+    <comment>Club Management</comment>
+  </data>
+  <data name="Wednesday" xml:space="preserve">
+    <value>Wed</value>
+    <comment>Dashboard</comment>
+  </data>
+  <data name="Week" xml:space="preserve">
+    <value>Week</value>
+    <comment>Dashboard</comment>
+  </data>
+  <data name="Welcome back" xml:space="preserve">
+    <value>Welcome back</value>
+    <comment>Dashboard</comment>
+  </data>
+  <data name="Year" xml:space="preserve">
+    <value>Year</value>
+    <comment>Host Management</comment>
+  </data>
+</root>

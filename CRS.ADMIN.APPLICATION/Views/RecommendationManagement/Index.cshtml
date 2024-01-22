@@ -1,0 +1,509 @@
+﻿@model CRS.ADMIN.APPLICATION.Models.RecommendationManagement.ManageGroupCommonModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var _ManageGroupModel = Model.ManageGroupModel as CRS.ADMIN.APPLICATION.Models.RecommendationManagement.ManageGroup;
+    var _ManageShufflingTimeModel = Model.ShufflingTimeListModels as List<CRS.ADMIN.APPLICATION.Models.RecommendationManagement.ShufflingTimeListModel>;
+    int sno = 1;
+}
+<div class="px-8 py-4 flex flex-col gap-8">
+    <!-- booking information  -->
+    <div class="flex justify-between items-center">
+        <div>
+            <div class="heading-title">Recommendation Requests</div>
+            <div class="span-title-light-gray"></div>
+        </div>
+    </div>
+    <div class="overall-recommendation">
+        <div class="payment-details flex gap-[45px]">
+            <div class="payment-details-card w-[268px]">
+                <div class="title flex gap-[8px] mb-[12px] items-center">
+                    <div class="logo h-[32px] w-[32px] flex justify-center
+                    items-center rounded-full bg-[#D9EAFA]">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 20 20" fill="none">
+                            <g clip-path="url(#clip0_6409_24911)">
+                                <path d="M17.5 0.5625H2.5C1.4375 0.5625 0.5625 1.4375 0.5625 2.5V17.5C0.5625 18.5625 1.4375 19.4688 2.53125 19.4688H17.5312C18.5938 19.4688 19.5 18.5938 19.5 17.5V2.5C19.4688 1.4375 18.5625 0.5625 17.5 0.5625ZM7.4375 11.7188V7.125H12.5625V11.6875H7.4375V11.7188ZM12.5625 13.125V18.0625H7.4375V13.125H12.5625ZM1.96875 7.125H6.0625V11.6875H1.96875V7.125ZM13.9688 7.125H18.0625V11.6875H13.9688V7.125ZM2.5 1.96875H17.5C17.8125 1.96875 18.0625 2.21875 18.0625 2.53125V5.75H1.96875V2.5C1.96875 2.1875 2.1875 1.96875 2.5 1.96875ZM1.96875 17.5V13.125H6.0625V18.0625H2.5C2.1875 18.0625 1.96875 17.8125 1.96875 17.5ZM17.5 18.0625H13.9688V13.125H18.0625V17.5C18.0625 17.8125 17.8125 18.0625 17.5 18.0625Z"
+                                      fill="#1976D2" />
+                            </g>
+                            <defs>
+                                <clipPath id="clip0_6409_24911">
+                                    <rect width="20" height="20" fill="white" />
+                                </clipPath>
+                            </defs>
+                        </svg>
+                    </div>
+                    <div class="text-lg font-semibold">@Model.RecommendationAnalyticsList[0].StatusLabel</div>
+                </div>
+                <div class="text-2xl font-semibold mb-[30px]">
+                    @Model.RecommendationAnalyticsList[0].StatusCount
+                </div>
+                <hr class="bg-[#F4F4F4] mb-[12px]" />
+                <div class="text-center text-xs cursor-pointer text-[#1C2434]">
+                    View all <i class="las la-angle-right"></i>
+                </div>
+            </div>
+            <div class="payment-details-card w-[268px] flex justify-between flex-col ">
+                <div>
+                    <div class="title flex gap-[8px] mb-[12px] items-center">
+                        <div class="logo h-[32px] w-[32px] flex justify-center
+                    items-center rounded-full bg-[#FEE5CD ]">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 20 20"
+                                 fill="none">
+                                <g clip-path="url(#clip0_6409_24911)">
+                                    <path d="M17.5 0.5625H2.5C1.4375 0.5625 0.5625 1.4375 0.5625 2.5V17.5C0.5625 18.5625 1.4375 19.4688 2.53125 19.4688H17.5312C18.5938 19.4688 19.5 18.5938 19.5 17.5V2.5C19.4688 1.4375 18.5625 0.5625 17.5 0.5625ZM7.4375 11.7188V7.125H12.5625V11.6875H7.4375V11.7188ZM12.5625 13.125V18.0625H7.4375V13.125H12.5625ZM1.96875 7.125H6.0625V11.6875H1.96875V7.125ZM13.9688 7.125H18.0625V11.6875H13.9688V7.125ZM2.5 1.96875H17.5C17.8125 1.96875 18.0625 2.21875 18.0625 2.53125V5.75H1.96875V2.5C1.96875 2.1875 2.1875 1.96875 2.5 1.96875ZM1.96875 17.5V13.125H6.0625V18.0625H2.5C2.1875 18.0625 1.96875 17.8125 1.96875 17.5ZM17.5 18.0625H13.9688V13.125H18.0625V17.5C18.0625 17.8125 17.8125 18.0625 17.5 18.0625Z"
+                                          fill="#F89336" />
+                                </g>
+                                <defs>
+                                    <clipPath id="clip0_6409_24911">
+                                        <rect width="20" height="20" fill="white" />
+                                    </clipPath>
+                                </defs>
+                            </svg>
+                        </div>
+                        <div class="text-lg font-semibold">@Model.RecommendationAnalyticsList[1].StatusLabel</div>
+                    </div>
+                    <div class="text-2xl font-semibold mb-[30px]">
+                        @Model.RecommendationAnalyticsList[1].StatusCount
+                    </div>
+                </div>
+                <div>
+                    <hr class="bg-[#F4F4F4] mb-[12px]" />
+                    <div class="text-center text-xs cursor-pointer text-[#1C2434]">
+                        View all <i class="las la-angle-right"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="payment-details-card w-[268px] flex justify-between flex-col ">
+                <div>
+                    <div class="title flex gap-[8px] mb-[12px] items-center">
+                        <div class="logo h-[32px] w-[32px] flex justify-center
+                    items-center rounded-full bg-[#C4F7C6 ]">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 20 20"
+                                 fill="none">
+                                <g clip-path="url(#clip0_6409_24911)">
+                                    <path d="M17.5 0.5625H2.5C1.4375 0.5625 0.5625 1.4375 0.5625 2.5V17.5C0.5625 18.5625 1.4375 19.4688 2.53125 19.4688H17.5312C18.5938 19.4688 19.5 18.5938 19.5 17.5V2.5C19.4688 1.4375 18.5625 0.5625 17.5 0.5625ZM7.4375 11.7188V7.125H12.5625V11.6875H7.4375V11.7188ZM12.5625 13.125V18.0625H7.4375V13.125H12.5625ZM1.96875 7.125H6.0625V11.6875H1.96875V7.125ZM13.9688 7.125H18.0625V11.6875H13.9688V7.125ZM2.5 1.96875H17.5C17.8125 1.96875 18.0625 2.21875 18.0625 2.53125V5.75H1.96875V2.5C1.96875 2.1875 2.1875 1.96875 2.5 1.96875ZM1.96875 17.5V13.125H6.0625V18.0625H2.5C2.1875 18.0625 1.96875 17.8125 1.96875 17.5ZM17.5 18.0625H13.9688V13.125H18.0625V17.5C18.0625 17.8125 17.8125 18.0625 17.5 18.0625Z"
+                                          fill="#28A745" />
+                                </g>
+                                <defs>
+                                    <clipPath id="clip0_6409_24911">
+                                        <rect width="20" height="20" fill="white" />
+                                    </clipPath>
+                                </defs>
+                            </svg>
+                        </div>
+                        <div class="text-lg font-semibold">@Model.RecommendationAnalyticsList[2].StatusLabel</div>
+                    </div>
+                    <div class="text-2xl font-semibold mb-[30px]">
+                        @Model.RecommendationAnalyticsList[2].StatusCount
+                    </div>
+                </div>
+                <div>
+                    <hr class="bg-[#F4F4F4] mb-[12px]" />
+                    <div class="text-center text-xs cursor-pointer text-[#1C2434]">
+                        View all <i class="las la-angle-right"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="payment-details-card w-[268px] flex justify-between flex-col ">
+                <div>
+                    <div class="title flex gap-[8px] mb-[12px] items-center">
+                        <div class="logo h-[32px] w-[32px] flex justify-center
+                    items-center rounded-full bg-[#FFCACA]">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 20 20"
+                                 fill="none">
+                                <g clip-path="url(#clip0_6409_24911)">
+                                    <path d="M17.5 0.5625H2.5C1.4375 0.5625 0.5625 1.4375 0.5625 2.5V17.5C0.5625 18.5625 1.4375 19.4688 2.53125 19.4688H17.5312C18.5938 19.4688 19.5 18.5938 19.5 17.5V2.5C19.4688 1.4375 18.5625 0.5625 17.5 0.5625ZM7.4375 11.7188V7.125H12.5625V11.6875H7.4375V11.7188ZM12.5625 13.125V18.0625H7.4375V13.125H12.5625ZM1.96875 7.125H6.0625V11.6875H1.96875V7.125ZM13.9688 7.125H18.0625V11.6875H13.9688V7.125ZM2.5 1.96875H17.5C17.8125 1.96875 18.0625 2.21875 18.0625 2.53125V5.75H1.96875V2.5C1.96875 2.1875 2.1875 1.96875 2.5 1.96875ZM1.96875 17.5V13.125H6.0625V18.0625H2.5C2.1875 18.0625 1.96875 17.8125 1.96875 17.5ZM17.5 18.0625H13.9688V13.125H18.0625V17.5C18.0625 17.8125 17.8125 18.0625 17.5 18.0625Z"
+                                          fill="#CB3F3F" />
+                                </g>
+                                <defs>
+                                    <clipPath id="clip0_6409_24911">
+                                        <rect width="20" height="20" fill="white" />
+                                    </clipPath>
+                                </defs>
+                            </svg>
+                        </div>
+                        <div class="text-lg font-semibold">@Model.RecommendationAnalyticsList[3].StatusLabel</div>
+                    </div>
+                    <div class="text-2xl font-semibold mb-[30px]">
+                        @Model.RecommendationAnalyticsList[3].StatusCount
+                    </div>
+                </div>
+                <div>
+                    <hr class="bg-[#F4F4F4] mb-[12px]" />
+                    <div class="text-center text-xs cursor-pointer text-[#1C2434]">
+                        View all <i class="las la-angle-right"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="divider-common m-0 h-[1px]">
+    </div>
+    <div class="flex flex-col gap-4">
+        <div class="">
+            <div class="flex gap-[24px]" style="border-bottom: 1px solid #f4f4f4;">
+                <div class="flex tab-container-plane bg-white gap-[16px]">
+                    <div onclick="getActiveButtonValue()">
+                        <button id="tab1Button" class="tab-button-plane tab-link">Requests</button>
+                    </div>
+                    <div onclick="getActiveButtonValue()">
+                        <button id="tab2Button" class="tab-button-plane tab-link active">Configure</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="">
+            <div class="bg-white">
+                <div id="tab1" class="tab-content-plane hidden">
+                    <div class="flex justify-between mb-4">
+                        <form>
+                            <div class="relative input-search-wrapper">
+                                <div class="absolute inset-y-0 left-0 flex items-center pl-[16px] pointer-events-none">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21" fill="none">
+                                        <path d="M17.5 18L13.875 14.375M15.8333 9.66667C15.8333 13.3486 12.8486 16.3333 9.16667 16.3333C5.48477 16.3333 2.5 13.3486 2.5 9.66667C2.5 5.98477 5.48477 3 9.16667 3C12.8486 3 15.8333 5.98477 15.8333 9.66667Z"
+                                              stroke="#667085" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round">
+                                        </path>
+                                    </svg>
+                                </div>
+                                <input type="search" id="default-search" class="input-search block w-full " placeholder="Search"
+                                       required="">
+                            </div>
+                        </form>
+                        <div class="export-button h-[40px]">
+                            <img src="/Content/assets_new/images/club/download-solid.svg" /> export
+                        </div>
+                    </div>
+                    <div class="table-tab">
+                        <div class="px-[12px] py-[16px] flex justify-between entry-export-container">
+                            <div class="flex items-center select-entries">
+                                show&nbsp;
+                                <select id="countries" class="w-full select-entires " style="width: 100%; ">
+                                    <option value="5" selected>5</option>
+                                    <option value="10">10</option>
+                                    <option value="15">15</option>
+                                    <option value="20">100</option>
+                                </select>&nbsp;entries
+                            </div>
+                        </div>
+                        <div class="relative overflow-x-auto">
+                            <table class="w-full  text-left club-table">
+                                <thead class="club-table-thead">
+                                    <tr>
+                                        <th scope="col" class="p-[12px]">
+                                            <div class="flex">
+                                                S.N
+                                                <div class="relative pl-[5px]">
+                                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                                </div>
+                                            </div>
+                                        </th>
+                                        <th scope="col" class="p-[12px]">
+                                            <div class="flex">
+                                                Club Profile
+                                                <div class="relative pl-[5px]">
+                                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                                </div>
+                                            </div>
+                                        </th>
+                                        <th scope="col" class="p-[12px]">
+                                            <div class="flex">
+                                                Status
+                                                <div class="relative pl-[5px]">
+                                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                                </div>
+                                            </div>
+                                        </th>
+                                        <th scope="col" class="p-[12px]">
+                                            <div class="flex">
+                                                Requested Date <div class="relative pl-[5px]">
+                                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                                </div>
+                                            </div>
+                                        </th>
+                                        <th scope="col" class="p-[12px]">
+                                            <div class="flex">
+                                                Updated Date <div class="relative pl-[5px]">
+                                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                                </div>
+                                            </div>
+                                        </th>
+                                        <th scope="col" class="p-[12px]">
+                                            <div class="flex">
+                                                Remarks
+                                                <div class="relative pl-[5px]">
+                                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                                </div>
+                                            </div>
+                                        </th>
+                                        <th scope="col" class="p-[12px]">
+                                            <div class="flex">
+                                                Action<div class="relative pl-[5px]">
+                                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                                </div>
+                                            </div>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @{
+                                        foreach (var item in Model.RecommendationRequestList)
+                                        {
+                                            <tr class="bg-white border-b ">
+                                                <td class="p-[12px]">
+                                                    @sno
+                                                </td>
+                                                <td class="p-[12px]">
+                                                    <div class="round-image-text flex gap-[12px] w-max ">
+                                                        <img class="w-[32px] h-[32px] rounded-full" src="@item.ClubLogo" />
+                                                        <div class="flex justify-between w-full">
+                                                            <div class="text-image grid flex-none">
+                                                                <div class="text-sm font-semibold text-[#101828] ">@item.ClubName</div>
+                                                                <div class="platinum ">@item.ClubCategory</div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td class="p-[12px]">
+                                                    <div class="approved w-max ">
+                                                        Approved
+                                                    </div>
+                                                </td>
+                                                <td class="p-[12px]">
+                                                    <div class="w-max">
+                                                        @item.ActionDate
+                                                    </div>
+                                                </td>
+                                                <td class="p-[12px]">
+                                                    <div class="w-max">
+                                                        @item.ActionDate
+                                                    </div>
+                                                </td>
+                                                <td class="p-[12px]">
+                                                    This is remarks.
+                                                </td>
+
+                                                <td class="p-[12px]">
+                                                    <div class="flex gap-2 items-center">
+                                                        <i class="las la-window-close text-[24px] text-[#CB3F3F] cursor-pointer "></i>
+                                                        <img src="/Content/assets_new/images/check-square.svg"
+                                                             data-modal-target="recommendation-confirmation"
+                                                             data-modal-toggle="recommendation-confirmation" alt="" class="cursor-pointer">
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            sno++;
+                                        }
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="pagination-club">
+                            <div class="show-entry">Showing 1 to 5 of 301 Entries</div>
+                            <div class="flex gap-[12px]">
+                                <div class="btn btn-secondary-box-shadow ">Previous</div>
+                                <div class="flex gap-[12px]">
+                                    <div class="pagination-number active">
+                                        1
+                                    </div>
+                                    <div class="pagination-number">
+                                        2
+                                    </div>
+                                    <div class="pagination-number">
+                                        3
+                                    </div>
+                                    <div class="pagination-number">
+                                        ..
+                                    </div>
+                                    <div class="pagination-number">
+                                        10
+                                    </div>
+                                </div>
+                                <div class="btn btn-secondary-box-shadow ">Next</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="tab2" class="tab-content-plane  ">
+                    <div class="flex justify-between mb-4">
+                        <form>
+                            <div class="relative input-search-wrapper">
+                                <div class="absolute inset-y-0 left-0 flex items-center pl-[16px] pointer-events-none">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21" fill="none">
+                                        <path d="M17.5 18L13.875 14.375M15.8333 9.66667C15.8333 13.3486 12.8486 16.3333 9.16667 16.3333C5.48477 16.3333 2.5 13.3486 2.5 9.66667C2.5 5.98477 5.48477 3 9.16667 3C12.8486 3 15.8333 5.98477 15.8333 9.66667Z"
+                                              stroke="#667085" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round">
+                                        </path>
+                                    </svg>
+                                </div>
+                                <input type="search" id="default-search" class="input-search block w-full " placeholder="Search"
+                                       required="">
+                            </div>
+                        </form>
+                    </div>
+                    <div class="table-tab">
+                        <div class="px-[12px] py-[16px] flex justify-between entry-export-container">
+                            <div class="flex items-center select-entries">
+                                show&nbsp;
+                                <select id="countries" class="w-full select-entires " style="width: 100%; ">
+                                    <option value="5" selected>5</option>
+                                    <option value="10">10</option>
+                                    <option value="15">15</option>
+                                    <option value="20">100</option>
+                                </select>&nbsp;entries
+                            </div>
+                        </div>
+                        <div class="relative overflow-x-auto">
+                            <table class="w-full  text-left club-table">
+                                <thead class="club-table-thead">
+                                    <tr>
+                                        <th scope="col" class="p-[12px]">
+                                            <div class="flex">
+                                                S.N
+                                                <div class="relative pl-[5px]">
+                                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                                </div>
+                                            </div>
+                                        </th>
+                                        <th scope="col" class="p-[12px]">
+                                            <div class="flex">
+                                                Location Name
+                                                <div class="relative pl-[5px]">
+                                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                                </div>
+                                            </div>
+                                        </th>
+                                        <th scope="col" class="p-[12px]">
+                                            <div class="flex">
+                                                Location Image <div class="relative pl-[5px]">
+                                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                                </div>
+                                            </div>
+                                        </th>
+                                        <th scope="col" class="p-[12px]">
+                                            <div class="flex justify-center">
+                                                Action<div class="relative pl-[5px]">
+                                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                                </div>
+                                            </div>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @{
+                                        foreach (var item in Model.LocationList)
+                                        {
+                                            <tr class="bg-white border-b ">
+                                                <td class="p-[12px]">
+                                                    @sno
+                                                </td>
+                                                <td class="p-[12px]">
+                                                    @item.LocationName
+                                                </td>
+                                                <td class="p-[12px]">
+                                                    <div class="round-image-text flex gap-[12px] w-max ">
+                                                        <img class="w-[32px] h-[32px] rounded-full" src="@item.LocationImage" />
+                                                    </div>
+                                                </td>
+                                                <td class="p-[12px]">
+                                                    <div class="flex gap-2 items-center justify-center">
+                                                        <img src="/Content/assets_new/images/frame.svg" alt=""
+                                                             class="cursor-pointer" onclick="GotoManageGroup('@item.LocationId')" />
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            sno++;
+                                        }
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="pagination-club">
+                            <div class="show-entry">Showing 1 to 5 of 301 Entries</div>
+                            <div class="flex gap-[12px]">
+                                <div class="btn btn-secondary-box-shadow ">Previous</div>
+                                <div class="flex gap-[12px]">
+                                    <div class="pagination-number active">
+                                        1
+                                    </div>
+                                    <div class="pagination-number">
+                                        2
+                                    </div>
+                                    <div class="pagination-number">
+                                        3
+                                    </div>
+                                    <div class="pagination-number">
+                                        ..
+                                    </div>
+                                    <div class="pagination-number">
+                                        10
+                                    </div>
+                                </div>
+                                <div class="btn btn-secondary-box-shadow ">Next</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- recommendation-confirmation  -->
+<div id="recommendation-confirmation" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 hidden w-full
+     p-4 overflow-x-hidden overflow-y-auto
+     md:inset-0 h-[calc(100%-1rem)] max-h-full " style="align-items: flex-start;">
+    <div class="relative max-w-2xl max-h-full w-[412px] px-4 pt-[40px] pb-[46px] mt-24">
+        <!-- Modal content -->
+        <div class="relative bg-white rounded-lg shadow">
+            <!-- Modal header -->
+            <button type="button"
+                    class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center absolute top-[24px] right-[20px] "
+                    data-modal-hide="recommendation-confirmation">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="25" viewBox="0 0 24 25" fill="none">
+                    <rect y="0.621094" width="24" height="24" rx="12" fill="#FAFAFA" />
+                    <path d="M5.41406 4.95703L4.33594 6.03516L10.9219 12.6211L4.33594 19.207L5.41406 20.2852L12 13.6992L18.5859 20.2852L19.6641 19.207L13.0781 12.6211L19.6641 6.03516L18.5859 4.95703L12 11.543L5.41406 4.95703Z"
+                          fill="#7A7A7A" />
+                </svg>
+            </button>
+            <!-- Modal body -->
+            <div class="grid gap-6 px-[20px] py-8">
+                <div class="text-[#333] font-semibold pb-[11px] border-b border-[#eeeeee]">Confirmation</div>
+                <div class="grid gap-[20px] text-[#062937] mb-[45px]">
+                    <div class="text-[14px] text-secondary-text-2 text-start">
+                        Are you sure you want to confirm the Recommendation Request?
+                    </div>
+                </div>
+                <div class="flex justify-end">
+                    <div class="flex gap-8">
+                        <button class="btn btn-gray-white  rounded-[4px] w-max gap-2"
+                                data-modal-hide="recommendation-confirmation">
+                            Cancel
+                        </button>
+                        <button class="btn btn-primary-default rounded-[4px] w-max gap-2"
+                                data-modal-hide="recommendation-confirmation">
+                            Confirm
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{    
+    <script>
+        function GotoManageGroup(id) {
+            window.location.href = "/RecommendationManagement/ManageGroup?locationId=" + id;
+        }
+    </script>
+}

@@ -1,0 +1,183 @@
+﻿@model CRS.ADMIN.APPLICATION.Models.RecommendationManagementV2.RecommendationDetailCommonModel
+@{
+    ViewBag.Title = "HostListView";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="px-8 py-4 flex flex-col gap-8">
+    @Html.AntiForgeryToken()
+    <div class="flex justify-between items-center">
+        <div>
+            <div class="heading-title">@CRS.ADMIN.APPLICATION.Resources.Resource.Hosts</div>
+            <div class="span-title-light-gray">@CRS.ADMIN.APPLICATION.Resources.Resource.HostSupportMsg</div>
+        </div>
+    </div>
+    <div class="table-tab">
+        @*<div class="px-[12px] py-[16px] flex justify-between entry-export-container">
+                <div class="flex items-center select-entries">
+                    @CRS.ADMIN.APPLICATION.Resources.Resource.Show&nbsp;
+                    <select id="countries" class="w-full select-entires " style="width: 100%; ">
+                        <option value="5" selected>5</option>
+                        <option value="10">10</option>
+                        <option value="15">15</option>
+                        <option value="20">100</option>
+                    </select>&nbsp;@CRS.ADMIN.APPLICATION.Resources.Resource.Entries
+                </div>
+            </div>*@
+        <div class="relative overflow-x-auto">
+            <table class="w-full  text-left club-table">
+                <thead class="club-table-thead">
+                    <tr>
+                        <th scope="col" class="p-[12px]">
+                            <div class="flex">
+                                S.N
+                                <div class="relative pl-[5px]">
+                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                </div>
+                            </div>
+                        </th>
+                        <th scope="col" class="p-[12px]">
+                            <div class="flex">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Host_Info
+                                <div class="relative pl-[5px]">
+                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                </div>
+                            </div>
+                        </th>
+                        <th scope="col" class="p-[12px]">
+                            <div class="flex">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Created_On
+                                <div class="relative pl-[5px]">
+                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                </div>
+                            </div>
+                        </th>
+                        <th scope="col" class="p-[12px]">
+                            <div class="flex">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Updated_On
+                                <div class="relative pl-[5px]">
+                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                </div>
+                            </div>
+                        </th>
+                        <th scope="col" class="p-[12px]">
+                            <div class="flex">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Order
+                                <div class="relative pl-[5px]">
+                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                </div>
+                            </div>
+                        </th>
+                        <th scope="col" class="p-[12px]">
+                            <div class="flex justify-center">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Action
+                                <div class="relative pl-[5px]">
+                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                </div>
+                            </div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        int sno = 1;
+                        foreach (var item in Model.GetSelectedHostList)
+                        {
+                            <tr class="bg-white border-b ">
+                                <td class="p-[12px]">
+                                    @sno
+                                </td>
+                                <td class="p-[12px]">
+                                    <div class="round-image-text flex gap-[12px] w-max ">
+                                        <img class="w-[32px] h-[32px] rounded-full"
+                                             src="@item.HostImage" />
+                                        <div class="flex justify-between w-full">
+                                            <div class="text-image grid flex-none">
+                                                <div class="text-sm font-semibold text-[#101828] ">@item.HostName</div>
+                                                <div class="text-xs  text-[#404040] ">@item.HostName</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="p-[12px]">
+                                    <div class="w-max">
+                                        @item.CreatedOn
+                                    </div>
+                                </td>
+                                <td class="p-[12px]">
+                                    <div class="w-max">
+                                        @item.UpdatedOn
+                                    </div>
+                                </td>
+                                <td class="p-[12px]">
+                                    <div class="w-max">
+                                        @item.DisplayOrder
+                                    </div>
+                                </td>
+                                <td class="p-[12px]">
+                                    <div class="flex gap-2 items-center justify-center">
+                                        <a href="">
+                                            <i class="las la-trash-alt text-[24px] text-[#CB3F3F] cursor-pointer" onclick="DeleteRequest('@item.RecommendationId','@item.ClubId','@item.HostId','@item.RecommendationHostId')"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                            sno++;
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+        @*<div class="pagination-club">
+                <div class="show-entry">@CRS.ADMIN.APPLICATION.Resources.Resource.Showing 1 to 5 of 301 @CRS.ADMIN.APPLICATION.Resources.Resource.Entries</div>
+                <div class="flex gap-[12px]">
+                    <div class="btn btn-secondary-box-shadow ">@CRS.ADMIN.APPLICATION.Resources.Resource.Previous</div>
+                    <div class="flex gap-[12px]">
+                        <div class="pagination-number active">
+                            1
+                        </div>
+                        <div class="pagination-number">
+                            2
+                        </div>
+                        <div class="pagination-number">
+                            3
+                        </div>
+                        <div class="pagination-number">
+                            ..
+                        </div>
+                        <div class="pagination-number">
+                            10
+                        </div>
+                    </div>
+                    <div class="btn btn-secondary-box-shadow ">@CRS.ADMIN.APPLICATION.Resources.Resource.Next</div>
+                </div>
+            </div>*@
+    </div>
+</div>
+@section scripts{
+    <script>
+        function DeleteRequest(recommendationid, clubid, hostid, recommendationhostid) {
+            $.ajax({
+                type: 'POST',
+                async: true,
+                url: "/RecommendationManagementV2/DeleteSelectedHost?recommendationid=" + recommendationid + "&clubid=" + clubid + "&hostid=" + hostid + "&recommendationhostid=" + recommendationhostid,
+                dataType: 'json',
+                data: {
+                    __RequestVerificationToken: $('input[name="__RequestVerificationToken"]').val(),
+                },
+                success: function (responseData) {
+                    window.location.reload();
+                },
+                error: function (ex) {
+
+                }
+            });
+        }
+    </script>
+}
+

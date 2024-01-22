@@ -1,0 +1,234 @@
+﻿@{
+    ViewBag.Title = "Manage Club Schedule";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/Content/assets_new/css/superadmin/schedule.css" rel="stylesheet" />
+<div class="flex flex-col gap-[32px] pb-4">
+    <div class="px-[32px]">
+        <div class="bg-white">
+            @Html.AntiForgeryToken()
+            <div class="grid gap-[32px]">
+                <div class="flex justify-between pb-[24px] items-center text-base font-medium border-b border-[#f6f6f7]">
+                    <div class="">Calendar</div>
+                    <div class="flex gap-[12px] items-center">
+                        <div class="flex h-[32px] w-[40px] justify-center items-center border border-[#D9D9D9] rounded-[4px]" id="prev-id">
+                            <i class="fa-solid fa-chevron-left"></i>
+                        </div>
+                        <div class="flex text-base font-medium current-date">
+                        </div>
+                        <div class="flex h-[32px] w-[40px] justify-center items-center border border-[#D9D9D9] rounded-[4px]" id="next-id">
+                            <i class="fa-solid fa-chevron-right"></i>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="grid gap-[21px] justify-center mb-6">
+                    <div class="grid grid-cols-7 w-full justify-between calender-card-schedule-container days-class">
+                    </div>
+                </div>
+            </div>
+            <div id="modal1" class="modal">
+                <div class="modal-content w-[334px] max-h-full px-[31px] py-[24px]">
+                    <div class="relative h-full py-[24px] w-[334px] px-[31px] bg-white rounded-lg shadow ">
+                        <!-- Modal header -->
+                        <div class="flex items-start justify-between py-4 ">
+                            <h3 class="text-small font-medium text-[#444] ">
+                                Schedule Status
+                            </h3>
+                            <button type="button" onclick="closeModal('modal1')" class="text-secondary-200 bg-transparent hover:text-secondary-100 hover:text-gray-900 ">
+                                <i class="las la-times"></i>
+                            </button>
+                        </div>
+                        <input hidden id="schedule-value-id" value="" />
+                        <!-- Modal body -->
+                        <div class="select-time-container">
+                            <!-- onchange="MyScheduleFunction();"> -->
+                            <input type="text" class="hidden" name="date" />
+
+                            <div id="toggle" class="text-black display-page cursor-pointer ">
+                                <div id="setvalue"> Select</div>
+                                <div class="display-page-arrow">
+                                    <b></b>
+                                </div>
+                            </div>
+
+                            <div class="toggleDivTime" id="toggleDivTime">
+                                @foreach (var item in ViewBag.ClubScheduleDDL as IEnumerable<SelectListItem>)
+                                {
+                                    var imgSRC = "/Content/assets_new/images/" + @item.Text + ".svg";
+
+                                    <div class="flex items-center checkbox-common gap-4 py-[8px] px-[16px]" onclick="MyScheduleFunction('@item.Value')">
+                                        <img src="@imgSRC" class="h-[21px] w-[16px]" />
+
+                                        <label for=""
+                                               class=" text-sm font-medium flex items-center justify-between w-full text-secondary-100">
+                                            @item.Text
+                                        </label>
+
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                        @*<select id="id_select2_schedule_status" style="width: 100%;" class="text-[#B7B7B7]" onchange="MyScheduleFunction();">
+                                @foreach (var item in ViewBag.ClubScheduleDDL as IEnumerable<SelectListItem>)
+                                {
+                                    var imgSRC = "/Content/assets/images/" + @item.Text + ".svg";
+                                    <option data-img_src="@imgSRC" value="@item.Value">@item.Text</option>
+                                }
+                            </select>*@
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts{
+    <script>
+        var toggle = document.getElementById('toggle');
+        var setValue = document.getElementById('setvalue');
+        var toggleDivTime = document.getElementById('toggleDivTime');
+        var hiddenInput = document.querySelector('input[name="date"]');
+
+        toggle.addEventListener('click', function () {
+            if (toggleDivTime.style.display === 'none' || toggleDivTime.style.display === '') {
+                toggleDivTime.style.display = 'block';
+            } else {
+                toggleDivTime.style.display = 'none';
+            }
+        });
+
+        // Add click event listeners to each div inside toggleDivTime
+        var divs = document.querySelectorAll('#toggleDivTime > div');
+        divs.forEach(function (div) {
+            div.addEventListener('click', function () {
+                // Remove active class from all divs
+                if (!div.classList.contains('disabled')) {
+                    divs.forEach(function (d) {
+                        d.classList.remove('active');
+                    });
+
+                    // Add active class to the clicked div
+                    div.classList.add('active');
+
+                    // Extract the text content of the clicked label
+                    var labelText = div.querySelector('label').textContent.trim();
+
+                    // Update the text content of the toggle element
+                    setValue.textContent = labelText;
+
+                    // Update hidden input value
+                    hiddenInput.value = labelText;
+
+                    // Hide toggleDivTime
+                    toggleDivTime.style.display = 'none';
+                }
+
+
+            });
+        });
+    </script>
+    <script>
+     // Declare a global variable to hold the JSON data
+     var clubSchedulesJson = @Html.Raw(ViewBag.ClubSchedulesJson);
+    </script>
+    <script src="~/Content/assets_new/js/schedulemanagement.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#schedule-value-id').val('');
+        });
+    </script>
+    <script>
+              function MyScheduleFunction(i) {
+                  //var selectedValue = document.getElementById("id_select2_schedule_status").value;
+                  var scheduleValue = document.getElementById("schedule-value-id").value;
+                  var scheduleValueSplitedData = scheduleValue.split(',');
+                  let DateValue = scheduleValueSplitedData[0];
+                  let ScheduleId = scheduleValueSplitedData[1];
+                  //let ClubSchedule = selectedValue;
+                  let ClubSchedule = i;
+                  let ClubId = '@ViewBag.ClubId'
+                  $.ajax({
+                      type: 'POST',
+                      async: true,
+                      url: '@Url.Action("ManageSchedule", "ScheduleManagement")',
+                      dataType: 'json',
+                      data: {
+                          __RequestVerificationToken: $('input[name="__RequestVerificationToken"]').val(),
+                          ScheduleId,
+                          DateValue,
+                          ClubSchedule,
+                          ClubId
+                      },
+                      success: function (data) {
+                          window.location.reload();
+                      },
+                      error: function (ex) {
+                          window.location.reload();
+                      }
+                  });
+              }
+          @*function MyScheduleFunction() {
+              var selectedValue = document.getElementById("id_select2_schedule_status").value;
+              var scheduleValue = document.getElementById("schedule-value-id").value;
+              var scheduleValueSplitedData = scheduleValue.split(',');
+              let DateValue = scheduleValueSplitedData[0];
+              let ScheduleId = scheduleValueSplitedData[1];
+              let ClubSchedule = selectedValue;
+              let ClubId = '@ViewBag.ClubId'
+              $.ajax({
+                  type: 'POST',
+                  async: true,
+                  url: '@Url.Action("ManageSchedule", "ScheduleManagement")',
+                  dataType: 'json',
+                  data: {
+                      __RequestVerificationToken: $('input[name="__RequestVerificationToken"]').val(),
+                      ScheduleId,
+                      DateValue,
+                      ClubSchedule,
+                      ClubId
+                  },
+                  success: function (data) {
+                      window.location.reload();
+                  },
+                  error: function (ex) {
+                      window.location.reload();
+                  }
+              });
+          }*@
+
+        function openModal(modalId, scheduleValue) {
+            $('#schedule-value-id').val(scheduleValue);
+            var modal = document.getElementById(modalId);
+            if (modal) {
+                modal.style.display = "flex";
+            }
+        }
+    </script>
+    <script type="text/javascript">
+        function custom_template(obj) {
+            var data = $(obj.element).data();
+            var text = $(obj.element).text();
+            if (data) {
+                img_src = data['img_src'];
+                template = $("<div style=\"display: flex; gap:6px; align-items: center; justify-content: start;\"><img src=\"" +
+                    img_src +
+                    "\" style=\"width:16px;height:16px;\"/><p style=\"font-size:14px;text-align:center; color:#000;\">" +
+                    text + "</p></div>");
+                return template;
+            }
+        }
+
+        var options = {
+            'templateSelection': custom_template,
+            'templateResult': custom_template,
+        }
+
+        $('#id_select2_schedule_status').select2(options);
+
+        $('.select2-container--default .select2-selection--single').css({
+            'height': '44px',
+            "display": 'flex',
+            "align-items": 'center'
+        });
+    </script>
+}

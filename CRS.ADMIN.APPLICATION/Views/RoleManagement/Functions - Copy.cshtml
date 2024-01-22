@@ -1,0 +1,124 @@
+﻿
+@{
+    ViewBag.Title = "Functions";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@Styles.Render("~/UI/Style")
+<style>
+    .dataTrigger {
+        background-color: #eee;
+        color: #444;
+        cursor: pointer;
+        padding: 18px;
+        width: 100%;
+        border: none;
+        text-align: left;
+        outline: none;
+        font-size: 15px;
+        transition: 0.4s;
+    }
+
+    .data {
+        width: 100%;
+    }
+
+        .data .form-check-inline {
+            width: 18%;
+        }
+
+            .data .form-check-inline .form-check-label {
+                display: flex;
+                margin: 10px 0px;
+            }
+
+                .data .form-check-inline .form-check-label span {
+                    margin-right: 8px;
+                }
+
+        .data a {
+            margin-bottom: 10px;
+        }
+</style>
+<div class="card">
+    <div class="card-header header-elements-inline">
+        <h5 class="card-title">Assign functions For <b> [Role : @ViewBag.Name]</b></h5>&nbsp;&nbsp;
+    </div>
+    <div class="card-body">
+        @using (Html.BeginForm("Functions", "RoleManagement", new { }, FormMethod.Post, new { @role = "form", @id = "AssignFunctions", @class = "form-validate-jquery" }))
+        {
+            <div class="row">
+                @Html.AntiForgeryToken()
+                @Html.Hidden("RoleID", ViewData["RoleID"])
+                @Html.Hidden("RoleName", ViewData["RoleName"])
+                @Html.NCheckBoxGroupFor("FunctionList", ViewData["Functions"] as IEnumerable<SelectListItem>, 1, "Role")
+                <div class="col-lg-12">
+                    <button type="button" class="btn btn-primary btn-sm bg-primary" onclick="window.history.back();"><i class="fa fa-arrow-left"></i> Back</button>
+                    <button type="button" onclick="SaveFunction()" class="btn btn-success btn-sm"><i class="fa fas fa-save"></i> Save</button>
+                    <button type="button" onclick="window.location.reload()" class="btn btn-danger btn-sm"><i class="fa fa-times"></i> Reset</button>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+@section Scripts{
+    <script>
+        function SaveFunction() {
+            //var RoleID = $("#RoleID").val();
+            //var RoleName = $("#RoleName").val();
+            //var list = new Array();
+            //var i = 0;
+            //$("input").each(function (index) {
+            //    if ($(this).is(":checked")) {
+            //        list.push($("input")[i].value);
+            //    }
+            //    i++;
+            //});
+            //jsonData = "{" +
+            //    "__RequestVerificationToken: '" + $('input[name="__RequestVerificationToken"]').val() + "'," +
+            //    "FunctionList:'" + list + "'," + "RoleId:'" + RoleID + "'," + "RoleName:'" + RoleName + "'}";
+            showConfirmationModal("Are you sure you want to save this functions?", "$('#AssignFunctions').submit();");
+        }
+
+        $(function () {
+            $(".selectallmenu").click(function (e) {
+                e.preventDefault();
+                var name = $(this).data('name');
+                $("input[data-type='" + name + "']").prop("checked", true);
+            });
+            $(".clearallmenu").click(function (e) {
+                e.preventDefault();
+                var name = $(this).data('name');
+                $('input[data-type="' + name + '"]').prop("checked", false);
+            });
+        });
+
+        $('button.dataTrigger').click(function () {
+            ExpandHide(this);
+        });
+
+        function ExpandHide(aa) {
+            var ID = aa.id + '_data';
+            var x = document.getElementById(ID);
+            var iconID = document.getElementById(aa.id + '_icon');
+            if (x.style.display === 'none') {
+                x.style.display = 'block';
+                iconID.className = "fa fa-minus icons pull-right";
+            }
+            else {
+                x.style.display = 'none';
+                iconID.className = "fa fa-plus icons pull-right";
+            }
+            var getClass = document.getElementsByClassName("data");
+            var getIconClass = document.getElementsByClassName("icons");
+            for (var i = 0; i < getClass.length; i++) {
+                var getId = getClass[i].id;
+                if (getId === ID) {
+                }
+                else {
+                    getClass[i].style.display = 'none';
+                    getIconClass[i].className = "fa fa-plus icons pull-right";
+                }
+            }
+        };
+    </script>
+}

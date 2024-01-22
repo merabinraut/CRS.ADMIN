@@ -1,0 +1,205 @@
+﻿@model CRS.ADMIN.APPLICATION.Models.ClubManagement.ClubDetailModel
+@{
+    ViewBag.Title = "Club Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section BreadCum{
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>Club Detail</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="~/Home">Home</a></li>
+                        <li class="breadcrumb-item">Club List</li>
+                        <li class="breadcrumb-item active">Club Detail</li>
+                    </ol>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+
+    <style>
+        .input-group {
+            display: block;
+        }
+    </style>
+}
+
+
+<div class="card">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-8">
+                <h5 class="font-weight-bold">Basic Information</h5>
+                <hr />
+                <div class="row">
+                    @if (!string.IsNullOrEmpty(Model.ClubName1))
+                    {
+                        @Html.NLabelFor(model => model.ClubName1, new { @class = "form-control", autocomplete = "off" }, 4)
+                    }
+                    @if (!string.IsNullOrEmpty(Model.ClubName1))
+                    {
+                        @Html.NLabelFor(model => model.ClubName2, new { @class = "form-control", autocomplete = "off" }, 4)
+                    }
+                    @if (!string.IsNullOrEmpty(Model.BusinessType))
+                    {
+                        @Html.NLabelFor(model => model.BusinessType, new { @class = "form-control", autocomplete = "off" }, 4)
+                    }
+                    @if (!string.IsNullOrEmpty(Model.GroupName))
+                    {
+                        @Html.NLabelFor(model => model.GroupName, new { @class = "form-control", autocomplete = "off" }, 4)
+                    }
+                    @if (!string.IsNullOrEmpty(Model.FirstName))
+                    {
+                        @Html.NLabelFor(model => model.FirstName, new { @class = "form-control", autocomplete = "off" }, 4)
+                    }
+                    @if (!string.IsNullOrEmpty(Model.MiddleName))
+                    {
+                        @Html.NLabelFor(model => model.MiddleName, new { @class = "form-control", autocomplete = "off" }, 4)
+                    }
+                    @if (!string.IsNullOrEmpty(Model.LastName))
+                    {
+                        @Html.NLabelFor(model => model.LastName, new { @class = "form-control", autocomplete = "off" }, 4)
+                    }
+                    @if (!string.IsNullOrEmpty(Model.Email))
+                    {
+                        @Html.NLabelFor(model => model.Email, new { @class = "form-control", autocomplete = "off" }, 4)
+                    }
+                    @if (!string.IsNullOrEmpty(Model.MobileNumber))
+                    {
+                        @Html.NLabelFor(model => model.MobileNumber, new { @class = "form-control", autocomplete = "off" }, 4)
+                    }
+                    @if (!string.IsNullOrEmpty(Model.Longitude))
+                    {
+                        @Html.NLabelFor(model => model.Longitude, new { @class = "form-control", autocomplete = "off" }, 4)
+                    }
+                    @if (!string.IsNullOrEmpty(Model.Latitude))
+                    {
+                        @Html.NLabelFor(model => model.Latitude, new { @class = "form-control", autocomplete = "off" }, 4)
+                    }
+                    @if (!string.IsNullOrEmpty(Model.LocationURL))
+                    {
+                        @Html.NLabelFor(model => model.LocationURL, new { @class = "form-control", autocomplete = "off" }, 4)
+                    }
+                    @if (!string.IsNullOrEmpty(Model.Description))
+                    {
+                        @Html.NLabelFor(model => model.Description, new { @class = "form-control", autocomplete = "off" }, 4)
+                    }
+                    @if (!string.IsNullOrEmpty(Model.BusinessCertificate))
+                    {
+                        <div class="col-md-4">
+                            @Html.LabelFor(model => model.BusinessCertificate, "Business Certificate", new { @class = "label", autocomplete = "off" })
+                            <div>
+                                @if (Model.BusinessCertificate != null)
+                                {<img id="BusinessCertificate_View" style="width: 150px; height: 150px" src="@Model.BusinessCertificate" />}
+                            </div>
+                        </div>
+                    }
+                    @if (!string.IsNullOrEmpty(Model.Logo))
+                    {
+                        <div class="col-md-4">
+                            @Html.LabelFor(model => model.Logo, "Logo", new { @class = "label", autocomplete = "off" })
+                            <div>
+                                @if (Model.Logo != null)
+                                {<img id="Logo_View" style="width: 150px; height: 150px" src="@Model.Logo" />}
+                            </div>
+                        </div>
+                    }
+                    @if (!string.IsNullOrEmpty(Model.CoverPhoto))
+                    {
+                        <div class="col-md-4">
+                            @Html.LabelFor(model => model.CoverPhoto, "Cover Photo", new { @class = "label", autocomplete = "off" })
+                            <div>
+                                @if (Model.CoverPhoto != null)
+                                {<img id="CoverPhoto_View" style="width: 150px; height: 150px" src="@Model.CoverPhoto" />}
+                            </div>
+                        </div>
+                    }
+                    @if (!string.IsNullOrEmpty(Model.Gallery))
+                    {
+                        <div class="col-md-4">
+                            @Html.LabelFor(model => model.Gallery, "Gallery", new { @class = "label", autocomplete = "off" })
+                            <div>
+                                @if (Model.Gallery != null)
+                                {<img id="Gallery_View" style="width: 150px; height: 150px" src="@Model.Gallery" />}
+                            </div>
+                        </div>
+                    }
+                </div>
+                <br />
+                <h5 class="font-weight-bold">Social Links</h5>
+                <hr />
+                <div class="row">
+                    @if (!string.IsNullOrEmpty(Model.WebsiteLink))
+                    {
+                        @Html.NLabelFor(model => model.WebsiteLink, new { @class = "form-control", autocomplete = "off" }, 4)
+                    }
+                    @if (!string.IsNullOrEmpty(Model.TiktokLink))
+                    {
+                        @Html.NLabelFor(model => model.TiktokLink, new { @class = "form-control", autocomplete = "off" }, 4)
+                    }
+                    @if (!string.IsNullOrEmpty(Model.TwitterLink))
+                    {
+                        @Html.NLabelFor(model => model.TwitterLink, new { @class = "form-control", autocomplete = "off" }, 4)
+                    }
+                    @if (!string.IsNullOrEmpty(Model.InstagramLink))
+                    {
+                        @Html.NLabelFor(model => model.InstagramLink, new { @class = "form-control", autocomplete = "off" }, 4)
+                    }
+                </div>
+                <br />
+                <h5 class="font-weight-bold">User Info</h5>
+                <hr />
+                <div class="row">
+                    @if (!string.IsNullOrEmpty(Model.LoginId))
+                    {
+                        @Html.NLabelFor(model => model.LoginId, new { @class = "form-control", autocomplete = "off" }, 4)
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <button type="button" class="btn btn-light btn-sm bg-primary" onclick="window.history.back();"><i class="fa fa-arrow-left"></i> Back</button>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="MyImage">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 id="ModalTitle"></h4>
+                <button type="button" class="rotate-right" id="rotate-right">Rotate</button>
+                <a href="#" class="close" data-dismiss="modal">&times;</a>
+            </div>
+            <div class="modal-body">
+                <img id="my_img" height="100%" width="100%" />
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts
+{
+    <script>
+        $("#BusinessCertificate_View").click(function() {
+            $("#MyImage").modal();
+            document.getElementById("my_img").src = '@Model.BusinessCertificate';
+        });
+        $("#Logo_View").click(function () {
+            $("#MyImage").modal();
+            document.getElementById("my_img").src = '@Model.Logo';
+        });
+        $("#CoverPhoto_View").click(function () {
+            $("#MyImage").modal();
+            document.getElementById("my_img").src = '@Model.CoverPhoto';
+        });
+        $("#Gallery_View").click(function () {
+            $("#MyImage").modal();
+            document.getElementById("my_img").src = '@Model.Gallery';
+        });
+    </script>
+}

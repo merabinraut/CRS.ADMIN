@@ -1,0 +1,233 @@
+﻿@model CRS.ADMIN.APPLICATION.Models.ReviewAndRatingsManagement.ReviewAndRatingsModel
+@{
+    ViewBag.Title = "Review & Ratings";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var myLanguageCookieValue = Context.Request.Cookies["culture"]?.Value;
+}
+
+<div class="px-8 py-4 flex flex-col gap-8">
+    <div class="flex justify-between items-center">
+        <div>
+            <div class="heading-title">
+                @CRS.ADMIN.APPLICATION.Resources.Resource.Review_and_Ratings
+            </div>
+            <div class="span-title-light-gray">
+                @CRS.ADMIN.APPLICATION.Resources.Resource.Review_and_rating_supporting_text
+            </div>
+        </div>
+    </div>
+    <div class="">
+        <div class="bg-white">
+            <div id="tab1" class="tab-content-plane">
+                <div class="flex justify-between mb-8">
+                    @using (Html.BeginForm("Index", "ReviewAndRatingsManagement", FormMethod.Get, new { @id = "ReviewForm" }))
+                    {
+                        <div class="relative input-search-wrapper">
+                            <div class="absolute inset-y-0 left-0 flex items-center pl-[16px] pointer-events-none">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21" fill="none">
+                                    <path d="M17.5 18L13.875 14.375M15.8333 9.66667C15.8333 13.3486 12.8486 16.3333 9.16667 16.3333C5.48477 16.3333 2.5 13.3486 2.5 9.66667C2.5 5.98477 5.48477 3 9.16667 3C12.8486 3 15.8333 5.98477 15.8333 9.66667Z"
+                                          stroke="#667085" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round">
+                                    </path>
+                                </svg>
+                            </div>
+                            <input type="search"
+                                   id="default-search"
+                                   class="input-search block w-full "
+                                   placeholder="@CRS.ADMIN.APPLICATION.Resources.Resource.Search"
+                                   required=""
+                                   name="searchText">
+                        </div>
+                    }
+                    <div class="flex gap-3">
+                        <div class="export-button  h-[40px]">
+                            <img src="~/Content/assets_new/images/club/download-solid.svg" />
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Export
+                        </div>
+                    </div>
+                </div>
+
+                <div class="table-tab">
+                    @*<div class="px-[12px] py-[16px] flex justify-between entry-export-container">
+                            <div class="flex items-center select-entries">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Show&nbsp;
+                                <select id="countries" class="w-full select-entires " style="width: 100%; ">
+                                    <option value="5" selected>5</option>
+                                    <option value="10">10</option>
+                                    <option value="15">15</option>
+                                    <option value="20">100</option>
+                                </select>&nbsp;@CRS.ADMIN.APPLICATION.Resources.Resource.Entries
+                            </div>
+                        </div>*@
+
+                    <div class="relative overflow-x-auto">
+                        <table class="w-full  text-left club-table">
+                            <thead class="club-table-thead">
+                                <tr>
+                                    <th scope="col" class="p-[12px]">
+                                        <div class="flex">
+                                            S.N
+                                            <div class="relative pl-[5px]">
+                                                <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                                <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                            </div>
+                                        </div>
+                                    </th>
+                                    <th scope="col" class="p-[12px]">
+                                        <div class="flex">
+                                            @CRS.ADMIN.APPLICATION.Resources.Resource.User_Info
+                                            <div class="relative pl-[5px]">
+                                                <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                                <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                            </div>
+                                        </div>
+                                    </th>
+                                    <th scope="col" class="p-[12px]">
+                                        <div class="flex">
+                                            @CRS.ADMIN.APPLICATION.Resources.Resource.Ratings
+                                            <div class="relative pl-[5px]">
+                                                <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                                <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                            </div>
+                                        </div>
+                                    </th>
+                                    <th scope="col" class="p-[12px]">
+                                        <div class="flex">
+                                            @CRS.ADMIN.APPLICATION.Resources.Resource.Reviews
+                                            <div class="relative pl-[5px]">
+                                                <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                                <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                            </div>
+                                        </div>
+                                    </th>
+                                    <th scope="col" class="p-[12px]">
+                                        <div class="flex">
+                                            @CRS.ADMIN.APPLICATION.Resources.Resource.Reviewed_On
+                                            <div class="relative pl-[5px]">
+                                                <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                                <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                            </div>
+                                        </div>
+                                    </th>
+
+                                    <th scope="col" class="p-[12px]">
+                                        <div class="flex justify-center ">
+                                            @CRS.ADMIN.APPLICATION.Resources.Resource.Action
+                                            <div class="relative pl-[5px]">
+                                                <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                                <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                            </div>
+                                        </div>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var review in Model.Reviews)
+                                {
+                                    int reviewCount = 1;
+                                    <tr class="bg-white border-b ">
+                                        <td class="p-[12px]">
+                                            @reviewCount
+                                        </td>
+                                        <td class="p-[12px]">
+                                            <div class="flex gap-[12px] w-max ">
+                                                <img src="@review.UserImage"
+                                                     class="h-[32px] w-[32px] object-cover rounded-full" />
+                                                <div>
+                                                    <div class='text-sm  text-[#101828] '>
+                                                        @review.FullName
+                                                    </div>
+                                                    <div class='text-xs  text-[#667085] '>
+                                                        @review.NickName
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="p-[12px]">
+                                            <div class="rating-review text-[16px] w-max" id="stars">
+                                                @for (int i = 1; i <= 5; i++)
+                                                {
+                                                    int parsedRating;
+                                                    bool parseSuccess = int.TryParse(review.Rating, out parsedRating);
+
+                                                    <div data-value="@i" class="@(parseSuccess && i <= parsedRating ? "rated" : "")">
+                                                        <i class="fa-solid fa-star"></i>
+                                                    </div>
+                                                }
+                                            </div>
+                                        </td>
+                                        <td class="p-[12px]">
+                                            @if (!string.IsNullOrWhiteSpace(myLanguageCookieValue) && myLanguageCookieValue.ToLower() == "ja")
+                                            {
+                                                var japaneseRemarks = review.JapaneseRemark.Split(',').Select(r => r.Trim());
+
+                                                <ul class="list-disc">
+                                                    @foreach (var remark in japaneseRemarks)
+                                                    {
+                                                        <li>@remark</li>
+                                                    }
+                                                </ul>
+                                            }
+                                            else
+                                            {
+                                                var englishRemarks = review.EnglishRemark.Split(',').Select(r => r.Trim());
+
+                                                <ul class="list-disc">
+                                                    @foreach (var remark in englishRemarks)
+                                                    {
+                                                        <li>@remark</li>
+                                                    }
+                                                </ul>
+                                            }
+                                        </td>
+                                        <td class="p-[12px]">
+                                            <div class="w-max ">
+                                                @review.ReviewedOn
+                                            </div>
+                                        </td>
+                                        <td class="p-[12px]">
+                                            <div class="flex justify-center items-center gap-2">
+                                                @*<i class="las la-file-alt text-[#BCB08A] text-[24px] cursor-pointer"></i>*@
+                                                <i class="las la-trash-alt text-[#CB3F3F] text-[24px] cursor-pointer"
+                                                   onclick="handleRemoveReviewAndRating('@review.ReviewId')"></i>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    reviewCount++;
+                                }
+                            </tbody>
+                        </table>
+
+                    </div>
+                    @*<div class="pagination-club">
+                            <div class="show-entry">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Showing 1 to 5 of 5 @CRS.ADMIN.APPLICATION.Resources.Resource.Entries
+                            </div>
+                        </div>*@
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts
+{
+    <script type="text/javascript">
+
+        function handleRemoveReviewAndRating(reviewId) {
+            $.ajax({
+                url: '/ReviewAndRatingsManagement/RemoveReviewAndRatings',
+                type: 'POST',
+                data: { reviewId: reviewId },
+                success: function (result) {
+                    if (result.success) {
+                        location.reload();
+                    } else {
+                        console.log('Error: ' + result.message);
+                    }
+                },
+                error: function () {
+                    console.log('An unexpected error occurred.');
+                }
+            });
+        }
+    </script>
+}

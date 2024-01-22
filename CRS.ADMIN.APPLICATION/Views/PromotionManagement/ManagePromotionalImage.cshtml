@@ -1,0 +1,96 @@
+﻿@model CRS.ADMIN.APPLICATION.Models.PromotionManagement.PromotionManagementModel
+@{
+    ViewBag.Title = "Promotion Management";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Styles.Render("~/UI/Style")
+<style>
+
+    .select-width .select2-container {
+        width: 100%;
+    }
+
+    .select2-container {
+        width: 100% !important;
+    }
+</style>
+<div class="card">
+    <div class="card-header header-elements-inline">
+        <h6 class="card-title">
+            <b style="color:red">*</b><b> Note: Please fill out all the field stating *(Mandatory) </b>
+
+        </h6>
+    </div>
+    <div class="card-body">
+        @using (Html.BeginForm("ManagePromotionalImage", "PromotionManagement", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true)
+            @Html.HiddenFor(model => model.Id)
+            @Html.HiddenFor(model => model.ImagePath)
+
+            <div class="tab-content">
+                <div class="row">
+                    @Html.NTextBoxFor(model => model.Title, new { @class = "form-control names_capitalize", @onkeypress = "return isAlphabateOnly(event)", autocomplete = "off", @maxlength = 100, @placeholder = "Enter title here" }, 3)
+                    @Html.NTextBoxFor(model => model.Description, new { @class = "form-control names_capitalize", @onkeypress = "return isAlphabateOnly(event)", autocomplete = "off", @maxlength = 100, @placeholder = "Enter Image Description" }, 3)
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        @Html.LabelFor(model => model.ImagePath, "Image", new { @class = "label", autocomplete = "off" })
+                        <span class='text-danger'>*</span>
+                        @if (!string.IsNullOrEmpty(Model.ImagePath))
+                        {
+                            <div><img id="Logo_View" height="200" width="200" style="border: solid" src="@Model.ImagePath" /></div>
+                            @Html.ValidationMessageFor(model => model.ImagePath, null, new { @class = "form-text text-danger" })
+                        }
+                        else
+                        {
+                            <div>
+                                <img id="Logo_View" style="width: 250px; height: 250px" src="~/Content/assets/images/Documnet_Image_icone.png" />
+                            </div>
+                            @Html.ValidationMessageFor(model => model.ImagePath, null, new { @class = "form-text text-danger" })
+                        }
+                        <div class="mt-1">
+                            <input type="file" title="Promotion" id="PromoImg" style="overflow: hidden" name="PromoImage" accept="image/x-png,image/jpeg,image/jpg" onchange="ShowLogo(this)" class="imgValidate" />
+                            <p class="form-text text-primary">[ Max 2MB ]</p>
+                        </div>
+                        <p class="form-text text-primary">[Image must be in jpeg, jpg or png format]</p>
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <button type="button" class="btn btn-primary btn-sm " onclick="window.history.back();"><i class="fa fa-arrow-left"></i> Back</button>
+                    <button type="submit" class="btn btn-success btn-sm ml-2" id="FormSubmit"><i class="fa fas fa-save"></i> Save</button>
+                </div>
+
+            </div>
+        }
+    </div>
+</div>
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+            if ($("#PromoImg").val() != "") {
+                document.getElementById("Logo_View").src = $("#PromoImg").val();
+            }
+        });
+    </script>
+
+    <script>
+
+        function ShowLogo(input) {
+            if (input.files && input.files[0]) {
+                var filerdr = new FileReader();
+                filerdr.onload = function (e) {
+                    $('#Logo_View').attr('src', e.target.result);
+                    $("#PromoImage").val(e.target.result);
+
+                }
+                filerdr.readAsDataURL(input.files[0]);
+            }
+            else $('#Logo_View').attr('src','@Model.ImagePath');
+        }
+
+    </script>
+}

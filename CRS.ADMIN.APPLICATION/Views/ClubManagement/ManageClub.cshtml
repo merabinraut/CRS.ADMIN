@@ -1,0 +1,332 @@
+﻿@model CRS.ADMIN.APPLICATION.Models.ClubManagement.ManageClubModel
+@{
+    ViewBag.Title = "Club Management";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<style>
+
+    .select-width .select2-container {
+        width: 100%;
+    }
+
+    .select2-container {
+        width: 100% !important;
+    }
+</style>
+<div class="card">
+    <div class="card-header header-elements-inline">
+        <h6 class="card-title">
+            <b style="color:red">*</b><b> Note: Please fill out all the field stating *(Mandatory) </b>
+
+        </h6>
+    </div>
+    <div class="card-body">
+        @using (Html.BeginForm("ManageClub", "ClubManagement", FormMethod.Post, new { @id = "ManageClubForm", enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true)
+            @Html.HiddenFor(model => model.AgentId)
+            @Html.HiddenFor(model => model.BusinessCertificate)
+            @Html.HiddenFor(model => model.Logo)
+            @Html.HiddenFor(model => model.CoverPhoto)
+            @Html.HiddenFor(model => model.Gallery)
+            if (!string.IsNullOrEmpty(Model.AgentId))
+            {
+                @Html.HiddenFor(model => model.LoginId)
+                @Html.HiddenFor(model => model.Email)
+                @Html.HiddenFor(model => model.MobileNumber)
+            }
+
+            <ul class="nav nav-tabs nav-tabs-highlight">
+                <li class="nav-item"><a href="#BasicInformation" class="nav-link active " data-toggle="tab">Basic Information</a></li>
+                <li class="nav-item"><a href="#SocialLinks" class="nav-link " data-toggle="tab">Social Links</a></li>
+                <li class="nav-item"><a href="#UserInfo" class="nav-link " data-toggle="tab">User Info</a></li>
+                <li class="nav-item"><a href="#Gallary" class="nav-link " data-toggle="tab">Gallary</a></li>
+            </ul>
+
+            <div class="tab-content">
+                <div id="BasicInformation" class="tab-pane fade active show">
+                    <div class="row">
+                        @Html.NTextBoxFor(model => model.ClubName1, new { @class = "form-control names_capitalize", @onkeypress = "return isAlphabateOnly(event)", autocomplete = "off", @maxlength = 100, @placeholder = "Enter club name (English)" }, 3)
+                        @Html.NTextBoxFor(model => model.ClubName2, new { @class = "form-control names_capitalize", @onkeypress = "return isAlphabateOnly(event)", autocomplete = "off", @maxlength = 100, @placeholder = "Enter club name (Katakana)" }, 3)
+                    </div>
+                    <div class="row">
+                        @*@Html.NDropDownListFor(model => model.BusinessType, new SelectList(ViewBag.BusinessTypeList, "Value", "Text"), new { @class = "form-control select2", id = "BusinessType", autocomplete = "off" }, 3)*@
+                        @Html.NTextBoxFor(model => model.GroupName, new { @class = "form-control names_capitalize", @onkeypress = "return isAlphabateOnly(event)", autocomplete = "off", @maxlength = 100, @placeholder = "Enter group name" }, 3)
+                        @Html.NDropDownListFor(model => model.LocationId, new SelectList(ViewBag.LocationDDLList, "Value", "Text"), new { @class = "form-control select2", id = "LocationId", autocomplete = "off" }, 3)
+                    </div>
+                    <div class="row">
+                        @Html.NTextBoxFor(model => model.FirstName, new { @class = "form-control names_capitalize", @onkeypress = "return isAlphabateOnly(event)", autocomplete = "off", @maxlength = 100, @placeholder = "Enter first name" }, 3)
+                        @Html.NTextBoxFor(model => model.MiddleName, new { @class = "form-control names_capitalize", @onkeypress = "return isAlphabateOnly(event)", autocomplete = "off", @maxlength = 100, @placeholder = "Enter middle name" }, 3)
+                        @Html.NTextBoxFor(model => model.LastName, new { @class = "form-control names_capitalize", @onkeypress = "return isAlphabateOnly(event)", autocomplete = "off", @maxlength = 100, @placeholder = "Enter last name" }, 3)
+                    </div>
+                    @if (!string.IsNullOrEmpty(Model.AgentId))
+                    {
+                        <div class="row">
+                            @Html.NTextBoxFor(model => model.Email, new { @class = "form-control", autocomplete = "off", @maxlength = 100, @placeholder = "Enter email address", @readonly = "readonly", @disabled = "disabled" }, 3)
+                            @Html.NTextBoxFor(model => model.MobileNumber, new { @class = "form-control", autocomplete = "off", @maxlength = 100, @placeholder = "Enter contact number", @disabled = "disabled", @readonly = "readonly" }, 3)
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="row">
+                            @Html.NTextBoxFor(model => model.Email, new { @class = "form-control", autocomplete = "off", @maxlength = 100, @placeholder = "Enter email address" }, 3)
+                            @Html.NTextBoxFor(model => model.MobileNumber, new { @class = "form-control", @onkeypress = "return isNumber(event)", autocomplete = "off", @maxlength = 11, @placeholder = "Enter contact number" }, 3)
+                        </div>
+                    }
+                    <div class="row">
+                        @Html.NTextBoxFor(model => model.Longitude, new { @class = "form-control names_capitalize", autocomplete = "off", @maxlength = 100, @placeholder = "Enter Longitude" }, 3)
+                        @Html.NTextBoxFor(model => model.Latitude, new { @class = "form-control names_capitalize", autocomplete = "off", @maxlength = 100, @placeholder = "Enter latitude" }, 3)
+                        @Html.NTextBoxFor(model => model.LocationURL, new { @class = "form-control names_capitalize", autocomplete = "off", @placeholder = "Enter location url" }, 3)
+                    </div>
+                    <div class="row">
+                        @Html.NTextBoxFor(model => model.Description, new { @class = "form-control names_capitalize", @onkeypress = "return isAlphabateOnly(event)", autocomplete = "off", @maxlength = 300, @placeholder = "Enter description" }, 3)
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            @Html.LabelFor(model => model.BusinessCertificate, "Business Certificate", new { @class = "label", autocomplete = "off" })
+                            <span class='text-danger'>*</span>
+                            @if (!string.IsNullOrEmpty(Model.BusinessCertificate))
+                            {
+                                <div><img id="BusinessCertificate_View" height="200" width="200" style="border: solid" src="@Model.BusinessCertificate" /></div>
+                                @Html.ValidationMessageFor(model => model.BusinessCertificate, null, new { @class = "form-text text-danger" })
+                            }
+                            else
+                            {
+                                <div>
+                                    <img id="BusinessCertificate_View" style="width: 250px; height: 250px" src="~/Content/assets/images/Documnet_Image_icone.png" />
+                                </div>
+                                @Html.ValidationMessageFor(model => model.BusinessCertificate, null, new { @class = "form-text text-danger" })
+                            }
+                            <div class="mt-1">
+                                <input type="file" title="Business Certificate" id="Business_Certificate" style="overflow: hidden" name="Business_Certificate" accept="image/x-png,image/jpeg,image/jpg" onchange="ShowBusinessCertificate(this)" class="imgValidate" />
+                                <p class="form-text text-primary">[ Max 2MB ]</p>
+                            </div>
+                            <p class="form-text text-primary">[Image must be in jpeg, jpg or png format]</p>
+                        </div>
+                        <div class="col-md-4">
+                            @Html.LabelFor(model => model.Logo, "Logo", new { @class = "label", autocomplete = "off" })
+                            <span class='text-danger'>*</span>
+                            @if (!string.IsNullOrEmpty(Model.Logo))
+                            {
+                                <div><img id="Logo_View" height="200" width="200" style="border: solid" src="@Model.Logo" /></div>
+                                @Html.ValidationMessageFor(model => model.Logo, null, new { @class = "form-text text-danger" })
+                            }
+                            else
+                            {
+                                <div>
+                                    <img id="Logo_View" style="width: 250px; height: 250px" src="~/Content/assets/images/Documnet_Image_icone.png" />
+                                </div>
+                                @Html.ValidationMessageFor(model => model.Logo, null, new { @class = "form-text text-danger" })
+                            }
+                            <div class="mt-1">
+                                <input type="file" title="Logo" id="Logo_Certificate" style="overflow: hidden" name="Logo_Certificate" accept="image/x-png,image/jpeg,image/jpg" onchange="ShowLogo(this)" class="imgValidate" />
+                                <p class="form-text text-primary">[ Max 2MB ]</p>
+                            </div>
+                            <p class="form-text text-primary">[Image must be in jpeg, jpg or png format]</p>
+                        </div>
+                        <div class="col-md-4">
+                            @Html.LabelFor(model => model.CoverPhoto, "Cover Photo", new { @class = "label", autocomplete = "off" })
+                            <span class='text-danger'>*</span>
+                            @if (!string.IsNullOrEmpty(Model.CoverPhoto))
+                            {
+                                <div><img id="CoverPhoto_View" height="200" width="200" style="border: solid" src="@Model.CoverPhoto" /></div>
+                                @Html.ValidationMessageFor(model => model.CoverPhoto, null, new { @class = "form-text text-danger" })
+                            }
+                            else
+                            {
+                                <div>
+                                    <img id="CoverPhoto_View" style="width: 250px; height: 250px" src="~/Content/assets/images/Documnet_Image_icone.png" />
+                                </div>
+                                @Html.ValidationMessageFor(model => model.CoverPhoto, null, new { @class = "form-text text-danger" })
+                            }
+                            <div class="mt-1">
+                                <input type="file" title="Cover Photo" id="CoverPhoto_Certificate" style="overflow: hidden" name="CoverPhoto_Certificate" accept="image/x-png,image/jpeg,image/jpg" onchange="ShowCoverPhoto(this)" class="imgValidate" />
+                                <p class="form-text text-primary">[ Max 2MB ]</p>
+                            </div>
+                            <p class="form-text text-primary">[Image must be in jpeg, jpg or png format]</p>
+                        </div>
+                        <div class="col-md-4">
+                            @Html.LabelFor(model => model.Gallery, "Gallery", new { @class = "label", autocomplete = "off" })
+                            <span class='text-danger'>*</span>
+                            @if (!string.IsNullOrEmpty(Model.Gallery))
+                            {
+                                <div><img id="Gallery_View" height="200" width="200" style="border: solid" src="@Model.Gallery" /></div>
+                                @Html.ValidationMessageFor(model => model.Gallery, null, new { @class = "form-text text-danger" })
+                            }
+                            else
+                            {
+                                <div>
+                                    <img id="Gallery_View" style="width: 250px; height: 250px" src="~/Content/assets/images/Documnet_Image_icone.png" />
+                                </div>
+                                @Html.ValidationMessageFor(model => model.Gallery, null, new { @class = "form-text text-danger" })
+                            }
+                            <div class="mt-1">
+                                <input type="file" title="Gallery" id="Gallery_Certificate" style="overflow: hidden" name="Gallery_Certificate" accept="image/x-png,image/jpeg,image/jpg" onchange="ShowGallery(this)" class="imgValidate" />
+                                <p class="form-text text-primary">[ Max 2MB ]</p>
+                            </div>
+                            <p class="form-text text-primary">[Image must be in jpeg, jpg or png format]</p>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <button type="button" class="btn btn-primary btn-sm " style="padding:10px;" onclick="window.history.back();"><i class="fa fa-arrow-left"></i> Back</button>
+                        <button type="button" class="btn btn-primary btn-sm ml-2 SocialLinksForm" id="SocialLinksForm"><i class="fa fa-arrow-right"></i> Next</button>
+                    </div>
+                </div>
+                <div id="SocialLinks" class="tab-pane fade">
+                    <div class="row">
+                        @Html.NTextBoxFor(model => model.WebsiteLink, new { @class = "form-control names_capitalize", autocomplete = "off", @maxlength = 75, @placeholder = "Enter website link", @onkeypress = "return isAlphabateOnly(event)" }, 3)
+                    </div>
+                    <div class="row">
+                        @Html.NTextBoxFor(model => model.TiktokLink, new { @class = "form-control names_capitalize", autocomplete = "off", @maxlength = 75, @placeholder = "Enter tiktok link", @onkeypress = "return isAlphabateOnly(event)" }, 3)
+                    </div>
+                    <div class="row">
+                        @Html.NTextBoxFor(model => model.TwitterLink, new { @class = "form-control names_capitalize", autocomplete = "off", @maxlength = 75, @placeholder = "Enter twitter link", @onkeypress = "return isAlphabateOnly(event)" }, 3)
+                    </div>
+                    <div class="row">
+                        @Html.NTextBoxFor(model => model.InstagramLink, new { @class = "form-control names_capitalize", autocomplete = "off", @maxlength = 75, @placeholder = "Enter instagram link", @onkeypress = "return isAlphabateOnly(event)" }, 3)
+                    </div>
+                    <div class="row mt-2">
+                        <button type="button" class="btn btn-primary btn-sm BasicInformationForm" style="padding:10px;" id="BasicInformationForm"><i class="fa fa-arrow-left"></i> Previous</button>
+                        <button type="button" class="btn btn-primary btn-sm ml-2 UserInfoForm" id="UserInfoForm"><i class="fa fa-arrow-right"></i> Next</button>
+                    </div>
+                </div>
+                <div id="UserInfo" class="tab-pane fade">
+                    <div class="row">
+                        @if (!string.IsNullOrEmpty(Model.AgentId))
+                        {
+                            @Html.NTextBoxFor(model => model.LoginId, new { @class = "form-control names_capitalize", autocomplete = "off", @maxlength = 75, @placeholder = "Enter username", @onkeypress = "return isAlphabateOnly(event)", @disabled = "disabled", @readonly = "readonly" }, 3)
+                        }
+                        else
+                        {
+
+                            @Html.NTextBoxFor(model => model.LoginId, new { @class = "form-control names_capitalize", autocomplete = "off", @maxlength = 75, @placeholder = "Enter username", @onkeypress = "return isAlphabateOnly(event)" }, 3)
+                        }
+                    </div>
+                    <div class="row mt-2">
+                        <button type="button" class="btn btn-primary btn-sm ml-2 SocialLinksForm" id="SocialLinksForm"><i class="fa fa-arrow-left"></i> Previous</button>
+                        <button type="submit" class="btn btn-success btn-sm ml-2" id="FormSubmit"><i class="fa fas fa-save"></i> Save</button>
+                    </div>
+                    <div class="mt-2">
+                        <button type="button" class="btn btn-primary btn-sm " onclick="window.history.back();"><i class="fa fa-arrow-left"></i> Back</button>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+            if ($("#AgentId").val() != "") {
+                if ($("#BusinessCertificate").val() != "") {
+                    document.getElementById("BusinessCertificate_View").src = $("#BusinessCertificate").val();
+                }
+                if ($("#Logo").val() != "") {
+                    document.getElementById("Logo_View").src = $("#Logo").val();
+                }
+                if ($("#CoverPhoto").val() != "") {
+                    document.getElementById("CoverPhoto_View").src = $("#CoverPhoto").val();
+                }
+                if ($("#Gallery").val() != "") {
+                    document.getElementById("Gallery_View").src = $("#CoverPhoto").val();
+                }
+            }
+        });
+    </script>
+    <script>
+        function isNumber(evt) {
+            evt = (evt) ? evt : window.event;
+            var charCode = (evt.which) ? evt.which : evt.keyCode;
+            if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+                return false;
+            }
+            return true;
+        }
+        //alphabet and whitespace
+        function isAlphabateOnly(evt) {
+            evt = (evt) ? evt : window.event;
+            var charCode = (evt.which) ? evt.which : evt.keyCode;
+            if ((charCode > 64 && charCode < 91) || (charCode > 96 && charCode < 123) || (charCode == 32) || (charCode == 46)) {
+                return true;
+            }
+            return false;
+        }
+    </script>
+    <script>
+        $('.SocialLinksForm').click(
+            function () {
+                $('[href="#SocialLinks"]').tab('show');
+            }
+        );
+
+        $('.UserInfoForm').click(
+            function () {
+                $('[href="#UserInfo"]').tab('show');
+            }
+        );
+
+        $('.BasicInformationForm').click(
+            function () {
+                $('[href="#BasicInformation"]').tab('show');
+            }
+        );
+    </script>
+    <script>
+        $("#FormSubmit").click(function () {
+            $("#ManageClubForm").submit();
+        });
+    </script>
+    <script>
+        function ShowBusinessCertificate(input) {
+            if (input.files && input.files[0]) {
+                var filerdr = new FileReader();
+                filerdr.onload = function (e) {
+                    $('#BusinessCertificate_View').attr('src', e.target.result);
+                    $("#Business_Certificate").val(e.target.result);
+                }
+                filerdr.readAsDataURL(input.files[0]);
+            }
+            else $('#BusinessCertificate_View').attr('src','@Model.BusinessCertificate');
+        }
+
+        function ShowLogo(input) {
+            if (input.files && input.files[0]) {
+                var filerdr = new FileReader();
+                filerdr.onload = function (e) {
+                    $('#Logo_View').attr('src', e.target.result);
+                    $("#Logo_Certificate").val(e.target.result);
+                }
+                filerdr.readAsDataURL(input.files[0]);
+            }
+            else $('#Logo_View').attr('src','@Model.Logo');
+        }
+
+        function ShowGallery(input) {
+            if (input.files && input.files[0]) {
+                var filerdr = new FileReader();
+                filerdr.onload = function (e) {
+                    $('#Gallery_View').attr('src', e.target.result);
+                    $("#Gallery_Certificate").val(e.target.result);
+                }
+                filerdr.readAsDataURL(input.files[0]);
+            }
+            else $('#Gallery_View').attr('src','@Model.Gallery');
+        }
+
+        function ShowCoverPhoto(input) {
+            if (input.files && input.files[0]) {
+                var filerdr = new FileReader();
+                filerdr.onload = function (e) {
+                    $('#CoverPhoto_View').attr('src', e.target.result);
+                    $("#CoverPhoto_Certificate").val(e.target.result);
+                }
+                filerdr.readAsDataURL(input.files[0]);
+            }
+            else $('#CoverPhoto_View').attr('src','@Model.CoverPhoto');
+        }
+    </script>
+}
