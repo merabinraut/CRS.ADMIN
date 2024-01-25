@@ -18,11 +18,11 @@
         </div>
     </form>
     <div class="flex gap-6">
-        @*<div class="custom-date " data-drawer-target="customer-date" data-drawer-show="customer-date"
-                 data-drawer-placement="right" aria-controls="customer-date">
-                <img src="~/Content/assets_new/images/club/calendar-week-solid.svg" alt="date">
-                @CRS.ADMIN.APPLICATION.Resources.Resource.Custom_Date
-            </div>*@
+        <div class="custom-date " data-drawer-target="customer-date" data-drawer-show="customer-date"
+             data-drawer-placement="right" aria-controls="customer-date">
+            <img src="~/Content/assets_new/images/club/calendar-week-solid.svg" alt="date">
+            @CRS.ADMIN.APPLICATION.Resources.Resource.Custom_Date
+        </div>
     </div>
 
 </div>
@@ -117,14 +117,7 @@
 
     <div class="table-tab">
         <div class="px-[12px] py-[16px] flex justify-between entry-export-container">
-            <div class="flex items-center select-entries">
-                @*@CRS.ADMIN.APPLICATION.Resources.Resource.Show&nbsp;
-                    <select id="countries" class="w-full select-entires " style="width: 100%; ">
-                        <option value="5" selected>5</option>
-                        <option value="10">10</option>
-                        <option value="15">15</option>
-                        <option value="20">100</option>
-                    </select>&nbsp;@CRS.ADMIN.APPLICATION.Resources.Resource.Entries*@
+            <div class="flex items-center select-entries" id="ShowEntries-Id">
             </div>
 
             <div class="export-button h-[40px]" onclick="exportExcel('table-id', 'Customer');">
@@ -332,17 +325,15 @@
 
         </div>
 
-        @*<div class="pagination-club">
-                <div class="show-entry">
-                    @CRS.ADMIN.APPLICATION.Resources.Resource.Showing 1 to 5 of 301
-                    @CRS.ADMIN.APPLICATION.Resources.Resource.Entries
+        <div class="pagination-club">
+            <div class="show-entry" id="Entries-Id">
+            </div>
+            <div class="flex gap-[12px]">
+                <div class="btn btn-secondary-box-shadow" id="prev-btn">
+                    @CRS.ADMIN.APPLICATION.Resources.Resource.Previous
                 </div>
-                <div class="flex gap-[12px]">
-                    <div class="btn btn-secondary-box-shadow ">
-                        @CRS.ADMIN.APPLICATION.Resources.Resource.Previous
-                    </div>
-                    <div class="flex gap-[12px]">
-                        <div class="pagination-number active">
+                <div class="flex gap-[12px]" id="pagination-id">
+                    @*<div class="pagination-number active">
 
                             1
                         </div>
@@ -357,13 +348,13 @@
                         </div>
                         <div class="pagination-number">
                             10
-                        </div>
+                        </div>*@
 
-                    </div>
-                    <div class="btn btn-secondary-box-shadow ">
-                        @CRS.ADMIN.APPLICATION.Resources.Resource.Next
-                    </div>
                 </div>
-            </div>*@
+                <div class="btn btn-secondary-box-shadow" id="next-btn">
+                    @CRS.ADMIN.APPLICATION.Resources.Resource.Next
+                </div>
+            </div>
+        </div>
     </div>
 </div>

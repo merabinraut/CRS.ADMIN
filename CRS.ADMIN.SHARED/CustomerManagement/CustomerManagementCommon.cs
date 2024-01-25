@@ -1,6 +1,8 @@
-﻿namespace CRS.ADMIN.SHARED.CustomerManagement
+﻿using CRS.ADMIN.SHARED.PaginationManagement;
+
+namespace CRS.ADMIN.SHARED.CustomerManagement
 {
-    public class CustomerSearchFilterCommon
+    public class CustomerSearchFilterCommon : PaginationFilterCommon
     {
         public string SearchFilter { get; set; }
         public string FromDate { get; set; }
