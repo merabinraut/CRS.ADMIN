@@ -117,6 +117,7 @@
     <Compile Include="LocationManagement\LocationCommon.cs" />
     <Compile Include="NotificationManagement\NotificationManagementCommon.cs" />
     <Compile Include="NotificationMessage.cs" />
+    <Compile Include="PaginationManagement\PaginationCommon.cs" />
     <Compile Include="PaymentManagement\PaymentManagementCommon.cs" />
     <Compile Include="PlanManagement\PlanManagementCommon.cs" />
     <Compile Include="PromotionManagement\PromotionManagementCommon.cs" />

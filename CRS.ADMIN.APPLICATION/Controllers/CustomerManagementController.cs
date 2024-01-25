@@ -17,7 +17,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             _BUSS = BUSS;
         }
         [HttpGet]
-        public ActionResult CustomerList(CustomerListCommonModel Request)
+        public ActionResult CustomerList(CustomerListCommonModel Request, int StartIndex = 0, int PageSize = 10)
         {
             Session["CurrentURL"] = "/CustomerManagement/CustomerList";
             ViewBag.UserStatusKey = Request.Status;
@@ -25,9 +25,14 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             var Response = Request.MapObject<CustomerListCommonModel>();
             var dbRequest = Request.MapObject<CustomerSearchFilterCommon>();
             dbRequest.Status = !string.IsNullOrEmpty(dbRequest.Status) ? dbRequest.Status.DecryptParameter() : null;
+            dbRequest.Skip = StartIndex;
+            dbRequest.Take = PageSize;
             var dbResponse = _BUSS.GetCustomerList(dbRequest);
             Response.CustomerListModel = dbResponse.MapObjects<CustomerListModel>();
             Response.CustomerListModel.ForEach(x => x.AgentId = x.AgentId.EncryptParameter());
+            ViewBag.StartIndex = StartIndex;
+            ViewBag.PageSize = PageSize;
+            ViewBag.TotalData = dbResponse.Count;
             return View(Response);
         }
 

@@ -270,6 +270,7 @@
     <Compile Include="Models\HostManagement\HostManagementModel.cs" />
     <Compile Include="Models\LocationManagement\LocationModel.cs" />
     <Compile Include="Models\NotificationManagement\NotificationManagementModel.cs" />
+    <Compile Include="Models\PaginationManagement\PaginationModel.cs" />
     <Compile Include="Models\PaymentManagement\PaymentManagementModel.cs" />
     <Compile Include="Models\PlanManagement\PlanManagementModel.cs" />
     <Compile Include="Models\PromotionManagement\PromotionManagementModel.cs" />
