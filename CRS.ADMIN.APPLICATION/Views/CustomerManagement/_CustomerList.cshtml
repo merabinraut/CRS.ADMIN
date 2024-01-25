@@ -223,14 +223,11 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @{
-                        int recordNumber = 1;
-                    }
                     @foreach (var customer in Model.CustomerListModel)
                     {
                         <tr class="bg-white border-b ">
                             <td class="p-[12px]">
-                                @recordNumber
+                                @customer.SNO
                             </td>
                             <td class="p-[12px]">
                                 <div class="round-image-text flex gap-[12px] w-max">
@@ -318,7 +315,6 @@
                                 </div>
                             </td>
                         </tr>
-                        recordNumber++;
                     }
                 </tbody>
             </table>

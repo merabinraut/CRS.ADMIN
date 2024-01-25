@@ -72,6 +72,7 @@ namespace CRS.ADMIN.APPLICATION.Models.CustomerManagement
     }
     public class CustomerListModel
     {
+        public string SNO { get; set; }
         public string AgentId { get; set; }
         public string ProfileImage { get; set; }
         public string NickName { get; set; }

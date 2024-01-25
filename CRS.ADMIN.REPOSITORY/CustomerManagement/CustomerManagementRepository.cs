@@ -1,5 +1,6 @@
 ﻿using CRS.ADMIN.SHARED;
 using CRS.ADMIN.SHARED.CustomerManagement;
+using System;
 using System.Collections.Generic;
 using System.Data;
 
@@ -21,6 +22,9 @@ namespace CRS.ADMIN.REPOSITORY.CustomerManagement
             SQL += !string.IsNullOrEmpty(Request.ToDate) ? ",@ToDate=" + _DAO.FilterString(Request.ToDate) : null;
             SQL += !string.IsNullOrEmpty(Request.Status) ? ",@Status=" + _DAO.FilterString(Request.Status) : null;
             SQL += !string.IsNullOrEmpty(Request.MobileNumber) ? ",@MobileNumber=" + _DAO.FilterString(Request.MobileNumber) : null;
+            SQL += !string.IsNullOrEmpty(Request.MobileNumber) ? ",@MobileNumber=" + _DAO.FilterString(Request.MobileNumber) : null;
+            SQL += ",@Skip=" + Request.Skip;
+            SQL += ",@Take=" + Request.Take;
             var dbResponse = _DAO.ExecuteDataTable(SQL);
             if (dbResponse != null)
             {
@@ -41,6 +45,8 @@ namespace CRS.ADMIN.REPOSITORY.CustomerManagement
                         Location = _DAO.ParseColumnValue(item, "Location").ToString(),
                         CreatedDate = _DAO.ParseColumnValue(item, "CreatedDate").ToString(),
                         UpdatedDate = _DAO.ParseColumnValue(item, "UpdatedDate").ToString(),
+                        TotalRecords = Convert.ToInt32(_DAO.ParseColumnValue(item, "TotalRecords").ToString()),
+                        SNO = Convert.ToInt32(_DAO.ParseColumnValue(item, "SNO").ToString())
                     });
                 }
             }

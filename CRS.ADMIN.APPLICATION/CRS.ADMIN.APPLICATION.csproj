@@ -2235,6 +2235,7 @@
     <Content Include="Content\assets_new\images\user-cog-solid.svg" />
     <Content Include="Content\assets_new\js\additional-methods.min.js" />
     <Content Include="Content\assets_new\js\calendar-management.js" />
+    <Content Include="Content\assets_new\js\custom-pagination-helper.js" />
     <Content Include="Content\assets_new\js\excel-download.js" />
     <Content Include="Content\assets_new\js\filter.js" />
     <Content Include="Content\assets_new\js\image-upload.js" />
