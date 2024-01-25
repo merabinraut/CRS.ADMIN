@@ -38,7 +38,7 @@
         </div>
 
         <div id="filter-container" class="px-6 py-5 rounded-[5px] border border-[#D0D5DD]" style="display: none;">
-            <form action="/CustomerManagement/CustomerList" method="get">
+            <form action="/CustomerManagement/CustomerList" method="get" id="filter-id">
                 <div class="flex flex-col gap-4">
                     <div class="flex text-[#3E3E3E] gap-1 items-center">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20"
@@ -103,7 +103,7 @@
                         <i class="las la-times"></i>@CRS.ADMIN.APPLICATION.Resources.Resource.Cancel
                     </button>
 
-                    <button id="cancelFilter" class="btn btn-primary-default gap-1 rounded-[4px]">
+                    <button id="SubmitFilter" class="btn btn-primary-default gap-1 rounded-[4px]">
                         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="19"
                              viewBox="0 0 18 19" fill="none">
                             <path d="M5.25 14.75V10.25H12.75V14.75H14.25V6.371L12.129 4.25H3.75V14.75H5.25ZM3 2.75H12.75L15.75 5.75V15.5C15.75 15.6989 15.671 15.8897 15.5303 16.0303C15.3897 16.171 15.1989 16.25 15 16.25H3C2.80109 16.25 2.61032 16.171 2.46967 16.0303C2.32902 15.8897 2.25 15.6989 2.25 15.5V3.5C2.25 3.30109 2.32902 3.11032 2.46967 2.96967C2.61032 2.82902 2.80109 2.75 3 2.75ZM6.75 11.75V14.75H11.25V11.75H6.75Z"
@@ -223,14 +223,11 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @{
-                        int recordNumber = 1;
-                    }
                     @foreach (var customer in Model.CustomerListModel)
                     {
                         <tr class="bg-white border-b ">
                             <td class="p-[12px]">
-                                @recordNumber
+                                @customer.SNO
                             </td>
                             <td class="p-[12px]">
                                 <div class="round-image-text flex gap-[12px] w-max">
@@ -318,7 +315,6 @@
                                 </div>
                             </td>
                         </tr>
-                        recordNumber++;
                     }
                 </tbody>
             </table>
@@ -333,23 +329,6 @@
                     @CRS.ADMIN.APPLICATION.Resources.Resource.Previous
                 </div>
                 <div class="flex gap-[12px]" id="pagination-id">
-                    @*<div class="pagination-number active">
-
-                            1
-                        </div>
-                        <div class="pagination-number">
-                            2
-                        </div>
-                        <div class="pagination-number">
-                            3
-                        </div>
-                        <div class="pagination-number">
-                            ..
-                        </div>
-                        <div class="pagination-number">
-                            10
-                        </div>*@
-
                 </div>
                 <div class="btn btn-secondary-box-shadow" id="next-btn">
                     @CRS.ADMIN.APPLICATION.Resources.Resource.Next

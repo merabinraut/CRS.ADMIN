@@ -27,8 +27,9 @@ namespace CRS.ADMIN.SHARED.CustomerManagement
         public string Street { get; set; }
         public string ResidenceNumber { get; set; }
     }
-    public class CustomerListCommon
+    public class CustomerListCommon : PaginationResponseCommon
     {
+        public int SNO { get; set; }
         public string AgentId { get; set; }
         public string ProfileImage { get; set; }
         public string FullName { get; set; }

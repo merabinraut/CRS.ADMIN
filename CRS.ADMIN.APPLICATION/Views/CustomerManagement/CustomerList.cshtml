@@ -221,138 +221,27 @@
             $('#ToDate').val('');
             var dropdown = document.getElementById('large');
             dropdown.value = dropdown.options[0].value;
+            document.getElementById("filter-id").submit();
         }
-
     </script>
     <script>
-        const paginationContainer = document.getElementById('pagination-id');
-        const prevButton = document.getElementById('prev-btn');
-        const nextButton = document.getElementById('next-btn');
-        const pageSize = @ViewBag.PageSize;
-        const TotalData = @ViewBag.TotalData;
-        const startIndexVal = @ViewBag.StartIndex;
-        let currentPage = Math.ceil((startIndexVal + 1) / pageSize);
         document.addEventListener('DOMContentLoaded', function () {
-            function fetchData(page) {
-                // Replace 'your-api-endpoint' with the actual API endpoint
-                //const apiUrl = `https://example.com/api/data?pageSize=${pageSize}&page=${page}`;
-                const TotalPages = Math.ceil(TotalData / pageSize);
-                displayPagination(TotalPages);
-                RangeOfEntries();
-                ShowEntriesFunction();
-                //// Fetch data from the server
-                //fetch(apiUrl)
-                //    .then(response => response.json())
-                //    .then(data => {
-                //        displayData(data.items);
-                //        displayPagination(data.totalPages);
-                //    })
-                //    .catch(error => console.error('Error fetching data:', error));
-            }
+                const page_size = @ViewBag.PageSize;
+                const total_data = @ViewBag.TotalData;
+                const start_index_val = @ViewBag.StartIndex;
+                let URL = "/CustomerManagement/CustomerList";
+                let user_status = $('#large').val();
+                let mobile_number = $('#MobileNumber').val();
+                let from_date = $('#FromDate').val();
+                let to_date = $('#ToDate').val();
+                let search_filter = $('#default-search').val();
 
-            function displayPagination(totalPages) {
-                debugger;
-                // Create previous button
-                prevButton.disabled = currentPage === 1;
-                prevButton.addEventListener('click', function () {
-                    if (currentPage > 1) {
-                        //currentPage--;
-                        //fetchData(currentPage);
-                    }
-                });
-
-                // Create next button
-                nextButton.disabled = currentPage === totalPages;
-                nextButton.addEventListener('click', function () {
-                    if (currentPage < totalPages) {
-                        //currentPage++;
-                        //fetchData(currentPage);
-                    }
-                });
-
-                let paginationHTMLContent = ``;
-                // Create page buttons
-                const maxVisibleButtons = 5; // Adjust as needed
-                let startPage = Math.max(1, currentPage - Math.floor(maxVisibleButtons / 2));
-                let endPage = Math.min(totalPages, startPage + maxVisibleButtons - 1);
-
-                if (endPage - startPage < maxVisibleButtons - 1) {
-                    startPage = Math.max(1, endPage - maxVisibleButtons + 1);
-                }
-
-                if (startPage > 1) {
-                    paginationHTMLContent += createPageButton(1);
-                    if (startPage > 2) {
-                        paginationHTMLContent += createSeparator();
-                    }
-                }
-
-                for (let i = startPage; i <= endPage; i++) {
-                    paginationHTMLContent += createPageButton(i);
-                }
-
-                if (endPage < totalPages) {
-                    if (endPage < totalPages - 1) {
-                        paginationHTMLContent += createSeparator();
-                    }
-                    paginationHTMLContent += createPageButton(totalPages);
-                }
-                paginationContainer.innerHTML = paginationHTMLContent;
-            }
-
-            function createPageButton(page) {
-                let pageButton = ``;
-                if (page === currentPage) {
-                    pageButton += `<div class="pagination-number active" onclick="RedirectFunction(` + page + `);" >` + page + `</div > `;
-                }
-                else {
-                    pageButton += `<div class="pagination-number" onclick="RedirectFunction(` + page + `);" >` + page + `</div > `;
-                }
-                return pageButton;
-            }
-
-            function createSeparator() {
-                const separator = `<div class="pagination-number" >...</div > `;
-                return separator;
-            }
-
-            fetchData(currentPage);
-            // Initial data fetch
-        });
-
-        function RedirectFunction(currentPage) {
-            if (pageSize < 1)
-                pageSize = 1;
-
-            if (currentPage < 1)
-                currentPage = 1;
-
-            const startIndex = (currentPage - 1) * pageSize;
-            window.location.href = `/CustomerManagement/CustomerList?StartIndex=${startIndex}&PageSize=${pageSize}`;
-        };
-
-        // Display information about the range of entries
-        function RangeOfEntries() {
-            const entriesContainer = document.getElementById('Entries-Id');
-            const startEntry = (currentPage - 1) * pageSize + 1;
-            const endEntry = Math.min(currentPage * pageSize, TotalData);
-            entriesContainer.innerHTML = '';
-            entriesContainer.innerHTML = ` @CRS.ADMIN.APPLICATION.Resources.Resource.Showing ${startEntry} to ${endEntry} of ${TotalData}  @CRS.ADMIN.APPLICATION.Resources.Resource.Entries`;
-        }
-
-        // Display information about the range of entries
-        function ShowEntriesFunction() {
-            const showEntriesContainer = document.getElementById('ShowEntries-Id');
-            showEntriesContainer.innerHTML = '';
-           showEntriesContainer.innerHTML = `
-                        @CRS.ADMIN.APPLICATION.Resources.Resource.Show&nbsp;
-                        <select id="countries" class="w-full select-entires" style="width: 100%;" onchange="handleSelectChange(this)">
-                            ${[5, 10, 20, 50, 100].map(value => `<option value="${value}"${value === pageSize ? ' selected' : ''}>${value}</option>`).join('')}
-                        </select>@CRS.ADMIN.APPLICATION.Resources.Resource.Entries`;
-        }
-
-        function handleSelectChange(selectElement) {
-            window.location.href = `/CustomerManagement/CustomerList?StartIndex=${0}&PageSize=${selectElement.value}`;
-        }
+                URL = addQueryParam(URL, 'FromDate', from_date);
+                URL = addQueryParam(URL, 'ToDate', to_date);
+                URL = addQueryParam(URL, 'Status', user_status);
+                URL = addQueryParam(URL, 'MobileNumber', mobile_number);
+                URL = addQueryParam(URL, 'SearchFilter', search_filter);
+                LoadPagination(page_size, total_data, start_index_val, URL);
+            });
     </script>
 }

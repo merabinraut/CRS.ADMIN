@@ -32,7 +32,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             Response.CustomerListModel.ForEach(x => x.AgentId = x.AgentId.EncryptParameter());
             ViewBag.StartIndex = StartIndex;
             ViewBag.PageSize = PageSize;
-            ViewBag.TotalData = dbResponse.Count;
+            ViewBag.TotalData = dbResponse != null && dbResponse.Any() ? dbResponse[0].TotalRecords : 0;
             return View(Response);
         }
 
