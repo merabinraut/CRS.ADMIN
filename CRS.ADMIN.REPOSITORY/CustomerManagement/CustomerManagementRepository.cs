@@ -22,7 +22,6 @@ namespace CRS.ADMIN.REPOSITORY.CustomerManagement
             SQL += !string.IsNullOrEmpty(Request.ToDate) ? ",@ToDate=" + _DAO.FilterString(Request.ToDate) : null;
             SQL += !string.IsNullOrEmpty(Request.Status) ? ",@Status=" + _DAO.FilterString(Request.Status) : null;
             SQL += !string.IsNullOrEmpty(Request.MobileNumber) ? ",@MobileNumber=" + _DAO.FilterString(Request.MobileNumber) : null;
-            SQL += !string.IsNullOrEmpty(Request.MobileNumber) ? ",@MobileNumber=" + _DAO.FilterString(Request.MobileNumber) : null;
             SQL += ",@Skip=" + Request.Skip;
             SQL += ",@Take=" + Request.Take;
             var dbResponse = _DAO.ExecuteDataTable(SQL);
