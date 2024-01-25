@@ -3,6 +3,7 @@ using CRS.ADMIN.APPLICATION.Models.PlanManagement;
 using CRS.ADMIN.BUSINESS.CommonManagement;
 using CRS.ADMIN.BUSINESS.PlanManagement;
 using CRS.ADMIN.SHARED;
+using CRS.ADMIN.SHARED.PaginationManagement;
 using CRS.ADMIN.SHARED.PlanManagement;
 using Microsoft.Ajax.Utilities;
 using System;
@@ -25,7 +26,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
         }
 
         [HttpGet]
-        public ActionResult PlanList(string SearchFilter = "")
+        public ActionResult PlanList(string SearchFilter = "", int StartIndex = 0, int PageSize = 10)
         {
             Session["CurrentURL"] = "/PlanManagement/PlanList";
             var culture = Request.Cookies["culture"]?.Value;
@@ -54,7 +55,13 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 liquorDictionary.Add(item.StaticValue.EncryptParameter(), culture == "en" ? item.StaticLabelEnglish : item.StaticLabelJapanese);
             }
             #endregion
-            var planLists = _business.GetPlanList(SearchFilter);
+            PaginationFilterCommon dbRequest = new PaginationFilterCommon()
+            {
+                Skip = StartIndex,
+                Take = PageSize,
+                SearchFilter = !string.IsNullOrEmpty(SearchFilter) ? SearchFilter : null
+            };
+            var planLists = _business.GetPlanList(dbRequest);
             ResModel.PlanManagementModel = planLists.MapObjects<PlanManagementModel>();
             ResModel.PlanManagementModel.ForEach(x => x.PlanId = x.PlanId.EncryptParameter());
             ResModel.PlanManagementModel.ForEach(x => x.PlanStatus = x.PlanStatus.Trim().ToUpper() == "A" ? "A" : "B");
@@ -69,6 +76,9 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             ViewBag.TimeList = ApplicationUtilities.SetDDLValue(timeDictionary as Dictionary<string, string>, ResModel.PlanMgmt.PlanTime, "--- Select ---");
             ViewBag.LiquorList = ApplicationUtilities.SetDDLValue(liquorDictionary as Dictionary<string, string>, ResModel.PlanMgmt.Liquor, "--- Select ---");
             ViewBag.SearchFilter = SearchFilter;
+            ViewBag.StartIndex = StartIndex;
+            ViewBag.PageSize = PageSize;
+            ViewBag.TotalData = planLists != null && planLists.Any() ? planLists[0].TotalRecords : 0;
             return View(ResModel);
         }
 

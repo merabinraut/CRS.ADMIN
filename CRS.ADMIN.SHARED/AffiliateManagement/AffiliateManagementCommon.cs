@@ -1,6 +1,8 @@
-﻿namespace CRS.ADMIN.SHARED.AffiliateManagement
+﻿using CRS.ADMIN.SHARED.PaginationManagement;
+
+namespace CRS.ADMIN.SHARED.AffiliateManagement
 {
-    public class AffiliateManagementCommon
+    public class AffiliateManagementCommon : PaginationResponseCommon
     {
         public string AffiliateId { get; set; }
         public string HoldAffiliateId { get; set; }

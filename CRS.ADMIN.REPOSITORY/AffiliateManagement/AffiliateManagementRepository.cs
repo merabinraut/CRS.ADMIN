@@ -1,5 +1,6 @@
 ﻿using CRS.ADMIN.SHARED;
 using CRS.ADMIN.SHARED.AffiliateManagement;
+using CRS.ADMIN.SHARED.PaginationManagement;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -14,11 +15,13 @@ namespace CRS.ADMIN.REPOSITORY.AffiliateManagement
             _dao = dao;
         }
 
-        public List<AffiliateManagementCommon> GetAffiliateList(string SearchField = "")
+        public List<AffiliateManagementCommon> GetAffiliateList(PaginationFilterCommon Request)
         {
             var Response = new List<AffiliateManagementCommon>();
             var SQL = "EXEC sproc_admin_affiliate_management @Flag = 'gal'";
-            SQL += !string.IsNullOrEmpty(SearchField) ? ",@SearchField=N" + _dao.FilterString(SearchField) : null;
+            SQL += !string.IsNullOrEmpty(Request.SearchFilter) ? ",@SearchField=N" + _dao.FilterString(Request.SearchFilter) : null;
+            SQL += ",@Skip=" + Request.Skip;
+            SQL += ",@Take=" + Request.Take;
             var dbResponse = _dao.ExecuteDataTable(SQL);
             if (dbResponse.Rows.Count > 0) Response = _dao.DataTableToListObject<AffiliateManagementCommon>(dbResponse).ToList();
             return Response;

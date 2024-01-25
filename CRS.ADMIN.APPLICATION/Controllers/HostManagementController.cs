@@ -3,6 +3,7 @@ using CRS.ADMIN.APPLICATION.Models.HostManagement;
 using CRS.ADMIN.BUSINESS.HostManagement;
 using CRS.ADMIN.SHARED;
 using CRS.ADMIN.SHARED.HostManagement;
+using CRS.ADMIN.SHARED.PaginationManagement;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -20,7 +21,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             _buss = buss;
         }
         [HttpGet]
-        public ActionResult HostList(string AgentId, string SearchFilter = "")
+        public ActionResult HostList(string AgentId, string SearchFilter = "", int StartIndex = 0, int PageSize = 10)
         {
             ViewBag.AgentId = AgentId;
             ViewBag.SearchFilter = SearchFilter;
@@ -40,15 +41,19 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             if (TempData.ContainsKey("ManageHostModel")) ResponseModel.ManageHostModel = TempData["ManageHostModel"] as ManageHostModel;
             else ResponseModel.ManageHostModel = new ManageHostModel();
             if (TempData.ContainsKey("RenderId")) RenderId = TempData["RenderId"].ToString();
-            var dbResponse = _buss.GetHostList(aId, SearchFilter);
+            PaginationFilterCommon dbRequest = new PaginationFilterCommon()
+            {
+                Skip = StartIndex,
+                Take = PageSize,
+                SearchFilter = !string.IsNullOrEmpty(SearchFilter) ? SearchFilter : null
+            };
+            var dbResponse = _buss.GetHostList(aId, dbRequest);
             ResponseModel.HostListModel = dbResponse.MapObjects<HostListModel>();
             foreach (var item in ResponseModel.HostListModel)
             {
                 item.HostId = item.HostId?.EncryptParameter();
                 item.AgentId = item.AgentId?.EncryptParameter();
             }
-            //ViewBag.RankDDL = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("RANKDDL") as Dictionary<string, string>, null, "--- Select ---");
-            //ViewBag.RankDDLKey = ResponseModel.ManageHostModel.Rank?.EncryptParameter();
             ViewBag.ZodiacSignsDDL = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("ZODIACSIGNSDDL") as Dictionary<string, string>, null, "--- Select ---");
             ViewBag.ZodiacSignsDDLKey = ResponseModel.ManageHostModel.ConstellationGroup;
             ViewBag.BloodGroupDDL = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("BLOODGROUPDDL") as Dictionary<string, string>, null, "--- Select ---");
@@ -60,6 +65,10 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             ViewBag.PopUpRenderValue = !string.IsNullOrEmpty(RenderId) ? RenderId : null;
             ViewBag.IsBackAllowed = true;
             ViewBag.BackButtonURL = "/ClubManagement/ClubList";
+
+            ViewBag.StartIndex = StartIndex;
+            ViewBag.PageSize = PageSize;
+            ViewBag.TotalData = dbResponse != null && dbResponse.Any() ? dbResponse[0].TotalRecords : 0;
             return View(ResponseModel);
         }
 

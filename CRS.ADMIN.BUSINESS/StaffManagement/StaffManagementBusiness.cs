@@ -1,5 +1,6 @@
 ﻿using CRS.ADMIN.REPOSITORY.StaffManagement;
 using CRS.ADMIN.SHARED;
+using CRS.ADMIN.SHARED.PaginationManagement;
 using CRS.ADMIN.SHARED.StaffManagement;
 using System.Collections.Generic;
 
@@ -7,7 +8,7 @@ namespace CRS.ADMIN.BUSINESS.StaffManagement
 {
     public class StaffManagementBusiness : IStaffManagementBusiness
     {
-         IStaffManagementRepository _repo;
+        IStaffManagementRepository _repo;
         public StaffManagementBusiness(StaffManagementRepository repo)
         {
             _repo = repo;
@@ -23,9 +24,9 @@ namespace CRS.ADMIN.BUSINESS.StaffManagement
             return _repo.GetStaffDetails(id);
         }
 
-        public List<StaffManagementListModelCommon> GetStaffList()
+        public List<StaffManagementListModelCommon> GetStaffList(PaginationFilterCommon Request)
         {
-            return _repo.GetStaffList();
+            return _repo.GetStaffList(Request);
         }
 
         public CommonDbResponse ManageStaff(ManagerStaffCommon commonModel)

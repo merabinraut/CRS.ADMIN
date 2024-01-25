@@ -20,7 +20,7 @@
     </div>
     <!-- container  -->
     <div class="flex justify-between pt-[24px] pb-[24px]">
-        <form>
+        <form action="/PromotionManagement/GetPromotionalImages" method="get">
             <div class="relative input-search-wrapper">
                 <div class="absolute inset-y-0 left-0 flex items-center pl-[16px] pointer-events-none">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21" fill="none">
@@ -30,9 +30,11 @@
                     </svg>
                 </div>
                 <input type="search"
+                       id="default-search"
                        class="input-search block w-full "
                        placeholder="@CRS.ADMIN.APPLICATION.Resources.Resource.Search"
-                       required="">
+                       value="@Model.SearchFilter"
+                       name="SearchFilter">
             </div>
         </form>
         <div class="btn btn-primary gap-[8px] h-[40px]" data-drawer-target="add-new-host-location"
@@ -44,21 +46,14 @@
     </div>
     <div class="table-tab">
         <div class="px-[16px] py-[12px] flex justify-between entry-export-container">
-            <div class="flex items-center select-entries">
-                @*@CRS.ADMIN.APPLICATION.Resources.Resource.Show&nbsp;
-                    <select id="countries" class="w-full select-entires " style="width: 100%; ">
-                        <option value="5" selected>5</option>
-                        <option value="10">10</option>
-                        <option value="15">15</option>
-                        <option value="20">100</option>
-                    </select>&nbsp;@CRS.ADMIN.APPLICATION.Resources.Resource.Entries*@
+            <div class="flex items-center select-entries" id="ShowEntries-Id">
             </div>
-            @*<div class="export-button">
-                    <img src="~/Content/assets_new/images/club/download-solid.svg">@CRS.ADMIN.APPLICATION.Resources.Resource.Export
-                </div>*@
+            <div class="export-button h-[40px]" onclick="exportExcel('table-id', 'Promotion')">
+                <img src="~/Content/assets_new/images/club/download-solid.svg"> @CRS.ADMIN.APPLICATION.Resources.Resource.Export
+            </div>
         </div>
         <div class="relative overflow-x-auto">
-            <table class="w-full  text-left club-table">
+            <table class="w-full  text-left club-table" id="table-id">
                 <thead class="club-table-thead">
                     <tr>
                         <th scope="col" class="p-[12px]">
@@ -128,12 +123,11 @@
                 </thead>
                 <tbody>
                     @{
-                        int i = 1;
                         foreach (var item in Model.PromotionManagementListModel)
                         {
                             <tr class="bg-white border-b ">
                                 <td class="p-[12px]">
-                                    @i
+                                    @item.SNO
                                 </td>
                                 <td class="p-[12px]">
                                     <div class="round-image-text gap-[12px]">
@@ -190,42 +184,24 @@
                                     </div>
                                 </td>
                             </tr>
-                            i++;
                         }
                     }
                 </tbody>
             </table>
         </div>
         <div class="pagination-club">
-            @*<div class="show-entry">
-                    @CRS.ADMIN.APPLICATION.Resources.Resource.Showing 1 to 5 of 5 @CRS.ADMIN.APPLICATION.Resources.Resource.Entries
+            <div class="show-entry" id="Entries-Id">
+            </div>
+            <div class="flex gap-[12px]">
+                <div class="btn btn-secondary-box-shadow" id="prev-btn">
+                    @CRS.ADMIN.APPLICATION.Resources.Resource.Previous
                 </div>
-                <div class="flex gap-[12px]">
-                    <div class="btn btn-secondary-box-shadow ">
-                        @CRS.ADMIN.APPLICATION.Resources.Resource.Previous
-                    </div>
-                    <div class="flex gap-[12px]">
-                        <div class="pagination-number active">
-                            1
-                        </div>
-                        <div class="pagination-number">
-                            2
-                        </div>
-                        <div class="pagination-number">
-                            3
-                        </div>
-                        <div class="pagination-number">
-                            ..
-                        </div>
-                        <div class="pagination-number">
-                            10
-                        </div>
-
-                    </div>
-                    <div class="btn btn-secondary-box-shadow ">
-                        @CRS.ADMIN.APPLICATION.Resources.Resource.Next
-                    </div>
-                </div>*@
+                <div class="flex gap-[12px]" id="pagination-id">
+                </div>
+                <div class="btn btn-secondary-box-shadow" id="next-btn">
+                    @CRS.ADMIN.APPLICATION.Resources.Resource.Next
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -272,5 +248,16 @@
                 event.preventDefault();
                 window.location.reload();
             });
+    </script>
+    <script>
+     document.addEventListener('DOMContentLoaded', function () {
+             const page_size = @ViewBag.PageSize;
+             const total_data = @ViewBag.TotalData;
+             const start_index_val = @ViewBag.StartIndex;
+             let URL = "/PromotionManagement/GetPromotionalImages";
+             let search_filter = $('#default-search').val();
+             URL = addQueryParam(URL, 'SearchFilter', search_filter);
+             LoadPagination(page_size, total_data, start_index_val, URL);
+         });
     </script>
 }

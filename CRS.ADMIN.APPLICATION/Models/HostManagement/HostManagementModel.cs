@@ -11,6 +11,7 @@ namespace CRS.ADMIN.APPLICATION.Models.HostManagement
     }
     public class HostListModel
     {
+        public string SNO { get; set; }
         public string AgentId { get; set; }
         public string HostId { get; set; }
         [Display(Name = "Host Name")]

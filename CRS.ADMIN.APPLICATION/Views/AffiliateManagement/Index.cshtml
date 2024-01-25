@@ -193,14 +193,7 @@
                 </div>
                 <div class="table-tab">
                     <div class="px-[12px] py-[16px] flex justify-between entry-export-container">
-                        <div class="flex items-center select-entries">
-                            @*@CRS.ADMIN.APPLICATION.Resources.Resource.Show&nbsp;
-                                <select id="countries" class="w-full select-entires " style="width: 100%; ">
-                                    <option value="5" selected>5</option>
-                                    <option value="10">10</option>
-                                    <option value="15">15</option>
-                                    <option value="20">100</option>
-                                </select>&nbsp;@CRS.ADMIN.APPLICATION.Resources.Resource.Entries*@
+                        <div class="flex items-center select-entries" id="ShowEntries-Id">
                         </div>
                         <div class="export-button  h-[40px]" onclick="exportExcel('table-id', 'Affiliate')">
                             <img src="~/Content/assets_new/images/club/download-solid.svg" /> @CRS.ADMIN.APPLICATION.Resources.Resource.Export
@@ -388,30 +381,20 @@
                         </table>
 
                     </div>
-                    @*<div class="pagination-club">
-                            <div class="show-entry">@CRS.ADMIN.APPLICATION.Resources.Resource.Showing 1 to 5 of 301 @CRS.ADMIN.APPLICATION.Resources.Resource.Entries</div>
-                            <div class="flex gap-[12px]">
-                                <div class="btn btn-secondary-box-shadow ">@CRS.ADMIN.APPLICATION.Resources.Resource.Previous</div>
-                                <div class="flex gap-[12px]">
-                                    <div class="pagination-number active">
-                                        1
-                                    </div>
-                                    <div class="pagination-number">
-                                        2
-                                    </div>
-                                    <div class="pagination-number">
-                                        3
-                                    </div>
-                                    <div class="pagination-number">
-                                        ..
-                                    </div>
-                                    <div class="pagination-number">
-                                        10
-                                    </div>
-                                </div>
-                                <div class="btn btn-secondary-box-shadow ">@CRS.ADMIN.APPLICATION.Resources.Resource.Next</div>
+                    <div class="pagination-club">
+                        <div class="show-entry" id="Entries-Id">
+                        </div>
+                        <div class="flex gap-[12px]">
+                            <div class="btn btn-secondary-box-shadow" id="prev-btn">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Previous
                             </div>
-                        </div>*@
+                            <div class="flex gap-[12px]" id="pagination-id">
+                            </div>
+                            <div class="btn btn-secondary-box-shadow" id="next-btn">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Next
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div id="tab3" class="tab-content-plane hidden ">
@@ -432,14 +415,7 @@
                 </div>
                 <div class="table-tab">
                     <div class="px-[12px] py-[16px] flex justify-between entry-export-container">
-                        <div class="flex items-center select-entries">
-                            @*@CRS.ADMIN.APPLICATION.Resources.Resource.Show&nbsp;
-                                <select id="countries" class="w-full select-entires " style="width: 100%; ">
-                                    <option value="5" selected>5</option>
-                                    <option value="10">10</option>
-                                    <option value="15">15</option>
-                                    <option value="20">100</option>
-                                </select>&nbsp;@CRS.ADMIN.APPLICATION.Resources.Resource.Entries*@
+                        <div class="flex items-center select-entries" id="ShowEntries-Id-2">
                         </div>
                         <div class="export-button  h-[40px]" onclick="exportExcel('table-id2', 'Customer')">
                             <img src="~/Content/assets_new/images/club/download-solid.svg" /> @CRS.ADMIN.APPLICATION.Resources.Resource.Export
@@ -568,30 +544,20 @@
                         </table>
 
                     </div>
-                    @*<div class="pagination-club">
-                            <div class="show-entry">@CRS.ADMIN.APPLICATION.Resources.Resource.Showing 1 to 5 of 301 @CRS.ADMIN.APPLICATION.Resources.Resource.Entries</div>
-                            <div class="flex gap-[12px]">
-                                <div class="btn btn-secondary-box-shadow ">@CRS.ADMIN.APPLICATION.Resources.Resource.Previous</div>
-                                <div class="flex gap-[12px]">
-                                    <div class="pagination-number active">
-                                        1
-                                    </div>
-                                    <div class="pagination-number">
-                                        2
-                                    </div>
-                                    <div class="pagination-number">
-                                        3
-                                    </div>
-                                    <div class="pagination-number">
-                                        ..
-                                    </div>
-                                    <div class="pagination-number">
-                                        10
-                                    </div>
-                                </div>
-                                <div class="btn btn-secondary-box-shadow ">@CRS.ADMIN.APPLICATION.Resources.Resource.Next</div>
+                    <div class="pagination-club">
+                        <div class="show-entry" id="Entries-Id-2">
+                        </div>
+                        <div class="flex gap-[12px]">
+                            <div class="btn btn-secondary-box-shadow" id="prev-btn-2">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Previous
                             </div>
-                        </div>*@
+                            <div class="flex gap-[12px]" id="pagination-id">
+                            </div>
+                            <div class="btn btn-secondary-box-shadow" id="next-btn-2">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Next
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -714,5 +680,27 @@
             //document.getElementById('tab' + tabNumber).classList.remove("hidden");
         });
 
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+                const page_size = @ViewBag.PageSize;
+                const total_data = @ViewBag.TotalData;
+                const start_index_val = @ViewBag.StartIndex;
+                let URL = "/AffiliateManagement/Index";
+                let search_filter = '@ViewBag.SearchFilter1';
+                URL = addQueryParam(URL, 'SearchFilter', search_filter);
+                LoadPagination(page_size, total_data, start_index_val, URL);
+
+                const page_size_2 = @ViewBag.PageSize2;
+                const total_data_2 = @ViewBag.TotalData2;
+                const start_index_val_2 = @ViewBag.StartIndex2;
+                let URL_2 = "/AffiliateManagement/Index";
+                let search_filter_2 = '@ViewBag.SearchFilter2';
+                URL_2 = addQueryParam(URL_2, 'SearchFilter', search_filter_2);
+                dynamicStartIndex = "StartIndex2";
+                dynamicPageSize = "PageSize2";
+                LoadPagination(page_size_2, total_data_2, start_index_val_2, URL_2, 'pagination-id-2', 'prev-btn-2', 'next-btn-2', 'ShowEntries-Id-2', 'Entries-Id-2');
+            });
     </script>
 }

@@ -3,7 +3,6 @@
     ViewBag.Title = "StaffList";
     Layout = "~/Views/Shared/_Layout.cshtml";
     var _ManageStaffModel = Model.ManageStaffModel as CRS.ADMIN.APPLICATION.Models.StaffManagement.ManageStaff;
-    int countRow = 0;
 }
 <div class="px-8 py-4">
     @Html.AntiForgeryToken()
@@ -17,7 +16,7 @@
     </div>
     <!-- container  -->
     <div class="flex justify-between pt-[24px] pb-[24px]">
-        <form>
+        <form action="/StaffManagement/StaffList" method="get">
             <div class="relative input-search-wrapper">
                 <div class="absolute inset-y-0 left-0 flex items-center pl-[16px] pointer-events-none">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21" fill="none">
@@ -27,9 +26,11 @@
                     </svg>
                 </div>
                 <input type="search"
+                       id="default-search"
                        class="input-search block w-full "
                        placeholder="@CRS.ADMIN.APPLICATION.Resources.Resource.Search"
-                       required="">
+                       value="@Model.SearchFilter"
+                       name="SearchFilter">
             </div>
         </form>
         <div class="btn btn-primary gap-[8px] h-[40px]" data-drawer-target="add-new-host-staff"
@@ -41,14 +42,7 @@
     </div>
     <div class="table-tab">
         <div class="px-[16px] py-[12px] flex justify-between entry-export-container">
-            <div class="flex items-center select-entries">
-                @*@CRS.ADMIN.APPLICATION.Resources.Resource.Show&nbsp;
-                    <select id="countries" class="w-full select-entires " style="width: 100%; ">
-                        <option value="5" selected>5</option>
-                        <option value="10">10</option>
-                        <option value="15">15</option>
-                        <option value="20">100</option>
-                    </select>&nbsp;@CRS.ADMIN.APPLICATION.Resources.Resource.Entries*@
+            <div class="flex items-center select-entries" id="ShowEntries-Id">
             </div>
             <div class="export-button h-[40px]" onclick="exportExcel('table-id', 'Staff')">
                 <img src="~/Content/assets_new/images/club/download-solid.svg"> @CRS.ADMIN.APPLICATION.Resources.Resource.Export
@@ -128,10 +122,7 @@
                     {
                         <tr class="bg-white border-b ">
                             <td class="p-[12px]">
-                                @if (stafflist.Id != "")
-                                {
-                                    countRow++;
-                                }@countRow
+                                @stafflist.SNO
                             </td>
                             <td class="p-[12px]">
                                 @stafflist.UserName
@@ -183,91 +174,24 @@
             </table>
         </div>
         <div class="pagination-club">
-            @*<div class="show-entry">@CRS.ADMIN.APPLICATION.Resources.Resource.Showing 1 to 5 of 301 @CRS.ADMIN.APPLICATION.Resources.Resource.Entries</div>
-                <div class="flex gap-[12px]">
-                    <div class="btn btn-secondary-box-shadow ">@CRS.ADMIN.APPLICATION.Resources.Resource.Previous</div>
-                    <div class="flex gap-[12px]">
-                        <div class="pagination-number active">
-                            1
-                        </div>
-                        <div class="pagination-number">
-                            2
-                        </div>
-                        <div class="pagination-number">
-                            3
-                        </div>
-                        <div class="pagination-number">
-                            ..
-                        </div>
-                        <div class="pagination-number">
-                            10
-                        </div>
-                    </div>
-                    <div class="btn btn-secondary-box-shadow ">@CRS.ADMIN.APPLICATION.Resources.Resource.Next</div>
-                </div>*@
-        </div>
-    </div>
-</div>
-<!-- add new staff form -->
-@Html.Partial("ManageStaffPartialView", _ManageStaffModel)
-<!-- Confirmation popup form -->
-<!--<div id="add-new-host-modal-save" tabindex="-1" aria-hidden="true"
-     class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
-    <div class="relative max-w-2xl max-h-full w-[412px] px-4 pt-[40px] pb-[46px]">-->
-<!-- Modal content -->
-<!--<div class="relative bg-white rounded-lg shadow">-->
-<!-- Modal header -->
-<!--<button type="button"
-        class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center absolute top-[24px] right-[20px] "
-        data-modal-hide="add-new-host-modal-save">
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="25" viewBox="0 0 24 25" fill="none">
-        <rect y="0.621094" width="24" height="24" rx="12" fill="#FAFAFA" />
-        <path d="M5.41406 4.95703L4.33594 6.03516L10.9219 12.6211L4.33594 19.207L5.41406 20.2852L12 13.6992L18.5859 20.2852L19.6641 19.207L13.0781 12.6211L19.6641 6.03516L18.5859 4.95703L12 11.543L5.41406 4.95703Z"
-              fill="#7A7A7A" />
-    </svg>
-</button>-->
-<!-- Modal body -->
-<!--<div class="grid gap-6 px-[20px] py-8">
-                <div class="flex justify-center mb-4">
-                    <img src="Content/assets_new/images/save-check.svg" />
+            <div class="show-entry" id="Entries-Id">
+            </div>
+            <div class="flex gap-[12px]">
+                <div class="btn btn-secondary-box-shadow" id="prev-btn">
+                    @CRS.ADMIN.APPLICATION.Resources.Resource.Previous
                 </div>
-                <div class="grid gap-[20px] text-[#062937] mb-[44px]">
-                    <div class="text-base text-secondary-text-2 text-center font-semibold">
-                        Update Profile
-                    </div>
-                    <div class="text-[14px] text-secondary-text-2 text-center">
-                        Congratulations, you just added a new user.
-                    </div>
+                <div class="flex gap-[12px]" id="pagination-id">
                 </div>
-                <div class="flex justify-end">
-                    <div class="flex gap-8">
-                        <button data-modal-hide="add-new-host-modal-save"
-                                class="btn btn-primary-normal px-4 rounded-[4px]  w-max h-[40px] text-sm gap-2 "
-                                data-drawer-target="add-new-host-staff" data-drawer-show="add-new-host-staff"
-                                data-drawer-placement="right" data-drawer-backdrop="false"
-                                aria-controls="drawer-disabled-backdrop">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16"
-                                 height="16" viewBox="0 0 16 16" fill="none">
-                                <path d="M8 1.5C4.41602 1.5 1.5 4.41602 1.5 8C1.5 11.584 4.41602 14.5 8 14.5C11.584 14.5 14.5 11.584 14.5 8C14.5 4.41602 11.584 1.5 8 1.5ZM8 2.5C11.043 2.5 13.5 4.95703 13.5 8C13.5 11.043 11.043 13.5 8 13.5C4.95703 13.5 2.5 11.043 2.5 8C2.5 4.95703 4.95703 2.5 8 2.5ZM7.5 5V7.5H5V8.5H7.5V11H8.5V8.5H11V7.5H8.5V5H7.5Z"
-                                      fill="#D75A8B" />
-                            </svg>Add New
-                        </button>
-                        <button class="btn btn-primary-default rounded-[4px] px-4 h-[40px] w-max gap-2"
-                                data-modal-hide="add-new-host-modal-save">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="17"
-                                 height="16" viewBox="0 0 17 16" fill="none">
-                                <path d="M5.71997 7.33117H13.8346V8.6645H5.71997L9.29597 12.2405L8.3533 13.1832L3.16797 7.99783L8.3533 2.8125L9.29597 3.75517L5.71997 7.33117Z"
-                                      fill="white" />
-                            </svg>Back
-                        </button>
-                    </div>
+                <div class="btn btn-secondary-box-shadow" id="next-btn">
+                    @CRS.ADMIN.APPLICATION.Resources.Resource.Next
                 </div>
             </div>
         </div>
     </div>
-</div>-->
-
-<script>
+</div>
+@Html.Partial("ManageStaffPartialView", _ManageStaffModel)
+@section scripts{
+    <script>
     $(document).ready(function () {
         $('select').select2({
             minimumResultsForSearch: Infinity
@@ -278,9 +202,6 @@
             element.classList.remove('translate-x-full');
         }
     });
-    //function AddStaff() {
-    //    document.getElementById("ManageStaffForm").submit();
-    //}
     function CancelFunction() {
         location.reload();
     }
@@ -305,4 +226,16 @@
             }
         });
     }
-</script>
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+                const page_size = @ViewBag.PageSize;
+                const total_data = @ViewBag.TotalData;
+                const start_index_val = @ViewBag.StartIndex;
+                let URL = "/StaffManagement/StaffList";
+                let search_filter = $('#default-search').val();
+                URL = addQueryParam(URL, 'SearchFilter', search_filter);
+                LoadPagination(page_size, total_data, start_index_val, URL);
+            });
+    </script>
+}

@@ -4,6 +4,7 @@ using CRS.ADMIN.APPLICATION.Models.TagManagement;
 using CRS.ADMIN.BUSINESS.ClubManagement;
 using CRS.ADMIN.SHARED;
 using CRS.ADMIN.SHARED.ClubManagement;
+using CRS.ADMIN.SHARED.PaginationManagement;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -21,7 +22,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             _BUSS = BUSS;
         }
         [HttpGet]
-        public ActionResult ClubList(string SearchFilter = "")
+        public ActionResult ClubList(string SearchFilter = "", int StartIndex = 0, int PageSize = 10)
         {
             ViewBag.SearchFilter = SearchFilter;
             Session["CurrentURL"] = "/ClubManagement/ClubList";
@@ -32,7 +33,13 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             if (TempData.ContainsKey("RenderId")) RenderId = TempData["RenderId"].ToString();
             if (TempData.ContainsKey("ManageTagModel")) response.ManageTag = TempData["ManageTagModel"] as ManageTag;
             else response.ManageTag = new ManageTag();
-            var dbResponse = _BUSS.GetClubList(SearchFilter);
+            PaginationFilterCommon dbRequest = new PaginationFilterCommon()
+            {
+                Skip = StartIndex,
+                Take = PageSize,
+                SearchFilter = !string.IsNullOrEmpty(SearchFilter) ? SearchFilter : null
+            };
+            var dbResponse = _BUSS.GetClubList(dbRequest);
             response.ClubListModel = dbResponse.MapObjects<ClubListModel>();
             foreach (var item in response.ClubListModel)
             {
@@ -49,6 +56,10 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             ViewBag.ClubCategoryDDLKey = response.ManageTag.Tag3CategoryName;
             ViewBag.LocationIdKey = response.ManageClubModel.LocationId ?? response.ManageTag.Tag1Location;
             ViewBag.BusinessTypeKey = response.ManageClubModel.BusinessType;
+            ViewBag.StartIndex = StartIndex;
+            ViewBag.PageSize = PageSize;
+            ViewBag.TotalData = dbResponse != null && dbResponse.Any() ? dbResponse[0].TotalRecords : 0;
+            response.SearchFilter = !string.IsNullOrEmpty(SearchFilter) ? SearchFilter : null;
             return View(response);
         }
 

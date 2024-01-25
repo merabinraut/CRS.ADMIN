@@ -2,17 +2,17 @@ let pageSize = 0;
 let TotalData = 0;
 let startIndexVal = 0;
 let URL = "#";
-function LoadPagination(PageSize, Total_Data, start_IndexVal, url) {
-    const paginationContainer = document.getElementById('pagination-id');
-    const prevButton = document.getElementById('prev-btn');
-    const nextButton = document.getElementById('next-btn');
+function LoadPagination(PageSize, Total_Data, start_IndexVal, url, pagination_container_id = "pagination-id",
+    prev_button_id = "prev-btn", next_button_id = "next-btn", show_entries_container_id = "ShowEntries-Id", entries_container_id = "Entries-Id") {
+    const paginationContainer = document.getElementById(pagination_container_id);
+    const prevButton = document.getElementById(prev_button_id);
+    const nextButton = document.getElementById(next_button_id);
+    const showEntriesContainer = document.getElementById(show_entries_container_id);
+    const entriesContainer = document.getElementById(entries_container_id);
     pageSize = PageSize;
     TotalData = Total_Data;
     startIndexVal = start_IndexVal;
     URL = url;
-    //const pageSize = @ViewBag.PageSize;
-    //const TotalData = @ViewBag.TotalData;
-    //const startIndexVal = @ViewBag.StartIndex;
     const currentPage = Math.ceil((startIndexVal + 1) / pageSize);
     const TotalPages = Math.ceil(TotalData / pageSize);
     if (TotalData > 0) {
@@ -33,7 +33,7 @@ function LoadPagination(PageSize, Total_Data, start_IndexVal, url) {
         } else {
             if (currentPage > 1) {
                 const prevButtonVal = currentPage - 1;
-                prevButton.setAttribute("onclick", "RedirectFunction(" + prevButtonVal + ")");
+                prevButton.setAttribute("onclick", `RedirectFunction(${prevButtonVal}, '${dynamicStartIndexLabel}', '${dynamicPageSizeLabel}')`);
             }
         }
 
@@ -43,7 +43,7 @@ function LoadPagination(PageSize, Total_Data, start_IndexVal, url) {
         } else {
             if (currentPage < totalPages) {
                 const nextButtonVal = currentPage + 1;
-                nextButton.setAttribute("onclick", "RedirectFunction(" + nextButtonVal + ")");
+                nextButton.setAttribute("onclick", `RedirectFunction( ${nextButtonVal} , '${dynamicStartIndexLabel}', '${dynamicPageSizeLabel}')`);
             }
         }
 
@@ -79,9 +79,9 @@ function LoadPagination(PageSize, Total_Data, start_IndexVal, url) {
     function createPageButton(page) {
         let pageButton = ``;
         if (page === currentPage) {
-            pageButton += `<div class="pagination-number active" onclick="RedirectFunction(` + page + `);" >` + page + `</div > `;
+            pageButton += `<div class="pagination-number active" onclick="RedirectFunction(${page}, '${dynamicStartIndexLabel}', '${dynamicPageSizeLabel}');" >` + page + `</div > `;
         } else {
-            pageButton += `<div class="pagination-number" onclick="RedirectFunction(` + page + `);" >` + page + `</div > `;
+            pageButton += `<div class="pagination-number" onclick="RedirectFunction(${page}, '${dynamicStartIndexLabel}', '${dynamicPageSizeLabel}');" >` + page + `</div > `;
         }
         return pageButton;
     }
@@ -93,11 +93,9 @@ function LoadPagination(PageSize, Total_Data, start_IndexVal, url) {
 
     // Display information about the range of entries
     function RangeOfEntries() {
-        const entriesContainer = document.getElementById('Entries-Id');
         const startEntry = (currentPage - 1) * pageSize + 1;
         const endEntry = Math.min(currentPage * pageSize, TotalData);
         entriesContainer.innerHTML = '';
-        //entriesContainer.innerHTML = ` @CRS.ADMIN.APPLICATION.Resources.Resource.Showing ${startEntry} to ${endEntry} of ${TotalData}  @CRS.ADMIN.APPLICATION.Resources.Resource.Entries`;
         if ((ShowingDynamicLabel != "" || ShowingDynamicLabel != null) && (EntriesDynamicLabel != "" || EntriesDynamicLabel != null)) {
             entriesContainer.innerHTML = `${ShowingDynamicLabel} ${startEntry} to ${endEntry} of ${TotalData} ${EntriesDynamicLabel}`;
         }
@@ -108,29 +106,23 @@ function LoadPagination(PageSize, Total_Data, start_IndexVal, url) {
 
     // Display information about the range of entries
     function ShowEntriesFunction() {
-        const showEntriesContainer = document.getElementById('ShowEntries-Id');
         showEntriesContainer.innerHTML = '';
         if ((ShowDynamicLabel != "" || ShowDynamicLabel != null) && (EntriesDynamicLabel != "" || EntriesDynamicLabel != null)) {
-            showEntriesContainer.innerHTML = `${ShowDynamicLabel}&nbsp;
-                         <select id="countries" class="w-full select-entires" style="width: 100%;" onchange="handleSelectChange(this)">
+            showEntriesContainer.innerHTML = `<div class="w-max flex-none"> ${ShowDynamicLabel}</div>&nbsp;
+                         <select id="countries" class="select-entires" style="width: 100%;"onchange="handleSelectChange(this, '${dynamicStartIndexLabel}', '${dynamicPageSizeLabel}')">
                              ${[5, 10, 20, 50, 100].map(value => `<option value="${value}"${value === pageSize ? ' selected' : ''}>${value}</option>`).join('')}
-                         </select> ${EntriesDynamicLabel}`;
+                         </select> <div class="w-max flex-none pl-1">  ${EntriesDynamicLabel} </div>`;
         }
         else {
-            showEntriesContainer.innerHTML = `Show&nbsp;
-                         <select id="countries" class="w-full select-entires" style="width: 100%;" onchange="handleSelectChange(this)">
+            showEntriesContainer.innerHTML = `<div class="w-max flex-none"> Show</div>&nbsp;
+                         <select id="countries" class="select-entires" style="width: 100%;"onchange="handleSelectChange(this, '${dynamicStartIndexLabel}', '${dynamicPageSizeLabel}')">
                              ${[5, 10, 20, 50, 100].map(value => `<option value="${value}"${value === pageSize ? ' selected' : ''}>${value}</option>`).join('')}
-                         </select> Entries`;
+                         </select> <div class="w-max flex-none pl-1">Entries</div>`;
         }
-        //showEntriesContainer.innerHTML = `
-        //                 @CRS.ADMIN.APPLICATION.Resources.Resource.Show&nbsp;
-        //                 <select id="countries" class="w-full select-entires" style="width: 100%;" onchange="handleSelectChange(this)">
-        //                     ${[5, 10, 20, 50, 100].map(value => `<option value="${value}"${value === pageSize ? ' selected' : ''}>${value}</option>`).join('')}
-        //                 </select>@CRS.ADMIN.APPLICATION.Resources.Resource.Entries`;
     }
 }
 
-function RedirectFunction(currentPage) {
+function RedirectFunction(currentPage, i, j) {
     if (pageSize < 1)
         pageSize = 1;
 
@@ -139,12 +131,12 @@ function RedirectFunction(currentPage) {
 
     const startIndex = (currentPage - 1) * pageSize;
     let separator = URL.includes('?') ? '&' : '?';
-    window.location.href = URL + separator + `StartIndex=${startIndex}&PageSize=${pageSize}`;
+    window.location.href = URL + separator + `${i}=${startIndex}&${j}=${pageSize}`;
 };
 
-function handleSelectChange(selectElement) {
+function handleSelectChange(selectElement, i, j) {
     let separator = URL.includes('?') ? '&' : '?';
-    window.location.href = URL + separator + `StartIndex=${0}&PageSize=${selectElement.value}`;
+    window.location.href = URL + separator + `${i}=${0}&${j}=${selectElement.value}`;
 }
 
 function addQueryParam(url, paramName, paramValue) {

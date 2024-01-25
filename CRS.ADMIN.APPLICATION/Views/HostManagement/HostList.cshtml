@@ -27,7 +27,12 @@
                         </svg>
                     </div>
                     <input name="AgentId" value="@ViewBag.AgentId" hidden />
-                    <input type="search" class="input-search block w-full " placeholder="@CRS.ADMIN.APPLICATION.Resources.Resource.Search" value="@ViewBag.SearchFilter" name="SearchFilter">
+                    <input type="search"
+                           id="default-search"
+                           class="input-search block w-full "
+                           placeholder="@CRS.ADMIN.APPLICATION.Resources.Resource.Search"
+                           value="@ViewBag.SearchFilter"
+                           name="SearchFilter">
                     <input type="submit" value="Submit" hidden>
                 </div>
             </form>
@@ -44,19 +49,13 @@
 
         </div>
         <div class="table-tab">
-            <!--<div class="px-[12px] py-[12px] flex justify-between entry-export-container">
-                <div class="flex items-center select-entries">-->
-            @*@CRS.ADMIN.APPLICATION.Resources.Resource.Show&nbsp;
-                <select id="countries" class="w-full select-entires " style="width: 100%; ">
-                    <option value="5" selected>5</option>
-                    <option value="10">10</option>
-                    <option value="15">15</option>
-                    <option value="20">100</option>
-                </select>&nbsp;@CRS.ADMIN.APPLICATION.Resources.Resource.Entries*@
-            <!--</div>
-
-
-            </div>-->
+            <div class="px-[16px] py-[12px] flex justify-between entry-export-container">
+                <div class="flex items-center select-entries" id="ShowEntries-Id">
+                </div>
+                <div class="export-button h-[40px]" onclick="exportExcel('table-id', 'Host')">
+                    <img src="~/Content/assets_new/images/club/download-solid.svg"> @CRS.ADMIN.APPLICATION.Resources.Resource.Export
+                </div>
+            </div>
 
             <div class="relative overflow-x-auto">
                 <table class="w-full  text-left club-table" id="table-id">
@@ -131,12 +130,11 @@
                     </thead>
                     <tbody>
                         @{
-                            int i = 1;
                             foreach (var item in Model.HostListModel)
                             {
                                 <tr class="bg-white border-b ">
                                     <td class="p-[12px]">
-                                        @i
+                                        @item.SNO
                                     </td>
                                     <td class="p-[12px]">
                                         <div class="round-image-text flex gap-[12px] w-max">
@@ -191,7 +189,6 @@
                                         </div>
                                     </td>
                                 </tr>
-                                i++;
                             }
                         }
 
@@ -199,39 +196,20 @@
                 </table>
 
             </div>
-            @*<div class="pagination-club">
-                    <div class="show-entry">
-                        @CRS.ADMIN.APPLICATION.Resources.Resource.Showing
-                        1 to 5 of 301
-                        @CRS.ADMIN.APPLICATION.Resources.Resource.Entries
+            <div class="pagination-club">
+                <div class="show-entry" id="Entries-Id">
+                </div>
+                <div class="flex gap-[12px]">
+                    <div class="btn btn-secondary-box-shadow" id="prev-btn">
+                        @CRS.ADMIN.APPLICATION.Resources.Resource.Previous
                     </div>
-                    <div class="flex gap-[12px]">
-                        <div class="btn btn-secondary-box-shadow ">
-                            @CRS.ADMIN.APPLICATION.Resources.Resource.Previous
-                        </div>
-                        <div class="flex gap-[12px]">
-                            <div class="pagination-number active">
-                                1
-                            </div>
-                            <div class="pagination-number">
-                                2
-                            </div>
-                            <div class="pagination-number">
-                                3
-                            </div>
-                            <div class="pagination-number">
-                                ..
-                            </div>
-                            <div class="pagination-number">
-                                10
-                            </div>
-
-                        </div>
-                        <div class="btn btn-secondary-box-shadow ">
-                            @CRS.ADMIN.APPLICATION.Resources.Resource.Next
-                        </div>
+                    <div class="flex gap-[12px]" id="pagination-id">
                     </div>
-                </div>*@
+                    <div class="btn btn-secondary-box-shadow" id="next-btn">
+                        @CRS.ADMIN.APPLICATION.Resources.Resource.Next
+                    </div>
+                </div>
+            </div>
         </div>
 
         <!-- drawer component -->
@@ -291,23 +269,21 @@
         function CancelFunction() {
             location.reload();
         }
-        //function ManageClubSubmitFunction() {
-        //    document.getElementById("ManageHostForm").submit();
-        //}
         function ManageHostGetDetailsFunction(i, j) {
             window.location.href = '/HostManagement/ManageHost?AgentId=' + i + '&&HostId=' + j;
         }
-
-        function exportCSVExcel() {
-            const currentDateTimeString = new Date().toISOString().replace('T', ' ').replace(/\.\d{3}Z$/, '');
-            $('#table-id').table2excel({
-                exclude: ".no-export",
-                filename: currentDateTimeString + "_hoslog.xls",
-                fileext: ".xls",
-                exclude_img: false,
-                exclude_links: true,
-                exclude_inputs: true
-            });
-        }
+    </script>
+    <script>
+     document.addEventListener('DOMContentLoaded', function () {
+             const page_size = @ViewBag.PageSize;
+             const total_data = @ViewBag.TotalData;
+             const start_index_val = @ViewBag.StartIndex;
+             let URL = "/HostManagement/HostList";
+             let search_filter = '@ViewBag.SearchFilter';
+             let AgentId = '@ViewBag.AgentId';
+             URL = addQueryParam(URL, 'SearchFilter', search_filter);
+             URL = addQueryParam(URL, 'AgentId', AgentId);
+             LoadPagination(page_size, total_data, start_index_val, URL);
+         });
     </script>
 }

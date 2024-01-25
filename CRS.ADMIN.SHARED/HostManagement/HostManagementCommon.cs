@@ -1,6 +1,8 @@
-﻿namespace CRS.ADMIN.SHARED.HostManagement
+﻿using CRS.ADMIN.SHARED.PaginationManagement;
+
+namespace CRS.ADMIN.SHARED.HostManagement
 {
-    public class HostListCommon
+    public class HostListCommon : PaginationResponseCommon
     {
         public string AgentId { get; set; }
         public string HostId { get; set; }

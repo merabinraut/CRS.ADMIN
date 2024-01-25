@@ -1,6 +1,7 @@
 ﻿using CRS.ADMIN.REPOSITORY.HostManagement;
 using CRS.ADMIN.SHARED;
 using CRS.ADMIN.SHARED.HostManagement;
+using CRS.ADMIN.SHARED.PaginationManagement;
 using System.Collections.Generic;
 
 namespace CRS.ADMIN.BUSINESS.HostManagement
@@ -17,9 +18,9 @@ namespace CRS.ADMIN.BUSINESS.HostManagement
             return _REPO.GetHostDetail(AgentId, HostId);
         }
 
-        public List<HostListCommon> GetHostList(string AgentId, string SearchFilter = "")
+        public List<HostListCommon> GetHostList(string AgentId, PaginationFilterCommon Request)
         {
-            return _REPO.GetHostList(AgentId, SearchFilter);
+            return _REPO.GetHostList(AgentId, Request);
         }
 
         public CommonDbResponse ManageHost(ManageHostCommon Request)

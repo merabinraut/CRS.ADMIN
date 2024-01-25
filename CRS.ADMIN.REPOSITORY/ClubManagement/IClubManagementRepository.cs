@@ -1,12 +1,13 @@
 ﻿using CRS.ADMIN.SHARED;
 using CRS.ADMIN.SHARED.ClubManagement;
+using CRS.ADMIN.SHARED.PaginationManagement;
 using System.Collections.Generic;
 
 namespace CRS.ADMIN.REPOSITORY.ClubManagement
 {
     public interface IClubManagementRepository
     {
-        List<ClubListCommon> GetClubList(string SearchFilter = "");
+        List<ClubListCommon> GetClubList(PaginationFilterCommon Request);
         ClubDetailCommon GetClubDetails(string AgentId);
         CommonDbResponse ManageClub(ManageClubCommon Request);
         CommonDbResponse ManageClubStatus(string AgentId, string Status, Common Request);

@@ -1,5 +1,6 @@
 ﻿using CRS.ADMIN.REPOSITORY.PromotionManagement;
 using CRS.ADMIN.SHARED;
+using CRS.ADMIN.SHARED.PaginationManagement;
 using CRS.ADMIN.SHARED.PromotionManagement;
 using System.Collections.Generic;
 
@@ -30,9 +31,9 @@ namespace CRS.ADMIN.BUSINESS.PromotionManagement
             return _repo.GetPromotionalImageById(Id);
         }
 
-        public List<PromotionManagementCommon> GetPromotionalImageLists()
+        public List<PromotionManagementCommon> GetPromotionalImageLists(PaginationFilterCommon Request)
         {
-            return _repo.GetPromotionalImageLists();
+            return _repo.GetPromotionalImageLists(Request);
         }
     }
 }

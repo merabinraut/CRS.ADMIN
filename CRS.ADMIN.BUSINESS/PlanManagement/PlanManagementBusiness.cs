@@ -1,5 +1,6 @@
 ﻿using CRS.ADMIN.REPOSITORY.PlanManagement;
 using CRS.ADMIN.SHARED;
+using CRS.ADMIN.SHARED.PaginationManagement;
 using CRS.ADMIN.SHARED.PlanManagement;
 using System.Collections.Generic;
 
@@ -26,9 +27,9 @@ namespace CRS.ADMIN.BUSINESS.PlanManagement
             return _repository.GetPlanDetail(planManagementCommon);
         }
 
-        public List<PlanManagementCommon> GetPlanList(string SearchFilter = "")
+        public List<PlanManagementCommon> GetPlanList(PaginationFilterCommon Request)
         {
-            return _repository.GetPlanList(SearchFilter);
+            return _repository.GetPlanList(Request);
         }
 
         public CommonDbResponse ManagePlan(PlanManagementCommon planManagementCommon)

@@ -1,5 +1,7 @@
 ﻿using CRS.ADMIN.SHARED;
 using CRS.ADMIN.SHARED.ClubManagement;
+using CRS.ADMIN.SHARED.PaginationManagement;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -15,11 +17,13 @@ namespace CRS.ADMIN.REPOSITORY.ClubManagement
         }
 
         #region Club Management
-        public List<ClubListCommon> GetClubList(string SearchFilter = "")
+        public List<ClubListCommon> GetClubList(PaginationFilterCommon Request)
         {
             var response = new List<ClubListCommon>();
             string SQL = "EXEC sproc_club_management @Flag='gclist'";
-            SQL += !string.IsNullOrEmpty(SearchFilter) ? ",@SearchFilter=N" + _DAO.FilterString(SearchFilter) : null;
+            SQL += !string.IsNullOrEmpty(Request.SearchFilter) ? ",@SearchFilter=N" + _DAO.FilterString(Request.SearchFilter) : null;
+            SQL += ",@Skip=" + Request.Skip;
+            SQL += ",@Take=" + Request.Take;
             var dbResponse = _DAO.ExecuteDataTable(SQL);
             if (dbResponse != null)
             {
@@ -39,7 +43,9 @@ namespace CRS.ADMIN.REPOSITORY.ClubManagement
                         Rank = _DAO.ParseColumnValue(item, "Rank").ToString(),
                         Ratings = _DAO.ParseColumnValue(item, "Ratings").ToString(),
                         ClubLogo = _DAO.ParseColumnValue(item, "ClubLogo").ToString(),
-                        ClubCategory = _DAO.ParseColumnValue(item, "ClubCategory").ToString()
+                        ClubCategory = _DAO.ParseColumnValue(item, "ClubCategory").ToString(),
+                        TotalRecords = Convert.ToInt32(_DAO.ParseColumnValue(item, "TotalRecords").ToString()),
+                        SNO = Convert.ToInt32(_DAO.ParseColumnValue(item, "SNO").ToString())
                     });
                 }
             }

@@ -3,6 +3,8 @@ using CRS.ADMIN.APPLICATION.Models.AffiliateManagement;
 using CRS.ADMIN.BUSINESS.AffiliateManagement;
 using CRS.ADMIN.SHARED;
 using CRS.ADMIN.SHARED.AffiliateManagement;
+using DocumentFormat.OpenXml.Wordprocessing;
+using System.Linq;
 using System.Web.Mvc;
 
 namespace CRS.ADMIN.APPLICATION.Controllers
@@ -14,7 +16,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
         {
             _affiliateBuss = affiliateBuss;
         }
-        public ActionResult Index(string SearchFilter1 = "", string SearchFilter2 = "")
+        public ActionResult Index(string SearchFilter1 = "", string SearchFilter2 = "", int StartIndex = 0, int PageSize = 10)
         {
             Session["CurrentURL"] = "/AffiliateManagement/Index";
             var ResponseModel = new ReferalCommonModel();
@@ -32,6 +34,9 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             if (!string.IsNullOrEmpty(SearchFilter1)) ActiveTab = "Affiliates";
             else if (!string.IsNullOrEmpty(SearchFilter2)) ActiveTab = "Converted Customers";
             ViewBag.ActiveTab = ActiveTab ?? "";
+            ViewBag.StartIndex = StartIndex;
+            ViewBag.PageSize = PageSize;
+            ViewBag.TotalData = dbResponse != null && dbResponse.Any() ? dbResponse[0].TotalRecords : 0;
             return View(ResponseModel);
         }
 

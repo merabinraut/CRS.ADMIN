@@ -19,32 +19,10 @@
                     @CRS.ADMIN.APPLICATION.Resources.Resource.Customer_Management_Supporting_Texts
                 </div>
             </div>
-
         </div>
-        <!--<div class="flex gap-[24px]" style="border-bottom: 1px solid #f4f4f4;">
-            <div class="flex tab-container-plane bg-white gap-[16px]">
-                <button id="tab1Button" class="tab-button-plane tab-link active">
-                    @CRS.ADMIN.APPLICATION.Resources.Resource.All
-                </button>-->
-        @*<button id="tab2Button" class="tab-button-plane tab-link">
-                @CRS.ADMIN.APPLICATION.Resources.Resource.Basic
-            </button>
-            <button id="tab2Button" class="tab-button-plane tab-link">
-                @CRS.ADMIN.APPLICATION.Resources.Resource.Premium
-            </button>*@
-        <!--</div>
-
-        </div>-->
-        <!-- container  -->
         <div id="tab1" class="tab-content-plane ">
             @Html.Partial("_CustomerList", customerList)
         </div>
-        @*<div id="tab2" class="tab-content-plane hidden">
-                @Html.Partial("_CustomerList", customerList)
-            </div>
-            <div id="tab3" class="tab-content-plane hidden">
-                @Html.Partial("_CustomerList", customerList)
-            </div>*@
     </div>
 
 </div>
@@ -193,17 +171,6 @@
             }
         });
 
-        //function exportCSVExcel() {
-        //    const currentDateTimeString = new Date().toISOString().replace('T', ' ').replace(/\.\d{3}Z$/, '');
-        //    $('#table-id').table2excel({
-        //        exclude: ".no-export",
-        //        filename: currentDateTimeString + "_hoslog_customer.xls",
-        //        fileext: ".xls",
-        //        exclude_img: false,
-        //        exclude_links: true,
-        //        exclude_inputs: true
-        //    });
-        //}
         function hideFilterContainerCustom() {
             var filterDiv = document.getElementById("filter");
             var filterContainer = document.getElementById("filter-container");
