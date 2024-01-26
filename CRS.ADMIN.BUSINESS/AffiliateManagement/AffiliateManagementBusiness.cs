@@ -1,6 +1,7 @@
 ﻿using CRS.ADMIN.REPOSITORY.AffiliateManagement;
 using CRS.ADMIN.SHARED;
 using CRS.ADMIN.SHARED.AffiliateManagement;
+using CRS.ADMIN.SHARED.PaginationManagement;
 using System.Collections.Generic;
 
 namespace CRS.ADMIN.BUSINESS.AffiliateManagement
@@ -18,14 +19,14 @@ namespace CRS.ADMIN.BUSINESS.AffiliateManagement
             return _repo.ApproveRejectAffiliateRequest(Request);
         }
 
-        public List<AffiliateManagementCommon> GetAffiliateList(string SearchField = "")
+        public List<AffiliateManagementCommon> GetAffiliateList(PaginationFilterCommon Request)
         {
-            return _repo.GetAffiliateList(SearchField);
+            return _repo.GetAffiliateList(Request);
         }
 
-        public List<ReferralConvertedCustomerListModelCommon> GetReferalConvertedCustomerList(string searchField, string affiliateId, string filterDate)
+        public List<ReferralConvertedCustomerListModelCommon> GetReferalConvertedCustomerList(string affiliateId, string filterDate, PaginationFilterCommon Request)
         {
-            return _repo.GetReferalConvertedCustomerList(searchField, affiliateId, filterDate);
+            return _repo.GetReferalConvertedCustomerList(affiliateId, filterDate, Request);
         }
 
         public CommonDbResponse ManageAffiliateStatus(ManageAffiliateStatusCommon Request)

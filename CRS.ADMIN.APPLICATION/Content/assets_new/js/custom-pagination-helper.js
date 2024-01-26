@@ -33,7 +33,7 @@ function LoadPagination(PageSize, Total_Data, start_IndexVal, url, pagination_co
         } else {
             if (currentPage > 1) {
                 const prevButtonVal = currentPage - 1;
-                prevButton.setAttribute("onclick", `RedirectFunction(${prevButtonVal}, '${dynamicStartIndexLabel}', '${dynamicPageSizeLabel}')`);
+                prevButton.setAttribute("onclick", `RedirectFunction(${prevButtonVal}, '${dynamicStartIndexLabel}', '${dynamicPageSizeLabel}', ${pageSize})`);
             }
         }
 
@@ -43,7 +43,7 @@ function LoadPagination(PageSize, Total_Data, start_IndexVal, url, pagination_co
         } else {
             if (currentPage < totalPages) {
                 const nextButtonVal = currentPage + 1;
-                nextButton.setAttribute("onclick", `RedirectFunction( ${nextButtonVal} , '${dynamicStartIndexLabel}', '${dynamicPageSizeLabel}')`);
+                nextButton.setAttribute("onclick", `RedirectFunction( ${nextButtonVal} , '${dynamicStartIndexLabel}', '${dynamicPageSizeLabel}' , ${pageSize})`);
             }
         }
 
@@ -79,9 +79,9 @@ function LoadPagination(PageSize, Total_Data, start_IndexVal, url, pagination_co
     function createPageButton(page) {
         let pageButton = ``;
         if (page === currentPage) {
-            pageButton += `<div class="pagination-number active" onclick="RedirectFunction(${page}, '${dynamicStartIndexLabel}', '${dynamicPageSizeLabel}');" >` + page + `</div > `;
+            pageButton += `<div class="pagination-number active">` + page + `</div > `;
         } else {
-            pageButton += `<div class="pagination-number" onclick="RedirectFunction(${page}, '${dynamicStartIndexLabel}', '${dynamicPageSizeLabel}');" >` + page + `</div > `;
+            pageButton += `<div class="pagination-number" onclick="RedirectFunction(${page}, '${dynamicStartIndexLabel}', '${dynamicPageSizeLabel}', ${pageSize});" >` + page + `</div > `;
         }
         return pageButton;
     }
@@ -122,16 +122,16 @@ function LoadPagination(PageSize, Total_Data, start_IndexVal, url, pagination_co
     }
 }
 
-function RedirectFunction(currentPage, i, j) {
-    if (pageSize < 1)
-        pageSize = 1;
+function RedirectFunction(currentPage, i, j, page_size) {
+    if (page_size < 1)
+        page_size = 1;
 
     if (currentPage < 1)
         currentPage = 1;
 
-    const startIndex = (currentPage - 1) * pageSize;
+    const startIndex = (currentPage - 1) * page_size;
     let separator = URL.includes('?') ? '&' : '?';
-    window.location.href = URL + separator + `${i}=${startIndex}&${j}=${pageSize}`;
+    window.location.href = URL + separator + `${i}=${startIndex}&${j}=${page_size}`;
 };
 
 function handleSelectChange(selectElement, i, j) {

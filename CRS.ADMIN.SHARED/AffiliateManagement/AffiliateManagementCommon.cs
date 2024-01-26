@@ -28,7 +28,7 @@ namespace CRS.ADMIN.SHARED.AffiliateManagement
         public string AgentId { get; set; }
         public string Status { get; set; }
     }
-    public class ReferralConvertedCustomerListModelCommon
+    public class ReferralConvertedCustomerListModelCommon : PaginationResponseCommon
     {
         public string CustomerId { get; set; }
         public string ReferCode { get; set; }
