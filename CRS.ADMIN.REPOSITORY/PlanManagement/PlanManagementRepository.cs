@@ -1,5 +1,7 @@
 ﻿using CRS.ADMIN.SHARED;
+using CRS.ADMIN.SHARED.PaginationManagement;
 using CRS.ADMIN.SHARED.PlanManagement;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -11,11 +13,13 @@ namespace CRS.ADMIN.REPOSITORY.PlanManagement
         private readonly RepositoryDao _dao;
         public PlanManagementRepository() => _dao = new RepositoryDao();
 
-        public List<PlanManagementCommon> GetPlanList(string SearchFilter = "")
+        public List<PlanManagementCommon> GetPlanList(PaginationFilterCommon Request)
         {
             var planList = new List<PlanManagementCommon>();
             var sql = "Exec sproc_admin_plan_management @Flag='s'";
-            sql += !string.IsNullOrEmpty(SearchFilter) ? ",@SearchFilter=N" + _dao.FilterString(SearchFilter) : null;
+            sql += !string.IsNullOrEmpty(Request.SearchFilter) ? ",@SearchFilter=N" + _dao.FilterString(Request.SearchFilter) : null;
+            sql += ",@Skip=" + Request.Skip;
+            sql += ",@Take=" + Request.Take;
             var dt = _dao.ExecuteDataTable(sql);
             if (dt != null && dt.Rows.Count > 0)
             {
@@ -37,7 +41,9 @@ namespace CRS.ADMIN.REPOSITORY.PlanManagement
                         ActionPlatform = item["ActionPlatform"].ToString(),
                         ActionDate = item["ActionDate"].ToString(),
                         PlanImage = item["PlanImage"].ToString(),
-                        PlanImage2 = item["PlanImage2"].ToString()
+                        PlanImage2 = item["PlanImage2"].ToString(),
+                        TotalRecords = Convert.ToInt32(_dao.ParseColumnValue(item, "TotalRecords").ToString()),
+                        SNO = Convert.ToInt32(_dao.ParseColumnValue(item, "SNO").ToString())
                     });
                 }
             }

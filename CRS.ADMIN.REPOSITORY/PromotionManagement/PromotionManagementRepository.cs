@@ -1,5 +1,7 @@
 ﻿using CRS.ADMIN.SHARED;
+using CRS.ADMIN.SHARED.PaginationManagement;
 using CRS.ADMIN.SHARED.PromotionManagement;
+using System;
 using System.Collections.Generic;
 using System.Data;
 
@@ -65,10 +67,13 @@ namespace CRS.ADMIN.REPOSITORY.PromotionManagement
             return new PromotionManagementCommon();
         }
 
-        public List<PromotionManagementCommon> GetPromotionalImageLists()
+        public List<PromotionManagementCommon> GetPromotionalImageLists(PaginationFilterCommon Request)
         {
             var promotionManagements = new List<PromotionManagementCommon>();
             var sql = "Exec sproc_promotion_management @Flag='s'";
+            sql += !string.IsNullOrEmpty(Request.SearchFilter) ? ",@SearchFilter=N" + _dao.FilterString(Request.SearchFilter) : null;
+            sql += ",@Skip=" + Request.Skip;
+            sql += ",@Take=" + Request.Take;
             var dt = _dao.ExecuteDataTable(sql);
             if (null != dt)
             {
@@ -83,6 +88,8 @@ namespace CRS.ADMIN.REPOSITORY.PromotionManagement
                         IsDeleted = item["IsDeleted"].ToString(),
                         ActionUser = item["ActionUser"].ToString(),
                         ActionDate = item["ActionDate"].ToString(),
+                        TotalRecords = Convert.ToInt32(_dao.ParseColumnValue(item, "TotalRecords").ToString()),
+                        SNO = Convert.ToInt32(_dao.ParseColumnValue(item, "SN").ToString())
                     };
                     promotionManagements.Add(common);
                 }

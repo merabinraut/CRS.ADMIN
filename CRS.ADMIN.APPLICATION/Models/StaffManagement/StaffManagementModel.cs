@@ -1,19 +1,18 @@
 ﻿using CRS.ADMIN.APPLICATION.Resources;
-using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
 
 namespace CRS.ADMIN.APPLICATION.Models.StaffManagement
 {
     public class StaffManagementCommonModel
     {
+        public string SearchFilter { get; set; }
         public List<StaffManagementModel> StaffListModel { get; set; }
         public ManageStaff ManageStaffModel { get; set; }
     }
     public class StaffManagementModel
     {
+        public string SNO { get; set; }
         public string Id { get; set; }
         public string FullName { get; set; }
         public string UserName { get; set; }

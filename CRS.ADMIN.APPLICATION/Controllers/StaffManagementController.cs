@@ -1,10 +1,13 @@
 ﻿using CRS.ADMIN.APPLICATION.Library;
+using CRS.ADMIN.APPLICATION.Models.CustomerManagement;
 using CRS.ADMIN.APPLICATION.Models.StaffManagement;
 using CRS.ADMIN.BUSINESS.StaffManagement;
 using CRS.ADMIN.SHARED;
+using CRS.ADMIN.SHARED.PaginationManagement;
 using CRS.ADMIN.SHARED.StaffManagement;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Web.Mvc;
 
 namespace CRS.ADMIN.APPLICATION.Controllers
@@ -17,7 +20,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             _business = business;
         }
         [HttpGet]
-        public ActionResult StaffList()
+        public ActionResult StaffList(CustomerListCommonModel Request, int StartIndex = 0, int PageSize = 10)
         {
             Session["CurrentUrl"] = "/StaffManagement/StaffList";
             string RenderId = "";
@@ -25,7 +28,13 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             if (TempData.ContainsKey("ManageStaffModel")) responseInfo.ManageStaffModel = TempData["ManageStaffModel"] as ManageStaff;
             else responseInfo.ManageStaffModel = new ManageStaff();
             if (TempData.ContainsKey("RenderId")) RenderId = TempData["RenderId"].ToString();
-            var dbResponseInfo = _business.GetStaffList();
+            PaginationFilterCommon dbRequest = new PaginationFilterCommon()
+            {
+                Skip = StartIndex,
+                Take = PageSize,
+                SearchFilter = !string.IsNullOrEmpty(Request.SearchFilter) ? Request.SearchFilter : null
+            };
+            var dbResponseInfo = _business.GetStaffList(dbRequest);
             responseInfo.StaffListModel = dbResponseInfo.MapObjects<StaffManagementModel>();
             foreach (var item in responseInfo.StaffListModel)
             {
@@ -33,8 +42,11 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             }
             ViewBag.PopUpRenderValue = !string.IsNullOrEmpty(RenderId) ? RenderId : null;
             ViewBag.RoleDDL = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("ROLEDDL", "2", "") as Dictionary<string, string>, null, "--- Select ---");
-            //ViewBag.RoleDDL = ApplicationUtilities.LoadDropdownList("ROLEDDL", "2", "") as Dictionary<string, string>;
             ViewBag.RoleIdKey = responseInfo.ManageStaffModel.RoleId.EncryptParameter();
+            ViewBag.StartIndex = StartIndex;
+            ViewBag.PageSize = PageSize;
+            ViewBag.TotalData = dbResponseInfo != null && dbResponseInfo.Any() ? dbResponseInfo[0].TotalRecords : 0;
+            responseInfo.SearchFilter = !string.IsNullOrEmpty(Request.SearchFilter) ? Request.SearchFilter : null;
             return View(responseInfo);
         }
         [HttpGet]

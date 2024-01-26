@@ -7,12 +7,14 @@ namespace CRS.ADMIN.APPLICATION.Models.ClubManagement
 {
     public class ClubManagementCommonModel
     {
+        public string SearchFilter { get; set; }
         public List<ClubListModel> ClubListModel { get; set; }
         public ManageClubModel ManageClubModel { get; set; }
         public ManageTag ManageTag { get; set; }
     }
     public class ClubListModel
     {
+        public string SNO { get; set; }
         public string LoginId { get; set; }
         public string AgentId { get; set; }
         public string Status { get; set; }

@@ -1,6 +1,7 @@
 ﻿using CRS.ADMIN.REPOSITORY.ClubManagement;
 using CRS.ADMIN.SHARED;
 using CRS.ADMIN.SHARED.ClubManagement;
+using CRS.ADMIN.SHARED.PaginationManagement;
 using System.Collections.Generic;
 
 namespace CRS.ADMIN.BUSINESS.ClubManagement
@@ -18,9 +19,9 @@ namespace CRS.ADMIN.BUSINESS.ClubManagement
             return _REPO.GetClubDetails(AgentId);
         }
 
-        public List<ClubListCommon> GetClubList(string SearchFilter = "")
+        public List<ClubListCommon> GetClubList(PaginationFilterCommon Request)
         {
-            return _REPO.GetClubList(SearchFilter);
+            return _REPO.GetClubList(Request);
         }
 
         public CommonDbResponse ManageClub(ManageClubCommon Request)

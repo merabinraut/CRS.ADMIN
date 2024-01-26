@@ -1,10 +1,7 @@
 ﻿using CRS.ADMIN.SHARED;
+using CRS.ADMIN.SHARED.PaginationManagement;
 using CRS.ADMIN.SHARED.StaffManagement;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CRS.ADMIN.REPOSITORY.StaffManagement
 {
@@ -12,7 +9,7 @@ namespace CRS.ADMIN.REPOSITORY.StaffManagement
     {
         CommonDbResponse DeleteStaff(string id, Common commonRequest);
         StaffDetailsCommon GetStaffDetails(string id);
-        List<StaffManagementListModelCommon> GetStaffList();
+        List<StaffManagementListModelCommon> GetStaffList(PaginationFilterCommon Request);
         CommonDbResponse ManageStaff(ManagerStaffCommon commonModel);
     }
 }

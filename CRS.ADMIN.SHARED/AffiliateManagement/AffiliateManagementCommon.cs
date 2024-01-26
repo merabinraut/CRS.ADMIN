@@ -1,6 +1,8 @@
-﻿namespace CRS.ADMIN.SHARED.AffiliateManagement
+﻿using CRS.ADMIN.SHARED.PaginationManagement;
+
+namespace CRS.ADMIN.SHARED.AffiliateManagement
 {
-    public class AffiliateManagementCommon
+    public class AffiliateManagementCommon : PaginationResponseCommon
     {
         public string AffiliateId { get; set; }
         public string HoldAffiliateId { get; set; }
@@ -26,7 +28,7 @@
         public string AgentId { get; set; }
         public string Status { get; set; }
     }
-    public class ReferralConvertedCustomerListModelCommon
+    public class ReferralConvertedCustomerListModelCommon : PaginationResponseCommon
     {
         public string CustomerId { get; set; }
         public string ReferCode { get; set; }

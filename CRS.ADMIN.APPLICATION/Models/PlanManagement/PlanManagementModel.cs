@@ -23,6 +23,7 @@ namespace CRS.ADMIN.APPLICATION.Models.PlanManagement
     }
     public class PlanManagementModel    
     {
+        public string SNO { get; set; }
         public string PlanId { get; set; }
         [DisplayName("Plan Name")]
         [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]

@@ -1,5 +1,7 @@
 ﻿using CRS.ADMIN.SHARED;
+using CRS.ADMIN.SHARED.PaginationManagement;
 using CRS.ADMIN.SHARED.StaffManagement;
+using System;
 using System.Collections.Generic;
 using System.Data;
 
@@ -13,7 +15,7 @@ namespace CRS.ADMIN.REPOSITORY.StaffManagement
             _dao = new RepositoryDao();
         }
 
-        public CommonDbResponse DeleteStaff(string id,  Common commonRequest)
+        public CommonDbResponse DeleteStaff(string id, Common commonRequest)
         {
             string sp_name = "EXEC sproc_superadmin_staffmanagement @Flag='ds'";
             sp_name += ",@Id=" + _dao.FilterString(id);
@@ -28,7 +30,7 @@ namespace CRS.ADMIN.REPOSITORY.StaffManagement
             string sp_name = "EXEC sproc_superadmin_staffmanagement @Flag='gsd'";
             sp_name += ",@Id=" + _dao.FilterString(id);
 
-            var dbResponseInfo=_dao.ExecuteDataRow(sp_name);
+            var dbResponseInfo = _dao.ExecuteDataRow(sp_name);
             if (dbResponseInfo != null)
             {
                 return new StaffDetailsCommon()
@@ -43,10 +45,13 @@ namespace CRS.ADMIN.REPOSITORY.StaffManagement
             return new StaffDetailsCommon();
         }
 
-        public List<StaffManagementListModelCommon> GetStaffList()
+        public List<StaffManagementListModelCommon> GetStaffList(PaginationFilterCommon Request)
         {
             var responseInfo = new List<StaffManagementListModelCommon>();
             string sp_name = "EXEC sproc_superadmin_staffmanagement @Flag='gsl'";
+            sp_name += !string.IsNullOrEmpty(Request.SearchFilter) ? ",@SearchFilter=N" + _dao.FilterString(Request.SearchFilter) : null;
+            sp_name += ",@Skip=" + Request.Skip;
+            sp_name += ",@Take=" + Request.Take;
             var dbResponseInfo = _dao.ExecuteDataTable(sp_name);
             if (dbResponseInfo != null)
             {
@@ -62,6 +67,8 @@ namespace CRS.ADMIN.REPOSITORY.StaffManagement
                         ProfileImage = dataRow["ProfileImage"].ToString(),
                         RoleName = dataRow["RoleName"].ToString(),
                         ActionDate = dataRow["ActionDate"].ToString(),
+                        TotalRecords = Convert.ToInt32(_dao.ParseColumnValue(dataRow, "TotalRecords").ToString()),
+                        SNO = Convert.ToInt32(_dao.ParseColumnValue(dataRow, "SNO").ToString())
                     });
                 }
             }

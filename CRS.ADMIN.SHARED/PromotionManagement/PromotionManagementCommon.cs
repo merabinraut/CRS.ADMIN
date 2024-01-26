@@ -1,6 +1,8 @@
-﻿namespace CRS.ADMIN.SHARED.PromotionManagement
+﻿using CRS.ADMIN.SHARED.PaginationManagement;
+
+namespace CRS.ADMIN.SHARED.PromotionManagement
 {
-    public class PromotionManagementCommon : Common
+    public class PromotionManagementCommon : PaginationResponseCommon
     {
         public string Id { get; set; }
         public string Title { get; set; }

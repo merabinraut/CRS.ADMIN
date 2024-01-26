@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using CRS.ADMIN.SHARED.PaginationManagement;
 
 namespace CRS.ADMIN.SHARED.StaffManagement
 {
-    public class StaffManagementListModelCommon : Common
+    public class StaffManagementListModelCommon : PaginationResponseCommon
     {
         public string Id { get; set; }
         public string FullName { get; set; }

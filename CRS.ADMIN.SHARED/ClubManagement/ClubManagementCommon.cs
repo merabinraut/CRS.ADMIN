@@ -1,6 +1,8 @@
-﻿namespace CRS.ADMIN.SHARED.ClubManagement
+﻿using CRS.ADMIN.SHARED.PaginationManagement;
+
+namespace CRS.ADMIN.SHARED.ClubManagement
 {
-    public class ClubListCommon
+    public class ClubListCommon : PaginationResponseCommon
     {
         public string LoginId { get; set; }
         public string AgentId { get; set; }

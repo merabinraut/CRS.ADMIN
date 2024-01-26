@@ -1,6 +1,7 @@
 ﻿using CRS.ADMIN.SHARED;
-using CRS.ADMIN.SHARED.ClubManagement;
 using CRS.ADMIN.SHARED.HostManagement;
+using CRS.ADMIN.SHARED.PaginationManagement;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -14,12 +15,14 @@ namespace CRS.ADMIN.REPOSITORY.HostManagement
         {
             _DAO = new RepositoryDao();
         }
-        public List<HostListCommon> GetHostList(string AgentId, string SearchFilter = "")
+        public List<HostListCommon> GetHostList(string AgentId, PaginationFilterCommon Request)
         {
             var response = new List<HostListCommon>();
             string SQL = "EXEC sproc_host_management @Flag='ghl'";
             SQL += ",@AgentId=" + _DAO.FilterString(AgentId);
-            SQL += !string.IsNullOrEmpty(SearchFilter) ? ",@SearchFilter=N" + _DAO.FilterString(SearchFilter) : null;
+            SQL += !string.IsNullOrEmpty(Request.SearchFilter) ? ",@SearchFilter=N" + _DAO.FilterString(Request.SearchFilter) : null;
+            SQL += ",@Skip=" + Request.Skip;
+            SQL += ",@Take=" + Request.Take;
             var dbResponse = _DAO.ExecuteDataTable(SQL);
             if (dbResponse != null)
             {
@@ -39,7 +42,9 @@ namespace CRS.ADMIN.REPOSITORY.HostManagement
                         ClubName = _DAO.ParseColumnValue(item, "ClubName").ToString(),
                         Ratings = _DAO.ParseColumnValue(item, "Ratings").ToString(),
                         TotalVisitors = _DAO.ParseColumnValue(item, "TotalVisitors").ToString(),
-                        HostImage = _DAO.ParseColumnValue(item, "HostImage").ToString()
+                        HostImage = _DAO.ParseColumnValue(item, "HostImage").ToString(),
+                        TotalRecords = Convert.ToInt32(_DAO.ParseColumnValue(item, "TotalRecords").ToString()),
+                        SNO = Convert.ToInt32(_DAO.ParseColumnValue(item, "SNO").ToString())
                     });
                 }
             }

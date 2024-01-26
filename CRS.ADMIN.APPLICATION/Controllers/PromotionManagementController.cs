@@ -2,6 +2,7 @@
 using CRS.ADMIN.APPLICATION.Models.PromotionManagement;
 using CRS.ADMIN.BUSINESS.PromotionManagement;
 using CRS.ADMIN.SHARED;
+using CRS.ADMIN.SHARED.PaginationManagement;
 using CRS.ADMIN.SHARED.PromotionManagement;
 using System;
 using System.IO;
@@ -15,23 +16,31 @@ namespace CRS.ADMIN.APPLICATION.Controllers
     {
         private readonly IPromotionManagementBusiness _business;
         public PromotionManagementController(IPromotionManagementBusiness business) => this._business = business;
-        public ActionResult GetPromotionalImages()
+        public ActionResult GetPromotionalImages(PromotionManagementCommonModel Request, int StartIndex = 0, int PageSize = 10)
         {
             Session["CurrentUrl"] = "/PromotionManagement/GetPromotionalImages";
-
             PromotionManagementCommonModel ResponseModel = new PromotionManagementCommonModel();
-            var promotionalImages = _business.GetPromotionalImageLists();
+            PaginationFilterCommon dbRequest = new PaginationFilterCommon()
+            {
+                Skip = StartIndex,
+                Take = PageSize,
+                SearchFilter = !string.IsNullOrEmpty(Request.SearchFilter) ? Request.SearchFilter : null
+            };
+            var promotionalImages = _business.GetPromotionalImageLists(dbRequest);
             ResponseModel.PromotionManagementListModel = promotionalImages.MapObjects<PromotionManagementListModel>();
             foreach (var item in ResponseModel.PromotionManagementListModel)
             {
                 item.Id = item.Id?.EncryptParameter();
                 item.IsDeleted = item.IsDeleted.Trim().ToUpper() == "FALSE" ? "A" : "B";
             }
-
             string RenderId = "";
             if (TempData.ContainsKey("PromotionManagementModel")) ResponseModel.PromotionManagementModel = TempData["PromotionManagementModel"] as PromotionManagementModel;
             if (TempData.ContainsKey("RenderId")) RenderId = TempData["RenderId"].ToString();
             ViewBag.PopUpRenderValue = !string.IsNullOrEmpty(RenderId) ? RenderId : null;
+            ViewBag.StartIndex = StartIndex;
+            ViewBag.PageSize = PageSize;
+            ViewBag.TotalData = promotionalImages != null && promotionalImages.Any() ? promotionalImages[0].TotalRecords : 0;
+            ResponseModel.SearchFilter = !string.IsNullOrEmpty(Request.SearchFilter) ? Request.SearchFilter : null;
             return View(ResponseModel);
         }
         [HttpGet]

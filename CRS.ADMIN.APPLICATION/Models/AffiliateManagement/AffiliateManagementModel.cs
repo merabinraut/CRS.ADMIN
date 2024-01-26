@@ -10,6 +10,7 @@ namespace CRS.ADMIN.APPLICATION.Models.AffiliateManagement
     }
     public class AffiliateManagementModel
     {
+        public string SNO { get; set; }
         public string AffiliateId { get; set; }
         public string HoldAffiliateId { get; set; }
         public string AffiliateImage { get; set; }
@@ -25,6 +26,7 @@ namespace CRS.ADMIN.APPLICATION.Models.AffiliateManagement
 
     public class ReferralConvertedCustomerListModel
     {
+        public string SNO { get; set; }
         public string CustomerId { get; set; }
         public string ReferCode { get; set; }
         public string CustomerImage { get; set; }

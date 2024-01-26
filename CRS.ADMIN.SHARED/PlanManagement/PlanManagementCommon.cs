@@ -1,8 +1,9 @@
-﻿using System.Web;
+﻿using CRS.ADMIN.SHARED.PaginationManagement;
+using System.Web;
 
 namespace CRS.ADMIN.SHARED.PlanManagement
 {
-    public class PlanManagementCommon : Common
+    public class PlanManagementCommon : PaginationResponseCommon
     {
         public string PlanId { get; set; }
         public string PlanName { get; set; }

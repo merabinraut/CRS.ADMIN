@@ -4,7 +4,6 @@ namespace CRS.ADMIN.SHARED.CustomerManagement
 {
     public class CustomerSearchFilterCommon : PaginationFilterCommon
     {
-        public string SearchFilter { get; set; }
         public string FromDate { get; set; }
         public string ToDate { get; set; }
         public string Status { get; set; }
@@ -29,7 +28,6 @@ namespace CRS.ADMIN.SHARED.CustomerManagement
     }
     public class CustomerListCommon : PaginationResponseCommon
     {
-        public int SNO { get; set; }
         public string AgentId { get; set; }
         public string ProfileImage { get; set; }
         public string FullName { get; set; }

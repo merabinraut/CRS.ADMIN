@@ -3,6 +3,9 @@ using CRS.ADMIN.APPLICATION.Models.AffiliateManagement;
 using CRS.ADMIN.BUSINESS.AffiliateManagement;
 using CRS.ADMIN.SHARED;
 using CRS.ADMIN.SHARED.AffiliateManagement;
+using CRS.ADMIN.SHARED.PaginationManagement;
+using DocumentFormat.OpenXml.Wordprocessing;
+using System.Linq;
 using System.Web.Mvc;
 
 namespace CRS.ADMIN.APPLICATION.Controllers
@@ -14,12 +17,24 @@ namespace CRS.ADMIN.APPLICATION.Controllers
         {
             _affiliateBuss = affiliateBuss;
         }
-        public ActionResult Index(string SearchFilter1 = "", string SearchFilter2 = "")
+        public ActionResult Index(string SearchFilter1 = "", string SearchFilter2 = "", int StartIndex = 0, int PageSize = 10, int StartIndex2 = 0, int PageSize2 = 10)
         {
             Session["CurrentURL"] = "/AffiliateManagement/Index";
             var ResponseModel = new ReferalCommonModel();
-            var dbResponse = _affiliateBuss.GetAffiliateList(SearchFilter1);
-            var dbReferalRes = _affiliateBuss.GetReferalConvertedCustomerList(SearchFilter2, "", "");
+            var dbAffiliateListRequest = new PaginationFilterCommon()
+            {
+                Skip = StartIndex,
+                Take = PageSize,
+                SearchFilter = SearchFilter1
+            };
+            var dbResponse = _affiliateBuss.GetAffiliateList(dbAffiliateListRequest);
+            var dbCustomerListRequest = new PaginationFilterCommon()
+            {
+                Skip = StartIndex2,
+                Take = PageSize2,
+                SearchFilter = SearchFilter2
+            };
+            var dbReferalRes = _affiliateBuss.GetReferalConvertedCustomerList("", "", dbCustomerListRequest);
             var analyticDBResponse = _affiliateBuss.GetAffiliateAnalytic();
             if (dbResponse.Count > 0) ResponseModel.GetAffiliateList = dbResponse.MapObjects<AffiliateManagementModel>();
             ResponseModel.GetAffiliateList.ForEach(x => x.AffiliateId = x.AffiliateId.EncryptParameter());
@@ -32,6 +47,13 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             if (!string.IsNullOrEmpty(SearchFilter1)) ActiveTab = "Affiliates";
             else if (!string.IsNullOrEmpty(SearchFilter2)) ActiveTab = "Converted Customers";
             ViewBag.ActiveTab = ActiveTab ?? "";
+            ViewBag.StartIndex = StartIndex;
+            ViewBag.PageSize = PageSize;
+            ViewBag.TotalData = dbResponse != null && dbResponse.Any() ? dbResponse[0].TotalRecords : 0;
+
+            ViewBag.StartIndex2 = StartIndex2;
+            ViewBag.PageSize2 = PageSize2;
+            ViewBag.TotalData2 = dbReferalRes != null && dbReferalRes.Any() ? dbReferalRes[0].TotalRecords : 0;
             return View(ResponseModel);
         }
 
