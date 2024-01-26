@@ -26,6 +26,8 @@
                     @using (Html.BeginForm("GetPaymentLedger", "PaymentManagement", FormMethod.Get))
                     {
                         @Html.HiddenFor(x => x.FirstOrDefault().ClubId)
+                        <input id="FromDate" name="FromDate" value="@ViewBag.FromDate" hidden />
+                        <input id="ToDate" name="ToDate" value="@ViewBag.ToDate" hidden />
                         <div class="relative input-search-wrapper">
                             <div class="absolute inset-y-0 left-0 flex items-center pl-[16px] pointer-events-none">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21"
@@ -39,6 +41,7 @@
                             <input type="search" id="default-search"
                                    class="input-search block w-full "
                                    placeholder="@CRS.ADMIN.APPLICATION.Resources.Resource.Search"
+                                   value="@ViewBag.SearchFilter"
                                    name="searchText">
                         </div>
 
@@ -71,24 +74,16 @@
                         <!-- Content for Tab 1 -->
                         <!-- table  -->
                         <div class="table-tab">
-                            <div class="px-[12px] py-[16px] flex justify-between entry-export-container">
-                                <div class="flex items-center select-entries">
-                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Show&nbsp;
-                                    <select id="countries" class="w-full select-entires " style="width: 100%; ">
-                                        <option value="5" selected>5</option>
-                                        <option value="10">10</option>
-                                        <option value="15">15</option>
-                                        <option value="20">100</option>
-                                    </select>&nbsp;@CRS.ADMIN.APPLICATION.Resources.Resource.Entries
+                            <div class="px-[16px] py-[12px] flex justify-between entry-export-container">
+                                <div class="flex items-center select-entries" id="ShowEntries-Id">
                                 </div>
-                                <div class="export-button h-[40px]">
-                                    <img src="~/Content/assets_new/images/club/download-solid.svg">
-                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Export
+                                <div class="export-button h-[40px]" onclick="exportExcel('table-id', 'PaymentLedger')">
+                                    <img src="~/Content/assets_new/images/club/download-solid.svg"> @CRS.ADMIN.APPLICATION.Resources.Resource.Export
                                 </div>
                             </div>
 
                             <div class="relative overflow-x-auto">
-                                <table class="w-full  text-left club-table">
+                                <table class="w-full  text-left club-table" id="table-id">
                                     <thead class="club-table-thead">
                                         <tr>
                                             <th scope="col" class="p-[12px]">
@@ -214,11 +209,9 @@
                                     <tbody>
                                         @foreach (var paymentLedger in Model)
                                         {
-                                            int rowCount = 1;
-
                                             <tr class="bg-white border-b ">
                                                 <td class="p-[12px] w-max">
-                                                    @rowCount
+                                                    @paymentLedger.SNO
                                                 </td>
                                                 <td class="p-[12px] w-max">
                                                     <div class="round-image-text flex gap-[12px] w-max ">
@@ -281,371 +274,50 @@
                                                     <div class="w-max text-[#1976D2] ">¥@paymentLedger.AdminPaymentAmount</div>
                                                 </td>
                                             </tr>
-                                            rowCount++;
                                         }
                                     </tbody>
                                 </table>
-
                             </div>
                             <div class="pagination-club">
-                                <div class="show-entry">
-                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Showing 1 to 5 of 301 @CRS.ADMIN.APPLICATION.Resources.Resource.Entries
+                                <div class="show-entry" id="Entries-Id">
                                 </div>
                                 <div class="flex gap-[12px]">
-                                    <div class="btn btn-secondary-box-shadow ">
+                                    <div class="btn btn-secondary-box-shadow" id="prev-btn">
                                         @CRS.ADMIN.APPLICATION.Resources.Resource.Previous
                                     </div>
-                                    <div class="flex gap-[12px]">
-                                        <div class="pagination-number active">
-
-                                            1
-                                        </div>
-                                        <div class="pagination-number">
-                                            2
-                                        </div>
-                                        <div class="pagination-number">
-                                            3
-                                        </div>
-                                        <div class="pagination-number">
-                                            ..
-                                        </div>
-                                        <div class="pagination-number">
-                                            10
-                                        </div>
-
+                                    <div class="flex gap-[12px]" id="pagination-id">
                                     </div>
-                                    <div class="btn btn-secondary-box-shadow ">
+                                    <div class="btn btn-secondary-box-shadow" id="next-btn">
                                         @CRS.ADMIN.APPLICATION.Resources.Resource.Next
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div id="tab2" class="tab-content hidden">
-                        <!-- Content for Tab 2 -->
-                        <div class="table-tab">
-                            <div class="px-[12px] py-[16px] flex justify-between entry-export-container">
-                                <div class="flex items-center select-entries">
-                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Show&nbsp;
-                                    <select id="countries" class="w-full select-entires " style="width: 100%; ">
-                                        <option value="5" selected>5</option>
-                                        <option value="10">10</option>
-                                        <option value="15">15</option>
-                                        <option value="20">100</option>
-                                    </select>&nbsp;@CRS.ADMIN.APPLICATION.Resources.Resource.Entries
-                                </div>
-                                <div class="export-button h-[40px]">
-                                    <img src="~/Content/assets_new/images/club/download-solid.svg">
-                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Export
-                                </div>
-                            </div>
-
-                            <div class="relative overflow-x-auto">
-                                <table class="w-full  text-left club-table">
-                                    <thead class="club-table-thead">
-                                        <tr>
-                                            <th scope="col" class="p-[12px]">
-                                                <div class="flex w-max">
-                                                    S.N
-                                                    <div class="relative pl-[5px]">
-                                                        <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
-                                                        <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
-                                                    </div>
-                                                </div>
-                                            </th>
-                                            <th scope="col" class="p-[12px]">
-                                                <div class="flex w-max">
-                                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Customer
-                                                    <div class="relative pl-[5px]">
-                                                        <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
-                                                        <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
-                                                    </div>
-                                                </div>
-                                            </th>
-                                            <th scope="col" class="p-[12px]">
-                                                <div class="flex w-max">
-                                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Location
-                                                    <div class="relative pl-[5px]">
-                                                        <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
-                                                        <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
-                                                    </div>
-                                                </div>
-                                            </th>
-                                            <th scope="col" class="p-[12px]">
-                                                <div class="flex w-max">
-                                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Date
-                                                    <div class="relative pl-[5px]">
-                                                        <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
-                                                        <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
-                                                    </div>
-                                                </div>
-                                            </th>
-
-                                            <th scope="col" class="p-[12px]">
-                                                <div class="flex w-max">
-                                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Payment_Status
-                                                    <div class="relative pl-[5px]">
-                                                        <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
-                                                        <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
-                                                    </div>
-                                                </div>
-                                            </th>
-                                            <th scope="col" class="p-[12px]">
-                                                <div class="flex w-max">
-                                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Total_Amount
-                                                    <div class="relative pl-[5px]">
-                                                        <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
-                                                        <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
-                                                    </div>
-                                                </div>
-                                            </th>
-                                            <th scope="col" class="p-[12px]">
-                                                <div class="flex w-max">
-                                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Total_Commission
-                                                    <div class="relative pl-[5px]">
-                                                        <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
-                                                        <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
-                                                    </div>
-                                                </div>
-                                            </th>
-                                            <th scope="col" class="p-[12px]">
-                                                <div class="flex w-max">
-                                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Grand_Total
-                                                    <div class="relative pl-[5px]">
-                                                        <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
-                                                        <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
-                                                    </div>
-                                                </div>
-                                            </th>
-                                            <th scope="col" class="p-[12px]">
-                                                <div class="flex w-max justify-center">
-                                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Action
-                                                    <div class="relative pl-[5px]">
-                                                        <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
-                                                        <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
-                                                    </div>
-                                                </div>
-                                            </th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @*<tr class="bg-white border-b ">
-                                                <td class="p-[12px] w-max">
-                                                    1
-                                                </td>
-                                                <td class="p-[12px] w-max">
-                                                    <div class="round-image-text flex gap-[12px] w-max ">
-                                                        <img class="w-[32px] h-[32px] rounded-full"
-                                                             src="../../../assets/images/demo-image.jpeg" />
-
-                                                        <div class="flex justify-between w-full">
-                                                            <div class="text-image grid flex-none">
-                                                                <div class="text-sm font-semibold text-[#101828] ">
-                                                                    Club
-                                                                    Earth
-                                                                </div>
-                                                                <div class="platinum ">platinum</div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td class="p-[12px] w-max">
-
-                                                    <div class="plan-a">
-                                                        Plan A
-                                                    </div>
-
-                                                </td>
-                                                <td class="p-[12px] w-max">
-                                                    <div class=" w-max">
-                                                        2023-06-01
-                                                    </div>
-                                                </td>
-
-                                                <td class="p-[12px] w-max">
-                                                    <div class="approved w-max">
-                                                        Received
-                                                    </div>
-                                                </td>
-                                                <td class="p-[12px] w-max">
-                                                    <div class="w-max ">¥11,234</div>
-
-                                                </td>
-                                                <td class="p-[12px] w-max">
-                                                    <div class="w-max ">¥11,234</div>
-
-                                                </td>
-                                                <td class="p-[12px] w-max">
-                                                    <div class="w-max ">¥11,234</div>
-
-                                                </td>
-                                                <td class="p-[12px] w-max">
-                                                    <div class="w-max ">¥11,234</div>
-
-                                                </td>
-
-
-
-                                            </tr>
-                                            <tr class="bg-white border-b ">
-                                                <td class="p-[12px] w-max">
-                                                    1
-                                                </td>
-                                                <td class="p-[12px] w-max">
-                                                    <div class="round-image-text flex gap-[12px] w-max ">
-                                                        <img class="w-[32px] h-[32px] rounded-full"
-                                                             src="../../../assets/images/demo-image.jpeg" />
-
-                                                        <div class="flex justify-between w-full">
-                                                            <div class="text-image grid flex-none">
-                                                                <div class="text-sm font-semibold text-[#101828] ">
-                                                                    Club
-                                                                    Earth
-                                                                </div>
-                                                                <div class="gold ">gold</div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td class="p-[12px] w-max">
-
-                                                    <div class="plan-a">
-                                                        Plan A
-                                                    </div>
-
-                                                </td>
-                                                <td class="p-[12px] w-max">
-                                                    <div class=" w-max">
-                                                        2023-06-01
-                                                    </div>
-                                                </td>
-
-                                                <td class="p-[12px] w-max">
-                                                    <div class="pending w-max">
-                                                        Processing
-                                                    </div>
-                                                </td>
-                                                <td class="p-[12px] w-max">
-                                                    <div class="w-max ">¥11,234</div>
-
-                                                </td>
-                                                <td class="p-[12px] w-max">
-                                                    <div class="w-max ">¥11,234</div>
-
-                                                </td>
-                                                <td class="p-[12px] w-max">
-                                                    <div class="w-max ">¥11,234</div>
-
-                                                </td>
-                                                <td class="p-[12px] w-max">
-                                                    <div class="flex justify-center items-center gap-3 w-full">
-                                                        <div class="btn btn-green-border h-[22px] text-[10px] rounded-[16px] w-max">
-                                                            Make Paid
-                                                        </div>
-                                                    </div>
-                                                </td>
-
-
-
-                                            </tr>
-                                            <tr class="bg-white border-b ">
-                                                <td class="p-[12px] w-max">
-                                                    1
-                                                </td>
-                                                <td class="p-[12px] w-max">
-                                                    <div class="round-image-text flex gap-[12px] w-max ">
-                                                        <img class="w-[32px] h-[32px] rounded-full"
-                                                             src="../../../assets/images/demo-image.jpeg" />
-
-                                                        <div class="flex justify-between w-full">
-                                                            <div class="text-image grid flex-none">
-                                                                <div class="text-sm font-semibold text-[#101828] ">
-                                                                    Club
-                                                                    Earth
-                                                                </div>
-                                                                <div class="silver ">Silver</div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td class="p-[12px] w-max">
-
-                                                    <div class="plan-a">
-                                                        Plan A
-                                                    </div>
-
-                                                </td>
-                                                <td class="p-[12px] w-max">
-                                                    <div class=" w-max">
-                                                        2023-06-01
-                                                    </div>
-                                                </td>
-
-                                                <td class="p-[12px] w-max">
-                                                    <div class="rejected w-max">
-                                                        Due
-                                                    </div>
-                                                </td>
-                                                <td class="p-[12px] w-max">
-                                                    <div class="w-max ">¥11,234</div>
-
-                                                </td>
-                                                <td class="p-[12px] w-max">
-                                                    <div class="w-max ">¥11,234</div>
-
-                                                </td>
-                                                <td class="p-[12px] w-max">
-                                                    <div class="w-max ">¥11,234</div>
-
-                                                </td>
-                                                <td class="p-[12px] w-max">
-                                                    <div class="w-max ">¥11,234</div>
-
-                                                </td>
-                                            </tr>*@
-                                    </tbody>
-                                </table>
-
-                            </div>
-                            <div class="pagination-club">
-                                <div class="show-entry">
-                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Showing 1 to 5 of 301 @CRS.ADMIN.APPLICATION.Resources.Resource.Entries
-                                </div>
-                                <div class="flex gap-[12px]">
-                                    <div class="btn btn-secondary-box-shadow ">
-                                        @CRS.ADMIN.APPLICATION.Resources.Resource.Previous
-                                    </div>
-                                    <div class="flex gap-[12px]">
-                                        <div class="pagination-number active">
-                                            1
-                                        </div>
-                                        <div class="pagination-number">
-                                            2
-                                        </div>
-                                        <div class="pagination-number">
-                                            3
-                                        </div>
-                                        <div class="pagination-number">
-                                            ..
-                                        </div>
-                                        <div class="pagination-number">
-                                            10
-                                        </div>
-                                    </div>
-                                    <div class="btn btn-secondary-box-shadow ">
-                                        @CRS.ADMIN.APPLICATION.Resources.Resource.Next
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div id="tab3" class="tab-content hidden">
-                        <!-- Content for Tab 3 -->
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    @Html.Partial("_CustomDate")
+    @*@Html.Partial("_CustomDate")*@
 </div>
+@section scripts
+{
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+                const page_size = @ViewBag.PageSize;
+                const total_data = @ViewBag.TotalData;
+                const start_index_val = @ViewBag.StartIndex;
+                let URL = "/PaymentManagement/GetPaymentLedger";
+                let search_filter = '@ViewBag.SearchFilter';
+                let ClubId = $('#ClubId').val();
+                let FromDate = '@ViewBag.FromDate';
+                let ToDate = '@ViewBag.ToDate';
+                URL = addQueryParam(URL, 'SearchFilter', search_filter);
+                URL = addQueryParam(URL, 'clubId', ClubId);
+                URL = addQueryParam(URL, 'FromDate', FromDate);
+                URL = addQueryParam(URL, 'ToDate', ToDate);
+                LoadPagination(page_size, total_data, start_index_val, URL);
+            });
+    </script>
+}

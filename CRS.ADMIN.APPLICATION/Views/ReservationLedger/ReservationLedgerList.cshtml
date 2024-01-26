@@ -26,7 +26,7 @@
         </div>
         <div class="flex flex-col  gap-4">
             <div class="flex justify-between ">
-                <form>
+                <form action="/ReservationLedger/ReservationLedgerList" method="get">
                     <div class="relative input-search-wrapper">
                         <div class="absolute inset-y-0 left-0 flex items-center pl-[16px] pointer-events-none">
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21"
@@ -37,11 +37,14 @@
                                 </path>
                             </svg>
                         </div>
+                        <input type="hidden" id="ClubId" name="ClubId" value="@ViewBag.ClubIdKey" />
+                        <input id="FromDate" name="FromDate" value="@ViewBag.FromDate" hidden />
+                        <input id="ToDate" name="ToDate" value="@ViewBag.ToDate" hidden />
                         <input type="search"
                                id="default-search"
                                class="input-search block w-full "
                                placeholder="@CRS.ADMIN.APPLICATION.Resources.Resource.Search"
-                               required="">
+                               value="@ViewBag.SearchText">
                     </div>
                 </form>
                 <div class="flex gap-6">
@@ -73,55 +76,64 @@
                         </div>
 
                         <div class="grid grid-cols-3 gap-[27px]">
+                            @*<div class="input-field-common">
+                                    <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
+                                        @CRS.ADMIN.APPLICATION.Resources.Resource.Hosts
+                                    </label>
+                                    <select id="large" name="Host" class=" default_select select-common block w-full "
+                                            style="width: 100%;">
+                                        <option>Select Host</option>
+                                        <option value="CA">club</option>
+                                        <option value="FR">club</option>
+                                        <option value="DE">club</option>
+                                    </select>
+                                </div>
+                                <div class="input-field-common">
+                                    <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
+                                        @CRS.ADMIN.APPLICATION.Resources.Resource.Club_Status
+                                    </label>
+                                    <select id="large" name="ClubStatus" class=" default_select select-common block w-full "
+                                            style="width: 100%;">
+                                        <option>Select Club Status</option>
+                                        <option value="CA">club</option>
+                                        <option value="FR">club</option>
+                                        <option value="DE">club</option>
+                                    </select>
+                                </div>*@
                             <div class="input-field-common">
                                 <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
-                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Club
+                                    @CRS.ADMIN.APPLICATION.Resources.Resource.ClubName
                                 </label>
-                                <select id="large" name="Club" class=" default_select select-common block w-full "
+                                <select id="large" name="ClubId" class=" default_select select-common block w-full "
                                         style="width: 100%;">
-                                    <option>Select Club Type</option>
-                                    <option value="CA">club</option>
-                                    <option value="FR">club</option>
-                                    <option value="DE">club</option>
+                                    @foreach (var item in ViewBag.ClubDDL as IEnumerable<SelectListItem>)
+                                    {
+                                        var selectedId = ViewBag.ClubIdKey as string;
+                                        if (item.Value == selectedId)
+                                        {
+                                            <option value="@item.Value" selected>@item.Text</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@item.Value">
+                                                @item.Text
+                                            </option>
+                                        }
+                                    }
                                 </select>
                             </div>
-                            <div class="input-field-common">
-                                <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
-                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Hosts
-                                </label>
-                                <select id="large" name="Host" class=" default_select select-common block w-full "
-                                        style="width: 100%;">
-                                    <option>Select Host</option>
-                                    <option value="CA">club</option>
-                                    <option value="FR">club</option>
-                                    <option value="DE">club</option>
-                                </select>
-                            </div>
-                            <div class="input-field-common">
-                                <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
-                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Club_Status
-                                </label>
-                                <select id="large" name="ClubStatus" class=" default_select select-common block w-full "
-                                        style="width: 100%;">
-                                    <option>Select Club Status</option>
-                                    <option value="CA">club</option>
-                                    <option value="FR">club</option>
-                                    <option value="DE">club</option>
-                                </select>
-                            </div>
+                            <br />
                             <div class="input-field-common">
                                 <label class="block mb-[12px] text-sm font-medium text-secondary-100 ">
                                     @CRS.ADMIN.APPLICATION.Resources.Resource.From_Date
                                 </label>
-
-                                <input type="date" class="w-full" placeholder="YYYY/MM/DD" name="FromDate" required>
+                                <input type="text" class="w-full" placeholder="@CRS.ADMIN.APPLICATION.Resources.Resource.From_Date" name="FromDate" id="FromDate" value="@ViewBag.FromDate" readonly>
                             </div>
                             <div class="input-field-common">
                                 <label class="block mb-[12px] text-sm font-medium text-secondary-100 ">
                                     @CRS.ADMIN.APPLICATION.Resources.Resource.To_Date
                                 </label>
-
-                                <input type="date" class="w-full" placeholder="YYYY/MM/DD" name="ToDate" required>
+                                <input type="text" class="w-full" placeholder="@CRS.ADMIN.APPLICATION.Resources.Resource.To_Date" name="ToDate" id="ToDate" value="@ViewBag.ToDate" readonly>
                             </div>
 
                         </div>
@@ -145,19 +157,15 @@
             </div>
             <!-- table  -->
             <div class="table-tab">
-                <div class="px-[12px] py-[16px] flex justify-between entry-export-container">
-                    @*<div class="flex items-center select-entries">
-                        @CRS.ADMIN.APPLICATION.Resources.Resource.Show&nbsp;
-                        <select id="countries" class="w-full select-entires " style="width: 100%; ">
-                            <option value="5" selected>5</option>
-                            <option value="10">10</option>
-                            <option value="15">15</option>
-                            <option value="20">100</option>
-                        </select>&nbsp;@CRS.ADMIN.APPLICATION.Resources.Resource.Entries
-                    </div>*@
+                <div class="px-[16px] py-[12px] flex justify-between entry-export-container">
+                    <div class="flex items-center select-entries" id="ShowEntries-Id">
+                    </div>
+                    <div class="export-button h-[40px]" onclick="exportExcel('table-id', 'ReservationLedger')">
+                        <img src="~/Content/assets_new/images/club/download-solid.svg"> @CRS.ADMIN.APPLICATION.Resources.Resource.Export
+                    </div>
                 </div>
                 <div class="relative overflow-x-auto">
-                    <table class="w-full  text-left club-table">
+                    <table class="w-full  text-left club-table" id="table-id">
                         <thead class="club-table-thead">
                             <tr>
                                 <th scope="col" class="p-[12px]">
@@ -262,37 +270,20 @@
                             }
                     </table>
                 </div>
-                @*<div class="pagination-club">
-                    <div class="show-entry">
-                        @CRS.ADMIN.APPLICATION.Resources.Resource.Showing 1 to 5 of 301 @CRS.ADMIN.APPLICATION.Resources.Resource.Entries
+                <div class="pagination-club">
+                    <div class="show-entry" id="Entries-Id">
                     </div>
                     <div class="flex gap-[12px]">
-                        <div class="btn btn-secondary-box-shadow ">
+                        <div class="btn btn-secondary-box-shadow" id="prev-btn">
                             @CRS.ADMIN.APPLICATION.Resources.Resource.Previous
                         </div>
-                        <div class="flex gap-[12px]">
-                            <div class="pagination-number active">
-
-                                1
-                            </div>
-                            <div class="pagination-number">
-                                2
-                            </div>
-                            <div class="pagination-number">
-                                3
-                            </div>
-                            <div class="pagination-number">
-                                ..
-                            </div>
-                            <div class="pagination-number">
-                                10
-                            </div>
+                        <div class="flex gap-[12px]" id="pagination-id">
                         </div>
-                        <div class="btn btn-secondary-box-shadow ">
+                        <div class="btn btn-secondary-box-shadow" id="next-btn">
                             @CRS.ADMIN.APPLICATION.Resources.Resource.Next
                         </div>
                     </div>
-                </div>*@
+                </div>
             </div>
         </div>
     </div>
@@ -742,3 +733,78 @@
         </div>
     </div>
 </div>
+@section scripts{
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+                const page_size = @ViewBag.PageSize;
+                const total_data = @ViewBag.TotalData;
+                const start_index_val = @ViewBag.StartIndex;
+                let URL = "/ReservationLedger/ReservationLedgerList";
+                let search_filter = '@ViewBag.SearchText';
+                URL = addQueryParam(URL, 'SearchFilter', search_filter);
+                LoadPagination(page_size, total_data, start_index_val, URL);
+
+                var currentDate = new Date();
+                var lastThreeMonths = new Date();
+                lastThreeMonths.setMonth(currentDate.getMonth() - 3);
+
+                 $("#FromDate").val("@ViewBag.FromDate");
+                 jQuery(function ($) {
+                     $.datepicker.regional['ja'] = {
+                         closeText: '閉じる',
+                         prevText: '&#x3c;前',
+                         nextText: '次&#x3e;',
+                         currentText: '今日',
+                         monthNames: ['1月', '2月', '3月', '4月', '5月', '6月',
+                             '7月', '8月', '9月', '10月', '11月', '12月'],
+                         monthNamesShort: ['1月', '2月', '3月', '4月', '5月', '6月',
+                             '7月', '8月', '9月', '10月', '11月', '12月'],
+                         dayNames: ['日曜日', '月曜日', '火曜日', '水曜日', '木曜日', '金曜日', '土曜日'],
+                         dayNamesShort: ['日', '月', '火', '水', '木', '金', '土'],
+                         dayNamesMin: ['日', '月', '火', '水', '木', '金', '土'],
+                         weekHeader: '週',
+                         dateFormat: 'yy/mm/dd',
+                         firstDay: 0,
+                         isRTL: false,
+                         showMonthAfterYear: true,
+                         yearSuffix: '年'
+                     };
+                     $.datepicker.setDefaults($.datepicker.regional['ja']);
+                     $("#FromDate").datepicker({
+                         minDate: lastThreeMonths,
+                         maxDate: new Date(),
+                         defaultDate: '@ViewBag.FromDate'
+                     });
+                 });
+
+                $("#ToDate").val("@ViewBag.ToDate");
+                 jQuery(function ($) {
+                     $.datepicker.regional['ja'] = {
+                         closeText: '閉じる',
+                         prevText: '&#x3c;前',
+                         nextText: '次&#x3e;',
+                         currentText: '今日',
+                         monthNames: ['1月', '2月', '3月', '4月', '5月', '6月',
+                             '7月', '8月', '9月', '10月', '11月', '12月'],
+                         monthNamesShort: ['1月', '2月', '3月', '4月', '5月', '6月',
+                             '7月', '8月', '9月', '10月', '11月', '12月'],
+                         dayNames: ['日曜日', '月曜日', '火曜日', '水曜日', '木曜日', '金曜日', '土曜日'],
+                         dayNamesShort: ['日', '月', '火', '水', '木', '金', '土'],
+                         dayNamesMin: ['日', '月', '火', '水', '木', '金', '土'],
+                         weekHeader: '週',
+                         dateFormat: 'yy/mm/dd',
+                         firstDay: 0,
+                         isRTL: false,
+                         showMonthAfterYear: true,
+                         yearSuffix: '年'
+                     };
+                     $.datepicker.setDefaults($.datepicker.regional['ja']);
+                     $("#ToDate").datepicker({
+                         minDate: lastThreeMonths,
+                         maxDate: new Date(),
+                         defaultDate: '@ViewBag.ToDate'
+                     });
+                 });
+            });
+    </script>
+}

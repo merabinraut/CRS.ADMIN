@@ -592,6 +592,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Club Name.
+        /// </summary>
+        public static string ClubName {
+            get {
+                return ResourceManager.GetString("ClubName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Clubs.
         /// </summary>
         public static string Clubs {

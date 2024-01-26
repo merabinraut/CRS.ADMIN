@@ -1,6 +1,8 @@
-﻿namespace CRS.ADMIN.SHARED.ReviewAndRatingsManagement
+﻿using CRS.ADMIN.SHARED.PaginationManagement;
+
+namespace CRS.ADMIN.SHARED.ReviewAndRatingsManagement
 {
-    public class ReviewCommon : Common
+    public class ReviewCommon : PaginationResponseCommon
     {
         public string ReviewId { get; set; }
         public string UserImage { get; set; }

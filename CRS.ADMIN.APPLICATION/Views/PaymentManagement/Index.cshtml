@@ -5,7 +5,7 @@
     var overViewModel = Model.PaymentOverview as CRS.ADMIN.APPLICATION.Models.PaymentManagement.PaymentOverviewModel;
     var paymentLog = Model.PaymentLogs as List<CRS.ADMIN.APPLICATION.Models.PaymentManagement.PaymentLogsModel>;
 }
-
+<link rel="stylesheet" href="//code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
 <div class="px-8 py-4 flex flex-col gap-8">
     <!-- booking information  -->
     <div class="flex justify-between items-center">
@@ -60,6 +60,7 @@
 </div>
 @section scripts
 {
+    <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
     <script>
         function getActiveButtonValue() {
             const activeButton = document.querySelector('.tab-link.active');
@@ -89,5 +90,79 @@
             $('#clubId').val(ClubId);
             document.getElementById("PaymentLogForm").submit();
         });
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+                const page_size = @ViewBag.PageSize;
+                const total_data = @ViewBag.TotalData;
+                const start_index_val = @ViewBag.StartIndex;
+                let URL = "/PaymentManagement/Index";
+                let search_filter = '@ViewBag.SearchFilter';
+                URL = addQueryParam(URL, 'SearchFilter', search_filter);
+                LoadPagination(page_size, total_data, start_index_val, URL);
+
+            var currentDate = new Date();
+            var lastThreeMonths = new Date();
+            lastThreeMonths.setMonth(currentDate.getMonth() - 3);
+
+             $("#FromDate").val("@ViewBag.FromDate");
+             jQuery(function ($) {
+                 $.datepicker.regional['ja'] = {
+                     closeText: '閉じる',
+                     prevText: '&#x3c;前',
+                     nextText: '次&#x3e;',
+                     currentText: '今日',
+                     monthNames: ['1月', '2月', '3月', '4月', '5月', '6月',
+                         '7月', '8月', '9月', '10月', '11月', '12月'],
+                     monthNamesShort: ['1月', '2月', '3月', '4月', '5月', '6月',
+                         '7月', '8月', '9月', '10月', '11月', '12月'],
+                     dayNames: ['日曜日', '月曜日', '火曜日', '水曜日', '木曜日', '金曜日', '土曜日'],
+                     dayNamesShort: ['日', '月', '火', '水', '木', '金', '土'],
+                     dayNamesMin: ['日', '月', '火', '水', '木', '金', '土'],
+                     weekHeader: '週',
+                     dateFormat: 'yy/mm/dd',
+                     firstDay: 0,
+                     isRTL: false,
+                     showMonthAfterYear: true,
+                     yearSuffix: '年'
+                 };
+                 $.datepicker.setDefaults($.datepicker.regional['ja']);
+                 $("#FromDate").datepicker({
+                     minDate: lastThreeMonths,
+                     maxDate: new Date(),
+                     defaultDate: '@ViewBag.FromDate'
+                 });
+             });
+
+            $("#ToDate").val("@ViewBag.ToDate");
+             jQuery(function ($) {
+                 $.datepicker.regional['ja'] = {
+                     closeText: '閉じる',
+                     prevText: '&#x3c;前',
+                     nextText: '次&#x3e;',
+                     currentText: '今日',
+                     monthNames: ['1月', '2月', '3月', '4月', '5月', '6月',
+                         '7月', '8月', '9月', '10月', '11月', '12月'],
+                     monthNamesShort: ['1月', '2月', '3月', '4月', '5月', '6月',
+                         '7月', '8月', '9月', '10月', '11月', '12月'],
+                     dayNames: ['日曜日', '月曜日', '火曜日', '水曜日', '木曜日', '金曜日', '土曜日'],
+                     dayNamesShort: ['日', '月', '火', '水', '木', '金', '土'],
+                     dayNamesMin: ['日', '月', '火', '水', '木', '金', '土'],
+                     weekHeader: '週',
+                     dateFormat: 'yy/mm/dd',
+                     firstDay: 0,
+                     isRTL: false,
+                     showMonthAfterYear: true,
+                     yearSuffix: '年'
+                 };
+                 $.datepicker.setDefaults($.datepicker.regional['ja']);
+                 $("#ToDate").datepicker({
+                     minDate: lastThreeMonths,
+                     maxDate: new Date(),
+                     defaultDate: '@ViewBag.ToDate'
+                 });
+             });
+            });
     </script>
 }

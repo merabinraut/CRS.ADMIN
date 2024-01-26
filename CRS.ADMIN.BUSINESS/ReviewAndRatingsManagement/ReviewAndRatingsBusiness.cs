@@ -1,5 +1,6 @@
 ﻿using CRS.ADMIN.REPOSITORY.ReviewAndRatingsManagement;
 using CRS.ADMIN.SHARED;
+using CRS.ADMIN.SHARED.PaginationManagement;
 using CRS.ADMIN.SHARED.ReviewAndRatingsManagement;
 using System.Collections.Generic;
 
@@ -14,9 +15,9 @@ namespace CRS.ADMIN.BUSINESS.ReviewAndRatingsManagement
         {
             return _repository.DeleteReview(reviewId, actionUser, actionIp);
         }
-        public List<ReviewCommon> GetReviews(string reviewId = "", string searchText = "")
+        public List<ReviewCommon> GetReviews(PaginationFilterCommon Request, string reviewId = "")
         {
-            return _repository.GetReviews(reviewId, searchText);
+            return _repository.GetReviews(Request, reviewId);
         }
     }
 }

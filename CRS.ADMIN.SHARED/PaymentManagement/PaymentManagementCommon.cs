@@ -1,4 +1,6 @@
-﻿namespace CRS.ADMIN.SHARED.PaymentManagement
+﻿using CRS.ADMIN.SHARED.PaginationManagement;
+
+namespace CRS.ADMIN.SHARED.PaymentManagement
 {
     public class PaymentOverviewCommon
     {
@@ -7,7 +9,7 @@
         public string AffiliatePayments { get; set; }
     }
 
-    public class PaymentLogsCommon
+    public class PaymentLogsCommon : PaginationResponseCommon
     {
         public string ClubId { get; set; }
         public string ClubName { get; set; }
@@ -23,7 +25,7 @@
         public string TransactionFormattedDate { get; set; }
     }
 
-    public class PaymentLedgerCommon
+    public class PaymentLedgerCommon : PaginationResponseCommon
     {
         public string CustomerName { get; set; }
         public string CustomerNickName { get; set; }

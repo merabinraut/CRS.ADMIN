@@ -2,6 +2,9 @@
 using CRS.ADMIN.APPLICATION.Models.ReviewAndRatingsManagement;
 using CRS.ADMIN.BUSINESS.ReviewAndRatingsManagement;
 using CRS.ADMIN.SHARED;
+using CRS.ADMIN.SHARED.PaginationManagement;
+using DocumentFormat.OpenXml.Wordprocessing;
+using System.Linq;
 using System.Web.Mvc;
 
 namespace CRS.ADMIN.APPLICATION.Controllers
@@ -10,18 +13,26 @@ namespace CRS.ADMIN.APPLICATION.Controllers
     {
         private readonly IReviewAndRatingsBusiness _buss;
         public ReviewAndRatingsManagementController(IReviewAndRatingsBusiness buss) => _buss = buss;
-        public ActionResult Index(string searchText = "")
+        public ActionResult Index(string searchText = "", int StartIndex = 0, int PageSize = 10)
         {
             Session["CurrentUrl"] = "/ReviewAndRatingsManagement/Index";
             var reviewAndRatingsViewModel = new ReviewAndRatingsModel();
-
-            var reviewCommon = _buss.GetReviews(searchText: searchText);
-
+            PaginationFilterCommon dbRequest = new PaginationFilterCommon()
+            {
+                Skip = StartIndex,
+                Take = PageSize,
+                SearchFilter = !string.IsNullOrEmpty(searchText) ? searchText : null
+            };
+            var reviewCommon = _buss.GetReviews(dbRequest);
             if (reviewCommon != null && reviewCommon.Count > 0)
             {
                 reviewAndRatingsViewModel.Reviews = reviewCommon.MapObjects<ReviewModel>();
                 reviewAndRatingsViewModel.Reviews.ForEach(x => x.ReviewId = x.ReviewId.EncryptParameter());
             }
+            ViewBag.SearchFilter = searchText;
+            ViewBag.StartIndex = StartIndex;
+            ViewBag.PageSize = PageSize;
+            ViewBag.TotalData = reviewCommon != null && reviewCommon.Any() ? reviewCommon[0].TotalRecords : 0;
             return View(reviewAndRatingsViewModel);
         }
 

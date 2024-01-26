@@ -2,6 +2,7 @@
 using CRS.ADMIN.APPLICATION.Models.ReservationLedger;
 using CRS.ADMIN.BUSINESS.ReservationLedger;
 using CRS.ADMIN.SHARED;
+using DocumentFormat.OpenXml.VariantTypes;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -15,7 +16,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
         public ReservationLedgerController(IReservationLedgerBusiness business) => _business = business;
 
         [HttpGet]
-        public ActionResult ReservationLedgerList(string SearchText = "", string ClubId = "", string Date = "")
+        public ActionResult ReservationLedgerList(string SearchText = "", string ClubId = "", string Date = "", string FromDate = "", string ToDate = "", int StartIndex = 0, int PageSize = 10)
         {
             Session["CurrentURL"] = "/ReservationLedger/ReservationLedgerList";
             var cId = !string.IsNullOrEmpty(ClubId) ? ClubId.DecryptParameter() : null;
@@ -24,6 +25,10 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             responseInfo.ForEach(x => x.ClubId = x.ClubId.EncryptParameter());
             ViewBag.LedgerList = responseInfo;
             ViewBag.SearchText = SearchText;
+            ViewBag.FromDate = FromDate;
+            ViewBag.ToDate = ToDate;
+            ViewBag.StartIndex = StartIndex;
+            ViewBag.PageSize = PageSize;
             return View();
         }
         [HttpGet]

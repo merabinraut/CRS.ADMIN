@@ -34,7 +34,7 @@
                                    id="default-search"
                                    class="input-search block w-full "
                                    placeholder="@CRS.ADMIN.APPLICATION.Resources.Resource.Search"
-                                   required=""
+                                   value="@ViewBag.SearchFilter"
                                    name="searchText">
                         </div>
                     }
@@ -47,20 +47,16 @@
                 </div>
 
                 <div class="table-tab">
-                    @*<div class="px-[12px] py-[16px] flex justify-between entry-export-container">
-                            <div class="flex items-center select-entries">
-                                @CRS.ADMIN.APPLICATION.Resources.Resource.Show&nbsp;
-                                <select id="countries" class="w-full select-entires " style="width: 100%; ">
-                                    <option value="5" selected>5</option>
-                                    <option value="10">10</option>
-                                    <option value="15">15</option>
-                                    <option value="20">100</option>
-                                </select>&nbsp;@CRS.ADMIN.APPLICATION.Resources.Resource.Entries
-                            </div>
-                        </div>*@
+                    <div class="px-[16px] py-[12px] flex justify-between entry-export-container">
+                        <div class="flex items-center select-entries" id="ShowEntries-Id">
+                        </div>
+                        <div class="export-button h-[40px]" onclick="exportExcel('table-id', 'ReviewAndRatings')">
+                            <img src="~/Content/assets_new/images/club/download-solid.svg"> @CRS.ADMIN.APPLICATION.Resources.Resource.Export
+                        </div>
+                    </div>
 
                     <div class="relative overflow-x-auto">
-                        <table class="w-full  text-left club-table">
+                        <table class="w-full  text-left club-table" id="table-id">
                             <thead class="club-table-thead">
                                 <tr>
                                     <th scope="col" class="p-[12px]">
@@ -123,10 +119,9 @@
                             <tbody>
                                 @foreach (var review in Model.Reviews)
                                 {
-                                    int reviewCount = 1;
                                     <tr class="bg-white border-b ">
                                         <td class="p-[12px]">
-                                            @reviewCount
+                                            @review.SNO
                                         </td>
                                         <td class="p-[12px]">
                                             <div class="flex gap-[12px] w-max ">
@@ -192,17 +187,25 @@
                                             </div>
                                         </td>
                                     </tr>
-                                    reviewCount++;
                                 }
                             </tbody>
                         </table>
 
                     </div>
-                    @*<div class="pagination-club">
-                            <div class="show-entry">
-                                @CRS.ADMIN.APPLICATION.Resources.Resource.Showing 1 to 5 of 5 @CRS.ADMIN.APPLICATION.Resources.Resource.Entries
+                    <div class="pagination-club">
+                        <div class="show-entry" id="Entries-Id">
+                        </div>
+                        <div class="flex gap-[12px]">
+                            <div class="btn btn-secondary-box-shadow" id="prev-btn">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Previous
                             </div>
-                        </div>*@
+                            <div class="flex gap-[12px]" id="pagination-id">
+                            </div>
+                            <div class="btn btn-secondary-box-shadow" id="next-btn">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Next
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -229,5 +232,16 @@
                 }
             });
         }
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+                const page_size = @ViewBag.PageSize;
+                const total_data = @ViewBag.TotalData;
+                const start_index_val = @ViewBag.StartIndex;
+                let URL = "/ReviewAndRatingsManagement/Index";
+                let search_filter = '@ViewBag.SearchFilter';
+                URL = addQueryParam(URL, 'SearchFilter', search_filter);
+                LoadPagination(page_size, total_data, start_index_val, URL);
+            });
     </script>
 }

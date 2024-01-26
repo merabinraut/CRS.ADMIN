@@ -349,6 +349,10 @@
     <value>クラブ管理</value>
     <comment>Club Management</comment>
   </data>
+  <data name="ClubName" xml:space="preserve">
+    <value>クラブ名</value>
+    <comment>Reports</comment>
+  </data>
   <data name="Clubs" xml:space="preserve">
     <value>クラブ</value>
     <comment>Dashboard</comment>
