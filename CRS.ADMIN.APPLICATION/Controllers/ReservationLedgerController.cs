@@ -2,10 +2,10 @@
 using CRS.ADMIN.APPLICATION.Models.ReservationLedger;
 using CRS.ADMIN.BUSINESS.ReservationLedger;
 using CRS.ADMIN.SHARED;
-using DocumentFormat.OpenXml.VariantTypes;
-using System;
+using CRS.ADMIN.SHARED.PaginationManagement;
+using CRS.ADMIN.SHARED.PaymentManagement;
 using System.Collections.Generic;
-using System.Configuration;
+using System.Linq;
 using System.Web.Mvc;
 
 namespace CRS.ADMIN.APPLICATION.Controllers
@@ -20,19 +20,30 @@ namespace CRS.ADMIN.APPLICATION.Controllers
         {
             Session["CurrentURL"] = "/ReservationLedger/ReservationLedgerList";
             var cId = !string.IsNullOrEmpty(ClubId) ? ClubId.DecryptParameter() : null;
-            var dbResponse = _business.GetReservationLedgerList(SearchText, cId, Date);
+            var dbRequest = new PaginationFilterCommon()
+            {
+                Skip = StartIndex,
+                Take = PageSize,
+                SearchFilter = SearchText,
+                FromDate = FromDate,
+                ToDate = ToDate
+            };
+            var dbResponse = _business.GetReservationLedgerList(dbRequest, cId, Date);
             var responseInfo = dbResponse.MapObjects<ReservationLedgerModel>();
             responseInfo.ForEach(x => x.ClubId = x.ClubId.EncryptParameter());
+            ViewBag.ClubDDL = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("CLUBLIST") as Dictionary<string, string>, null, "--- Select ---");
+            ViewBag.ClubIdKey = ClubId;
             ViewBag.LedgerList = responseInfo;
             ViewBag.SearchText = SearchText;
             ViewBag.FromDate = FromDate;
             ViewBag.ToDate = ToDate;
             ViewBag.StartIndex = StartIndex;
             ViewBag.PageSize = PageSize;
+            ViewBag.TotalData = dbResponse != null && dbResponse.Any() ? dbResponse[0].TotalRecords : 0;
             return View();
         }
         [HttpGet]
-        public ActionResult ReservationLedgerDetail(string ClubId, string Date, string SearchText = "")
+        public ActionResult ReservationLedgerDetail(string ClubId, string Date, string SearchText = "", int StartIndex = 0, int PageSize = 10, string FromDate = "", string ToDate = "")
         {
             Session["CurrentURL"] = "/ReservationLedger/ReservationLedgerList";
             var cId = !string.IsNullOrEmpty(ClubId) ? ClubId.DecryptParameter() : null;
@@ -47,7 +58,15 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 return RedirectToAction("ReservationLedgerList", new { Date = Date });
             }
             var Response = new List<ReservationLedgerDetailModel>();
-            var dbResponse = _business.GetReservationLedgerDetail(cId, Date, SearchText);
+            var dbRequest = new PaginationFilterCommon()
+            {
+                Skip = StartIndex,
+                Take = PageSize,
+                SearchFilter = SearchText,
+                FromDate = FromDate,
+                ToDate = ToDate
+            };
+            var dbResponse = _business.GetReservationLedgerDetail(dbRequest, cId, Date);
             Response = dbResponse.MapObjects<ReservationLedgerDetailModel>();
             Response.ForEach(x => x.ClubId = x.ClubId.EncryptParameter());
             ViewBag.IsBackAllowed = true;

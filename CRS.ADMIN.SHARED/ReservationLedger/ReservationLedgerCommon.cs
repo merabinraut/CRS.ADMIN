@@ -1,6 +1,8 @@
-﻿namespace CRS.ADMIN.SHARED.ReservationLedger
+﻿using CRS.ADMIN.SHARED.PaginationManagement;
+
+namespace CRS.ADMIN.SHARED.ReservationLedger
 {
-    public class ReservationLedgerCommon : Common
+    public class ReservationLedgerCommon : PaginationResponseCommon
     {
         public string ClubId { get; set; }
         public string ClubName { get; set; }
@@ -11,7 +13,7 @@
         public string TransactionFormattedDate { get; set; }
         public string TotalVisitors { get; set; }
     }
-    public class ReservationLedgerDetailCommon
+    public class ReservationLedgerDetailCommon : PaginationResponseCommon
     {
         public string ClubId { get; set; }
         public string CustomerName { get; set; }

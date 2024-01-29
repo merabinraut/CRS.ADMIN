@@ -76,6 +76,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             ViewBag.PageSize = PageSize;
             ViewBag.FromDate = FromDate;
             ViewBag.ToDate = ToDate;
+            ViewBag.ClubId = clubId;
             ViewBag.TotalData = paymentLedgerCommon != null && paymentLedgerCommon.Any() ? paymentLedgerCommon[0].TotalRecords : 0;
             return View(paymentLedgerModel);
         }

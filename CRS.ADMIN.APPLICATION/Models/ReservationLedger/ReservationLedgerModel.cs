@@ -2,6 +2,7 @@
 {
     public class ReservationLedgerModel
     {
+        public string SNO { get; set; }
         public string ClubId { get; set; }
         public string ClubName { get; set; }
         public string ClubLogo { get; set; }
@@ -13,6 +14,7 @@
     }
     public class ReservationLedgerDetailModel
     {
+        public string SNO { get; set; }
         public string ClubId { get; set; }
         public string CustomerName { get; set; }
         public string CustomerNickName { get; set; }

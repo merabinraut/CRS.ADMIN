@@ -99,7 +99,16 @@
                 const start_index_val = @ViewBag.StartIndex;
                 let URL = "/PaymentManagement/Index";
                 let search_filter = '@ViewBag.SearchFilter';
+                let FromDate = '@ViewBag.FromDate';
+                let ToDate = '@ViewBag.ToDate';
+                let LocationId = '@ViewBag.LocationId';
+                let ClubId = '@ViewBag.ClubIdKey';
+
                 URL = addQueryParam(URL, 'SearchFilter', search_filter);
+                URL = addQueryParam(URL, 'FromDate', FromDate);
+                URL = addQueryParam(URL, 'ToDate', ToDate);
+                URL = addQueryParam(URL, 'ClubId', ClubId);
+                URL = addQueryParam(URL, 'LocationId', LocationId);
                 LoadPagination(page_size, total_data, start_index_val, URL);
 
             var currentDate = new Date();
