@@ -55,9 +55,9 @@ namespace CRS.ADMIN.BUSINESS.ClubManagement
         #endregion
 
         #region Manage gallery
-        public List<GalleryManagementCommon> GetGalleryImage(string AgentId, string GalleryId = "", string SearchFilter = "")
+        public List<GalleryManagementCommon> GetGalleryImage(string AgentId, PaginationFilterCommon request, string GalleryId = "")
         {
-            return _REPO.GetGalleryImage(AgentId, GalleryId, SearchFilter);
+            return _REPO.GetGalleryImage(AgentId, request, GalleryId);
         }
         public CommonDbResponse ManageGalleryImage(ManageGalleryImageCommon Request)
         {

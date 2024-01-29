@@ -17,6 +17,8 @@ namespace CRS.ADMIN.APPLICATION.Models.ClubManagement
         public string Status { get; set; }
         public string CreatedDate { get; set; }
         public string UpdatedDate { get; set; }
+        public int SNO { get; set; }
+        public int TotalRecords { get; set; }
     }
 
     public class ManageGalleryImageModel

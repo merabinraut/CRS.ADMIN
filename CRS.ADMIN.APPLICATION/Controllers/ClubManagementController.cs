@@ -484,8 +484,14 @@ namespace CRS.ADMIN.APPLICATION.Controllers
 
         #region Gallery Management
         [HttpGet]
-        public ActionResult GalleryManagement(string ClubId, string SearchFilter = "")
+        public ActionResult GalleryManagement(string ClubId, string SearchFilter = "", int StartIndex = 0, int PageSize = 10)
         {
+            PaginationFilterCommon request = new PaginationFilterCommon()
+            {
+                Skip = StartIndex,
+                Take = PageSize,
+                SearchFilter = SearchFilter
+            };
             var CID = ClubId?.DecryptParameter();
             if (string.IsNullOrEmpty(CID))
             {
@@ -502,7 +508,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             if (TempData.ContainsKey("GalleryManagementModel")) ReturnModel.ManageGalleryImageModel = TempData["GalleryManagementModel"] as ManageGalleryImageModel;
             else ReturnModel.ManageGalleryImageModel = new ManageGalleryImageModel();
             if (TempData.ContainsKey("RenderId")) RenderId = TempData["RenderId"].ToString();
-            var dbResponse = _BUSS.GetGalleryImage(CID, "", SearchFilter);
+            var dbResponse = _BUSS.GetGalleryImage(CID, request, "");
             ReturnModel.GalleryManagementModel = dbResponse.MapObjects<GalleryManagementModel>();
             foreach (var item in ReturnModel.GalleryManagementModel)
             {
@@ -515,6 +521,10 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             ViewBag.BackButtonURL = "/ClubManagement/ClubList";
             ViewBag.SearchFilter = SearchFilter;
             ViewBag.ClubId = ClubId;
+
+            ViewBag.StartIndex = StartIndex;
+            ViewBag.PageSize = PageSize;
+            ViewBag.TotalData = dbResponse != null && dbResponse.Any() ? dbResponse[0].TotalRecords : 0;
             return View(ReturnModel);
         }
 
@@ -522,6 +532,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
         public ActionResult ManageGallery(string AgentId, string GalleryId)
         {
             ManageGalleryImageModel model = new ManageGalleryImageModel();
+            PaginationFilterCommon request = new PaginationFilterCommon();
             var aId = AgentId?.DecryptParameter();
             var gId = GalleryId?.DecryptParameter();
             if (string.IsNullOrEmpty(aId))
@@ -544,7 +555,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 });
                 return RedirectToAction("GalleryManagement", "ClubManagement");
             }
-            var dbResponse = _BUSS.GetGalleryImage(aId, gId);
+            var dbResponse = _BUSS.GetGalleryImage(aId, request, gId);
             model = dbResponse[0].MapObject<ManageGalleryImageModel>();
             model.AgentId = model.AgentId.EncryptParameter();
             model.GalleryId = model.GalleryId.EncryptParameter();

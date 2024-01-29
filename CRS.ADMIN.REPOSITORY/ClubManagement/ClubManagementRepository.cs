@@ -251,12 +251,14 @@ namespace CRS.ADMIN.REPOSITORY.ClubManagement
         #endregion
 
         #region Manage gallery
-        public List<GalleryManagementCommon> GetGalleryImage(string AgentId, string GalleryId = "", string SearchFilter = "")
+        public List<GalleryManagementCommon> GetGalleryImage(string AgentId, PaginationFilterCommon request, string GalleryId = "")
         {
             string SQL = "EXEC dbo.sproc_club_gallery_management @Flag='gcgl'";
             SQL += ", @AgentId =" + _DAO.FilterString(AgentId);
             SQL += !string.IsNullOrEmpty(GalleryId) ? ", @GalleryId =" + _DAO.FilterString(GalleryId) : "";
-            SQL += !string.IsNullOrEmpty(SearchFilter) ? ", @SearchFilter =N" + _DAO.FilterString(SearchFilter) : "";
+            SQL += !string.IsNullOrEmpty(request.SearchFilter) ? ", @SearchFilter =N" + _DAO.FilterString(request.SearchFilter) : "";
+            SQL += ",@Skip=" + request.Skip;
+            SQL += ",@Take=" + request.Take;
             var dbResponse = _DAO.ExecuteDataTable(SQL);
             if (dbResponse != null && dbResponse.Rows.Count > 0) return _DAO.DataTableToListObject<GalleryManagementCommon>(dbResponse).ToList();
             return new List<GalleryManagementCommon>();
