@@ -8,6 +8,7 @@ namespace CRS.ADMIN.APPLICATION.Models.ReviewAndRatingsManagement
     }
     public class ReviewModel
     {
+        public string SNO { get; set; }
         public string ReviewId { get; set; }
         public string UserImage { get; set; }
         public string NickName { get; set; }

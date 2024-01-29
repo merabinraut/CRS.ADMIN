@@ -63,35 +63,35 @@
                         <label for="email" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
                             @CRS.ADMIN.APPLICATION.Resources.Resource.Rank
                         </label>
-                        @Html.TextBoxFor(model => model.Rank, new
-                       {
-                           @class = "w-full",
-                           @placeholder = CRS.ADMIN.APPLICATION.Resources.Resource.Rank,
-                           @onkeypress = "return isNumber(event)",
-                           autocomplete = "off",
-                           @maxLength = "3"
-                       })
+                        @*@Html.TextBoxFor(model => model.Rank, new
+                            {
+                                @class = "w-full",
+                                @placeholder = CRS.ADMIN.APPLICATION.Resources.Resource.Rank,
+                                @onkeypress = "return isNumber(event)",
+                                autocomplete = "off",
+                                @maxLength = "3"
+                            })*@
+                        <select id="large" class="select-common block w-full " name="Rank">
+                            @foreach (var item in ViewBag.RankDDL as IEnumerable<SelectListItem>)
+                            {
+                                var selectedId = ViewBag.RankDDLKey as string;
+                                if (item.Value == selectedId)
+                                {
+                                    <option value="@item.Value" selected>
+                                        @item.Text
+                                    </option>
+                                }
+                                else
+                                {
+                                    <option value="@item.Value">
+                                        @item.Text
+                                    </option>
+                                }
+                            }
+                        </select>
                         <span class="error">
                             @Html.ValidationMessageFor(m => m.Rank)
                         </span>
-                        @*<select id="large" class="select-common block w-full " name="RankDDLKey">
-                                @foreach (var item in ViewBag.RankDDL as IEnumerable<SelectListItem>)
-                                {
-                                    var selectedId = ViewBag.RankDDLKey as string;
-                                    if (item.Value == selectedId)
-                                    {
-                                        <option value="@item.Value" selected>
-                                            @item.Text
-                                        </option>
-                                    }
-                                    else
-                                    {
-                                        <option value="@item.Value">
-                                            @item.Text
-                                        </option>
-                                    }
-                                }
-                            </select>*@
                     </div>
                 </div>
                 <div class="divider-common"></div>
@@ -195,7 +195,15 @@
                                style="display:none;">
                         <p id="file_name_bussiness_certificate"
                            class="file-name w-max h-[23px] overflow-hidden pl-2 text-xs text-[#686868] leading-[25px]">
-                            @CRS.ADMIN.APPLICATION.Resources.Resource.No_File_Choosen
+                            @if (string.IsNullOrEmpty(Model.HostLogo))
+                            {
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.No_File_Choosen
+                            }
+                            else
+                            {
+                                string fileName = Path.GetFileName(Model.HostLogo);
+                                @fileName
+                            }
                     </div>
                     <div class="text-xs text-error mt-[8px]">
                         @CRS.ADMIN.APPLICATION.Resources.Resource.Note:
@@ -211,7 +219,7 @@
                         </label>
                         <div class="select-date-common flex gap-[16px]">
                             @{
-                                DateTime date = Convert.ToDateTime(Model.DOB);
+                                DateTime date = (!string.IsNullOrEmpty(Model.DOB) && Model.DOB.Trim().ToUpper() != "YYYY-MM-DD") ? Convert.ToDateTime(Model.DOB) : DateTime.Now;
                                 int SplitYear = date.Year;
                                 int SplitMonth = date.Month;
                                 int SplitDay = date.Day;
@@ -222,14 +230,14 @@
                                     DateTime currentDate = DateTime.Now;
                                     int currentYear = currentDate.Year;
                                     List<int> last100Years = new List<int>();
-                                    int startYear = currentYear - 100;
+                                    int startYear = currentYear - 200;
                                     for (int year = currentYear; year >= startYear; year--)
                                     {
                                         last100Years.Add(year);
                                     }
                                     foreach (var item in last100Years)
                                     {
-                                        if (SplitYear == item)
+                                        if ((!string.IsNullOrEmpty(Model.DOB) && Model.DOB.Trim().ToUpper() != "YYYY-MM-DD") && SplitYear == item)
                                         {
                                             <option value="@item" selected>@item</option>
                                         }
@@ -244,7 +252,7 @@
                                 <option selected>MM</option>
                                 @for (int i = 1; i < 13; i++)
                                 {
-                                    if (SplitMonth == i)
+                                    if ((!string.IsNullOrEmpty(Model.DOB) && Model.DOB.Trim().ToUpper() != "YYYY-MM-DD") && SplitMonth == i)
                                     {
                                         <option value="@i" selected>@i</option>
                                     }
@@ -258,7 +266,7 @@
                                 <option selected>DD</option>
                                 @for (int i = 1; i < 33; i++)
                                 {
-                                    if (SplitDay == i)
+                                    if ((!string.IsNullOrEmpty(Model.DOB) && Model.DOB.Trim().ToUpper() != "YYYY-MM-DD") && SplitDay == i)
                                     {
                                         <option value="@i" selected>@i</option>
                                     }
@@ -346,7 +354,17 @@
                                 @CRS.ADMIN.APPLICATION.Resources.Resource.Address
                             </label>
 
-                            <input type="text" class="w-full" placeholder="@CRS.ADMIN.APPLICATION.Resources.Resource.Address" name="Address" value="@Model.Address">
+                            @*<input type="text" class="w-full" placeholder="@CRS.ADMIN.APPLICATION.Resources.Resource.Address" name="Address" value="@Model.Address">*@
+                            @Html.TextBoxFor(model => model.Address, new
+                            {
+                               @class = "w-full",
+                               @placeholder = CRS.ADMIN.APPLICATION.Resources.Resource.Address,
+                               autocomplete = "off",
+                               maxLength = "50"
+                            })
+                            <span class="error">
+                                @Html.ValidationMessageFor(m => m.Address)
+                            </span>
                         </div>
                         <div class="input-field-common">
                             <label for="email" class="block mb-[12px] text-sm font-medium text-secondary-100 ">

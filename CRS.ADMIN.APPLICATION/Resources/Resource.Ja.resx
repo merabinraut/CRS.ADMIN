@@ -334,7 +334,7 @@
     <comment>Club Management</comment>
   </data>
   <data name="Club Profile" xml:space="preserve">
-    <value>クラブプロフィール</value>
+    <value>クラブ名</value>
     <comment>Reservation Ledger</comment>
   </data>
   <data name="Club Status" xml:space="preserve">
@@ -348,6 +348,10 @@
   <data name="ClubManagement" xml:space="preserve">
     <value>クラブ管理</value>
     <comment>Club Management</comment>
+  </data>
+  <data name="ClubName" xml:space="preserve">
+    <value>クラブ名</value>
+    <comment>Reports</comment>
   </data>
   <data name="Clubs" xml:space="preserve">
     <value>クラブ</value>
@@ -946,7 +950,7 @@
     <comment>Club Management</comment>
   </data>
   <data name="Phone Number" xml:space="preserve">
-    <value>携帯電話</value>
+    <value>電話番号</value>
     <comment>Customer Management</comment>
   </data>
   <data name="Plan" xml:space="preserve">
@@ -1029,7 +1033,7 @@
     <comment>Review And Rating Management</comment>
   </data>
   <data name="Ratings" xml:space="preserve">
-    <value>星評価</value>
+    <value>口コミ数</value>
     <comment>Club Management</comment>
   </data>
   <data name="Ratings By" xml:space="preserve">

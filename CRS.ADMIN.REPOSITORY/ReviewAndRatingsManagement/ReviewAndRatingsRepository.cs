@@ -1,5 +1,8 @@
 ﻿using CRS.ADMIN.SHARED;
+using CRS.ADMIN.SHARED.PaginationManagement;
 using CRS.ADMIN.SHARED.ReviewAndRatingsManagement;
+using DocumentFormat.OpenXml.Office2016.Excel;
+using System;
 using System.Collections.Generic;
 using System.Data;
 
@@ -20,14 +23,15 @@ namespace CRS.ADMIN.REPOSITORY.ReviewAndRatingsManagement
             return _repositoryDao.ParseCommonDbResponse(sql);
         }
 
-        public List<ReviewCommon> GetReviews(string reviewId = "", string searchText = "")
+        public List<ReviewCommon> GetReviews(PaginationFilterCommon Request, string reviewId = "")
         {
             var reviews = new List<ReviewCommon>();
             var sql = "sproc_review_and_ratings_admin_setup @Flag='srnr'";
             if (!string.IsNullOrWhiteSpace(reviewId))
                 sql += " ,@ReviewId=" + _repositoryDao.FilterString(reviewId);
-            if (!string.IsNullOrWhiteSpace(searchText))
-                sql += " ,@SearchText=N" + _repositoryDao.FilterString(searchText);
+            sql += !string.IsNullOrEmpty(Request.SearchFilter) ? ",@SearchText=N" + _repositoryDao.FilterString(Request.SearchFilter) : null;
+            sql += ",@Skip=" + Request.Skip;
+            sql += ",@Take=" + Request.Take;
             var dt = _repositoryDao.ExecuteDataTable(sql);
             if (null != dt)
             {
@@ -46,6 +50,8 @@ namespace CRS.ADMIN.REPOSITORY.ReviewAndRatingsManagement
                         RemarkType = item["RemarkType"].ToString(),
                         Rating = item["Rating"].ToString(),
                         ReviewedOn = item["ReviewedOn"].ToString(),
+                        TotalRecords = Convert.ToInt32(_repositoryDao.ParseColumnValue(item, "TotalRecords").ToString()),
+                        SNO = Convert.ToInt32(_repositoryDao.ParseColumnValue(item, "SNO").ToString())
                     };
                     reviews.Add(review);
                 }

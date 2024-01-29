@@ -3,6 +3,7 @@
     ViewBag.Title = "Reservation Ledger List";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<link rel="stylesheet" href="//code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
 <div class="px-8 py-4">
     <!-- title  -->
     <div class="flex flex-col  gap-8">
@@ -15,18 +16,18 @@
                     Manage club's reservation informations.
                 </div>
             </div>
-            <div class="flex gap-6">
-                <div class="btn btn-primary-normal h-[40px] gap-1 font-semibold px-4"
-                     data-drawer-target="custom-date-drawer" data-drawer-show="custom-date-drawer"
-                     data-drawer-placement="right" aria-controls="custom-date-drawer">
-                    <i class="las la-calendar"></i>
-                    @CRS.ADMIN.APPLICATION.Resources.Resource.View_Calendar
-                </div>
-            </div>
+            @*<div class="flex gap-6">
+                    <div class="btn btn-primary-normal h-[40px] gap-1 font-semibold px-4"
+                         data-drawer-target="custom-date-drawer" data-drawer-show="custom-date-drawer"
+                         data-drawer-placement="right" aria-controls="custom-date-drawer">
+                        <i class="las la-calendar"></i>
+                        @CRS.ADMIN.APPLICATION.Resources.Resource.View_Calendar
+                    </div>
+                </div>*@
         </div>
         <div class="flex flex-col  gap-4">
             <div class="flex justify-between ">
-                <form>
+                <form action="/ReservationLedger/ReservationLedgerList" method="get">
                     <div class="relative input-search-wrapper">
                         <div class="absolute inset-y-0 left-0 flex items-center pl-[16px] pointer-events-none">
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21"
@@ -37,19 +38,17 @@
                                 </path>
                             </svg>
                         </div>
+                        <input type="hidden" name="ClubId" value="@ViewBag.ClubIdKey" />
+                        <input name="FromDate" value="@ViewBag.FromDate" hidden />
+                        <input name="ToDate" value="@ViewBag.ToDate" hidden />
                         <input type="search"
                                id="default-search"
                                class="input-search block w-full "
                                placeholder="@CRS.ADMIN.APPLICATION.Resources.Resource.Search"
-                               required="">
+                               value="@ViewBag.SearchText">
                     </div>
                 </form>
-                <div class="flex gap-6">
-                    <div class="export-button h-[40px]">
-                        <img src="/Content/assets_new/images/club/download-solid.svg">
-                        @CRS.ADMIN.APPLICATION.Resources.Resource.Export
-                    </div>
-                </div>
+
             </div>
             <!-- filter  -->
             <div class="">
@@ -62,102 +61,107 @@
                 </div>
                 <div id="filter-container" class="px-6 py-5 rounded-[5px] border border-[#D0D5DD]"
                      style="display: none;">
-                    <div class="flex flex-col gap-4">
-                        <div class="flex text-[#3E3E3E] gap-1 items-center">
-                            <svg xmlns="http://www.w3.org/2000/svg"
-                                 width="20" height="21" viewBox="0 0 20 21" fill="none">
-                                <path d="M5 10.5H15M2.5 5.5H17.5M7.5 15.5H12.5" stroke="#3E3E3E" stroke-width="1.67"
-                                      stroke-linecap="round" stroke-linejoin="round" />
-                            </svg>
-                            @CRS.ADMIN.APPLICATION.Resources.Resource.Filter_By
+                    <form action="/ReservationLedger/ReservationLedgerList" method="get" id="filter-id">
+                        <div class="flex flex-col gap-4">
+                            <div class="flex text-[#3E3E3E] gap-1 items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg"
+                                     width="20" height="21" viewBox="0 0 20 21" fill="none">
+                                    <path d="M5 10.5H15M2.5 5.5H17.5M7.5 15.5H12.5" stroke="#3E3E3E" stroke-width="1.67"
+                                          stroke-linecap="round" stroke-linejoin="round" />
+                                </svg>
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Filter_By
+                            </div>
+
+                            <div class="grid grid-cols-3 gap-[27px]">
+                                @*<div class="input-field-common">
+                                        <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
+                                            @CRS.ADMIN.APPLICATION.Resources.Resource.Hosts
+                                        </label>
+                                        <select id="large" name="Host" class=" default_select select-common block w-full "
+                                                style="width: 100%;">
+                                            <option>Select Host</option>
+                                            <option value="CA">club</option>
+                                            <option value="FR">club</option>
+                                            <option value="DE">club</option>
+                                        </select>
+                                    </div>
+                                    <div class="input-field-common">
+                                        <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
+                                            @CRS.ADMIN.APPLICATION.Resources.Resource.Club_Status
+                                        </label>
+                                        <select id="large" name="ClubStatus" class=" default_select select-common block w-full "
+                                                style="width: 100%;">
+                                            <option>Select Club Status</option>
+                                            <option value="CA">club</option>
+                                            <option value="FR">club</option>
+                                            <option value="DE">club</option>
+                                        </select>
+                                    </div>*@
+                                <div class="input-field-common">
+                                    <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
+                                        @CRS.ADMIN.APPLICATION.Resources.Resource.ClubName
+                                    </label>
+                                    <select id="large" name="ClubId" class=" default_select select-common block w-full "
+                                            style="width: 100%;">
+                                        @foreach (var item in ViewBag.ClubDDL as IEnumerable<SelectListItem>)
+                                        {
+                                            var selectedId = ViewBag.ClubIdKey as string;
+                                            if (item.Value == selectedId)
+                                            {
+                                                <option value="@item.Value" selected>@item.Text</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@item.Value">
+                                                    @item.Text
+                                                </option>
+                                            }
+                                        }
+                                    </select>
+                                </div>
+                                <div class="input-field-common">
+                                    <label class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                                        @CRS.ADMIN.APPLICATION.Resources.Resource.From_Date
+                                    </label>
+                                    <input type="text" class="w-full" placeholder="@CRS.ADMIN.APPLICATION.Resources.Resource.From_Date" name="FromDate" id="FromDate" value="@ViewBag.FromDate" readonly>
+                                </div>
+                                <div class="input-field-common">
+                                    <label class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                                        @CRS.ADMIN.APPLICATION.Resources.Resource.To_Date
+                                    </label>
+                                    <input type="text" class="w-full" placeholder="@CRS.ADMIN.APPLICATION.Resources.Resource.To_Date" name="ToDate" id="ToDate" value="@ViewBag.ToDate" readonly>
+                                </div>
+
+                            </div>
                         </div>
+                        <div class=" flex gap-4 mt-4">
+                            <button id="cancelFilter" class="btn btn-primary-normal gap-1 rounded-[4px]"
+                                    onclick="window.location.href='@Url.Action("ReservationLedgerList", "ReservationLedger")';" type="button">
+                                <i class="las la-times"></i>@CRS.ADMIN.APPLICATION.Resources.Resource.Cancel
+                            </button>
 
-                        <div class="grid grid-cols-3 gap-[27px]">
-                            <div class="input-field-common">
-                                <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
-                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Club
-                                </label>
-                                <select id="large" name="Club" class=" default_select select-common block w-full "
-                                        style="width: 100%;">
-                                    <option>Select Club Type</option>
-                                    <option value="CA">club</option>
-                                    <option value="FR">club</option>
-                                    <option value="DE">club</option>
-                                </select>
-                            </div>
-                            <div class="input-field-common">
-                                <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
-                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Hosts
-                                </label>
-                                <select id="large" name="Host" class=" default_select select-common block w-full "
-                                        style="width: 100%;">
-                                    <option>Select Host</option>
-                                    <option value="CA">club</option>
-                                    <option value="FR">club</option>
-                                    <option value="DE">club</option>
-                                </select>
-                            </div>
-                            <div class="input-field-common">
-                                <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
-                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Club_Status
-                                </label>
-                                <select id="large" name="ClubStatus" class=" default_select select-common block w-full "
-                                        style="width: 100%;">
-                                    <option>Select Club Status</option>
-                                    <option value="CA">club</option>
-                                    <option value="FR">club</option>
-                                    <option value="DE">club</option>
-                                </select>
-                            </div>
-                            <div class="input-field-common">
-                                <label class="block mb-[12px] text-sm font-medium text-secondary-100 ">
-                                    @CRS.ADMIN.APPLICATION.Resources.Resource.From_Date
-                                </label>
-
-                                <input type="date" class="w-full" placeholder="YYYY/MM/DD" name="FromDate" required>
-                            </div>
-                            <div class="input-field-common">
-                                <label class="block mb-[12px] text-sm font-medium text-secondary-100 ">
-                                    @CRS.ADMIN.APPLICATION.Resources.Resource.To_Date
-                                </label>
-
-                                <input type="date" class="w-full" placeholder="YYYY/MM/DD" name="ToDate" required>
-                            </div>
-
+                            <button id="cancelFilter" class="btn btn-primary-default gap-1 rounded-[4px]" type="submit">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18"
+                                     height="19" viewBox="0 0 18 19" fill="none">
+                                    <path d="M5.25 14.75V10.25H12.75V14.75H14.25V6.371L12.129 4.25H3.75V14.75H5.25ZM3 2.75H12.75L15.75 5.75V15.5C15.75 15.6989 15.671 15.8897 15.5303 16.0303C15.3897 16.171 15.1989 16.25 15 16.25H3C2.80109 16.25 2.61032 16.171 2.46967 16.0303C2.32902 15.8897 2.25 15.6989 2.25 15.5V3.5C2.25 3.30109 2.32902 3.11032 2.46967 2.96967C2.61032 2.82902 2.80109 2.75 3 2.75ZM6.75 11.75V14.75H11.25V11.75H6.75Z"
+                                          fill="white" />
+                                </svg>@CRS.ADMIN.APPLICATION.Resources.Resource.Apply
+                            </button>
                         </div>
-                    </div>
-                    <div class=" flex gap-4 mt-4">
-                        <button id="cancelFilter" class="btn btn-primary-normal gap-1 rounded-[4px]"
-                                onclick="hideFilterContainer()">
-                            <i class="las la-times"></i> @CRS.ADMIN.APPLICATION.Resources.Resource.Cancel
-                        </button>
-
-                        <button id="cancelFilter" class="btn btn-primary-default gap-1 rounded-[4px]"
-                                onclick="hideFilterContainer()">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="18"
-                                 height="19" viewBox="0 0 18 19" fill="none">
-                                <path d="M5.25 14.75V10.25H12.75V14.75H14.25V6.371L12.129 4.25H3.75V14.75H5.25ZM3 2.75H12.75L15.75 5.75V15.5C15.75 15.6989 15.671 15.8897 15.5303 16.0303C15.3897 16.171 15.1989 16.25 15 16.25H3C2.80109 16.25 2.61032 16.171 2.46967 16.0303C2.32902 15.8897 2.25 15.6989 2.25 15.5V3.5C2.25 3.30109 2.32902 3.11032 2.46967 2.96967C2.61032 2.82902 2.80109 2.75 3 2.75ZM6.75 11.75V14.75H11.25V11.75H6.75Z"
-                                      fill="white" />
-                            </svg>@CRS.ADMIN.APPLICATION.Resources.Resource.Apply
-                        </button>
-                    </div>
+                    </form>
                 </div>
             </div>
             <!-- table  -->
             <div class="table-tab">
-                <div class="px-[12px] py-[16px] flex justify-between entry-export-container">
-                    @*<div class="flex items-center select-entries">
-                        @CRS.ADMIN.APPLICATION.Resources.Resource.Show&nbsp;
-                        <select id="countries" class="w-full select-entires " style="width: 100%; ">
-                            <option value="5" selected>5</option>
-                            <option value="10">10</option>
-                            <option value="15">15</option>
-                            <option value="20">100</option>
-                        </select>&nbsp;@CRS.ADMIN.APPLICATION.Resources.Resource.Entries
-                    </div>*@
+                <div class="px-[16px] py-[12px] flex justify-between entry-export-container">
+                    <div class="flex items-center select-entries" id="ShowEntries-Id">
+                    </div>
+                    <div class="export-button h-[40px]" onclick="exportExcel('table-id', 'ReservationLedger')">
+                        <img src="~/Content/assets_new/images/club/download-solid.svg"> @CRS.ADMIN.APPLICATION.Resources.Resource.Export
+                    </div>
                 </div>
                 <div class="relative overflow-x-auto">
-                    <table class="w-full  text-left club-table">
+                    <table class="w-full  text-left club-table" id="table-id">
                         <thead class="club-table-thead">
                             <tr>
                                 <th scope="col" class="p-[12px]">
@@ -218,12 +222,11 @@
                         </thead>
                         <tbody>
                             @{
-                                int i = 1;
                                 foreach (var item in ViewBag.LedgerList)
                                 {
                                     <tr class="bg-white border-b ">
                                         <td class="p-[12px]">
-                                            @i
+                                            @item.SNO
                                         </td>
                                         <td class="p-[12px] w-max">
                                             <div class="round-image-text w-max flex gap-[12px]">
@@ -257,42 +260,24 @@
                                         </td>
 
                                     </tr>
-                                    i++;
                                 }
                             }
                     </table>
                 </div>
-                @*<div class="pagination-club">
-                    <div class="show-entry">
-                        @CRS.ADMIN.APPLICATION.Resources.Resource.Showing 1 to 5 of 301 @CRS.ADMIN.APPLICATION.Resources.Resource.Entries
+                <div class="pagination-club">
+                    <div class="show-entry" id="Entries-Id">
                     </div>
                     <div class="flex gap-[12px]">
-                        <div class="btn btn-secondary-box-shadow ">
+                        <div class="btn btn-secondary-box-shadow" id="prev-btn">
                             @CRS.ADMIN.APPLICATION.Resources.Resource.Previous
                         </div>
-                        <div class="flex gap-[12px]">
-                            <div class="pagination-number active">
-
-                                1
-                            </div>
-                            <div class="pagination-number">
-                                2
-                            </div>
-                            <div class="pagination-number">
-                                3
-                            </div>
-                            <div class="pagination-number">
-                                ..
-                            </div>
-                            <div class="pagination-number">
-                                10
-                            </div>
+                        <div class="flex gap-[12px]" id="pagination-id">
                         </div>
-                        <div class="btn btn-secondary-box-shadow ">
+                        <div class="btn btn-secondary-box-shadow" id="next-btn">
                             @CRS.ADMIN.APPLICATION.Resources.Resource.Next
                         </div>
                     </div>
-                </div>*@
+                </div>
             </div>
         </div>
     </div>
@@ -742,3 +727,86 @@
         </div>
     </div>
 </div>
+@section scripts{
+    <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+                const page_size = @ViewBag.PageSize;
+                const total_data = @ViewBag.TotalData;
+                const start_index_val = @ViewBag.StartIndex;
+                let URL = "/ReservationLedger/ReservationLedgerList";
+                let search_filter = '@ViewBag.SearchFilter';
+                let FromDate = '@ViewBag.FromDate';
+                let ToDate = '@ViewBag.ToDate';
+                let ClubId = '@ViewBag.ClubIdKey';
+
+                URL = addQueryParam(URL, 'SearchFilter', search_filter);
+                URL = addQueryParam(URL, 'FromDate', FromDate);
+                URL = addQueryParam(URL, 'ToDate', ToDate);
+                URL = addQueryParam(URL, 'ClubId', ClubId);
+                LoadPagination(page_size, total_data, start_index_val, URL);
+
+                var currentDate = new Date();
+                var lastThreeMonths = new Date();
+                lastThreeMonths.setMonth(currentDate.getMonth() - 3);
+
+                 $("#FromDate").val("@ViewBag.FromDate");
+                 jQuery(function ($) {
+                     $.datepicker.regional['ja'] = {
+                         closeText: '閉じる',
+                         prevText: '&#x3c;前',
+                         nextText: '次&#x3e;',
+                         currentText: '今日',
+                         monthNames: ['1月', '2月', '3月', '4月', '5月', '6月',
+                             '7月', '8月', '9月', '10月', '11月', '12月'],
+                         monthNamesShort: ['1月', '2月', '3月', '4月', '5月', '6月',
+                             '7月', '8月', '9月', '10月', '11月', '12月'],
+                         dayNames: ['日曜日', '月曜日', '火曜日', '水曜日', '木曜日', '金曜日', '土曜日'],
+                         dayNamesShort: ['日', '月', '火', '水', '木', '金', '土'],
+                         dayNamesMin: ['日', '月', '火', '水', '木', '金', '土'],
+                         weekHeader: '週',
+                         dateFormat: 'yy/mm/dd',
+                         firstDay: 0,
+                         isRTL: false,
+                         showMonthAfterYear: true,
+                         yearSuffix: '年'
+                     };
+                     $.datepicker.setDefaults($.datepicker.regional['ja']);
+                     $("#FromDate").datepicker({
+                         minDate: lastThreeMonths,
+                         maxDate: new Date(),
+                         defaultDate: '@ViewBag.FromDate'
+                     });
+                 });
+
+                $("#ToDate").val("@ViewBag.ToDate");
+                 jQuery(function ($) {
+                     $.datepicker.regional['ja'] = {
+                         closeText: '閉じる',
+                         prevText: '&#x3c;前',
+                         nextText: '次&#x3e;',
+                         currentText: '今日',
+                         monthNames: ['1月', '2月', '3月', '4月', '5月', '6月',
+                             '7月', '8月', '9月', '10月', '11月', '12月'],
+                         monthNamesShort: ['1月', '2月', '3月', '4月', '5月', '6月',
+                             '7月', '8月', '9月', '10月', '11月', '12月'],
+                         dayNames: ['日曜日', '月曜日', '火曜日', '水曜日', '木曜日', '金曜日', '土曜日'],
+                         dayNamesShort: ['日', '月', '火', '水', '木', '金', '土'],
+                         dayNamesMin: ['日', '月', '火', '水', '木', '金', '土'],
+                         weekHeader: '週',
+                         dateFormat: 'yy/mm/dd',
+                         firstDay: 0,
+                         isRTL: false,
+                         showMonthAfterYear: true,
+                         yearSuffix: '年'
+                     };
+                     $.datepicker.setDefaults($.datepicker.regional['ja']);
+                     $("#ToDate").datepicker({
+                         minDate: lastThreeMonths,
+                         maxDate: new Date(),
+                         defaultDate: '@ViewBag.ToDate'
+                     });
+                 });
+            });
+    </script>
+}

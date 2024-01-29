@@ -1,4 +1,6 @@
-﻿using CRS.ADMIN.SHARED.PaymentManagement;
+﻿using CRS.ADMIN.SHARED.PaginationManagement;
+using CRS.ADMIN.SHARED.PaymentManagement;
+using System;
 using System.Collections.Generic;
 using System.Data;
 
@@ -9,18 +11,19 @@ namespace CRS.ADMIN.REPOSITORY.PaymentManagement
         private readonly RepositoryDao _dao;
         public PaymentManagementRepository() => _dao = new RepositoryDao();
 
-        public List<PaymentLedgerCommon> GetPaymentLedgerDetail(string searchText, string clubId, string date)
+        public List<PaymentLedgerCommon> GetPaymentLedgerDetail(string clubId, string date, PaginationFilterCommon Request, string FromDate = "", string ToDate = "")
         {
             var paymentLogs = new List<PaymentLedgerCommon>();
 
             string sql = "sproc_admin_payment_management @Flag='gpld'";
             sql += " ,@ClubId =" + _dao.FilterString(clubId);
-
-            if (!string.IsNullOrWhiteSpace(searchText))
-                sql += " ,@SearchField =N" + _dao.FilterString(searchText);
             if (!string.IsNullOrEmpty(date))
                 sql += " ,@Date=" + _dao.FilterString(date);
-
+            sql += !string.IsNullOrEmpty(Request.SearchFilter) ? ",@SearchFilter=N" + _dao.FilterString(Request.SearchFilter) : null;
+            sql += !string.IsNullOrEmpty(FromDate) ? ",@FromDate=" + _dao.FilterString(FromDate) : null;
+            sql += !string.IsNullOrEmpty(ToDate) ? ",@ToDate=" + _dao.FilterString(ToDate) : null;
+            sql += ",@Skip=" + Request.Skip;
+            sql += ",@Take=" + Request.Take;
             var dbResp = _dao.ExecuteDataTable(sql);
             if (dbResp != null && dbResp.Rows.Count > 0)
             {
@@ -43,7 +46,9 @@ namespace CRS.ADMIN.REPOSITORY.PaymentManagement
                             CommissionAmount = dataRow["CommissionAmount"].ToString(),
                             TotalCommissionAmount = dataRow["TotalCommissionAmount"].ToString(),
                             AdminPaymentAmount = dataRow["AdminPaymentAmount"].ToString(),
-                            ReservationType = dataRow["ReservationType"].ToString()
+                            ReservationType = dataRow["ReservationType"].ToString(),
+                            TotalRecords = Convert.ToInt32(_dao.ParseColumnValue(dataRow, "TotalRecords").ToString()),
+                            SNO = Convert.ToInt32(_dao.ParseColumnValue(dataRow, "SNO").ToString())
                         });
                     }
                 }
@@ -52,16 +57,20 @@ namespace CRS.ADMIN.REPOSITORY.PaymentManagement
             return paymentLogs;
         }
 
-        public List<PaymentLogsCommon> GetPaymentLogs(string searchText, string clubId, string date)
+        public List<PaymentLogsCommon> GetPaymentLogs(string clubId, string date, PaginationFilterCommon Request, string LocationId = "", string FromDate = "", string ToDate = "")
         {
             var paymentLogs = new List<PaymentLogsCommon>();
             string sql = "sproc_admin_payment_management @Flag='gpl'";
-            if (!string.IsNullOrEmpty(searchText))
-                sql += " ,@SearchField=N" + _dao.FilterString(searchText);
             if (!string.IsNullOrEmpty(clubId))
                 sql += " ,@ClubId=" + _dao.FilterString(clubId);
             if (!string.IsNullOrEmpty(date))
                 sql += " ,@Date=" + _dao.FilterString(date);
+            sql += !string.IsNullOrEmpty(Request.SearchFilter) ? ",@SearchFilter=N" + _dao.FilterString(Request.SearchFilter) : null;
+            sql += !string.IsNullOrEmpty(LocationId) ? ",@LocationId=" + _dao.FilterString(LocationId) : null;
+            sql += !string.IsNullOrEmpty(FromDate) ? ",@FromDate=" + _dao.FilterString(FromDate) : null;
+            sql += !string.IsNullOrEmpty(ToDate) ? ",@ToDate=" + _dao.FilterString(ToDate) : null;
+            sql += ",@Skip=" + Request.Skip;
+            sql += ",@Take=" + Request.Take;
             var dbResp = _dao.ExecuteDataTable(sql);
             if (dbResp != null && dbResp.Rows.Count > 0)
             {
@@ -81,6 +90,8 @@ namespace CRS.ADMIN.REPOSITORY.PaymentManagement
                         TotalAmount = dataRow["TotalAmount"].ToString(),
                         TotalCommission = dataRow["TotalCommissionAmount"].ToString(),
                         GrandTotal = dataRow["GrandTotal"].ToString(),
+                        TotalRecords = Convert.ToInt32(_dao.ParseColumnValue(dataRow, "TotalRecords").ToString()),
+                        SNO = Convert.ToInt32(_dao.ParseColumnValue(dataRow, "SNO").ToString())
                     });
                 }
             }

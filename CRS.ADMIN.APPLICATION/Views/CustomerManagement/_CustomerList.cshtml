@@ -9,6 +9,10 @@
                           stroke="#667085" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round" />
                 </svg>
             </div>
+            <input name="FromDate" value="@Model.FromDate" hidden />
+            <input name="ToDate" value="@Model.ToDate" hidden />
+            <input name="Status" value="@ViewBag.UserStatusKey" hidden />
+            <input name="MobileNumber" value="@Model.MobileNumber" hidden />
             <input type="search"
                    id="default-search"
                    class="input-search block w-full "
@@ -82,17 +86,17 @@
                         <br />
                         <div class="input-field-common">
                             <label class="block mb-[12px] text-sm font-medium text-secondary-100 ">
-                                From Date
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.From_Date
                             </label>
 
-                            <input type="date" class="w-full" placeholder="YYYY/MM/DD" name="FromDate" id="FromDate" value="@Model.FromDate">
+                            <input type="text" class="w-full" placeholder="@CRS.ADMIN.APPLICATION.Resources.Resource.From_Date" name="FromDate" id="FromDate" value="@Model.FromDate" readonly>
                         </div>
                         <div class="input-field-common">
                             <label class="block mb-[12px] text-sm font-medium text-secondary-100 ">
-                                To Date
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.To_Date
                             </label>
 
-                            <input type="date" class="w-full" placeholder="YYYY/MM/DD" name="ToDate" id="ToDate" value="@Model.ToDate">
+                            <input type="text" class="w-full" placeholder="@CRS.ADMIN.APPLICATION.Resources.Resource.To_Date" name="ToDate" id="ToDate" value="@Model.ToDate" readonly>
                         </div>
 
                     </div>

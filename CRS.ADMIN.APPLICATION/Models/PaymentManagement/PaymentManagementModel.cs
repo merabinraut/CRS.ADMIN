@@ -15,6 +15,7 @@ namespace CRS.ADMIN.APPLICATION.Models.PaymentManagement
     }
     public class PaymentLogsModel
     {
+        public string SNO { get; set; }
         public string ClubId { get; set; }
         public string ClubName { get; set; }
         public string ClubLogo { get; set; }
@@ -31,6 +32,7 @@ namespace CRS.ADMIN.APPLICATION.Models.PaymentManagement
 
     public class PaymentLedgerModel
     {
+        public string SNO { get; set; }
         public string ClubId { get; set; }
         public string CustomerName { get; set; }
         public string CustomerNickName { get; set; }

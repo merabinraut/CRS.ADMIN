@@ -229,7 +229,15 @@
                                            style="display:none;">
                                     <p id="file_name_bussiness_certificate"
                                        class="file-name w-max h-[23px] overflow-hidden pl-2 text-xs text-[#686868] leading-[25px]">
-                                        @CRS.ADMIN.APPLICATION.Resources.Resource.No_File_Choosen
+                                        @if (string.IsNullOrEmpty(Model.BusinessCertificate))
+                                        {
+                                            @CRS.ADMIN.APPLICATION.Resources.Resource.No_File_Choosen
+                                        }
+                                        else
+                                        {
+                                            string fileName = Path.GetFileName(Model.BusinessCertificate);
+                                            @fileName
+                                        }
                                 </div>
                                 <div class="text-xs text-error mt-[8px]">
                                     @CRS.ADMIN.APPLICATION.Resources.Resource.Note:
@@ -250,7 +258,15 @@
                                     <input id="file_input_logo" class="file-input" name="Logo_Certificate" value="@Model.Logo" type="file" style="display:none;">
                                     <p id="file_name_logo"
                                        class="file-name w-max h-[23px] overflow-hidden pl-2 text-xs text-[#686868] leading-[25px]">
-                                        @CRS.ADMIN.APPLICATION.Resources.Resource.No_File_Choosen
+                                        @if (string.IsNullOrEmpty(Model.Logo))
+                                        {
+                                            @CRS.ADMIN.APPLICATION.Resources.Resource.No_File_Choosen
+                                        }
+                                        else
+                                        {
+                                            string fileName = Path.GetFileName(Model.Logo);
+                                            @fileName
+                                        }
                                 </div>
                                 <div class="text-xs text-error mt-[8px]">
                                     @CRS.ADMIN.APPLICATION.Resources.Resource.Note:
@@ -272,7 +288,15 @@
                                            style="display:none;">
                                     <p id="file_name_personal_document"
                                        class="file-name w-max h-[23px] overflow-hidden pl-2 text-xs text-[#686868] leading-[25px]">
-                                        @CRS.ADMIN.APPLICATION.Resources.Resource.No_File_Choosen
+                                        @if (string.IsNullOrEmpty(Model.CoverPhoto))
+                                        {
+                                            @CRS.ADMIN.APPLICATION.Resources.Resource.No_File_Choosen
+                                        }
+                                        else
+                                        {
+                                            string fileName = Path.GetFileName(Model.CoverPhoto);
+                                            @fileName
+                                        }
                                 </div>
                                 <div class="text-xs text-error mt-[8px]">
                                     @CRS.ADMIN.APPLICATION.Resources.Resource.Note:
@@ -545,14 +569,14 @@
                                     }
                                 </div>
                                 @*<div class="input-field-common w-full ">
-                                    <label class="block mb-4 text-sm font-medium text-secondary-100 ">
-                                        Password
-                                    </label>
-                                    <div class="password-input">
-                                        <input type="text" class="w-full" placeholder="Enter password" name="clubpassword" required>
-                                        <i class="las la-eye password-eye" onclick="togglePassword()"></i>
-                                    </div>
-                                </div>*@
+                                        <label class="block mb-4 text-sm font-medium text-secondary-100 ">
+                                            Password
+                                        </label>
+                                        <div class="password-input">
+                                            <input type="text" class="w-full" placeholder="Enter password" name="clubpassword" required>
+                                            <i class="las la-eye password-eye" onclick="togglePassword()"></i>
+                                        </div>
+                                    </div>*@
                             </div>
                         </div>
                     </div>
