@@ -23,13 +23,13 @@
                             @CRS.ADMIN.APPLICATION.Resources.Resource.Group_Name
                         </label>
                         @Html.TextBoxFor(model => model.GroupName, new
-                        {
-                            @class = "w-full rounded-[4px]",
-                            @placeholder = "Enter group name",
-                            @style = "border-radius:4px !important",
-                            @autocomplete = "off",
-                            @maxLength = "50"
-                        })
+                       {
+                           @class = "w-full rounded-[4px]",
+                           @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.Group_Name,
+                           @style = "border-radius:4px !important",
+                           @autocomplete = "off",
+                           @maxLength = "50"
+                       })
                         <span class="error">
                             @Html.ValidationMessageFor(m => m.GroupName)
                         </span>
@@ -43,7 +43,7 @@
                         @Html.TextBoxFor(model => model.Description, new
                         {
                             @class = "w-full rounded-[4px]",
-                            @placeholder = "Enter group name",
+                            @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.Description,
                             @style = "border-radius:4px !important",
                             @autocomplete = "off",
                             @maxLength = "200"

@@ -4,7 +4,7 @@
     ViewBag.Title = "Club Reservations Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
+<link rel="stylesheet" href="//code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
 <div class="px-8 py-4 flex flex-col gap-8">
 
     <!-- booking information  -->
@@ -25,9 +25,9 @@
                 <div class="flex justify-between ">
                     @using (Html.BeginForm("ReservationLedgerDetail", "ReservationLedger", FormMethod.Get))
                     {
-                        <input id="ClubId" name="FromDate" value="@ViewBag.ClubId" hidden />
-                        <input id="FromDate" name="FromDate" value="@ViewBag.FromDate" hidden />
-                        <input id="ToDate" name="ToDate" value="@ViewBag.ToDate" hidden />
+                        <input name="FromDate" value="@ViewBag.ClubId" hidden />
+                        <input name="FromDate" value="@ViewBag.FromDate" hidden />
+                        <input name="ToDate" value="@ViewBag.ToDate" hidden />
                         <div class="relative input-search-wrapper">
                             <div class="absolute inset-y-0 left-0 flex items-center pl-[16px] pointer-events-none">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21"
@@ -60,7 +60,7 @@
 
                     <div id="filter-container" class="px-6 py-5 rounded-[5px] border border-[#D0D5DD]" style="display: none;">
                         <form action="/ReservationLedger/ReservationLedgerDetail" method="get" id="filter-id">
-                            <input id="ClubId" name="FromDate" value="@ViewBag.ClubId" hidden />
+                            <input name="ClubId" value="@ViewBag.ClubId" hidden />
                             <div class="flex flex-col gap-4">
                                 <div class="flex text-[#3E3E3E] gap-1 items-center">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="20"
@@ -365,6 +365,7 @@
 </div>
 
 @section scripts{
+    <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
                 const page_size = @ViewBag.PageSize;

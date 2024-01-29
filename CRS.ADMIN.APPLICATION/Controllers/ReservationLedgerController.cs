@@ -71,6 +71,14 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             Response.ForEach(x => x.ClubId = x.ClubId.EncryptParameter());
             ViewBag.IsBackAllowed = true;
             ViewBag.BackButtonURL = "/ReservationLedger/ReservationLedgerList";
+
+            ViewBag.ClubId = ClubId;
+            ViewBag.SearchText = SearchText;
+            ViewBag.FromDate = FromDate;
+            ViewBag.ToDate = ToDate;
+            ViewBag.StartIndex = StartIndex;
+            ViewBag.PageSize = PageSize;
+            ViewBag.TotalData = dbResponse != null && dbResponse.Any() ? dbResponse[0].TotalRecords : 0;
             return View(Response);
         }
     }

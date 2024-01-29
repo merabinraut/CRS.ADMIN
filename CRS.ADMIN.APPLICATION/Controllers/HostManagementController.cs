@@ -10,6 +10,7 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using static Google.Apis.Requests.BatchRequest;
 
 namespace CRS.ADMIN.APPLICATION.Controllers
 {
@@ -65,6 +66,8 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             ViewBag.PopUpRenderValue = !string.IsNullOrEmpty(RenderId) ? RenderId : null;
             ViewBag.IsBackAllowed = true;
             ViewBag.BackButtonURL = "/ClubManagement/ClubList";
+            ViewBag.RankDDL = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("RANKDDL") as Dictionary<string, string>, null, "--- Select ---");
+            ViewBag.RankDDLKey = ResponseModel.ManageHostModel.Rank;
 
             ViewBag.StartIndex = StartIndex;
             ViewBag.PageSize = PageSize;
@@ -121,6 +124,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 model.PreviousOccupation = model.PreviousOccupation?.EncryptParameter();
                 model.LiquorStrength = model.LiquorStrength?.EncryptParameter();
                 model.HostLogo = dbResponse.ImagePath;
+                model.Rank = dbResponse.Rank.EncryptParameter();
                 TempData["RenderId"] = "ManageHost";
                 TempData["ManageHostModel"] = model;
                 return RedirectToAction("HostList", "HostManagement", new { AgentId });
@@ -185,9 +189,9 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 if (allowedContentType.Contains(contentType.ToLower()))
                 {
                     var dateTime = DateTime.Now.ToString("yyyyMMddHHmmssffff");
-                    string fileName = "GalleryImage_" + dateTime + ext.ToLower();
-                    ImagePath = Path.Combine(Server.MapPath("~/Content/UserUpload/Host/Gallery"), fileName);
-                    Model.HostLogo = "/Content/UserUpload/Host/Gallery/" + fileName;
+                    string fileName = "host_pi_" + dateTime + ext.ToLower();
+                    ImagePath = Path.Combine(Server.MapPath("~/Content/UserUpload/Host"), fileName);
+                    Model.HostLogo = "/Content/UserUpload/Host/" + fileName;
                 }
                 else
                 {
@@ -217,7 +221,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                     return RedirectToAction("ClubList", "ClubManagement");
                 }
                 if (!string.IsNullOrEmpty(requestCommon.HostId)) requestCommon.HostId = !string.IsNullOrEmpty(Model.HostId) ? Model.HostId.DecryptParameter() : null;
-                requestCommon.Rank = requestCommon.Rank;
+                requestCommon.Rank = requestCommon.Rank.DecryptParameter();
                 requestCommon.ConstellationGroup = ZodiacSignsDDLKey?.DecryptParameter();
                 requestCommon.BloodType = BloodGroupDDLKey?.DecryptParameter();
                 requestCommon.PreviousOccupation = OccupationDDLKey?.DecryptParameter();

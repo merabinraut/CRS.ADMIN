@@ -660,7 +660,8 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                         Message = "Please select Host",
                         Title = NotificationMessage.INFORMATION.ToString()
                     });
-                    return View(Model);
+                    return RedirectToAction("ManageMainPageRequest", "RecommendationManagementV2", new { groupId = Model.GroupId, locationId = Model.LocationId, displayId = Model.DisplayId });
+                    //return View(Model);
                 }
                 if (!string.IsNullOrEmpty(hostDDLByClubId)) hostDDLByClubId = hostDDLByClubId.Substring(1);
                 if (Model.DisplayOrderDDL != null)
@@ -678,7 +679,8 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                         Message = "Please select Display order",
                         Title = NotificationMessage.INFORMATION.ToString()
                     });
-                    return View(Model);
+                    return RedirectToAction("ManageMainPageRequest", "RecommendationManagementV2", new { groupId = Model.GroupId, locationId = Model.LocationId, displayId = Model.DisplayId });
+                    //return View(Model);
                 }
                 if (!string.IsNullOrEmpty(displayOrderDDL)) displayOrderDDL = displayOrderDDL.Substring(1);
                 var HostRecommendationCSValue = "";
@@ -715,7 +717,8 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                             Message = dbResponseInfo.Message ?? "Something went wrong try again later",
                             Title = NotificationMessage.INFORMATION.ToString()
                         });
-                        return View(Model);
+                        return RedirectToAction("ManageMainPageRequest", "RecommendationManagementV2", new { groupId = Model.GroupId, locationId = Model.LocationId, displayId = Model.DisplayId });
+                        //return View(Model);
                     }
                 }
             }
@@ -725,7 +728,8 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 Message = "Please fill all required fields",
                 Title = NotificationMessage.INFORMATION.ToString()
             });
-            return View(Model);
+            return RedirectToAction("ManageMainPageRequest", "RecommendationManagementV2", new { groupId = Model.GroupId, locationId = Model.LocationId, displayId = Model.DisplayId });
+            //return View(Model);
         }
 
         [HttpPost, ValidateAntiForgeryToken]
