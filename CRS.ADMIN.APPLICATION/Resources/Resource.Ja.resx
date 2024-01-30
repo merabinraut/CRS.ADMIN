@@ -125,7 +125,7 @@
     <comment>Recommendation Management</comment>
   </data>
   <data name="Add New" xml:space="preserve">
-    <value>追加する</value>
+    <value>新しく追加する</value>
   </data>
   <data name="Additional Field" xml:space="preserve">
     <value>追加フィールド</value>
@@ -520,7 +520,7 @@
     <value>件</value>
   </data>
   <data name="Export" xml:space="preserve">
-    <value>輸出</value>
+    <value>エクスポート</value>
   </data>
   <data name="Export Pdf" xml:space="preserve">
     <value>エクスポート</value>
@@ -626,7 +626,7 @@
     <comment>Host Management</comment>
   </data>
   <data name="Host Management Supporting Text" xml:space="preserve">
-    <value>クラブのホストの詳細情報を管理します。</value>
+    <value>クラブのホストを管理する</value>
     <comment>Host Management</comment>
   </data>
   <data name="Host Name" xml:space="preserve">
@@ -986,11 +986,11 @@
     <comment>Payment Management</comment>
   </data>
   <data name="Plan Management" xml:space="preserve">
-    <value>計画管理</value>
+    <value>プラン管理</value>
     <comment>Plan Management</comment>
   </data>
   <data name="Plan Management Supporting Text" xml:space="preserve">
-    <value>計画の管理</value>
+    <value>プランの情報を管理します</value>
     <comment>Plan Management</comment>
   </data>
   <data name="Plan Name" xml:space="preserve">

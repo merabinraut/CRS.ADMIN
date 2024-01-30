@@ -1969,7 +1969,7 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Manage Payments.
+        ///   Looks up a localized string similar to Manage club plan’s information..
         /// </summary>
         public static string Payment_Management_Supporting_Text {
             get {

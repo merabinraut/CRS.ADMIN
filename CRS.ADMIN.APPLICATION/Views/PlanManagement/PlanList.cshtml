@@ -60,9 +60,9 @@
                 <div class="px-[16px] py-[12px] flex justify-between entry-export-container">
                     <div class="flex items-center select-entries" id="ShowEntries-Id">
                     </div>
-                    <div class="export-button h-[40px]" onclick="exportExcel('table-id', 'Plan')">
-                        <img src="~/Content/assets_new/images/club/download-solid.svg"> @CRS.ADMIN.APPLICATION.Resources.Resource.Export
-                    </div>
+                    @*<div class="export-button h-[40px]" onclick="exportExcel('table-id', 'Plan')">
+                            <img src="~/Content/assets_new/images/club/download-solid.svg"> @CRS.ADMIN.APPLICATION.Resources.Resource.Export
+                        </div>*@
                 </div>
                 <div class="relative overflow-x-auto">
                     <table class="w-full text-left club-table" id="table-id">
@@ -113,6 +113,15 @@
                                         </div>
                                     </div>
                                 </th>
+                                <th scope="col" class="p-[12px]">
+                                    <div class="flex w-max">
+                                        @CRS.ADMIN.APPLICATION.Resources.Resource.Price
+                                        <div class="relative pl-[5px]">
+                                            <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                            <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                        </div>
+                                    </div>
+                                </th>
                                 @*<th scope="col" class="p-[12px]">
                                         <div class="flex w-max">
                                             @CRS.ADMIN.APPLICATION.Resources.Resource.Image 1
@@ -131,7 +140,16 @@
                                             </div>
                                         </div>
                                     </th>*@
-                                <th scope="col" class="p-[12px]">
+                                @*<th scope="col" class="p-[12px]">
+                                        <div class="flex w-max">
+                                            @CRS.ADMIN.APPLICATION.Resources.Resource.Image
+                                            <div class="relative pl-[5px]">
+                                                <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                                <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                            </div>
+                                        </div>
+                                    </th>*@
+                                @*<th scope="col" class="p-[12px]">
                                     <div class="flex w-max">
                                         @CRS.ADMIN.APPLICATION.Resources.Resource.Image
                                         <div class="relative pl-[5px]">
@@ -139,25 +157,8 @@
                                             <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
                                         </div>
                                     </div>
-                                </th>
-                                <th scope="col" class="p-[12px]">
-                                    <div class="flex w-max">
-                                        @CRS.ADMIN.APPLICATION.Resources.Resource.Image
-                                        <div class="relative pl-[5px]">
-                                            <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
-                                            <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
-                                        </div>
-                                    </div>
-                                </th>
-                                <th scope="col" class="p-[12px]">
-                                    <div class="flex w-max">
-                                        @CRS.ADMIN.APPLICATION.Resources.Resource.Price
-                                        <div class="relative pl-[5px]">
-                                            <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
-                                            <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
-                                        </div>
-                                    </div>
-                                </th>
+                                </th>*@
+
                                 <th scope="col" class="p-[12px]">
                                     <div class="flex w-max">
                                         @CRS.ADMIN.APPLICATION.Resources.Resource.Nomination
@@ -231,7 +232,7 @@
                                         <td class="p-[12px]">
                                             @item.PlanTime
                                         </td>
-                                        <td class="p-[12px]">
+                                        @*<td class="p-[12px]">
                                             @if (!string.IsNullOrEmpty(item.PlanImage))
                                             {
                                                 <img class="table-image h-[36px] w-[88px]" src="@item.PlanImage">
@@ -240,22 +241,23 @@
                                             {
                                                 <img class="table-image h-[36px] w-[88px]" src="~/Content/assets_new/images/demo-image.jpeg">
                                             }
-                                        </td>
-                                        <td class="p-[12px]">
-                                            @if (!string.IsNullOrEmpty(item.PlanImage2))
-                                            {
-                                                <img class="table-image h-[36px] w-[88px]" src="@item.PlanImage2">
-                                            }
-                                            else
-                                            {
-                                                <img class="table-image h-[36px] w-[88px]" src="~/Content/assets_new/images/demo-image.jpeg">
-                                            }
-                                        </td>
+                                        </td>*@
                                         <td class="p-[12px]">
                                             <div class="">
                                                 @item.Price
                                             </div>
                                         </td>
+                                        @*<td class="p-[12px]">
+                                                @if (!string.IsNullOrEmpty(item.PlanImage2))
+                                                {
+                                                    <img class="table-image h-[36px] w-[88px]" src="@item.PlanImage2">
+                                                }
+                                                else
+                                                {
+                                                    <img class="table-image h-[36px] w-[88px]" src="~/Content/assets_new/images/demo-image.jpeg">
+                                                }
+                                            </td>*@
+
                                         <td class="p-[12px]">
                                             @item.Nomination
                                         </td>
