@@ -125,7 +125,7 @@
     <comment>Recommendation Management</comment>
   </data>
   <data name="Add New" xml:space="preserve">
-    <value>追加する</value>
+    <value>新しく追加する</value>
   </data>
   <data name="Additional Field" xml:space="preserve">
     <value>追加フィールド</value>
@@ -296,6 +296,10 @@
   <data name="Choose Images" xml:space="preserve">
     <value>画像の選択</value>
     <comment>Location Management</comment>
+  </data>
+  <data name="Choose Logo" xml:space="preserve">
+    <value>選ぶ</value>
+    <comment>Gallery Management</comment>
   </data>
   <data name="Clear All" xml:space="preserve">
     <value>クリア</value>
@@ -516,7 +520,7 @@
     <value>件</value>
   </data>
   <data name="Export" xml:space="preserve">
-    <value>輸出</value>
+    <value>エクスポート</value>
   </data>
   <data name="Export Pdf" xml:space="preserve">
     <value>エクスポート</value>
@@ -556,6 +560,22 @@
   <data name="Gallery" xml:space="preserve">
     <value>ギャラリー</value>
     <comment>Location Management</comment>
+  </data>
+  <data name="Gallery Management" xml:space="preserve">
+    <value>ギャラリー管理</value>
+    <comment>Gallery Management</comment>
+  </data>
+  <data name="Gallery/Banner" xml:space="preserve">
+    <value>画像</value>
+    <comment>Gallery Management</comment>
+  </data>
+  <data name="GallerySupoortMsg" xml:space="preserve">
+    <value>ホストの写真を管理する</value>
+    <comment>Gallery Management</comment>
+  </data>
+  <data name="GalleryTitlePlaceHolder" xml:space="preserve">
+    <value>バナー1</value>
+    <comment>Gallery Management</comment>
   </data>
   <data name="Gold" xml:space="preserve">
     <value>ゴルドー</value>
@@ -606,7 +626,7 @@
     <comment>Host Management</comment>
   </data>
   <data name="Host Management Supporting Text" xml:space="preserve">
-    <value>クラブのホストの詳細情報を管理します。</value>
+    <value>クラブのホストを管理する</value>
     <comment>Host Management</comment>
   </data>
   <data name="Host Name" xml:space="preserve">
@@ -636,6 +656,10 @@
   <data name="Image Titile" xml:space="preserve">
     <value>画像のタイトル</value>
     <comment>Promotion Management</comment>
+  </data>
+  <data name="ImageValidationMsg" xml:space="preserve">
+    <value>注意:画像はheif形式で、最大ファイルサイズは5 mbです。</value>
+    <comment>Gallery Management</comment>
   </data>
   <data name="Info" xml:space="preserve">
     <value>情報</value>
@@ -751,6 +775,10 @@
   <data name="Manage Commission Slabs" xml:space="preserve">
     <value>コミッションスラブの管理</value>
     <comment>Commission Management</comment>
+  </data>
+  <data name="Manage Gallery" xml:space="preserve">
+    <value>管理ギャラリー</value>
+    <comment>Gallery Management</comment>
   </data>
   <data name="Manage Group" xml:space="preserve">
     <value>管理グループ</value>
@@ -958,11 +986,11 @@
     <comment>Payment Management</comment>
   </data>
   <data name="Plan Management" xml:space="preserve">
-    <value>計画管理</value>
+    <value>プラン管理</value>
     <comment>Plan Management</comment>
   </data>
   <data name="Plan Management Supporting Text" xml:space="preserve">
-    <value>計画の管理</value>
+    <value>プランの情報を管理します</value>
     <comment>Plan Management</comment>
   </data>
   <data name="Plan Name" xml:space="preserve">
@@ -1297,6 +1325,10 @@
   <data name="Time" xml:space="preserve">
     <value>時間</value>
     <comment>Plan Management</comment>
+  </data>
+  <data name="Title" xml:space="preserve">
+    <value>タイトル</value>
+    <comment>Gallery Management</comment>
   </data>
   <data name="To Amount" xml:space="preserve">
     <value>金額まで</value>

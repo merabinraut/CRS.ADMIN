@@ -475,6 +475,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Choose Logo.
+        /// </summary>
+        public static string Choose_Logo {
+            get {
+                return ResourceManager.GetString("Choose Logo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Clear All.
         /// </summary>
         public static string Clear_All {
@@ -1069,6 +1078,42 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Gallery/Banner.
+        /// </summary>
+        public static string Gallery_Banner {
+            get {
+                return ResourceManager.GetString("Gallery/Banner", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Gallery Management.
+        /// </summary>
+        public static string Gallery_Management {
+            get {
+                return ResourceManager.GetString("Gallery Management", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Manage your gallery..
+        /// </summary>
+        public static string GallerySupoortMsg {
+            get {
+                return ResourceManager.GetString("GallerySupoortMsg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Banner1.
+        /// </summary>
+        public static string GalleryTitlePlaceHolder {
+            get {
+                return ResourceManager.GetString("GalleryTitlePlaceHolder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Gold.
         /// </summary>
         public static string Gold {
@@ -1245,6 +1290,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         public static string Image_Titile {
             get {
                 return ResourceManager.GetString("Image Titile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Note: Image should be in HEIF format and Maximum file size is  5 MB..
+        /// </summary>
+        public static string ImageValidationMsg {
+            get {
+                return ResourceManager.GetString("ImageValidationMsg", resourceCulture);
             }
         }
         
@@ -1506,6 +1560,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         public static string Manage_Commission_Slabs {
             get {
                 return ResourceManager.GetString("Manage Commission Slabs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Manage Gallery.
+        /// </summary>
+        public static string Manage_Gallery {
+            get {
+                return ResourceManager.GetString("Manage Gallery", resourceCulture);
             }
         }
         
@@ -1906,7 +1969,7 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Manage Payments.
+        ///   Looks up a localized string similar to Manage club plan’s information..
         /// </summary>
         public static string Payment_Management_Supporting_Text {
             get {
@@ -2757,6 +2820,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         public static string Time {
             get {
                 return ResourceManager.GetString("Time", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Title.
+        /// </summary>
+        public static string Title {
+            get {
+                return ResourceManager.GetString("Title", resourceCulture);
             }
         }
         

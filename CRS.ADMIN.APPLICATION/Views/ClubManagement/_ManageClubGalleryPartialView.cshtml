@@ -2,11 +2,10 @@
 <div id="add-new-gallery"
      class="drawer-close-disable  flex justify-end fixed top-0 right-0 z-40 h-screen overflow-y-auto transition-transform translate-x-full "
      tabindex="-1" aria-labelledby="drawer-right-label">
-
     <div class="bg-white w-[574px] drawer-container relative">
         <div class="drawer-form-container sticky top-0 z-[5] ">
             <div class="drawer-form flex justify-between bg-secondary-color-pink py-[16px] px-[24px] h-[56px]">
-                <div>Manage Gallery</div>
+                <div>@CRS.ADMIN.APPLICATION.Resources.Resource.Manage_Gallery</div>
                 <button type="button" data-drawer-hide="add-new-gallery" aria-controls="add-new-gallery"
                         class="text-[20px]">
                     <i class="las la-window-close text-white" onclick="CancelFunction();"></i>
@@ -26,12 +25,12 @@
                 <div class="grid grid-cols-1 gap-x-[20px] gap-y-[16px]">
                     <div class="input-field-common">
                         <label for="email" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
-                            Title
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Title
                         </label>
                         @Html.TextBoxFor(model => model.ImageTitle, new
                         {
                            @class = "w-full",
-                           @placeholder = "Banner",
+                           @placeholder = CRS.ADMIN.APPLICATION.Resources.Resource.GalleryTitlePlaceHolder,
                            autocomplete = "off",
                            maxLength = "50"
                         })
@@ -41,46 +40,36 @@
                         @*<input type="text" class="w-full" placeholder="Banner" name="ImageTitle" value="@Model.ImageTitle" required>
                             <span class="error">Validation msg</span>*@
                     </div>
-
-
                     <div>
                         <label for="email" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
-                            Gallery/Banner
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Gallery_Banner
                         </label>
                         <div class="file-upload-common">
 
                             <label for="file_input-gallery" class="custom-file-upload w-[128px] flex-none text-ellipsis-customer">
-                                <span>Custom Upload</span>
+                                <span>@CRS.ADMIN.APPLICATION.Resources.Resource.Choose_Logo</span>
                             </label>
                             <input id="file_input-gallery" type="file" style="display:none;" name="Image_Path" required>
                             <p id="file_name_display-gallery"
                                class="w-max h-[23px] overflow-hidden pl-2 text-[#686868]">
-                                No
-                                File Choosen
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.No_File_Choosen
                             </p>
                         </div>
                         <div class="text-xs text-error mt-[8px]">
-                            Note: Image should be in HEIF format and Maximum file
-                            size
-                            is 5 MB.
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.ImageValidationMsg
                         </div>
                     </div>
-
                 </div>
-
                 <div class="flex justify-end py-[16px] ">
                     <div class="flex gap-[24px]">
                         <div class="btn btn-secondary rounded-[4px] px-4" data-drawer-hide="add-new-gallery"
-                             aria-controls="add-new-gallery" onclick="CancelFunction();">Cancel</div>
+                             aria-controls="add-new-gallery" onclick="CancelFunction();">@CRS.ADMIN.APPLICATION.Resources.Resource.Cancel</div>
                         <div class="btn btn-primary rounded-[4px] px-4">
-                            <button type="submit">Create</button>
+                            <button type="submit">@CRS.ADMIN.APPLICATION.Resources.Resource.Create</button>
                         </div>
                     </div>
-
                 </div>
             }
         </div>
-
     </div>
-
 </div>

@@ -9,8 +9,8 @@
     @Html.AntiForgeryToken()
     <div class="flex flex-col">
         <div class="mb-8">
-            <div class="heading-title">Gallery Management</div>
-            <div class="span-title-light-gray">Supporting Texts</div>
+            <div class="heading-title">@CRS.ADMIN.APPLICATION.Resources.Resource.Gallery_Management</div>
+            <div class="span-title-light-gray">@CRS.ADMIN.APPLICATION.Resources.Resource.GallerySupoortMsg</div>
         </div>
 
         <div class="flex justify-between pb-[24px]">
@@ -24,7 +24,7 @@
                         </svg>
                     </div>
                     <input value="@ViewBag.ClubId" name="ClubId" hidden />
-                    <input type="search" name="SearchFilter" class="input-search block w-full " placeholder="Search"
+                    <input type="search" name="SearchFilter" class="input-search block w-full " placeholder="@CRS.ADMIN.APPLICATION.Resources.Resource.Search"
                            value="@ViewBag.SearchFilter">
                     <input type="submit" hidden />
 
@@ -33,24 +33,15 @@
         </div>
         <div class="table-tab">
             <div class="px-[16px] py-[12px] flex justify-between entry-export-container">
-                <div class="flex items-center select-entries">
-                    @*show&nbsp;
-                        <select id="countries" class="w-full select-entires " style="width: 100%; ">
-                            <option value="5" selected>5</option>
-                            <option value="10">10</option>
-                            <option value="15">15</option>
-                            <option value="20">100</option>
-                        </select>&nbsp;entries*@
+                <div class="flex items-center select-entries" id="ShowEntries-Id">
                 </div>
                 <div class="btn btn-primary gap-[8px]" data-drawer-target="add-new-gallery"
                      data-drawer-show="add-new-gallery" data-drawer-placement="right" data-drawer-backdrop="false"
                      aria-controls="drawer-disabled-backdrop">
                     <img src="~/Content/assets_new/images/plus-circle-solid.svg" />
-                    Add New
+                    @CRS.ADMIN.APPLICATION.Resources.Resource.Add_New
                 </div>
-
             </div>
-
             <div class="relative overflow-x-auto">
                 <table class="w-full  text-left club-table">
                     <thead class="club-table-thead">
@@ -66,7 +57,7 @@
                             </th>
                             <th scope="col" class="p-[12px]">
                                 <div class="flex">
-                                    Title
+                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Title
                                     <div class="relative pl-[5px]">
                                         <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
                                         <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
@@ -75,7 +66,7 @@
                             </th>
                             <th scope="col" class="p-[12px]">
                                 <div class="flex">
-                                    Image
+                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Image
                                     <div class="relative pl-[5px]">
                                         <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
                                         <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
@@ -84,7 +75,7 @@
                             </th>
                             <th scope="col" class="p-[12px]">
                                 <div class="flex">
-                                    Created On
+                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Created_On
                                     <div class="relative pl-[5px]">
                                         <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
                                         <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
@@ -101,15 +92,13 @@
                                 </th>*@
                             <th scope="col" class="p-[12px]">
                                 <div class="flex justify-center">
-                                    Action
+                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Action
                                     <div class="relative pl-[5px]">
                                         <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
                                         <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
                                     </div>
                                 </div>
                             </th>
-
-
                         </tr>
                     </thead>
                     <tbody>
@@ -154,34 +143,21 @@
                         }
                     </tbody>
                 </table>
-
             </div>
-            @*<div class="pagination-club">
-                    <div class="show-entry">Showing 1 to 5 of 301 Entries</div>
-                    <div class="flex gap-[12px]">
-                        <div class="btn btn-secondary-box-shadow ">Previous</div>
-                        <div class="flex gap-[12px]">
-                            <div class="pagination-number active">
-
-                                1
-                            </div>
-                            <div class="pagination-number">
-                                2
-                            </div>
-                            <div class="pagination-number">
-                                3
-                            </div>
-                            <div class="pagination-number">
-                                ..
-                            </div>
-                            <div class="pagination-number">
-                                10
-                            </div>
-
-                        </div>
-                        <div class="btn btn-secondary-box-shadow ">Next</div>
+            <div class="pagination-club">
+                <div class="show-entry" id="Entries-Id">
+                </div>
+                <div class="flex gap-[12px]">
+                    <div class="btn btn-secondary-box-shadow" id="prev-btn">
+                        @CRS.ADMIN.APPLICATION.Resources.Resource.Previous
                     </div>
-                </div>*@
+                    <div class="flex gap-[12px]" id="pagination-id">
+                    </div>
+                    <div class="btn btn-secondary-box-shadow" id="next-btn">
+                        @CRS.ADMIN.APPLICATION.Resources.Resource.Next
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -242,5 +218,18 @@
                   element.classList.remove('translate-x-full');
               }
          });
+    </script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+            const page_size = @ViewBag.PageSize;
+            const total_data = @ViewBag.TotalData;
+            const start_index_val = @ViewBag.StartIndex;
+            let URL = "/ClubManagement/GalleryManagement";
+            let search_filter = $('#default-search').val();
+            let ClubId = '@ViewBag.ClubId';
+            URL = addQueryParam(URL, 'SearchFilter', search_filter);
+            URL = addQueryParam(URL, 'ClubId', ClubId);
+            LoadPagination(page_size, total_data, start_index_val, URL);
+        });
     </script>
 }
