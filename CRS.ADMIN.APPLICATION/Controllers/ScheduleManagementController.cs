@@ -19,6 +19,9 @@ namespace CRS.ADMIN.APPLICATION.Controllers
         [HttpGet]
         public ActionResult ClubScheduleManagement(string ClubId)
         {
+            var culture = Request.Cookies["culture"]?.Value;
+            culture = string.IsNullOrEmpty(culture) ? "ja" : culture;
+            ViewBag.CultureLang = culture;
             var Response = new List<ClubScheduleModel>();
             var CId = !string.IsNullOrEmpty(ClubId) ? ClubId.DecryptParameter() : null;
             if (string.IsNullOrEmpty(CId))

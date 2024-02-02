@@ -1,4 +1,4 @@
-const currentDate = document.querySelector(".current-date"),
+﻿const currentDate = document.querySelector(".current-date"),
     daysTag = document.querySelector(".days-class"),
     ConstantCurrentMonth = new Date().getMonth(),
     ConstCurrentDate = new Date(),
@@ -6,16 +6,24 @@ const currentDate = document.querySelector(".current-date"),
     ConstMonth = (ConstCurrentDate.getMonth() + 1).toString().padStart(2, '0'),
     ConstDay = ConstCurrentDate.getDate().toString().padStart(2, '0'),
     ConstFormattedDate = `${ConstYear}-${ConstMonth}-${ConstDay}`;
-
+var months = [];
+var daysOfWeek = [];
+var culture = $('#culture_id').attr('lang-data');
 let idValue = 1; //dynamic id value
 var Clubschedule = clubSchedulesJson;
 //get new date, current year and month
 let date = new Date(),
     currYear = date.getFullYear(),
     currMonth = date.getMonth();
-
-const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+if (culture == 'Ja' || culture == 'ja') {
+    months = ["1月", "2月", "3月", "4月", "5月", "6月", "7月", "8月", "9月", "10月", "11月", "12月"];
+    daysOfWeek = ['日曜日', '月曜日', '火曜日', '水曜日', '木曜日', '金曜日', '土曜日'];
+} else {
+    months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
     daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+}
+//const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+//    daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
 const renderCalendar = () => {
     let firstDayofMonth = new Date(currYear, currMonth, 1).getDay(), // getting first day of month
@@ -60,7 +68,7 @@ const renderCalendar = () => {
         let isDisabled = ((i >= date.getDate() && currMonth === new Date().getMonth()
             && currYear === new Date().getFullYear()) || (new Date(currentFullDate) > new Date(ConstFormattedDate))) ? false : true;
         var dayOfWeek = new Date(currYear, currMonth, i).getDay();
-        //<button onclick="openModal('modal1')">Open Modal�1</button>
+        //<button onclick="openModal('modal1')">Open Modal 1</button>
         if (!isDisabled) {
             htmlText += `<div class="calender-card-schedule${isToday}" onclick="openModal('modal1','${currentFullDate},${ScheduleId}')">
                 <div class=" text-center">
