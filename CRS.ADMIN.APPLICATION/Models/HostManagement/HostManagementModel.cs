@@ -39,8 +39,16 @@ namespace CRS.ADMIN.APPLICATION.Models.HostManagement
         public string HostId { get; set; }
         [Display(Name = "Host Name")]
         [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
-        [MaxLength(50, ErrorMessage = "Maximum 50 characters allowed")]
+        [MaxLength(100, ErrorMessage = "Maximum 100 characters allowed")]
         public string HostName { get; set; }
+        [Display(Name = "Host Name Japanese")]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
+        [MaxLength(100, ErrorMessage = "Maximum 100 characters allowed")]
+        public string HostNameJapanese { get; set; }
+        [Display(Name = "Host Introduction")]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
+        [MaxLength(500, ErrorMessage = "Maximum 500 characters allowed")]
+        public string HostIntroduction { get; set; }
         [Display(Name = "Position")]
         [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
         [MaxLength(50, ErrorMessage = "Maximum 50 characters allowed")]
@@ -88,5 +96,16 @@ namespace CRS.ADMIN.APPLICATION.Models.HostManagement
         public string BirthDate { get; set; }
         public string HostLogo { get; set; }
         public string Address { get; set; }
+        public List<HostIdentityDataModel> HostIdentityDataModel { get; set; } = new List<HostIdentityDataModel>();
+    }
+    public class HostIdentityDataModel
+    {
+        public string IdentityLabel { get; set; }
+        public string IdentityType { get; set; }
+        public string IdentityValue { get; set; }
+        public string IdentityDDLType { get; set; }
+        public string IdentityDescription { get; set; }
+        public string IdentityLabelJapanese { get; set; }
+        public string IdentityLabelEnglish { get; set; }
     }
 }

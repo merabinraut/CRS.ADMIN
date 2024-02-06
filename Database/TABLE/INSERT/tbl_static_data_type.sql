@@ -189,3 +189,22 @@ VALUES
     GETDATE(), -- ActionDate - datetime
     'A'  -- Status - char(1)
     )
+	
+	
+	INSERT INTO dbo.tbl_static_data_type
+(
+    StaticDataType,
+    StaticDataName,
+    StaticDataDescription,
+    ActionUser,
+    ActionDate,
+    Status
+)
+VALUES
+(   34, -- StaticDataType - bigint
+    'Skills', -- StaticDataName - varchar(200)
+    'Skills list', -- StaticDataDescription - varchar(256)
+    SYSTEM_USER, -- ActionUser - varchar(200)
+    GETDATE(), -- ActionDate - datetime
+    'A'  -- Status - char(1)
+    )

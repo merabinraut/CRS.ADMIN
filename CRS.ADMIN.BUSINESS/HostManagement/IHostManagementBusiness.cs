@@ -16,5 +16,9 @@ namespace CRS.ADMIN.BUSINESS.HostManagement
         CommonDbResponse ManageGalleryImage(HostManageGalleryImageCommon Request);
         CommonDbResponse ManageGalleryImageStatus(string AgentId, string HostId, string GalleryId, Common Request);
         #endregion
+        #region Host Identity Detail Management 
+        List<HostIdentityDataCommon> GetHostIdentityDetail(string AgentId = "", string HostId = "");
+        List<StaticDataCommon> GetSkillsDLL();
+        #endregion
     }
 }

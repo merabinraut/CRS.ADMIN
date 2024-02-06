@@ -263,6 +263,9 @@
     <value>生年月日</value>
     <comment>Host Management</comment>
   </data>
+  <data name="BirthPlace" xml:space="preserve">
+    <value>出生地</value>
+  </data>
   <data name="Blood Type" xml:space="preserve">
     <value>血液型</value>
     <comment>Host Management</comment>
@@ -508,6 +511,9 @@
     <value>メールログ</value>
     <comment>Email Log</comment>
   </data>
+  <data name="English" xml:space="preserve">
+    <value>英語</value>
+  </data>
   <data name="Enter Additional Information" xml:space="preserve">
     <value>追加情報を入力してください</value>
     <comment>Plan Management</comment>
@@ -633,6 +639,10 @@
     <value>ホスト名</value>
     <comment>Host Management</comment>
   </data>
+  <data name="HostIntroduction" xml:space="preserve">
+    <value>ホストの紹介</value>
+    <comment>Host Management</comment>
+  </data>
   <data name="Hosts" xml:space="preserve">
     <value>ホスト</value>
     <comment>Dashboard</comment>
@@ -640,6 +650,10 @@
   <data name="HostSupportMsg" xml:space="preserve">
     <value>ホストの推薦注文を管理する。</value>
     <comment>Recommendation Management-&gt;Host List</comment>
+  </data>
+  <data name="HotSkills" xml:space="preserve">
+    <value>ホットスキル</value>
+    <comment>Host Management</comment>
   </data>
   <data name="Image" xml:space="preserve">
     <value>画像</value>
@@ -672,6 +686,9 @@
   <data name="January" xml:space="preserve">
     <value>一月</value>
     <comment>Dashboard</comment>
+  </data>
+  <data name="Japanese" xml:space="preserve">
+    <value>日本語</value>
   </data>
   <data name="July" xml:space="preserve">
     <value>七月</value>
@@ -712,6 +729,10 @@
   <data name="Latitude Placeholder" xml:space="preserve">
     <value>緯度を入力してください</value>
     <comment>Club Management</comment>
+  </data>
+  <data name="Lifestyle" xml:space="preserve">
+    <value>ライフスタイル</value>
+    <comment>Host Management</comment>
   </data>
   <data name="Line" xml:space="preserve">
     <value>ライン</value>
@@ -977,6 +998,9 @@
     <value>個人文書</value>
     <comment>Club Management</comment>
   </data>
+  <data name="Personality" xml:space="preserve">
+    <value>人格</value>
+  </data>
   <data name="Phone Number" xml:space="preserve">
     <value>電話番号</value>
     <comment>Customer Management</comment>
@@ -1035,6 +1059,9 @@
   <data name="Profile" xml:space="preserve">
     <value>プロフィール</value>
     <comment>Dashboard</comment>
+  </data>
+  <data name="ProfileImage" xml:space="preserve">
+    <value>プロフィール画像</value>
   </data>
   <data name="Promotion Management" xml:space="preserve">
     <value>プロモーション管理</value>
@@ -1275,9 +1302,17 @@
     <value>シルバー</value>
     <comment>Dashboard</comment>
   </data>
+  <data name="SkillSets" xml:space="preserve">
+    <value>スキルセット</value>
+    <comment>Host Management</comment>
+  </data>
   <data name="SMSLog" xml:space="preserve">
     <value>SMSログ</value>
     <comment>SMS Log</comment>
+  </data>
+  <data name="SNS" xml:space="preserve">
+    <value>SNS</value>
+    <comment>Host Management</comment>
   </data>
   <data name="Social Link" xml:space="preserve">
     <value>SNSリンク</value>

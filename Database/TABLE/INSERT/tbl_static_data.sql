@@ -423,3 +423,26 @@ VALUES
 (33, 'Aspects I focus on for self-improvement', '8', 'Aspects I focus on for self-improvement', N'自分磨きで気をつけていること', 'A', SYSTEM_USER, GETDATE()),
 (33, 'Future dreams and aspirations', '9', 'Future dreams and aspirations', N'将来の夢・やりたいこと', 'A', SYSTEM_USER, GETDATE()),
 (33, 'Future goals as a host', '10', 'Future goals as a host', N'ホストとしての今後の目標', 'A', SYSTEM_USER, GETDATE())
+
+INSERT INTO dbo.tbl_static_data
+(
+    StaticDataType,
+    StaticDataLabel,
+    StaticDataValue,
+    StaticDataDescription,
+    AdditionalValue1,
+    Status,
+    ActionUser,
+    ActionDate
+)
+VALUES
+(34, 'Skill 1', '1', 'Skill 1', N'スキル1', 'A', SYSTEM_USER, GETDATE()),
+(34, 'Skill 2', '2', 'Skill 2', N'スキル2', 'A', SYSTEM_USER, GETDATE()),
+(34, 'Skill 3', '3', 'Skill 3', N'スキル3', 'A', SYSTEM_USER, GETDATE()),
+(34, 'Skill 4', '4', 'Skill 4', N'スキル4', 'A', SYSTEM_USER, GETDATE()),
+(34, 'Skill 5', '5', 'Skill 5', N'スキル5', 'A', SYSTEM_USER, GETDATE()),
+(34, 'Skill 6', '6', 'Skill 6', N'スキル6', 'A', SYSTEM_USER, GETDATE()),
+(34, 'Skill 7', '7', 'Skill 7', N'スキル7', 'A', SYSTEM_USER, GETDATE()),
+(34, 'Skill 8', '8', 'Skill 8', N'スキル8', 'A', SYSTEM_USER, GETDATE()),
+(34, 'Skill 9', '9', 'Skill 9', N'スキル9', 'A', SYSTEM_USER, GETDATE()),
+(34, 'Skill 10', '10', 'Skill 10', N'スキル10', 'A', SYSTEM_USER, GETDATE())

@@ -2580,7 +2580,7 @@
     <Content Include="Views\LocationManagement\LocationDetail.cshtml" />
     <Content Include="Views\ClubManagement\ManageTag.cshtml" />
     <Content Include="Views\ClubManagement\_ManageClubPartialView.cshtml" />
-    <Content Include="Views\HostManagement\_ManageHostPartialView.cshtml" />
+    <Content Include="Views\HostManagement\_ManageHostPartialView_Copy.cshtml" />
     <Content Include="Views\ClubManagement\_ManageTagPartialView.cshtml" />
     <Content Include="Views\ClubManagement\GalleryManagement.cshtml" />
     <Content Include="Views\ClubManagement\_ManageClubGalleryPartialView.cshtml" />
@@ -2637,6 +2637,7 @@
     <Content Include="Views\EmailLog\Index.cshtml" />
     <Content Include="Views\ReservationLedger\ReservationLedgerDetail.cshtml" />
     <Content Include="Views\ReservationLedger\_CustomDate.cshtml" />
+    <Content Include="Views\HostManagement\_ManageHostPartialView.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -1,6 +1,7 @@
 ﻿using CRS.ADMIN.SHARED;
 using CRS.ADMIN.SHARED.HostManagement;
 using CRS.ADMIN.SHARED.PaginationManagement;
+using DocumentFormat.OpenXml.Office2016.Excel;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -53,13 +54,14 @@ namespace CRS.ADMIN.REPOSITORY.HostManagement
 
         public ManageHostCommon GetHostDetail(string AgentId, string HostId)
         {
+            var Response = new ManageHostCommon();
             string SQL = "EXEC sproc_host_management @Flag='ghd'";
             SQL += ",@AgentId=" + _DAO.FilterString(AgentId);
             SQL += ",@HostId=" + _DAO.FilterString(HostId);
             var dbResponse = _DAO.ExecuteDataRow(SQL);
             if (dbResponse != null)
             {
-                return new ManageHostCommon()
+                Response = new ManageHostCommon()
                 {
                     AgentId = _DAO.ParseColumnValue(dbResponse, "AgentId").ToString(),
                     HostId = _DAO.ParseColumnValue(dbResponse, "HostId").ToString(),
@@ -71,26 +73,35 @@ namespace CRS.ADMIN.REPOSITORY.HostManagement
                     BloodType = _DAO.ParseColumnValue(dbResponse, "BloodType").ToString(),
                     PreviousOccupation = _DAO.ParseColumnValue(dbResponse, "PreviousOccupation").ToString(),
                     LiquorStrength = _DAO.ParseColumnValue(dbResponse, "LiquorStrength").ToString(),
-                    //WebsiteLink = _DAO.ParseColumnValue(dbResponse, "WebsiteLink").ToString(),
                     InstagramLink = _DAO.ParseColumnValue(dbResponse, "InstagramLink").ToString(),
                     TiktokLink = _DAO.ParseColumnValue(dbResponse, "TiktokLink").ToString(),
                     TwitterLink = _DAO.ParseColumnValue(dbResponse, "TwitterLink").ToString(),
                     Rank = _DAO.ParseColumnValue(dbResponse, "Rank").ToString(),
                     Line = _DAO.ParseColumnValue(dbResponse, "Line").ToString(),
                     ImagePath = _DAO.ParseColumnValue(dbResponse, "ImagePath").ToString(),
-                    Address = _DAO.ParseColumnValue(dbResponse, "Address").ToString()
+                    Address = _DAO.ParseColumnValue(dbResponse, "Address").ToString(),
+                    HostNameJapanese = _DAO.ParseColumnValue(dbResponse, "HostNameJapanese").ToString(),
+                    HostIntroduction = _DAO.ParseColumnValue(dbResponse, "HostIntroduction").ToString(),
                 };
+
+                string SQL2 = "EXEC sproc_host_identity_detail_management @Flag = 'ghid'";
+                SQL2 += ",@ClubId=" + _DAO.FilterString(AgentId);
+                SQL2 += ",@HostId=" + _DAO.FilterString(HostId);
+                var dbResponse2 = _DAO.ExecuteDataTable(SQL2);
+                if (dbResponse2 != null && dbResponse2.Rows.Count > 0) Response.HostIdentityDataModel = _DAO.DataTableToListObject<HostIdentityDataCommon>(dbResponse2).ToList();
             }
-            return new ManageHostCommon();
+            return Response;
         }
 
         public CommonDbResponse ManageHost(ManageHostCommon Request)
         {
+            var Response = new CommonDbResponse();
             string SQL = "EXEC sproc_host_management ";
             SQL += !string.IsNullOrEmpty(Request.HostId) ? "@Flag='uh'" : "@Flag='rh'";
             SQL += ",@AgentId=" + _DAO.FilterString(Request.AgentId);
             SQL += !string.IsNullOrEmpty(Request.HostId) ? ",@HostId=" + _DAO.FilterString(Request.HostId) : "";
-            SQL += ",@HostName=N" + _DAO.FilterString(Request.HostName);
+            SQL += ",@HostName=" + _DAO.FilterString(Request.HostName);
+            SQL += ",@HostNameJapanese=N" + _DAO.FilterString(Request.HostNameJapanese);
             SQL += ",@Position=N" + _DAO.FilterString(Request.Position);
             SQL += !string.IsNullOrEmpty(Request.Rank?.ToString()) ? ",@Rank=" + Request.Rank : "";
             SQL += ",@DOB=" + _DAO.FilterString(Request.DOB);
@@ -109,7 +120,24 @@ namespace CRS.ADMIN.REPOSITORY.HostManagement
             SQL += ",@ImagePath=" + _DAO.FilterString(Request.ImagePath);
             SQL += ",@Line=" + _DAO.FilterString(Request.Line);
             SQL += ",@Address=N" + _DAO.FilterString(Request.Address);
-            return _DAO.ParseCommonDbResponse(SQL);
+            SQL += ",@HostIntroduction=N" + _DAO.FilterString(Request.HostIntroduction);
+            Response = _DAO.ParseCommonDbResponse(SQL);
+
+            foreach (var item in Request.HostIdentityDataModel)
+            {
+                var SQL2 = "EXEC sproc_host_identity_detail_management @Flag = 'mhid'";
+                SQL2 += ",@ClubId=" + _DAO.FilterString(Request.AgentId);
+                SQL2 += !string.IsNullOrEmpty(Request.HostId) ? ",@HostId=" + _DAO.FilterString(Request.HostId) : _DAO.FilterString(Response.Extra1);
+                SQL2 += ",@IdentityType=" + _DAO.FilterString(item.IdentityType);
+                SQL2 += ",@IdentityValue=" + _DAO.FilterString(item.IdentityValue);
+                SQL2 += !string.IsNullOrEmpty(item.IdentityDDLType) ? ",@IdentityDDLType=" + _DAO.FilterString(item.IdentityDDLType) : null;
+                SQL2 += ",@IdentityDescription=N" + _DAO.FilterString(item.IdentityDescription);
+                SQL2 += ",@ActionUser=N" + _DAO.FilterString(Request.ActionUser);
+                SQL2 += ",@ActionIP=" + _DAO.FilterString(Request.ActionIP);
+                SQL2 += ",@ActionPlatform=" + _DAO.FilterString(Request.ActionPlatform);
+                _DAO.ParseCommonDbResponse(SQL2);
+            }
+            return Response;
         }
 
         public CommonDbResponse ManageHostStatus(string AgentId, string HostId, string Status, Common Request)
@@ -161,6 +189,26 @@ namespace CRS.ADMIN.REPOSITORY.HostManagement
             SQL += ",@ActionPlatform=" + _DAO.FilterString(Request.ActionPlatform);
             SQL += ",@ActionIP=" + _DAO.FilterString(Request.ActionIP);
             return _DAO.ParseCommonDbResponse(SQL);
+        }
+        #endregion
+
+        #region Host Identity Detail Management 
+        public List<HostIdentityDataCommon> GetHostIdentityDetail(string AgentId = "", string HostId = "")
+        {
+            var Response = new List<HostIdentityDataCommon>();
+            string SQL = "EXEC sproc_host_identity_detail_management @Flag = 'ghid'";
+            SQL += !string.IsNullOrEmpty(AgentId) ? ",@ClubId=" + _DAO.FilterString(AgentId) : null;
+            SQL += !string.IsNullOrEmpty(HostId) ? ",@HostId=" + _DAO.FilterString(HostId) : null;
+            var dbResponse = _DAO.ExecuteDataTable(SQL);
+            if (dbResponse != null && dbResponse.Rows.Count > 0) Response = _DAO.DataTableToListObject<HostIdentityDataCommon>(dbResponse).ToList();
+            return Response;
+        }
+        public List<StaticDataCommon> GetSkillsDLL()
+        {
+            string SQL = "EXEC sproc_host_identity_detail_management @Flag = 'gsddl'";
+            var dbResponse = _DAO.ExecuteDataTable(SQL);
+            if (dbResponse != null && dbResponse.Rows.Count > 0) return _DAO.DataTableToListObject<StaticDataCommon>(dbResponse).ToList();
+            return new List<StaticDataCommon>();
         }
         #endregion
     }

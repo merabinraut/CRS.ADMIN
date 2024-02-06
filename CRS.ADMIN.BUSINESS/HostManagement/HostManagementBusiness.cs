@@ -46,5 +46,15 @@ namespace CRS.ADMIN.BUSINESS.HostManagement
             return _REPO.ManageGalleryImageStatus(AgentId, HostId, GalleryId, Request);
         }
         #endregion
+        #region Host Identity Detail Management 
+        public List<HostIdentityDataCommon> GetHostIdentityDetail(string AgentId = "", string HostId = "")
+        {
+            return _REPO.GetHostIdentityDetail(AgentId, HostId);
+        }
+        public List<StaticDataCommon> GetSkillsDLL()
+        {
+            return _REPO.GetSkillsDLL();
+        }
+        #endregion
     }
 }
