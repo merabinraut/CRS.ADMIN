@@ -534,9 +534,8 @@
                                             @Html.HiddenFor(model => Model.HostIdentityDataModel[i].IdentityType)
                                             @Html.HiddenFor(model => Model.HostIdentityDataModel[i].IdentityValue)
                                             @Html.HiddenFor(model => Model.HostIdentityDataModel[i].IdentityLabel)
-                                            @Html.HiddenFor(model => Model.HostIdentityDataModel[i].IdentityDDLType)
 
-                                            <select id="identityDDL" class="select-common block w-full">
+                                            <select class="select-common block w-full identity-ddl-class" name="HostIdentityDataModel[@i].IdentityDDLType" required>
                                                 @foreach (var item in ViewBag.SkillDDL as IEnumerable<SelectListItem>)
                                                 {
                                                     var selectedId = Model.HostIdentityDataModel[i].IdentityDDLType;
@@ -554,15 +553,16 @@
                                                     }
                                                 }
                                             </select>
-
+                                            <br />
                                             @Html.TextBoxFor(model => Model.HostIdentityDataModel[i].IdentityDescription, new
-                                            {
-                                                @class = "w-full",
-                                                @placeholder = @Model.HostIdentityDataModel[i].IdentityLabel,
-                                                @onkeypress = "return isNumber(event)",
-                                                autocomplete = "off",
-                                                @maxLength = "3"
-                                            })
+                                               {
+                                                   @class = "w-full",
+                                                   @placeholder = @Model.HostIdentityDataModel[i].IdentityLabel,
+                                                   @onkeypress = "return isNumber(event)",
+                                                   autocomplete = "off",
+                                                   @maxLength = "3",
+                                                   required = "required"
+                                               })
                                             <span class="error">
                                                 @Html.ValidationMessageFor(model => Model.HostIdentityDataModel[i].IdentityDescription)
                                             </span>
@@ -720,7 +720,7 @@
                     <div class="flex justify-end py-4">
                         <div class="flex gap-6">
                             <a>
-                                <button class="resetForm btn btn-primary-default h-[40px] px-8 rounded-[4px]  text-sm leading-[10px]" id="submit-button-id">
+                                <button class="resetForm btn btn-primary-default h-[40px] px-8 rounded-[4px]  text-sm leading-[10px]" id="submit-button-id" type="submit">
                                     @CRS.ADMIN.APPLICATION.Resources.Resource.Submit
                                 </button>
                             </a>

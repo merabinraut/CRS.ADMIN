@@ -142,6 +142,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 model.HostIdentityDataModel.ForEach(x => x.IdentityLabel = (!string.IsNullOrEmpty(culture) && culture == "en") ? x.IdentityLabelEnglish : x.IdentityLabelJapanese);
                 model.HostIdentityDataModel.ForEach(x => x.IdentityType = x.IdentityType.EncryptParameter());
                 model.HostIdentityDataModel.ForEach(x => x.IdentityValue = x.IdentityValue.EncryptParameter());
+                model.HostIdentityDataModel.ForEach(x => x.IdentityDDLType = !string.IsNullOrEmpty(x.IdentityDDLType) ? x.IdentityDDLType.EncryptParameter() : null);
                 TempData["RenderId"] = "ManageHost";
                 TempData["ManageHostModel"] = model;
                 return RedirectToAction("HostList", "HostManagement", new { AgentId });
@@ -249,6 +250,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 requestCommon.ImagePath = Model.HostLogo;
                 requestCommon.HostIdentityDataModel.ForEach(x => x.IdentityType = x.IdentityType.DecryptParameter());
                 requestCommon.HostIdentityDataModel.ForEach(x => x.IdentityValue = x.IdentityValue.DecryptParameter());
+                requestCommon.HostIdentityDataModel.ForEach(x => x.IdentityDDLType = !string.IsNullOrEmpty(x.IdentityDDLType) ? x.IdentityDDLType.DecryptParameter() : null);
                 var dbResponse = _buss.ManageHost(requestCommon);
                 if (dbResponse != null && dbResponse.Code == 0)
                 {
