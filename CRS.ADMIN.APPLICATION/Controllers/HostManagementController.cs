@@ -4,6 +4,7 @@ using CRS.ADMIN.BUSINESS.HostManagement;
 using CRS.ADMIN.SHARED;
 using CRS.ADMIN.SHARED.HostManagement;
 using CRS.ADMIN.SHARED.PaginationManagement;
+using Microsoft.Ajax.Utilities;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -24,6 +25,8 @@ namespace CRS.ADMIN.APPLICATION.Controllers
         [HttpGet]
         public ActionResult HostList(string AgentId, string SearchFilter = "", int StartIndex = 0, int PageSize = 10)
         {
+            var culture = Request.Cookies["culture"]?.Value;
+            culture = string.IsNullOrEmpty(culture) ? "ja" : culture;
             ViewBag.AgentId = AgentId;
             ViewBag.SearchFilter = SearchFilter;
             string RenderId = "";
@@ -55,6 +58,15 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 item.HostId = item.HostId?.EncryptParameter();
                 item.AgentId = item.AgentId?.EncryptParameter();
             }
+
+            if (string.IsNullOrEmpty(ResponseModel.ManageHostModel.AgentId) && string.IsNullOrEmpty(ResponseModel.ManageHostModel.HostId))
+            {
+                var dbHostIdentityResponse = _buss.GetHostIdentityDetail();
+                ResponseModel.ManageHostModel.HostIdentityDataModel = dbHostIdentityResponse.MapObjects<HostIdentityDataModel>();
+                ResponseModel.ManageHostModel.HostIdentityDataModel.ForEach(x => x.IdentityLabel = (!string.IsNullOrEmpty(culture) && culture == "en") ? x.IdentityLabelEnglish : x.IdentityLabelJapanese);
+                ResponseModel.ManageHostModel.HostIdentityDataModel.ForEach(x => x.IdentityType = x.IdentityType.EncryptParameter());
+                ResponseModel.ManageHostModel.HostIdentityDataModel.ForEach(x => x.IdentityValue = x.IdentityValue.EncryptParameter());
+            }
             ViewBag.ZodiacSignsDDL = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("ZODIACSIGNSDDL") as Dictionary<string, string>, null, "--- Select ---");
             ViewBag.ZodiacSignsDDLKey = ResponseModel.ManageHostModel.ConstellationGroup;
             ViewBag.BloodGroupDDL = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("BLOODGROUPDDL") as Dictionary<string, string>, null, "--- Select ---");
@@ -68,7 +80,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             ViewBag.BackButtonURL = "/ClubManagement/ClubList";
             ViewBag.RankDDL = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("RANKDDL") as Dictionary<string, string>, null, "--- Select ---");
             ViewBag.RankDDLKey = ResponseModel.ManageHostModel.Rank;
-
+            ViewBag.SkillDDL = ApplicationUtilities.SetDDLValue(CustomLoadDropdownList("SKILLDDL") as Dictionary<string, string>, null, "--- Select ---");
             ViewBag.StartIndex = StartIndex;
             ViewBag.PageSize = PageSize;
             ViewBag.TotalData = dbResponse != null && dbResponse.Any() ? dbResponse[0].TotalRecords : 0;
@@ -78,6 +90,8 @@ namespace CRS.ADMIN.APPLICATION.Controllers
         [HttpGet]
         public ActionResult ManageHost(string AgentId, string HostId = null)
         {
+            var culture = Request.Cookies["culture"]?.Value;
+            culture = string.IsNullOrEmpty(culture) ? "ja" : culture;
             if (string.IsNullOrEmpty(AgentId))
             {
                 this.AddNotificationMessage(new NotificationModel()
@@ -125,6 +139,10 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 model.LiquorStrength = model.LiquorStrength?.EncryptParameter();
                 model.HostLogo = dbResponse.ImagePath;
                 model.Rank = dbResponse.Rank.EncryptParameter();
+                model.HostIdentityDataModel.ForEach(x => x.IdentityLabel = (!string.IsNullOrEmpty(culture) && culture == "en") ? x.IdentityLabelEnglish : x.IdentityLabelJapanese);
+                model.HostIdentityDataModel.ForEach(x => x.IdentityType = x.IdentityType.EncryptParameter());
+                model.HostIdentityDataModel.ForEach(x => x.IdentityValue = x.IdentityValue.EncryptParameter());
+                model.HostIdentityDataModel.ForEach(x => x.IdentityDDLType = !string.IsNullOrEmpty(x.IdentityDDLType) ? x.IdentityDDLType.EncryptParameter() : null);
                 TempData["RenderId"] = "ManageHost";
                 TempData["ManageHostModel"] = model;
                 return RedirectToAction("HostList", "HostManagement", new { AgentId });
@@ -230,6 +248,9 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 requestCommon.ActionUser = ApplicationUtilities.GetSessionValue("Username").ToString();
                 requestCommon.ActionIP = ApplicationUtilities.GetIP();
                 requestCommon.ImagePath = Model.HostLogo;
+                requestCommon.HostIdentityDataModel.ForEach(x => x.IdentityType = x.IdentityType.DecryptParameter());
+                requestCommon.HostIdentityDataModel.ForEach(x => x.IdentityValue = x.IdentityValue.DecryptParameter());
+                requestCommon.HostIdentityDataModel.ForEach(x => x.IdentityDDLType = !string.IsNullOrEmpty(x.IdentityDDLType) ? x.IdentityDDLType.DecryptParameter() : null);
                 var dbResponse = _buss.ManageHost(requestCommon);
                 if (dbResponse != null && dbResponse.Code == 0)
                 {
@@ -582,6 +603,24 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 Title = response.Code == ResponseCode.Success ? NotificationMessage.SUCCESS.ToString() : NotificationMessage.INFORMATION.ToString()
             });
             return Json(response.Message, JsonRequestBehavior.AllowGet);
+        }
+        #endregion
+        #region
+        public object CustomLoadDropdownList(string ForMethod)
+        {
+            var culture = Request.Cookies["culture"]?.Value;
+            culture = string.IsNullOrEmpty(culture) ? "ja" : culture;
+            var dbResponse = new List<StaticDataCommon>();
+            var response = new Dictionary<string, string>();
+            switch (ForMethod.ToUpper())
+            {
+                case "SKILLDDL":
+                    dbResponse = _buss.GetSkillsDLL();
+                    dbResponse.ForEach(x => x.StaticLabel = (!string.IsNullOrEmpty(culture) && culture == "en") ? x.StaticLabelEnglish : x.StaticLabelJapanese);
+                    dbResponse.ForEach(item => { response.Add(item.StaticValue.EncryptParameter(), item.StaticLabel); });
+                    return response;
+                default: return response;
+            }
         }
         #endregion
     }

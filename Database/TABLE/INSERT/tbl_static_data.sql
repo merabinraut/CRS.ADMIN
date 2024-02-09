@@ -358,3 +358,91 @@ VALUES
     'rabin.raut', -- ActionUser - varchar(200)
     GETDATE()  -- ActionDate - datetime
     )
+	
+	
+	INSERT INTO dbo.tbl_static_data
+(
+    StaticDataType,
+    StaticDataLabel,
+    StaticDataValue,
+    StaticDataDescription,
+    Status,
+    ActionUser,
+    ActionDate
+)
+VALUES
+(31, 'Skill 1', '1', 'Skill 1', 'A', SYSTEM_USER, GETDATE()),
+(31, 'Skill 2', '2', 'Skill 2', 'A', SYSTEM_USER, GETDATE()),
+(31, 'Skill 3', '3', 'Skill 3', 'A', SYSTEM_USER, GETDATE()),
+(31, 'Skill 4', '4', 'Skill 4', 'A', SYSTEM_USER, GETDATE()),
+(31, 'Skill 5', '5', 'Skill 5', 'A', SYSTEM_USER, GETDATE()),
+(31, 'Skill 6', '6', 'Skill 6', 'A', SYSTEM_USER, GETDATE())
+
+INSERT INTO dbo.tbl_static_data
+(
+    StaticDataType,
+    StaticDataLabel,
+    StaticDataValue,
+    StaticDataDescription,
+    AdditionalValue1,
+    Status,
+    ActionUser,
+    ActionDate
+)
+VALUES
+(32, 'Hobby', '1', 'Hobby', N'趣味', 'A', SYSTEM_USER, GETDATE()),
+(32, 'Special Skill', '2', 'Special Skill', N'特技', 'A', SYSTEM_USER, GETDATE()),
+(32, 'Qualifications', '3', 'Qualifications', N'資格', 'A', SYSTEM_USER, GETDATE()),
+(32, 'Proud of', '4', 'Proud of', N'自慢', 'A', SYSTEM_USER, GETDATE()),
+(32, 'Favorite Things', '5', 'Favorite Things', N'好物', 'A', SYSTEM_USER, GETDATE()),
+(32, 'Dislikes', '6', 'Dislikes', N'苦手', 'A', SYSTEM_USER, GETDATE()),
+(32, 'Habits or Catchphrases', '7', 'Habits or Catchphrases', N'口癖', 'A', SYSTEM_USER, GETDATE()),
+(32, 'Personality', '8', 'Personality', N'性格', 'A', SYSTEM_USER, GETDATE()),
+(32, 'Smoking', '9', 'Smoking', N'喫煙', 'A', SYSTEM_USER, GETDATE()),
+(32, 'Charm Points', '10', 'Charm Points', N'チャームポイント', 'A', SYSTEM_USER, GETDATE())
+
+INSERT INTO dbo.tbl_static_data
+(
+    StaticDataType,
+    StaticDataLabel,
+    StaticDataValue,
+    StaticDataDescription,
+    AdditionalValue1,
+    Status,
+    ActionUser,
+    ActionDate
+)
+VALUES
+(33, 'How I spend my days off', '1', 'How I spend my days off', N'休日の過ごし方', 'A', SYSTEM_USER, GETDATE()),
+(33, 'Favorite places to visit', '2', 'Favorite places to visit', N'よく遊びに行く場所', 'A', SYSTEM_USER, GETDATE()),
+(33, 'Places I want to travel to', '3', 'Places I want to travel to', N'旅行してみたい場所', 'A', SYSTEM_USER, GETDATE()),
+(33, 'Activities I often do with my male friends', '4', 'Activities I often do with my male friends', N'男友達とよくやること', 'A', SYSTEM_USER, GETDATE()),
+(33, 'Frequently used smartphone apps', '5', 'Frequently used smartphone apps', N'よく使うスマホアプリ', 'A', SYSTEM_USER, GETDATE()),
+(33, 'If I were to take a girl on a date', '6', 'If I were to take a girl on a date', N'女の子をデートに連れて行くなら', 'A', SYSTEM_USER, GETDATE()),
+(33, 'Always carry with me', '7', 'Always carry with me', N'必ず持ち歩いているモノ', 'A', SYSTEM_USER, GETDATE()),
+(33, 'Aspects I focus on for self-improvement', '8', 'Aspects I focus on for self-improvement', N'自分磨きで気をつけていること', 'A', SYSTEM_USER, GETDATE()),
+(33, 'Future dreams and aspirations', '9', 'Future dreams and aspirations', N'将来の夢・やりたいこと', 'A', SYSTEM_USER, GETDATE()),
+(33, 'Future goals as a host', '10', 'Future goals as a host', N'ホストとしての今後の目標', 'A', SYSTEM_USER, GETDATE())
+
+INSERT INTO dbo.tbl_static_data
+(
+    StaticDataType,
+    StaticDataLabel,
+    StaticDataValue,
+    StaticDataDescription,
+    AdditionalValue1,
+    Status,
+    ActionUser,
+    ActionDate
+)
+VALUES
+(34, 'Skill 1', '1', 'Skill 1', N'スキル1', 'A', SYSTEM_USER, GETDATE()),
+(34, 'Skill 2', '2', 'Skill 2', N'スキル2', 'A', SYSTEM_USER, GETDATE()),
+(34, 'Skill 3', '3', 'Skill 3', N'スキル3', 'A', SYSTEM_USER, GETDATE()),
+(34, 'Skill 4', '4', 'Skill 4', N'スキル4', 'A', SYSTEM_USER, GETDATE()),
+(34, 'Skill 5', '5', 'Skill 5', N'スキル5', 'A', SYSTEM_USER, GETDATE()),
+(34, 'Skill 6', '6', 'Skill 6', N'スキル6', 'A', SYSTEM_USER, GETDATE()),
+(34, 'Skill 7', '7', 'Skill 7', N'スキル7', 'A', SYSTEM_USER, GETDATE()),
+(34, 'Skill 8', '8', 'Skill 8', N'スキル8', 'A', SYSTEM_USER, GETDATE()),
+(34, 'Skill 9', '9', 'Skill 9', N'スキル9', 'A', SYSTEM_USER, GETDATE()),
+(34, 'Skill 10', '10', 'Skill 10', N'スキル10', 'A', SYSTEM_USER, GETDATE())

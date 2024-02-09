@@ -1,11 +1,11 @@
-USE [CRS]
+﻿USE [CRS];
 GO
 
-/****** Object:  StoredProcedure [dbo].[sproc_club_management]    Script Date: 23/11/2023 21:02:38 ******/
-SET ANSI_NULLS ON
+/****** Object:  StoredProcedure [dbo].[sproc_club_management]    Script Date: 2/7/2024 5:43:50 PM ******/
+SET ANSI_NULLS ON;
 GO
 
-SET QUOTED_IDENTIFIER ON
+SET QUOTED_IDENTIFIER ON;
 GO
 
 
@@ -17,23 +17,24 @@ GO
 
 
 
+--[dbo].[sproc_club_management]'cmg',3
 ALTER PROC [dbo].[sproc_club_management]
-    @Flag VARCHAR(10),
+    @Flag VARCHAR(10) = '',
     @AgentId VARCHAR(20) = NULL,
     @ImageID VARCHAR(20) = NULL,
     @UserId VARCHAR(20) = NULL,
     @ClubId VARCHAR(20) = NULL,
     @LoginId VARCHAR(200) = NULL,
-    @FirstName VARCHAR(200) = NULL,
-    @MiddleName VARCHAR(200) = NULL,
-    @LastName VARCHAR(200) = NULL,
+    @FirstName NVARCHAR(200) = NULL,
+    @MiddleName NVARCHAR(200) = NULL,
+    @LastName NVARCHAR(200) = NULL,
     @Email VARCHAR(500) = NULL,
     @MobileNumber VARCHAR(11) = NULL,
-    @ClubName1 VARCHAR(500) = NULL,
+    @ClubName1 NVARCHAR(500) = NULL,
     @ClubName2 NVARCHAR(500) = NULL,
     @BusinessType VARCHAR(8) = NULL,
-    @GroupName VARCHAR(500) = NULL,
-    @Description VARCHAR(500) = NULL,
+    @GroupName NVARCHAR(512) = NULL,
+    @Description NVARCHAR(512) = NULL,
     @LocationURL VARCHAR(MAX) = NULL,
     @Longitude VARCHAR(75) = NULL,
     @Latitude VARCHAR(75) = NULL,
@@ -49,44 +50,77 @@ ALTER PROC [dbo].[sproc_club_management]
     @TwitterLink VARCHAR(MAX) = NULL,
     @InstagramLink VARCHAR(MAX) = NULL,
     @ImagePath VARCHAR(MAX) = NULL,
-    @ImageTitle VARCHAR(150) = NULL,
+    @ImageTitle NVARCHAR(150) = NULL,
     @ClubSno VARCHAR(10) = NULL,
     @Status CHAR(1) = NULL,
     @LocationId VARCHAR(10) = NULL,
-    @CompanyName NVARCHAR(512) = NULL
+    @CompanyName NVARCHAR(512) = NULL,
+    @SearchFilter NVARCHAR(200) = NULL,
+    @Skip INT = 0,
+    @Take INT = 10
 AS
 DECLARE @Sno VARCHAR(10),
         @Sno2 VARCHAR(10),
         @Sno3 VARCHAR(10),
+        @Sno4 VARCHAR(10),
         @TransactionName VARCHAR(200),
         @ErrorDesc VARCHAR(MAX),
         @RandomPassword VARCHAR(20),
-        @RoleId BIGINT;
+        @RoleId BIGINT,
+        @RoleType VARCHAR(10),
+        @SmsEmailResponseCode INT = 1;
+DECLARE @SQLString NVARCHAR(MAX) = N'',
+        @FetchQuery NVARCHAR(MAX),
+        @SQLFilterParameter NVARCHAR(MAX) = N'';
 BEGIN TRY
     IF ISNULL(@Flag, '') = 'gclist' --get club list
     BEGIN
-        SELECT b.LoginId,
+        SELECT ROW_NUMBER() OVER (ORDER BY a.ClubName1 ASC) AS SNO,
+               b.LoginId,
                a.AgentId,
                a.ClubName1 AS ClubNameEng,
                a.ClubName2 AS ClubNameJap,
                a.MobileNumber,
-               'Default Location' AS Location,
-               a.ActionDate AS CreatedDate,
-               --CONVERT(VARCHAR, a.ActionDate, 100) AS CreatedDate,
-               a.ActionDate AS UpdatedDate,
-               --CONVERT(VARCHAR, a.ActionDate, 100) AS UpdatedDate,
+               ISNULL(c.LocationName, '-') AS Location,
+               FORMAT(a.ActionDate, N'yyyy年MM月dd日 HH:mm:ss', 'ja-JP') AS CreatedDate,
+               FORMAT(a.ActionDate, N'yyyy年MM月dd日 HH:mm:ss', 'ja-JP') AS UpdatedDate,
+               --FORMAT(a.ActionDate, 'dd MMM, yyyy hh:mm:ss') AS CreatedDate,
+               --FORMAT(a.ActionDate, 'dd MMM, yyyy hh:mm:ss') AS UpdatedDate,
                '1' AS Rank,
                '5' AS Ratings,
                a.Status,
                a.Sno,
                a.CompanyName,
-			   a.Logo AS ClubLogo
-        FROM tbl_club_details a WITH (NOLOCK)
-            INNER JOIN tbl_users b WITH (NOLOCK)
+               a.Logo AS ClubLogo,
+               ISNULL(e.StaticDataLabel, '-') AS ClubCategory,
+               COUNT(a.AgentId) OVER () AS TotalRecords
+        FROM dbo.tbl_club_details a WITH (NOLOCK)
+            INNER JOIN dbo.tbl_users b WITH (NOLOCK)
                 ON b.AgentId = a.AgentId
-                   AND b.RoleId = 5
-                   AND ISNULL(b.Status, '') NOT IN ( 'D', '' )
-        WHERE ISNULL(a.Status, '') NOT IN ( 'D', '' );
+                   AND b.RoleType = 4
+                   AND ISNULL(b.Status, '') IN ( 'A', 'B' )
+            LEFT JOIN dbo.tbl_location c WITH (NOLOCK)
+                ON c.LocationId = a.LocationId
+                   AND ISNULL(c.Status, '') = 'A'
+            LEFT JOIN dbo.tbl_tag_detail d WITH (NOLOCK)
+                ON d.ClubId = a.AgentId
+                   AND ISNULL(d.Tag3Status, '') = 'A'
+            LEFT JOIN dbo.tbl_static_data e WITH (NOLOCK)
+                ON e.StaticDataType = 17
+                   AND e.StaticDataValue = d.Tag3CategoryName
+                   AND ISNULL(e.Status, '') = 'A'
+        WHERE ISNULL(a.Status, '') IN ( 'A' )
+              AND
+              (
+                  @SearchFilter IS NULL
+                  OR
+                  (
+                      a.ClubName1 LIKE '%' + @SearchFilter + '%'
+                      OR a.MobileNumber LIKE '%' + @SearchFilter + '%'
+                      OR a.Email LIKE '%' + @SearchFilter + '%'
+                  )
+              )
+        ORDER BY a.ClubName1 ASC OFFSET @Skip ROWS FETCH NEXT @Take ROW ONLY;
         RETURN;
     END;
     ELSE IF ISNULL(@Flag, '') = 'gcd' --get club details
@@ -94,14 +128,15 @@ BEGIN TRY
         IF NOT EXISTS
         (
             SELECT 'X'
-            FROM tbl_club_details a WITH (NOLOCK)
-                INNER JOIN tbl_users b WITH (NOLOCK)
+            FROM dbo.tbl_club_details a WITH (NOLOCK)
+                INNER JOIN dbo.tbl_users b WITH (NOLOCK)
                     ON b.AgentId = a.AgentId
-                       AND b.RoleId = 5
-                       AND ISNULL(b.Status, '') NOT IN ( 'D', '' )
-                LEFT JOIN tbl_website_details c WITH (NOLOCK)
+                       AND b.RoleType = 4
+                       AND ISNULL(b.Status, '') IN ( 'A', 'B' )
+                LEFT JOIN dbo.tbl_website_details c WITH (NOLOCK)
                     ON c.AgentId = b.AgentId
-            WHERE ISNULL(a.Status, '') NOT IN ( 'D', '' )
+                       AND c.RoleId = 4
+            WHERE ISNULL(a.Status, '') IN ( 'A', 'B' )
                   AND a.AgentId = @AgentId
         )
         BEGIN
@@ -144,15 +179,15 @@ BEGIN TRY
                c.InstagramLink,
                a.LocationId,
                a.CompanyName
-        FROM tbl_club_details a WITH (NOLOCK)
-            INNER JOIN tbl_users b WITH (NOLOCK)
+        FROM dbo.tbl_club_details a WITH (NOLOCK)
+            INNER JOIN dbo.tbl_users b WITH (NOLOCK)
                 ON b.AgentId = a.AgentId
-                   AND b.RoleId = 5
-                   AND ISNULL(b.Status, '') NOT IN ( 'D', '' )
-            LEFT JOIN tbl_website_details c WITH (NOLOCK)
+                   AND b.RoleType = 4
+                   AND ISNULL(b.Status, '') IN ( 'A', 'B' )
+            LEFT JOIN dbo.tbl_website_details c WITH (NOLOCK)
                 ON c.AgentId = b.AgentId
-                   AND b.RoleId = 5
-        WHERE ISNULL(a.Status, '') NOT IN ( 'D', '' )
+                   AND c.RoleId = 4
+        WHERE ISNULL(a.Status, '') IN ( 'A', 'B' )
               AND a.AgentId = @AgentId;
 
         RETURN;
@@ -168,12 +203,12 @@ BEGIN TRY
         IF EXISTS
         (
             SELECT 'X'
-            FROM tbl_club_details a WITH (NOLOCK)
-                INNER JOIN tbl_users b WITH (NOLOCK)
+            FROM dbo.tbl_club_details a WITH (NOLOCK)
+                INNER JOIN dbo.tbl_users b WITH (NOLOCK)
                     ON b.AgentId = a.AgentId
-                       AND ISNULL(b.Status, '') NOT IN ( 'D', '' )
+                       AND ISNULL(b.Status, '') IN ( 'A', 'B' )
             WHERE b.LoginId = @LoginId
-                  AND ISNULL(a.Status, '') NOT IN ( 'D', '' )
+                  AND ISNULL(a.Status, '') IN ( 'A', 'B' )
         )
         BEGIN
             SELECT 1 Code,
@@ -182,11 +217,11 @@ BEGIN TRY
         END;
 
         SELECT @TransactionName = 'Flag_rc',
-               @RandomPassword = dbo.func_generate_random_no(8);
+               @RandomPassword = dbo.func_generate_random_no(10);
 
         BEGIN TRANSACTION @TransactionName;
 
-        INSERT INTO tbl_club_details
+        INSERT INTO dbo.tbl_club_details
         (
             FirstName,
             MiddleName,
@@ -211,26 +246,30 @@ BEGIN TRY
             ActionPlatform,
             ActionDate,
             LocationId,
-            CompanyName
+            CompanyName,
+            CommissionId
         )
         VALUES
         (   @FirstName, @MiddleName, @LastName, @Email, @MobileNumber, @ClubName1, @ClubName2, @BusinessType,
             @GroupName, @Description, @LocationURL, @Longitude, @Latitude, 'A', --Active
             @Logo, @CoverPhoto, @BusinessCertificate, @Gallery, @ActionUser, @ActionIP, @ActionPlatform, GETDATE(),
-            @LocationId, @CompanyName);
+            @LocationId, @CompanyName, 1);
 
         SET @Sno = SCOPE_IDENTITY();
 
-        UPDATE tbl_club_details
+        UPDATE dbo.tbl_club_details
         SET AgentId = @Sno
         WHERE Sno = @Sno;
 
-        SELECT @RoleId = a.Id
+        SELECT TOP 1
+               @RoleId = a.Id,
+               @RoleType = a.RoleType
         FROM dbo.tbl_roles a WITH (NOLOCK)
         WHERE a.RoleName = 'Club'
-              AND ISNULL(a.Status, '') = 'A';
+              AND ISNULL(a.Status, '') = 'A'
+        ORDER BY 1 ASC;
 
-        INSERT INTO tbl_users
+        INSERT INTO dbo.tbl_users
         (
             RoleId,
             AgentId,
@@ -241,20 +280,22 @@ BEGIN TRY
             ActionUser,
             ActionIP,
             ActionPlatform,
-            ActionDate
+            ActionDate,
+            RoleType,
+            IsPasswordForceful
         )
         VALUES
         (   @RoleId, @Sno, @LoginId, PWDENCRYPT(@RandomPassword), 'A', --Active
-            'Y', @ActionUser, @ActionIP, @ActionPlatform, GETDATE());
+            'Y', @ActionUser, @ActionIP, @ActionPlatform, GETDATE(), @RoleType, 'Y');
 
         SET @Sno2 = SCOPE_IDENTITY();
 
-        UPDATE tbl_users
+        UPDATE dbo.tbl_users
         SET UserId = @Sno2
         WHERE Sno = @Sno2
               AND AgentId = @Sno;
 
-        INSERT INTO tbl_website_details
+        INSERT INTO dbo.tbl_website_details
         (
             AgentId,
             WebsiteLink,
@@ -269,10 +310,7 @@ BEGIN TRY
         )
         VALUES
         (@Sno, @WebsiteLink, @TiktokLink, @TwitterLink, @InstagramLink, @ActionUser, @ActionIP, @ActionPlatform,
-         GETDATE(), 5);
-
-        SELECT 0 Code,
-               'Club registred successfully' Message;
+         GETDATE(), @RoleType);
 
         INSERT INTO dbo.tbl_tag_detail
         (
@@ -289,11 +327,61 @@ BEGIN TRY
             );
         SET @Sno3 = SCOPE_IDENTITY();
 
-        UPDATE tbl_tag_detail
+        UPDATE dbo.tbl_tag_detail
         SET TagId = @Sno3
         WHERE Sno = @Sno3;
 
         COMMIT TRANSACTION @TransactionName;
+
+        CREATE TABLE #temp_rc
+        (
+            Code INT
+        );
+
+        INSERT INTO #temp_rc
+        (
+            Code
+        )
+        EXEC dbo.sproc_club_email_sms_management @Flag = '1',
+                                                 @LoginId = @LoginId,
+                                                 @Password = @RandomPassword,
+                                                 @EmailSendTo = @Email,
+                                                 @Username = @ClubName1,
+                                                 @AgentId = @Sno,
+                                                 @UserId = @Sno2,
+                                                 @ActionUser = @ActionUser,
+                                                 @ActionIP = @ActionIP,
+                                                 @ActionPlatform = @ActionPlatform,
+                                                 @ResponseCode = @SmsEmailResponseCode OUTPUT;
+        DROP TABLE #temp_rc;
+
+        INSERT INTO dbo.tbl_customer_notification
+        (
+            ToAgentId,
+            NotificationType,
+            NotificationSubject,
+            NotificationBody,
+            NotificationStatus,
+            NotificationReadStatus,
+            CreatedBy,
+            CreatedDate,
+            NotificationURL,
+            AdditionalDetail1,
+            ToAgentType
+        )
+        VALUES
+        (0, 'Club OnBoard Alert', 'Club OnBoard Alert', @ClubName2 + ' (' + @ClubName1 + ')', 'A', 'A', @ActionUser,
+         GETDATE(), '#', @Sno, 'Customer');
+
+        SET @Sno4 = SCOPE_IDENTITY();
+
+        UPDATE dbo.tbl_customer_notification
+        SET notificationId = @Sno4
+        WHERE Sno = @Sno4;
+
+        SELECT 0 Code,
+               'Club registred successfully' Message;
+
         RETURN;
     END;
     ELSE IF ISNULL(@Flag, '') = 'mc' --manage club
@@ -301,12 +389,13 @@ BEGIN TRY
         IF NOT EXISTS
         (
             SELECT 'X'
-            FROM tbl_club_details a WITH (NOLOCK)
-                INNER JOIN tbl_users b WITH (NOLOCK)
+            FROM dbo.tbl_club_details a WITH (NOLOCK)
+                INNER JOIN dbo.tbl_users b WITH (NOLOCK)
                     ON b.AgentId = a.AgentId
-                       AND ISNULL(b.Status, '') NOT IN ( 'D', '' )
+                       AND b.RoleType = 4
+                       AND ISNULL(b.Status, '') IN ( 'A' )
             WHERE a.AgentId = @AgentId
-                  AND ISNULL(a.Status, '') NOT IN ( 'D', '' )
+                  AND ISNULL(a.Status, '') IN ( 'A' )
         )
         BEGIN
             SELECT 1 Code,
@@ -318,7 +407,7 @@ BEGIN TRY
 
         BEGIN TRANSACTION @TransactionName;
 
-        UPDATE tbl_club_details
+        UPDATE dbo.tbl_club_details
         SET FirstName = ISNULL(@FirstName, FirstName),
             MiddleName = ISNULL(@MiddleName, MiddleName),
             LastName = ISNULL(@LastName, LastName),
@@ -341,47 +430,43 @@ BEGIN TRY
             LocationId = ISNULL(@LocationId, LocationId),
             CompanyName = ISNULL(@CompanyName, CompanyName)
         WHERE AgentId = @AgentId
-              AND ISNULL(Status, '') NOT IN ( 'D', '' );
+              AND ISNULL(Status, '') IN ( 'A' );
 
-        IF EXISTS
+        UPDATE dbo.tbl_website_details
+        SET WebsiteLink = ISNULL(@WebsiteLink, WebsiteLink),
+            TiktokLink = ISNULL(@TiktokLink, TiktokLink),
+            TwitterLink = ISNULL(@TwitterLink, TwitterLink),
+            InstagramLink = ISNULL(@InstagramLink, InstagramLink),
+            ActionUser = @ActionUser,
+            ActionIP = @ActionIP,
+            ActionPlatform = @ActionPlatform,
+            ActionDate = GETDATE()
+        WHERE AgentId = @AgentId
+              AND RoleId = 4;
+
+        INSERT INTO dbo.tbl_customer_notification
         (
-            SELECT 'X'
-            FROM dbo.tbl_website_details a WITH (NOLOCK)
-            WHERE a.AgentId = @AgentId
-                  AND a.RoleId = 5
+            ToAgentId,
+            NotificationType,
+            NotificationSubject,
+            NotificationBody,
+            NotificationStatus,
+            NotificationReadStatus,
+            CreatedBy,
+            CreatedDate,
+            NotificationURL,
+            AdditionalDetail1,
+            ToAgentType
         )
-        BEGIN
-            UPDATE tbl_website_details
-            SET WebsiteLink = ISNULL(@WebsiteLink, WebsiteLink),
-                TiktokLink = ISNULL(@TiktokLink, TiktokLink),
-                TwitterLink = ISNULL(@TwitterLink, TwitterLink),
-                InstagramLink = ISNULL(@InstagramLink, InstagramLink),
-                ActionUser = @ActionUser,
-                ActionIP = @ActionIP,
-                ActionPlatform = @ActionPlatform,
-                ActionDate = GETDATE()
-            WHERE AgentId = @AgentId
-                  AND RoleId = 5;
-        END;
-        ELSE
-        BEGIN
-            INSERT INTO tbl_website_details
-            (
-                AgentId,
-                WebsiteLink,
-                TiktokLink,
-                TwitterLink,
-                InstagramLink,
-                ActionUser,
-                ActionIP,
-                ActionPlatform,
-                ActionDate,
-                RoleId
-            )
-            VALUES
-            (@AgentId, @WebsiteLink, @TiktokLink, @TwitterLink, @InstagramLink, @ActionUser, @ActionIP,
-             @ActionPlatform, GETDATE(), 5);
-        END;
+        VALUES
+        (0, 'Club OnBoard Alert', 'Club OnBoard Alert', @ClubName2 + ' (' + @ClubName1 + ')', 'A', 'A', @ActionUser,
+         GETDATE(), '#', @AgentId, 'Customer');
+
+        SET @Sno4 = SCOPE_IDENTITY();
+
+        UPDATE dbo.tbl_customer_notification
+        SET notificationId = @Sno4
+        WHERE Sno = @Sno4;
 
         SELECT 0 Code,
                'Club details updated successfully' Message;
@@ -394,7 +479,7 @@ BEGIN TRY
         IF NOT EXISTS
         (
             SELECT 'X'
-            FROM tbl_club_details a WITH (NOLOCK)
+            FROM dbo.tbl_club_details a WITH (NOLOCK)
             WHERE a.AgentId = @AgentId
         )
         BEGIN
@@ -419,12 +504,13 @@ BEGIN TRY
             IF NOT EXISTS
             (
                 SELECT 'X'
-                FROM tbl_club_details a WITH (NOLOCK)
-                    INNER JOIN tbl_users b WITH (NOLOCK)
+                FROM dbo.tbl_club_details a WITH (NOLOCK)
+                    INNER JOIN dbo.tbl_users b WITH (NOLOCK)
                         ON b.AgentId = a.AgentId
-                           AND ISNULL(a.Status, '') = 'I'
+                           AND ISNULL(a.Status, '') = 'B'
+                           AND b.RoleType = 4
                 WHERE a.AgentId = @AgentId
-                      AND ISNULL(b.Status, '') = 'I'
+                      AND ISNULL(b.Status, '') = 'B'
             )
             BEGIN
                 SELECT 1 Code,
@@ -434,25 +520,35 @@ BEGIN TRY
                 RETURN;
             END;
 
-            UPDATE tbl_users
+            UPDATE dbo.tbl_users
             SET Status = 'A',
                 ActionUser = @ActionUser,
                 ActionIP = @ActionIP,
                 ActionPlatform = @ActionPlatform,
                 ActionDate = GETDATE()
             WHERE AgentId = @AgentId
+                  AND RoleType = 4
                   AND ISNULL(IsPrimary, '') = 'Y'
-                  AND ISNULL(Status, '') NOT IN ( 'D', 'S' );
+                  AND ISNULL(Status, '') IN ( 'B' );
+
+            UPDATE dbo.tbl_club_details
+            SET Status = 'A',
+                ActionUser = @ActionUser,
+                ActionIP = @ActionIP,
+                ActionPlatform = @ActionPlatform,
+                ActionDate = GETDATE()
+            WHERE AgentId = @AgentId;
         END;
-        ELSE
+        ELSE IF ISNULL(@Status, '') = 'B'
         BEGIN
             IF NOT EXISTS
             (
                 SELECT 'X'
-                FROM tbl_club_details a WITH (NOLOCK)
-                    INNER JOIN tbl_users b WITH (NOLOCK)
+                FROM dbo.tbl_club_details a WITH (NOLOCK)
+                    INNER JOIN dbo.tbl_users b WITH (NOLOCK)
                         ON b.AgentId = a.AgentId
                            AND ISNULL(a.Status, '') = 'A'
+                           AND b.RoleType = 4
                 WHERE a.AgentId = @AgentId
                       AND ISNULL(b.Status, '') = 'A'
             )
@@ -464,23 +560,69 @@ BEGIN TRY
                 RETURN;
             END;
 
-            UPDATE tbl_users
-            SET Status = 'D',
+            UPDATE dbo.tbl_users
+            SET Status = 'B',
+                ActionUser = @ActionUser,
+                ActionIP = @ActionIP,
+                ActionPlatform = @ActionPlatform,
+                ActionDate = GETDATE()
+            WHERE AgentId = @AgentId
+                  AND RoleType = 4
+                  AND ISNULL(Status, '') = 'A';
+
+            UPDATE dbo.tbl_club_details
+            SET Status = 'B',
                 ActionUser = @ActionUser,
                 ActionIP = @ActionIP,
                 ActionPlatform = @ActionPlatform,
                 ActionDate = GETDATE()
             WHERE AgentId = @AgentId;
         END;
+        ELSE IF ISNULL(@Status, '') = 'D'
+        BEGIN
+            IF NOT EXISTS
+            (
+                SELECT 'X'
+                FROM dbo.tbl_club_details a WITH (NOLOCK)
+                    INNER JOIN dbo.tbl_users b WITH (NOLOCK)
+                        ON b.AgentId = a.AgentId
+                           AND ISNULL(a.Status, '') = 'A'
+                           AND b.RoleType = 4
+                WHERE a.AgentId = @AgentId
+                      AND ISNULL(b.Status, '') = 'A'
+            )
+            BEGIN
+                SELECT 1 Code,
+                       'Invalid details' Message;
 
-        UPDATE tbl_club_details
-        SET Status = 'D',
-            ActionUser = @ActionUser,
-            ActionIP = @ActionIP,
-            ActionPlatform = @ActionPlatform,
-            ActionDate = GETDATE()
-        WHERE AgentId = @AgentId;
+                ROLLBACK TRANSACTION @TransactionName;
+                RETURN;
+            END;
 
+            UPDATE dbo.tbl_users
+            SET Status = 'D',
+                ActionUser = @ActionUser,
+                ActionIP = @ActionIP,
+                ActionPlatform = @ActionPlatform,
+                ActionDate = GETDATE()
+            WHERE AgentId = @AgentId
+                  AND RoleType = 4
+                  AND ISNULL(Status, '') = 'A';
+
+            UPDATE dbo.tbl_club_details
+            SET Status = 'D',
+                ActionUser = @ActionUser,
+                ActionIP = @ActionIP,
+                ActionPlatform = @ActionPlatform,
+                ActionDate = GETDATE()
+            WHERE AgentId = @AgentId;
+
+            SELECT 0 Code,
+                   'Club deleted successfully' Message;
+
+            COMMIT TRANSACTION @TransactionName;
+            RETURN;
+        END;
         SELECT 0 Code,
                'User status updated successfully' Message;
 
@@ -493,9 +635,10 @@ BEGIN TRY
         IF NOT EXISTS
         (
             SELECT 'X'
-            FROM tbl_club_details a WITH (NOLOCK)
-                INNER JOIN tbl_users b WITH (NOLOCK)
+            FROM dbo.tbl_club_details a WITH (NOLOCK)
+                INNER JOIN dbo.tbl_users b WITH (NOLOCK)
                     ON b.AgentId = a.AgentId
+                       AND RoleType = 4
                        AND ISNULL(a.Status, '') IN ( 'A' )
             WHERE a.AgentId = @AgentId
                   --AND b.UserId = @UserId				
@@ -507,15 +650,16 @@ BEGIN TRY
             RETURN;
         END;
 
-        SET @RandomPassword = dbo.func_generate_random_no(8);
+        SET @RandomPassword = dbo.func_generate_random_no(10);
 
-        UPDATE tbl_users
+        UPDATE dbo.tbl_users
         SET Password = PWDENCRYPT(@RandomPassword),
             ActionUser = @ActionUser,
             ActionIP = @ActionIP,
             ActionPlatform = @ActionPlatform,
             ActionDate = GETDATE()
-        WHERE AgentId = @AgentId;
+        WHERE AgentId = @AgentId
+              AND RoleType = 4;
         --AND UserId = @UserId;
 
         SELECT 0 Code,
@@ -528,9 +672,10 @@ BEGIN TRY
         IF NOT EXISTS
         (
             SELECT 'X'
-            FROM tbl_club_details a WITH (NOLOCK)
-                INNER JOIN tbl_users b WITH (NOLOCK)
+            FROM dbo.tbl_club_details a WITH (NOLOCK)
+                INNER JOIN dbo.tbl_users b WITH (NOLOCK)
                     ON b.AgentId = a.AgentId
+                       AND b.RoleType = 4
                        AND ISNULL(a.Status, '') IN ( 'A' )
             WHERE a.AgentId = @AgentId
                   AND ISNULL(b.Status, '') IN ( 'A' )
@@ -566,27 +711,73 @@ BEGIN TRY
             CreatedDate
         )
         VALUES
-        (NULL, @AgentId, @ImageTitle, @ImagePath, 'A', @ActionUser, GETDATE());
+        (4, @AgentId, @ImageTitle, @ImagePath, 'A', @ActionUser, GETDATE());
 
+        --UPDATE dbo.tbl_gallery
+        --SET RoleId = '4'
+        --WHERE AgentId = @AgentId;
         SELECT 0 Code,
                'Club Image Inserted Successfully' Message;
         RETURN;
     END;
+    --ELSE IF ISNULL(@Flag, '') = 'cmg' --Club Management Gallery
+    --BEGIN
+    --    SELECT DISTINCT ga.AgentId,
+    --           ga.ImagePath,
+    --           ga.ImageTitle,
+    --           ga.Sno,
+    --           ga.CreatedDate,
+    --           ga.UpdatedDate,
+    --           ga.Status
+    --    FROM dbo.tbl_roles tr
+    --        INNER JOIN dbo.tbl_users tu
+    --            ON tu.RoleType = tr.RoleType
+    --        INNER JOIN dbo.tbl_gallery ga WITH (NOLOCK)
+    --            ON ga.RoleId = tu.RoleType
+    --    WHERE ga.Status = 'A'
+    --          AND ga.RoleId IN ( '4', '5' )
+    --          AND ga.AgentId = 3;
+
+    --    RETURN;
+    --END;
     ELSE IF ISNULL(@Flag, '') = 'cmg' --Club Management Gallery
     BEGIN
-        SELECT b.LoginId,
+        IF ISNULL(@SearchFilter, '') <> ''
+        BEGIN
+            SET @SQLFilterParameter = N' AND ga.ImageTitle LIKE N''%' + @SearchFilter + N'%''';
+        END;
+        IF ISNULL(@AgentId, '') <> ''
+        BEGIN
+            BEGIN
+                SET @SQLFilterParameter += N' AND ga.AgentId=' + @AgentId;
+            END;
+        END;
+        SET @FetchQuery
+            = N' OFFSET ' + CAST(ISNULL(@Skip, '0') AS VARCHAR) + N' ROWS FETCH NEXT '
+              + CAST(ISNULL(@Take, '10') AS VARCHAR) + N' ROW ONLY';
+
+        SET @SQLString
+            = N'
+        SELECT ROW_NUMBER() OVER (ORDER BY ga.CreatedDate DESC) AS SNO,
+               b.LoginId,
                ga.AgentId,
                ga.ImagePath,
                ga.ImageTitle,
                ga.Sno,
-               ga.CreatedDate,
-               ga.UpdatedDate
-        FROM tbl_gallery ga WITH (NOLOCK)
-            INNER JOIN tbl_users b WITH (NOLOCK)
+               FORMAT(ga.CreatedDate, N''yyyy年MM月dd日 HH:mm:ss'', ''ja-JP'') as CreatedDate,
+			   FORMAT(ga.UpdatedDate, N''yyyy年MM月dd日 HH:mm:ss'', ''ja-JP'') as UpdatedDate,
+               ga.Status,
+			   COUNT(ga.AgentId) OVER() AS TotalRecords
+        FROM dbo.tbl_gallery ga WITH (NOLOCK)
+            INNER JOIN dbo.tbl_users b WITH (NOLOCK)
                 ON b.AgentId = ga.AgentId
-                   AND ISNULL(b.Status, '') NOT IN ( 'D', '' )
-        WHERE ISNULL(ga.Status, '') NOT IN ( 'D', '' );
-
+                   AND ISNULL(b.Status, '''') IN ( ''A'' )
+                   AND b.RoleType = 4
+                   AND ga.RoleId = 4
+        WHERE ISNULL(ga.Status, '''') IN ( ''A'' ) ' + @SQLFilterParameter + N' ORDER BY ga.CreatedDate DESC '
+              + @FetchQuery;
+        PRINT (@SQLString);
+        EXEC (@SQLString);
         RETURN;
     END;
     ELSE IF ISNULL(@Flag, '') = 'dgi' --delete gallery image
@@ -607,9 +798,10 @@ BEGIN TRY
         --          RETURN;
         --      END;
 
-        DELETE FROM tbl_gallery
+        DELETE FROM dbo.tbl_gallery
         WHERE Sno = @ClubSno
-              AND AgentId = @AgentId;
+              AND AgentId = @AgentId
+              AND RoleId = 4;
         --UPDATE tbl_gallery
         --SET [Status] = 'D',
         --	UpdatedBy = @ActionUser,
@@ -627,10 +819,11 @@ BEGIN TRY
         IF NOT EXISTS
         (
             SELECT 'X'
-            FROM tbl_club_details a WITH (NOLOCK)
-                INNER JOIN tbl_users b WITH (NOLOCK)
+            FROM dbo.tbl_club_details a WITH (NOLOCK)
+                INNER JOIN dbo.tbl_users b WITH (NOLOCK)
                     ON b.AgentId = a.AgentId
                        AND ISNULL(a.Status, '') IN ( 'A' )
+                       AND b.RoleType = 4
             WHERE a.AgentId = @AgentId
                   AND ISNULL(b.Status, '') IN ( 'A' )
         )
@@ -651,9 +844,57 @@ BEGIN TRY
                ImagePath,
                Sno,
                AgentId
-        FROM tbl_gallery
+        FROM dbo.tbl_gallery
         WHERE AgentId = @AgentId
-              AND Sno = @ClubSno;
+              AND Sno = @ClubSno
+              AND RoleId = 4;
+        RETURN;
+    END;
+    ELSE IF ISNULL(@Flag, '') = 'uci' --Update club image
+    BEGIN
+        IF NOT EXISTS
+        (
+            SELECT 'X'
+            FROM dbo.tbl_club_details a WITH (NOLOCK)
+                INNER JOIN dbo.tbl_users b WITH (NOLOCK)
+                    ON b.AgentId = a.AgentId
+                       AND ISNULL(a.Status, '') IN ( 'A' )
+                       AND b.RoleType = 4
+            WHERE a.AgentId = @AgentId
+                  AND ISNULL(b.Status, '') IN ( 'A' )
+        )
+        BEGIN
+            SELECT 1 Code,
+                   'Invalid user detail' Message;
+            RETURN;
+        END;
+
+        IF @ImageID IS NULL
+        BEGIN
+            SELECT 1 CODE,
+                   'Image is required' MESSAGE;
+            RETURN;
+        END;
+
+        IF @ImagePath IS NULL
+        BEGIN
+            SELECT 1 CODE,
+                   'Invalid Detail' MESSAGE;
+            RETURN;
+        END;
+
+        UPDATE dbo.tbl_gallery
+        SET ImagePath = @ImagePath,
+            ImageTitle = ISNULL(@ImageTitle, 'title was null'),
+            UpdatedBy = @ActionUser,
+            UpdatedIP = ISNULL(@ActionIP, '::1'),
+            UpdatedDate = GETDATE()
+        WHERE Sno = @ImageID
+              AND AgentId = @AgentId
+              AND RoleId = 4;
+
+        SELECT 0 Code,
+               'Club Image updated successfully' Message;
         RETURN;
     END;
 
@@ -671,7 +912,7 @@ BEGIN CATCH
 
     SET @ErrorDesc = 'SQL error found: (' + ERROR_MESSAGE() + ')' + ' at ' + CAST(ERROR_LINE() AS VARCHAR);
 
-    INSERT INTO tbl_error_log
+    INSERT INTO dbo.tbl_error_log
     (
         ErrorDesc,
         ErrorScript,

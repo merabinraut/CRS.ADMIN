@@ -221,3 +221,4 @@ insert into tbl_menus
 
 values(29, 'SMS Log', '/SMSLog/Index', 'A', 'Admin', 'rabin.raut', '::1', getdate()),
 (30, 'Email Log', '/EmailLog/Index', 'A', 'Admin', 'rabin.raut', '::1', getdate())
+

@@ -38,8 +38,8 @@
             </form>
             <div class="flex gap-6">
                 @*<div class="export-button h-[40px]" onclick="exportCSVExcel();">
-                    <img src="~/Content/assets_new/images/club/download-solid.svg"> @CRS.ADMIN.APPLICATION.Resources.Resource.Export
-                </div>*@
+                        <img src="~/Content/assets_new/images/club/download-solid.svg"> @CRS.ADMIN.APPLICATION.Resources.Resource.Export
+                    </div>*@
                 <div class="btn btn-primary gap-[8px] h-[40px]" data-drawer-target="add-new-host" data-drawer-show="add-new-host"
                      data-drawer-placement="right" data-drawer-backdrop="false" aria-controls="drawer-disabled-backdrop">
                     <img src="~/Content/assets_new/images/plus-circle-solid.svg" />
@@ -227,7 +227,7 @@
          if (PopUpRenderValue != null && PopUpRenderValue != "" && PopUpRenderValue == "ManageHost") {
               var element = document.getElementById('add-new-host');
               element.classList.remove('translate-x-full');
-          }
+         }
      });
     </script>
     <script>
@@ -285,5 +285,81 @@
              URL = addQueryParam(URL, 'AgentId', AgentId);
              LoadPagination(page_size, total_data, start_index_val, URL);
          });
+    </script>
+    <script>
+                const steps = document.querySelectorAll('.profile-steps');
+        const nextButton = document.getElementById('nextBtn');
+        const saveData = document.getElementById('saveData');
+        const previousButton = document.getElementById('previousBtn');
+        const submitButton = document.getElementById('submit-button-id');
+        const contentSections = document.querySelectorAll('.content-section');
+
+        let currentStep = 0;
+        const cancelButton = document.querySelector('.resetForm');
+
+        cancelButton.addEventListener('click', () => {
+            currentStep = 0; // Reset the step to 0
+            updateStep(); // Update the UI to reflect the new step
+        });
+
+        const updateStep = () => {
+            steps.forEach((step, index) => {
+                if (index === currentStep) {
+                    step.classList.add('active');
+                    step.classList.remove('active-green');
+                } else if (index < currentStep) {
+                    step.classList.remove('active');
+                    step.classList.add('active-green');
+                } else {
+                    step.classList.remove('active', 'active-green');
+                }
+            });
+
+            contentSections.forEach((section, index) => {
+                if (index === currentStep) {
+                    section.style.display = 'block';
+                } else {
+                    section.style.display = 'none';
+                }
+            });
+
+            if (currentStep === 0) {
+                previousButton.style.display = 'none';
+                previousButton.setAttribute('type', 'button');
+            } else {
+                previousButton.style.display = 'inline';
+                previousButton.setAttribute('type', 'button');
+            }
+
+            if (currentStep === steps.length - 1) {
+                nextButton.style.display = 'none';
+                //saveData.style.display = 'block';
+                nextButton.textContent = '@CRS.ADMIN.APPLICATION.Resources.Resource.Save_Changes';
+                nextButton.setAttribute('type', 'button');
+            } else {
+                nextButton.style.display = 'block';
+                //saveData.style.display = 'none';
+                nextButton.textContent = '@CRS.ADMIN.APPLICATION.Resources.Resource.Next';
+                nextButton.setAttribute('type', 'button');
+                $('')
+            }
+        };
+
+        nextButton.addEventListener('click', () => {
+            if (currentStep < steps.length - 1) {
+                currentStep++;
+                updateStep();
+            }
+        });
+
+        previousButton.addEventListener('click', () => {
+            if (currentStep > 0) {
+                currentStep--;
+                updateStep();
+            }
+        });
+
+        // Initial state setup
+        updateStep();
     </script>
 }

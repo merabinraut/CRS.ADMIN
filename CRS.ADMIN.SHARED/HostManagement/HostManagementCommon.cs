@@ -1,4 +1,5 @@
 ﻿using CRS.ADMIN.SHARED.PaginationManagement;
+using System.Collections.Generic;
 
 namespace CRS.ADMIN.SHARED.HostManagement
 {
@@ -39,5 +40,17 @@ namespace CRS.ADMIN.SHARED.HostManagement
         public string ImagePath { get; set; }
         public string Line { get; set; }
         public string Address { get; set; }
+        public string HostNameJapanese { get; set; }
+        public string HostIntroduction { get; set; }
+        public List<HostIdentityDataCommon> HostIdentityDataModel { get; set; } = new List<HostIdentityDataCommon>();
+    }
+    public class HostIdentityDataCommon
+    {
+        public string IdentityLabelJapanese { get; set; }
+        public string IdentityLabelEnglish { get; set; }
+        public string IdentityType { get; set; }
+        public string IdentityValue { get; set; }
+        public string IdentityDDLType { get; set; }
+        public string IdentityDescription { get; set; }
     }
 }

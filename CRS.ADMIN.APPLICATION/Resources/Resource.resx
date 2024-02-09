@@ -263,6 +263,9 @@
     <value>Birth Date</value>
     <comment>Host Management</comment>
   </data>
+  <data name="BirthPlace" xml:space="preserve">
+    <value>Birth Place</value>
+  </data>
   <data name="Blood Type" xml:space="preserve">
     <value>Blood Type</value>
     <comment>Host Management</comment>
@@ -508,6 +511,9 @@
     <value>Email Log</value>
     <comment>Email Log</comment>
   </data>
+  <data name="English" xml:space="preserve">
+    <value>English</value>
+  </data>
   <data name="Enter Additional Information" xml:space="preserve">
     <value>Enter Additional Information</value>
     <comment>Plan Management</comment>
@@ -633,6 +639,10 @@
     <value>Host Name</value>
     <comment>Host Management</comment>
   </data>
+  <data name="HostIntroduction" xml:space="preserve">
+    <value>Host Introduction</value>
+    <comment>Host Management</comment>
+  </data>
   <data name="Hosts" xml:space="preserve">
     <value>Hosts</value>
     <comment>Dashboard</comment>
@@ -640,6 +650,10 @@
   <data name="HostSupportMsg" xml:space="preserve">
     <value>Manage host recommendation order.</value>
     <comment>Recommendation Management-&gt;Host List</comment>
+  </data>
+  <data name="HotSkills" xml:space="preserve">
+    <value>HOT-SKILLS</value>
+    <comment>Host Management</comment>
   </data>
   <data name="Image" xml:space="preserve">
     <value>Image</value>
@@ -672,6 +686,9 @@
   <data name="January" xml:space="preserve">
     <value>Jan</value>
     <comment>Dashboard</comment>
+  </data>
+  <data name="Japanese" xml:space="preserve">
+    <value>Japanese</value>
   </data>
   <data name="July" xml:space="preserve">
     <value>Jul</value>
@@ -712,6 +729,10 @@
   <data name="Latitude Placeholder" xml:space="preserve">
     <value>Enter Latitude</value>
     <comment>Club Management</comment>
+  </data>
+  <data name="Lifestyle" xml:space="preserve">
+    <value>Lifestyle</value>
+    <comment>Host Management</comment>
   </data>
   <data name="Line" xml:space="preserve">
     <value>Line</value>
@@ -977,6 +998,9 @@
     <value>Personal Documents</value>
     <comment>Club Management</comment>
   </data>
+  <data name="Personality" xml:space="preserve">
+    <value>PERSONALITY</value>
+  </data>
   <data name="Phone Number" xml:space="preserve">
     <value>Phone Number</value>
     <comment>Customer Management</comment>
@@ -1035,6 +1059,9 @@
   <data name="Profile" xml:space="preserve">
     <value>Profile</value>
     <comment>Dashboard</comment>
+  </data>
+  <data name="ProfileImage" xml:space="preserve">
+    <value>Profile Image</value>
   </data>
   <data name="Promotion Management" xml:space="preserve">
     <value>Promotion Management</value>
@@ -1275,9 +1302,17 @@
     <value>Silver</value>
     <comment>Dashboard</comment>
   </data>
+  <data name="SkillSets" xml:space="preserve">
+    <value>Skill Sets</value>
+    <comment>Host Management</comment>
+  </data>
   <data name="SMSLog" xml:space="preserve">
     <value>SMS Log</value>
     <comment>SMS Log</comment>
+  </data>
+  <data name="SNS" xml:space="preserve">
+    <value>SNS</value>
+    <comment>Host Management</comment>
   </data>
   <data name="Social Link" xml:space="preserve">
     <value>Social Link</value>
