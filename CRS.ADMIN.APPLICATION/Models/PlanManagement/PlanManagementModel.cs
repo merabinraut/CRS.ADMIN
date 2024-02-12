@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using CRS.ADMIN.APPLICATION.Resources;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Web;
@@ -21,32 +22,40 @@ namespace CRS.ADMIN.APPLICATION.Models.PlanManagement
         public string Nomination { get; set; }
         public string UpdatedDate { get; set; }
     }
-    public class PlanManagementModel    
+    public class PlanManagementModel
     {
-        public string SNO { get; set; }
+        public string SNO { get; set; } = "0";
         public string PlanId { get; set; }
         [DisplayName("Plan Name")]
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
+        [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Required")]
         public string PlanName { get; set; }
+        [DisplayName("Plan Category")]
+        [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Required")]
+        public string PlanCategory { get; set; }
         [DisplayName("Plan Type")]
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
+        [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Required")]
         public string PlanType { get; set; }
         [DisplayName("Time")]
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
+        [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Required")]
         public string PlanTime { get; set; }
         [DisplayName("Price")]
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
+        [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Required")]
         public string Price { get; set; }
         [DisplayName("Liquor")]
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
+        [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Required")]
         public string Liquor { get; set; }
         [DisplayName("Nomination")]
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
+        [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Required")]
         public string Nomination { get; set; }
         [DisplayName("Plan Image")]
+        //[Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Required")]
         public string PlanImage { get; set; }
         [DisplayName("Plan Image 2")]
+        //[Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Required")]
         public string PlanImage2 { get; set; }
+        [DisplayName("Number of People")]
+        [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Required")]
+        public int NoOfPeople { get; set; }
         public string Remarks { get; set; }
         public string PlanStatus { get; set; }
         public string ExtraField1 { get; set; }

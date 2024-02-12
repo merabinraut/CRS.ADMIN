@@ -1870,6 +1870,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Number of People.
+        /// </summary>
+        public static string NoOfPeople {
+            get {
+                return ResourceManager.GetString("NoOfPeople", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Note.
         /// </summary>
         public static string Note {

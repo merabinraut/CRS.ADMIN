@@ -19,5 +19,7 @@ namespace CRS.ADMIN.SHARED.PlanManagement
         public string ExtraField1 { get; set; }
         public string ExtraField2 { get; set; }
         public string ExtraField3 { get; set; }
+        public string PlanCategory { get; set; }
+        public int NoOfPeople { get; set; }
     }
 }

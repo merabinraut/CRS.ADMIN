@@ -906,6 +906,10 @@
     <value>指名</value>
     <comment>Plan Management</comment>
   </data>
+  <data name="NoOfPeople" xml:space="preserve">
+    <value>人々の数</value>
+    <comment>Plan Management</comment>
+  </data>
   <data name="Note" xml:space="preserve">
     <value>注記</value>
     <comment>Location Management</comment>
