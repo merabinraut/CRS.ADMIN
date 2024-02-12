@@ -446,3 +446,33 @@ VALUES
 (34, 'Skill 8', '8', 'Skill 8', N'スキル8', 'A', SYSTEM_USER, GETDATE()),
 (34, 'Skill 9', '9', 'Skill 9', N'スキル9', 'A', SYSTEM_USER, GETDATE()),
 (34, 'Skill 10', '10', 'Skill 10', N'スキル10', 'A', SYSTEM_USER, GETDATE())
+
+INSERT INTO dbo.tbl_static_data
+(
+    StaticDataType,
+    StaticDataLabel,
+    StaticDataValue,
+    StaticDataDescription,
+    Status,
+    ActionUser,
+    ActionDate
+)
+VALUES
+(36, 'Available for private booking', '1', 'Available for private booking', 'A', SYSTEM_USER, GETDATE()),
+(36, 'Large staff presence', '2', 'Large staff presence', 'A', SYSTEM_USER, GETDATE()),
+(36, 'VIP Rooms Available', '3', 'VIP Rooms Available', 'A', SYSTEM_USER, GETDATE()),
+(36, 'Suitable for girls night out', '4', 'Suitable for girls night out', 'A', SYSTEM_USER, GETDATE())
+
+INSERT INTO dbo.tbl_static_data
+(
+    StaticDataType,
+    StaticDataLabel,
+    StaticDataValue,
+    StaticDataDescription,
+    Status,
+    ActionUser,
+    ActionDate
+)
+VALUES
+(35, 'Normal Plan', '1', 'Normal Plan', 'A', SYSTEM_USER, GETDATE()),
+(35, 'Offer Plan', '2', 'Offer Plan', 'A', SYSTEM_USER, GETDATE())

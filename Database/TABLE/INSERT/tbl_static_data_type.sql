@@ -208,3 +208,33 @@ VALUES
     GETDATE(), -- ActionDate - datetime
     'A'  -- Status - char(1)
     )
+	
+	INSERT INTO dbo.tbl_static_data_type
+(
+    StaticDataType,
+    StaticDataName,
+    StaticDataDescription,
+    ActionUser,
+    ActionDate,
+    Status
+)
+VALUES
+(   '35', 
+    'Plan Category', 
+    'Plan category', 
+    SYSTEM_USER, 
+    GETDATE(), 
+    'A'  
+    )
+	
+	INSERT INTO dbo.tbl_static_data_type
+(
+    StaticDataType,
+    StaticDataName,
+    StaticDataDescription,
+    ActionUser,
+    ActionDate,
+    Status
+)
+VALUES
+(36, 'Club Availability', 'Club availability', SYSTEM_USER, GETDATE(), 'A');
