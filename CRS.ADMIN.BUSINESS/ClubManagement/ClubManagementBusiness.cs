@@ -52,6 +52,10 @@ namespace CRS.ADMIN.BUSINESS.ClubManagement
         {
             return _REPO.GetTagDetails(clubid);
         }
+        public ManageTagCommon GetAvailabilityList(string cId)
+        {
+            return _REPO.GetAvailabilityList(cId);
+        }
         #endregion
 
         #region Manage gallery
@@ -67,6 +71,8 @@ namespace CRS.ADMIN.BUSINESS.ClubManagement
         {
             return _REPO.ManageGalleryImageStatus(AgentId, GalleryId, Request);
         }
+
+       
         #endregion
     }
 }

@@ -17,12 +17,14 @@ namespace CRS.ADMIN.BUSINESS.ClubManagement
         CommonDbResponse ManageTag(ManageTagCommon request);
         List<LocationListCommon> GetLocationDDL(string clubID);
         ManageTagCommon GetTagDetails(string clubid);
+        ManageTagCommon GetAvailabilityList(string cId);
         #endregion
 
         #region Manage gallery
         List<GalleryManagementCommon> GetGalleryImage(string AgentId, PaginationFilterCommon request, string GalleryId = "");
         CommonDbResponse ManageGalleryImage(ManageGalleryImageCommon Request);
         CommonDbResponse ManageGalleryImageStatus(string AgentId, string GalleryId, Common Request);
+       
         #endregion
     }
 }

@@ -385,6 +385,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             else
             {
                 var dbResponseInfo = _BUSS.GetTagDetails(cId);
+                var dbAvailabilityInfo = _BUSS.GetAvailabilityList(cId);
                 if (dbResponseInfo == null || dbResponseInfo.Code != "0")
                 {
                     this.AddNotificationMessage(new NotificationModel()

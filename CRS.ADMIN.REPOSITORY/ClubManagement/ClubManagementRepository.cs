@@ -248,6 +248,10 @@ namespace CRS.ADMIN.REPOSITORY.ClubManagement
             }
             return new ManageTagCommon();
         }
+        public ManageTagCommon GetAvailabilityList(string cId)
+        {
+            throw new NotImplementedException();
+        }
         #endregion
 
         #region Manage gallery
@@ -288,6 +292,8 @@ namespace CRS.ADMIN.REPOSITORY.ClubManagement
             SQL += ",@ActionIP=" + _DAO.FilterString(Request.ActionIP);
             return _DAO.ParseCommonDbResponse(SQL);
         }
+
+        
         #endregion
     }
 }
