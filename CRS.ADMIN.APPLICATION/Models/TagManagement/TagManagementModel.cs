@@ -62,6 +62,13 @@ namespace CRS.ADMIN.APPLICATION.Models.TagManagement
         public string Tag5StoreDescription { get; set; }
         [DisplayName("Status")]
         public string Tag5Status { get; set; }
+
+        #region
+        public string AvailableForPrivateBooking { get; set; }
+        public string LargeStaffPresence { get; set; }
+        public string VIPRoomAvailable { get; set; }
+        public string SuitableForGirlsNgtOut { get; set; }
+        #endregion
     }
     public class LocationDDL
     {

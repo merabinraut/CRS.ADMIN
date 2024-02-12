@@ -19,6 +19,10 @@
         public string Tag5StoreName { get; set; }
         public string Tag5StoreDescription { get; set; }
         public string Tag5Status { get; set; }
+        public string AvailableForPrivateBooking { get; set; }
+        public string LargeStaffPresence { get; set; }
+        public string VIPRoomAvailable { get; set; }
+        public string SuitableForGirlsNgtOut { get; set; }
     }
     public class LocationListCommon : Common
     {
