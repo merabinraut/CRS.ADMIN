@@ -248,9 +248,28 @@ namespace CRS.ADMIN.REPOSITORY.ClubManagement
             }
             return new ManageTagCommon();
         }
-        public ManageTagCommon GetAvailabilityList(string cId)
+        public List<AvailabilityTagModelCommon> GetAvailabilityList(string cId)
         {
-            throw new NotImplementedException();
+            List<AvailabilityTagModelCommon> responseInfo = new List<AvailabilityTagModelCommon>();
+            string sp_name = "exec sproc_ap_club_tag_management @Flag='gtl'";
+            sp_name += ",@ClubId=" + _DAO.FilterString(cId);
+            var dbResponseInfo = _DAO.ExecuteDataTable(sp_name);
+            if (dbResponseInfo != null)
+            {
+                foreach(DataRow data in dbResponseInfo.Rows)
+                {
+                    responseInfo.Add(new AvailabilityTagModelCommon
+                    {
+                        StaticType = data["StaticType"].ToString(),
+                        StaticLabel = data["StaticLabel"].ToString(),
+                        StaticVaue = data["StaticValue"].ToString(),
+                        StaticDescription = data["StaticDescription"].ToString(),
+                        StaticStatus = data["StaticStatus"].ToString(),
+                        StaticLabelJapanese = data["StaticLabelJapanese"].ToString(),
+                    });
+                }
+            }
+            return responseInfo;
         }
         #endregion
 

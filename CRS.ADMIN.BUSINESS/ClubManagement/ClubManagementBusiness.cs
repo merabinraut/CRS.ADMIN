@@ -52,7 +52,7 @@ namespace CRS.ADMIN.BUSINESS.ClubManagement
         {
             return _REPO.GetTagDetails(clubid);
         }
-        public ManageTagCommon GetAvailabilityList(string cId)
+        public List<AvailabilityTagModelCommon> GetAvailabilityList(string cId)
         {
             return _REPO.GetAvailabilityList(cId);
         }

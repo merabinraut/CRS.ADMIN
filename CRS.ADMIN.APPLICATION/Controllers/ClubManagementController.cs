@@ -33,6 +33,9 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             if (TempData.ContainsKey("RenderId")) RenderId = TempData["RenderId"].ToString();
             if (TempData.ContainsKey("ManageTagModel")) response.ManageTag = TempData["ManageTagModel"] as ManageTag;
             else response.ManageTag = new ManageTag();
+
+            if (TempData.ContainsKey("AvailabilityModel")) response.GetAvailabilityList = TempData["AvailabilityModel"] as List<AvailabilityTagModel>;
+            else response.ManageTag.GetAvailabilityTagModel = new List<AvailabilityTagModel>();
             PaginationFilterCommon dbRequest = new PaginationFilterCommon()
             {
                 Skip = StartIndex,
@@ -371,6 +374,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
         public ActionResult ManageTag(string ClubId = "")
         {
             var ResponseModel = new ManageTag();
+            //var availabilityInfo = new List<AvailabilityTagModel>();
             var cId = ClubId?.DecryptParameter();
             if (string.IsNullOrEmpty(cId))
             {
@@ -396,6 +400,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                     });
                     return RedirectToAction("ClubList", "ClubManagement");
                 }
+                
                 ResponseModel = dbResponseInfo.MapObject<ManageTag>();
                 ResponseModel.ClubId = ClubId;
                 ResponseModel.TagId = ResponseModel.TagId.EncryptParameter();
@@ -403,15 +408,37 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 ResponseModel.Tag2RankName = ResponseModel.Tag2RankName?.EncryptParameter();
                 ResponseModel.Tag3CategoryName = ResponseModel.Tag3CategoryName?.EncryptParameter();
                 ResponseModel.Tag5StoreName = ResponseModel.Tag5StoreName?.EncryptParameter();
+                ResponseModel.GetAvailabilityTagModel = dbAvailabilityInfo.MapObjects<AvailabilityTagModel>();
                 TempData["ManageTagModel"] = ResponseModel;
+                TempData["AvailabilityModel"] = ResponseModel.GetAvailabilityTagModel;
                 TempData["RenderId"] = "ManageTag";
                 return RedirectToAction("ClubList", "ClubManagement");
             }
         }
 
         [HttpPost, ValidateAntiForgeryToken]
-        public ActionResult ManageTag(ManageTag Model, string tag1Select, string tag2Select, string tag3Select, string tag5Select)
+        public ActionResult ManageTag(ManageTag Model, string tag1Select, string tag2Select, string tag3Select, string tag5Select, string[] availabilityList = null)
         {
+            string[] clubAvailability = availabilityList;
+
+            // Split each string in the array by comma and create a list of lists
+            List<List<string>> splitAvailability = new List<List<string>>();
+
+            foreach (string availability in availabilityList)
+            {
+                string[] values = availability.Split(',');
+                List<string> innerList = new List<string>(values);
+                splitAvailability.Add(innerList);
+            }
+            var Request = new AvailabilityTagModel();
+            List<string> Value=new List<string>();
+            foreach (var innerList in splitAvailability)
+            {
+                foreach (string value in innerList)
+                {
+                    Value.Add(value);
+                }
+            }
             var ClubId = !string.IsNullOrEmpty(Model.ClubId) ? Model.ClubId.DecryptParameter() : null;
             var TagId = !string.IsNullOrEmpty(Model.TagId) ? Model.TagId.DecryptParameter() : null;
             if (string.IsNullOrEmpty(ClubId) || string.IsNullOrEmpty(TagId))
