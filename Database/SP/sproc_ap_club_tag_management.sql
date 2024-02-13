@@ -1,5 +1,13 @@
-USE CRS;
+USE [CRS];
 GO
+
+/****** Object:  StoredProcedure [dbo].[sproc_ap_club_tag_management]    Script Date: 2/13/2024 2:15:31 PM ******/
+SET ANSI_NULLS ON;
+GO
+
+SET QUOTED_IDENTIFIER ON;
+GO
+
 
 ALTER PROC [dbo].[sproc_ap_club_tag_management]
     @Flag VARCHAR(10),
@@ -19,6 +27,7 @@ BEGIN
         (
             StaticType VARCHAR(10),
             StaticLabel NVARCHAR(MAX),
+            StaticLabelJapanese NVARCHAR(MAX),
             StaticValue VARCHAR(10),
             StaticDescription NVARCHAR(MAX),
             StaticStatus CHAR(1)
@@ -27,6 +36,7 @@ BEGIN
         INSERT INTO #temp_gtl
         SELECT a.StaticDataType,
                b.StaticDataLabel,
+               b.AdditionalValue1,
                b.StaticDataValue,
                '',
                'B'
@@ -50,6 +60,7 @@ BEGIN
 
         SELECT a.StaticType,
                a.StaticLabel,
+               a.StaticLabelJapanese,
                a.StaticValue,
                a.StaticDescription,
                a.StaticStatus
@@ -125,4 +136,5 @@ BEGIN
     END;
 END;
 GO
+
 
