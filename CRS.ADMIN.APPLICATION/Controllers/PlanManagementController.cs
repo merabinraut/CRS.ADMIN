@@ -36,24 +36,13 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             var planTypeDBResponse = _business.GetDDL("7");
             var timeDBResponse = _business.GetDDL("8");
             var liquorDBResponse = _business.GetDDL("9");
+            var planCategoryDBResponse = _business.GetDDL("35");
 
-            Dictionary<string, string> planTypeDictionary = new Dictionary<string, string>();
-            foreach (var planType in planTypeDBResponse)
-            {
-                planTypeDictionary.Add(planType.StaticValue.EncryptParameter(), culture == "en" ? planType.StaticLabelEnglish : planType.StaticLabelJapanese);
-            }
+            var planTypeDictionary = GetDictionaryFromResponse(_business.GetDDL("7"), culture);
+            var timeDictionary = GetDictionaryFromResponse(_business.GetDDL("8"), culture);
+            var liquorDictionary = GetDictionaryFromResponse(_business.GetDDL("9"), culture);
+            var planCategoryDictionary = GetDictionaryFromResponse(_business.GetDDL("35"), culture);
 
-            Dictionary<string, string> timeDictionary = new Dictionary<string, string>();
-            foreach (var item in timeDBResponse)
-            {
-                timeDictionary.Add(item.StaticValue.EncryptParameter(), culture == "en" ? item.StaticLabelEnglish : item.StaticLabelJapanese);
-            }
-
-            Dictionary<string, string> liquorDictionary = new Dictionary<string, string>();
-            foreach (var item in liquorDBResponse)
-            {
-                liquorDictionary.Add(item.StaticValue.EncryptParameter(), culture == "en" ? item.StaticLabelEnglish : item.StaticLabelJapanese);
-            }
             #endregion
             PaginationFilterCommon dbRequest = new PaginationFilterCommon()
             {
@@ -72,9 +61,10 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             if (TempData.ContainsKey("RenderId")) RenderId = TempData["RenderId"].ToString();
             ViewBag.PopUpRenderValue = !string.IsNullOrEmpty(RenderId) ? RenderId : null;
 
-            ViewBag.PlanList = ApplicationUtilities.SetDDLValue(planTypeDictionary as Dictionary<string, string>, ResModel.PlanMgmt.PlanType, "--- Select ---");
-            ViewBag.TimeList = ApplicationUtilities.SetDDLValue(timeDictionary as Dictionary<string, string>, ResModel.PlanMgmt.PlanTime, "--- Select ---");
-            ViewBag.LiquorList = ApplicationUtilities.SetDDLValue(liquorDictionary as Dictionary<string, string>, ResModel.PlanMgmt.Liquor, "--- Select ---");
+            ViewBag.PlanList = ApplicationUtilities.SetDDLValue(planTypeDictionary as Dictionary<string, string>, null, "--- Select ---");
+            ViewBag.TimeList = ApplicationUtilities.SetDDLValue(timeDictionary as Dictionary<string, string>, null, "--- Select ---");
+            ViewBag.LiquorList = ApplicationUtilities.SetDDLValue(liquorDictionary as Dictionary<string, string>, null, "--- Select ---");
+            ViewBag.PlanCategoryDDL = ApplicationUtilities.SetDDLValue(planCategoryDictionary as Dictionary<string, string>, null, "--- Select ---");
             ViewBag.SearchFilter = SearchFilter;
             ViewBag.StartIndex = StartIndex;
             ViewBag.PageSize = PageSize;
@@ -122,12 +112,13 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             {
                 PlanId = i
             };
-            var serviceResp = _business.GetPlan(common);
+            var serviceResp = _business.GetPlanDetail(common);
             viewModel = serviceResp.MapObject<PlanManagementModel>();
             viewModel.PlanId = viewModel.PlanId.EncryptParameter();
             viewModel.PlanTime = viewModel.PlanTime.EncryptParameter();
             viewModel.PlanType = viewModel.PlanType.EncryptParameter();
             viewModel.Liquor = viewModel.Liquor.EncryptParameter();
+            viewModel.PlanCategory = viewModel.PlanCategory.EncryptParameter();
             TempData["PlanManagementModel"] = viewModel;
             TempData["RenderId"] = "Manage";
             return RedirectToAction("PlanList", "PlanManagement");
@@ -171,6 +162,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             common.PlanTime = !string.IsNullOrEmpty(common.PlanTime) ? common.PlanTime.DecryptParameter() : null;
             common.Liquor = !string.IsNullOrEmpty(common.Liquor) ? common.Liquor.DecryptParameter() : null;
             common.PlanId = !string.IsNullOrEmpty(common.PlanId) ? common.PlanId.DecryptParameter() : null;
+            common.PlanCategory = !string.IsNullOrEmpty(common.PlanCategory) ? common.PlanCategory.DecryptParameter() : null;
             if (string.IsNullOrEmpty(common.PlanType) || string.IsNullOrEmpty(common.PlanTime) || (!string.IsNullOrEmpty(model.PlanId) && string.IsNullOrEmpty(common.PlanId)))
             {
                 this.AddNotificationMessage(new NotificationModel()
@@ -325,6 +317,16 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             var response = new Dictionary<string, string>();
             dbResponse.ForEach(item => { response.Add(item.Key, item.Value); });
             return response;
+        }
+
+        Dictionary<string, string> GetDictionaryFromResponse(List<StaticDataCommon> response, string culture)
+        {
+            Dictionary<string, string> dictionary = new Dictionary<string, string>();
+            foreach (var item in response)
+            {
+                dictionary.Add(item.StaticValue.EncryptParameter(), culture == "en" ? item.StaticLabelEnglish : item.StaticLabelJapanese);
+            }
+            return dictionary;
         }
     }
 }

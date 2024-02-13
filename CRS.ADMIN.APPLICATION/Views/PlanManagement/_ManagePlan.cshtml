@@ -45,7 +45,7 @@
                         <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
                             @CRS.ADMIN.APPLICATION.Resources.Resource.Plan_Type
                         </label>
-                        <select id="large" name="PlanType" class="default_select select-common block w-full" style="width: 100%;">
+                        <select id="large" name="PlanType" class="default_select select-common block w-full" style="width: 100%;" required>
                             @foreach (var item in ViewBag.PlanList as IEnumerable<SelectListItem>)
                             {
                                 var selectedId = Model.PlanType as string;
@@ -61,48 +61,18 @@
                                 }
                             }
                         </select>
-                    </div>
-                    <div class="h-[2px] w-full bg-[#EBEBEB]"></div>
-                    <div class="input-field-common">
-                        <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
-                            @CRS.ADMIN.APPLICATION.Resources.Resource.Time
-                        </label>
-                        <select id="large" name="PlanTime" class=" default_select select-common block w-full "
-                                style="width: 100%;">
-                            @foreach (var item in ViewBag.TimeList as IEnumerable<SelectListItem>)
-                            {
-                                var selectedId = Model.PlanTime as string;
-                                if (item.Value == selectedId)
-                                {
-                                    <option value="@item.Value" selected>@item.Text</option>
-                                }
-                                else
-                                {
-                                    <option value="@item.Value">
-                                        @item.Text
-                                    </option>
-                                }
-                            }
-                        </select>
-                    </div>
-                    <div class="input-field-common">
-                        <label class="block mb-[12px] text-sm font-medium text-secondary-100 ">
-                            @CRS.ADMIN.APPLICATION.Resources.Resource.Price
-                        </label>
-                        @Html.TextBoxFor(model => model.Price, new { @class = "w-full rounded-[4px]", @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.Price, @style = "border-radius:4px !important", @onkeypress = "return isNumber(event)", autocomplete = "off", @maxLength = "7" })
                         <span class="error">
-                            @Html.ValidationMessageFor(m => m.Price)
+                            @Html.ValidationMessageFor(m => m.PlanType)
                         </span>
                     </div>
                     <div class="input-field-common">
                         <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
-                            @CRS.ADMIN.APPLICATION.Resources.Resource.Liquor
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Plan_Type
                         </label>
-                        <select id="large" name="Liquor" class=" default_select select-common block w-full "
-                                style="width: 100%;">
-                            @foreach (var item in ViewBag.LiquorList as IEnumerable<SelectListItem>)
+                        <select name="PlanCategory" class="default_select select-common block w-full" style="width: 100%;" required>
+                            @foreach (var item in ViewBag.PlanCategoryDDL as IEnumerable<SelectListItem>)
                             {
-                                var selectedId = Model.Liquor as string;
+                                var selectedId = Model.PlanCategory as string;
                                 if (item.Value == selectedId)
                                 {
                                     <option value="@item.Value" selected>@item.Text</option>
@@ -115,32 +85,14 @@
                                 }
                             }
                         </select>
+                        <span class="error">
+                            @Html.ValidationMessageFor(m => m.PlanCategory)
+                        </span>
                     </div>
-                    <div class="input-field-common">
-                        <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
-                            @CRS.ADMIN.APPLICATION.Resources.Resource.Nomination
-                        </label>
-                        <select id="large" name="Nomination" class=" default_select select-common block w-full "
-                                style="width: 100%;">
-                            @for (int i = 1; i <= 50; i++)
-                            {
-                                var selectedId = Model.Nomination as string;
-                                if (i.ToString() == selectedId)
-                                {
-                                    <option value="@i" selected>@i</option>
-                                }
-                                else
-                                {
-                                    <option value="@i">
-                                        @i
-                                    </option>
-                                }
-                            }
-                        </select>
-                    </div>
+                    <div class="h-[2px] w-full bg-[#EBEBEB]"></div>
                     <div>
                         <label for="gallery" class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
-                            @CRS.ADMIN.APPLICATION.Resources.Resource.Promotional_Image
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Image
                         </label>
                         <div class="file-upload-common bg-gray-gallery">
                             <label for="file_input_logo" class="custom-file-upload w-[128px] flex-none text-ellipsis-customer">
@@ -148,7 +100,7 @@
                                     @CRS.ADMIN.APPLICATION.Resources.Resource.Choose_Images
                                 </span>
                             </label>
-                            <input id="file_input_logo" class="file-input" name="ImageFile" type="file" style="display:none;">
+                            <input id="file_input_logo" class="file-input" name="ImageFile" type="file" style="display:none;" required>
                             <p id="file_name_logo"
                                class="file-name w-max h-[23px] overflow-hidden pl-2 text-xs text-[#686868] leading-[25px]">
                                 @if (string.IsNullOrEmpty(Model.PlanImage))
@@ -166,10 +118,13 @@
                             @CRS.ADMIN.APPLICATION.Resources.Resource.Image_should_be_in_HEIF_format
                             @CRS.ADMIN.APPLICATION.Resources.Resource.and_Maximum_file_size_is_5_MB .
                         </div>
+                        <span class="error">
+                            @Html.ValidationMessageFor(m => m.PlanImage)
+                        </span>
                     </div>
                     <div>
                         <label for="gallery" class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
-                            @CRS.ADMIN.APPLICATION.Resources.Resource.Promotional_Image 2
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Image 2
                         </label>
                         <div class="file-upload-common bg-gray-gallery">
                             <label for="file_input_logo2" class="custom-file-upload w-[128px] flex-none text-ellipsis-customer">
@@ -177,10 +132,10 @@
                                     @CRS.ADMIN.APPLICATION.Resources.Resource.Choose_Images
                                 </span>
                             </label>
-                            <input id="file_input_logo2" class="file-input" name="ImageFile2" type="file" style="display:none;">
+                            <input id="file_input_logo2" class="file-input" name="ImageFile2" type="file" style="display:none;" required>
                             <p id="file_name_logo2"
                                class="file-name w-max h-[23px] overflow-hidden pl-2 text-xs text-[#686868] leading-[25px]">
-                                @if (string.IsNullOrEmpty(Model.PlanImage))
+                                @if (string.IsNullOrEmpty(Model.PlanImage2))
                                 {
                                     @CRS.ADMIN.APPLICATION.Resources.Resource.No_File_Choosen
                                 }
@@ -195,7 +150,121 @@
                             @CRS.ADMIN.APPLICATION.Resources.Resource.Image_should_be_in_HEIF_format
                             @CRS.ADMIN.APPLICATION.Resources.Resource.and_Maximum_file_size_is_5_MB .
                         </div>
+                        <span class="error">
+                            @Html.ValidationMessageFor(m => m.PlanImage2)
+                        </span>
                     </div>
+                    <div class="input-field-common">
+                        <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Time
+                        </label>
+                        <select id="large" name="PlanTime" class=" default_select select-common block w-full "
+                                style="width: 100%;" required>
+                            @foreach (var item in ViewBag.TimeList as IEnumerable<SelectListItem>)
+                            {
+                                var selectedId = Model.PlanTime as string;
+                                if (item.Value == selectedId)
+                                {
+                                    <option value="@item.Value" selected>@item.Text</option>
+                                }
+                                else
+                                {
+                                    <option value="@item.Value">
+                                        @item.Text
+                                    </option>
+                                }
+                            }
+                        </select>
+                        <span class="error">
+                            @Html.ValidationMessageFor(m => m.PlanTime)
+                        </span>
+                    </div>
+                    <div class="input-field-common">
+                        <label class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Price
+                        </label>
+                        @Html.TextBoxFor(model => model.Price, new { @class = "w-full rounded-[4px]", @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.Price, @style = "border-radius:4px !important", @onkeypress = "return isNumber(event)", autocomplete = "off", @maxLength = "7" })
+                        <span class="error">
+                            @Html.ValidationMessageFor(m => m.Price)
+                        </span>
+                    </div>
+                    <div class="input-field-common">
+                        <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Liquor
+                        </label>
+                        <select id="large" name="Liquor" class=" default_select select-common block w-full "
+                                style="width: 100%;" required>
+                            @foreach (var item in ViewBag.LiquorList as IEnumerable<SelectListItem>)
+                            {
+                                var selectedId = Model.Liquor as string;
+                                if (item.Value == selectedId)
+                                {
+                                    <option value="@item.Value" selected>@item.Text</option>
+                                }
+                                else
+                                {
+                                    <option value="@item.Value">
+                                        @item.Text
+                                    </option>
+                                }
+                            }
+                        </select>
+                        <span class="error">
+                            @Html.ValidationMessageFor(m => m.Liquor)
+                        </span>
+                    </div>
+                    <div class="input-field-common">
+                        <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Nomination
+                        </label>
+                        <select id="large" name="Nomination" class=" default_select select-common block w-full "
+                                style="width: 100%;" required>
+                            @for (int i = 1; i <= 10; i++)
+                            {
+                                var selectedId = Model.Nomination as string;
+                                if (i.ToString() == selectedId)
+                                {
+                                    <option value="@i" selected>@i</option>
+                                }
+                                else
+                                {
+                                    <option value="@i">
+                                        @i
+                                    </option>
+                                }
+                            }
+                        </select>
+                        <span class="error">
+                            @Html.ValidationMessageFor(m => m.Nomination)
+                        </span>
+                    </div>
+
+                    <div class="input-field-common">
+                        <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.NoOfPeople
+                        </label>
+                        <select name="NoOfPeople" class=" default_select select-common block w-full "
+                                style="width: 100%;" required>
+                            @for (int i = 1; i <= 10; i++)
+                            {
+                                var selectedId = Model.NoOfPeople;
+                                if (i == selectedId)
+                                {
+                                    <option value="@i" selected>@i</option>
+                                }
+                                else
+                                {
+                                    <option value="@i">
+                                        @i
+                                    </option>
+                                }
+                            }
+                        </select>
+                        <span class="error">
+                            @Html.ValidationMessageFor(m => m.NoOfPeople)
+                        </span>
+                    </div>
+
                     <div class="input-field-common">
                         <label class="block mb-[12px] text-sm font-medium text-secondary-100 ">
                             @CRS.ADMIN.APPLICATION.Resources.Resource.Remarks
@@ -231,11 +300,11 @@
                 <div class="flex justify-end ">
                     <div class="flex gap-6">
                         <button class="resetForm btn btn-primary-normal rounded-[4px] px-8 text-sm"
-                                data-drawer-hide="add-new-host-club" id="CancelId">
+                                data-drawer-hide="add-new-host-club" id="CancelId" type="button">
                             @CRS.ADMIN.APPLICATION.Resources.Resource.Cancel
                         </button>
                         <button class="resetForm btn btn-primary-default px-8 rounded-[4px]  text-sm leading-[10px]"
-                                id="saveData">
+                                id="saveData" type="submit">
                             @CRS.ADMIN.APPLICATION.Resources.Resource.Submit
                         </button>
                     </div>

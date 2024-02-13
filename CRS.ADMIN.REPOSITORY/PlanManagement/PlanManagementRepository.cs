@@ -78,7 +78,9 @@ namespace CRS.ADMIN.REPOSITORY.PlanManagement
                     PlanImage2 = dataTable.Rows[0]["PlanImage2"].ToString(),
                     ExtraField1 = dataTable.Rows[0]["AdditionalValue1"].ToString(),
                     ExtraField2 = dataTable.Rows[0]["AdditionalValue2"].ToString(),
-                    ExtraField3 = dataTable.Rows[0]["AdditionalValue3"].ToString()
+                    ExtraField3 = dataTable.Rows[0]["AdditionalValue3"].ToString(),
+                    PlanCategory = dataTable.Rows[0]["PlanCategory"].ToString(),
+                    NoOfPeople = !string.IsNullOrEmpty(dataTable.Rows[0]["NoOfPeople"].ToString()) ? Convert.ToInt32(dataTable.Rows[0]["NoOfPeople"].ToString()) : 0
                 };
             }
             return new PlanManagementCommon();
@@ -109,9 +111,12 @@ namespace CRS.ADMIN.REPOSITORY.PlanManagement
                     ActionPlatform = dataTable.Rows[0]["ActionPlatform"].ToString(),
                     ActionDate = dataTable.Rows[0]["ActionDate"].ToString(),
                     PlanImage = dataTable.Rows[0]["PlanImage"].ToString(),
+                    PlanImage2 = dataTable.Rows[0]["PlanImage2"].ToString(),
                     ExtraField1 = dataTable.Rows[0]["AdditionalValue1"].ToString(),
                     ExtraField2 = dataTable.Rows[0]["AdditionalValue2"].ToString(),
                     ExtraField3 = dataTable.Rows[0]["AdditionalValue3"].ToString(),
+                    PlanCategory = dataTable.Rows[0]["PlanCategory"].ToString(),
+                    NoOfPeople = !string.IsNullOrEmpty(dataTable.Rows[0]["NoOfPeople"].ToString()) ? Convert.ToInt32(dataTable.Rows[0]["NoOfPeople"].ToString()) : 0
                 };
             }
             return new PlanManagementCommon();
@@ -138,6 +143,8 @@ namespace CRS.ADMIN.REPOSITORY.PlanManagement
             sql += ", @ExtraField1=N" + _dao.FilterString(planManagementCommon.ExtraField1);
             sql += ", @ExtraField2=N" + _dao.FilterString(planManagementCommon.ExtraField2);
             sql += ", @ExtraField3=N" + _dao.FilterString(planManagementCommon.ExtraField3);
+            sql += ", @PlanCategory=" + _dao.FilterString(planManagementCommon.PlanCategory);
+            sql += ", @NoOfPeople=" + planManagementCommon.NoOfPeople;
             return _dao.ParseCommonDbResponse(sql);
         }
 

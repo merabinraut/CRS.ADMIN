@@ -906,6 +906,10 @@
     <value>Nomination</value>
     <comment>Plan Management</comment>
   </data>
+  <data name="NoOfPeople" xml:space="preserve">
+    <value>Number of People</value>
+    <comment>Plan Management</comment>
+  </data>
   <data name="Note" xml:space="preserve">
     <value>Note</value>
     <comment>Location Management</comment>

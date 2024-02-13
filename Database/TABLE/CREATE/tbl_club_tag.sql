@@ -1,0 +1,19 @@
+
+
+CREATE TABLE dbo.tbl_club_tag
+(
+	Sno BIGINT IDENTITY(1,2) PRIMARY KEY,
+	ClubId BIGINT NULL,
+	TagType VARCHAR(10) NULL,
+	TagId VARCHAR(10) NULL,
+	TagDescription NVARCHAR(512) NULL,
+	TagStatus CHAR(1) NULL,
+	CreatedBy NVARCHAR(100) NULL,
+	CreatedDate DATETIME NULL,
+	CreatedIP VARCHAR(50) NULL,
+	CreatedPlatform VARCHAR(20) NULL,
+	UpdatedBy NVARCHAR(100) NULL,
+	UpdatedDate DATETIME NULL,
+	UpdatedIP VARCHAR(50) NULL,
+	UpdatedPlatform VARCHAR(20) NULL
+)
