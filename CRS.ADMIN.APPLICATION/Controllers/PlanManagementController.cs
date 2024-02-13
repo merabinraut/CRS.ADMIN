@@ -36,24 +36,13 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             var planTypeDBResponse = _business.GetDDL("7");
             var timeDBResponse = _business.GetDDL("8");
             var liquorDBResponse = _business.GetDDL("9");
+            var planCategoryDBResponse = _business.GetDDL("35");
 
-            Dictionary<string, string> planTypeDictionary = new Dictionary<string, string>();
-            foreach (var planType in planTypeDBResponse)
-            {
-                planTypeDictionary.Add(planType.StaticValue.EncryptParameter(), culture == "en" ? planType.StaticLabelEnglish : planType.StaticLabelJapanese);
-            }
+            var planTypeDictionary = GetDictionaryFromResponse(_business.GetDDL("7"), culture);
+            var timeDictionary = GetDictionaryFromResponse(_business.GetDDL("8"), culture);
+            var liquorDictionary = GetDictionaryFromResponse(_business.GetDDL("9"), culture);
+            var planCategoryDictionary = GetDictionaryFromResponse(_business.GetDDL("35"), culture);
 
-            Dictionary<string, string> timeDictionary = new Dictionary<string, string>();
-            foreach (var item in timeDBResponse)
-            {
-                timeDictionary.Add(item.StaticValue.EncryptParameter(), culture == "en" ? item.StaticLabelEnglish : item.StaticLabelJapanese);
-            }
-
-            Dictionary<string, string> liquorDictionary = new Dictionary<string, string>();
-            foreach (var item in liquorDBResponse)
-            {
-                liquorDictionary.Add(item.StaticValue.EncryptParameter(), culture == "en" ? item.StaticLabelEnglish : item.StaticLabelJapanese);
-            }
             #endregion
             PaginationFilterCommon dbRequest = new PaginationFilterCommon()
             {
@@ -75,7 +64,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             ViewBag.PlanList = ApplicationUtilities.SetDDLValue(planTypeDictionary as Dictionary<string, string>, null, "--- Select ---");
             ViewBag.TimeList = ApplicationUtilities.SetDDLValue(timeDictionary as Dictionary<string, string>, null, "--- Select ---");
             ViewBag.LiquorList = ApplicationUtilities.SetDDLValue(liquorDictionary as Dictionary<string, string>, null, "--- Select ---");
-            ViewBag.PlanCategoryDDL = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("PLANCATEGORYDDL") as Dictionary<string, string>, null, "--- Select ---");
+            ViewBag.PlanCategoryDDL = ApplicationUtilities.SetDDLValue(planCategoryDictionary as Dictionary<string, string>, null, "--- Select ---");
             ViewBag.SearchFilter = SearchFilter;
             ViewBag.StartIndex = StartIndex;
             ViewBag.PageSize = PageSize;
@@ -328,6 +317,16 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             var response = new Dictionary<string, string>();
             dbResponse.ForEach(item => { response.Add(item.Key, item.Value); });
             return response;
+        }
+
+        Dictionary<string, string> GetDictionaryFromResponse(List<StaticDataCommon> response, string culture)
+        {
+            Dictionary<string, string> dictionary = new Dictionary<string, string>();
+            foreach (var item in response)
+            {
+                dictionary.Add(item.StaticValue.EncryptParameter(), culture == "en" ? item.StaticLabelEnglish : item.StaticLabelJapanese);
+            }
+            return dictionary;
         }
     }
 }
