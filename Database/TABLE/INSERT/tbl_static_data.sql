@@ -476,3 +476,14 @@ INSERT INTO dbo.tbl_static_data
 VALUES
 (35, 'Normal Plan', '1', 'Normal Plan', 'A', SYSTEM_USER, GETDATE()),
 (35, 'Offer Plan', '2', 'Offer Plan', 'A', SYSTEM_USER, GETDATE())
+
+
+INSERT INTO tbl_static_data ( [StaticDataType], [StaticDataLabel], [StaticDataValue], [StaticDataDescription], [AdditionalValue1], [AdditionalValue2], [AdditionalValue3], [AdditionalValue4], [Status], [ActionUser], [ActionDate])
+VALUES
+(  37, N'Notice', '1', 'Notice', N'お知らせ', NULL, NULL, NULL, 'A', 'kiran.acharya', N'2024-02-12T16:51:31.953' )
+
+
+INSERT INTO tbl_static_data ([StaticDataType], [StaticDataLabel], [StaticDataValue], [StaticDataDescription], [AdditionalValue1], [AdditionalValue2], [AdditionalValue3], [AdditionalValue4], [Status], [ActionUser], [ActionDate])
+VALUES
+(  37, N'Schedule', '2', 'Schedule', N'スケジュール', NULL, NULL, NULL, 'A', 'kiran.acharya', N'2024-02-12T16:51:31.953' )
+

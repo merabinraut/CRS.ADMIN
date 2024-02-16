@@ -24,5 +24,12 @@ namespace CRS.ADMIN.REPOSITORY.ClubManagement
         CommonDbResponse ManageGalleryImage(ManageGalleryImageCommon Request);
         CommonDbResponse ManageGalleryImageStatus(string AgentId, string GalleryId, Common Request);
         #endregion
+
+        #region Event Management
+
+        List<EventListCommon> GetEventList(PaginationFilterCommon Request, string AgentId);
+        CommonDbResponse ManageEvent(EventCommon Request);
+        EventCommon GetEventDetails(string AgentId, string EventId);
+        #endregion
     }
 }

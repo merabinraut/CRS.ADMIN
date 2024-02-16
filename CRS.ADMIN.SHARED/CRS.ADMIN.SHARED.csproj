@@ -101,6 +101,7 @@
   <ItemGroup>
     <Compile Include="AffiliateManagement\AffiliateManagementCommon.cs" />
     <Compile Include="ClubManagement\ClubManagementCommon.cs" />
+    <Compile Include="ClubManagement\EventManagementCommon.cs" />
     <Compile Include="ClubManagement\GalleryManagementCommon.cs" />
     <Compile Include="CommissionManagement\AssignCommissionCommon.cs" />
     <Compile Include="CommissionManagement\CommissionCategoryCommon.cs" />

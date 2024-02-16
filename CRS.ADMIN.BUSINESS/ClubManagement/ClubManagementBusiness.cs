@@ -68,5 +68,20 @@ namespace CRS.ADMIN.BUSINESS.ClubManagement
             return _REPO.ManageGalleryImageStatus(AgentId, GalleryId, Request);
         }
         #endregion
-    }
+        #region Event Management
+
+        public List<EventListCommon> GetEventList(PaginationFilterCommon Request, string AgentId) 
+        { 
+          return _REPO.GetEventList(Request,AgentId);
+        }
+        public CommonDbResponse ManageEvent(EventCommon Request)
+        { 
+          return _REPO.ManageEvent(Request);
+        }
+        public EventCommon GetEventDetails(string AgentId, string EventId)
+        { 
+          return _REPO.GetEventDetails(AgentId, EventId);
+        }
+    #endregion
+}
 }
