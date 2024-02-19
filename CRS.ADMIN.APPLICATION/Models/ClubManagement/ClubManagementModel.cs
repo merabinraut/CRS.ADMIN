@@ -11,6 +11,7 @@ namespace CRS.ADMIN.APPLICATION.Models.ClubManagement
         public List<ClubListModel> ClubListModel { get; set; }
         public ManageClubModel ManageClubModel { get; set; }
         public ManageTag ManageTag { get; set; }
+        public List<AvailabilityTagModel> GetAvailabilityList { get; set; }
     }
     public class ClubListModel
     {

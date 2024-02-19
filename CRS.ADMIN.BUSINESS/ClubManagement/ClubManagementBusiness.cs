@@ -52,6 +52,14 @@ namespace CRS.ADMIN.BUSINESS.ClubManagement
         {
             return _REPO.GetTagDetails(clubid);
         }
+        public List<AvailabilityTagModelCommon> GetAvailabilityList(string cId)
+        {
+            return _REPO.GetAvailabilityList(cId);
+        }
+        public CommonDbResponse ManageClubAvailability(AvailabilityTagModelCommon request, ManageTagCommon dbRequest,string[] updatedValues)
+        {
+            return _REPO.ManageClubAvailability(request, dbRequest,updatedValues);
+        }
         #endregion
 
         #region Manage gallery
@@ -67,6 +75,10 @@ namespace CRS.ADMIN.BUSINESS.ClubManagement
         {
             return _REPO.ManageGalleryImageStatus(AgentId, GalleryId, Request);
         }
+
+        
+
+
         #endregion
         #region Event Management
 
