@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Globalization;
 using System.Linq;
 using System.Threading;
@@ -23,6 +24,7 @@ namespace CRS.ADMIN.APPLICATION.Library
         }
         public static string GetDefaultLanguage()
         {
+            if (ConfigurationManager.AppSettings["Phase"] != null && ConfigurationManager.AppSettings["Phase"].ToString().ToUpper() == "DEVELOPMENT") return "En";
             return AvailableLanguages[1].LanguageCultureName;
         }
         public void SetLanguage(string lang)
