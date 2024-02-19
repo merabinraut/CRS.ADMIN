@@ -43,7 +43,7 @@ namespace CRS.ADMIN.APPLICATION.Models.TagManagement
         public string Tag1Location { get; set; }
         [DisplayName("Status")]
         public string Tag1Status { get; set; }
-        [DisplayName("Rank Name")]
+        //[DisplayName("Rank Name")]
         public string Tag2RankName { get; set; }
         [DisplayName("Rank Description")]
         public string Tag2RankDescription { get; set; }

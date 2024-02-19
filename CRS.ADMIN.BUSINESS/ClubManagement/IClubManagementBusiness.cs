@@ -24,7 +24,8 @@ namespace CRS.ADMIN.BUSINESS.ClubManagement
         List<GalleryManagementCommon> GetGalleryImage(string AgentId, PaginationFilterCommon request, string GalleryId = "");
         CommonDbResponse ManageGalleryImage(ManageGalleryImageCommon Request);
         CommonDbResponse ManageGalleryImageStatus(string AgentId, string GalleryId, Common Request);
-       
+        CommonDbResponse ManageClubAvailability(AvailabilityTagModelCommon request, ManageTagCommon dbRequest, string[] updatedValues);
+
         #endregion
     }
 }

@@ -18,6 +18,7 @@ namespace CRS.ADMIN.REPOSITORY.ClubManagement
         List<LocationListCommon> GetLocationDDL(string clubID);
         ManageTagCommon GetTagDetails(string clubid);
         List<AvailabilityTagModelCommon> GetAvailabilityList(string cId);
+        CommonDbResponse ManageClubAvailability(AvailabilityTagModelCommon request, ManageTagCommon dbRequest, string[] updatedValues);
         #endregion
 
         #region Manage gallery
@@ -25,6 +26,7 @@ namespace CRS.ADMIN.REPOSITORY.ClubManagement
         CommonDbResponse ManageGalleryImage(ManageGalleryImageCommon Request);
         CommonDbResponse ManageGalleryImageStatus(string AgentId, string GalleryId, Common Request);
         
+
         #endregion
     }
 }
