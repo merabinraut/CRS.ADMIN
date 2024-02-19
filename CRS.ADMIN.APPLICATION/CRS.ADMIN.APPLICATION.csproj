@@ -257,6 +257,7 @@
     <Compile Include="Models\AdminDashboardModel.cs" />
     <Compile Include="Models\AffiliateManagement\AffiliateManagementModel.cs" />
     <Compile Include="Models\ClubManagement\ClubManagementModel.cs" />
+    <Compile Include="Models\ClubManagement\EventModel.cs" />
     <Compile Include="Models\ClubManagement\GalleryManagementModel.cs" />
     <Compile Include="Models\CommissionManagement\AssignCommissionModel.cs" />
     <Compile Include="Models\CommissionManagement\CommissionCategoryModel.cs" />
@@ -300,6 +301,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\img\" />
+    <Folder Include="Content\userupload\ClubManagement\Event\" />
     <Folder Include="Content\userupload\LocationImages\" />
     <Folder Include="Content\userupload\PromotionalImages\" />
     <Folder Include="Properties\PublishProfiles\" />
@@ -333,6 +335,7 @@
     <Content Include="Content\assets\demo_data\wizard\experience.html" />
     <Content Include="Content\assets\demo_data\wizard\personal_data.html" />
     <Content Include="Content\assets\images\admin-image.jpg" />
+    <Content Include="Content\assets\images\notice.svg" />
     <Content Include="Content\assets\js\app.js" />
     <Content Include="Content\assets\js\chart.min.js" />
     <Content Include="Content\assets\js\currencyFormatter.min.js" />
@@ -2638,6 +2641,8 @@
     <Content Include="Views\ReservationLedger\ReservationLedgerDetail.cshtml" />
     <Content Include="Views\ReservationLedger\_CustomDate.cshtml" />
     <Content Include="Views\HostManagement\_ManageHostPartialView.cshtml" />
+    <Content Include="Views\ClubManagement\EventList.cshtml" />
+    <Content Include="Views\ClubManagement\_ManageEvent.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

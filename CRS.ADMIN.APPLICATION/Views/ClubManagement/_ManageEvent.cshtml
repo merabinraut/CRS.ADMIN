@@ -1,0 +1,225 @@
+@model CRS.ADMIN.APPLICATION.Models.ClubManagement.EventModel
+<div id="add-new-host-club"
+     class="drawer-close-disable  flex justify-end fixed top-0 right-0 z-40 h-screen overflow-y-auto transition-transform translate-x-full"
+     tabindex="-1" aria-labelledby="add-new-host-club" aria-modal="true" role="dialog">
+    <div class="bg-white w-[616px] drawer-container relative">
+        <div class="drawer-form-container sticky top-0 z-[5] ">
+            <div class="drawer-form flex justify-between bg-secondary-color-pink py-[16px] px-[24px] h-[56px]">
+                <div>
+                    @CRS.ADMIN.APPLICATION.Resources.Resource.Manage_Club_Events
+                </div>
+                <button type="button" data-drawer-hide="add-new-host-club" aria-controls="add-new-host-club"
+                        class="text-[20px]">
+                    <i class="las la-window-close text-white" onclick="CancelFunction()"></i>
+                </button>
+            </div>
+        </div>
+        <div class="p-[24px]">
+            @using (Html.BeginForm("ManageEvent", "ClubManagement", FormMethod.Post, new { @id = "ManageEventForm", enctype = "multipart/form-data" }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.HiddenFor(model => model.AgentId);
+                @Html.HiddenFor(model => model.EventId);
+                @Html.HiddenFor(model => model.Image);
+                @Html.HiddenFor(model => model.EventTypeName);
+
+                <div class="grid gap-4">
+
+                    <!-- notice rendering -->
+                    <div class=" ">
+                        <div class="flex justify-start items-center gap-6">
+                            @foreach (var item in ViewBag.EventType as Dictionary<string, (string Text, string JapaneseValue, string culture)>)
+                            {
+                                <div class="flex gap-[10px] items-center">
+                                    <input type="radio" name="EventType" id=@item.Value.Text value=@item.Key
+                                     class="w-4 h-4 bg-white rounded-full border border-[#A6A6A6] focus:ring-4 focus:ring-blue-300 checked:after:translate-x-full after:content-[''] after:absolute after:top-[3.8px] after:left-[2px] after:border-[#A6A6A6] after:bg-[#A6A6A6] after:border after:rounded-full after:h-3 after:w-3 after:transition-all checked:after:border-white checked:border-secondary-color-pink checked:bg-secondary-color-pink checked:after:bg-white">
+
+                                    @if (Convert.ToString(@item.Value.culture) == "en-US")
+                                    {
+                                        <label for="notice" class="text-[#333] font-normal text-[16px]"> @item.Value.Text</label>
+                                    }
+                                    else
+                                    {
+
+                                        <label for="notice" class="text-[#333] font-normal text-[16px]"> @item.Value.JapaneseValue</label>
+                                    }
+
+                                </div>
+                            }
+
+                        </div>
+
+                        <div id="noticeMain" class="uppercase text-[#001118] text-[14px] mt-4 font-bold leading-[20px] mb-[20px]">@CRS.ADMIN.APPLICATION.Resources.Resource.Event_Notice.ToUpper()</div>
+                        <div id="scheduleMain" class="uppercase text-[#001118] text-[14px] mt-4 font-bold leading-[20px] mb-[20px]">@CRS.ADMIN.APPLICATION.Resources.Resource.Event_Schedule.ToUpper()</div>
+
+                        <!-- for date -->
+                        <div class="mb-[20px]">
+                            <div class="input-field-common mb-[20px]" id="tagInput1">
+                                <div class="input-field-common">
+                                    <label for="date" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                                        @CRS.ADMIN.APPLICATION.Resources.Resource.Date
+                                    </label>
+                                    @Html.TextBoxFor(model => model.EventDate, new
+                               {
+                                   @class = "w-full",
+                                   @placeholder = "YYYY/MM/DD",
+                                   @autocomplete = "off",
+                                   @type = "text",
+                                     @readonly= "readonly"
+                                      })
+                                    <span class="error">
+                                        @Html.ValidationMessageFor(m => m.EventDate)
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div id="scheduleimage" class="mb-[20px]">
+
+                                <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
+                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Image
+                                </label>
+                                <div class="file-upload-common rounded-[4px] border-[#E6E6E6]">
+                                    <label for="file_input_cover" class="custom-file-upload bg-[#E49797] w-[123px] flex-none ">
+                                        <span>@CRS.ADMIN.APPLICATION.Resources.Resource.Choose_Images</span>
+                                    </label>
+                                    <input id="file_input_cover" class="file-input" name="Image" type="file"
+                                           style="display:none;">
+                                    <p id="file_name_logo"
+                                       class="file-name w-max h-[23px] overflow-hidden pl-2 text-xs text-[#686868] leading-[25px]">
+                                        @CRS.ADMIN.APPLICATION.Resources.Resource.No_File_Choosen
+                                </div>
+                                <div class="text-xs text-error mt-[8px]">
+                                    @CRS.ADMIN.APPLICATION.Resources.Resource.ImageValidationMsg
+                                </div>
+                            </div>
+
+                            <!-- </div> -->
+                            <div class="input-field-common mb-[20px]" id="tagInput3">
+                                <div class="input-field-common">
+                                    <label for="date" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                                        @CRS.ADMIN.APPLICATION.Resources.Resource.Title
+                                    </label>
+                                    @Html.TextBoxFor(model => model.Title, new
+                                             {
+                                             @class = "w-full",
+                                             @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.Title,
+                                             autocomplete = "off"
+                                             })
+
+                                    <span class="error">
+                                        @Html.ValidationMessageFor(m => m.Title)
+                                    </span>
+                                </div>
+                            </div>
+
+
+                            <div class="input-field-common mb-[20px]" id="tagInput4">
+                                <div class="input-field-common">
+                                    <label for="date" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                                        @CRS.ADMIN.APPLICATION.Resources.Resource.Description
+                                    </label>
+                                    @Html.TextBoxFor(model => model.Description, new
+                                        {
+                                        @class = "w-full",
+                                        @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.Description_About_Club,
+                                        autocomplete = "off"
+                                        })
+                                    <span class="error">
+                                        @Html.ValidationMessageFor(m => m.Description)
+                                    </span>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+
+                <!-- for submit button -->
+                <div class="py-4 flex justify-end">
+                    <div class="flex gap-6">
+                        <button class="btn btn-secondary rounded-[4px]" type="button" data-drawer-hide="add-new-host-tag"
+                                aria-controls="add-new-host-tag" onclick="CancelFunction();">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Cancel
+                        </button>
+                        <button class="btn btn-primary-default rounded-[4px]" type="submit"> @CRS.ADMIN.APPLICATION.Resources.Resource.Submit</button>
+
+
+                    </div>
+
+                </div>
+            }
+        </div>
+    </div>
+</div>
+<!-- notice and schedule start -->
+<script>
+    const notice = document.getElementById('Notice');
+    const noticeMain = document.getElementById('noticeMain');
+    const schedule = document.getElementById('Schedule');
+    const scheduleMain = document.getElementById('scheduleMain');
+    const scheduleimage = document.getElementById('scheduleimage');
+    const tagInput3 = document.getElementById('tagInput3');
+
+    if ($("#EventId").val() !== '') {
+        var imagePath = "@Model.Image"
+       
+        if (imagePath !==null) {
+            var imageName = imagePath.replace("/Content/UserUpload/ClubManagement/Event/", "");
+            $("#file_name_logo").text(imageName)
+        }
+       
+        if ($('[name="EventTypeName"]').val()== "Notice") {
+            noticeMain.style.display = 'block';
+            scheduleimage.style.display = 'none';
+            scheduleMain.style.display = 'none';
+            tagInput3.style.display = 'none';
+            notice.checked = true;
+        }
+        /**/
+        else if ($('[name="EventTypeName"]').val() == "Schedule") {
+        /**/
+        noticeMain.style.display = 'none';
+        tagInput3.style.display = 'block';
+        scheduleimage.style.display = 'block';
+            scheduleMain.style.display = 'block';
+            schedule.checked = true;
+    }
+
+}
+else {
+    noticeMain.style.display = 'block';
+    scheduleimage.style.display = 'none';
+    scheduleMain.style.display = 'none';
+    tagInput3.style.display = 'none';
+    notice.checked = true;
+}
+
+notice.addEventListener('change', function () {
+    if (this.checked) {
+        noticeMain.style.display = 'block';
+        scheduleimage.style.display = 'none';
+        scheduleMain.style.display = 'none';
+        tagInput3.style.display = 'none';
+
+    } else {
+        noticeMain.style.display = 'none';
+    }
+});
+schedule.addEventListener('change', function () {
+    if (this.checked) {
+        noticeMain.style.display = 'none';
+        tagInput3.style.display = 'block';
+        scheduleimage.style.display = 'block';
+        scheduleMain.style.display = 'block';
+
+
+    } else {
+        scheduleimage.style.display = 'none';
+        tagInput3.style.display = 'none';
+        scheduleMain.style.display = 'none';
+    }
+});
+</script>
+<!-- testing end -->

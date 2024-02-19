@@ -616,6 +616,20 @@ BEGIN
         ORDER BY a.StaticDataValue ASC;
         RETURN;
     END;
+
+	ELSE IF ISNULL(@Flag, '') = '039' --Age Range
+    BEGIN
+        SELECT a.StaticDataValue AS Value,
+               a.StaticDataLabel AS TEXT,
+			   a.AdditionalValue1 AS japaneseText
+        FROM dbo.tbl_static_data a WITH (NOLOCK)
+            INNER JOIN dbo.tbl_static_data_type b WITH (NOLOCK)
+                ON b.StaticDataType = a.StaticDataType
+        WHERE b.StaticDataType = 37
+              AND ISNULL(a.Status, '') = 'A'
+        ORDER BY a.StaticDataValue ASC;
+        RETURN;
+    END;
 END;
 GO
 

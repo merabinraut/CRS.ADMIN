@@ -479,6 +479,10 @@
     <value>説明</value>
     <comment>Club Management</comment>
   </data>
+  <data name="Description About Club" xml:space="preserve">
+    <value>説明</value>
+    <comment>Club Management</comment>
+  </data>
   <data name="Description Placeholder" xml:space="preserve">
     <value>クラブ説明</value>
     <comment>Club Management</comment>
@@ -524,6 +528,30 @@
   </data>
   <data name="Entries" xml:space="preserve">
     <value>件</value>
+  </data>
+  <data name="Event Date" xml:space="preserve">
+    <value>年</value>
+    <comment>Event Date</comment>
+  </data>
+  <data name="Event Description" xml:space="preserve">
+    <value>説明</value>
+    <comment>Club Management</comment>
+  </data>
+  <data name="Event Management Supporting Text" xml:space="preserve">
+    <value>クラブのイベントやお知らせなどを管理します</value>
+    <comment>Club Management</comment>
+  </data>
+  <data name="Event Notice" xml:space="preserve">
+    <value>お知らせ</value>
+    <comment>Club Management</comment>
+  </data>
+  <data name="Event Schedule" xml:space="preserve">
+    <value>スケジュール</value>
+    <comment>Club Management</comment>
+  </data>
+  <data name="Events Management" xml:space="preserve">
+    <value>イベント管理</value>
+    <comment>Club Management</comment>
   </data>
   <data name="Export" xml:space="preserve">
     <value>エクスポート</value>
@@ -784,6 +812,10 @@
   <data name="Main Menu" xml:space="preserve">
     <value>メインメニュー</value>
     <comment>Side Bar Menu</comment>
+  </data>
+  <data name="Manage Club Events" xml:space="preserve">
+    <value>クラブイベント管理</value>
+    <comment>Club Management</comment>
   </data>
   <data name="Manage Club Profile" xml:space="preserve">
     <value>クラブプロフィールの管理</value>

@@ -4,11 +4,17 @@ using CRS.ADMIN.APPLICATION.Models.TagManagement;
 using CRS.ADMIN.BUSINESS.ClubManagement;
 using CRS.ADMIN.SHARED;
 using CRS.ADMIN.SHARED.ClubManagement;
+using CRS.ADMIN.SHARED.Home;
 using CRS.ADMIN.SHARED.PaginationManagement;
+using DocumentFormat.OpenXml.Drawing.Diagrams;
+using DocumentFormat.OpenXml.EMMA;
+using Microsoft.Office.Interop.Excel;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Mvc;
 
@@ -709,6 +715,377 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             });
             return Json(response.Message, JsonRequestBehavior.AllowGet);
         }
+        #endregion
+
+        #region Event 
+
+
+
+        [HttpGet]
+        public ActionResult EventList(string ClubId = "",string SearchFilter = "", int StartIndex = 0, int PageSize = 10)
+        {
+            ViewBag.SearchFilter = null;
+            Session["CurrentURL"] = "/ClubManagement/EventList";
+            string RenderId = "";
+            var response = new EventManagementCommonModel();
+            if (TempData.ContainsKey("ManageEventModel")) response.ManageEventModel = TempData["ManageEventModel"] as EventModel;
+            else response.ManageEventModel = new EventModel();
+            if (TempData.ContainsKey("RenderId")) RenderId = TempData["RenderId"].ToString();
+            PaginationFilterCommon dbRequest = new PaginationFilterCommon()
+            {
+                Skip = StartIndex,
+                Take = PageSize,
+                SearchFilter = !string.IsNullOrEmpty(SearchFilter) ? SearchFilter : null
+            };
+            var dbResponse = _BUSS.GetEventList(dbRequest, ClubId.DecryptParameter());
+            response.EventListModel = dbResponse.MapObjects<EventListModel>();
+            foreach (var item in response.EventListModel)
+            {
+                item.AgentId = item.AgentId?.EncryptParameter();
+                item.EventId = item.EventId?.EncryptParameter();
+           
+            }
+            var culture = System.Threading.Thread.CurrentThread.CurrentCulture.ToString();
+            ViewBag.PopUpRenderValue = !string.IsNullOrEmpty(RenderId) ? RenderId : null;
+            ViewBag.EventType = ApplicationUtilities.LoadDropdownValuesList("EVENTTYPE", "", "", culture);
+            ViewBag.StartIndex = StartIndex;
+            ViewBag.PageSize = PageSize;
+            ViewBag.TotalData = dbResponse != null && dbResponse.Any() ? dbResponse[0].TotalRecords : 0;
+            response.SearchFilter = null;
+            response.ManageEventModel.AgentId = ClubId;
+           
+            return View(response);
+        }
+
+        [HttpPost, ValidateAntiForgeryToken]
+        public ActionResult ManageEvent(EventModel Model, HttpPostedFileBase Image)
+        {
+            var agentid = string.Empty;
+            
+                string ImagePath = "";
+                string ErrorMessage = string.Empty;
+                 agentid = Model.AgentId;
+                if (string.IsNullOrEmpty(Model.EventType))
+                {
+                    ErrorMessage = "Event Type is Required.";
+                    this.AddNotificationMessage(new NotificationModel()
+                    {
+                        NotificationType = NotificationMessage.INFORMATION,
+                        Message = ErrorMessage ?? "Something went wrong. Please try again later.",
+                        Title = NotificationMessage.INFORMATION.ToString(),
+                    });
+                    return RedirectToAction("EventList", "ClubManagement", new
+                    {
+                        ClubId = agentid
+                    });
+                }
+                Model.EventType = Model.EventType.DecryptParameter();
+                if (Model.EventType.ToUpper() == "1") //check for notice event type
+                {
+                    Model.Title = "";
+                    Model.Image = "";
+                   ModelState.Remove("Title");
+                if (Model.EventDate == null || Model.Description == null)
+                    {
+                        bool allowRedirect = false;
+
+                        if (string.IsNullOrEmpty(Model.EventDate))
+                        {
+                            ErrorMessage = "Event Date required";
+                            allowRedirect = true;
+                        }
+                        else if (string.IsNullOrEmpty(Model.Description))
+                        {
+                            ErrorMessage = "Event Description required";
+                            allowRedirect = true;
+                        }
+
+                        if (allowRedirect)
+                        {
+                            this.AddNotificationMessage(new NotificationModel()
+                            {
+                                NotificationType = NotificationMessage.INFORMATION,
+                                Message = ErrorMessage ?? "Something went wrong. Please try again later.",
+                                Title = NotificationMessage.INFORMATION.ToString(),
+                            });
+                            TempData["ManageEventModel"] = Model;
+                            TempData["RenderId"] = "Manage";
+                            return RedirectToAction("EventList", "ClubManagement", new
+                            {
+                                ClubId = agentid
+                            });
+                        }
+                    }
+                }
+                else if (Model.EventType.ToUpper() == "2")     //check for schedule event type
+                {
+                    if (Model.EventDate == null || Model.Description == null || Model.Title == null)
+                    {
+                        bool allowRedirect = false;
+
+                        if (string.IsNullOrEmpty(Model.EventDate))
+                        {
+                            ErrorMessage = "Event Date required";
+                            allowRedirect = true;
+                        }
+                        else if (string.IsNullOrEmpty(Model.Description))
+                        {
+                            ErrorMessage = "Event Description required";
+                            allowRedirect = true;
+                        }
+                        else if (string.IsNullOrEmpty(Model.Description))
+                        {
+                            ErrorMessage = "Event Title required";
+                            allowRedirect = true;
+                        }
+
+                        if (allowRedirect)
+                        {
+                            this.AddNotificationMessage(new NotificationModel()
+                            {
+                                NotificationType = NotificationMessage.INFORMATION,
+                                Message = ErrorMessage ?? "Something went wrong. Please try again later.",
+                                Title = NotificationMessage.INFORMATION.ToString(),
+                            });
+                            TempData["ManageEventModel"] = Model;
+                            TempData["RenderId"] = "Manage";
+                            return RedirectToAction("EventList", "ClubManagement", new
+                            {
+                                ClubId = agentid
+                            });
+                        }
+                    }
+                    var allowedContentType = AllowedImageContentType();
+
+
+                    if (Image == null)
+                    {
+                        if (string.IsNullOrEmpty(Model.Image))
+                        {
+                            bool allowRedirect = false;
+
+                            if (Image == null && string.IsNullOrEmpty(Model.Image))
+                            {
+                                ErrorMessage = "Image required";
+                                allowRedirect = true;
+                            }
+                            if (allowRedirect)
+                            {
+                                this.AddNotificationMessage(new NotificationModel()
+                                {
+                                    NotificationType = NotificationMessage.INFORMATION,
+                                    Message = ErrorMessage ?? "Something went wrong. Please try again later.",
+                                    Title = NotificationMessage.INFORMATION.ToString(),
+                                });
+                                TempData["ManageEventModel"] = Model;
+                                TempData["RenderId"] = "ManageClubGallery";
+                                return RedirectToAction("EventList", "ClubManagement", new { ClubId = agentid });
+                            }
+                        }
+                    }  //for update  of image
+                    if (Image != null)
+                    {
+                        var contentType = Image.ContentType;
+                        var ext = Path.GetExtension(Image.FileName);
+                        if (allowedContentType.Contains(contentType.ToLower()))
+                        {
+                            var dateTime = DateTime.Now.ToString("yyyyMMddHHmmssffff");
+                            string fileName = "EventImage_" + dateTime + ext.ToLower();
+                            ImagePath = Path.Combine(Server.MapPath("~/Content/UserUpload/ClubManagement/Event"), fileName);
+                            Model.Image = "/Content/UserUpload/ClubManagement/Event/" + fileName;
+                        }
+                        else
+                        {
+                            this.AddNotificationMessage(new NotificationModel()
+                            {
+                                NotificationType = NotificationMessage.INFORMATION,
+                                Message = "Invalid image format.",
+                                Title = NotificationMessage.INFORMATION.ToString(),
+                            });
+                            TempData["ManageEventModel"] = Model;
+                            TempData["RenderId"] = "ManageClubGallery";
+                            return RedirectToAction("EventList", "ClubManagement", new { ClubId = agentid });
+                        }
+                    }
+                }
+
+            if (ModelState.IsValid)
+            {
+                EventCommon commonModel = Model.MapObject<EventCommon>();
+                commonModel.ActionUser = ApplicationUtilities.GetSessionValue("Username").ToString();
+                commonModel.ActionIP = ApplicationUtilities.GetIP();
+                if (!string.IsNullOrEmpty(commonModel.AgentId))
+                {
+                    commonModel.AgentId = commonModel.AgentId.DecryptParameter();
+                    if (string.IsNullOrEmpty(commonModel.AgentId))
+                    {
+                        this.AddNotificationMessage(new NotificationModel()
+                        {
+                            NotificationType = NotificationMessage.INFORMATION,
+                            Message = "Invalid event details.",
+                            Title = NotificationMessage.INFORMATION.ToString(),
+                        });
+                        TempData["ManageEventModel"] = Model;
+                        TempData["RenderId"] = "Manage";
+                        return RedirectToAction("EventList", "ClubManagement", new
+                        {
+                            ClubId = agentid
+                        });
+                    }
+                }
+                if (Model.EventId!=null)
+                {
+                    commonModel.EventId = Model.EventId.DecryptParameter();
+                }
+                commonModel.ActionUser = ApplicationUtilities.GetSessionValue("Username").ToString();
+                commonModel.ActionIP = ApplicationUtilities.GetIP();
+                var dbResponse = _BUSS.ManageEvent(commonModel);
+                if (dbResponse != null && dbResponse.Code == 0)
+                {
+                    if (Image != null) ApplicationUtilities.ResizeImage(Image, ImagePath);
+
+                    this.AddNotificationMessage(new NotificationModel()
+                    {
+                        NotificationType = dbResponse.Code == ResponseCode.Success ? NotificationMessage.SUCCESS : NotificationMessage.INFORMATION,
+                        Message = dbResponse.Message ?? "Failed",
+                        Title = dbResponse.Code == ResponseCode.Success ? NotificationMessage.SUCCESS.ToString() : NotificationMessage.INFORMATION.ToString()
+                    });
+                    return RedirectToAction("EventList", "ClubManagement", new
+                    {
+                        ClubId = agentid
+                    });
+                }
+                else
+                {
+                    this.AddNotificationMessage(new NotificationModel()
+                    {
+                        NotificationType = NotificationMessage.INFORMATION,
+                        Message = dbResponse.Message ?? "Failed",
+                        Title = NotificationMessage.INFORMATION.ToString()
+                    });
+                    TempData["ManageEventModel"] = Model;
+                    TempData["RenderId"] = "Manage";
+                    return RedirectToAction("EventList", "ClubManagement", new
+                    {
+                        ClubId = agentid
+                    });
+                }
+            }
+            var errorMessages = ModelState.Where(x => x.Value.Errors.Count > 0)
+                                  .SelectMany(x => x.Value.Errors.Select(e => $"{x.Key}: {e.ErrorMessage}"))
+                                  .ToList();
+
+            var notificationModels = errorMessages.Select(errorMessage => new NotificationModel
+            {
+                NotificationType = NotificationMessage.INFORMATION,
+                Message = errorMessage,
+                Title = NotificationMessage.INFORMATION.ToString(),
+            }).ToArray();
+            AddNotificationMessage(notificationModels);
+            var errors = ModelState.Where(x => x.Value.Errors.Count > 0).Select(x => new { x.Key }).ToList();
+            TempData["ManageEventModel"] = Model;
+            TempData["RenderId"] = "Manage";
+            return RedirectToAction("EventList", "ClubManagement", new
+            {
+                ClubId = agentid
+            });
+        }
+
+
+        [HttpGet]
+        public ActionResult ManageEvent(string AgentId = "",string EventId="")
+        {
+            EventModel model = new EventModel();
+            var agentid = AgentId;
+            var culture = System.Threading.Thread.CurrentThread.CurrentCulture.ToString();
+            ViewBag.EventType = ApplicationUtilities.LoadDropdownValuesList("EVENTTYPE", "", "", culture);
+            if (!string.IsNullOrEmpty(AgentId)  )
+            {
+                if (!string.IsNullOrEmpty(EventId))
+                {
+                    var id = AgentId.DecryptParameter();
+                    var Eventid = EventId.DecryptParameter();
+                    if (string.IsNullOrEmpty(id))
+                    {
+                        this.AddNotificationMessage(new NotificationModel()
+                        {
+                            NotificationType = NotificationMessage.INFORMATION,
+                            Message = "Invalid event details",
+                            Title = NotificationMessage.INFORMATION.ToString(),
+                        });
+                        return RedirectToAction("EventList", "ClubManagement", new
+                        {
+                            ClubId =agentid
+                        });
+                    }
+                    if (string.IsNullOrEmpty(Eventid))
+                    {
+                        this.AddNotificationMessage(new NotificationModel()
+                        {
+                            NotificationType = NotificationMessage.INFORMATION,
+                            Message = "Invalid event details",
+                            Title = NotificationMessage.INFORMATION.ToString(),
+                        });
+                        return RedirectToAction("EventList", "ClubManagement", new
+                        {
+                            ClubId = agentid
+                        });
+                    }
+                    var dbResponse = _BUSS.GetEventDetails(id,Eventid);
+                    model = dbResponse.MapObject<EventModel>();
+                    model.AgentId = model.AgentId.EncryptParameter();
+                    model.EventId = model.EventId.EncryptParameter();
+                }
+            }
+            TempData["ManageEventModel"] = model;
+           TempData["RenderId"] = "Manage";
+
+            return RedirectToAction("EventList", "ClubManagement", new
+            {
+                ClubId = model.AgentId
+            });
+        }
+
+        [HttpGet]
+        public ActionResult DeleteEvent(string AgentId = "", string EventId = "")
+        {
+            var response = new CommonDbResponse();
+            var aId = !string.IsNullOrEmpty(AgentId) ? AgentId.DecryptParameter() : null;
+            if (string.IsNullOrEmpty(aId))
+            {
+                this.AddNotificationMessage(new NotificationModel()
+                {
+                    NotificationType = NotificationMessage.INFORMATION,
+                    Message = "Invalid details",
+                    Title = NotificationMessage.INFORMATION.ToString(),
+                });
+            }
+            var commonRequest = new Common()
+            {
+                ActionIP = ApplicationUtilities.GetIP(),
+                ActionUser = ApplicationUtilities.GetSessionValue("Username").ToString()
+            };
+            EventCommon commonModel =new EventCommon();
+            commonModel.AgentId = aId;
+            commonModel.flag = "del";
+            commonModel.EventId = EventId.DecryptParameter();
+            var dbResponse = _BUSS.ManageEvent(commonModel);
+            response = dbResponse;
+            this.AddNotificationMessage(new NotificationModel()
+            {
+                NotificationType = response.Code == ResponseCode.Success ? NotificationMessage.SUCCESS : NotificationMessage.INFORMATION,
+                Message = response.Message ?? "Something went wrong. Please try again later",
+                Title = response.Code == ResponseCode.Success ? NotificationMessage.SUCCESS.ToString() : NotificationMessage.INFORMATION.ToString()
+            });
+
+            return RedirectToAction("EventList", "ClubManagement", new
+            {
+                ClubId = AgentId
+            });
+            
+        }
+
+
         #endregion
     }
 }

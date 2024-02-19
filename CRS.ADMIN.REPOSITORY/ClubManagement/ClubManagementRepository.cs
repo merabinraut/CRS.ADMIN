@@ -289,5 +289,95 @@ namespace CRS.ADMIN.REPOSITORY.ClubManagement
             return _DAO.ParseCommonDbResponse(SQL);
         }
         #endregion
+
+        #region Event Management
+
+       public List<EventListCommon> GetEventList(PaginationFilterCommon Request,string AgentId)
+        {
+            var response = new List<EventListCommon>();
+            string SQL = "EXEC sproc_event_management @Flag='gel'";
+            SQL += !string.IsNullOrEmpty(Request.SearchFilter) ? ",@SearchFilter=N" + _DAO.FilterString(Request.SearchFilter) : null;
+            SQL += !string.IsNullOrEmpty(AgentId) ? ",@AgentId=N" + _DAO.FilterString(AgentId) : null;
+            SQL += ",@Skip=" + Request.Skip;
+            SQL += ",@Take=" + Request.Take;
+            var dbResponse = _DAO.ExecuteDataTable(SQL);
+            if (dbResponse != null)
+            {
+                foreach (DataRow item in dbResponse.Rows)
+                {
+                    response.Add(new EventListCommon()
+                    {
+                        LoginId = _DAO.ParseColumnValue(item, "LoginId").ToString(),
+                        AgentId = _DAO.ParseColumnValue(item, "AgentId").ToString(),
+                        Status = _DAO.ParseColumnValue(item, "Status").ToString(),
+                        SNO = Convert.ToInt32(_DAO.ParseColumnValue(item, "Sno").ToString()),
+                        EventId = _DAO.ParseColumnValue(item, "EventId").ToString(),
+                        Title = _DAO.ParseColumnValue(item, "EventTitle").ToString(),
+                        Description = _DAO.ParseColumnValue(item, "Description").ToString(),
+                        ActionUser = _DAO.ParseColumnValue(item, "ActionUser").ToString(),
+                        CreatedDate = _DAO.ParseColumnValue(item, "ActionDate").ToString(),
+                        ActionPlatform = _DAO.ParseColumnValue(item, "ActionPlatform").ToString(),
+                        ActionDate = _DAO.ParseColumnValue(item, "ActionDate").ToString(),
+                        UpdatedDate = _DAO.ParseColumnValue(item, "UpdatedDate").ToString(),
+                        EventDate = _DAO.ParseColumnValue(item, "EventDate").ToString(),
+                        EventType = _DAO.ParseColumnValue(item, "EventTypeName").ToString(),
+                        Image = _DAO.ParseColumnValue(item, "Image").ToString(),
+                        TotalRecords = Convert.ToInt32(_DAO.ParseColumnValue(item, "TotalRecords").ToString()),
+                    });
+                }
+            }
+            return response;
+        }
+
+
+        public CommonDbResponse ManageEvent(EventCommon Request)
+        {
+            string SQL = "EXEC sproc_event_management ";                      
+            //SQL += "@Flag='I'";
+            if (Request.flag == "del")
+            {
+                SQL += "@Flag='del'";
+            }
+            else
+            {
+                SQL += string.IsNullOrEmpty(Request.EventId) ? "@Flag='rc'" : "@Flag='me'";
+            }
+            SQL += ",@EventDate=" + _DAO.FilterString(Request.EventDate);
+            SQL += ",@EventId=" + _DAO.FilterString(Request.EventId);
+            SQL += ",@EventType=" + _DAO.FilterString(Request.EventType);
+            SQL += ",@Description=N" + _DAO.FilterString(Request.Description);
+            SQL += string.IsNullOrEmpty(Request.Title) ? ",@EventTitle=" + _DAO.FilterString(Request.Title) : ",@EventTitle=N" + _DAO.FilterString(Request.Title);
+            SQL += ",@ImagePath=" + _DAO.FilterString(Request.Image);
+            SQL += ",@AgentId=" + _DAO.FilterString(Request.AgentId); 
+            SQL += ",@ActionUser=" + _DAO.FilterString(Request.ActionUser);
+            SQL += ",@ActionIP=" + _DAO.FilterString(Request.ActionIP);
+            SQL += ",@ActionPlatform=" + _DAO.FilterString(Request.ActionPlatform);
+            return _DAO.ParseCommonDbResponse(SQL);
+        }
+
+        public EventCommon GetEventDetails(string AgentId,string EventId)
+        {
+            string SQL = "EXEC sproc_event_management @Flag='ged'";
+            SQL += ",@AgentId=" + _DAO.FilterString(AgentId);
+            SQL += ",@EventId=" + _DAO.FilterString(EventId);
+            var dbResponse = _DAO.ExecuteDataRow(SQL);
+            if (dbResponse != null)
+            {
+                return new EventCommon()
+                {                                 
+                    EventDate = _DAO.ParseColumnValue(dbResponse, "Date").ToString(),
+                    EventType = Convert.ToString(_DAO.ParseColumnValue(dbResponse, "EventType")),
+                    EventTypeName = Convert.ToString(_DAO.ParseColumnValue(dbResponse, "EventTypeName")),
+                    Description = Convert.ToString(_DAO.ParseColumnValue(dbResponse, "Description")),
+                    Title = Convert.ToString(_DAO.ParseColumnValue(dbResponse, "EventTitle")),
+                    Image = Convert.ToString(_DAO.ParseColumnValue(dbResponse, "Image")),
+                    AgentId = _DAO.ParseColumnValue(dbResponse, "AgentId").ToString(),
+                    EventId = _DAO.ParseColumnValue(dbResponse, "EventId").ToString(),
+
+                };
+            }
+            return new EventCommon();
+        }
+        #endregion
     }
 }

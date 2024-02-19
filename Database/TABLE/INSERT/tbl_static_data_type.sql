@@ -238,3 +238,8 @@ VALUES
 )
 VALUES
 (36, 'Club Availability', 'Club availability', SYSTEM_USER, GETDATE(), 'A');
+
+INSERT INTO tbl_static_data_type ( [StaticDataType], [StaticDataName], [StaticDataDescription], [ActionUser], [ActionDate], [Status])
+VALUES
+( 37, 'Event Type', 'CEvent Type', 'kiran.acharya', N'2024-02-12T15:39:25.57', 'A' )
+

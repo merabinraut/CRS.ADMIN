@@ -38,3 +38,19 @@ VALUES
 ('12', '5', 'Manage Role Type', '/RoleManagement/AddRoleType', 'A', 'rabin.raut', '::1', GETDATE()),
 ('14', '5', 'Manage Menus', '/RoleManagement/Menus', 'A', 'rabin.raut', '::1', GETDATE()),
 ('16', '5', 'Manage Functions', '/RoleManagement/Functions', 'A', 'rabin.raut', '::1', GETDATE())
+
+
+
+INSERT INTO tbl_application_functions ([FunctionId], [MenuId], [FunctionName], [FunctionURL], [Status], [ActionUser], [ActionIP], [ActionDate])
+VALUES
+(  144, 14, 'Event Management', '/ClubManagement/EventList', 'A', 'kiran.acharya', '::1', N'2024-01-22T15:53:22.727' )
+
+
+INSERT INTO tbl_application_functions ([FunctionId], [MenuId], [FunctionName], [FunctionURL], [Status], [ActionUser], [ActionIP], [ActionDate])
+VALUES
+(  145, 14, 'Manage Event', '/ClubManagement/ManageEvent', 'A', 'kiran.acharya', '::1', N'2024-01-22T15:53:22.727' )
+
+
+INSERT INTO tbl_application_functions ([FunctionId], [MenuId], [FunctionName], [FunctionURL], [Status], [ActionUser], [ActionIP], [ActionDate])
+VALUES
+(  146, 14, 'Delete Event', '/ClubManagement/DeleteEvent', 'A', 'kiran.acharya', '::1', N'2024-01-22T15:53:22.727' )
