@@ -1,4 +1,6 @@
 ﻿using CRS.ADMIN.APPLICATION.Models.TagManagement;
+using DocumentFormat.OpenXml.Drawing.Charts;
+using DocumentFormat.OpenXml.Wordprocessing;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -107,7 +109,10 @@ namespace CRS.ADMIN.APPLICATION.Models.ClubManagement
         public string Email { get; set; }
         [DisplayName("Contact Number")]
         [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
-        public string MobileNumber { get; set; }
+        public string MobileNumber { get; set; }    
+        [DisplayName("Landline Number")]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
+        public string LandlineNumber { get; set; }
         [DisplayName("Club Name (English)")]
         [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
         [MaxLength(50, ErrorMessage = "Maximum 50 characters allowed")]
@@ -160,5 +165,49 @@ namespace CRS.ADMIN.APPLICATION.Models.ClubManagement
         public string LocationId { get; set; }
         [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
         public string CompanyName { get; set; }
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
+        public string ceoFullName { get; set; }
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
+        public string Line { get; set; }
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
+        public string GoogleMap { get; set; }
+        public string WorkingHrFrom { get; set; }
+        public string WorkingHrTo { get; set; }
+        public string Holiday { get; set; }
+        public string LastOrderTime { get; set; }
+        public string LastEntryTime { get; set; }
+        public string Tax { get; set; } 
+        public string PostalCode { get; set; }
+        public string Prefecture { get; set; }
+        public string City { get; set; }
+        public string Street { get; set; }
+        public string BuildingRoomNo { get; set; }
+        public string RegularFee { get; set; }
+        public string DesignationFee { get; set; }
+        public string CompanionFee { get; set; } 
+        public string ExtensionFee { get; set; }
+        public string Drink { get; set; }
+        public List<planIdentityDataModel> PlanList { get; set; }
     }
+
+    public class plan
+    {
+        public string PlanId { get; set; }
+        public string LastorderTime { get; set; }
+        public string LastEntryTime { get; set; }
+        public string MaximumReservation { get; set; }
+        public string Drink { get; set; }
+    }
+    public class planIdentityDataModel
+    {
+        public string English { get; set; }
+        public string StaticDataValue { get; set; }
+        public string japanese { get; set; }
+        public string inputtype { get; set; }
+        public string name { get; set; } 
+        public string IdentityLabel { get; set; }
+        public string IdentityDescription { get; set; }
+     
+    }
+
 }

@@ -511,6 +511,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Club Info.
+        /// </summary>
+        public static string Club_Info {
+            get {
+                return ResourceManager.GetString("Club Info", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Club List.
         /// </summary>
         public static string Club_List {
@@ -2226,6 +2235,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         public static string Plan_Type {
             get {
                 return ResourceManager.GetString("Plan Type", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Plans.
+        /// </summary>
+        public static string Plans {
+            get {
+                return ResourceManager.GetString("Plans", resourceCulture);
             }
         }
         

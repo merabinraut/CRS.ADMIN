@@ -79,4 +79,14 @@ namespace CRS.ADMIN.SHARED.ClubManagement
         public string LocationId { get; set; }
         public string CompanyName { get; set; }
     }
+
+    public class planIdentityDataCommon
+    {
+        public string English { get; set; }
+        public string StaticDataValue { get; set; }
+        public string japanese { get; set; }
+        public string inputtype { get; set; }
+        public string name { get; set; }
+
+    }
 }

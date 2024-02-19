@@ -50,6 +50,29 @@ namespace CRS.ADMIN.REPOSITORY.ClubManagement
                 }
             }
             return response;
+        }  
+        public List<planIdentityDataCommon> GetClubPlanIdentityList()
+        {
+            var response = new List<planIdentityDataCommon>();
+            string SQL = "EXEC sproc_club_management @Flag='cpi'";
+          
+            var dbResponse = _DAO.ExecuteDataTable(SQL);
+            if (dbResponse != null)
+            {
+                foreach (DataRow item in dbResponse.Rows)
+                {
+                    response.Add(new planIdentityDataCommon()
+                    {
+                        StaticDataValue = _DAO.ParseColumnValue(item, "StaticDataValue").ToString(),
+                        English = _DAO.ParseColumnValue(item, "English").ToString(),
+                        japanese = _DAO.ParseColumnValue(item, "japanese").ToString(),
+                        inputtype = _DAO.ParseColumnValue(item, "inputtype").ToString(),
+                        name = _DAO.ParseColumnValue(item, "name").ToString(),
+                       
+                    });
+                }
+            }
+            return response;
         }
 
         public ClubDetailCommon GetClubDetails(string AgentId)

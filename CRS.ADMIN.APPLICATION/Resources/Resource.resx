@@ -312,6 +312,10 @@
     <value>Club</value>
     <comment>Dashboard</comment>
   </data>
+  <data name="Club Info" xml:space="preserve">
+    <value>Club Info</value>
+    <comment>Club Management</comment>
+  </data>
   <data name="Club List" xml:space="preserve">
     <value>Club List</value>
     <comment>Recommendation Management</comment>
@@ -1064,6 +1068,10 @@
   <data name="Plan Type" xml:space="preserve">
     <value>Plan Type</value>
     <comment>Plan Management</comment>
+  </data>
+  <data name="Plans" xml:space="preserve">
+    <value>Plans</value>
+    <comment>Club Management</comment>
   </data>
   <data name="Platforms" xml:space="preserve">
     <value>Platforms</value>

@@ -12,6 +12,7 @@ namespace CRS.ADMIN.REPOSITORY.ClubManagement
         CommonDbResponse ManageClub(ManageClubCommon Request);
         CommonDbResponse ManageClubStatus(string AgentId, string Status, Common Request);
         CommonDbResponse ResetClubUserPassword(string AgentId, string UserId, Common Request);
+        List<planIdentityDataCommon> GetClubPlanIdentityList();
 
         #region "Manage Tag"
         CommonDbResponse ManageTag(ManageTagCommon request);

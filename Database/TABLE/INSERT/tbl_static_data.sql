@@ -487,3 +487,17 @@ INSERT INTO tbl_static_data ([StaticDataType], [StaticDataLabel], [StaticDataVal
 VALUES
 (  37, N'Schedule', '2', 'Schedule', N'スケジュール', NULL, NULL, NULL, 'A', 'kiran.acharya', N'2024-02-12T16:51:31.953' )
 
+
+
+INSERT INTO tbl_static_data ( [StaticDataType], [StaticDataLabel], [StaticDataValue], [StaticDataDescription], [AdditionalValue1], [AdditionalValue2], [AdditionalValue3], [AdditionalValue4], [Status], [ActionUser], [ActionDate])
+VALUES
+(  38, N'Plan', '1', 'Plan', N'プラン', NULL, NULL, NULL, 'A', 'kiran.acharya', N'2024-02-12T15:41:15.33' ),
+(  38, N'Last order Time', '2', 'Last orderTime', N'最終入店時間', NULL, NULL, NULL, 'A', 'kiran.acharya', N'2024-02-12T15:41:15.33' ),
+(  38, N'Last Entry Time', '3', 'Last Entry Time', N'ラストオーダー時間', NULL, NULL, NULL, 'A', 'kiran.acharya', N'2024-02-12T15:41:15.33' ),
+(  38, N'Maximum Reservation', '4', 'Maximum Reservation', N'予約最大人数', NULL, NULL, NULL, 'A', 'kiran.acharya', N'2024-02-12T15:41:15.33' )
+
+INSERT INTO tbl_static_data ( [StaticDataType], [StaticDataLabel], [StaticDataValue], [StaticDataDescription], [AdditionalValue1], [AdditionalValue2], [AdditionalValue3], [AdditionalValue4], [Status], [ActionUser], [ActionDate])
+VALUES
+(  39, N'Dropdown', '1', 'Dropdown', N'', NULL, NULL, NULL, 'A', 'kiran.acharya', N'2024-02-12T15:41:15.33' ),
+(  39, N'Text Box', '2', 'Text Box', N'', NULL, NULL, NULL, 'A', 'kiran.acharya', N'2024-02-12T15:41:15.33' ),
+(  39, N'Time', '3', 'Time', N'', NULL, NULL, NULL, 'A', 'kiran.acharya', N'2024-02-12T15:41:15.33' )
