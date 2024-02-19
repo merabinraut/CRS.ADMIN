@@ -14,6 +14,7 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Mvc;
 
@@ -1100,6 +1101,28 @@ namespace CRS.ADMIN.APPLICATION.Library
                     response.Add("A".EncryptParameter(), "Active");
                     response.Add("B".EncryptParameter(), "Blocked");
                     return response;
+                default: return response;
+            }
+        }
+
+
+        public static object LoadDropdownValuesList(string ForMethod, string search1 = "", string search2 = "",string culture="")
+        {
+            var _CommonBuss = new CommonManagementBusiness();
+            var dbResponse = new Dictionary<string, (string Text, string JapaneseValue, string culture)>();
+            //var response = new Dictionary<string ,string>();
+            var response = new Dictionary<string, (string Text, string JapaneseValue,string culture)>();
+            switch (ForMethod.ToUpper())
+            {
+               
+                case "EVENTTYPE":
+                    dbResponse = _CommonBuss.GetDropDownValues("039", search1, search2,culture);                   
+                    dbResponse.ForEach(item => { response.Add
+                        //(item.Key.EncryptParameter(), culture == "en-US" ? item.Value.Text: item.Value.JapaneseValue);
+                        (item.Key.EncryptParameter(),  item.Value);
+                    });
+                    return response;
+               
                 default: return response;
             }
         }

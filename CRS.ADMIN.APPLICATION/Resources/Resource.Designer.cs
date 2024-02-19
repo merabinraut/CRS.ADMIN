@@ -889,6 +889,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Description About Club.
+        /// </summary>
+        public static string Description_About_Club {
+            get {
+                return ResourceManager.GetString("Description About Club", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to eg. Description about club.
         /// </summary>
         public static string Description_Placeholder {
@@ -993,6 +1002,60 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         public static string Entries {
             get {
                 return ResourceManager.GetString("Entries", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Event Date.
+        /// </summary>
+        public static string Event_Date {
+            get {
+                return ResourceManager.GetString("Event Date", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Description.
+        /// </summary>
+        public static string Event_Description {
+            get {
+                return ResourceManager.GetString("Event Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Manage club events &amp; notices..
+        /// </summary>
+        public static string Event_Management_Supporting_Text {
+            get {
+                return ResourceManager.GetString("Event Management Supporting Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Notice.
+        /// </summary>
+        public static string Event_Notice {
+            get {
+                return ResourceManager.GetString("Event Notice", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Schedule.
+        /// </summary>
+        public static string Event_Schedule {
+            get {
+                return ResourceManager.GetString("Event Schedule", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Events Management.
+        /// </summary>
+        public static string Events_Management {
+            get {
+                return ResourceManager.GetString("Events Management", resourceCulture);
             }
         }
         
@@ -1587,6 +1650,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         public static string Main_Menu {
             get {
                 return ResourceManager.GetString("Main Menu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Manage Club Events.
+        /// </summary>
+        public static string Manage_Club_Events {
+            get {
+                return ResourceManager.GetString("Manage Club Events", resourceCulture);
             }
         }
         
@@ -2856,6 +2928,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         public static string Status {
             get {
                 return ResourceManager.GetString("Status", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string String1 {
+            get {
+                return ResourceManager.GetString("String1", resourceCulture);
             }
         }
         
