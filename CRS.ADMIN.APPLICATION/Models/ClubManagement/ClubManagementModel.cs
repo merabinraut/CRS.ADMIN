@@ -187,7 +187,10 @@ namespace CRS.ADMIN.APPLICATION.Models.ClubManagement
         public string CompanionFee { get; set; } 
         public string ExtensionFee { get; set; }
         public string Drink { get; set; }
-        public List<planIdentityDataModel> PlanList { get; set; }
+        public string Pref { get; set; }
+        public object data { get; set; }
+        public List<PlanList> PlanDetailList { get; set; } = new List<PlanList>();
+        // public List<planIdentityDataModel> PlanList { get; set; }
     }
 
     public class plan
@@ -197,6 +200,12 @@ namespace CRS.ADMIN.APPLICATION.Models.ClubManagement
         public string LastEntryTime { get; set; }
         public string MaximumReservation { get; set; }
         public string Drink { get; set; }
+    }
+
+    public class PlanList
+    {
+        public List<planIdentityDataModel> PlanIdentityList { get; set; }
+       = new List<planIdentityDataModel>();
     }
     public class planIdentityDataModel
     {

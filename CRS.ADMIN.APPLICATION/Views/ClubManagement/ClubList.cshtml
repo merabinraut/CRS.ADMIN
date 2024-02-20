@@ -468,7 +468,7 @@
                 document.getElementById('tagInput5').style.display = 'none';
             }
         });
-
+        debugger;
         const steps = document.querySelectorAll('.profile-steps');
         const nextButton = document.getElementById('nextBtn');
         const saveData = document.getElementById('saveData');
@@ -524,7 +524,7 @@
                 submitButton.style.display = 'none';
                 nextButton.textContent = '@CRS.ADMIN.APPLICATION.Resources.Resource.Next';
                 nextButton.setAttribute('type', 'button');
-                $('')
+               
             }
         };
 
@@ -597,71 +597,131 @@
             });
     </script>
     <script>
+        debugger;
+        //document.addEventListener('DOMContentLoaded', function () {
+        //    document.getElementById('addRowButton').addEventListener('click', function () {
+        //        debugger;
+        //        //$('.plandropdown').select2();
+        //        var plansDivs = document.querySelectorAll('#container .plans');
+        //        var plansDivsCount = plansDivs.length;
+        //        var rowcouunts = parseInt( plansDivsCount) + 1
+        //        var newid = rowcouunts + "_large";
+        //        var newRow = $('#addablerow .plans').clone(); // Clone the content
+        //        newRow.find('select').attr('id', newid);
+        //        $('#container').append(newRow);
+        //        $('#' + newid + '').select2();// Append it to the container
+        //       /* ('.plans').find('.your-span-class').remove();*/
+        //    });
+        //    //var style = document.createElement('style');
+        //    //style.innerHTML = '.select2-container--default .select2-selection--single {' +
+        //    //    'height: 44px !important;' +
+        //    //    '}';
+        //    //document.head.appendChild(style); // Append the style element to the document's head
+        //    //$('.plandropdown').select2();
+        //});
 
+        function getRowValues() {
+            debugger;
+            var rowsData = [];
+            var plansDivs = document.querySelectorAll('#container .plans');
+            var sv = "";
+            var name=""
+            plansDivs.forEach(function (plansDiv) {
+                debugger;
+
+                var staticDataInputs = plansDiv.querySelectorAll('.StaticDataValue');
+                var nameInputs = plansDiv.querySelectorAll('.name');
+                var descriptionInputs = plansDiv.querySelectorAll('.w-full');
+
+                var rowData = [];
+
+                for (var i = 0; i < staticDataInputs.length; i++) {
+                    var staticDataValue = staticDataInputs[i].value;
+                    var nameValue = nameInputs[i].value;
+                    var descriptionValue = descriptionInputs[i].value;
+
+                    rowData.push({
+                        StaticDataValue: staticDataValue,
+                        name: nameValue,
+                        IdentityDescription: descriptionValue
+                    });
+                }
+
+                rowsData.push(rowData);
+            });
+            debugger;
+            var jsonData = JSON.stringify(rowsData);
+            $("#data").val(jsonData)
+            $('#ManageClubForm').submit();
+
+        }
         debugger;
         var html = "";
         var rowcouunt = 1;
-         var PlanList = @Html.Raw(Json.Encode(Model.ManageClubModel.PlanList));
+      for (var i = 0; i <@Model.ManageClubModel.PlanDetailList[0].PlanIdentityList.Count; i++) {
+   var PlanList = @Html.Raw(Json.Encode(Model.ManageClubModel.PlanDetailList[0]));
+
+      var id = rowcouunt +"_PlanList_IdentityDescription_" + i ;
+      if (PlanList.PlanIdentityList[i].inputtype.toLowerCase() === "dropdown") {
+          html += `<div class="input-field-common">
+    <label class="block mb-[12px] text-sm font-medium text-secondary-text-2">
+        ${PlanList.PlanIdentityList[i].IdentityLabel}
+    </label>
+       <input type="hidden" name= "PlanList.PlanIdentityList[${i}].StaticDataValue" value=${PlanList.PlanIdentityList[i].StaticDataValue}  class='StaticDataValue'/>
+    <input type="hidden"name= "PlanList.PlanIdentityList[${i}].name" value=${PlanList.PlanIdentityList[i].name}   class='name'/>
+    <select id="large" name="PlanList.PlanIdentityList[${i}].IdentityDescription"   class="default_select select-common block w-full" style="width: 100%;">
+         @foreach (KeyValuePair<string, string> item in ViewBag.PlansList as Dictionary<string, string>)
+         {
+
+               <option value="@item.Key" selected>
+                     @item.Value
+                </option>
+         }
+
+
+    </select>
+</div>`;
+      }
+      else if (PlanList.PlanIdentityList[i].inputtype.toLowerCase() === "textbox") {
+          html += `<div class="input-field-common">
+    <label class="block mb-[12px] text-sm font-medium text-secondary-text-2">
+        ${PlanList.PlanIdentityList[i].IdentityLabel}
+    </label>
+    <input type="hidden" name= "PlanList.PlanIdentityList[${i}].StaticDataValue" value=${PlanList.PlanIdentityList[i].StaticDataValue}  class='StaticDataValue'  />
+  <input type="hidden" name= "PlanList.PlanIdentityList[${i}].name" value=${PlanList.PlanIdentityList[i].name}   class='name'/>
+    <input type="text" name="PlanList.PlanIdentityList[${i}].IdentityDescription"   class="w-full" autocomplete="off" maxlength="100" />
+    <span class="error">${PlanList.PlanIdentityList[i].IdentityDescription}</span>
+</div>`;
+      }
+      else if (PlanList.PlanIdentityList[i].inputtype.toLowerCase() === "time") {
+          html += `<div class="input-field-common">
+    <label for="instagram" class="block mb-[12px] text-sm font-medium text-secondary-100">
+        ${PlanList.PlanIdentityList[i].IdentityLabel}
+    </label>
+       <input type="hidden"   name= "PlanList.PlanIdentityList[${i}].StaticDataValue" value=${PlanList.PlanIdentityList[i].StaticDataValue}  class='StaticDataValue' />
+      <input type="hidden" name= "PlanList.PlanIdentityList[${i}].name" value=${PlanList.PlanIdentityList[i].name} class='name'  />
+    <input type="time" name="PlanList.PlanIdentityList[${i}].IdentityDescription"   class="w-full" placeholder="HH:MM" autocomplete="off" maxlength="30"  />
+    <span class="error">${PlanList.PlanIdentityList[i].IdentityDescription}</span>
+  </div>`;
+      }
+  }
 
 
 
 
-        for (var i = 0; i <=@Model.ManageClubModel.PlanList.Count; i++) {
-    
-            var id = rowcouunt +"_PlanList_IdentityDescription_" + i ;
-            if (PlanList[i].inputtype.toLowerCase() === "dropdown") {
-                html += `<div class="input-field-common">
-          <label class="block mb-[12px] text-sm font-medium text-secondary-text-2">
-              ${PlanList[i].IdentityLabel}
-          </label>
-             <input type="hidden" name= ${PlanList[i].StaticDataValue}  />
-          <input type="hidden" name= ${PlanList[i].name} class="w-full"  />
-          <select id="large" name="PlanList[${i}].IdentityDescription" id=${id}  class="default_select select-common block w-full" style="width: 100%;">
-              <option>Select Plan</option>
-              <option value="CA">Canada</option>
-              <option value="FR">France</option>
-              <option value="DE">Germany</option>
-          </select>
-      </div>`;
-            }
-            else if (PlanList[i].inputtype.toLowerCase() === "textbox") {
-                html += `<div class="input-field-common">
-          <label class="block mb-[12px] text-sm font-medium text-secondary-text-2">
-              ${PlanList[i].IdentityLabel}
-          </label>
-          <input type="hidden" name= ${PlanList[i].StaticDataValue}  />
-        <input type="hidden" name= ${PlanList[i].name} class="w-full"  />
-          <input type="text" name="PlanList[${i}].IdentityDescription" id=${id}  class="w-full" autocomplete="off" maxlength="100" />
-          <span class="error">${PlanList[i].IdentityDescription}</span>
-      </div>`;
-            }
-            else if (PlanList[i].inputtype.toLowerCase() === "time") {
-                html += `<div class="input-field-common">
-          <label for="instagram" class="block mb-[12px] text-sm font-medium text-secondary-100">
-              ${PlanList[i].IdentityLabel}
-          </label>
-             <input type="hidden" name= ${PlanList[i].StaticDataValue}  />
-            <input type="hidden" name= ${PlanList[i].name} class="w-full"  />
-          <input type="time" name="PlanList[${i}].IdentityDescription"  id=${id} class="w-full" placeholder="HH:MM" autocomplete="off" maxlength="30"  />
-          <span class="error">${PlanList[i].IdentityDescription}</span>
-        </div>`;
-            }
-        }
 
         function repeatContent() {
             debugger;
             rowcouunt++;
-            var originalContent = document.getElementById('originalContent');
-
-
-
+            var originalContent = document.getElementById('container');
 
             var htmlToInsert =
-                '<style>' +
-                '.select2-container--default .select2-selection--single {' +
-                'height: 44px !important;' +
-                '}' +
-                '</style>' +
+
+                `<style>
+                    .select2-container--default .select2-selection--single {
+                        height: 44px !important;
+                  }
+                </style>`+
                 '<!-- for plan last order and last entry  -->' +
                 ' <div class="plans">' +
                 '<div class="grid grid-cols-3 gap-x-4 gap-y-5">' +
@@ -673,30 +733,30 @@
 
 
 
-            getalllistofolanlist();
+           // getalllistofolanlist();
 
             // Initialize Select2 after inserting HTML
             $('#large').select2();
         }
 
-        function getalllistofolanlist() {
-            debugger;
-            var rows = document.querySelectorAll('.plans'); // Get all rows
-            var rowData = [];
-            rows.forEach(function (row) {
-                var inputs = row.querySelectorAll('input, select'); // Get all inputs/selects in this row
-                var rowDataItem = {};
-                inputs.forEach(function (input, index) {
-                    var planListIdentityDescription = row.querySelector('[name="PlanList[' + index + '].IdentityDescription"]').value;
-                    rowData.push(planListIdentityDescription);
-                   /* rowDataItem[input.name] = input.value; // Assuming name attribute is set for each input/select*/
-                });
-               /* rowData.push(rowDataItem['PlanList[1].IdentityDescription']);*/
-            });
+        //function getalllistofolanlist() {
+        //    debugger;
+        //    var rows = document.querySelectorAll('.plans'); // Get all rows
+        //    var rowData = [];
+        //    rows.forEach(function (row) {
+        //        var inputs = row.querySelectorAll('input, select'); // Get all inputs/selects in this row
+        //        var rowDataItem = {};
+        //        inputs.forEach(function (input, index) {
+        //            var planListIdentityDescription = row.querySelector('[name="PlanList[' + index + '].IdentityDescription"]').value;
+        //            rowData.push(planListIdentityDescription);
+        //           /* rowDataItem[input.name] = input.value; // Assuming name attribute is set for each input/select*/
+        //        });
+        //       /* rowData.push(rowDataItem['PlanList[1].IdentityDescription']);*/
+        //    });
 
-            //console.log(rowData); // Output the collected data
+        //    //console.log(rowData); // Output the collected data
 
-        };
+        //};
     </script>
 
 }

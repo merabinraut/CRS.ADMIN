@@ -249,6 +249,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helper\DDLHelper.cs" />
     <Compile Include="Library\ApplicationUtilities.cs" />
     <Compile Include="Library\ManageLanguage.cs" />
     <Compile Include="Library\ProjectGrid.cs" />

@@ -1100,7 +1100,12 @@ namespace CRS.ADMIN.APPLICATION.Library
                     response = new Dictionary<string, string>();
                     response.Add("A".EncryptParameter(), "Active");
                     response.Add("B".EncryptParameter(), "Blocked");
+                    return response; 
+                case "CLUBPLANS":
+                    dbResponse = _CommonBuss.GetDropDown("040", search1, search2);
+                    dbResponse.ForEach(item => { response.Add(item.Key.EncryptParameter(), item.Value); });
                     return response;
+
                 default: return response;
             }
         }
@@ -1110,6 +1115,7 @@ namespace CRS.ADMIN.APPLICATION.Library
         {
             var _CommonBuss = new CommonManagementBusiness();
             var dbResponse = new Dictionary<string, (string Text, string JapaneseValue, string culture)>();
+            var dbResponse1 = new Dictionary<string,  string>();
             //var response = new Dictionary<string ,string>();
             var response = new Dictionary<string, (string Text, string JapaneseValue,string culture)>();
             switch (ForMethod.ToUpper())
@@ -1122,10 +1128,28 @@ namespace CRS.ADMIN.APPLICATION.Library
                         (item.Key.EncryptParameter(),  item.Value);
                     });
                     return response;
-               
+                //case "PREF":
+                //    dbResponse = _CommonBuss.GetDropDownValues("041", search1, search2, culture);
+                //    dbResponse.ForEach(item => {
+                //        response.Add
+                //        //(item.Key.EncryptParameter(), culture == "en" ? item.Value.Text: item.Value.JapaneseValue);
+                //        (item.Key.EncryptParameter(), item.Value);
+                //    });
+                //    return response;
+
+                //case "PREF":
+                //    dbResponse1 = _CommonBuss.GetDropDownLanguage("041", search1, search2, culture);
+                //    dbResponse1.ForEach(item => {
+                //        response.Add
+                //        //(item.Key.EncryptParameter(), culture == "en" ? item.Value.Text: item.Value.JapaneseValue);
+                //        (item.Key.EncryptParameter(), item.Value);
+                //    });
+                //    return dbResponse1;
                 default: return response;
             }
         }
+
+    
         public static string StaticEncryptData(this string textToEncrypt)
         {
             StringCipher cipher = new StringCipher("thisiscrsStaticEncryptDecryptData");

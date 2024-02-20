@@ -1,4 +1,5 @@
 ﻿using CRS.ADMIN.SHARED.PaginationManagement;
+using System.Collections.Generic;
 
 namespace CRS.ADMIN.SHARED.ClubManagement
 {
@@ -80,6 +81,12 @@ namespace CRS.ADMIN.SHARED.ClubManagement
         public string CompanyName { get; set; }
     }
 
+
+    public class PlanListCommon
+    {
+        public List<planIdentityDataCommon> PlanIdentityList { get; set; }
+       = new List<planIdentityDataCommon>();
+    }
     public class planIdentityDataCommon
     {
         public string English { get; set; }
@@ -87,6 +94,8 @@ namespace CRS.ADMIN.SHARED.ClubManagement
         public string japanese { get; set; }
         public string inputtype { get; set; }
         public string name { get; set; }
+        public string IdentityLabel { get; set; }
+        public string IdentityDescription { get; set; }
 
     }
 }

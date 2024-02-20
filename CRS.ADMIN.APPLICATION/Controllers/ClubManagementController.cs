@@ -1,4 +1,5 @@
-﻿using CRS.ADMIN.APPLICATION.Library;
+﻿using CRS.ADMIN.APPLICATION.Helper;
+using CRS.ADMIN.APPLICATION.Library;
 using CRS.ADMIN.APPLICATION.Models.ClubManagement;
 using CRS.ADMIN.APPLICATION.Models.HostManagement;
 using CRS.ADMIN.APPLICATION.Models.TagManagement;
@@ -18,6 +19,7 @@ using System.Net;
 using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Mvc;
+using static Google.Apis.Requests.BatchRequest;
 
 namespace CRS.ADMIN.APPLICATION.Controllers
 {
@@ -36,6 +38,8 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             string RenderId = "";
             var culture = Request.Cookies["culture"]?.Value;
             culture = string.IsNullOrEmpty(culture) ? "ja" : culture;
+            ViewBag.Pref = DDLHelper.LoadDropdownList("PREF") as Dictionary<string, string>;
+            ViewBag.PlansList = ApplicationUtilities.LoadDropdownList("CLUBPLANS") as Dictionary<string, string>;
             var response = new ClubManagementCommonModel();
             if (TempData.ContainsKey("ManageClubModel")) response.ManageClubModel = TempData["ManageClubModel"] as ManageClubModel;
             else response.ManageClubModel = new ManageClubModel();
@@ -49,14 +53,18 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 SearchFilter = !string.IsNullOrEmpty(SearchFilter) ? SearchFilter : null
             };
             var dbResponse = _BUSS.GetClubList(dbRequest);
-            List<planIdentityDataCommon> planlist = _BUSS.GetClubPlanIdentityList();
-            response.ManageClubModel.PlanList = planlist.MapObjects<planIdentityDataModel>();
-            response.ManageClubModel.PlanList.ForEach(x => x.IdentityLabel = (!string.IsNullOrEmpty(culture) && culture == "en") ? x.English : x.japanese);
+            List<PlanListCommon> planlist = _BUSS.GetClubPlanIdentityList(culture);
+            response.ManageClubModel.PlanDetailList = planlist.MapObjects<PlanList>();
+            List<planIdentityDataCommon> addablerow = _BUSS.GetClubPlanIdentityListAddable(culture);
+            response.ManageClubModel.PlanDetailList = planlist.MapObjects<PlanList>();
+            ////response.ManageClubModel.PlanDetailList.ForEach(x => x.IdentityLabel = (!string.IsNullOrEmpty(culture) && culture == "en") ? x.English : x.japanese);
             response.ClubListModel = dbResponse.MapObjects<ClubListModel>();
             foreach (var item in response.ClubListModel)
             {
                 item.AgentId = item.AgentId?.EncryptParameter();
             }
+
+
             ViewBag.PopUpRenderValue = !string.IsNullOrEmpty(RenderId) ? RenderId : null;
             ViewBag.LocationDDLList = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("LOCATIONDDL") as Dictionary<string, string>, null, "--- Select ---");
             ViewBag.BusinessTypeDDL = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("BUSINESSTYPEDDL") as Dictionary<string, string>, null, "--- Select ---");
@@ -95,9 +103,8 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                     return RedirectToAction("ClubList", "ClubManagement");
                 }
                 var dbResponse = _BUSS.GetClubDetails(id);
-                List<planIdentityDataCommon> planlist = _BUSS.GetClubPlanIdentityList();
-                model.PlanList = planlist.MapObjects<planIdentityDataModel>();
-                model.PlanList.ForEach(x => x.IdentityLabel = (!string.IsNullOrEmpty(culture) && culture == "en") ? x.English : x.japanese);
+                List<PlanListCommon> planlist = _BUSS.GetClubPlanIdentityList(culture);
+                model.PlanDetailList = planlist.MapObjects<PlanList>();
                 model = dbResponse.MapObject<ManageClubModel>();
                 model.AgentId = model.AgentId.EncryptParameter();
                 model.LocationId = !string.IsNullOrEmpty(model.LocationId) ? model.LocationId.EncryptParameter() : null;

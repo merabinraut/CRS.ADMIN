@@ -23,9 +23,13 @@ namespace CRS.ADMIN.BUSINESS.ClubManagement
         {
             return _REPO.GetClubList(Request);
         }
-        public List<planIdentityDataCommon> GetClubPlanIdentityList()
+        public List<PlanListCommon> GetClubPlanIdentityList(string culture)
         {
-            return _REPO.GetClubPlanIdentityList();
+            return _REPO.GetClubPlanIdentityList(culture);
+        }
+        public List<planIdentityDataCommon> GetClubPlanIdentityListAddable(string culture)
+        {
+            return _REPO.GetClubPlanIdentityListAddable(culture);
         }
 
         public CommonDbResponse ManageClub(ManageClubCommon Request)
