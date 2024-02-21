@@ -1,10 +1,14 @@
 ﻿using CRS.ADMIN.SHARED;
 using CRS.ADMIN.SHARED.ClubManagement;
 using CRS.ADMIN.SHARED.PaginationManagement;
+using DocumentFormat.OpenXml.EMMA;
+using DocumentFormat.OpenXml.Office.Word;
 using DocumentFormat.OpenXml.Office2016.Excel;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 
 namespace CRS.ADMIN.REPOSITORY.ClubManagement
@@ -149,13 +153,73 @@ namespace CRS.ADMIN.REPOSITORY.ClubManagement
                     InstagramLink = _DAO.ParseColumnValue(dbResponse, "InstagramLink").ToString(),
                     LocationId = _DAO.ParseColumnValue(dbResponse, "LocationId").ToString(),
                     CompanyName = _DAO.ParseColumnValue(dbResponse, "CompanyName").ToString(),
+                    
+                    WorkingHrTo = _DAO.ParseColumnValue(dbResponse, "ClubClosingTime").ToString(),
+                    WorkingHrFrom = _DAO.ParseColumnValue(dbResponse, "ClubOpeningTime").ToString(),
+                    PostalCode = _DAO.ParseColumnValue(dbResponse, "InputZip").ToString(),
+                    Drink = _DAO.ParseColumnValue(dbResponse, "VariousDrinksFee").ToString(),
+                    ExtensionFee = _DAO.ParseColumnValue(dbResponse, "OnSiteNominationFee").ToString(),
+                    CompanionFee = _DAO.ParseColumnValue(dbResponse, "AccompanyingFee").ToString(),
+                    DesignationFee = _DAO.ParseColumnValue(dbResponse, "NominationFee").ToString(),
+                    RegularFee = _DAO.ParseColumnValue(dbResponse, "RegularPrice").ToString(),
+                    BuildingRoomNo = _DAO.ParseColumnValue(dbResponse, "InputHouseNo").ToString(),
+                    Street = _DAO.ParseColumnValue(dbResponse, "InputStreet").ToString(),
+                    City = _DAO.ParseColumnValue(dbResponse, "InputCity").ToString(),
+                    Prefecture = _DAO.ParseColumnValue(dbResponse, "InputPrefecture").ToString(),
+                    Tax = _DAO.ParseColumnValue(dbResponse, "Tax").ToString(),
+                    LastEntryTime = _DAO.ParseColumnValue(dbResponse, "LastEntrySyokai").ToString(),
+                    LastOrderTime = _DAO.ParseColumnValue(dbResponse, "LastOrderTime").ToString(),
+                    Holiday = _DAO.ParseColumnValue(dbResponse, "Holiday").ToString(),
+                    GoogleMap = _DAO.ParseColumnValue(dbResponse, "LocationURL").ToString(),
                 };
             }
             return new ClubDetailCommon();
         }
 
+        //public CommonDbResponse ManageClub(ManageClubCommon Request)
+        //{
+        //    string SQL = "EXEC sproc_club_management ";
+        //    SQL += string.IsNullOrEmpty(Request.AgentId) ? "@Flag='rc'" : "@Flag='mc'";
+        //    if (string.IsNullOrEmpty(Request.AgentId))
+        //    {
+        //        SQL += ",@LoginId=N" + _DAO.FilterString(Request.LoginId);
+        //        SQL += ",@Email=" + _DAO.FilterString(Request.Email);
+        //        SQL += ",@MobileNumber=" + _DAO.FilterString(Request.MobileNumber);
+        //    }
+        //    else
+        //    {
+        //        SQL += ",@AgentId=" + _DAO.FilterString(Request.AgentId);
+        //    }
+        //    SQL += ",@FirstName=N" + _DAO.FilterString(Request.FirstName);
+        //    SQL += ",@MiddleName=N" + _DAO.FilterString(Request.MiddleName);
+        //    SQL += ",@LastName=N" + _DAO.FilterString(Request.LastName);
+        //    SQL += ",@ClubName1=N" + _DAO.FilterString(Request.ClubName1);
+        //    SQL += ",@ClubName2=N" + _DAO.FilterString(Request.ClubName2);
+        //    SQL += ",@BusinessType=" + _DAO.FilterString(Request.BusinessType);
+        //    SQL += ",@GroupName=N" + _DAO.FilterString(Request.GroupName);
+        //    SQL += ",@Description=N" + _DAO.FilterString(Request.Description);
+        //    SQL += ",@LocationURL=" + _DAO.FilterString(Request.LocationURL);
+        //    SQL += ",@Longitude=" + _DAO.FilterString(Request.Longitude);
+        //    SQL += ",@Latitude=" + _DAO.FilterString(Request.Latitude);
+        //    SQL += ",@Logo=" + _DAO.FilterString(Request.Logo);
+        //    SQL += ",@CoverPhoto=" + _DAO.FilterString(Request.CoverPhoto);
+        //    SQL += ",@BusinessCertificate=" + _DAO.FilterString(Request.BusinessCertificate);
+        //    SQL += ",@Gallery=" + _DAO.FilterString(Request.Gallery);
+        //    SQL += ",@WebsiteLink=" + _DAO.FilterString(Request.WebsiteLink);
+        //    SQL += ",@TiktokLink=" + _DAO.FilterString(Request.TiktokLink);
+        //    SQL += ",@TwitterLink=" + _DAO.FilterString(Request.TwitterLink);
+        //    SQL += ",@InstagramLink=" + _DAO.FilterString(Request.InstagramLink);
+        //    SQL += ",@ActionUser=" + _DAO.FilterString(Request.ActionUser);
+        //    SQL += ",@ActionIP=" + _DAO.FilterString(Request.ActionIP);
+        //    SQL += ",@ActionPlatform=" + _DAO.FilterString(Request.ActionPlatform);
+        //    SQL += ",@LocationId=" + _DAO.FilterString(Request.LocationId);
+        //    SQL += ",@CompanyName=N" + _DAO.FilterString(Request.CompanyName);
+        //    return _DAO.ParseCommonDbResponse(SQL);
+        //}
+
         public CommonDbResponse ManageClub(ManageClubCommon Request)
         {
+            var Response=new CommonDbResponse();    
             string SQL = "EXEC sproc_club_management ";
             SQL += string.IsNullOrEmpty(Request.AgentId) ? "@Flag='rc'" : "@Flag='mc'";
             if (string.IsNullOrEmpty(Request.AgentId))
@@ -176,7 +240,7 @@ namespace CRS.ADMIN.REPOSITORY.ClubManagement
             SQL += ",@BusinessType=" + _DAO.FilterString(Request.BusinessType);
             SQL += ",@GroupName=N" + _DAO.FilterString(Request.GroupName);
             SQL += ",@Description=N" + _DAO.FilterString(Request.Description);
-            SQL += ",@LocationURL=" + _DAO.FilterString(Request.LocationURL);
+            SQL += ",@LocationURL=" + _DAO.FilterString(Request.GoogleMap);
             SQL += ",@Longitude=" + _DAO.FilterString(Request.Longitude);
             SQL += ",@Latitude=" + _DAO.FilterString(Request.Latitude);
             SQL += ",@Logo=" + _DAO.FilterString(Request.Logo);
@@ -192,8 +256,107 @@ namespace CRS.ADMIN.REPOSITORY.ClubManagement
             SQL += ",@ActionPlatform=" + _DAO.FilterString(Request.ActionPlatform);
             SQL += ",@LocationId=" + _DAO.FilterString(Request.LocationId);
             SQL += ",@CompanyName=N" + _DAO.FilterString(Request.CompanyName);
-            return _DAO.ParseCommonDbResponse(SQL);
+            SQL += ",@ceoFullName=N" + _DAO.FilterString(Request.ceoFullName);
+            SQL += ",@Line=" + _DAO.FilterString(Request.Line);      
+            SQL += ",@ClubOpeningTime=" + _DAO.FilterString(Request.WorkingHrFrom);
+            SQL += ",@ClubClosingTime=" + _DAO.FilterString(Request.WorkingHrTo);
+            SQL += ",@Holiday=" + _DAO.FilterString(Request.Holiday);
+            SQL += ",@LastOrderTime=" + _DAO.FilterString(Request.LastOrderTime);
+            SQL += ",@LastEntryTime=" + _DAO.FilterString(Request.LastEntryTime);
+            SQL += ",@Tax=" + _DAO.FilterString(Request.Tax);
+            SQL += ",@PostalCode=" + _DAO.FilterString(Request.PostalCode);
+            SQL += ",@Prefecture=" + _DAO.FilterString(Request.Prefecture);
+            SQL += ",@City=N" + _DAO.FilterString(Request.City); 
+            SQL += ",@InputStreet=N" + _DAO.FilterString(Request.Street); 
+            SQL += ",@BuildingRoomNo=N" + _DAO.FilterString(Request.BuildingRoomNo);
+            SQL += ",@RegularFee=" + _DAO.FilterString(Request.RegularFee);
+            SQL += ",@DesignationFee=" + _DAO.FilterString(Request.DesignationFee); 
+            SQL += ",@CompanionFee=" + _DAO.FilterString(Request.CompanionFee); 
+            SQL += ",@ExtensionFee=" + _DAO.FilterString(Request.ExtensionFee);
+
+            SQL += ",@VariousDrinks=N" + _DAO.FilterString(Request.Drink);
+            Response= _DAO.ParseCommonDbResponse(SQL);
+
+            foreach (var planList in Request.PlanDetailList)
+            {
+                var i = 0;
+                foreach (var planIdentity in planList.PlanIdentityList)
+                {
+                    string SQL2 = "EXEC sproc_club_management ";
+                    SQL2 += "@Flag='icp'";
+                    SQL2 += ",@ClubPlanTypeId=" + _DAO.FilterString(planIdentity.StaticDataValue);
+                    SQL2 += ",@Description=N" + _DAO.FilterString(planIdentity.IdentityDescription);
+                    SQL2 += ",@PlanListId=" + _DAO.FilterString(Convert.ToString( i));
+                    SQL2 += ",@ClubId=" + _DAO.FilterString(Response.Extra1);
+                    SQL2 += ",@ActionPlatform=" + _DAO.FilterString(Request.ActionPlatform);
+                    SQL2 += ",@ActionUser=" + _DAO.FilterString(Request.ActionUser);
+                    _DAO.ParseCommonDbResponse(SQL2);
+                }
+                i++;
+            }
+
+            return Response;
+            // Create a DataTable to hold the PlanIdentity data
+            //DataTable table = new DataTable();
+
+            //table.Columns.Add("ClubPlanTypeId", typeof(long));
+            //table.Columns.Add("Description", typeof(string));
+            //table.Columns.Add("PlanListId", typeof(long));
+
+
+            //// Populate the DataTable with PlanIdentity data from the model
+            //foreach (var planList in Request.PlanDetailList)
+            //{
+            //    var i = 0;
+            //    foreach (var planIdentity in planList.PlanIdentityList)
+            //    {
+            //        table.Rows.Add(planIdentity.StaticDataValue, planIdentity.IdentityDescription, i);
+
+            //    }
+            //    i++;
+            //}
+
+            //using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["DBConnString"] != null ? ConfigurationManager.ConnectionStrings["DBConnString"].ConnectionString : ""))
+            //{
+            //    using (SqlCommand command = new SqlCommand(SQL, connection))
+            //    {
+            //        // Create and add parameters
+            //        // Your existing parameter creation code...
+
+            //        // Add the @ClubPlanDetails parameter
+            //        SqlParameter parameter = new SqlParameter("@ClubPlanDetails", SqlDbType.Structured);
+            //        parameter.Value = table;
+            //        parameter.TypeName = "ClubPlanDetailsType";
+            //        command.Parameters.Add(parameter);
+
+            //        // Add output parameter to capture message and code
+            //        SqlParameter returnMessageParam = new SqlParameter("@ReturnMessage", SqlDbType.NVarChar, 1000);
+            //        returnMessageParam.Direction = ParameterDirection.Output;
+            //        command.Parameters.Add(returnMessageParam);
+
+            //        SqlParameter returnCodeParam = new SqlParameter("@ReturnCode", SqlDbType.Int);
+            //        returnCodeParam.Direction = ParameterDirection.Output;
+            //        command.Parameters.Add(returnCodeParam);
+
+            //        // Open connection, execute the command, and capture output parameters
+            //        connection.Open();
+            //        command.ExecuteNonQuery();
+
+            //        // Retrieve message and code from output parameters
+            //        string returnMessage = returnMessageParam.Value != DBNull.Value ? returnMessageParam.Value.ToString() : "";
+            //        int Code = (int)returnCodeParam.Value;
+
+            //        // Construct CommonDbResponse object with message and code
+            //        CommonDbResponse response = new CommonDbResponse();
+            //        response.Message = returnMessage;
+            //        response.Extra1 =Convert.ToString( Code);
+
+            //        return response;
+            //    }
+            //}
+            //return _DAO.ParseCommonDbResponse(SQL);
         }
+
 
         public CommonDbResponse ManageClubStatus(string AgentId, string Status, Common Request)
         {

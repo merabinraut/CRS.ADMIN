@@ -188,7 +188,7 @@ namespace CRS.ADMIN.APPLICATION.Models.ClubManagement
         public string ExtensionFee { get; set; }
         public string Drink { get; set; }
         public string Pref { get; set; }
-        public object data { get; set; }
+
         public List<PlanList> PlanDetailList { get; set; } = new List<PlanList>();
         // public List<planIdentityDataModel> PlanList { get; set; }
     }
@@ -216,7 +216,10 @@ namespace CRS.ADMIN.APPLICATION.Models.ClubManagement
         public string name { get; set; } 
         public string IdentityLabel { get; set; }
         public string IdentityDescription { get; set; }
-     
+        public string PlanListId { get; set; }
+        public string Id { get; set; }
+        public string PlanId { get; set; }
+
     }
 
 }

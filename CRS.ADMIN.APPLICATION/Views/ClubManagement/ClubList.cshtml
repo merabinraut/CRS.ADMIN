@@ -524,7 +524,7 @@
                 submitButton.style.display = 'none';
                 nextButton.textContent = '@CRS.ADMIN.APPLICATION.Resources.Resource.Next';
                 nextButton.setAttribute('type', 'button');
-               
+
             }
         };
 
@@ -656,20 +656,19 @@
 
         }
         debugger;
-        var html = "";
-        var rowcouunt = 1;
-      for (var i = 0; i <@Model.ManageClubModel.PlanDetailList[0].PlanIdentityList.Count; i++) {
-   var PlanList = @Html.Raw(Json.Encode(Model.ManageClubModel.PlanDetailList[0]));
-
+        /*var rowcouunt = 1;*/
+             @*for (var i = 0; i <@Model.ManageClubModel.PlanDetailList[0].PlanIdentityList.Count; i++) {
+     var PlanList = @Html.Raw(Json.Encode(Model.ManageClubModel.PlanDetailList[0]));
       var id = rowcouunt +"_PlanList_IdentityDescription_" + i ;
       if (PlanList.PlanIdentityList[i].inputtype.toLowerCase() === "dropdown") {
           html += `<div class="input-field-common">
     <label class="block mb-[12px] text-sm font-medium text-secondary-text-2">
         ${PlanList.PlanIdentityList[i].IdentityLabel}
     </label>
-       <input type="hidden" name= "PlanList.PlanIdentityList[${i}].StaticDataValue" value=${PlanList.PlanIdentityList[i].StaticDataValue}  class='StaticDataValue'/>
-    <input type="hidden"name= "PlanList.PlanIdentityList[${i}].name" value=${PlanList.PlanIdentityList[i].name}   class='name'/>
-    <select id="large" name="PlanList.PlanIdentityList[${i}].IdentityDescription"   class="default_select select-common block w-full" style="width: 100%;">
+       <input type="hidden" name= "ManageClubModel.PlanDetailList[${rowcouunt}].PlanIdentityList[${i}].StaticDataValue" value=${PlanList.PlanIdentityList[i].StaticDataValue}  class='StaticDataValue'/>
+    <input type="hidden"name= "ManageClubModel.PlanDetailList[${rowcouunt}].PlanIdentityList[${i}].name" value=${PlanList.PlanIdentityList[i].name}   class='name'/>
+
+    <select id="large" name="ManageClubModel.PlanDetailList[${rowcouunt}].PlanIdentityList[${i}].IdentityDescription"   class="default_select select-common block w-full" style="width: 100%;">
          @foreach (KeyValuePair<string, string> item in ViewBag.PlansList as Dictionary<string, string>)
          {
 
@@ -687,9 +686,9 @@
     <label class="block mb-[12px] text-sm font-medium text-secondary-text-2">
         ${PlanList.PlanIdentityList[i].IdentityLabel}
     </label>
-    <input type="hidden" name= "PlanList.PlanIdentityList[${i}].StaticDataValue" value=${PlanList.PlanIdentityList[i].StaticDataValue}  class='StaticDataValue'  />
-  <input type="hidden" name= "PlanList.PlanIdentityList[${i}].name" value=${PlanList.PlanIdentityList[i].name}   class='name'/>
-    <input type="text" name="PlanList.PlanIdentityList[${i}].IdentityDescription"   class="w-full" autocomplete="off" maxlength="100" />
+    <input type="hidden" name= "ManageClubModel.PlanDetailList[${rowcouunt}].PlanIdentityList[${i}].StaticDataValue" value=${PlanList.PlanIdentityList[i].StaticDataValue}  class='StaticDataValue'  />
+  <input type="hidden" name= "ManageClubModel.PlanDetailList[${rowcouunt}].PlanIdentityList[${i}].name" value=${PlanList.PlanIdentityList[i].name}   class='name'/>
+    <input type="text" name="ManageClubModel.PlanDetailList[${rowcouunt}].PlanIdentityList[${i}].IdentityDescription"   class="w-full" autocomplete="off" maxlength="100" />
     <span class="error">${PlanList.PlanIdentityList[i].IdentityDescription}</span>
 </div>`;
       }
@@ -698,22 +697,70 @@
     <label for="instagram" class="block mb-[12px] text-sm font-medium text-secondary-100">
         ${PlanList.PlanIdentityList[i].IdentityLabel}
     </label>
-       <input type="hidden"   name= "PlanList.PlanIdentityList[${i}].StaticDataValue" value=${PlanList.PlanIdentityList[i].StaticDataValue}  class='StaticDataValue' />
-      <input type="hidden" name= "PlanList.PlanIdentityList[${i}].name" value=${PlanList.PlanIdentityList[i].name} class='name'  />
-    <input type="time" name="PlanList.PlanIdentityList[${i}].IdentityDescription"   class="w-full" placeholder="HH:MM" autocomplete="off" maxlength="30"  />
+       <input type="hidden"   name= "ManageClubModel.PlanDetailList[${rowcouunt}].PlanIdentityList[${i}].StaticDataValue" value=${PlanList.PlanIdentityList[i].StaticDataValue}  class='StaticDataValue' />
+      <input type="hidden" name= "ManageClubModel.PlanDetailList[${rowcouunt}].PlanIdentityList[${i}].name" value=${PlanList.PlanIdentityList[i].name} class='name'  />
+    <input type="time" name="ManageClubModel.PlanDetailList[${rowcouunt}].PlanIdentityList[${i}].IdentityDescription"   class="w-full" placeholder="HH:MM" autocomplete="off" maxlength="30"  />
     <span class="error">${PlanList.PlanIdentityList[i].IdentityDescription}</span>
   </div>`;
       }
-  }
+  }*@
 
 
 
 
 
-        function repeatContent() {
-            debugger;
-            rowcouunt++;
-            var originalContent = document.getElementById('container');
+     function repeatContent() {
+       debugger;
+       rowcouunt++;
+      var originalContent = document.getElementById('container');
+     var plansDivs = document.querySelectorAll('#container .plans');
+     var plansDivsCount = plansDivs.length;
+     var rowcouunt = parseInt( plansDivsCount)
+     var html = "";
+     for (var i = 0; i < @Model.ManageClubModel.PlanDetailList[0].PlanIdentityList.Count; i++) {
+    var PlanList = @Html.Raw(Json.Encode(Model.ManageClubModel.PlanDetailList[0]));
+    var id = rowcouunt + "_PlanList_IdentityDescription_" + i;
+    if (PlanList.PlanIdentityList[i].inputtype.toLowerCase() === "dropdown") {
+        html += "<div class='input-field-common'>";
+        html += "<label class='block mb-[12px] text-sm font-medium text-secondary-text-2'>";
+        html += PlanList.PlanIdentityList[i].IdentityLabel;
+        html += "</label>";
+        html += "<input type='hidden' name='ManageClubModelPlanDetailList[" + rowcouunt + "].PlanIdentityList[" + i + "].StaticDataValue' value='" + PlanList.PlanIdentityList[i].StaticDataValue + "' class='StaticDataValue' />";
+        html += "<input type='hidden' name='PlanDetailList[" + rowcouunt + "].PlanIdentityList[" + i + "].name' value='" + PlanList.PlanIdentityList[i].name + "' class='name' />";
+        html += "<select id='large' name='PlanDetailList[" + rowcouunt + "].PlanIdentityList[" + i + "].IdentityDescription' class='default_select select-common block w-full' style='width: 100%;'>";
+         @foreach (KeyValuePair<string, string> item in ViewBag.PlansList as Dictionary<string, string>)
+         {
+            <text>
+                html += "<option value='@item.Key'>@item.Value</option>";
+             </text>
+             
+         }
+        // Add options here...
+        html += "</select>";
+        html += "</div>";
+    } else if (PlanList.PlanIdentityList[i].inputtype.toLowerCase() === "textbox") {
+        html += "<div class='input-field-common'>";
+        html += "<label class='block mb-[12px] text-sm font-medium text-secondary-text-2'>";
+        html += PlanList.PlanIdentityList[i].IdentityLabel;
+        html += "</label>";
+        html += "<input type='hidden' name='PlanDetailList[" + rowcouunt + "].PlanIdentityList[" + i + "].StaticDataValue' value='" + PlanList.PlanIdentityList[i].StaticDataValue + "' class='StaticDataValue' />";
+        html += "<input type='hidden' name='PlanDetailList[" + rowcouunt + "].PlanIdentityList[" + i + "].name' value='" + PlanList.PlanIdentityList[i].name + "' class='name' />";
+        html += "<input type='text' name='PlanDetailList[" + rowcouunt + "].PlanIdentityList[" + i + "].IdentityDescription' class='w-full' autocomplete='off' maxlength='100' />";
+        html += "<span class='error'>" + PlanList.PlanIdentityList[i].IdentityDescription + "</span>";
+        html += "</div>";
+    } else if (PlanList.PlanIdentityList[i].inputtype.toLowerCase() === "time") {
+        html += "<div class='input-field-common'>";
+        html += "<label for='time' class='block mb-[12px] text-sm font-medium text-secondary-100'>";
+        html += PlanList.PlanIdentityList[i].IdentityLabel;
+        html += "</label>";
+        html += "<input type='hidden' name='PlanDetailList[" + rowcouunt + "].PlanIdentityList[" + i + "].StaticDataValue' value='" + PlanList.PlanIdentityList[i].StaticDataValue + "' class='StaticDataValue' />";
+        html += "<input type='hidden' name='PlanDetailList[" + rowcouunt + "].PlanIdentityList[" + i + "].name' value='" + PlanList.PlanIdentityList[i].name + "' class='name' />";
+        html += "<input type='time' name='PlanDetailList[" + rowcouunt + "].PlanIdentityList[" + i + "].IdentityDescription' class='w-full' placeholder='HH:MM' autocomplete='off' maxlength='30' />";
+        html += "<span class='error'>" + PlanList.PlanIdentityList[i].IdentityDescription + "</span>";
+        html += "</div>";
+    }
+}
+
 
             var htmlToInsert =
 

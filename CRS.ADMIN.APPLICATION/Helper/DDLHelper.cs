@@ -33,6 +33,10 @@ namespace CRS.ADMIN.APPLICATION.Helper
                     dbResponse = _CommonBuss.GetDropDownLanguage("3", search1, search2,"");
                     dbResponse.ForEach(item => { response.Add(item.StaticValue.EncryptParameter(), GetLocalizedLabel(item, culture)); });
                     return response;
+                case "Holiday":
+                    dbResponse = _CommonBuss.GetDropDownLanguage("4", search1, search2,"");
+                    dbResponse.ForEach(item => { response.Add(item.StaticValue.EncryptParameter(), GetLocalizedLabel(item, culture)); });
+                    return response;
 
                 default:
                     return response;

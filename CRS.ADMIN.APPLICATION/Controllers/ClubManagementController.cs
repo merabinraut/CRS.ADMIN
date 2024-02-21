@@ -38,8 +38,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             string RenderId = "";
             var culture = Request.Cookies["culture"]?.Value;
             culture = string.IsNullOrEmpty(culture) ? "ja" : culture;
-            ViewBag.Pref = DDLHelper.LoadDropdownList("PREF") as Dictionary<string, string>;
-            ViewBag.PlansList = ApplicationUtilities.LoadDropdownList("CLUBPLANS") as Dictionary<string, string>;
+           
             var response = new ClubManagementCommonModel();
             if (TempData.ContainsKey("ManageClubModel")) response.ManageClubModel = TempData["ManageClubModel"] as ManageClubModel;
             else response.ManageClubModel = new ManageClubModel();
@@ -55,16 +54,26 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             var dbResponse = _BUSS.GetClubList(dbRequest);
             List<PlanListCommon> planlist = _BUSS.GetClubPlanIdentityList(culture);
             response.ManageClubModel.PlanDetailList = planlist.MapObjects<PlanList>();
-            List<planIdentityDataCommon> addablerow = _BUSS.GetClubPlanIdentityListAddable(culture);
-            response.ManageClubModel.PlanDetailList = planlist.MapObjects<PlanList>();
+            response.ManageClubModel.PlanDetailList.ForEach(planList =>
+            {
+                planList.PlanIdentityList.ForEach(planIdentity =>
+                {
+                    // Encrypt specific properties
+                    planIdentity.StaticDataValue = planIdentity.StaticDataValue.EncryptParameter(); // Call your encryption method here
+                });
+            });
+            //List<planIdentityDataCommon> addablerow = _BUSS.GetClubPlanIdentityListAddable(culture);
+            //response.ManageClubModel.PlanDetailList = planlist.MapObjects<PlanList>();
+
             ////response.ManageClubModel.PlanDetailList.ForEach(x => x.IdentityLabel = (!string.IsNullOrEmpty(culture) && culture == "en") ? x.English : x.japanese);
             response.ClubListModel = dbResponse.MapObjects<ClubListModel>();
             foreach (var item in response.ClubListModel)
             {
                 item.AgentId = item.AgentId?.EncryptParameter();
             }
-
-
+            ViewBag.Pref = DDLHelper.LoadDropdownList("PREF") as Dictionary<string, string>;
+            ViewBag.Holiday = DDLHelper.LoadDropdownList("Holiday") as Dictionary<string, string>;
+            ViewBag.PlansList = ApplicationUtilities.LoadDropdownList("CLUBPLANS") as Dictionary<string, string>;
             ViewBag.PopUpRenderValue = !string.IsNullOrEmpty(RenderId) ? RenderId : null;
             ViewBag.LocationDDLList = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("LOCATIONDDL") as Dictionary<string, string>, null, "--- Select ---");
             ViewBag.BusinessTypeDDL = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("BUSINESSTYPEDDL") as Dictionary<string, string>, null, "--- Select ---");
@@ -265,6 +274,15 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 }
                 commonModel.LocationId = LocationDDL?.DecryptParameter();
                 commonModel.BusinessType = BusinessTypeDDL?.DecryptParameter();
+                commonModel.PlanDetailList.ForEach(planList =>
+                {
+                    planList.PlanIdentityList.ForEach(planIdentity =>
+                    {
+                        // Encrypt specific properties
+                        planIdentity.StaticDataValue = planIdentity.StaticDataValue.DecryptParameter(); // Call your encryption method here
+                        planIdentity.IdentityDescription = planIdentity.name.ToLower()=="plan" ? planIdentity.IdentityDescription.DecryptParameter() : planIdentity.IdentityDescription; 
+                    });
+                });
                 var dbResponse = _BUSS.ManageClub(commonModel);
                 if (dbResponse != null && dbResponse.Code == 0)
                 {

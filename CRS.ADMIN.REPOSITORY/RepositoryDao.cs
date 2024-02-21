@@ -11,6 +11,7 @@
     using System.Linq;
     using System.Reflection;
     using CRS.ADMIN.SHARED;
+    using System.Text;
 
     public class RepositoryDao
     {
@@ -500,6 +501,26 @@
                 str = "'" + str + "'";
 
             return str.TrimEnd().TrimStart();
+        }
+        public string FilterTable(DataTable dataTable)
+        {
+            StringBuilder sb = new StringBuilder();
+
+            foreach (DataRow row in dataTable.Rows)
+            {
+                foreach (var item in row.ItemArray)
+                {
+                    var str = FilterQuote(item.ToString());
+                    if (str.ToLower() != "null")
+                        sb.Append("'" + str + "',");
+                }
+            }
+
+            // Remove the trailing comma
+            if (sb.Length > 0)
+                sb.Length--;
+
+            return sb.ToString();
         }
         public object ConvertType<T>(object source)
         {
