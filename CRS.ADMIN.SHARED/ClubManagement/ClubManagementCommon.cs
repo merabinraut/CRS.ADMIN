@@ -69,6 +69,11 @@ namespace CRS.ADMIN.SHARED.ClubManagement
         public string ExtensionFee { get; set; }
         public string Drink { get; set; }
         public string Pref { get; set; }
+        public string LandLineNumber { get; set; } 
+        public string Line { get; set; }
+        public string ceoFullName { get; set; }
+        
+        public List<PlanListCommon> PlanDetailList { get; set; } = new List<PlanListCommon>();
     }
 
     public class ManageClubCommon : Common
@@ -102,6 +107,7 @@ namespace CRS.ADMIN.SHARED.ClubManagement
         public string Line { get; set; }
 
         public string GoogleMap { get; set; }
+        public string LandLineNumber { get; set; }
         public string WorkingHrFrom { get; set; }
         public string WorkingHrTo { get; set; }
         public string Holiday { get; set; }

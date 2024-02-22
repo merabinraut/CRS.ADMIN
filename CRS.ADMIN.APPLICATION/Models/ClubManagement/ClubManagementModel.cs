@@ -82,6 +82,8 @@ namespace CRS.ADMIN.APPLICATION.Models.ClubManagement
         public string TwitterLink { get; set; }
         [Display(Name = "Instagram")]
         public string InstagramLink { get; set; }
+
+
     }
 
     public class ManageClubModel
@@ -92,26 +94,28 @@ namespace CRS.ADMIN.APPLICATION.Models.ClubManagement
         [MinLength(3, ErrorMessage = "Minimum 3 characters required")]
         [MaxLength(16, ErrorMessage = "Maximum 16 characters allowed")]
         public string LoginId { get; set; }
-        [DisplayName("First Name")]
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
-        [MaxLength(50, ErrorMessage = "Maximum 50 characters allowed")]
-        public string FirstName { get; set; }
-        [DisplayName("Middle Name")]
-        [MaxLength(50, ErrorMessage = "Maximum 50 characters allowed")]
-        public string MiddleName { get; set; }
-        [DisplayName("Last Name")]
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
-        [MaxLength(50, ErrorMessage = "Maximum 50 characters allowed")]
-        public string LastName { get; set; }
+        //[DisplayName("First Name")]
+        //[Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
+        //[MaxLength(50, ErrorMessage = "Maximum 50 characters allowed")]
+        //public string FirstName { get; set; }
+        //[DisplayName("Middle Name")]
+        //[MaxLength(50, ErrorMessage = "Maximum 50 characters allowed")]
+        //public string MiddleName { get; set; }
+        //[DisplayName("Last Name")]
+        //[Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
+        //[MaxLength(50, ErrorMessage = "Maximum 50 characters allowed")]
+        //public string LastName { get; set; }
         [DisplayName("Email Address")]
         [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
         [MaxLength(75, ErrorMessage = "Maximum 75 characters allowed")]
         public string Email { get; set; }
         [DisplayName("Contact Number")]
         [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
+        [RegularExpression("^[0-9]{11}$", ErrorMessage = "The field must be a 11-digit number.")]
         public string MobileNumber { get; set; }    
         [DisplayName("Landline Number")]
         [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
+        [RegularExpression("^[0-9]{10}$", ErrorMessage = "The field must be a 10-digit number.")]
         public string LandlineNumber { get; set; }
         [DisplayName("Club Name (English)")]
         [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
@@ -129,7 +133,7 @@ namespace CRS.ADMIN.APPLICATION.Models.ClubManagement
         [MaxLength(50, ErrorMessage = "Maximum 50 characters allowed")]
         public string GroupName { get; set; }
         [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
-        [MaxLength(300, ErrorMessage = "Maximum 50 characters allowed")]
+        [MaxLength(200, ErrorMessage = "Maximum 200 characters allowed")]
         public string Description { get; set; }
         [DisplayName("Location")]
         [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
@@ -167,26 +171,45 @@ namespace CRS.ADMIN.APPLICATION.Models.ClubManagement
         public string CompanyName { get; set; }
         [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
         public string ceoFullName { get; set; }
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
+       
         public string Line { get; set; }
         [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
         public string GoogleMap { get; set; }
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
         public string WorkingHrFrom { get; set; }
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
         public string WorkingHrTo { get; set; }
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
         public string Holiday { get; set; }
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
         public string LastOrderTime { get; set; }
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
         public string LastEntryTime { get; set; }
-        public string Tax { get; set; } 
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
+        [RegularExpression("^[0-9]{3}$", ErrorMessage = "The field must be a 3-digit number.")]
+        public string Tax { get; set; }
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
+        [RegularExpression(@"^[0-9-]{1,7}$", ErrorMessage = "The field contain numbers and dashes only, with a maximum length of 7 characters.")]
         public string PostalCode { get; set; }
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
         public string Prefecture { get; set; }
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
         public string City { get; set; }
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
         public string Street { get; set; }
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
         public string BuildingRoomNo { get; set; }
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
         public string RegularFee { get; set; }
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
         public string DesignationFee { get; set; }
-        public string CompanionFee { get; set; } 
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
+        public string CompanionFee { get; set; }
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
         public string ExtensionFee { get; set; }
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
         public string Drink { get; set; }
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
         public string Pref { get; set; }
 
         public List<PlanList> PlanDetailList { get; set; } = new List<PlanList>();
@@ -210,11 +233,13 @@ namespace CRS.ADMIN.APPLICATION.Models.ClubManagement
     public class planIdentityDataModel
     {
         public string English { get; set; }
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
         public string StaticDataValue { get; set; }
         public string japanese { get; set; }
         public string inputtype { get; set; }
         public string name { get; set; } 
         public string IdentityLabel { get; set; }
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
         public string IdentityDescription { get; set; }
         public string PlanListId { get; set; }
         public string Id { get; set; }

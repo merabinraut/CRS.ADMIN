@@ -2,6 +2,7 @@
 using CRS.ADMIN.SHARED;
 using CRS.ADMIN.SHARED.ClubManagement;
 using CRS.ADMIN.SHARED.PaginationManagement;
+using System;
 using System.Collections.Generic;
 
 namespace CRS.ADMIN.BUSINESS.ClubManagement
@@ -14,9 +15,9 @@ namespace CRS.ADMIN.BUSINESS.ClubManagement
             _REPO = REPO;
         }
 
-        public ClubDetailCommon GetClubDetails(string AgentId)
+        public ClubDetailCommon GetClubDetails(string AgentId, String culture = "")
         {
-            return _REPO.GetClubDetails(AgentId);
+            return _REPO.GetClubDetails(AgentId,culture);
         }
 
         public List<ClubListCommon> GetClubList(PaginationFilterCommon Request)

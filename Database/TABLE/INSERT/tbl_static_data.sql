@@ -494,7 +494,7 @@ VALUES
 (  38, N'Plan', '1', 'Plan', N'プラン', NULL, NULL, NULL, 'A', 'kiran.acharya', N'2024-02-12T15:41:15.33' ),
 (  38, N'Last order Time', '2', 'Last orderTime', N'最終入店時間', NULL, NULL, NULL, 'A', 'kiran.acharya', N'2024-02-12T15:41:15.33' ),
 (  38, N'Last Entry Time', '3', 'Last Entry Time', N'ラストオーダー時間', NULL, NULL, NULL, 'A', 'kiran.acharya', N'2024-02-12T15:41:15.33' ),
-(  38, N'Maximum Reservation', '4', 'Maximum Reservation', N'予約最大人数', NULL, NULL, NULL, 'A', 'kiran.acharya', N'2024-02-12T15:41:15.33' )
+(  38, N'Maximum No Of People', '4', 'Maximum No Of People', N'最大予約人数', NULL, NULL, NULL, 'A', 'kiran.acharya', N'2024-02-12T15:41:15.33' )
 
 INSERT INTO tbl_static_data ( [StaticDataType], [StaticDataLabel], [StaticDataValue], [StaticDataDescription], [AdditionalValue1], [AdditionalValue2], [AdditionalValue3], [AdditionalValue4], [Status], [ActionUser], [ActionDate])
 VALUES

@@ -44,6 +44,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             else response.ManageClubModel = new ManageClubModel();
             if (TempData.ContainsKey("RenderId")) RenderId = TempData["RenderId"].ToString();
             if (TempData.ContainsKey("ManageTagModel")) response.ManageTag = TempData["ManageTagModel"] as ManageTag;
+            
             else response.ManageTag = new ManageTag();
             PaginationFilterCommon dbRequest = new PaginationFilterCommon()
             {
@@ -52,20 +53,26 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 SearchFilter = !string.IsNullOrEmpty(SearchFilter) ? SearchFilter : null
             };
             var dbResponse = _BUSS.GetClubList(dbRequest);
-            List<PlanListCommon> planlist = _BUSS.GetClubPlanIdentityList(culture);
-            response.ManageClubModel.PlanDetailList = planlist.MapObjects<PlanList>();
-            response.ManageClubModel.PlanDetailList.ForEach(planList =>
-            {
-                planList.PlanIdentityList.ForEach(planIdentity =>
-                {
-                    // Encrypt specific properties
-                    planIdentity.StaticDataValue = planIdentity.StaticDataValue.EncryptParameter(); // Call your encryption method here
-                });
-            });
-            //List<planIdentityDataCommon> addablerow = _BUSS.GetClubPlanIdentityListAddable(culture);
-            //response.ManageClubModel.PlanDetailList = planlist.MapObjects<PlanList>();
 
-            ////response.ManageClubModel.PlanDetailList.ForEach(x => x.IdentityLabel = (!string.IsNullOrEmpty(culture) && culture == "en") ? x.English : x.japanese);
+
+            if (TempData.ContainsKey("EditPlan")) response.ManageClubModel = TempData["EditPlan"] as ManageClubModel;
+            else
+            {
+                List<PlanListCommon> planlist = _BUSS.GetClubPlanIdentityList(culture);
+                response.ManageClubModel.PlanDetailList = planlist.MapObjects<PlanList>();
+                response.ManageClubModel.PlanDetailList.ForEach(planList =>
+                {
+                    planList.PlanIdentityList.ForEach(planIdentity =>
+                    {
+                        // Encrypt specific properties
+                        planIdentity.StaticDataValue = planIdentity.StaticDataValue.EncryptParameter(); // Call your encryption method here
+                    });
+                });
+            }
+
+
+           
+         
             response.ClubListModel = dbResponse.MapObjects<ClubListModel>();
             foreach (var item in response.ClubListModel)
             {
@@ -84,6 +91,8 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             ViewBag.ClubStoreDDLKey = response.ManageTag.Tag5StoreName;
             ViewBag.ClubCategoryDDLKey = response.ManageTag.Tag3CategoryName;
             ViewBag.LocationIdKey = response.ManageClubModel.LocationId ?? response.ManageTag.Tag1Location;
+            ViewBag.PrefIdKey =!string.IsNullOrEmpty( response.ManageClubModel.Prefecture) ? ViewBag.Pref[response.ManageClubModel.Prefecture]:null;
+            ViewBag.HolidayIdKey = !string.IsNullOrEmpty(response.ManageClubModel.Holiday )? ViewBag.Holiday[response.ManageClubModel.Holiday]:null;
             ViewBag.BusinessTypeKey = response.ManageClubModel.BusinessType;
             ViewBag.StartIndex = StartIndex;
             ViewBag.PageSize = PageSize;
@@ -111,16 +120,35 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                     });
                     return RedirectToAction("ClubList", "ClubManagement");
                 }
-                var dbResponse = _BUSS.GetClubDetails(id);
-                List<PlanListCommon> planlist = _BUSS.GetClubPlanIdentityList(culture);
-                model.PlanDetailList = planlist.MapObjects<PlanList>();
+                var dbResponse = _BUSS.GetClubDetails(id,culture);
+                //List<PlanListCommon> planlist = _BUSS.GetClubPlanIdentityList(culture);
+                //model.PlanDetailList = planlist.MapObjects<PlanList>();
+              
+               
                 model = dbResponse.MapObject<ManageClubModel>();
+              
+                ViewBag.PlansList = ApplicationUtilities.LoadDropdownList("CLUBPLANS") as Dictionary<string, string>;
+                model.PlanDetailList.ForEach(planList =>
+                {
+                    planList.PlanIdentityList.ForEach(planIdentity =>
+                    {
+                        // Encrypt specific properties
+                        planIdentity.StaticDataValue = planIdentity.StaticDataValue.EncryptParameter(); // Call your encryption method here
+                                      
+                        planIdentity.IdentityDescription = planIdentity.name.ToLower()=="plan"?  planIdentity.IdentityDescription.EncryptParameter(): planIdentity.IdentityDescription; // Call your encryption method here
+                        planIdentity.PlanId = planIdentity.name.ToLower() == "plan" ? ViewBag.PlansList[planIdentity.IdentityDescription] : planIdentity.IdentityDescription;  // Call your encryption method here
+
+                    });
+                });
                 model.AgentId = model.AgentId.EncryptParameter();
                 model.LocationId = !string.IsNullOrEmpty(model.LocationId) ? model.LocationId.EncryptParameter() : null;
                 model.BusinessType = !string.IsNullOrEmpty(model.BusinessType) ? model.BusinessType.EncryptParameter() : null;
+                model.Prefecture = !string.IsNullOrEmpty(model.Prefecture) ? model.Prefecture.EncryptParameter() : null;
+                model.Holiday = !string.IsNullOrEmpty(model.Holiday) ? model.Holiday.EncryptParameter() : null;
             }
             TempData["ManageClubModel"] = model;
             TempData["RenderId"] = "Manage";
+            TempData["EditPlan"] = model;
             return RedirectToAction("ClubList", "ClubManagement");
         }
 
@@ -274,6 +302,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 }
                 commonModel.LocationId = LocationDDL?.DecryptParameter();
                 commonModel.BusinessType = BusinessTypeDDL?.DecryptParameter();
+                commonModel.Holiday = commonModel.Holiday?.DecryptParameter();
                 commonModel.PlanDetailList.ForEach(planList =>
                 {
                     planList.PlanIdentityList.ForEach(planIdentity =>
@@ -337,8 +366,10 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 this.ShowPopup(1, "Invalid club details");
                 return RedirectToAction("ClubList");
             }
-            var dbResponse = _BUSS.GetClubDetails(id);
-            response = dbResponse.MapObject<ClubDetailModel>();
+            var culture = Request.Cookies["culture"]?.Value;
+            culture = string.IsNullOrEmpty(culture) ? "ja" : culture;
+            var dbResponse = _BUSS.GetClubDetails(id,culture);
+           
             response.AgentId = null;
             response.UserId = null;
             return View(response);
