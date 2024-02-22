@@ -382,6 +382,46 @@
             }
         });
     </script>
+<script>
+    const checkbox5 = document.getElementById('tag5');
+    const tagInput5 = document.getElementById('tagInput5');
+
+    checkbox5.addEventListener('change', function () {
+        if (this.checked) {
+            tagInput5.style.display = 'block';
+            $('#Tag5Status').val('A');
+        } else {
+            tagInput5.style.display = 'none';
+            $('#Tag5Status').val('B');
+        }
+    });
+</script>
+<script>
+    $(document).ready(function () {
+        $('.availability-checkbox').change(function () {
+            var checkedValuesContainer = $('#checkedValuesContainer');
+            checkedValuesContainer.empty();
+            $('.availability-checkbox').each(function () {
+                var id = $(this).attr('id');
+                var staticValue = id.split('_').pop();
+                if ($(this).is(':checked')) {
+                    var inputField = $('<input>')
+                        .attr('type', 'hidden')
+                        .attr('name', 'checkedValues')
+                        .val(staticValue + ',A'); 
+                    checkedValuesContainer.append(inputField);
+                } else {
+                    var inputField = $('<input>')
+                        .attr('type', 'hidden')
+                        .attr('name', 'checkedValues')
+                        .val(staticValue + ',B'); 
+                    checkedValuesContainer.append(inputField);
+                }
+            });
+        });
+    });
+
+</script>
     <script>
         // Get references to the file input and file name display element
         const fileInput = document.getElementById("file_input");
@@ -401,7 +441,6 @@
     </script>
     <script>
         $(document).ready(function () {
-            debugger;
             $('select').select2({
                 minimumResultsForSearch: Infinity
             });

@@ -1,9 +1,4 @@
-USE [CRS]
-GO
-/****** Object:  StoredProcedure [dbo].[sproc_dropdown_management_v2]    Script Date: 2/20/2024 2:30:59 PM ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
+USE CRS;
 GO
 
 ALTER PROC [dbo].[sproc_dropdown_management_v2]
@@ -41,3 +36,4 @@ BEGIN
         
     END;
 END;
+GO

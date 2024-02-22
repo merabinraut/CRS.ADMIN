@@ -286,7 +286,6 @@
     <script>
 
         $(document).ready(function () {
-            debugger;
             var PopUpRenderValue = '@ViewBag.PopUpRenderValue';
            if (PopUpRenderValue != null && PopUpRenderValue != "" && PopUpRenderValue == "Manage") {
              var element = document.getElementById('add-new-host-club');
@@ -297,7 +296,6 @@
 
 
         document.addEventListener('DOMContentLoaded', function () {
-            debugger;
                 const page_size = @ViewBag.PageSize;
                 const total_data = @ViewBag.TotalData;
                 const start_index_val = @ViewBag.StartIndex;
@@ -340,7 +338,6 @@
             location.reload();
         }
         function ManageEventGetDetailsFunction(i, j) {
-            debugger;
             window.location.href = '/ClubManagement/ManageEvent?AgentId=' + i +'&EventId=' +j;
         }
         function DeleteEventGetDetailsFunction(i,j) {

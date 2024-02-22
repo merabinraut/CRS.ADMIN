@@ -7,6 +7,11 @@ using System.Web;
 
 namespace CRS.ADMIN.APPLICATION.Models.TagManagement
 {
+    public class CommonTagModel
+    {
+        public ManageTag GetTagDetail { get; set; }
+        public List<AvailabilityTagModel> GetAvailabilityTagList { get; set; }
+    }
     public class TagManagementModel
     {
         public string Sno { get; set; }
@@ -38,7 +43,7 @@ namespace CRS.ADMIN.APPLICATION.Models.TagManagement
         public string Tag1Location { get; set; }
         [DisplayName("Status")]
         public string Tag1Status { get; set; }
-        [DisplayName("Rank Name")]
+        //[DisplayName("Rank Name")]
         public string Tag2RankName { get; set; }
         [DisplayName("Rank Description")]
         public string Tag2RankDescription { get; set; }
@@ -62,10 +67,28 @@ namespace CRS.ADMIN.APPLICATION.Models.TagManagement
         public string Tag5StoreDescription { get; set; }
         [DisplayName("Status")]
         public string Tag5Status { get; set; }
+        public List<AvailabilityTagModel> GetAvailabilityTagModel { get; set; }
+        //public string StaticType { get; set; }
+        //public string StaticLabel { get; set; }
+        //public string StaticVaue { get; set; }
+        //public string StaticDescription { get; set; }
+        //public string StaticStatus { get; set; }
+        //public string StaticLabelJapanese { get; set; }
     }
     public class LocationDDL
     {
         public string LocationID { get; set; }
         public string LocationName { get; set; }
+    }
+    public class AvailabilityTagModel
+    {
+        #region "Club Availability"
+        public string StaticType { get; set; }
+        public string StaticLabel { get; set; }
+        public string StaticVaue { get; set; }
+        public string StaticDescription { get; set; }
+        public string StaticStatus { get; set; }
+        public string StaticLabelJapanese { get; set; }
+        #endregion
     }
 }

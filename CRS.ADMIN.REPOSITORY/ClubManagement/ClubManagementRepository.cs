@@ -1,9 +1,7 @@
 ﻿using CRS.ADMIN.SHARED;
 using CRS.ADMIN.SHARED.ClubManagement;
 using CRS.ADMIN.SHARED.PaginationManagement;
-using DocumentFormat.OpenXml.EMMA;
-using DocumentFormat.OpenXml.Office.Word;
-using DocumentFormat.OpenXml.Office2016.Excel;
+using DocumentFormat.OpenXml.Office2010.Excel;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -589,6 +587,53 @@ namespace CRS.ADMIN.REPOSITORY.ClubManagement
             }
             return new ManageTagCommon();
         }
+        public List<AvailabilityTagModelCommon> GetAvailabilityList(string cId)
+        {
+            List<AvailabilityTagModelCommon> responseInfo = new List<AvailabilityTagModelCommon>();
+            string sp_name = "exec sproc_ap_club_tag_management @Flag='gtl'";
+            sp_name += ",@ClubId=" + _DAO.FilterString(cId);
+            var dbResponseInfo = _DAO.ExecuteDataTable(sp_name);
+            if (dbResponseInfo != null)
+            {
+                foreach(DataRow data in dbResponseInfo.Rows)
+                {
+                    responseInfo.Add(new AvailabilityTagModelCommon
+                    {
+                        StaticType = data["StaticType"].ToString(),
+                        StaticLabel = data["StaticLabel"].ToString(),
+                        StaticVaue = data["StaticValue"].ToString(),
+                        StaticDescription = data["StaticDescription"].ToString(),
+                        StaticStatus = data["StaticStatus"].ToString(),
+                        StaticLabelJapanese = data["StaticLabelJapanese"].ToString(),
+                    });
+                }
+            }
+            return responseInfo;
+        }
+        public CommonDbResponse ManageClubAvailability(AvailabilityTagModelCommon request, ManageTagCommon dbRequest, string[] updatedValues)
+        {
+            string originalSpName = "EXEC sproc_ap_club_tag_management @Flag='mt'";
+            var response = _DAO.ParseCommonDbResponse(originalSpName);
+
+            foreach (var item in updatedValues)
+            {
+                string sp_name = originalSpName;
+                string[] parts = item.Split(',');
+                string tagid = parts[0];
+                string tagstatus = parts[1];
+                sp_name += ", @ClubId=" + _DAO.FilterString(dbRequest.ClubId);
+                sp_name += ", @TagType=" + _DAO.FilterString(request.StaticType);
+                sp_name += ", @TagId=" + _DAO.FilterString(tagid);
+                sp_name += ", @TagDescription=" + _DAO.FilterString("");
+                sp_name += ", @TagStatus=" + _DAO.FilterString(tagstatus);
+                sp_name += ", @ActionUser=" + _DAO.FilterString(dbRequest.ActionUser);
+                sp_name += ", @ActionIP=" + _DAO.FilterString(dbRequest.ActionIP);
+                sp_name += ", @ActionPlatform=" + _DAO.FilterString(dbRequest.ActionPlatform);
+                _DAO.ParseCommonDbResponse(sp_name);
+            }
+            return response;
+        }
+
         #endregion
 
         #region Manage gallery
@@ -629,6 +674,9 @@ namespace CRS.ADMIN.REPOSITORY.ClubManagement
             SQL += ",@ActionIP=" + _DAO.FilterString(Request.ActionIP);
             return _DAO.ParseCommonDbResponse(SQL);
         }
+
+        
+
         #endregion
 
         #region Event Management

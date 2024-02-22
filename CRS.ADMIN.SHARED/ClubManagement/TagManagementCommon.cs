@@ -19,11 +19,28 @@
         public string Tag5StoreName { get; set; }
         public string Tag5StoreDescription { get; set; }
         public string Tag5Status { get; set; }
+        public string StaticType { get; set; }
+        public string StaticLabel { get; set; }
+        public string StaticVaue { get; set; }
+        public string StaticDescription { get; set; }
+        public string StaticStatus { get; set; }
+        public string StaticLabelJapanese { get; set; }
     }
     public class LocationListCommon : Common
     {
         public string LocationID { get; set; }
         public string LocationName { get; set; }
 
+    }
+    public class AvailabilityTagModelCommon
+    {
+        #region "Club Availability"
+        public string StaticType { get; set; }
+        public string StaticLabel { get; set; }
+        public string StaticVaue { get; set; }
+        public string StaticDescription { get; set; }
+        public string StaticStatus { get; set; }
+        public string StaticLabelJapanese { get; set; }
+        #endregion
     }
 }
