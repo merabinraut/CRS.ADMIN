@@ -1097,6 +1097,10 @@
     <value>プラン</value>
     <comment>Payment Management</comment>
   </data>
+  <data name="Plan Fee" xml:space="preserve">
+    <value>プラン金</value>
+    <comment>Club Management</comment>
+  </data>
   <data name="Plan list" xml:space="preserve">
     <value>プランリスト</value>
     <comment>ClubManagement</comment>

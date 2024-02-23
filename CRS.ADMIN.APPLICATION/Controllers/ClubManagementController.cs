@@ -63,6 +63,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             {
                 List<PlanListCommon> planlist = _BUSS.GetClubPlanIdentityList(culture);
                 response.ManageClubModel.PlanDetailList = planlist.MapObjects<PlanList>();
+
                 response.ManageClubModel.PlanDetailList.ForEach(planList =>
                 {
                     planList.PlanIdentityList.ForEach(planIdentity =>
@@ -131,11 +132,14 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 model = dbResponse.MapObject<ManageClubModel>();
               
                 ViewBag.PlansList = ApplicationUtilities.LoadDropdownList("CLUBPLANS") as Dictionary<string, string>;
+                
                 model.PlanDetailList.ForEach(planList =>
                 {
                     planList.PlanIdentityList.ForEach(planIdentity =>
                     {
                         // Encrypt specific properties
+
+                        
                         planIdentity.StaticDataValue = planIdentity.StaticDataValue.EncryptParameter(); // Call your encryption method here
                                       
                         planIdentity.IdentityDescription = planIdentity.name.ToLower()=="plan"?  planIdentity.IdentityDescription.EncryptParameter(): planIdentity.IdentityDescription; // Call your encryption method here
@@ -143,6 +147,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
 
                     });
                 });
+               
                 model.AgentId = model.AgentId.EncryptParameter();
                 model.LocationId = !string.IsNullOrEmpty(model.LocationId) ? model.LocationId.EncryptParameter() : null;
                 model.BusinessType = !string.IsNullOrEmpty(model.BusinessType) ? model.BusinessType.EncryptParameter() : null;
@@ -306,15 +311,33 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 commonModel.LocationId = LocationDDL?.DecryptParameter();
                 commonModel.BusinessType = BusinessTypeDDL?.DecryptParameter();
                 commonModel.Holiday = commonModel.Holiday?.DecryptParameter();
+                commonModel.Prefecture = commonModel.Prefecture?.DecryptParameter();
+                bool isValuePresent = false;
+                bool isduplicate = false;
                 commonModel.PlanDetailList.ForEach(planList =>
                 {
                     planList.PlanIdentityList.ForEach(planIdentity =>
                     {
+                        isValuePresent = planIdentity.name.ToLower() == "plan" ? planList.PlanIdentityList.Any(pi => pi.IdentityDescription == planIdentity.IdentityDescription) : false;
+                        if (isValuePresent == true)
+                        {
+                            isduplicate = true;
+                        }
                         // Encrypt specific properties
                         planIdentity.StaticDataValue = planIdentity.StaticDataValue.DecryptParameter(); // Call your encryption method here
                         planIdentity.IdentityDescription = planIdentity.name.ToLower()=="plan" ? planIdentity.IdentityDescription.DecryptParameter() : planIdentity.IdentityDescription; 
                     });
                 });
+                if (isduplicate == true)
+                {
+                    this.AddNotificationMessage(new NotificationModel()
+                    {
+                        NotificationType = NotificationMessage.INFORMATION,
+                        Message = "Duplicate plan name.",
+                        Title = NotificationMessage.INFORMATION.ToString(),
+                    });
+                    return RedirectToAction("ClubList", "ClubManagement");
+                }
                 var dbResponse = _BUSS.ManageClub(commonModel);
                 if (dbResponse != null && dbResponse.Code == 0)
                 {

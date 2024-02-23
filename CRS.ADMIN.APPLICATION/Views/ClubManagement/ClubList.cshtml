@@ -382,46 +382,46 @@
             }
         });
     </script>
-<script>
-    const checkbox5 = document.getElementById('tag5');
-    const tagInput5 = document.getElementById('tagInput5');
+    <script>
+        const checkbox5 = document.getElementById('tag5');
+        const tagInput5 = document.getElementById('tagInput5');
 
-    checkbox5.addEventListener('change', function () {
-        if (this.checked) {
-            tagInput5.style.display = 'block';
-            $('#Tag5Status').val('A');
-        } else {
-            tagInput5.style.display = 'none';
-            $('#Tag5Status').val('B');
-        }
-    });
-</script>
-<script>
-    $(document).ready(function () {
-        $('.availability-checkbox').change(function () {
-            var checkedValuesContainer = $('#checkedValuesContainer');
-            checkedValuesContainer.empty();
-            $('.availability-checkbox').each(function () {
-                var id = $(this).attr('id');
-                var staticValue = id.split('_').pop();
-                if ($(this).is(':checked')) {
-                    var inputField = $('<input>')
-                        .attr('type', 'hidden')
-                        .attr('name', 'checkedValues')
-                        .val(staticValue + ',A'); 
-                    checkedValuesContainer.append(inputField);
-                } else {
-                    var inputField = $('<input>')
-                        .attr('type', 'hidden')
-                        .attr('name', 'checkedValues')
-                        .val(staticValue + ',B'); 
-                    checkedValuesContainer.append(inputField);
-                }
+        checkbox5.addEventListener('change', function () {
+            if (this.checked) {
+                tagInput5.style.display = 'block';
+                $('#Tag5Status').val('A');
+            } else {
+                tagInput5.style.display = 'none';
+                $('#Tag5Status').val('B');
+            }
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+            $('.availability-checkbox').change(function () {
+                var checkedValuesContainer = $('#checkedValuesContainer');
+                checkedValuesContainer.empty();
+                $('.availability-checkbox').each(function () {
+                    var id = $(this).attr('id');
+                    var staticValue = id.split('_').pop();
+                    if ($(this).is(':checked')) {
+                        var inputField = $('<input>')
+                            .attr('type', 'hidden')
+                            .attr('name', 'checkedValues')
+                            .val(staticValue + ',A');
+                        checkedValuesContainer.append(inputField);
+                    } else {
+                        var inputField = $('<input>')
+                            .attr('type', 'hidden')
+                            .attr('name', 'checkedValues')
+                            .val(staticValue + ',B');
+                        checkedValuesContainer.append(inputField);
+                    }
+                });
             });
         });
-    });
 
-</script>
+    </script>
     <script>
         // Get references to the file input and file name display element
         const fileInput = document.getElementById("file_input");
@@ -639,10 +639,52 @@
         debugger;
         var optionCount = $('select[name="PlanDetailList[0].PlanIdentityList[0].IdentityDescription"] option').length;
         var plansDiv = document.querySelectorAll('#container .plans');
+        $('.default_select').select2({
+            
+        });
         var plansDivsCounts = plansDiv.length;
         if (plansDivsCounts>optionCount) {
             document.getElementById("addrow").disabled = true;
         }
+        function DisableDropdownoption() {
+            plansDiv.forEach(function (planDiv, index) {
+                // Get all select elements within the current row
+                var selects = planDiv.querySelectorAll('select');
+                debugger;
+                selects.forEach(function (select, selectIndex) {
+                    debugger;
+                    // Construct unique ID for each select element
+                    var selectId = 'select_' + index + '_' + selectIndex;
+                    select.id = selectId;
+
+                    // Get the selected value of the current select element
+                    var selectedValue = select.value;
+
+                    // Iterate over all rows again to find the selected value in other rows
+                    plansDiv.forEach(function (otherPlanDiv, otherIndex) {
+                        // Exclude the current row
+                        if (otherIndex !== index) {
+                            // Find select elements in other rows
+                            var otherSelects = otherPlanDiv.querySelectorAll('select');
+
+                            otherSelects.forEach(function (otherSelect) {
+                                // If the selected value matches, disable the option
+                                if (otherSelect.value === selectedValue) {
+                                    // Disable the option
+                                    otherSelect.disabled = true;
+                                } else {
+                                    // Enable the option
+                                    otherSelect.disabled = false;
+                                }
+                            });
+                        }
+                    });
+                });
+            });
+ }
+
+
+
         //document.addEventListener('DOMContentLoaded', function () {
         //    document.getElementById('addRowButton').addEventListener('click', function () {
         //        debugger;
@@ -701,34 +743,193 @@
 
         }
         debugger;
-       
+
         var selectedOptions = {};
-        $('.plans .default_select').change(function () {
-               
-                var selectedValue = $(this).val();
-              
-                var rowIndex = $(this).closest('.plans').index();
+        var isdocready = false;
+        var firstrow = false;
+        //$(document).ready(function () {
+        //    isdocready = true;
+        //    $("div.plans").find('.default_select').find('option').prop('disabled', false);
+        //    isdocready = false;
+        //});
+       
+        //$("div.plans").find('select').on("change", function () {
+        //    debugger;
+        //    var specificKey = $(this).val(); // Get the selected value
 
-               
-                if (selectedOptions[selectedValue] !== undefined && selectedOptions[selectedValue] !== rowIndex) {
-                  
-                    $(this).val('');
-                 
-                    console.log('Error: Option already selected in another row.');
-                } else {
-              
-                    selectedOptions[selectedValue] = rowIndex;
-                }
-            });
-      
+        //    // Reset all options in all dropdowns
+        //    $("div.plans").find('select option').prop('disabled', false);
 
+        //    // Disable corresponding options in other dropdowns based on the current selection
+        //    $("div.plans").find('select').not($(this)).each(function () {
+        //        $(this).find('option[value="' + specificKey + '"]').prop('disabled', true);
+        //    });
+        //    //var specificKey = $(this).val(); // Get the selected value
+        //    //var currentDropdown = this; // Get the current dropdown
+
+        //    //$("div.plans").find('select').each(function () {
+        //    //    if (this !== currentDropdown) { // Ensure we're not working with the current dropdown
+        //    //        $(this).find('option:not(:disabled)').prop('disabled', false); // Enable only non-disabled options in other dropdowns
+        //    //        $(this).find('option[value="' + specificKey + '"]:not(:disabled)').prop('disabled', true); // Disable the corresponding non-disabled option
+        //    //    }
+        //    //});
+        //    //var dropdown = $(this)[0]; // Get the native select element from jQuery object
+        //    ////var specificKey = $(this).eq(0).val()
+        //    ////// Example condition: Disable option 3 if option 2 is selected
+        //    ////if (dropdown.value === specificKey) {
+        //    ////    $(dropdown).find('option[value="' + specificKey + '"]').prop('disabled', true);
+        //    ////} else {
+        //    ////    $(dropdown).find('option[value="' + specificKey + '"]').prop('disabled', false);
+        //    ////}
+        //    //var specificKey = $(this).val();
+        //    ////$(dropdown).find('option').prop('disabled', false);
+        //    //var test = $(".plans").find('select option[value="' + specificKey + '"]');
+        //    //$(".plans").find('select option[value="' + specificKey + '"]').prop('disabled', true);
+        //});
+
+        // Approach 2: Direct manipulation
+        // Example: Disable option 2 after a certain event occurs
+        //function disableOption2() {
+        //    $("div.plans").find('select').each(function () {
+        //        var specificKey = $(this);
+        //        $(this).find('option[value="' + specificKey + '"]').prop('disabled', true);
+        //    });
+        //}
+
+        // //Call disableOption2 function to disable option 2
+        //disableOption2();
+
+
+
+
+
+
+
+       // $("div.plans").on('change', "select", function () {
+       //     if (isdocready==false) {
+       //         var specificKey = $(this).val(); // Extract specific key from the clicked option
+
+       //         // Disable the selected option in all dropdowns with the class .default_select
+       //         $("div.plans").find('.default_select').find('option').prop('disabled', false); // Re-enable all options
+       //         $("div.plans").find('.default_select').find('option[value="' + specificKey + '"]').prop('disabled', true); // Disable the selected option
+       //         firstrow=true
+       //     }
+
+       //});
+
+
+
+        //$("div.plans").on("change", "select", function () {
+        //    // Get the selected value
+        //    debugger;
+        //    var selectedValue = $(this).val();
+
+        //    // Loop through each option in the select element
+        //    $(this).find("option").each(function () {
+        //        // Check if the current option's value is the same as the selected value
+        //        if ($(this).val() === selectedValue) {
+        //            // Enable the selected option and remove aria-disabled attribute
+        //            $(this).prop("disabled", false).removeAttr("aria-disabled");
+        //        } else {
+        //            // Disable other options and set aria-disabled attribute to true
+        //            $(this).prop("disabled", true).attr("aria-disabled", true);
+        //        }
+        //    });
+        //});
+        //$('.plans .default_select').change(function () {
+        //    debugger;
+
+        //$("div.plans").find('.default_select').find('option').each(function () {
+
+        //    var clickedOption = $(this).find('option:selected');
+        //    var specificKey = clickedOption.val(); // Replace 'specific_key' with the actual value of the option you want to exclude
+
+        //    // Re-enable the clicked option
+        //    clickedOption.prop('disabled', false);
+
+        //    // Disable all other options except the clicked one
+        //    $("div.plans").find('.default_select').find('option').not(clickedOption).prop('disabled', true);
+
+        //});
+        //});
+
+
+
+        //$('.plans .default_select').change(function () {
+        //    debugger;
+        //    var selectedValue = $(this).val();
+
+        //    var selectedValue = $(this).val();
+
+        //    // Iterate over each row (.plans) except the current row
+        //    $('.plans').not($(this).closest('.plans')).each(function () {
+        //        // Find select elements in other rows
+        //        $(this).find('.default_select').each(function () {
+        //            // Disable the option with the selected value
+        //            $(this).find('option[value="' + selectedValue + '"]').prop('disabled', true);
+        //        });
+        //    });
+
+
+            //$('.plans .default_select').on('click', 'option:disabled', function (e) {
+            //    e.preventDefault(); // Prevent the default action when a disabled option is clicked
+            //});
+            //plansDiv.forEach(function (otherPlanDiv, otherIndex) {
+            //    // Exclude the current row
+            //      var otherSelects = otherPlanDiv.querySelectorAll('select');
+            //        otherSelects.forEach(function (otherSelect) {
+            //            // If the selected value matches, disable the option
+            //            otherSelect.querySelectorAll('option').forEach(function (option) {
+            //                if (option.value === selectedValue) {
+            //                    option.disabled = true;
+            //                } else {
+            //                    option.disabled = false;
+            //                }
+            //            });
+            //        });
+
+            //});
+                //var selectedValue = $(this).val();
+
+                //var rowIndex = $(this).closest('.plans').index();
+
+
+                //if (selectedOptions[selectedValue] !== undefined && selectedOptions[selectedValue] !== rowIndex) {
+
+                //    $(this).val('');
+
+                //    console.log('Error: Option already selected in another row.');
+                //} else {
+
+                //    selectedOptions[selectedValue] = rowIndex;
+                //}
+      /*      });*/
+        //$("div.plans select").select2()
+        //    .on("select2:select", function (e) {
+        //        var selectedOptionValue = e.params.data.id; // Get the selected option value
+        //        var currentDropdown = e.currentTarget;
+
+        //        // Loop through all select2 dropdowns within div.plans
+        //        $("div.plans select").each(function () {
+        //            var $currentSelect = $(this);
+
+        //            // Skip the current select element
+        //            if ($currentSelect[0] === currentDropdown) return;
+
+        //            // Hide the selected option from other dropdowns
+        //            $currentSelect.find('option[value="' + selectedOptionValue + '"]').remove();
+
+        //            // Refresh the Select2 instance after updating the options
+        //            $currentSelect.trigger('change.select2');
+        //        });
+        //    });
         function repeatContent() {
             debugger;
 
             if (plansDivsCounts < optionCount) {
 
 
-          
+
                 var originalContent = document.getElementById('container');
                 var plansDivs = document.querySelectorAll('#container .plans');
                 var plansDivsCount = plansDivs.length;
@@ -765,9 +966,9 @@
                         html += "<input type='hidden' name='PlanDetailList[" + rowcouunt + "].PlanIdentityList[" + i + "].name' value='" + PlanList.PlanIdentityList[i].name + "' class='name' />";
                         html += "<input type='text' name='PlanDetailList[" + rowcouunt + "].PlanIdentityList[" + i + "].IdentityDescription' class='w-full' autocomplete='off' maxlength='100' />";
                         if (PlanList.PlanIdentityList[i].IdentityDescription != null) {
-                          
+
                                html += "<span class='error'>" + PlanList.PlanIdentityList[i].IdentityDescription + "</span>";
-                        
+
                         }
 
                        // html += "<span class='error'>" + PlanList.PlanIdentityList[i].IdentityDescription + "</span>";
@@ -805,39 +1006,106 @@
                     '<br />';
 
                 originalContent.insertAdjacentHTML('beforeend', htmlToInsert);
-                var id = rowcount + "_large";
+                var id = rowcouunt + "_large";
                 var selector = '#' + id;
                 $(selector).select2();
+                //$("div.plans select").select2()
+                //    .on("select2:select", function (e) {
+                //        var selectedOption = e.params.data; // Get the selected option data
+                //        var selectedValue = selectedOption.id; // Get the value of the selected option
+
+                //        // Loop through all select2 dropdowns within div.plans
+                //        $("div.plans select").each(function () {
+                //            var $currentSelect = $(this);
+
+                //            // Skip the current select element
+                //            if ($currentSelect[0] === e.currentTarget) return;
+
+                //            // Disable the option with the same value as the selected one
+                //            var $optionToDisable = $currentSelect.find('option[value="' + selectedValue + '"]');
+                //            if (!$optionToDisable.prop("disabled")) {
+                //                $optionToDisable.prop("disabled", true);
+
+                //                // Refresh the Select2 instance after updating the options
+                //                $currentSelect.trigger('change.select2');
+                //            }
+                //        });
+                //    });
                 //$('#largeplan').select2();
-               
-                   
-                $('.plans .default_select').change(function () {
+                //$(".default_select").select2()
+                //    .on("select2:select", function (e) {
+                //        debugger;
+                //        var selected_element = $(e.currentTarget);
+                //        var select_val = selected_element.val();
+                //        $.each(this.options, function (i, item) {
+                //            if (item.selected) {
+                //                $(item).prop("disabled", true);
+                //            }
+                //        });
+                //        console.log(select_val);
+                //        $('select').select2();
+                //    });
 
-                        var selectedValue = $(this).val();
+                //$("div.plans").find('select').on("change", function () {
+                //    debugger;
+                //    var specificKey = $(this).val(); // Get the selected value
 
-                        var rowIndex = $(this).closest('.plans').index();
+                //    // Reset all options in all dropdowns
+                //    $(".plans").find('select option').prop('disabled', false);
+
+                //    // Disable corresponding options in other dropdowns based on the current selection
+                //    $(".plans").find('select').not($(this)).each(function () {
+                //        $(this).find('option[value="' + specificKey + '"]').prop('disabled', true);
+                //    });
+                //});
+
+                //$("div.plans").find('.default_select').on('change', function () {
+                //    if (isdocready == false && firstrow==false) {
+                //        var specificKey = $(this).val(); // Extract specific key from the clicked option
+
+                //        // Disable the selected option in all dropdowns with the class .default_select
+                //        $("div.plans").find('.default_select').find('option').prop('disabled', false); // Re-enable all options
+                //        $("div.plans").find('.default_select').find('option[value="' + specificKey + '"]').prop('disabled', true); // Disable the selected option
+
+                //    }
+                //    firstrow = false;
+                //});
 
 
-                        if (selectedOptions[selectedValue] !== undefined && selectedOptions[selectedValue] !== rowIndex) {
-
-                            $(this).val('');
-
-                            console.log('Error: Option already selected in another row.');
-                        } else {
-
-                            selectedOptions[selectedValue] = rowIndex;
-                        }
-                    });
-               
-
-                if (plansDivsCounts == rowcouunt) {
+                if (optionCount == parseInt( rowcouunt + 1)) {
                     document.getElementById("addrow").disabled = true;
                 }
             }
             else {
-                document.getElementById("addrow").disabled = true;
+                document.getElementById("addrow").disabled = false;
             }
         }
+
+
+
+
+  //// Get the dropdown element
+  //var dropdown = document.getElementById("myDropdown");
+
+  //// Approach 1: Using event listeners
+  //dropdown.addEventListener("change", function() {
+  //  // Example condition: Disable option 3 if option 2 is selected
+  //  if (dropdown.value === "option2") {
+  //    dropdown.querySelector('option[value="option3"]').disabled = true;
+  //  } else {
+  //    dropdown.querySelector('option[value="option3"]').disabled = false;
+  //  }
+  //});
+
+  //// Approach 2: Direct manipulation
+  //// Example: Disable option 2 after a certain event occurs
+  //function disableOption2() {
+  //  dropdown.querySelector('option[value="option2"]').disabled = true;
+  //}
+
+  //// Call disableOption2 function to disable option 2
+  //disableOption2();
+
 
     </script>
 

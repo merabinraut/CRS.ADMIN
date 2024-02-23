@@ -77,7 +77,7 @@ namespace CRS.ADMIN.REPOSITORY.ClubManagement
                         japanese = _DAO.ParseColumnValue(item, "japanese").ToString(),
                         inputtype = _DAO.ParseColumnValue(item, "inputtype").ToString(),
                         name = _DAO.ParseColumnValue(item, "name").ToString(),
-                        IdentityLabel=culture=="en"? _DAO.ParseColumnValue(item, "English").ToString() : _DAO.ParseColumnValue(item, "japanese").ToString(),
+                        IdentityLabel=culture.ToLower()=="en"? _DAO.ParseColumnValue(item, "English").ToString() : _DAO.ParseColumnValue(item, "japanese").ToString(),
                     });
                 }
            
@@ -158,7 +158,7 @@ namespace CRS.ADMIN.REPOSITORY.ClubManagement
                                     IdentityDescription = _DAO.ParseColumnValue(row, "Description").ToString(),
                                     PlanId = _DAO.ParseColumnValue(row, "Description").ToString(),
                                     Id = _DAO.ParseColumnValue(row, "Id").ToString(),
-                                    IdentityLabel = culture == "en" ? _DAO.ParseColumnValue(row, "English").ToString() : _DAO.ParseColumnValue(row, "japanese").ToString(),
+                                    IdentityLabel = culture.ToLower() == "en" ? _DAO.ParseColumnValue(row, "English").ToString() : _DAO.ParseColumnValue(row, "japanese").ToString(),
                                 });
 
                                                              

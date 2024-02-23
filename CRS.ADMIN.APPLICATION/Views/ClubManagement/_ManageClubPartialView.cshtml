@@ -23,7 +23,7 @@
 
             <div class=" py-4 grid gap-6">
 
-                @using (Html.BeginForm("ManageClub", "ClubManagement", FormMethod.Post, new { @id = "ManageHostForm", enctype = "multipart/form-data" }))
+                @using (Html.BeginForm("ManageClub", "ClubManagement", FormMethod.Post, new { @id = "ManageClubForm", enctype = "multipart/form-data" }))
                         {
                             @Html.AntiForgeryToken()
                             if (!string.IsNullOrEmpty(Model.AgentId))
@@ -595,7 +595,7 @@
                     <div id="content3" class="content-section" style="display: none;">
                         <div class="grid gap-4 py-[10px]">
                             <div class="flex gap-2 text-primary-300 text-sm font-semibold items-center mt-[10px]">
-                                <div class="flex-none uppercase">club info</div>
+                                <div class="flex-none uppercase">@CRS.ADMIN.APPLICATION.Resources.Resource.Club_Info</div>
                                 <div class="bg-[#F4F4F4] h-[1px] w-full">
                                 </div>
                             </div>
@@ -1046,7 +1046,7 @@
                                                     @Html.HiddenFor(model => model.PlanDetailList[i].PlanIdentityList[j].PlanId, new { @class = "PlanId" })
                                                     @Html.HiddenFor(model => model.PlanDetailList[i].PlanIdentityList[j].Id, new { @class = "Id" })
 
-                                                    <select id=@id class=" default_select select-common block w-full "
+                                                    <select id=@id class="default_select select-common block w-full"
                                                             style="width: 100%;" name="PlanDetailList[@i].PlanIdentityList[@j].IdentityDescription">
                                                         @foreach (KeyValuePair<string, string> item in ViewBag.PlansList as Dictionary<string, string>)
                                                         {
@@ -1156,7 +1156,7 @@
                                             <path d="M9 1.74951C4.96802 1.74951 1.6875 5.03003 1.6875 9.06201C1.6875 13.094 4.96802 16.3745 9 16.3745C13.032 16.3745 16.3125 13.094 16.3125 9.06201C16.3125 5.03003 13.032 1.74951 9 1.74951ZM9 2.87451C12.4233 2.87451 15.1875 5.63867 15.1875 9.06201C15.1875 12.4854 12.4233 15.2495 9 15.2495C5.57666 15.2495 2.8125 12.4854 2.8125 9.06201C2.8125 5.63867 5.57666 2.87451 9 2.87451ZM8.4375 5.68701V8.49951H5.625V9.62451H8.4375V12.437H9.5625V9.62451H12.375V8.49951H9.5625V5.68701H8.4375Z"
                                                   fill="#D75A8B" />
                                         </svg>
-                                        <span class="text-[14px] font-medium leading-[20px]">Add New</span>
+                                        <span class="text-[14px] font-medium leading-[20px]">@CRS.ADMIN.APPLICATION.Resources.Resource.Add_New</span>
                                     </button>
                                 </div>
 
@@ -1167,17 +1167,17 @@
                         <div>
                             <button type="button" class="btn btn-primary-normal leading-[12px] rounded-[4px] px-3 text-sm"
                                     id="previousBtn">
-                                Prev
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Previous
                             </button>
                         </div>
                         <div class="flex gap-6">
-                            <button type="button" onclick="CancelFunction()"  class="resetForm btn btn-gray-white rounded-[4px] px-8 text-sm"
+                            <button type="button" onclick="CancelFunction()" class="resetForm btn btn-gray-white rounded-[4px] px-8 text-sm"
                                     data-drawer-hide="add-new-host-club">
-                                cancel
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Cancel
                             </button>
                             <button type="button" class="btn btn-primary-default rounded-[4px] px-8 text-sm leading-[10px]"
                                     id="nextBtn">
-                                Next
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Next
                             </button>
                         </div>
                     </div>

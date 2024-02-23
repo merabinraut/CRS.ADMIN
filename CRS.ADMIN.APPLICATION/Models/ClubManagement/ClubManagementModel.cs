@@ -210,7 +210,7 @@ namespace CRS.ADMIN.APPLICATION.Models.ClubManagement
         public string ExtensionFee { get; set; }
         [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
         public string Drink { get; set; }
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
+
         public string Pref { get; set; }
 
         public List<PlanList> PlanDetailList { get; set; } = new List<PlanList>();
