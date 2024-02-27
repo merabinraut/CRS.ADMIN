@@ -6,6 +6,7 @@
     var id = "";
 }
 
+
 <div id="add-new-host-club" class="drawer-close-disable  flex justify-end fixed top-0 right-0 z-40 h-screen overflow-y-auto transition-transform translate-x-full "
      tabindex="-1" aria-labelledby="drawer-right-label">
     <div class="bg-white w-[863px] drawer-container relative">
@@ -259,13 +260,14 @@
                                            @maxLength = "11"
                                        })
                                             @*<input type="text" class="w-full" placeholder="@CRS.ADMIN.APPLICATION.Resources.Resource.Phone_Number" name="MobileNumber" value="@Model.MobileNumber">*@
-                                            <span class="error">
-                                                @Html.ValidationMessageFor(m => m.MobileNumber)
-                                            </span>
+
                                         }
                                         @*<input type="text" class="w-full" placeholder="090-6490-3254" name="mobileNumber" required>*@
 
                                     </div>
+                                    <span class="error">
+                                        @Html.ValidationMessageFor(m => m.MobileNumber)
+                                    </span>
                                 </div>
                                 <!-- for landline -->
                                 <div class="input-field-common w-full">
@@ -296,6 +298,9 @@
                                         @*<input type="text" class="w-full" placeholder="090-6490-3254" name="landLineNumber" required>*@
 
                                     </div>
+                                    <span class="error">
+                                        @Html.ValidationMessageFor(m => m.LandlineNumber)
+                                    </span>
                                 </div>
                             </div>
                             <!-- email info end -->
