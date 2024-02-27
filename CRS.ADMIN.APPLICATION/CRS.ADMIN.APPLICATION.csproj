@@ -304,6 +304,7 @@
   <ItemGroup>
     <Folder Include="Content\img\" />
     <Folder Include="Content\userupload\ClubManagement\Event\" />
+    <Folder Include="Content\userupload\Host\" />
     <Folder Include="Content\userupload\LocationImages\" />
     <Folder Include="Content\userupload\PromotionalImages\" />
     <Folder Include="Properties\PublishProfiles\" />

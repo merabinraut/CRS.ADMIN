@@ -401,7 +401,7 @@ namespace CRS.ADMIN.REPOSITORY.ClubManagement
                     SQL2 += ",@ClubPlanTypeId=" + _DAO.FilterString(planIdentity.StaticDataValue);
                     SQL2 += ",@Description=N" + _DAO.FilterString(planIdentity.IdentityDescription);
                     SQL2 += ",@PlanListId=" + _DAO.FilterString(Convert.ToString( i));
-                    SQL2 += ",@ClubId=" + _DAO.FilterString(Response.Extra1);
+                    SQL2 += ",@ClubId=" + _DAO.FilterString(string.IsNullOrEmpty(Request.AgentId)?   Response.Extra1: Request.AgentId);
                     SQL2 += ",@ActionPlatform=" + _DAO.FilterString(Request.ActionPlatform);
                     SQL2 += ",@ActionUser=" + _DAO.FilterString(Request.ActionUser);
                     SQL2 += ",@Id=" + _DAO.FilterString(  planIdentity.Id);
@@ -736,7 +736,7 @@ namespace CRS.ADMIN.REPOSITORY.ClubManagement
             SQL += ",@EventType=" + _DAO.FilterString(Request.EventType);
             SQL += ",@Description=N" + _DAO.FilterString(Request.Description);
             SQL += string.IsNullOrEmpty(Request.Title) ? ",@EventTitle=" + _DAO.FilterString(Request.Title) : ",@EventTitle=N" + _DAO.FilterString(Request.Title);
-            SQL += ",@ImagePath=" + _DAO.FilterString(Request.Image);
+            SQL += string.IsNullOrEmpty(Request.Image) ? ",@ImagePath=" + _DAO.FilterString(Request.Image) : ",@ImagePath=N" + _DAO.FilterString(Request.Image);  
             SQL += ",@AgentId=" + _DAO.FilterString(Request.AgentId); 
             SQL += ",@ActionUser=" + _DAO.FilterString(Request.ActionUser);
             SQL += ",@ActionIP=" + _DAO.FilterString(Request.ActionIP);

@@ -114,8 +114,7 @@ namespace CRS.ADMIN.APPLICATION.Models.ClubManagement
         [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
         [RegularExpression("^[0-9]{11}$", ErrorMessage = "The field must be a 11-digit number.")]
         public string MobileNumber { get; set; }    
-        [DisplayName("Landline Number")]
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
+        [DisplayName("Landline Number")]      
         [RegularExpression("^[0-9]{10}$", ErrorMessage = "The field must be a 10-digit number.")]
         public string LandlineNumber { get; set; }
         [DisplayName("Club Name (English)")]
@@ -187,10 +186,10 @@ namespace CRS.ADMIN.APPLICATION.Models.ClubManagement
         [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
         public string LastEntryTime { get; set; }
         [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
-        [RegularExpression("^[0-9]{3}$", ErrorMessage = "The field must be a 3-digit number.")]
+        [RegularExpression(@"^(?:100|\d{1,2})$", ErrorMessage = "Tax must be a number between 0 and 100.")]
         public string Tax { get; set; }
         [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
-        [RegularExpression(@"^[0-9-]{1,7}$", ErrorMessage = "The field contain numbers and dashes only, with a maximum length of 7 characters.")]
+        [RegularExpression(@"^\d{3}-\d{4}$", ErrorMessage = "Postal Code contain 3 number before dash and 4 number after dash.")]
         public string PostalCode { get; set; }
         [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
         public string Prefecture { get; set; }
@@ -212,6 +211,8 @@ namespace CRS.ADMIN.APPLICATION.Models.ClubManagement
         public string Drink { get; set; }
 
         public string Pref { get; set; }
+        public string LocationDDL { get; set; }
+        public string BusinessTypeDDL { get; set; }
 
         public List<PlanList> PlanDetailList { get; set; } = new List<PlanList>();
         // public List<planIdentityDataModel> PlanList { get; set; }

@@ -381,7 +381,7 @@
                                         <label for="file_input_logo" class="custom-file-upload bg-[#CC527A] w-[123px] flex-none ">
                                             <span> @CRS.ADMIN.APPLICATION.Resources.Resource.Choose_Images</span>
                                         </label>
-                                        <input id="file_input_logo" class="file-input" name="Logo_Certificate" ,value="@Model.Logo" type="file" style="display:none;">
+                                        <input id="file_input_logo" class="file-input" name="Logo_Certificate" value="@Model.Logo" type="file" style="display:none;">
                                         <p id="file_name_logo"
                                            class="file-name w-max h-[23px] overflow-hidden pl-2 text-xs text-[#686868] leading-[25px]">
                                             @if (string.IsNullOrEmpty(Model.Logo))
@@ -393,6 +393,7 @@
                                                 string fileName = Path.GetFileName(Model.Logo);
                                                 @fileName
                                             }
+                                        </p>
                                     </div>
                                     <div class="text-xs text-error mt-[8px]">
                                         @CRS.ADMIN.APPLICATION.Resources.Resource.Note:
@@ -421,6 +422,7 @@
                                                 string fileName = Path.GetFileName(Model.CoverPhoto);
                                                 @fileName
                                             }
+                                        </p>
                                     </div>
                                     <div class="text-xs text-error mt-[8px]">
                                         @CRS.ADMIN.APPLICATION.Resources.Resource.Note:
@@ -439,6 +441,7 @@
                                     <label for="file_input_business_certificate" class="custom-file-upload w-[123px] bg-[#CC527A] flex-none ">
                                         <span>@CRS.ADMIN.APPLICATION.Resources.Resource.Choose_Images</span>
                                     </label>
+                                    @*<input type="hidden" name="Business_Certificate" value="@Model.Business_Certificate"/>*@
                                     <input id="file_input_business_certificate" class="file-input" type="file" name="Business_Certificate" value="@Model.BusinessCertificate"
                                            style="display:none;">
                                     <p id="file_name_bussiness_certificate"
@@ -452,6 +455,7 @@
                                             string fileName = Path.GetFileName(Model.BusinessCertificate);
                                             @fileName
                                         }
+                                    </p>
                                 </div>
                                 <div class="text-xs text-error mt-[8px]">
                                     @CRS.ADMIN.APPLICATION.Resources.Resource.Note:
@@ -1045,12 +1049,13 @@
                                                     @Html.HiddenFor(model => model.PlanDetailList[i].PlanIdentityList[j].StaticDataValue, new { @class = "StaticDataValue" })
                                                     @Html.HiddenFor(model => model.PlanDetailList[i].PlanIdentityList[j].PlanId, new { @class = "PlanId" })
                                                     @Html.HiddenFor(model => model.PlanDetailList[i].PlanIdentityList[j].Id, new { @class = "Id" })
-
+                                                    @Html.HiddenFor(model => model.PlanDetailList[i].PlanIdentityList[j].IdentityLabel, new { @class = "IdentityLabel" })
+                                                    @Html.HiddenFor(model => model.PlanDetailList[i].PlanIdentityList[j].inputtype, new { @class = "inputtype" })
                                                     <select id=@id class="default_select select-common block w-full"
                                                             style="width: 100%;" name="PlanDetailList[@i].PlanIdentityList[@j].IdentityDescription">
                                                         @foreach (KeyValuePair<string, string> item in ViewBag.PlansList as Dictionary<string, string>)
                                                         {
-                                                            var selectedId =Model.PlanDetailList[i].PlanIdentityList[j].PlanId;
+                                                            var selectedId = Model.PlanDetailList[i].PlanIdentityList[j].PlanId;
                                                             if (item.Value == selectedId)
                                                             {
                                                                 <option value="@item.Key" selected>
@@ -1070,55 +1075,59 @@
                                                 }
                                                 else if (@Model.PlanDetailList[i].PlanIdentityList[j].inputtype.ToLower() == "textbox")
                                                 {
-                                                <div class="input-field-common">
-                                                    <label class="block mb-[12px] text-sm font-medium text-secondary-text-2">
-                                                        @Model.PlanDetailList[i].PlanIdentityList[j].IdentityLabel
-                                                    </label>
-                                                    @Html.HiddenFor(model => model.PlanDetailList[i].PlanIdentityList[j].name, new { @class = "name" })
-                                                    @Html.HiddenFor(model => model.PlanDetailList[i].PlanIdentityList[j].StaticDataValue, new { @class = "StaticDataValue" })
-                                                    @Html.HiddenFor(model => model.PlanDetailList[i].PlanIdentityList[j].PlanId, new { @class = "PlanId" })
-                                                    @Html.HiddenFor(model => model.PlanDetailList[i].PlanIdentityList[j].Id, new { @class = "Id" })
-                                                    @Html.TextBoxFor(model => model.PlanDetailList[i].PlanIdentityList[j].IdentityDescription, new
-                                               {
-                                                   @class = "w-full",
-                                                   @placeholder = Model.PlanDetailList[i].PlanIdentityList[j].IdentityLabel,
-                                                   //@onkeypress = "return isAlphabetWithSpace(event)",
-                                                   autocomplete = "off",
-                                                   @maxLength = "100"
-                                            ,
+                                            <div class="input-field-common">
+                                                <label class="block mb-[12px] text-sm font-medium text-secondary-text-2">
+                                                    @Model.PlanDetailList[i].PlanIdentityList[j].IdentityLabel
+                                                </label>
+                                                @Html.HiddenFor(model => model.PlanDetailList[i].PlanIdentityList[j].name, new { @class = "name" })
+                                                @Html.HiddenFor(model => model.PlanDetailList[i].PlanIdentityList[j].StaticDataValue, new { @class = "StaticDataValue" })
+                                                @Html.HiddenFor(model => model.PlanDetailList[i].PlanIdentityList[j].PlanId, new { @class = "PlanId" })
+                                                @Html.HiddenFor(model => model.PlanDetailList[i].PlanIdentityList[j].Id, new { @class = "Id" })
+                                                @Html.HiddenFor(model => model.PlanDetailList[i].PlanIdentityList[j].inputtype, new { @class = "inputtype" })
+                                                @Html.HiddenFor(model => model.PlanDetailList[i].PlanIdentityList[j].IdentityLabel, new { @class = "IdentityLabel" })
+                                                @Html.TextBoxFor(model => model.PlanDetailList[i].PlanIdentityList[j].IdentityDescription, new
+                                           {
+                                               @class = "w-full",
+                                               @placeholder = Model.PlanDetailList[i].PlanIdentityList[j].IdentityLabel,
+                                               //@onkeypress = "return isAlphabetWithSpace(event)",
+                                               autocomplete = "off",
+                                               @maxLength = "100"
+                                        ,
 
-                                               })
-                                                    <span class="error">
-                                                        @Html.ValidationMessageFor(model => Model.PlanDetailList[i].PlanIdentityList[j].IdentityDescription)
-                                                    </span>
-                                                </div>
+                                           })
+                                                <span class="error">
+                                                    @Html.ValidationMessageFor(model => Model.PlanDetailList[i].PlanIdentityList[j].IdentityDescription)
+                                                </span>
+                                            </div>
                                                 }
                                                 else if (@Model.PlanDetailList[i].PlanIdentityList[j].inputtype.ToLower() == "time")
                                                 {
-                                                <div class="input-field-common">
-                                                    <label for="instagram" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
-                                                        @Model.PlanDetailList[i].PlanIdentityList[j].IdentityLabel
-                                                    </label>
-                                                    @Html.HiddenFor(model => model.PlanDetailList[i].PlanIdentityList[j].name, new { @class = "name" })
-                                                    @Html.HiddenFor(model => model.PlanDetailList[i].PlanIdentityList[j].StaticDataValue, new { @class = "StaticDataValue" })
-                                                    @Html.HiddenFor(model => model.PlanDetailList[i].PlanIdentityList[j].PlanId, new { @class = "PlanId" })
-                                                    @Html.HiddenFor(model => model.PlanDetailList[i].PlanIdentityList[j].Id, new { @class = "Id" })
-                                                    @Html.TextBoxFor(model => model.PlanDetailList[i].PlanIdentityList[j].IdentityDescription, new
-                                               {
-                                                   @class = "w-full",
-                                                   @placeholder = "HH:MM",
-                                                   //@onkeypress = "return isNumber(event)",
-                                                   autocomplete = "off",
-                                                   @maxLength = "30",
+                                            <div class="input-field-common">
+                                                <label for="instagram" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                                                    @Model.PlanDetailList[i].PlanIdentityList[j].IdentityLabel
+                                                </label>
+                                                @Html.HiddenFor(model => model.PlanDetailList[i].PlanIdentityList[j].name, new { @class = "name" })
+                                                @Html.HiddenFor(model => model.PlanDetailList[i].PlanIdentityList[j].StaticDataValue, new { @class = "StaticDataValue" })
+                                                @Html.HiddenFor(model => model.PlanDetailList[i].PlanIdentityList[j].PlanId, new { @class = "PlanId" })
+                                                @Html.HiddenFor(model => model.PlanDetailList[i].PlanIdentityList[j].Id, new { @class = "Id" })
+                                                @Html.HiddenFor(model => model.PlanDetailList[i].PlanIdentityList[j].inputtype, new { @class = "inputtype" })
+                                                @Html.HiddenFor(model => model.PlanDetailList[i].PlanIdentityList[j].IdentityLabel, new { @class = "IdentityLabel" })
+                                                @Html.TextBoxFor(model => model.PlanDetailList[i].PlanIdentityList[j].IdentityDescription, new
+                                           {
+                                               @class = "w-full",
+                                               @placeholder = "HH:MM",
+                                               //@onkeypress = "return isNumber(event)",
+                                               autocomplete = "off",
+                                               @maxLength = "30",
 
-                                                   @type = "time"
-                                               })
-                                                    <span class="error">
-                                                        @Html.ValidationMessageFor(model => Model.PlanDetailList[i].PlanIdentityList[j].IdentityDescription)
-                                                    </span>
-                                                    @*<input type="time" class="w-full" placeholder="HH:MM" name="lastOrderTime" required>*@
-                                                    <!-- <span class="error">Validation msg</span> -->
-                                                </div>
+                                               @type = "time"
+                                           })
+                                                <span class="error">
+                                                    @Html.ValidationMessageFor(model => Model.PlanDetailList[i].PlanIdentityList[j].IdentityDescription)
+                                                </span>
+                                                @*<input type="time" class="w-full" placeholder="HH:MM" name="lastOrderTime" required>*@
+                                                <!-- <span class="error">Validation msg</span> -->
+                                            </div>
                                                 }
                                                 }
 
