@@ -1033,7 +1033,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                             ErrorMessage = "Event Description required";
                             allowRedirect = true;
                         }
-                        else if (string.IsNullOrEmpty(Model.Description))
+                        else if (string.IsNullOrEmpty(Model.Title))
                         {
                             ErrorMessage = "Event Title required";
                             allowRedirect = true;
@@ -1058,31 +1058,31 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                     var allowedContentType = AllowedImageContentType();
 
 
-                    if (Image == null)
-                    {
-                        if (string.IsNullOrEmpty(Model.Image))
-                        {
-                            bool allowRedirect = false;
+                    //if (Image == null)
+                    //{
+                    //    if (string.IsNullOrEmpty(Model.Image))
+                    //    {
+                    //        bool allowRedirect = false;
 
-                            if (Image == null && string.IsNullOrEmpty(Model.Image))
-                            {
-                                ErrorMessage = "Image required";
-                                allowRedirect = true;
-                            }
-                            if (allowRedirect)
-                            {
-                                this.AddNotificationMessage(new NotificationModel()
-                                {
-                                    NotificationType = NotificationMessage.INFORMATION,
-                                    Message = ErrorMessage ?? "Something went wrong. Please try again later.",
-                                    Title = NotificationMessage.INFORMATION.ToString(),
-                                });
-                                TempData["ManageEventModel"] = Model;
-                                TempData["RenderId"] = "ManageClubGallery";
-                                return RedirectToAction("EventList", "ClubManagement", new { ClubId = agentid });
-                            }
-                        }
-                    }  //for update  of image
+                    //        if (Image == null && string.IsNullOrEmpty(Model.Image))
+                    //        {
+                    //            ErrorMessage = "Image required";
+                    //            allowRedirect = true;
+                    //        }
+                    //        if (allowRedirect)
+                    //        {
+                    //            this.AddNotificationMessage(new NotificationModel()
+                    //            {
+                    //                NotificationType = NotificationMessage.INFORMATION,
+                    //                Message = ErrorMessage ?? "Something went wrong. Please try again later.",
+                    //                Title = NotificationMessage.INFORMATION.ToString(),
+                    //            });
+                    //            TempData["ManageEventModel"] = Model;
+                    //            TempData["RenderId"] = "ManageClubGallery";
+                    //            return RedirectToAction("EventList", "ClubManagement", new { ClubId = agentid });
+                    //        }
+                    //    }
+                    //}  //for update  of image
                     if (Image != null)
                     {
                         var contentType = Image.ContentType;
