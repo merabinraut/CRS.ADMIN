@@ -18,6 +18,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Mvc;
@@ -28,9 +29,11 @@ namespace CRS.ADMIN.APPLICATION.Controllers
     public class ClubManagementController : BaseController
     {
         private readonly IClubManagementBusiness _BUSS;
-        public ClubManagementController(IClubManagementBusiness BUSS)
+        private readonly HttpClient _httpClient;
+        public ClubManagementController(IClubManagementBusiness BUSS,HttpClient httpClient)
         {
             _BUSS = BUSS;
+            _httpClient = httpClient;
         }
         [HttpGet]
         public ActionResult ClubList(string SearchFilter = "", int StartIndex = 0, int PageSize = 10)
@@ -40,7 +43,10 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             string RenderId = "";
             var culture = Request.Cookies["culture"]?.Value;
             culture = string.IsNullOrEmpty(culture) ? "ja" : culture;
-           
+            //var ss = GetPostalCodeInfo("1000001");
+
+
+
             var response = new ClubManagementCommonModel();
             if (TempData.ContainsKey("ManageClubModel")) response.ManageClubModel = TempData["ManageClubModel"] as ManageClubModel;
             else response.ManageClubModel = new ManageClubModel();
@@ -58,9 +64,27 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 SearchFilter = !string.IsNullOrEmpty(SearchFilter) ? SearchFilter : null
             };
             var dbResponse = _BUSS.GetClubList(dbRequest);
+            if (TempData.ContainsKey("EditPlan"))
+            {
+              
+                response.ManageClubModel = TempData["EditPlan"] as ManageClubModel;
+                int plancount = response.ManageClubModel.PlanDetailList.Count;
+                if (plancount==0)
+                {
+                    List<PlanListCommon> planlist = _BUSS.GetClubPlanIdentityList(culture);
+                    response.ManageClubModel.PlanDetailList = planlist.MapObjects<PlanList>();
 
-
-            if (TempData.ContainsKey("EditPlan")) response.ManageClubModel = TempData["EditPlan"] as ManageClubModel;
+                    response.ManageClubModel.PlanDetailList.ForEach(planList =>
+                    {
+                        planList.PlanIdentityList.ForEach(planIdentity =>
+                        {
+                            // Encrypt specific properties
+                            planIdentity.StaticDataValue = planIdentity.StaticDataValue.EncryptParameter(); // Call your encryption method here
+                        });
+                    });
+                }
+            } 
+            
             else
             {
                 
@@ -143,11 +167,8 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 {
                     planList.PlanIdentityList.ForEach(planIdentity =>
                     {
-                        // Encrypt specific properties
-
-                        
-                        planIdentity.StaticDataValue = planIdentity.StaticDataValue.EncryptParameter(); // Call your encryption method here
-                                      
+                        // Encrypt specific properties                        
+                        planIdentity.StaticDataValue = planIdentity.StaticDataValue.EncryptParameter(); // Call your encryption method here                                      
                         planIdentity.IdentityDescription = planIdentity.name.ToLower()=="plan"?  planIdentity.IdentityDescription.EncryptParameter(): planIdentity.IdentityDescription; // Call your encryption method here
                         planIdentity.PlanId = planIdentity.name.ToLower() == "plan" ? ViewBag.PlansList[planIdentity.IdentityDescription] : planIdentity.IdentityDescription;  // Call your encryption method here
 
@@ -173,49 +194,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
         public ActionResult ManageClub(ManageClubModel Model, HttpPostedFileBase Business_Certificate, HttpPostedFileBase Logo_Certificate, HttpPostedFileBase CoverPhoto_Certificate, string LocationDDL, string BusinessTypeDDL)
         {
             string ErrorMessage = string.Empty;
-            if
-            (
-               string.IsNullOrEmpty(Model.BusinessCertificate) ||
-               string.IsNullOrEmpty(Model.Logo) ||
-               string.IsNullOrEmpty(Model.CoverPhoto) ||
-               string.IsNullOrEmpty(Model.Gallery)
-            )
-            {
-               
-                if (Business_Certificate == null || Logo_Certificate == null || CoverPhoto_Certificate == null)
-                {
-                    bool allowRedirect = false;
-
-                    if (Business_Certificate == null && string.IsNullOrEmpty(Model.BusinessCertificate))
-                    {
-                        ErrorMessage = "Business certificate required";
-
-                        allowRedirect = true;
-                    }
-                    else if (Logo_Certificate == null && string.IsNullOrEmpty(Model.Logo))
-                    {
-                        ErrorMessage = "Logo required";
-                        allowRedirect = true;
-                    }
-                    else if (CoverPhoto_Certificate == null && string.IsNullOrEmpty(Model.CoverPhoto))
-                    {
-                        ErrorMessage = "Cover photo required";
-                        allowRedirect = true;
-                    }
-                    if (allowRedirect)
-                    {
-                        this.AddNotificationMessage(new NotificationModel()
-                        {
-                            NotificationType = NotificationMessage.INFORMATION,
-                            Message = ErrorMessage ?? "Something went wrong. Please try again later.",
-                            Title = NotificationMessage.INFORMATION.ToString(),
-                        });
-                        TempData["ManageClubModel"] = Model;
-                        TempData["RenderId"] = "Manage";
-                        return RedirectToAction("ClubList", "ClubManagement");
-                    }
-                }
-            }
+           
             if (!string.IsNullOrEmpty(BusinessTypeDDL?.DecryptParameter())) ModelState.Remove("BusinessType");
             if (!string.IsNullOrEmpty(LocationDDL?.DecryptParameter())) ModelState.Remove("LocationId");
             ViewBag.PlansList = ApplicationUtilities.LoadDropdownList("CLUBPLANS") as Dictionary<string, string>;
@@ -249,84 +228,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             string coverPhotoPath = "";
             var allowedContentType = AllowedImageContentType();
             string dateTime = "";
-            bool allowRedirectfile = false;
-            if (Business_Certificate != null)
-            {
-                var contentType = Business_Certificate.ContentType;
-                var ext = Path.GetExtension(Business_Certificate.FileName);
-                if (allowedContentType.Contains(contentType.ToLower()))
-                {
-                    dateTime = DateTime.Now.ToString("yyyyMMddHHmmssffff");
-                    string fileName = "BusinessCertificate_" + dateTime + ext.ToLower();
-                    businessCertificatePath = Path.Combine(Server.MapPath("~/Content/UserUpload/ClubManagement"), fileName);
-                    Model.BusinessCertificate = "/Content/UserUpload/ClubManagement/" + fileName;
-                }
-                else
-                {
-                    this.AddNotificationMessage(new NotificationModel()
-                    {
-                        NotificationType = NotificationMessage.INFORMATION,
-                        Message = "Invalid image format.",
-                        Title = NotificationMessage.INFORMATION.ToString(),
-                    });
-                    allowRedirectfile = true;
-                    
-                }
-            }
-
-            if (Logo_Certificate != null)
-            {
-                var contentType = Logo_Certificate.ContentType;
-                var ext = Path.GetExtension(Logo_Certificate.FileName);
-                if (allowedContentType.Contains(contentType.ToLower()))
-                {
-                    dateTime = DateTime.Now.ToString("yyyyMMddHHmmssffff");
-                    string fileName = "Logo_" + dateTime + ext.ToLower();
-                    LogoPath = Path.Combine(Server.MapPath("~/Content/UserUpload/ClubManagement"), fileName);
-                    Model.Logo = "/Content/UserUpload/ClubManagement/" + fileName;
-                }
-                else
-                {
-                    this.AddNotificationMessage(new NotificationModel()
-                    {
-                        NotificationType = NotificationMessage.INFORMATION,
-                        Message = "Invalid image format.",
-                        Title = NotificationMessage.INFORMATION.ToString(),
-                    });
-                    allowRedirectfile = true;
-                   
-                }
-            }
-
-            if (CoverPhoto_Certificate != null)
-            {
-                var contentType = CoverPhoto_Certificate.ContentType;
-                var ext = Path.GetExtension(CoverPhoto_Certificate.FileName);
-                if (allowedContentType.Contains(contentType.ToLower()))
-                {
-                    dateTime = DateTime.Now.ToString("yyyyMMddHHmmssffff");
-                    string fileName = "CoverPhoto_" + dateTime + ext.ToLower();
-                    coverPhotoPath = Path.Combine(Server.MapPath("~/Content/UserUpload/ClubManagement"), fileName);
-                    Model.CoverPhoto = "/Content/UserUpload/ClubManagement/" + fileName;
-                }
-                else
-                {
-                    this.AddNotificationMessage(new NotificationModel()
-                    {
-                        NotificationType = NotificationMessage.INFORMATION,
-                        Message = "Invalid image format.",
-                        Title = NotificationMessage.INFORMATION.ToString(),
-                    });
-                    allowRedirectfile = true;
-                   
-                }
-            }
-            if (allowRedirectfile ==true)
-            {
-                TempData["ManageClubModel"] = Model;
-                TempData["RenderId"] = "Manage";
-                return RedirectToAction("ClubList", "ClubManagement");
-            }
+            
             if (ModelState.IsValid)
             {               
                 if (isduplicate == true)
@@ -337,10 +239,138 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                         Message = "Duplicate plan name.",
                         Title = NotificationMessage.INFORMATION.ToString(),
                     });
+                    
                     TempData["ManageClubModel"] = Model;
                     TempData["RenderId"] = "Manage";
                     return RedirectToAction("ClubList", "ClubManagement");
                 }
+                if
+           (
+              string.IsNullOrEmpty(Model.BusinessCertificate) ||
+              string.IsNullOrEmpty(Model.Logo) ||
+              string.IsNullOrEmpty(Model.CoverPhoto) ||
+              string.IsNullOrEmpty(Model.Gallery)
+           )
+                {
+
+                    if (Business_Certificate == null || Logo_Certificate == null || CoverPhoto_Certificate == null)
+                    {
+                        bool allowRedirect = false;
+
+                        if (Business_Certificate == null && string.IsNullOrEmpty(Model.BusinessCertificate))
+                        {
+                            ErrorMessage = "Business certificate required";
+
+                            allowRedirect = true;
+                        }
+                        else if (Logo_Certificate == null && string.IsNullOrEmpty(Model.Logo))
+                        {
+                            ErrorMessage = "Logo required";
+                            allowRedirect = true;
+                        }
+                        else if (CoverPhoto_Certificate == null && string.IsNullOrEmpty(Model.CoverPhoto))
+                        {
+                            ErrorMessage = "Cover photo required";
+                            allowRedirect = true;
+                        }
+                        if (allowRedirect)
+                        {
+                            this.AddNotificationMessage(new NotificationModel()
+                            {
+                                NotificationType = NotificationMessage.INFORMATION,
+                                Message = ErrorMessage ?? "Something went wrong. Please try again later.",
+                                Title = NotificationMessage.INFORMATION.ToString(),
+                            });
+                            TempData["ManageClubModel"] = Model;
+                            TempData["RenderId"] = "Manage";
+                            return RedirectToAction("ClubList", "ClubManagement");
+                        }
+                    }
+                }
+
+                bool allowRedirectfile = false;
+                if (Business_Certificate != null)
+                {
+                    var contentType = Business_Certificate.ContentType;
+                    var ext = Path.GetExtension(Business_Certificate.FileName);
+                    if (allowedContentType.Contains(contentType.ToLower()))
+                    {
+
+                        dateTime = DateTime.Now.ToString("yyyyMMddHHmmssffff");
+                        string fileName = "BusinessCertificate_" + dateTime + ext.ToLower();
+                        businessCertificatePath = Path.Combine(Server.MapPath("~/Content/UserUpload/ClubManagement"), fileName);
+                        Model.BusinessCertificate = "/Content/UserUpload/ClubManagement/" + fileName;
+                    }
+                    else
+                    {
+                        this.AddNotificationMessage(new NotificationModel()
+                        {
+                            NotificationType = NotificationMessage.INFORMATION,
+                            Message = "Invalid image format.",
+                            Title = NotificationMessage.INFORMATION.ToString(),
+                        });
+                        allowRedirectfile = true;
+
+                    }
+                }
+
+                if (Logo_Certificate != null)
+                {
+                    var contentType = Logo_Certificate.ContentType;
+                    var ext = Path.GetExtension(Logo_Certificate.FileName);
+                    if (allowedContentType.Contains(contentType.ToLower()))
+                    {
+                        dateTime = DateTime.Now.ToString("yyyyMMddHHmmssffff");
+                        string fileName = "Logo_" + dateTime + ext.ToLower();
+                        LogoPath = Path.Combine(Server.MapPath("~/Content/UserUpload/ClubManagement"), fileName);
+                        Model.Logo = "/Content/UserUpload/ClubManagement/" + fileName;
+                    }
+                    else
+                    {
+                        this.AddNotificationMessage(new NotificationModel()
+                        {
+                            NotificationType = NotificationMessage.INFORMATION,
+                            Message = "Invalid image format.",
+                            Title = NotificationMessage.INFORMATION.ToString(),
+                        });
+                        allowRedirectfile = true;
+
+                    }
+                }
+
+                if (CoverPhoto_Certificate != null)
+                {
+                    var contentType = CoverPhoto_Certificate.ContentType;
+                    var ext = Path.GetExtension(CoverPhoto_Certificate.FileName);
+                    if (allowedContentType.Contains(contentType.ToLower()))
+                    {
+                        dateTime = DateTime.Now.ToString("yyyyMMddHHmmssffff");
+                        string fileName = "CoverPhoto_" + dateTime + ext.ToLower();
+                        coverPhotoPath = Path.Combine(Server.MapPath("~/Content/UserUpload/ClubManagement"), fileName);
+                        Model.CoverPhoto = "/Content/UserUpload/ClubManagement/" + fileName;
+                    }
+                    else
+                    {
+                        this.AddNotificationMessage(new NotificationModel()
+                        {
+                            NotificationType = NotificationMessage.INFORMATION,
+                            Message = "Invalid image format.",
+                            Title = NotificationMessage.INFORMATION.ToString(),
+                        });
+                        allowRedirectfile = true;
+
+                    }
+                }
+                if (allowRedirectfile == true)
+                {
+                    //Model.BusinessCertificate =  Business_Certificate.FileName;
+                    //Model.CoverPhoto =  CoverPhoto_Certificate.FileName;
+                    //Model.Logo=  Logo_Certificate.FileName;
+                    TempData["ManageClubModel"] = Model;
+                    TempData["RenderId"] = "Manage";
+                    return RedirectToAction("ClubList", "ClubManagement");
+                }
+
                 ManageClubCommon commonModel = Model.MapObject<ManageClubCommon>();
                 commonModel.ActionUser = ApplicationUtilities.GetSessionValue("Username").ToString();
                 commonModel.ActionIP = ApplicationUtilities.GetIP();
@@ -355,6 +385,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                             Message = "Invalid club details.",
                             Title = NotificationMessage.INFORMATION.ToString(),
                         });
+                       
                         TempData["ManageClubModel"] = Model;
                         TempData["RenderId"] = "Manage";
                         return RedirectToAction("ClubList", "ClubManagement");
@@ -387,6 +418,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                         Message = dbResponse.Message ?? "Failed",
                         Title = dbResponse.Code == ResponseCode.Success ? NotificationMessage.SUCCESS.ToString() : NotificationMessage.INFORMATION.ToString()
                     });
+
                     return RedirectToAction("ClubList", "ClubManagement");
                 }
                 else
@@ -397,6 +429,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                         Message = dbResponse.Message ?? "Failed",
                         Title = NotificationMessage.INFORMATION.ToString()
                     });
+                   
                     TempData["ManageClubModel"] = Model;
                     TempData["RenderId"] = "Manage";
                     return RedirectToAction("ClubList", "ClubManagement");
@@ -416,8 +449,33 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             var errors = ModelState.Where(x => x.Value.Errors.Count > 0).Select(x => new { x.Key }).ToList();
             TempData["ManageClubModel"] = Model;
             TempData["RenderId"] = "Manage";
+            
             return RedirectToAction("ClubList", "ClubManagement");
         }
+
+
+        //public JsonResult GetPostalCodeInfo(string postalCode)
+        //{
+           
+        //    HttpResponseMessage response = _httpClient.GetAsync($"https://postal-codes-jp.azurewebsites.net/api/PostalCodes/{postalCode}").Result;
+
+
+        //    if (response.IsSuccessStatusCode)
+        //    {
+
+        //        string jsonResponse = response.Content.ReadAsStringAsync().Result;
+
+        //        // Return the JSON result
+        //        return new JsonRequestBehavior(jsonResponse);
+        //    }
+        //    else
+        //    {
+
+        //        return new JsonResult(new { error = "Error occurred while fetching data." });
+        //    }
+        //}
+
+
 
         [HttpGet]
         public ActionResult ClubDetails(string AgentId)

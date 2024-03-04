@@ -189,7 +189,7 @@ namespace CRS.ADMIN.APPLICATION.Models.ClubManagement
         [RegularExpression(@"^(?:100|\d{1,2})$", ErrorMessage = "Tax must be a number between 0 and 100.")]
         public string Tax { get; set; }
         [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
-        [RegularExpression(@"^\d{3}-\d{4}$", ErrorMessage = "Postal Code contain 3 number before dash and 4 number after dash.")]
+        [RegularExpression(@"^\d{3}-\d{4}$", ErrorMessage = "Invalid Postal Code")]
         public string PostalCode { get; set; }
         [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
         public string Prefecture { get; set; }

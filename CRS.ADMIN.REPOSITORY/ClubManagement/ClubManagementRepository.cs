@@ -46,7 +46,7 @@ namespace CRS.ADMIN.REPOSITORY.ClubManagement
                         Location = _DAO.ParseColumnValue(item, "Location").ToString(),
                         CreatedDate = _DAO.ParseColumnValue(item, "CreatedDate").ToString(),
                         UpdatedDate = _DAO.ParseColumnValue(item, "UpdatedDate").ToString(),
-                        Rank = _DAO.ParseColumnValue(item, "Rank").ToString(),
+                        Rank =!string.IsNullOrEmpty( _DAO.ParseColumnValue(item, "Rank").ToString())? _DAO.ParseColumnValue(item, "Rank").ToString() :"",
                         Ratings = _DAO.ParseColumnValue(item, "Ratings").ToString(),
                         ClubLogo = _DAO.ParseColumnValue(item, "ClubLogo").ToString(),
                         ClubCategory = _DAO.ParseColumnValue(item, "ClubCategory").ToString(),
@@ -134,19 +134,27 @@ namespace CRS.ADMIN.REPOSITORY.ClubManagement
                 int i = 0;
                 if (dbResponse1.Rows.Count > 0)
                 {
-
-                    foreach (DataRow item in dbResponse1.Rows.Cast<DataRow>()
-                                .Where(row => _DAO.ParseColumnValue(row, "PlanListId").ToString() == Convert.ToString(i)))
+                    var code = String.Empty;
+                    
+                    foreach (DataRow item in dbResponse1.Rows)
                     {
+                         code = _DAO.ParseColumnValue(item, "Code").ToString();
+                       
+                    }
+                    if (code=="0")
+                    {
+                        foreach (DataRow item in dbResponse1.Rows.Cast<DataRow>()
+                                                       .Where(row => _DAO.ParseColumnValue(row, "PlanListId").ToString() == Convert.ToString(i)))
+                        {
 
 
-                        List<planIdentityDataCommon> filteredPlan = new List<planIdentityDataCommon>();
+                            List<planIdentityDataCommon> filteredPlan = new List<planIdentityDataCommon>();
                             // Iterate through the filtered rows and add them to the list
                             foreach (DataRow row in dbResponse1.Rows.Cast<DataRow>()
                                 .Where(row => _DAO.ParseColumnValue(row, "PlanListId").ToString() == Convert.ToString(i)))
                             {
-                            //if (_DAO.ParseColumnValue(item, "PlanListId").ToString() == Convert.ToString(i))
-                            //{
+                                //if (_DAO.ParseColumnValue(item, "PlanListId").ToString() == Convert.ToString(i))
+                                //{
                                 filteredPlan.Add(new planIdentityDataCommon()
                                 {
                                     StaticDataValue = _DAO.ParseColumnValue(row, "StaticDataValue").ToString(),
@@ -161,16 +169,18 @@ namespace CRS.ADMIN.REPOSITORY.ClubManagement
                                     IdentityLabel = culture.ToLower() == "en" ? _DAO.ParseColumnValue(row, "English").ToString() : _DAO.ParseColumnValue(row, "japanese").ToString(),
                                 });
 
-                                                             
 
+
+                            }
+                            response.AddRange(filteredPlan);
+                            listcomm.Add(new PlanListCommon { PlanIdentityList = filteredPlan });
+                            i++;
                         }
-                        response.AddRange(filteredPlan);
-                        listcomm.Add(new PlanListCommon { PlanIdentityList = filteredPlan });
+
                         i++;
                     }
-                    
-                    i++;
-                    }
+                  
+                }
 
                     // Add all items from the filtered list to PlanIdentityList
 

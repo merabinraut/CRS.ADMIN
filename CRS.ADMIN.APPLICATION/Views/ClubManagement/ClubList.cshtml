@@ -429,7 +429,6 @@
 
         // Add an event listener to the file input
         fileInput.addEventListener("change", function () {
-            debugger;
             // Check if a file has been selected
             if (fileInput.files.length > 0) {
                 // Display the name of the selected file
@@ -439,6 +438,15 @@
                 fileNameDisplay.textContent = "";
             }
         });
+
+        document.getElementById('file_input_logo').addEventListener('change', function (event) {
+            debugger;
+            const file = event.target.files[0];
+            console.log('Selected file name:', file.name);
+            console.log('Selected file type:', file.type);
+            console.log('Selected file size:', file.size);
+        });
+
     </script>
     <script>
         $(document).ready(function () {
@@ -508,7 +516,6 @@
                 document.getElementById('tagInput5').style.display = 'none';
             }
         });
-        debugger;
         const steps = document.querySelectorAll('.profile-steps');
         const nextButton = document.getElementById('nextBtn');
         const saveData = document.getElementById('saveData');
@@ -637,7 +644,6 @@
             });
     </script>
     <script>
-        debugger;
         var optionCount = $('select[name="PlanDetailList[0].PlanIdentityList[0].IdentityDescription"] option').length;
         var plansDiv = document.querySelectorAll('#container .plans');
         $('.default_select').select2({
@@ -651,9 +657,7 @@
             plansDiv.forEach(function (planDiv, index) {
                 // Get all select elements within the current row
                 var selects = planDiv.querySelectorAll('select');
-                debugger;
                 selects.forEach(function (select, selectIndex) {
-                    debugger;
                     // Construct unique ID for each select element
                     var selectId = 'select_' + index + '_' + selectIndex;
                     select.id = selectId;
@@ -686,14 +690,11 @@
 
 
         function getRowValues() {
-            debugger;
             var rowsData = [];
             var plansDivs = document.querySelectorAll('#container .plans');
             var sv = "";
             var name=""
             plansDivs.forEach(function (plansDiv) {
-                debugger;
-
                 var staticDataInputs = plansDiv.querySelectorAll('.StaticDataValue');
                 var nameInputs = plansDiv.querySelectorAll('.name');
                 var descriptionInputs = plansDiv.querySelectorAll('.w-full');
@@ -714,25 +715,18 @@
 
                 rowsData.push(rowData);
             });
-            debugger;
             var jsonData = JSON.stringify(rowsData);
             $("#data").val(jsonData)
             $('#ManageClubForm').submit();
 
         }
-        debugger;
 
         var selectedOptions = {};
         var isdocready = false;
         var firstrow = false;
  
         function repeatContent() {
-            debugger;
-
             if (plansDivsCounts < optionCount) {
-
-
-
                 var originalContent = document.getElementById('container');
                 var plansDivs = document.querySelectorAll('#container .plans');
                 var plansDivsCount = plansDivs.length;
