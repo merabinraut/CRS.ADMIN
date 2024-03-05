@@ -487,3 +487,4 @@ INSERT INTO tbl_static_data ([StaticDataType], [StaticDataLabel], [StaticDataVal
 VALUES
 (  37, N'Schedule', '2', 'Schedule', N'スケジュール', NULL, NULL, NULL, 'A', 'kiran.acharya', N'2024-02-12T16:51:31.953' )
 
+
