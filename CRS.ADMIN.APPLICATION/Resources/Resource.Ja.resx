@@ -274,6 +274,10 @@
     <value>予約済み</value>
     <comment>Dashboard</comment>
   </data>
+  <data name="Building &amp; Room No" xml:space="preserve">
+    <value>建物と部屋番号</value>
+    <comment>ClubManagement</comment>
+  </data>
   <data name="Business Cerfificate" xml:space="preserve">
     <value>会社番号証明書</value>
     <comment>Club Management</comment>
@@ -296,6 +300,10 @@
     <value>種別名</value>
     <comment>Commission Management</comment>
   </data>
+  <data name="CEO Full Name" xml:space="preserve">
+    <value>CEOフルネーム</value>
+    <comment>ClubManagement</comment>
+  </data>
   <data name="Choose Images" xml:space="preserve">
     <value>画像の選択</value>
     <comment>Location Management</comment>
@@ -304,6 +312,10 @@
     <value>選ぶ</value>
     <comment>Gallery Management</comment>
   </data>
+  <data name="City" xml:space="preserve">
+    <value>市</value>
+    <comment>ClubManagement</comment>
+  </data>
   <data name="Clear All" xml:space="preserve">
     <value>クリア</value>
     <comment>Roles Management</comment>
@@ -311,6 +323,10 @@
   <data name="Club" xml:space="preserve">
     <value>クラブ</value>
     <comment>Dashboard</comment>
+  </data>
+  <data name="Club Info" xml:space="preserve">
+    <value>クラブ情報</value>
+    <comment>ClubManagement</comment>
   </data>
   <data name="Club List" xml:space="preserve">
     <value>クラブリスト</value>
@@ -379,6 +395,10 @@
   <data name="Commission Type" xml:space="preserve">
     <value>コミッションタイプ</value>
     <comment>Commission Management</comment>
+  </data>
+  <data name="Companion Fee" xml:space="preserve">
+    <value>同伴料金</value>
+    <comment>ClubManagement</comment>
   </data>
   <data name="Company Name" xml:space="preserve">
     <value>会社名</value>
@@ -487,6 +507,10 @@
     <value>クラブ説明</value>
     <comment>Club Management</comment>
   </data>
+  <data name="Designation Fee" xml:space="preserve">
+    <value>指名料金</value>
+    <comment>ClubManagement</comment>
+  </data>
   <data name="Display Order" xml:space="preserve">
     <value>表示順</value>
     <comment>Recommendation Management-&gt;Manage group</comment>
@@ -494,6 +518,10 @@
   <data name="Display Page" xml:space="preserve">
     <value>表示ページ</value>
     <comment>Recommendation Management</comment>
+  </data>
+  <data name="Drink" xml:space="preserve">
+    <value>ドリンク</value>
+    <comment>ClubManagement</comment>
   </data>
   <data name="Due Payments" xml:space="preserve">
     <value>支払い期限</value>
@@ -560,6 +588,10 @@
     <value>エクスポート</value>
     <comment>Dashboard</comment>
   </data>
+  <data name="Extension Fee" xml:space="preserve">
+    <value>延長料金</value>
+    <comment>ClubManagement</comment>
+  </data>
   <data name="Facebook" xml:space="preserve">
     <value>フェイスブック</value>
     <comment>Affiliate Management</comment>
@@ -615,6 +647,10 @@
     <value>ゴルドー</value>
     <comment>Dashboard</comment>
   </data>
+  <data name="Google Map" xml:space="preserve">
+    <value>グーグルマップ</value>
+    <comment>ClubManagement</comment>
+  </data>
   <data name="Grand Total" xml:space="preserve">
     <value>総計</value>
     <comment>Payment Management</comment>
@@ -650,6 +686,10 @@
   <data name="Hide Host Info" xml:space="preserve">
     <value>ホスト情報を非表示にする</value>
     <comment>Host Management</comment>
+  </data>
+  <data name="Holiday" xml:space="preserve">
+    <value>店休日</value>
+    <comment>ClubManagement</comment>
   </data>
   <data name="Host Info" xml:space="preserve">
     <value>ホスト情報</value>
@@ -726,6 +766,10 @@
     <value>六月</value>
     <comment>Dashboard</comment>
   </data>
+  <data name="LandlineNumber" xml:space="preserve">
+    <value>固定電話番号</value>
+    <comment>ClubManagement</comment>
+  </data>
   <data name="Language" xml:space="preserve">
     <value>言語</value>
     <comment>Language Preference</comment>
@@ -742,9 +786,17 @@
     <value>苗字</value>
     <comment>Club Management</comment>
   </data>
+  <data name="Last Order Time" xml:space="preserve">
+    <value>ラストオーダー時間</value>
+    <comment>ClubManagement</comment>
+  </data>
   <data name="Last updated on" xml:space="preserve">
     <value>最終更新日</value>
     <comment>Security</comment>
+  </data>
+  <data name="LastEntryTime" xml:space="preserve">
+    <value>最終入店時間</value>
+    <comment>ClubManagement</comment>
   </data>
   <data name="Lastname Placeholder" xml:space="preserve">
     <value>姓を入力してください</value>
@@ -1045,6 +1097,14 @@
     <value>プラン</value>
     <comment>Payment Management</comment>
   </data>
+  <data name="Plan Fee" xml:space="preserve">
+    <value>プラン金</value>
+    <comment>Club Management</comment>
+  </data>
+  <data name="Plan list" xml:space="preserve">
+    <value>プランリスト</value>
+    <comment>ClubManagement</comment>
+  </data>
   <data name="Plan Management" xml:space="preserve">
     <value>プラン管理</value>
     <comment>Plan Management</comment>
@@ -1065,6 +1125,14 @@
     <value>プランタイプ</value>
     <comment>Plan Management</comment>
   </data>
+  <data name="PlanFee" xml:space="preserve">
+    <value>プラン金</value>
+    <comment>ClubManagement</comment>
+  </data>
+  <data name="Plans" xml:space="preserve">
+    <value>プラン</value>
+    <comment>ClubManagement</comment>
+  </data>
   <data name="Platforms" xml:space="preserve">
     <value>ホーム</value>
     <comment>Affiliate Management</comment>
@@ -1076,6 +1144,14 @@
   <data name="Position" xml:space="preserve">
     <value>位置</value>
     <comment>Host Management</comment>
+  </data>
+  <data name="Postal Code" xml:space="preserve">
+    <value>郵便番号</value>
+    <comment>ClubManagement</comment>
+  </data>
+  <data name="Prefecture" xml:space="preserve">
+    <value>県</value>
+    <comment>ClubManagement</comment>
   </data>
   <data name="Premium" xml:space="preserve">
     <value>プレミアム</value>
@@ -1162,6 +1238,10 @@
   <data name="RecommendationSupportMsg" xml:space="preserve">
     <value>クラブおよびホストのオススメ情報を管理する</value>
     <comment>Recommendation Management</comment>
+  </data>
+  <data name="Regular Fee" xml:space="preserve">
+    <value>通常料金</value>
+    <comment>ClubManagement</comment>
   </data>
   <data name="Reject" xml:space="preserve">
     <value>キャンセル</value>
@@ -1370,6 +1450,10 @@
     <value>状態</value>
     <comment>Customer Management</comment>
   </data>
+  <data name="Street" xml:space="preserve">
+    <value>町</value>
+    <comment>ClubManagement</comment>
+  </data>
   <data name="Stripe" xml:space="preserve">
     <value>ストライプ</value>
     <comment>Dashboard</comment>
@@ -1384,6 +1468,10 @@
   <data name="Tag" xml:space="preserve">
     <value>鬼ごっこ</value>
     <comment>Club Management</comment>
+  </data>
+  <data name="Tax" xml:space="preserve">
+    <value>税金</value>
+    <comment>ClubManagement</comment>
   </data>
   <data name="Thursday" xml:space="preserve">
     <value>木</value>
@@ -1547,6 +1635,14 @@
   <data name="Welcome back" xml:space="preserve">
     <value>おかえり</value>
     <comment>Dashboard</comment>
+  </data>
+  <data name="Working Hours (From)" xml:space="preserve">
+    <value>開店時間</value>
+    <comment>ClubManagement</comment>
+  </data>
+  <data name="Working Hours (To)" xml:space="preserve">
+    <value>閉店時間</value>
+    <comment>ClubManagement</comment>
   </data>
   <data name="Year" xml:space="preserve">
     <value>年</value>

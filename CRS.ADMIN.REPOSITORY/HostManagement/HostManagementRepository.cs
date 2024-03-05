@@ -119,20 +119,19 @@ namespace CRS.ADMIN.REPOSITORY.HostManagement
             SQL += ",@ActionPlatform=" + _DAO.FilterString(Request.ActionPlatform);
             SQL += ",@ImagePath=" + _DAO.FilterString(Request.ImagePath);
             SQL += ",@Line=" + _DAO.FilterString(Request.Line);
-            SQL += ",@Address=N" + _DAO.FilterString(Request.Address);
-            SQL += ",@HostIntroduction=N" + _DAO.FilterString(Request.HostIntroduction);
+            SQL += string.IsNullOrEmpty(Request.Address) ? ",@Address=" + _DAO.FilterString(Request.Address) : ",@Address=N" + _DAO.FilterString(Request.Address); 
+            SQL += string.IsNullOrEmpty(Request.HostIntroduction) ? ",@HostIntroduction=" + _DAO.FilterString(Request.HostIntroduction) : ",@HostIntroduction=N" + _DAO.FilterString(Request.HostIntroduction);  
             Response = _DAO.ParseCommonDbResponse(SQL);
 
             foreach (var item in Request.HostIdentityDataModel)
             {
                 var SQL2 = "EXEC sproc_host_identity_detail_management @Flag = 'mhid'";
                 SQL2 += ",@ClubId=" + _DAO.FilterString(Request.AgentId);
-                SQL2 += !string.IsNullOrEmpty(Request.HostId) ? ",@HostId=" + _DAO.FilterString(Request.HostId) : _DAO.FilterString(Response.Extra1);
+                SQL2 += !string.IsNullOrEmpty(Request.HostId) ? ",@HostId=" + _DAO.FilterString(Request.HostId) : ",@HostId=" + _DAO.FilterString(Response.Extra1);
                 SQL2 += ",@IdentityType=" + _DAO.FilterString(item.IdentityType);
                 SQL2 += ",@IdentityValue=" + _DAO.FilterString(item.IdentityValue);
                 SQL2 += !string.IsNullOrEmpty(item.IdentityDDLType) ? ",@IdentityDDLType=" + _DAO.FilterString(item.IdentityDDLType) : null;
-                SQL2 += ",@IdentityDescription=N" + _DAO.FilterString(item.IdentityDescription);
-                SQL2 += ",@ActionUser=N" + _DAO.FilterString(Request.ActionUser);
+                SQL2 += string.IsNullOrEmpty(item.IdentityDescription) ? ",@IdentityDescription=" + _DAO.FilterString(item.IdentityDescription) : ",@IdentityDescription=N" + _DAO.FilterString(item.IdentityDescription); 
                 SQL2 += ",@ActionIP=" + _DAO.FilterString(Request.ActionIP);
                 SQL2 += ",@ActionPlatform=" + _DAO.FilterString(Request.ActionPlatform);
                 _DAO.ParseCommonDbResponse(SQL2);

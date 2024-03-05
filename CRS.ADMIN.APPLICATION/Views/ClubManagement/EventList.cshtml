@@ -168,7 +168,11 @@
                                                                             </td>
                                                                             <td class="p-[12px]">
                                                                                 <div class="w-max">
-                                                                                    <img class="w-[32px] h-[32px] rounded-full" src="@item.Image" />
+                                                                                    @if (!string.IsNullOrEmpty(@item.Image))
+                                                                                    {
+                                                                                        <img class="w-[32px] h-[32px] rounded-full" src="@item.Image" />
+                                                                                    }
+
                                                                                 </div>
                                                                             </td>
                                                                             <td class="p-[12px]">

@@ -1,6 +1,7 @@
 ﻿using CRS.ADMIN.SHARED;
 using CRS.ADMIN.SHARED.ClubManagement;
 using CRS.ADMIN.SHARED.PaginationManagement;
+using System;
 using System.Collections.Generic;
 
 namespace CRS.ADMIN.REPOSITORY.ClubManagement
@@ -8,10 +9,12 @@ namespace CRS.ADMIN.REPOSITORY.ClubManagement
     public interface IClubManagementRepository
     {
         List<ClubListCommon> GetClubList(PaginationFilterCommon Request);
-        ClubDetailCommon GetClubDetails(string AgentId);
+        ClubDetailCommon GetClubDetails(string AgentId, String culture = "");
         CommonDbResponse ManageClub(ManageClubCommon Request);
         CommonDbResponse ManageClubStatus(string AgentId, string Status, Common Request);
         CommonDbResponse ResetClubUserPassword(string AgentId, string UserId, Common Request);
+        List<PlanListCommon> GetClubPlanIdentityList(string culture);
+        List<planIdentityDataCommon> GetClubPlanIdentityListAddable(string culture);
 
         #region "Manage Tag"
         CommonDbResponse ManageTag(ManageTagCommon request);

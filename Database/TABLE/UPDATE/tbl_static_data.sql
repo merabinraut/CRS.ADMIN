@@ -3,8 +3,6 @@
 update dbo.tbl_static_data set staticdatalabel = 'on site payment', staticdatavalue = 1, additionalvalue1 =n'現地で支払う' where staticdatatype = 10 and id = 49
 update dbo.tbl_static_data set staticdatalabel = 'stripe payment', staticdatavalue = 2, additionalvalue1 =n'クレジットカード' where staticdatatype = 10 and id = 51
 
-UPDATE dbo.tbl_static_data SET AdditionalValue1 = '161 AND 165' WHERE StaticDataType = 20 AND StaticDataValue = 1
-UPDATE dbo.tbl_static_data SET AdditionalValue1 = '166 AND 170' WHERE StaticDataType = 20 AND StaticDataValue = 2
-UPDATE dbo.tbl_static_data SET AdditionalValue1 = '171 AND 175' WHERE StaticDataType = 20 AND StaticDataValue = 3
-UPDATE dbo.tbl_static_data SET AdditionalValue1 = '176 AND 180' WHERE StaticDataType = 20 AND StaticDataValue = 4
-UPDATE dbo.tbl_static_data SET AdditionalValue1 = '181 AND 185' WHERE StaticDataType = 20 AND StaticDataValue = 5
+
+	update tbl_static_data set StaticDataLabel='On site payment' ,StaticDataValue='1', AdditionalValue1=N'現地で支払う' where id =49
+				update tbl_static_data set StaticDataLabel='Stripe payment' ,StaticDataValue='2', AdditionalValue1=N'クレジットカード' where id =51

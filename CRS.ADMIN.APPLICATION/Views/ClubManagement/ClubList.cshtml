@@ -382,46 +382,46 @@
             }
         });
     </script>
-<script>
-    const checkbox5 = document.getElementById('tag5');
-    const tagInput5 = document.getElementById('tagInput5');
+    <script>
+        const checkbox5 = document.getElementById('tag5');
+        const tagInput5 = document.getElementById('tagInput5');
 
-    checkbox5.addEventListener('change', function () {
-        if (this.checked) {
-            tagInput5.style.display = 'block';
-            $('#Tag5Status').val('A');
-        } else {
-            tagInput5.style.display = 'none';
-            $('#Tag5Status').val('B');
-        }
-    });
-</script>
-<script>
-    $(document).ready(function () {
-        $('.availability-checkbox').change(function () {
-            var checkedValuesContainer = $('#checkedValuesContainer');
-            checkedValuesContainer.empty();
-            $('.availability-checkbox').each(function () {
-                var id = $(this).attr('id');
-                var staticValue = id.split('_').pop();
-                if ($(this).is(':checked')) {
-                    var inputField = $('<input>')
-                        .attr('type', 'hidden')
-                        .attr('name', 'checkedValues')
-                        .val(staticValue + ',A'); 
-                    checkedValuesContainer.append(inputField);
-                } else {
-                    var inputField = $('<input>')
-                        .attr('type', 'hidden')
-                        .attr('name', 'checkedValues')
-                        .val(staticValue + ',B'); 
-                    checkedValuesContainer.append(inputField);
-                }
+        checkbox5.addEventListener('change', function () {
+            if (this.checked) {
+                tagInput5.style.display = 'block';
+                $('#Tag5Status').val('A');
+            } else {
+                tagInput5.style.display = 'none';
+                $('#Tag5Status').val('B');
+            }
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+            $('.availability-checkbox').change(function () {
+                var checkedValuesContainer = $('#checkedValuesContainer');
+                checkedValuesContainer.empty();
+                $('.availability-checkbox').each(function () {
+                    var id = $(this).attr('id');
+                    var staticValue = id.split('_').pop();
+                    if ($(this).is(':checked')) {
+                        var inputField = $('<input>')
+                            .attr('type', 'hidden')
+                            .attr('name', 'checkedValues')
+                            .val(staticValue + ',A');
+                        checkedValuesContainer.append(inputField);
+                    } else {
+                        var inputField = $('<input>')
+                            .attr('type', 'hidden')
+                            .attr('name', 'checkedValues')
+                            .val(staticValue + ',B');
+                        checkedValuesContainer.append(inputField);
+                    }
+                });
             });
         });
-    });
 
-</script>
+    </script>
     <script>
         // Get references to the file input and file name display element
         const fileInput = document.getElementById("file_input");
@@ -438,6 +438,15 @@
                 fileNameDisplay.textContent = "";
             }
         });
+
+        document.getElementById('file_input_logo').addEventListener('change', function (event) {
+            debugger;
+            const file = event.target.files[0];
+            console.log('Selected file name:', file.name);
+            console.log('Selected file type:', file.type);
+            console.log('Selected file size:', file.size);
+        });
+
     </script>
     <script>
         $(document).ready(function () {
@@ -507,7 +516,6 @@
                 document.getElementById('tagInput5').style.display = 'none';
             }
         });
-
         const steps = document.querySelectorAll('.profile-steps');
         const nextButton = document.getElementById('nextBtn');
         const saveData = document.getElementById('saveData');
@@ -556,13 +564,14 @@
                 nextButton.style.display = 'none';
                 //saveData.style.display = 'block';
                 nextButton.textContent = '@CRS.ADMIN.APPLICATION.Resources.Resource.Save_Changes';
+                submitButton.style.display = 'block';
                 nextButton.setAttribute('type', 'button');
             } else {
                 nextButton.style.display = 'block';
-                //saveData.style.display = 'none';
+                submitButton.style.display = 'none';
                 nextButton.textContent = '@CRS.ADMIN.APPLICATION.Resources.Resource.Next';
                 nextButton.setAttribute('type', 'button');
-                $('')
+
             }
         };
 
@@ -634,4 +643,219 @@
                 LoadPagination(page_size, total_data, start_index_val, URL);
             });
     </script>
+    <script>
+        var optionCount = $('select[name="PlanDetailList[0].PlanIdentityList[0].IdentityDescription"] option').length;
+        var plansDiv = document.querySelectorAll('#container .plans');
+        $('.default_select').select2({
+            
+        });
+        var plansDivsCounts = plansDiv.length;
+        if (plansDivsCounts>optionCount) {
+            document.getElementById("addrow").disabled = true;
+        }
+        function DisableDropdownoption() {
+            plansDiv.forEach(function (planDiv, index) {
+                // Get all select elements within the current row
+                var selects = planDiv.querySelectorAll('select');
+                selects.forEach(function (select, selectIndex) {
+                    // Construct unique ID for each select element
+                    var selectId = 'select_' + index + '_' + selectIndex;
+                    select.id = selectId;
+
+                    // Get the selected value of the current select element
+                    var selectedValue = select.value;
+
+                    // Iterate over all rows again to find the selected value in other rows
+                    plansDiv.forEach(function (otherPlanDiv, otherIndex) {
+                        // Exclude the current row
+                        if (otherIndex !== index) {
+                            // Find select elements in other rows
+                            var otherSelects = otherPlanDiv.querySelectorAll('select');
+
+                            otherSelects.forEach(function (otherSelect) {
+                                // If the selected value matches, disable the option
+                                if (otherSelect.value === selectedValue) {
+                                    // Disable the option
+                                    otherSelect.disabled = true;
+                                } else {
+                                    // Enable the option
+                                    otherSelect.disabled = false;
+                                }
+                            });
+                        }
+                    });
+                });
+            });
+ }
+
+
+        function getRowValues() {
+            var rowsData = [];
+            var plansDivs = document.querySelectorAll('#container .plans');
+            var sv = "";
+            var name=""
+            plansDivs.forEach(function (plansDiv) {
+                var staticDataInputs = plansDiv.querySelectorAll('.StaticDataValue');
+                var nameInputs = plansDiv.querySelectorAll('.name');
+                var descriptionInputs = plansDiv.querySelectorAll('.w-full');
+
+                var rowData = [];
+
+                for (var i = 0; i < staticDataInputs.length; i++) {
+                    var staticDataValue = staticDataInputs[i].value;
+                    var nameValue = nameInputs[i].value;
+                    var descriptionValue = descriptionInputs[i].value;
+
+                    rowData.push({
+                        StaticDataValue: staticDataValue,
+                        name: nameValue,
+                        IdentityDescription: descriptionValue
+                    });
+                }
+
+                rowsData.push(rowData);
+            });
+            var jsonData = JSON.stringify(rowsData);
+            $("#data").val(jsonData)
+            $('#ManageClubForm').submit();
+
+        }
+
+        var selectedOptions = {};
+        var isdocready = false;
+        var firstrow = false;
+ 
+        function repeatContent() {
+            if (plansDivsCounts < optionCount) {
+                var originalContent = document.getElementById('container');
+                var plansDivs = document.querySelectorAll('#container .plans');
+                var plansDivsCount = plansDivs.length;
+                var rowcouunt = parseInt(plansDivsCount)
+                var html = "";
+                for (var i = 0; i < @Model.ManageClubModel.PlanDetailList[0].PlanIdentityList.Count; i++) {
+                    ids = rowcouunt + "_large";
+                    var PlanList = @Html.Raw(Json.Encode(Model.ManageClubModel.PlanDetailList[0]));
+                    var id = rowcouunt + "_PlanList_IdentityDescription_" + i;
+                    if (PlanList.PlanIdentityList[i].inputtype.toLowerCase() === "dropdown") {
+                        html += "<div class='input-field-common'>";
+                        html += "<label class='block mb-[12px] text-sm font-medium text-secondary-text-2'>";
+                        html += PlanList.PlanIdentityList[i].IdentityLabel;
+                        html += "</label>";
+                        html += "<input type='hidden'  name='PlanDetailList[" + rowcouunt + "].PlanIdentityList[" + i + "].StaticDataValue' value='" + PlanList.PlanIdentityList[i].StaticDataValue + "' class='StaticDataValue' />";
+                        html += "<input type='hidden' name='PlanDetailList[" + rowcouunt + "].PlanIdentityList[" + i + "].name' value='" + PlanList.PlanIdentityList[i].name + "' class='name' />";
+                        html += "<input type='hidden'  name='PlanDetailList[" + rowcouunt + "].PlanIdentityList[" + i + "].inputtype' value='" + PlanList.PlanIdentityList[i].inputtype + "' class='inputtype' />";
+                        html += "<input type='hidden'  name='PlanDetailList[" + rowcouunt + "].PlanIdentityList[" + i + "].IdentityLabel' value='" + PlanList.PlanIdentityList[i].IdentityLabel + "' class='IdentityLabel' />";
+                        html += "<select id='" + ids + "' name='PlanDetailList[" + rowcouunt + "].PlanIdentityList[" + i + "].IdentityDescription' class='default_select select-common block w-full' style='width: 100%;'>";
+                         @foreach (KeyValuePair<string, string> item in ViewBag.PlansList as Dictionary<string, string>)
+                       {
+                        <text>
+                          html += "<option value='@item.Key'>@item.Value</option>";
+                        </text>
+
+                        }
+                        // Add options here...
+                        html += "</select>";
+                        html += "</div>";
+                    } else if (PlanList.PlanIdentityList[i].inputtype.toLowerCase() === "textbox") {
+                        html += "<div class='input-field-common'>";
+                        html += "<label class='block mb-[12px] text-sm font-medium text-secondary-text-2'>";
+                        html += PlanList.PlanIdentityList[i].IdentityLabel;
+                        html += "</label>";
+                        html += "<input type='hidden' name='PlanDetailList[" + rowcouunt + "].PlanIdentityList[" + i + "].StaticDataValue' value='" + PlanList.PlanIdentityList[i].StaticDataValue + "' class='StaticDataValue' />";
+                        html += "<input type='hidden' name='PlanDetailList[" + rowcouunt + "].PlanIdentityList[" + i + "].name' value='" + PlanList.PlanIdentityList[i].name + "' class='name' />";
+                        html += "<input type='hidden'  name='PlanDetailList[" + rowcouunt + "].PlanIdentityList[" + i + "].inputtype' value='" + PlanList.PlanIdentityList[i].inputtype + "' class='inputtype' />";
+                        html += "<input type='hidden'  name='PlanDetailList[" + rowcouunt + "].PlanIdentityList[" + i + "].IdentityLabel' value='" + PlanList.PlanIdentityList[i].IdentityLabel + "' class='IdentityLabel' />";
+                        html += "<input type='text' name='PlanDetailList[" + rowcouunt + "].PlanIdentityList[" + i + "].IdentityDescription' class='w-full' autocomplete='off' maxlength='100' />";
+                        if (PlanList.PlanIdentityList[i].IdentityDescription != null) {
+
+                               html += "<span class='error'>" + PlanList.PlanIdentityList[i].IdentityDescription + "</span>";
+
+                        }
+
+                       // html += "<span class='error'>" + PlanList.PlanIdentityList[i].IdentityDescription + "</span>";
+                        html += "</div>";
+                    } else if (PlanList.PlanIdentityList[i].inputtype.toLowerCase() === "time") {
+                        html += "<div class='input-field-common'>";
+                        html += "<label for='time' class='block mb-[12px] text-sm font-medium text-secondary-100'>";
+                        html += PlanList.PlanIdentityList[i].IdentityLabel;
+                        html += "</label>";
+                        html += "<input type='hidden' name='PlanDetailList[" + rowcouunt + "].PlanIdentityList[" + i + "].StaticDataValue' value='" + PlanList.PlanIdentityList[i].StaticDataValue + "' class='StaticDataValue' />";
+                        html += "<input type='hidden' name='PlanDetailList[" + rowcouunt + "].PlanIdentityList[" + i + "].name' value='" + PlanList.PlanIdentityList[i].name + "' class='name' />";
+                        html += "<input type='hidden'  name='PlanDetailList[" + rowcouunt + "].PlanIdentityList[" + i + "].inputtype' value='" + PlanList.PlanIdentityList[i].inputtype + "' class='inputtype' />";
+                        html += "<input type='hidden'  name='PlanDetailList[" + rowcouunt + "].PlanIdentityList[" + i + "].IdentityLabel' value='" + PlanList.PlanIdentityList[i].IdentityLabel + "' class='IdentityLabel' />";
+                        html += "<input type='time' name='PlanDetailList[" + rowcouunt + "].PlanIdentityList[" + i + "].IdentityDescription' class='w-full' placeholder='HH:MM' autocomplete='off' maxlength='30' />";
+                        if (PlanList.PlanIdentityList[i].IdentityDescription != null) {
+
+                            html += "<span class='error'>" + PlanList.PlanIdentityList[i].IdentityDescription + "</span>";
+
+                        }
+                        // html += "<span class='error'>" + PlanList.PlanIdentityList[i].IdentityDescription + "</span>";
+                        html += "</div>";
+                    }
+                }
+                var htmlToInsert =
+
+                    '<style>'+
+                    '.select2-container--default .select2-selection--single {'+
+                        'height: 44px !important;'+
+                 '}' +
+                 '.input-field-common .error {'+
+                    'color: var(--error);'+
+                    'font-size: 12px;'+
+                    'font-style: normal;'+
+                    'font-weight: 500;'+
+                    'margin-top: 8px;'+
+                '}' +
+                '</style>'+
+                    '<!-- for plan last order and last entry  -->' +
+                    ' <div class="plans">' +
+                    '<div class="grid grid-cols-3 gap-x-4 gap-y-5">' +
+                    html +
+                    '</div>' +
+                    '</div>' +
+                    '<br />';
+
+                originalContent.insertAdjacentHTML('beforeend', htmlToInsert);
+                var id = rowcouunt + "_large";
+                var selector = '#' + id;
+                $(selector).select2();
+                $(".error").text("");
+                
+                if (optionCount == parseInt( rowcouunt + 1)) {
+                    document.getElementById("addrow").disabled = true;
+                }
+            }
+            else {
+                document.getElementById("addrow").disabled = false;
+            }
+        }
+
+
+
+
+  //// Get the dropdown element
+  //var dropdown = document.getElementById("myDropdown");
+
+  //// Approach 1: Using event listeners
+  //dropdown.addEventListener("change", function() {
+  //  // Example condition: Disable option 3 if option 2 is selected
+  //  if (dropdown.value === "option2") {
+  //    dropdown.querySelector('option[value="option3"]').disabled = true;
+  //  } else {
+  //    dropdown.querySelector('option[value="option3"]').disabled = false;
+  //  }
+  //});
+
+  //// Approach 2: Direct manipulation
+  //// Example: Disable option 2 after a certain event occurs
+  //function disableOption2() {
+  //  dropdown.querySelector('option[value="option2"]').disabled = true;
+  //}
+
+  //// Call disableOption2 function to disable option 2
+  //disableOption2();
+
+
+    </script>
+
 }
