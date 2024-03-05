@@ -227,25 +227,38 @@
                                         @CRS.ADMIN.APPLICATION.Resources.Resource.Phone_Number
                                     </label>
                                     <div class="number-input w-full">
-                                        <div class="flag-section">
-                                            <div class="japan-flag">
-                                                <div></div>
-                                            </div>
-                                            <div>
-                                                +81
-                                            </div>
-                                            <div class="line-y">
 
-                                            </div>
-
-                                        </div>
                                         @if (!string.IsNullOrEmpty(Model.AgentId))
                                         {
+                                            <div class="flag-section" style="background: #e5e5e5;">
+                                                <div class="japan-flag" style="background: white;">
+                                                    <div></div>
+                                                </div>
+                                                <div>
+                                                    +81
+                                                </div>
+                                                <div class="line-y">
+
+                                                </div>
+
+                                            </div>
                                             @Html.HiddenFor(model => model.MobileNumber)
                                             <input type="text" class="w-full" placeholder="@CRS.ADMIN.APPLICATION.Resources.Resource.Phone_Number" name="MobileNumber" value="@Model.MobileNumber" disabled>
                                         }
                                         else
                                         {
+                                            <div class="flag-section">
+                                                <div class="japan-flag" style="border: 1px solid #dbd6d6;">
+                                                    <div></div>
+                                                </div>
+                                                <div>
+                                                    +81
+                                                </div>
+                                                <div class="line-y">
+
+                                                </div>
+
+                                            </div>
                                             @Html.TextBoxFor(model => model.MobileNumber, new
                                          {
                                            @class = "w-full",
@@ -271,7 +284,7 @@
                                     </label>
                                     <div class="number-input w-full">
                                         <div class="flag-section">
-                                            <div class="japan-flag">
+                                            <div class="japan-flag" style="border: 1px solid #dbd6d6;">
                                                 <div></div>
                                             </div>
                                             <div>
