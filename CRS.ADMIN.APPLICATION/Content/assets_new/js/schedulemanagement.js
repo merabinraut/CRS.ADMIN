@@ -50,7 +50,7 @@ const renderCalendar = () => {
         else {
             htmlText += `
                 <div class="calender-number-schedule">
-                    <img src="/Content/assets_new/images/unreservable.svg" />
+                    <img src="/Content/assets_new/images/reservable.svg" />
                 </div>`;
         }
         htmlText += `</div>`;
@@ -94,7 +94,7 @@ const renderCalendar = () => {
         else {
             htmlText += `
                 <div class="calender-number-schedule">
-                    <img src="/Content/assets_new/images/unreservable.svg" />
+                    <img src="/Content/assets_new/images/reservable.svg" />
                 </div>`;
         }
         htmlText += `</div>`;
@@ -118,7 +118,7 @@ const renderCalendar = () => {
         else {
             htmlText += `
                 <div class="calender-number-schedule">
-                    <img src="/Content/assets_new/images/unreservable.svg" />
+                    <img src="/Content/assets_new/images/reservable.svg" />
                 </div>`;
         }
         htmlText += `</div>`;

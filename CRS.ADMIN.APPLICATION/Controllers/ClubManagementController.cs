@@ -1,5 +1,7 @@
-﻿using CRS.ADMIN.APPLICATION.Library;
+﻿using CRS.ADMIN.APPLICATION.Helper;
+using CRS.ADMIN.APPLICATION.Library;
 using CRS.ADMIN.APPLICATION.Models.ClubManagement;
+using CRS.ADMIN.APPLICATION.Models.HostManagement;
 using CRS.ADMIN.APPLICATION.Models.TagManagement;
 using CRS.ADMIN.BUSINESS.ClubManagement;
 using CRS.ADMIN.SHARED;
@@ -8,24 +10,30 @@ using CRS.ADMIN.SHARED.Home;
 using CRS.ADMIN.SHARED.PaginationManagement;
 using DocumentFormat.OpenXml.Drawing.Diagrams;
 using DocumentFormat.OpenXml.EMMA;
+using DocumentFormat.OpenXml.Spreadsheet;
 using Microsoft.Office.Interop.Excel;
+using Syncfusion.XlsIO.Implementation.PivotAnalysis;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Mvc;
+using static Google.Apis.Requests.BatchRequest;
 
 namespace CRS.ADMIN.APPLICATION.Controllers
 {
     public class ClubManagementController : BaseController
     {
         private readonly IClubManagementBusiness _BUSS;
-        public ClubManagementController(IClubManagementBusiness BUSS)
+        private readonly HttpClient _httpClient;
+        public ClubManagementController(IClubManagementBusiness BUSS,HttpClient httpClient)
         {
             _BUSS = BUSS;
+            _httpClient = httpClient;
         }
         [HttpGet]
         public ActionResult ClubList(string SearchFilter = "", int StartIndex = 0, int PageSize = 10)
@@ -33,11 +41,18 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             ViewBag.SearchFilter = SearchFilter;
             Session["CurrentURL"] = "/ClubManagement/ClubList";
             string RenderId = "";
+            var culture = Request.Cookies["culture"]?.Value;
+            culture = string.IsNullOrEmpty(culture) ? "ja" : culture;
+            //var ss = GetPostalCodeInfo("1000001");
+
+
+
             var response = new ClubManagementCommonModel();
             if (TempData.ContainsKey("ManageClubModel")) response.ManageClubModel = TempData["ManageClubModel"] as ManageClubModel;
             else response.ManageClubModel = new ManageClubModel();
             if (TempData.ContainsKey("RenderId")) RenderId = TempData["RenderId"].ToString();
             if (TempData.ContainsKey("ManageTagModel")) response.ManageTag = TempData["ManageTagModel"] as ManageTag;
+            
             else response.ManageTag = new ManageTag();
 
             if (TempData.ContainsKey("AvailabilityModel")) response.GetAvailabilityList = TempData["AvailabilityModel"] as List<AvailabilityTagModel>;
@@ -49,11 +64,57 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 SearchFilter = !string.IsNullOrEmpty(SearchFilter) ? SearchFilter : null
             };
             var dbResponse = _BUSS.GetClubList(dbRequest);
+            if (TempData.ContainsKey("EditPlan"))
+            {
+              
+                response.ManageClubModel = TempData["EditPlan"] as ManageClubModel;
+                int plancount = response.ManageClubModel.PlanDetailList.Count;
+                if (plancount==0)
+                {
+                    List<PlanListCommon> planlist = _BUSS.GetClubPlanIdentityList(culture);
+                    response.ManageClubModel.PlanDetailList = planlist.MapObjects<PlanList>();
+
+                    response.ManageClubModel.PlanDetailList.ForEach(planList =>
+                    {
+                        planList.PlanIdentityList.ForEach(planIdentity =>
+                        {
+                            // Encrypt specific properties
+                            planIdentity.StaticDataValue = planIdentity.StaticDataValue.EncryptParameter(); // Call your encryption method here
+                        });
+                    });
+                }
+            } 
+            
+            else
+            {
+                
+                int plancount = response.ManageClubModel.PlanDetailList.Count;
+                
+                if (plancount ==0)
+                {
+                    List<PlanListCommon> planlist = _BUSS.GetClubPlanIdentityList(culture);
+                    response.ManageClubModel.PlanDetailList = planlist.MapObjects<PlanList>();
+
+                    response.ManageClubModel.PlanDetailList.ForEach(planList =>
+                    {
+                        planList.PlanIdentityList.ForEach(planIdentity =>
+                        {
+                            // Encrypt specific properties
+                            planIdentity.StaticDataValue = planIdentity.StaticDataValue.EncryptParameter(); // Call your encryption method here
+                        });
+                    });
+                }
+                
+            }
+                  
             response.ClubListModel = dbResponse.MapObjects<ClubListModel>();
             foreach (var item in response.ClubListModel)
             {
                 item.AgentId = item.AgentId?.EncryptParameter();
             }
+            ViewBag.Pref = DDLHelper.LoadDropdownList("PREF") as Dictionary<string, string>;
+            ViewBag.Holiday = DDLHelper.LoadDropdownList("Holiday") as Dictionary<string, string>;
+            ViewBag.PlansList = ApplicationUtilities.LoadDropdownList("CLUBPLANS") as Dictionary<string, string>;
             ViewBag.PopUpRenderValue = !string.IsNullOrEmpty(RenderId) ? RenderId : null;
             ViewBag.LocationDDLList = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("LOCATIONDDL") as Dictionary<string, string>, null, "--- Select ---");
             ViewBag.BusinessTypeDDL = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("BUSINESSTYPEDDL") as Dictionary<string, string>, null, "--- Select ---");
@@ -63,8 +124,11 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             ViewBag.RankDDLKey = response.ManageTag.Tag2RankName;
             ViewBag.ClubStoreDDLKey = response.ManageTag.Tag5StoreName;
             ViewBag.ClubCategoryDDLKey = response.ManageTag.Tag3CategoryName;
-            ViewBag.LocationIdKey = response.ManageClubModel.LocationId ?? response.ManageTag.Tag1Location;
-            ViewBag.BusinessTypeKey = response.ManageClubModel.BusinessType;
+            ViewBag.LocationIdKey = response.ManageClubModel.LocationDDL;
+            
+            ViewBag.PrefIdKey =!string.IsNullOrEmpty( response.ManageClubModel.Prefecture) ? ViewBag.Pref[response.ManageClubModel.Prefecture]:null;
+            ViewBag.HolidayIdKey = !string.IsNullOrEmpty(response.ManageClubModel.Holiday )? ViewBag.Holiday[response.ManageClubModel.Holiday]:null;
+            ViewBag.BusinessTypeKey = response.ManageClubModel.BusinessTypeDDL;
             ViewBag.StartIndex = StartIndex;
             ViewBag.PageSize = PageSize;
             ViewBag.TotalData = dbResponse != null && dbResponse.Any() ? dbResponse[0].TotalRecords : 0;
@@ -75,6 +139,8 @@ namespace CRS.ADMIN.APPLICATION.Controllers
         [HttpGet]
         public ActionResult ManageClub(string AgentId = "")
         {
+            var culture = Request.Cookies["culture"]?.Value;
+            culture = string.IsNullOrEmpty(culture) ? "ja" : culture;
             ManageClubModel model = new ManageClubModel();
             if (!string.IsNullOrEmpty(AgentId))
             {
@@ -89,14 +155,38 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                     });
                     return RedirectToAction("ClubList", "ClubManagement");
                 }
-                var dbResponse = _BUSS.GetClubDetails(id);
+                var dbResponse = _BUSS.GetClubDetails(id,culture);
+                //List<PlanListCommon> planlist = _BUSS.GetClubPlanIdentityList(culture);
+                //model.PlanDetailList = planlist.MapObjects<PlanList>();
+                             
                 model = dbResponse.MapObject<ManageClubModel>();
+              
+                ViewBag.PlansList = ApplicationUtilities.LoadDropdownList("CLUBPLANS") as Dictionary<string, string>;
+                
+                model.PlanDetailList.ForEach(planList =>
+                {
+                    planList.PlanIdentityList.ForEach(planIdentity =>
+                    {
+                        // Encrypt specific properties                        
+                        planIdentity.StaticDataValue = planIdentity.StaticDataValue.EncryptParameter(); // Call your encryption method here                                      
+                        planIdentity.IdentityDescription = planIdentity.name.ToLower()=="plan"?  planIdentity.IdentityDescription.EncryptParameter(): planIdentity.IdentityDescription; // Call your encryption method here
+                        planIdentity.PlanId = planIdentity.name.ToLower() == "plan" ? ViewBag.PlansList[planIdentity.IdentityDescription] : planIdentity.IdentityDescription;  // Call your encryption method here
+
+                    });
+                });
+               
                 model.AgentId = model.AgentId.EncryptParameter();
-                model.LocationId = !string.IsNullOrEmpty(model.LocationId) ? model.LocationId.EncryptParameter() : null;
-                model.BusinessType = !string.IsNullOrEmpty(model.BusinessType) ? model.BusinessType.EncryptParameter() : null;
+                //model.LocationId = !string.IsNullOrEmpty(model.LocationId) ? model.LocationId.EncryptParameter() : null;
+                //model.BusinessType = !string.IsNullOrEmpty(model.BusinessType) ? model.BusinessType.EncryptParameter() : null;
+                model.LocationDDL = !string.IsNullOrEmpty(model.LocationId) ? model.LocationId.EncryptParameter() : null;
+                model.BusinessTypeDDL = !string.IsNullOrEmpty(model.BusinessType) ? model.BusinessType.EncryptParameter() : null;
+                model.Prefecture = !string.IsNullOrEmpty(model.Prefecture) ? model.Prefecture.EncryptParameter() : null;
+                model.Holiday = !string.IsNullOrEmpty(model.Holiday) ? model.Holiday.EncryptParameter() : null;
             }
             TempData["ManageClubModel"] = model;
             TempData["RenderId"] = "Manage";
+            TempData["EditPlan"] = model;
+
             return RedirectToAction("ClubList", "ClubManagement");
         }
 
@@ -104,63 +194,108 @@ namespace CRS.ADMIN.APPLICATION.Controllers
         public ActionResult ManageClub(ManageClubModel Model, HttpPostedFileBase Business_Certificate, HttpPostedFileBase Logo_Certificate, HttpPostedFileBase CoverPhoto_Certificate, string LocationDDL, string BusinessTypeDDL)
         {
             string ErrorMessage = string.Empty;
-            if
-            (
-               string.IsNullOrEmpty(Model.BusinessCertificate) ||
-               string.IsNullOrEmpty(Model.Logo) ||
-               string.IsNullOrEmpty(Model.CoverPhoto) ||
-               string.IsNullOrEmpty(Model.Gallery)
-            )
-            {
-                if (Business_Certificate == null || Logo_Certificate == null || CoverPhoto_Certificate == null)
-                {
-                    bool allowRedirect = false;
-
-                    if (Business_Certificate == null && string.IsNullOrEmpty(Model.BusinessCertificate))
-                    {
-                        ErrorMessage = "Business certificate required";
-                        allowRedirect = true;
-                    }
-                    else if (Logo_Certificate == null && string.IsNullOrEmpty(Model.Logo))
-                    {
-                        ErrorMessage = "Logo required";
-                        allowRedirect = true;
-                    }
-                    else if (CoverPhoto_Certificate == null && string.IsNullOrEmpty(Model.CoverPhoto))
-                    {
-                        ErrorMessage = "Cover photo required";
-                        allowRedirect = true;
-                    }
-                    if (allowRedirect)
-                    {
-                        this.AddNotificationMessage(new NotificationModel()
-                        {
-                            NotificationType = NotificationMessage.INFORMATION,
-                            Message = ErrorMessage ?? "Something went wrong. Please try again later.",
-                            Title = NotificationMessage.INFORMATION.ToString(),
-                        });
-                        TempData["ManageClubModel"] = Model;
-                        TempData["RenderId"] = "Manage";
-                        return RedirectToAction("ClubList", "ClubManagement");
-                    }
-                }
-            }
+           
             if (!string.IsNullOrEmpty(BusinessTypeDDL?.DecryptParameter())) ModelState.Remove("BusinessType");
             if (!string.IsNullOrEmpty(LocationDDL?.DecryptParameter())) ModelState.Remove("LocationId");
+            ViewBag.PlansList = ApplicationUtilities.LoadDropdownList("CLUBPLANS") as Dictionary<string, string>;
             ModelState.Remove("LocationURL");
-            if (ModelState.IsValid)
+            string concatenateplanvalue = string.Empty;
+
+            bool isduplicate = false;
+            Model.PlanDetailList.ForEach(planList =>
             {
-                string businessCertificatePath = "";
-                string LogoPath = "";
-                string coverPhotoPath = "";
-                var allowedContentType = AllowedImageContentType();
-                string dateTime = "";
+                concatenateplanvalue += ", ";
+                planList.PlanIdentityList.ForEach(planIdentity =>
+                {
+                    
+                    planIdentity.PlanId = planIdentity.name.ToLower() == "plan" ? ViewBag.PlansList[planIdentity.IdentityDescription] : planIdentity.IdentityDescription;  // Call your encryption method here
+                    
+                    if (planIdentity.name.ToLower() == "plan")
+                    {
+                      
+                        if (concatenateplanvalue.Contains(planIdentity.IdentityDescription.DecryptParameter()))
+                        {
+                            isduplicate = true;
+                        }
+                        concatenateplanvalue += planIdentity.IdentityDescription.DecryptParameter();
+                    }
+                    
+                });
+            });
+
+            string businessCertificatePath = "";
+            string LogoPath = "";
+            string coverPhotoPath = "";
+            var allowedContentType = AllowedImageContentType();
+            string dateTime = "";
+            
+            if (ModelState.IsValid)
+            {               
+                if (isduplicate == true)
+                {
+                    this.AddNotificationMessage(new NotificationModel()
+                    {
+                        NotificationType = NotificationMessage.INFORMATION,
+                        Message = "Duplicate plan name.",
+                        Title = NotificationMessage.INFORMATION.ToString(),
+                    });
+                    
+                    TempData["ManageClubModel"] = Model;
+                    TempData["RenderId"] = "Manage";
+                    return RedirectToAction("ClubList", "ClubManagement");
+                }
+                if
+           (
+              string.IsNullOrEmpty(Model.BusinessCertificate) ||
+              string.IsNullOrEmpty(Model.Logo) ||
+              string.IsNullOrEmpty(Model.CoverPhoto) ||
+              string.IsNullOrEmpty(Model.Gallery)
+           )
+                {
+
+                    if (Business_Certificate == null || Logo_Certificate == null || CoverPhoto_Certificate == null)
+                    {
+                        bool allowRedirect = false;
+
+                        if (Business_Certificate == null && string.IsNullOrEmpty(Model.BusinessCertificate))
+                        {
+                            ErrorMessage = "Business certificate required";
+
+                            allowRedirect = true;
+                        }
+                        else if (Logo_Certificate == null && string.IsNullOrEmpty(Model.Logo))
+                        {
+                            ErrorMessage = "Logo required";
+                            allowRedirect = true;
+                        }
+                        else if (CoverPhoto_Certificate == null && string.IsNullOrEmpty(Model.CoverPhoto))
+                        {
+                            ErrorMessage = "Cover photo required";
+                            allowRedirect = true;
+                        }
+                        if (allowRedirect)
+                        {
+                            this.AddNotificationMessage(new NotificationModel()
+                            {
+                                NotificationType = NotificationMessage.INFORMATION,
+                                Message = ErrorMessage ?? "Something went wrong. Please try again later.",
+                                Title = NotificationMessage.INFORMATION.ToString(),
+                            });
+                            TempData["ManageClubModel"] = Model;
+                            TempData["RenderId"] = "Manage";
+                            return RedirectToAction("ClubList", "ClubManagement");
+                        }
+                    }
+                }
+
+                bool allowRedirectfile = false;
                 if (Business_Certificate != null)
                 {
                     var contentType = Business_Certificate.ContentType;
                     var ext = Path.GetExtension(Business_Certificate.FileName);
                     if (allowedContentType.Contains(contentType.ToLower()))
                     {
+
                         dateTime = DateTime.Now.ToString("yyyyMMddHHmmssffff");
                         string fileName = "BusinessCertificate_" + dateTime + ext.ToLower();
                         businessCertificatePath = Path.Combine(Server.MapPath("~/Content/UserUpload/ClubManagement"), fileName);
@@ -174,9 +309,8 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                             Message = "Invalid image format.",
                             Title = NotificationMessage.INFORMATION.ToString(),
                         });
-                        TempData["ManageClubModel"] = Model;
-                        TempData["RenderId"] = "Manage";
-                        return RedirectToAction("ClubList", "ClubManagement");
+                        allowRedirectfile = true;
+
                     }
                 }
 
@@ -199,9 +333,8 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                             Message = "Invalid image format.",
                             Title = NotificationMessage.INFORMATION.ToString(),
                         });
-                        TempData["ManageClubModel"] = Model;
-                        TempData["RenderId"] = "Manage";
-                        return RedirectToAction("ClubList", "ClubManagement");
+                        allowRedirectfile = true;
+
                     }
                 }
 
@@ -224,11 +357,20 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                             Message = "Invalid image format.",
                             Title = NotificationMessage.INFORMATION.ToString(),
                         });
-                        TempData["ManageClubModel"] = Model;
-                        TempData["RenderId"] = "Manage";
-                        return RedirectToAction("ClubList", "ClubManagement");
+                        allowRedirectfile = true;
+
                     }
                 }
+                if (allowRedirectfile == true)
+                {
+                    //Model.BusinessCertificate =  Business_Certificate.FileName;
+                    //Model.CoverPhoto =  CoverPhoto_Certificate.FileName;
+                    //Model.Logo=  Logo_Certificate.FileName;
+                    TempData["ManageClubModel"] = Model;
+                    TempData["RenderId"] = "Manage";
+                    return RedirectToAction("ClubList", "ClubManagement");
+                }
+
                 ManageClubCommon commonModel = Model.MapObject<ManageClubCommon>();
                 commonModel.ActionUser = ApplicationUtilities.GetSessionValue("Username").ToString();
                 commonModel.ActionIP = ApplicationUtilities.GetIP();
@@ -243,6 +385,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                             Message = "Invalid club details.",
                             Title = NotificationMessage.INFORMATION.ToString(),
                         });
+                       
                         TempData["ManageClubModel"] = Model;
                         TempData["RenderId"] = "Manage";
                         return RedirectToAction("ClubList", "ClubManagement");
@@ -250,6 +393,19 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 }
                 commonModel.LocationId = LocationDDL?.DecryptParameter();
                 commonModel.BusinessType = BusinessTypeDDL?.DecryptParameter();
+                commonModel.Holiday = commonModel.Holiday?.DecryptParameter();
+                commonModel.Prefecture = commonModel.Prefecture?.DecryptParameter();        
+                var returntype = string.Empty;                
+                commonModel.PlanDetailList.ForEach(planList =>
+                {                    
+                    planList.PlanIdentityList.ForEach(planIdentity =>
+                    {                        
+                        string decryptedDescription = planIdentity.name.ToLower() == "plan" ? planIdentity.IdentityDescription.DecryptParameter() : planIdentity.IdentityDescription;                                               
+                        planIdentity.StaticDataValue = planIdentity.StaticDataValue.DecryptParameter();
+                        planIdentity.IdentityDescription = planIdentity.name.ToLower() == "plan" ? decryptedDescription : planIdentity.IdentityDescription;
+                       
+                    });     
+                });                
                 var dbResponse = _BUSS.ManageClub(commonModel);
                 if (dbResponse != null && dbResponse.Code == 0)
                 {
@@ -262,6 +418,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                         Message = dbResponse.Message ?? "Failed",
                         Title = dbResponse.Code == ResponseCode.Success ? NotificationMessage.SUCCESS.ToString() : NotificationMessage.INFORMATION.ToString()
                     });
+
                     return RedirectToAction("ClubList", "ClubManagement");
                 }
                 else
@@ -272,6 +429,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                         Message = dbResponse.Message ?? "Failed",
                         Title = NotificationMessage.INFORMATION.ToString()
                     });
+                   
                     TempData["ManageClubModel"] = Model;
                     TempData["RenderId"] = "Manage";
                     return RedirectToAction("ClubList", "ClubManagement");
@@ -291,8 +449,33 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             var errors = ModelState.Where(x => x.Value.Errors.Count > 0).Select(x => new { x.Key }).ToList();
             TempData["ManageClubModel"] = Model;
             TempData["RenderId"] = "Manage";
+            
             return RedirectToAction("ClubList", "ClubManagement");
         }
+
+
+        //public JsonResult GetPostalCodeInfo(string postalCode)
+        //{
+           
+        //    HttpResponseMessage response = _httpClient.GetAsync($"https://postal-codes-jp.azurewebsites.net/api/PostalCodes/{postalCode}").Result;
+
+
+        //    if (response.IsSuccessStatusCode)
+        //    {
+
+        //        string jsonResponse = response.Content.ReadAsStringAsync().Result;
+
+        //        // Return the JSON result
+        //        return new JsonRequestBehavior(jsonResponse);
+        //    }
+        //    else
+        //    {
+
+        //        return new JsonResult(new { error = "Error occurred while fetching data." });
+        //    }
+        //}
+
+
 
         [HttpGet]
         public ActionResult ClubDetails(string AgentId)
@@ -304,8 +487,10 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 this.ShowPopup(1, "Invalid club details");
                 return RedirectToAction("ClubList");
             }
-            var dbResponse = _BUSS.GetClubDetails(id);
-            response = dbResponse.MapObject<ClubDetailModel>();
+            var culture = Request.Cookies["culture"]?.Value;
+            culture = string.IsNullOrEmpty(culture) ? "ja" : culture;
+            var dbResponse = _BUSS.GetClubDetails(id,culture);
+           
             response.AgentId = null;
             response.UserId = null;
             return View(response);
@@ -848,7 +1033,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                             ErrorMessage = "Event Description required";
                             allowRedirect = true;
                         }
-                        else if (string.IsNullOrEmpty(Model.Description))
+                        else if (string.IsNullOrEmpty(Model.Title))
                         {
                             ErrorMessage = "Event Title required";
                             allowRedirect = true;
@@ -873,31 +1058,31 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                     var allowedContentType = AllowedImageContentType();
 
 
-                    if (Image == null)
-                    {
-                        if (string.IsNullOrEmpty(Model.Image))
-                        {
-                            bool allowRedirect = false;
+                    //if (Image == null)
+                    //{
+                    //    if (string.IsNullOrEmpty(Model.Image))
+                    //    {
+                    //        bool allowRedirect = false;
 
-                            if (Image == null && string.IsNullOrEmpty(Model.Image))
-                            {
-                                ErrorMessage = "Image required";
-                                allowRedirect = true;
-                            }
-                            if (allowRedirect)
-                            {
-                                this.AddNotificationMessage(new NotificationModel()
-                                {
-                                    NotificationType = NotificationMessage.INFORMATION,
-                                    Message = ErrorMessage ?? "Something went wrong. Please try again later.",
-                                    Title = NotificationMessage.INFORMATION.ToString(),
-                                });
-                                TempData["ManageEventModel"] = Model;
-                                TempData["RenderId"] = "ManageClubGallery";
-                                return RedirectToAction("EventList", "ClubManagement", new { ClubId = agentid });
-                            }
-                        }
-                    }  //for update  of image
+                    //        if (Image == null && string.IsNullOrEmpty(Model.Image))
+                    //        {
+                    //            ErrorMessage = "Image required";
+                    //            allowRedirect = true;
+                    //        }
+                    //        if (allowRedirect)
+                    //        {
+                    //            this.AddNotificationMessage(new NotificationModel()
+                    //            {
+                    //                NotificationType = NotificationMessage.INFORMATION,
+                    //                Message = ErrorMessage ?? "Something went wrong. Please try again later.",
+                    //                Title = NotificationMessage.INFORMATION.ToString(),
+                    //            });
+                    //            TempData["ManageEventModel"] = Model;
+                    //            TempData["RenderId"] = "ManageClubGallery";
+                    //            return RedirectToAction("EventList", "ClubManagement", new { ClubId = agentid });
+                    //        }
+                    //    }
+                    //}  //for update  of image
                     if (Image != null)
                     {
                         var contentType = Image.ContentType;

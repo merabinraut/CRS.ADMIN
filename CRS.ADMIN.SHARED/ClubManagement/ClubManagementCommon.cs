@@ -1,4 +1,6 @@
 ﻿using CRS.ADMIN.SHARED.PaginationManagement;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace CRS.ADMIN.SHARED.ClubManagement
 {
@@ -49,6 +51,29 @@ namespace CRS.ADMIN.SHARED.ClubManagement
         public string TwitterLink { get; set; }
         public string InstagramLink { get; set; }
         public string CompanyName { get; set; }
+        public string GoogleMap { get; set; }
+        public string WorkingHrFrom { get; set; }
+        public string WorkingHrTo { get; set; }
+        public string Holiday { get; set; }
+        public string LastOrderTime { get; set; }
+        public string LastEntryTime { get; set; }
+        public string Tax { get; set; }
+        public string PostalCode { get; set; }
+        public string Prefecture { get; set; }
+        public string City { get; set; }
+        public string Street { get; set; }
+        public string BuildingRoomNo { get; set; }
+        public string RegularFee { get; set; }
+        public string DesignationFee { get; set; }
+        public string CompanionFee { get; set; }
+        public string ExtensionFee { get; set; }
+        public string Drink { get; set; }
+        public string Pref { get; set; }
+        public string LandLineNumber { get; set; } 
+        public string Line { get; set; }
+        public string ceoFullName { get; set; }
+        
+        public List<PlanListCommon> PlanDetailList { get; set; } = new List<PlanListCommon>();
     }
 
     public class ManageClubCommon : Common
@@ -78,5 +103,49 @@ namespace CRS.ADMIN.SHARED.ClubManagement
         public string InstagramLink { get; set; }
         public string LocationId { get; set; }
         public string CompanyName { get; set; }
+        public string ceoFullName { get; set; }
+        public string Line { get; set; }
+
+        public string GoogleMap { get; set; }
+        public string LandLineNumber { get; set; }
+        public string WorkingHrFrom { get; set; }
+        public string WorkingHrTo { get; set; }
+        public string Holiday { get; set; }
+        public string LastOrderTime { get; set; }
+        public string LastEntryTime { get; set; }
+        public string Tax { get; set; }
+        public string PostalCode { get; set; }
+        public string Prefecture { get; set; }
+        public string City { get; set; }
+        public string Street { get; set; }
+        public string BuildingRoomNo { get; set; }
+        public string RegularFee { get; set; }
+        public string DesignationFee { get; set; }
+        public string CompanionFee { get; set; }
+        public string ExtensionFee { get; set; }
+        public string Drink { get; set; }
+        public string Pref { get; set; }
+        public object data { get; set; }
+        public List<PlanListCommon> PlanDetailList { get; set; } = new List<PlanListCommon>();
+    }
+
+
+    public class PlanListCommon
+    {
+        public List<planIdentityDataCommon> PlanIdentityList { get; set; }
+       = new List<planIdentityDataCommon>();
+    }
+    public class planIdentityDataCommon
+    {
+        public string English { get; set; }
+        public string StaticDataValue { get; set; }
+        public string japanese { get; set; }
+        public string inputtype { get; set; }
+        public string name { get; set; }
+        public string IdentityLabel { get; set; }
+        public string IdentityDescription { get; set; }
+        public string PlanListId { get; set; }
+        public string Id { get; set; }
+        public string PlanId { get; set; }
     }
 }

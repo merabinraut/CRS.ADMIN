@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using CRS.ADMIN.SHARED;
+using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 
 namespace CRS.ADMIN.REPOSITORY.CommonManagement
 {
@@ -41,6 +43,18 @@ namespace CRS.ADMIN.REPOSITORY.CommonManagement
                     response.Add(item["Value"].ToString(),( item["Text"].ToString(), item["japaneseText"].ToString(),culture));
             }
             return response;
+        }
+        public List<StaticDataCommon> GetDropDownLanguage(string Flag, string Extra1 = "", string Extra2 = "", string culture = "")
+        {
+            List<StaticDataCommon> response = new List<StaticDataCommon>();
+            string SQL = "EXEC sproc_dropdown_management_v2 ";
+            SQL += "@Flag=" + _DAO.FilterString(Flag);
+            SQL += ",@SearchField1=" + _DAO.FilterString(Extra1);
+            SQL += ",@SearchField2=" + _DAO.FilterString(Extra2);
+            var dbResponse = _DAO.ExecuteDataTable(SQL);
+            return dbResponse != null && dbResponse.Rows.Count > 0
+                ? _DAO.DataTableToListObject<StaticDataCommon>(dbResponse).ToList()
+                : new List<StaticDataCommon>();
         }
     }
 }
