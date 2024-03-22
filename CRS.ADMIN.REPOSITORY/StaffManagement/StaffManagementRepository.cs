@@ -80,7 +80,7 @@ namespace CRS.ADMIN.REPOSITORY.StaffManagement
             string sp_name = "EXEC sproc_superadmin_staffmanagement ";
             sp_name += string.IsNullOrEmpty(commonModel.Id) ? "@Flag='ms'" : "@Flag='us'";
             sp_name += ",@Id=" + _dao.FilterString(commonModel.Id);
-            sp_name += ",@UserName=" + _dao.FilterString(commonModel.UserName);
+            sp_name += ",@UserName=N" + _dao.FilterString(commonModel.UserName);
             sp_name += ",@EmailAddress=" + _dao.FilterString(commonModel.EmailAddress);
             sp_name += ",@MobileNumber=" + _dao.FilterString(commonModel.MobileNumber);
             sp_name += ",@RoleId=" + _dao.FilterString(commonModel.RoleId);
