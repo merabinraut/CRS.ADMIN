@@ -222,3 +222,107 @@ insert into tbl_menus
 values(29, 'SMS Log', '/SMSLog/Index', 'A', 'Admin', 'rabin.raut', '::1', getdate()),
 (30, 'Email Log', '/EmailLog/Index', 'A', 'Admin', 'rabin.raut', '::1', getdate())
 
+
+INSERT INTO tbl_menus
+(
+    MenuId,
+    MenuName,
+    MenuUrl,
+    MenuGroup,
+    ParentGroup,
+    CssClass,
+    Status,
+    MenuAccessCategory,
+    ActionUser,
+    ActionIP,
+    ActionDate
+)
+VALUES
+('33', 'Bookmark Management', '/BookmarkManagement/Index', '', '', '', 'A', 'Customer', 'rabin.raut', '::1', GETDATE());
+
+
+INSERT INTO tbl_menus
+(
+    MenuId,
+    MenuName,
+    MenuUrl,
+    MenuGroup,
+    ParentGroup,
+    CssClass,
+    Status,
+    MenuAccessCategory,
+    ActionUser,
+    ActionIP,
+    ActionDate
+)
+VALUES
+('34', 'Notification Management', '/NotificationManagement/ViewAllNotifications', '', '', '', 'A', 'Customer', 'rabin.raut', '::1', GETDATE());
+
+INSERT INTO tbl_menus
+(
+    MenuId,
+    MenuName,
+    MenuUrl,
+    MenuGroup,
+    ParentGroup,
+    CssClass,
+    Status,
+    MenuAccessCategory,
+    ActionUser,
+    ActionIP,
+    ActionDate
+)
+VALUES
+('35', 'Profile Management', '/ProfileManagement/Index', '', '', '', 'A', 'Customer', 'rabin.raut', '::1', GETDATE());
+
+INSERT INTO tbl_menus
+(
+    MenuId,
+    MenuName,
+    MenuUrl,
+    MenuGroup,
+    ParentGroup,
+    CssClass,
+    Status,
+    MenuAccessCategory,
+    ActionUser,
+    ActionIP,
+    ActionDate
+)
+VALUES
+('36', 'Reservation Management', '/ReservationManagementV2/Index', '', '', '', 'A', 'Customer', 'rabin.raut', '::1', GETDATE());
+
+
+INSERT INTO tbl_menus
+(
+    MenuId,
+    MenuName,
+    MenuUrl,
+    MenuGroup,
+    ParentGroup,
+    CssClass,
+    Status,
+    MenuAccessCategory,
+    ActionUser,
+    ActionIP,
+    ActionDate
+)
+VALUES
+('37', 'Reservation History Management', '/ReservationHistoryManagementV2/ReservationHistory', '', '', '', 'A', 'Customer', 'rabin.raut', '::1', GETDATE());
+
+INSERT INTO tbl_menus
+(
+    MenuId,
+    MenuName,
+    MenuUrl,
+    MenuGroup,
+    ParentGroup,
+    CssClass,
+    Status,
+    MenuAccessCategory,
+    ActionUser,
+    ActionIP,
+    ActionDate
+)
+VALUES
+('38', 'Review Management', '/ReviewManagement/ReviewList', '', '', '', 'A', 'Customer', 'rabin.raut', '::1', GETDATE());
