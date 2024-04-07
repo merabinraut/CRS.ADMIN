@@ -13,7 +13,7 @@
         <div class="drawer-form-container sticky top-0 z-[5] ">
             <div class="drawer-form flex justify-between bg-secondary-color-pink py-[16px] px-[24px] h-[56px]">
                 <div>  @CRS.ADMIN.APPLICATION.Resources.Resource.Manage_Club_Profile</div>
-                <button type="button" data-drawer-hide="add-new-host-club" aria-controls="add-new-host-club"  onclick="CancelFunction()" 
+                <button type="button" data-drawer-hide="add-new-host-club" aria-controls="add-new-host-club" onclick="CancelFunction()"
                         class="text-[20px]">
                     <i class="las la-window-close text-white"></i>
                 </button>
@@ -43,7 +43,7 @@
                     {
                         @Html.HiddenFor(model => model.BusinessCertificate)
                     }
-               
+
                     if (!string.IsNullOrEmpty(Model.LoginId))
                     {
                         @Html.HiddenFor(model => model.LoginId)
@@ -313,26 +313,53 @@
                                 <!-- BUSSiNESStype, name and username start -->
                                 <div class="grid grid-cols-3 gap-x-5 gap-y-4">
 
+
                                     <div class="input-field-common">
                                         <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
                                             @*@CRS.ADMIN.APPLICATION.Resources.Resource.Location*@
                                             Business Type
                                         </label>
-                                        <select id="large" class=" default_select select-common block w-full "
-                                                style="width: 100%;" name="LocationDDL">
+                                        <select id="tabDropdown" class=" default_select select-common block w-full "
+                                                style="width: 100%;" name="LocationDDL" onchange="changeTab(this.value)">
 
-                                            <option value="Value" selected>
+                                            <option value="tab1" selected>
                                                 Individual
                                             </option>
 
-                                            <option value="Value">
+                                            <option value="tab2">
                                                 Corporation
                                             </option>
 
 
                                         </select>
+
+                                        <div id="tab1" class="tab-pane">Content of Tab 1</div>
+                                        <div id="tab2" class="tab-pane" style="display: none;">Content of Tab 2</div>
+
+
+
                                         <span class="error">
                                             @Html.ValidationMessageFor(m => m.LocationId)
+                                        </span>
+                                    </div>
+
+                                    <div id="tab2" class="tab-pane input-field-common" style="display: none;">
+                                        <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
+                                            @* @CRS.ADMIN.APPLICATION.Resources.Resource.*@
+                                            Company Name
+                                        </label>
+                                        @Html.TextBoxFor(model => model.GroupName, new
+                                   {
+                                       @class = "w-full",
+                                       /*@placeholder = CRS.ADMIN.APPLICATION.Resources.Resource.Group_Name_Placeholder,*/
+                                       @placeholder = "Company Name",
+                                       //@onkeypress = "return isAlphabetWithSpace(event)",
+                                       autocomplete = "off",
+                                       @maxLength = "50"
+                                   })
+                                        @*<input type="text" class="w-full" placeholder="@CRS.ADMIN.APPLICATION.Resources.Resource.Group_Name_Placeholder" name="GroupName" value="@Model.GroupName">*@
+                                        <span class="error">
+                                            @Html.ValidationMessageFor(m => m.GroupName)
                                         </span>
                                     </div>
 
@@ -374,11 +401,7 @@
                                             @Html.ValidationMessageFor(m => m.GroupName)
                                         </span>
                                     </div>
-                                </div>
-                                <!-- name username section end -->
-                                <!-- for email contact number and landline -->
 
-                                <div class="grid grid-cols-3 gap-x-5 gap-y-4">
 
                                     <div class="input-field-common w-full">
                                         <label class="block mb-4 text-sm font-medium text-secondary-100 ">
@@ -519,8 +542,10 @@
                                             @Html.ValidationMessageFor(m => m.GroupName)
                                         </span>
                                     </div>
-                                </div>
 
+                                </div>
+                                <!-- name username section end -->
+                                <!-- for email contact number and landline -->
 
                             </div>
 
@@ -623,7 +648,7 @@
                                     </label>
                                     @Html.TextBoxFor(model => model.GroupName, new
                                {
-                                   
+
                                    @class = "w-full",
                                    /*@placeholder = CRS.ADMIN.APPLICATION.Resources.Resource.Group_Name_Placeholder,*/
                                    @placeholder = "Licensed Issued Date",
@@ -636,9 +661,35 @@
                                         @Html.ValidationMessageFor(m => m.GroupName)
                                     </span>
                                 </div>
+
+                                @*corporation club username*@
+
+                                <div id="tab2" style="display: none;" class="tab-pane input-field-common">
+                                    <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
+                                        @* @CRS.ADMIN.APPLICATION.Resources.Resource.*@
+                                        Club Username
+                                    </label>
+                                    @Html.TextBoxFor(model => model.GroupName, new
+                               {
+                                   @class = "w-full",
+                                   /*@placeholder = CRS.ADMIN.APPLICATION.Resources.Resource.Group_Name_Placeholder,*/
+                                   @placeholder = "Club Username",
+                                   //@onkeypress = "return isAlphabetWithSpace(event)",
+                                   autocomplete = "off",
+                                   @maxLength = "50"
+                               })
+                                    @*<input type="text" class="w-full" placeholder="@CRS.ADMIN.APPLICATION.Resources.Resource.Group_Name_Placeholder" name="GroupName" value="@Model.GroupName">*@
+                                    <span class="error">
+                                        @Html.ValidationMessageFor(m => m.GroupName)
+                                    </span>
+                                </div>
+                                @*corporation club username end *@
+
+
                             </div>
 
-                            <div class="grid grid-cols-3 gap-x-5 gap-y-4">
+
+                            <div id="tab1" class="tab-pane grid grid-cols-3 gap-x-5 gap-y-4">
                                 <div class="input-field-common">
                                     <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
                                         @* @CRS.ADMIN.APPLICATION.Resources.Resource.*@
@@ -680,7 +731,7 @@
 
                                             </div>
                                             @Html.HiddenFor(model => model.MobileNumber)
-                                            <input type="text" class="w-full" placeholder="090 - 6490 - 3254" name="MobileNumber"  disabled>
+                                            <input type="text" class="w-full" placeholder="090 - 6490 - 3254" name="MobileNumber" disabled>
                                         }
                                         else
                                         {
@@ -717,9 +768,245 @@
                             </div>
 
 
+                            <div id="tab2" style="display: none;" class="tab-pane">
+
+                                <div class=" flex gap-2 text-primary-300 text-sm font-semibold items-center mt-[10px]">
+                                    <div class="flex-none uppercase">
+                                        @*@CRS.ADMIN.APPLICATION.Resources.Resource*@
+                                        Representative 1
+                                    </div>
+                                    <div class="bg-[#F4F4F4] h-[1px] w-full">
+                                    </div>
+                                </div>
+
+                                <div class="grid grid-cols-3 gap-x-5 mt-4 gap-y-4">
+
+                                    @*Contact Name*@
+
+                                    <div class="input-field-common">
+                                        <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
+                                            @* @CRS.ADMIN.APPLICATION.Resources.Resource.*@
+                                            Contact Name
+                                        </label>
+                                        @Html.TextBoxFor(model => model.GroupName, new
+                                   {
+                                       @class = "w-full",
+                                       /*@placeholder = CRS.ADMIN.APPLICATION.Resources.Resource.Group_Name_Placeholder,*/
+                                       @placeholder = "Contact Name",
+                                       //@onkeypress = "return isAlphabetWithSpace(event)",
+                                       autocomplete = "off",
+                                       @maxLength = "50"
+                                   })
+                                        @*<input type="text" class="w-full" placeholder="@CRS.ADMIN.APPLICATION.Resources.Resource.Group_Name_Placeholder" name="GroupName" value="@Model.GroupName">*@
+                                        <span class="error">
+                                            @Html.ValidationMessageFor(m => m.GroupName)
+                                        </span>
+                                    </div>
+
+                                    @*Mobile Number*@
+
+                                    <div class="input-field-common w-full">
+                                        <label class="block mb-4 text-sm font-medium text-secondary-100 ">
+                                            Mobile Number
+                                        </label>
+                                        <div class="number-input w-full">
+
+                                            @if (!string.IsNullOrEmpty(Model.AgentId))
+                                            {
+                                                <div class="flag-section" style="background: #e5e5e5;">
+                                                    <div class="japan-flag" style="background: white;">
+                                                        <div></div>
+                                                    </div>
+                                                    <div>
+                                                        +81
+                                                    </div>
+                                                    <div class="line-y">
+
+                                                    </div>
+
+                                                </div>
+                                                @Html.HiddenFor(model => model.MobileNumber)
+                                                <input type="text" class="w-full" placeholder="090 - 6490 - 3254" name="MobileNumber" disabled>
+                                            }
+                                            else
+                                            {
+                                                <div class="flag-section">
+                                                    <div class="japan-flag" style="border: 1px solid #dbd6d6;">
+                                                        <div></div>
+                                                    </div>
+                                                    <div>
+                                                        +81
+                                                    </div>
+                                                    <div class="line-y">
+
+                                                    </div>
+
+                                                </div>
+                                                @Html.TextBoxFor(model => model.MobileNumber, new
+                                           {
+                                               @class = "w-full",
+                                               @placeholder = "090 - 6490 - 3254",
+                                               @onkeypress = "return isNumber(event)",
+                                               autocomplete = "off",
+                                               @maxLength = "11"
+                                           })
+                                                @*<input type="text" class="w-full" placeholder="@CRS.ADMIN.APPLICATION.Resources.Resource.Phone_Number" name="MobileNumber" value="@Model.MobileNumber">*@
+
+                                            }
+                                            @*<input type="text" class="w-full" placeholder="090-6490-3254" name="mobileNumber" required>*@
+
+                                        </div>
+                                        <span class="error">
+                                            @Html.ValidationMessageFor(m => m.MobileNumber)
+                                        </span>
+                                    </div>
+
+                                    @*email address*@
+
+                                    <div class="input-field-common">
+                                        <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
+                                            @* @CRS.ADMIN.APPLICATION.Resources.Resource.*@
+                                            Email Address
+                                        </label>
+                                        @Html.TextBoxFor(model => model.GroupName, new
+                                   {
+                                       @class = "w-full",
+                                       /*@placeholder = CRS.ADMIN.APPLICATION.Resources.Resource.Group_Name_Placeholder,*/
+                                       @placeholder = "Email Address",
+                                       //@onkeypress = "return isAlphabetWithSpace(event)",
+                                       autocomplete = "off",
+                                       @maxLength = "50"
+                                   })
+                                        @*<input type="text" class="w-full" placeholder="@CRS.ADMIN.APPLICATION.Resources.Resource.Group_Name_Placeholder" name="GroupName" value="@Model.GroupName">*@
+                                        <span class="error">
+                                            @Html.ValidationMessageFor(m => m.GroupName)
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            @*representative 2 for corporation*@
+
+                            <div id="tab2" style="display: none;" class="tab-pane">
+
+                                <div class=" flex gap-2 text-primary-300 text-sm font-semibold items-center mt-[10px]">
+                                    <div class="flex-none uppercase">
+                                        @*@CRS.ADMIN.APPLICATION.Resources.Resource*@
+                                        Representative 2
+                                    </div>
+                                    <div class="bg-[#F4F4F4] h-[1px] w-full">
+                                    </div>
+                                </div>
+
+                                <div class="grid grid-cols-3 gap-x-5 mt-4 gap-y-4">
+
+                                    @*Contact Name*@
+
+                                    <div class="input-field-common">
+                                        <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
+                                            @* @CRS.ADMIN.APPLICATION.Resources.Resource.*@
+                                            Contact Name
+                                        </label>
+                                        @Html.TextBoxFor(model => model.GroupName, new
+                                   {
+                                       @class = "w-full",
+                                       /*@placeholder = CRS.ADMIN.APPLICATION.Resources.Resource.Group_Name_Placeholder,*/
+                                       @placeholder = "Contact Name",
+                                       //@onkeypress = "return isAlphabetWithSpace(event)",
+                                       autocomplete = "off",
+                                       @maxLength = "50"
+                                   })
+                                        @*<input type="text" class="w-full" placeholder="@CRS.ADMIN.APPLICATION.Resources.Resource.Group_Name_Placeholder" name="GroupName" value="@Model.GroupName">*@
+                                        <span class="error">
+                                            @Html.ValidationMessageFor(m => m.GroupName)
+                                        </span>
+                                    </div>
+
+                                    @*Mobile Number*@
+
+                                    <div class="input-field-common w-full">
+                                        <label class="block mb-4 text-sm font-medium text-secondary-100 ">
+                                            Mobile Number
+                                        </label>
+                                        <div class="number-input w-full">
+
+                                            @if (!string.IsNullOrEmpty(Model.AgentId))
+                                            {
+                                                <div class="flag-section" style="background: #e5e5e5;">
+                                                    <div class="japan-flag" style="background: white;">
+                                                        <div></div>
+                                                    </div>
+                                                    <div>
+                                                        +81
+                                                    </div>
+                                                    <div class="line-y">
+
+                                                    </div>
+
+                                                </div>
+                                                @Html.HiddenFor(model => model.MobileNumber)
+                                                <input type="text" class="w-full" placeholder="090 - 6490 - 3254" name="MobileNumber" disabled>
+                                            }
+                                            else
+                                            {
+                                                <div class="flag-section">
+                                                    <div class="japan-flag" style="border: 1px solid #dbd6d6;">
+                                                        <div></div>
+                                                    </div>
+                                                    <div>
+                                                        +81
+                                                    </div>
+                                                    <div class="line-y">
+
+                                                    </div>
+
+                                                </div>
+                                                @Html.TextBoxFor(model => model.MobileNumber, new
+                                           {
+                                               @class = "w-full",
+                                               @placeholder = "090 - 6490 - 3254",
+                                               @onkeypress = "return isNumber(event)",
+                                               autocomplete = "off",
+                                               @maxLength = "11"
+                                           })
+                                                @*<input type="text" class="w-full" placeholder="@CRS.ADMIN.APPLICATION.Resources.Resource.Phone_Number" name="MobileNumber" value="@Model.MobileNumber">*@
+
+                                            }
+                                            @*<input type="text" class="w-full" placeholder="090-6490-3254" name="mobileNumber" required>*@
+
+                                        </div>
+                                        <span class="error">
+                                            @Html.ValidationMessageFor(m => m.MobileNumber)
+                                        </span>
+                                    </div>
+
+                                    @*email address*@
+
+                                    <div class="input-field-common">
+                                        <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
+                                            @* @CRS.ADMIN.APPLICATION.Resources.Resource.*@
+                                            Email Address
+                                        </label>
+                                        @Html.TextBoxFor(model => model.GroupName, new
+                                   {
+                                       @class = "w-full",
+                                       /*@placeholder = CRS.ADMIN.APPLICATION.Resources.Resource.Group_Name_Placeholder,*/
+                                       @placeholder = "Email Address",
+                                       //@onkeypress = "return isAlphabetWithSpace(event)",
+                                       autocomplete = "off",
+                                       @maxLength = "50"
+                                   })
+                                        @*<input type="text" class="w-full" placeholder="@CRS.ADMIN.APPLICATION.Resources.Resource.Group_Name_Placeholder" name="GroupName" value="@Model.GroupName">*@
+                                        <span class="error">
+                                            @Html.ValidationMessageFor(m => m.GroupName)
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+
 
                         </div>
-                        </div>
+                    </div>
 
 
                     <div id="content2" class="content-section" style="display: none;">
@@ -1463,8 +1750,38 @@
     </div>
 </div>
 
+@section Scripts {
+    @{
+        // Set default selected option
+        var selectedOption = "#tab1";
+    }
+    <script>
+    // Function to show the selected tab content and hide others
+        function showTabContent(selectedTabId) {
+            debugger
+        var tabContents = document.querySelectorAll(".tab-pane1");
+        tabContents.forEach(function(tabContent) {
+            if (tabContent.id === selectedTabId) {
+                tabContent.style.display = "block";
+            } else {
+                tabContent.style.display = "none";
+            }
+        });
+    }
 
+    // Initial call to show the default selected tab content
+    showTabContent('@selectedOption');
 
+    // Listen for changes in the dropdown selection
+        document.getElementById("tabDropdown").addEventListener("change", function () {
+            debugger
+        // Get the value of the selected option
+        var selectedOption = this.value;
+        // Show the corresponding tab content based on the selected option
+        showTabContent(selectedOption);
+    });
+    </script>
+}
 
 
 

@@ -646,7 +646,7 @@
         var optionCount = $('select[name="PlanDetailList[0].PlanIdentityList[0].IdentityDescription"] option').length;
         var plansDiv = document.querySelectorAll('#container .plans');
         $('.default_select').select2({
-            
+
         });
         var plansDivsCounts = plansDiv.length;
         if (plansDivsCounts>optionCount) {
@@ -723,7 +723,7 @@
         var selectedOptions = {};
         var isdocready = false;
         var firstrow = false;
- 
+
         function repeatContent() {
             if (plansDivsCounts < optionCount) {
                 var originalContent = document.getElementById('container');
@@ -819,7 +819,7 @@
                 var selector = '#' + id;
                 $(selector).select2();
                 $(".error").text("");
-                
+
                 if (optionCount == parseInt( rowcouunt + 1)) {
                     document.getElementById("addrow").disabled = true;
                 }
@@ -856,5 +856,19 @@
 
 
     </script>
+    
+    <script>
+        function changeTab(selectedTabId) {
+            var tabPanes = document.querySelectorAll(".tab-pane");
+            tabPanes.forEach(function (tab) {
+                if (tab.id === selectedTabId) {
+                    tab.style.display = "block";
+                } else {
+                    tab.style.display = "none";
+                }
+            });
+        }
+    </script>
+  
 
 }
