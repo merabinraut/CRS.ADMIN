@@ -25,6 +25,8 @@ namespace CRS.ADMIN.APPLICATION.Models.LocationManagement
         [DisplayName("Location Title")]
         [Required(AllowEmptyStrings = false, ErrorMessage = "Location title is required")]
         public string LocationName { get; set; }
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Location subtitle is required")]
+        public string LocationSubtitle { get; set; }
         public string LocationImage { get; set; }
         [DisplayName("Map Link")]
         [Required(AllowEmptyStrings = false, ErrorMessage = "Map Link is required")]

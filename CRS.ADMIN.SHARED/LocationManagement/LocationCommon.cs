@@ -4,6 +4,7 @@
     {
         public string LocationId { get; set; }
         public string LocationName { get; set; }
+        public string LocationSubtitle { get; set; }
         public string LocationImage { get; set; }
         public string LocationURL { get; set; }
         public string LocationStatus { get; set; }

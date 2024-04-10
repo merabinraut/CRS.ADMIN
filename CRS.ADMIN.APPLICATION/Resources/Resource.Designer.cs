@@ -1708,6 +1708,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Location Subtitle.
+        /// </summary>
+        public static string LocationSubtitle {
+            get {
+                return ResourceManager.GetString("LocationSubtitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Log out.
         /// </summary>
         public static string Log_out {
