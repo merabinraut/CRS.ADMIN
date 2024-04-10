@@ -24,6 +24,22 @@ namespace CRS.ADMIN.BUSINESS.ClubManagement
         {
             return _REPO.GetClubList(Request);
         }
+        public List<ClubListCommon> GetClubPendingList(PaginationFilterCommon Request)
+        {
+            return _REPO.GetClubPendingList(Request);
+        }
+        public List<ClubListCommon> GetClubRejectedList(PaginationFilterCommon Request)
+        {
+            return _REPO.GetClubRejectedList(Request);
+        }
+        public ClubDetailCommon GetClubPendingDetails(string AgentId, String culture = "")
+        {
+            return _REPO.GetClubPendingDetails(AgentId, culture);
+        }
+        public CommonDbResponse ManageApproveReject(string holdId, string flag, String culture = "")
+        {
+            return _REPO.ManageApproveReject(holdId, flag, culture);
+        }
         public List<PlanListCommon> GetClubPlanIdentityList(string culture)
         {
             return _REPO.GetClubPlanIdentityList(culture);
@@ -103,6 +119,16 @@ namespace CRS.ADMIN.BUSINESS.ClubManagement
         { 
           return _REPO.GetEventDetails(AgentId, EventId);
         }
-    #endregion
-}
+        #endregion
+        #region club Manager
+        public ManageManagerCommon GetManagerDetails(string AgentId)
+        {
+            return _REPO.GetManagerDetails(AgentId);
+        }
+        public CommonDbResponse ManageManager(ManageManagerCommon request)
+        {
+            return _REPO.ManageManager(request);
+        }
+        #endregion
+    }
 }

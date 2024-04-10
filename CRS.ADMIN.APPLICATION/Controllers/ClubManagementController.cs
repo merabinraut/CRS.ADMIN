@@ -1,6 +1,7 @@
 ﻿using CRS.ADMIN.APPLICATION.Helper;
 using CRS.ADMIN.APPLICATION.Library;
 using CRS.ADMIN.APPLICATION.Models.ClubManagement;
+using CRS.ADMIN.APPLICATION.Models.ClubManagerModel;
 using CRS.ADMIN.APPLICATION.Models.HostManagement;
 using CRS.ADMIN.APPLICATION.Models.TagManagement;
 using CRS.ADMIN.BUSINESS.ClubManagement;
@@ -52,8 +53,10 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             else response.ManageClubModel = new ManageClubModel();
             if (TempData.ContainsKey("RenderId")) RenderId = TempData["RenderId"].ToString();
             if (TempData.ContainsKey("ManageTagModel")) response.ManageTag = TempData["ManageTagModel"] as ManageTag;
-            
             else response.ManageTag = new ManageTag();
+            if (TempData.ContainsKey("ManageManagerModel")) response.ManageManager = TempData["ManageManagerModel"] as ManageManagerModel;
+            else response.ManageManager = new ManageManagerModel();
+
 
             if (TempData.ContainsKey("AvailabilityModel")) response.GetAvailabilityList = TempData["AvailabilityModel"] as List<AvailabilityTagModel>;
             else response.ManageTag.GetAvailabilityTagModel = new List<AvailabilityTagModel>();
@@ -64,6 +67,8 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 SearchFilter = !string.IsNullOrEmpty(SearchFilter) ? SearchFilter : null
             };
             var dbResponse = _BUSS.GetClubList(dbRequest);
+            var dbResponsePending = _BUSS.GetClubPendingList(dbRequest);
+           // var dbResponseRejected = _BUSS.GetClubRejectedList(dbRequest);
             if (TempData.ContainsKey("EditPlan"))
             {
               
@@ -108,16 +113,20 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             }
                   
             response.ClubListModel = dbResponse.MapObjects<ClubListModel>();
+            response.ClubPendingListModel = dbResponsePending.MapObjects<ClubListModel>();
+            //response.ClubRejectedListModel = dbResponseRejected.MapObjects<ClubListModel>();
             foreach (var item in response.ClubListModel)
             {
                 item.AgentId = item.AgentId?.EncryptParameter();
             }
+            response.ClubPendingListModel.ForEach(item => item.SNO = item.SNO?.EncryptParameter());
+            //response.ClubRejectedListModel.ForEach(item => item.SNO = item.SNO?.EncryptParameter());
             ViewBag.Pref = DDLHelper.LoadDropdownList("PREF") as Dictionary<string, string>;
             ViewBag.Holiday = DDLHelper.LoadDropdownList("Holiday") as Dictionary<string, string>;
             ViewBag.PlansList = ApplicationUtilities.LoadDropdownList("CLUBPLANS") as Dictionary<string, string>;
             ViewBag.PopUpRenderValue = !string.IsNullOrEmpty(RenderId) ? RenderId : null;
             ViewBag.LocationDDLList = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("LOCATIONDDL") as Dictionary<string, string>, null, "--- Select ---");
-            ViewBag.BusinessTypeDDL = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("BUSINESSTYPEDDL") as Dictionary<string, string>, null, "--- Select ---");
+            ViewBag.BusinessTypeDDL = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("BUSINESSTYPEDDL") as Dictionary<string, string>, null, "");
             ViewBag.RankDDL = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("RANKDDL") as Dictionary<string, string>, null, "--- Select ---");
             ViewBag.ClubStoreDDL = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("CLUBSTOREDDL") as Dictionary<string, string>, null, "--- Select ---");
             ViewBag.ClubCategoryDDL = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("CLUBCATEGORYDDL") as Dictionary<string, string>, null, "--- Select ---");
@@ -129,6 +138,8 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             ViewBag.PrefIdKey =!string.IsNullOrEmpty( response.ManageClubModel.Prefecture) ? ViewBag.Pref[response.ManageClubModel.Prefecture]:null;
             ViewBag.HolidayIdKey = !string.IsNullOrEmpty(response.ManageClubModel.Holiday )? ViewBag.Holiday[response.ManageClubModel.Holiday]:null;
             ViewBag.BusinessTypeKey = response.ManageClubModel.BusinessTypeDDL;
+           ViewBag.ClosingDate = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("CLOSINGDATE") as Dictionary<string, string>, null, "--- Select ---");
+            ViewBag.ClosingDateIdKey = !string.IsNullOrEmpty(response.ManageClubModel.ClosingDate) ? ViewBag.drpClosingDate[response.ManageClubModel.ClosingDate] : null;
             ViewBag.StartIndex = StartIndex;
             ViewBag.PageSize = PageSize;
             ViewBag.TotalData = dbResponse != null && dbResponse.Any() ? dbResponse[0].TotalRecords : 0;
@@ -190,268 +201,298 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             return RedirectToAction("ClubList", "ClubManagement");
         }
 
-        [HttpPost, ValidateAntiForgeryToken]
-        public ActionResult ManageClub(ManageClubModel Model, HttpPostedFileBase Business_Certificate, HttpPostedFileBase Logo_Certificate, HttpPostedFileBase CoverPhoto_Certificate, string LocationDDL, string BusinessTypeDDL)
-        {
-            string ErrorMessage = string.Empty;
+        //[HttpPost, ValidateAntiForgeryToken]
+        //public ActionResult ManageClub(ManageClubModel Model, HttpPostedFileBase Business_Certificate, HttpPostedFileBase Logo_Certificate, HttpPostedFileBase CoverPhoto_Certificate, HttpPostedFileBase KYC_Document, string LocationDDL, string BusinessTypeDDL)
+        //{
+        //    string ErrorMessage = string.Empty;
            
-            if (!string.IsNullOrEmpty(BusinessTypeDDL?.DecryptParameter())) ModelState.Remove("BusinessType");
-            if (!string.IsNullOrEmpty(LocationDDL?.DecryptParameter())) ModelState.Remove("LocationId");
-            ViewBag.PlansList = ApplicationUtilities.LoadDropdownList("CLUBPLANS") as Dictionary<string, string>;
-            ModelState.Remove("LocationURL");
-            string concatenateplanvalue = string.Empty;
+        //    if (!string.IsNullOrEmpty(BusinessTypeDDL?.DecryptParameter())) ModelState.Remove("BusinessType");
+        //    if (!string.IsNullOrEmpty(LocationDDL?.DecryptParameter())) ModelState.Remove("LocationId");
+        //    ViewBag.PlansList = ApplicationUtilities.LoadDropdownList("CLUBPLANS") as Dictionary<string, string>;
+        //    ModelState.Remove("LocationURL");
+        //    string concatenateplanvalue = string.Empty;
 
-            bool isduplicate = false;
-            Model.PlanDetailList.ForEach(planList =>
-            {
-                concatenateplanvalue += ", ";
-                planList.PlanIdentityList.ForEach(planIdentity =>
-                {
+        //    bool isduplicate = false;
+        //    Model.PlanDetailList.ForEach(planList =>
+        //    {
+        //        concatenateplanvalue += ", ";
+        //        planList.PlanIdentityList.ForEach(planIdentity =>
+        //        {
                     
-                    planIdentity.PlanId = planIdentity.name.ToLower() == "plan" ? ViewBag.PlansList[planIdentity.IdentityDescription] : planIdentity.IdentityDescription;  // Call your encryption method here
+        //            planIdentity.PlanId = planIdentity.name.ToLower() == "plan" ? ViewBag.PlansList[planIdentity.IdentityDescription] : planIdentity.IdentityDescription;  // Call your encryption method here
                     
-                    if (planIdentity.name.ToLower() == "plan")
-                    {
+        //            if (planIdentity.name.ToLower() == "plan")
+        //            {
                       
-                        if (concatenateplanvalue.Contains(planIdentity.IdentityDescription.DecryptParameter()))
-                        {
-                            isduplicate = true;
-                        }
-                        concatenateplanvalue += planIdentity.IdentityDescription.DecryptParameter();
-                    }
+        //                if (concatenateplanvalue.Contains(planIdentity.IdentityDescription.DecryptParameter()))
+        //                {
+        //                    isduplicate = true;
+        //                }
+        //                concatenateplanvalue += planIdentity.IdentityDescription.DecryptParameter();
+        //            }
                     
-                });
-            });
+        //        });
+        //    });
 
-            string businessCertificatePath = "";
-            string LogoPath = "";
-            string coverPhotoPath = "";
-            var allowedContentType = AllowedImageContentType();
-            string dateTime = "";
+        //    string businessCertificatePath = "";  
+        //    string kycDocumentPath = "";
+        //    string LogoPath = "";
+        //    string coverPhotoPath = "";
+        //    var allowedContentType = AllowedImageContentType();
+        //    string dateTime = "";
             
-            if (ModelState.IsValid)
-            {               
-                if (isduplicate == true)
-                {
-                    this.AddNotificationMessage(new NotificationModel()
-                    {
-                        NotificationType = NotificationMessage.INFORMATION,
-                        Message = "Duplicate plan name.",
-                        Title = NotificationMessage.INFORMATION.ToString(),
-                    });
+        //    if (ModelState.IsValid)
+        //    {               
+        //        if (isduplicate == true)
+        //        {
+        //            this.AddNotificationMessage(new NotificationModel()
+        //            {
+        //                NotificationType = NotificationMessage.INFORMATION,
+        //                Message = "Duplicate plan name.",
+        //                Title = NotificationMessage.INFORMATION.ToString(),
+        //            });
                     
-                    TempData["ManageClubModel"] = Model;
-                    TempData["RenderId"] = "Manage";
-                    return RedirectToAction("ClubList", "ClubManagement");
-                }
-                if
-           (
-              string.IsNullOrEmpty(Model.BusinessCertificate) ||
-              string.IsNullOrEmpty(Model.Logo) ||
-              string.IsNullOrEmpty(Model.CoverPhoto) ||
-              string.IsNullOrEmpty(Model.Gallery)
-           )
-                {
+        //            TempData["ManageClubModel"] = Model;
+        //            TempData["RenderId"] = "Manage";
+        //            return RedirectToAction("ClubList", "ClubManagement");
+        //        }
+        //        if
+        //   (
+        //      string.IsNullOrEmpty(Model.BusinessCertificate) ||
+        //      string.IsNullOrEmpty(Model.KYCDocument) ||
+        //      string.IsNullOrEmpty(Model.Logo) ||
+        //      string.IsNullOrEmpty(Model.CoverPhoto) ||
+        //      string.IsNullOrEmpty(Model.Gallery)
+        //   )
+        //        {
 
-                    if (Business_Certificate == null || Logo_Certificate == null || CoverPhoto_Certificate == null)
-                    {
-                        bool allowRedirect = false;
+        //            if (Business_Certificate == null || Logo_Certificate == null || CoverPhoto_Certificate == null)
+        //            {
+        //                bool allowRedirect = false;
 
-                        if (Business_Certificate == null && string.IsNullOrEmpty(Model.BusinessCertificate))
-                        {
-                            ErrorMessage = "Business certificate required";
+        //                if (Business_Certificate == null && string.IsNullOrEmpty(Model.BusinessCertificate))
+        //                {
+        //                    ErrorMessage = "Business certificate required";
 
-                            allowRedirect = true;
-                        }
-                        else if (Logo_Certificate == null && string.IsNullOrEmpty(Model.Logo))
-                        {
-                            ErrorMessage = "Logo required";
-                            allowRedirect = true;
-                        }
-                        else if (CoverPhoto_Certificate == null && string.IsNullOrEmpty(Model.CoverPhoto))
-                        {
-                            ErrorMessage = "Cover photo required";
-                            allowRedirect = true;
-                        }
-                        if (allowRedirect)
-                        {
-                            this.AddNotificationMessage(new NotificationModel()
-                            {
-                                NotificationType = NotificationMessage.INFORMATION,
-                                Message = ErrorMessage ?? "Something went wrong. Please try again later.",
-                                Title = NotificationMessage.INFORMATION.ToString(),
-                            });
-                            TempData["ManageClubModel"] = Model;
-                            TempData["RenderId"] = "Manage";
-                            return RedirectToAction("ClubList", "ClubManagement");
-                        }
-                    }
-                }
+        //                    allowRedirect = true;
+        //                }
+        //                else if (Logo_Certificate == null && string.IsNullOrEmpty(Model.Logo))
+        //                {
+        //                    ErrorMessage = "Logo required";
+        //                    allowRedirect = true;
+        //                }
+        //                else if (CoverPhoto_Certificate == null && string.IsNullOrEmpty(Model.CoverPhoto))
+        //                {
+        //                    ErrorMessage = "Cover photo required";
+        //                    allowRedirect = true;
+        //                }
+        //                else if (KYC_Document == null && string.IsNullOrEmpty(Model.KYCDocument))
+        //                {
+        //                    ErrorMessage = "KYC document required";
+        //                    allowRedirect = true;
+        //                }
+        //                if (allowRedirect)
+        //                {
+        //                    this.AddNotificationMessage(new NotificationModel()
+        //                    {
+        //                        NotificationType = NotificationMessage.INFORMATION,
+        //                        Message = ErrorMessage ?? "Something went wrong. Please try again later.",
+        //                        Title = NotificationMessage.INFORMATION.ToString(),
+        //                    });
+        //                    TempData["ManageClubModel"] = Model;
+        //                    TempData["RenderId"] = "Manage";
+        //                    return RedirectToAction("ClubList", "ClubManagement");
+        //                }
+        //            }
+        //        }
 
-                bool allowRedirectfile = false;
-                if (Business_Certificate != null)
-                {
-                    var contentType = Business_Certificate.ContentType;
-                    var ext = Path.GetExtension(Business_Certificate.FileName);
-                    if (allowedContentType.Contains(contentType.ToLower()))
-                    {
+        //        bool allowRedirectfile = false;
+        //        if (Business_Certificate != null)
+        //        {
+        //            var contentType = Business_Certificate.ContentType;
+        //            var ext = Path.GetExtension(Business_Certificate.FileName);
+        //            if (allowedContentType.Contains(contentType.ToLower()))
+        //            {
 
-                        dateTime = DateTime.Now.ToString("yyyyMMddHHmmssffff");
-                        string fileName = "BusinessCertificate_" + dateTime + ext.ToLower();
-                        businessCertificatePath = Path.Combine(Server.MapPath("~/Content/UserUpload/ClubManagement"), fileName);
-                        Model.BusinessCertificate = "/Content/UserUpload/ClubManagement/" + fileName;
-                    }
-                    else
-                    {
-                        this.AddNotificationMessage(new NotificationModel()
-                        {
-                            NotificationType = NotificationMessage.INFORMATION,
-                            Message = "Invalid image format.",
-                            Title = NotificationMessage.INFORMATION.ToString(),
-                        });
-                        allowRedirectfile = true;
+        //                dateTime = DateTime.Now.ToString("yyyyMMddHHmmssffff");
+        //                string fileName = "BusinessCertificate_" + dateTime + ext.ToLower();
+        //                businessCertificatePath = Path.Combine(Server.MapPath("~/Content/UserUpload/ClubManagement"), fileName);
+        //                Model.BusinessCertificate = "/Content/UserUpload/ClubManagement/" + fileName;
+        //            }
+        //            else
+        //            {
+        //                this.AddNotificationMessage(new NotificationModel()
+        //                {
+        //                    NotificationType = NotificationMessage.INFORMATION,
+        //                    Message = "Invalid image format.",
+        //                    Title = NotificationMessage.INFORMATION.ToString(),
+        //                });
+        //                allowRedirectfile = true;
 
-                    }
-                }
+        //            }
+        //        }
+        //        if (KYC_Document != null)
+        //        {
+        //            var contentType = KYC_Document.ContentType;
+        //            var ext = Path.GetExtension(KYC_Document.FileName);
+        //            if (allowedContentType.Contains(contentType.ToLower()))
+        //            {
 
-                if (Logo_Certificate != null)
-                {
-                    var contentType = Logo_Certificate.ContentType;
-                    var ext = Path.GetExtension(Logo_Certificate.FileName);
-                    if (allowedContentType.Contains(contentType.ToLower()))
-                    {
-                        dateTime = DateTime.Now.ToString("yyyyMMddHHmmssffff");
-                        string fileName = "Logo_" + dateTime + ext.ToLower();
-                        LogoPath = Path.Combine(Server.MapPath("~/Content/UserUpload/ClubManagement"), fileName);
-                        Model.Logo = "/Content/UserUpload/ClubManagement/" + fileName;
-                    }
-                    else
-                    {
-                        this.AddNotificationMessage(new NotificationModel()
-                        {
-                            NotificationType = NotificationMessage.INFORMATION,
-                            Message = "Invalid image format.",
-                            Title = NotificationMessage.INFORMATION.ToString(),
-                        });
-                        allowRedirectfile = true;
+        //                dateTime = DateTime.Now.ToString("yyyyMMddHHmmssffff");
+        //                string fileName = "KYCDocumentPath_" + dateTime + ext.ToLower();
+        //                kycDocumentPath = Path.Combine(Server.MapPath("~/Content/UserUpload/ClubManagement"), fileName);
+        //                Model.KYCDocument = "/Content/UserUpload/ClubManagement/" + fileName;
+        //            }
+        //            else
+        //            {
+        //                this.AddNotificationMessage(new NotificationModel()
+        //                {
+        //                    NotificationType = NotificationMessage.INFORMATION,
+        //                    Message = "Invalid image format.",
+        //                    Title = NotificationMessage.INFORMATION.ToString(),
+        //                });
+        //                allowRedirectfile = true;
 
-                    }
-                }
+        //            }
+        //        }
+        //        if (Logo_Certificate != null)
+        //        {
+        //            var contentType = Logo_Certificate.ContentType;
+        //            var ext = Path.GetExtension(Logo_Certificate.FileName);
+        //            if (allowedContentType.Contains(contentType.ToLower()))
+        //            {
+        //                dateTime = DateTime.Now.ToString("yyyyMMddHHmmssffff");
+        //                string fileName = "Logo_" + dateTime + ext.ToLower();
+        //                LogoPath = Path.Combine(Server.MapPath("~/Content/UserUpload/ClubManagement"), fileName);
+        //                Model.Logo = "/Content/UserUpload/ClubManagement/" + fileName;
+        //            }
+        //            else
+        //            {
+        //                this.AddNotificationMessage(new NotificationModel()
+        //                {
+        //                    NotificationType = NotificationMessage.INFORMATION,
+        //                    Message = "Invalid image format.",
+        //                    Title = NotificationMessage.INFORMATION.ToString(),
+        //                });
+        //                allowRedirectfile = true;
 
-                if (CoverPhoto_Certificate != null)
-                {
-                    var contentType = CoverPhoto_Certificate.ContentType;
-                    var ext = Path.GetExtension(CoverPhoto_Certificate.FileName);
-                    if (allowedContentType.Contains(contentType.ToLower()))
-                    {
-                        dateTime = DateTime.Now.ToString("yyyyMMddHHmmssffff");
-                        string fileName = "CoverPhoto_" + dateTime + ext.ToLower();
-                        coverPhotoPath = Path.Combine(Server.MapPath("~/Content/UserUpload/ClubManagement"), fileName);
-                        Model.CoverPhoto = "/Content/UserUpload/ClubManagement/" + fileName;
-                    }
-                    else
-                    {
-                        this.AddNotificationMessage(new NotificationModel()
-                        {
-                            NotificationType = NotificationMessage.INFORMATION,
-                            Message = "Invalid image format.",
-                            Title = NotificationMessage.INFORMATION.ToString(),
-                        });
-                        allowRedirectfile = true;
+        //            }
+        //        }
 
-                    }
-                }
-                if (allowRedirectfile == true)
-                {
-                    //Model.BusinessCertificate =  Business_Certificate.FileName;
-                    //Model.CoverPhoto =  CoverPhoto_Certificate.FileName;
-                    //Model.Logo=  Logo_Certificate.FileName;
-                    TempData["ManageClubModel"] = Model;
-                    TempData["RenderId"] = "Manage";
-                    return RedirectToAction("ClubList", "ClubManagement");
-                }
+        //        if (CoverPhoto_Certificate != null)
+        //        {
+        //            var contentType = CoverPhoto_Certificate.ContentType;
+        //            var ext = Path.GetExtension(CoverPhoto_Certificate.FileName);
+        //            if (allowedContentType.Contains(contentType.ToLower()))
+        //            {
+        //                dateTime = DateTime.Now.ToString("yyyyMMddHHmmssffff");
+        //                string fileName = "CoverPhoto_" + dateTime + ext.ToLower();
+        //                coverPhotoPath = Path.Combine(Server.MapPath("~/Content/UserUpload/ClubManagement"), fileName);
+        //                Model.CoverPhoto = "/Content/UserUpload/ClubManagement/" + fileName;
+        //            }
+        //            else
+        //            {
+        //                this.AddNotificationMessage(new NotificationModel()
+        //                {
+        //                    NotificationType = NotificationMessage.INFORMATION,
+        //                    Message = "Invalid image format.",
+        //                    Title = NotificationMessage.INFORMATION.ToString(),
+        //                });
+        //                allowRedirectfile = true;
 
-                ManageClubCommon commonModel = Model.MapObject<ManageClubCommon>();
-                commonModel.ActionUser = ApplicationUtilities.GetSessionValue("Username").ToString();
-                commonModel.ActionIP = ApplicationUtilities.GetIP();
-                if (!string.IsNullOrEmpty(commonModel.AgentId))
-                {
-                    commonModel.AgentId = commonModel.AgentId.DecryptParameter();
-                    if (string.IsNullOrEmpty(commonModel.AgentId))
-                    {
-                        this.AddNotificationMessage(new NotificationModel()
-                        {
-                            NotificationType = NotificationMessage.INFORMATION,
-                            Message = "Invalid club details.",
-                            Title = NotificationMessage.INFORMATION.ToString(),
-                        });
+        //            }
+        //        }
+        //        if (allowRedirectfile == true)
+        //        {
+        //            //Model.BusinessCertificate =  Business_Certificate.FileName;
+        //            //Model.CoverPhoto =  CoverPhoto_Certificate.FileName;
+        //            //Model.Logo=  Logo_Certificate.FileName;
+        //            TempData["ManageClubModel"] = Model;
+        //            TempData["RenderId"] = "Manage";
+        //            return RedirectToAction("ClubList", "ClubManagement");
+        //        }
+
+        //        ManageClubCommon commonModel = Model.MapObject<ManageClubCommon>();
+        //        commonModel.ActionUser = ApplicationUtilities.GetSessionValue("Username").ToString();
+        //        commonModel.ActionIP = ApplicationUtilities.GetIP();
+        //        if (!string.IsNullOrEmpty(commonModel.AgentId))
+        //        {
+        //            commonModel.AgentId = commonModel.AgentId.DecryptParameter();
+        //            if (string.IsNullOrEmpty(commonModel.AgentId))
+        //            {
+        //                this.AddNotificationMessage(new NotificationModel()
+        //                {
+        //                    NotificationType = NotificationMessage.INFORMATION,
+        //                    Message = "Invalid club details.",
+        //                    Title = NotificationMessage.INFORMATION.ToString(),
+        //                });
                        
-                        TempData["ManageClubModel"] = Model;
-                        TempData["RenderId"] = "Manage";
-                        return RedirectToAction("ClubList", "ClubManagement");
-                    }
-                }
-                commonModel.LocationId = LocationDDL?.DecryptParameter();
-                commonModel.BusinessType = BusinessTypeDDL?.DecryptParameter();
-                commonModel.Holiday = commonModel.Holiday?.DecryptParameter();
-                commonModel.Prefecture = commonModel.Prefecture?.DecryptParameter();        
-                var returntype = string.Empty;                
-                commonModel.PlanDetailList.ForEach(planList =>
-                {                    
-                    planList.PlanIdentityList.ForEach(planIdentity =>
-                    {                        
-                        string decryptedDescription = planIdentity.name.ToLower() == "plan" ? planIdentity.IdentityDescription.DecryptParameter() : planIdentity.IdentityDescription;                                               
-                        planIdentity.StaticDataValue = planIdentity.StaticDataValue.DecryptParameter();
-                        planIdentity.IdentityDescription = planIdentity.name.ToLower() == "plan" ? decryptedDescription : planIdentity.IdentityDescription;
+        //                TempData["ManageClubModel"] = Model;
+        //                TempData["RenderId"] = "Manage";
+        //                return RedirectToAction("ClubList", "ClubManagement");
+        //            }
+        //        }
+        //        commonModel.LocationId = LocationDDL?.DecryptParameter();
+        //        commonModel.BusinessType = BusinessTypeDDL?.DecryptParameter();
+        //        commonModel.Holiday = commonModel.Holiday?.DecryptParameter();
+        //        commonModel.Prefecture = commonModel.Prefecture?.DecryptParameter();        
+        //        var returntype = string.Empty;                
+        //        commonModel.PlanDetailList.ForEach(planList =>
+        //        {                    
+        //            planList.PlanIdentityList.ForEach(planIdentity =>
+        //            {                        
+        //                string decryptedDescription = planIdentity.name.ToLower() == "plan" ? planIdentity.IdentityDescription.DecryptParameter() : planIdentity.IdentityDescription;                                               
+        //                planIdentity.StaticDataValue = planIdentity.StaticDataValue.DecryptParameter();
+        //                planIdentity.IdentityDescription = planIdentity.name.ToLower() == "plan" ? decryptedDescription : planIdentity.IdentityDescription;
                        
-                    });     
-                });                
-                var dbResponse = _BUSS.ManageClub(commonModel);
-                if (dbResponse != null && dbResponse.Code == 0)
-                {
-                    if (Business_Certificate != null) ApplicationUtilities.ResizeImage(Business_Certificate, businessCertificatePath);
-                    if (Logo_Certificate != null) ApplicationUtilities.ResizeImage(Logo_Certificate, LogoPath);
-                    if (CoverPhoto_Certificate != null) ApplicationUtilities.ResizeImage(CoverPhoto_Certificate, coverPhotoPath);
-                    this.AddNotificationMessage(new NotificationModel()
-                    {
-                        NotificationType = dbResponse.Code == ResponseCode.Success ? NotificationMessage.SUCCESS : NotificationMessage.INFORMATION,
-                        Message = dbResponse.Message ?? "Failed",
-                        Title = dbResponse.Code == ResponseCode.Success ? NotificationMessage.SUCCESS.ToString() : NotificationMessage.INFORMATION.ToString()
-                    });
+        //            });     
+        //        });                
+        //        var dbResponse = _BUSS.ManageClub(commonModel);
+        //        if (dbResponse != null && dbResponse.Code == 0)
+        //        {
+        //            if (Business_Certificate != null) ApplicationUtilities.ResizeImage(Business_Certificate, businessCertificatePath);
+        //            if (Logo_Certificate != null) ApplicationUtilities.ResizeImage(Logo_Certificate, LogoPath);
+        //            if (CoverPhoto_Certificate != null) ApplicationUtilities.ResizeImage(CoverPhoto_Certificate, coverPhotoPath);
+        //            this.AddNotificationMessage(new NotificationModel()
+        //            {
+        //                NotificationType = dbResponse.Code == ResponseCode.Success ? NotificationMessage.SUCCESS : NotificationMessage.INFORMATION,
+        //                Message = dbResponse.Message ?? "Failed",
+        //                Title = dbResponse.Code == ResponseCode.Success ? NotificationMessage.SUCCESS.ToString() : NotificationMessage.INFORMATION.ToString()
+        //            });
 
-                    return RedirectToAction("ClubList", "ClubManagement");
-                }
-                else
-                {
-                    this.AddNotificationMessage(new NotificationModel()
-                    {
-                        NotificationType = NotificationMessage.INFORMATION,
-                        Message = dbResponse.Message ?? "Failed",
-                        Title = NotificationMessage.INFORMATION.ToString()
-                    });
+        //            return RedirectToAction("ClubList", "ClubManagement");
+        //        }
+        //        else
+        //        {
+        //            this.AddNotificationMessage(new NotificationModel()
+        //            {
+        //                NotificationType = NotificationMessage.INFORMATION,
+        //                Message = dbResponse.Message ?? "Failed",
+        //                Title = NotificationMessage.INFORMATION.ToString()
+        //            });
                    
-                    TempData["ManageClubModel"] = Model;
-                    TempData["RenderId"] = "Manage";
-                    return RedirectToAction("ClubList", "ClubManagement");
-                }
-            }
-            var errorMessages = ModelState.Where(x => x.Value.Errors.Count > 0)
-                                  .SelectMany(x => x.Value.Errors.Select(e => $"{x.Key}: {e.ErrorMessage}"))
-                                  .ToList();
+        //            TempData["ManageClubModel"] = Model;
+        //            TempData["RenderId"] = "Manage";
+        //            return RedirectToAction("ClubList", "ClubManagement");
+        //        }
+        //    }
+        //    var errorMessages = ModelState.Where(x => x.Value.Errors.Count > 0)
+        //                          .SelectMany(x => x.Value.Errors.Select(e => $"{x.Key}: {e.ErrorMessage}"))
+        //                          .ToList();
 
-            var notificationModels = errorMessages.Select(errorMessage => new NotificationModel
-            {
-                NotificationType = NotificationMessage.INFORMATION,
-                Message = errorMessage,
-                Title = NotificationMessage.INFORMATION.ToString(),
-            }).ToArray();
-            AddNotificationMessage(notificationModels);
-            var errors = ModelState.Where(x => x.Value.Errors.Count > 0).Select(x => new { x.Key }).ToList();
-            TempData["ManageClubModel"] = Model;
-            TempData["RenderId"] = "Manage";
+        //    var notificationModels = errorMessages.Select(errorMessage => new NotificationModel
+        //    {
+        //        NotificationType = NotificationMessage.INFORMATION,
+        //        Message = errorMessage,
+        //        Title = NotificationMessage.INFORMATION.ToString(),
+        //    }).ToArray();
+        //    AddNotificationMessage(notificationModels);
+        //    var errors = ModelState.Where(x => x.Value.Errors.Count > 0).Select(x => new { x.Key }).ToList();
+        //    TempData["ManageClubModel"] = Model;
+        //    TempData["RenderId"] = "Manage";
             
-            return RedirectToAction("ClubList", "ClubManagement");
-        }
+        //    return RedirectToAction("ClubList", "ClubManagement");
+        //}
 
 
         //public JsonResult GetPostalCodeInfo(string postalCode)
@@ -560,6 +601,506 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             return Json(response.SetMessageInTempData(this));
         }
 
+        [HttpPost, ValidateAntiForgeryToken]
+        public ActionResult ManageClub(ManageClubModel Model, HttpPostedFileBase Business_Certificate, HttpPostedFileBase Logo_Certificate, HttpPostedFileBase CoverPhoto_Certificate, HttpPostedFileBase KYC_Document, string LocationDDL, string BusinessTypeDDL)
+        {
+            string ErrorMessage = string.Empty;
+
+            if (!string.IsNullOrEmpty(BusinessTypeDDL?.DecryptParameter())) ModelState.Remove("BusinessType");
+            if (!string.IsNullOrEmpty(LocationDDL?.DecryptParameter())) ModelState.Remove("LocationId");
+            ViewBag.PlansList = ApplicationUtilities.LoadDropdownList("CLUBPLANS") as Dictionary<string, string>;
+            ModelState.Remove("LocationURL");
+            string concatenateplanvalue = string.Empty;
+
+            bool isduplicate = false;
+            Model.PlanDetailList.ForEach(planList =>
+            {
+                concatenateplanvalue += ", ";
+                planList.PlanIdentityList.ForEach(planIdentity =>
+                {
+
+                    planIdentity.PlanId = planIdentity.name.ToLower() == "plan" ? ViewBag.PlansList[planIdentity.IdentityDescription] : planIdentity.IdentityDescription;  // Call your encryption method here
+
+                    if (planIdentity.name.ToLower() == "plan")
+                    {
+
+                        if (concatenateplanvalue.Contains(planIdentity.IdentityDescription.DecryptParameter()))
+                        {
+                            isduplicate = true;
+                        }
+                        concatenateplanvalue += planIdentity.IdentityDescription.DecryptParameter();
+                    }
+
+                });
+            });
+
+            string businessCertificatePath = "";
+            string kycDocumentPath = "";
+            string LogoPath = "";
+            string coverPhotoPath = "";
+            var allowedContentType = AllowedImageContentType();
+            string dateTime = "";
+
+            if (ModelState.IsValid)
+            {
+                if (isduplicate == true)
+                {
+                    this.AddNotificationMessage(new NotificationModel()
+                    {
+                        NotificationType = NotificationMessage.INFORMATION,
+                        Message = "Duplicate plan name.",
+                        Title = NotificationMessage.INFORMATION.ToString(),
+                    });
+
+                    TempData["ManageClubModel"] = Model;
+                    TempData["RenderId"] = "Manage";
+                    return RedirectToAction("ClubList", "ClubManagement");
+                }
+                if
+           (
+              string.IsNullOrEmpty(Model.BusinessCertificate) ||
+              string.IsNullOrEmpty(Model.KYCDocument) ||
+              string.IsNullOrEmpty(Model.Logo) ||
+              string.IsNullOrEmpty(Model.CoverPhoto) ||
+              string.IsNullOrEmpty(Model.Gallery)
+           )
+                {
+
+                    if (Business_Certificate == null || Logo_Certificate == null || CoverPhoto_Certificate == null)
+                    {
+                        bool allowRedirect = false;
+
+                        if (Business_Certificate == null && string.IsNullOrEmpty(Model.BusinessCertificate))
+                        {
+                            ErrorMessage = "Business certificate required";
+
+                            allowRedirect = true;
+                        }
+                        else if (Logo_Certificate == null && string.IsNullOrEmpty(Model.Logo))
+                        {
+                            ErrorMessage = "Logo required";
+                            allowRedirect = true;
+                        }
+                        else if (CoverPhoto_Certificate == null && string.IsNullOrEmpty(Model.CoverPhoto))
+                        {
+                            ErrorMessage = "Cover photo required";
+                            allowRedirect = true;
+                        }
+                        else if (KYC_Document == null && string.IsNullOrEmpty(Model.KYCDocument))
+                        {
+                            ErrorMessage = "KYC document required";
+                            allowRedirect = true;
+                        }
+                        if (allowRedirect)
+                        {
+                            this.AddNotificationMessage(new NotificationModel()
+                            {
+                                NotificationType = NotificationMessage.INFORMATION,
+                                Message = ErrorMessage ?? "Something went wrong. Please try again later.",
+                                Title = NotificationMessage.INFORMATION.ToString(),
+                            });
+                            TempData["ManageClubModel"] = Model;
+                            TempData["RenderId"] = "Manage";
+                            return RedirectToAction("ClubList", "ClubManagement");
+                        }
+                    }
+                }
+
+                bool allowRedirectfile = false;
+                if (Business_Certificate != null)
+                {
+                    var contentType = Business_Certificate.ContentType;
+                    var ext = Path.GetExtension(Business_Certificate.FileName);
+                    if (allowedContentType.Contains(contentType.ToLower()))
+                    {
+
+                        dateTime = DateTime.Now.ToString("yyyyMMddHHmmssffff");
+                        string fileName = "BusinessCertificate_" + dateTime + ext.ToLower();
+                        businessCertificatePath = Path.Combine(Server.MapPath("~/Content/UserUpload/ClubManagement"), fileName);
+                        Model.BusinessCertificate = "/Content/UserUpload/ClubManagement/" + fileName;
+                    }
+                    else
+                    {
+                        this.AddNotificationMessage(new NotificationModel()
+                        {
+                            NotificationType = NotificationMessage.INFORMATION,
+                            Message = "Invalid image format.",
+                            Title = NotificationMessage.INFORMATION.ToString(),
+                        });
+                        allowRedirectfile = true;
+
+                    }
+                }
+                if (KYC_Document != null)
+                {
+                    var contentType = KYC_Document.ContentType;
+                    var ext = Path.GetExtension(KYC_Document.FileName);
+                    if (allowedContentType.Contains(contentType.ToLower()))
+                    {
+
+                        dateTime = DateTime.Now.ToString("yyyyMMddHHmmssffff");
+                        string fileName = "KYCDocumentPath_" + dateTime + ext.ToLower();
+                        kycDocumentPath = Path.Combine(Server.MapPath("~/Content/UserUpload/ClubManagement"), fileName);
+                        Model.KYCDocument = "/Content/UserUpload/ClubManagement/" + fileName;
+                    }
+                    else
+                    {
+                        this.AddNotificationMessage(new NotificationModel()
+                        {
+                            NotificationType = NotificationMessage.INFORMATION,
+                            Message = "Invalid image format.",
+                            Title = NotificationMessage.INFORMATION.ToString(),
+                        });
+                        allowRedirectfile = true;
+
+                    }
+                }
+                if (Logo_Certificate != null)
+                {
+                    var contentType = Logo_Certificate.ContentType;
+                    var ext = Path.GetExtension(Logo_Certificate.FileName);
+                    if (allowedContentType.Contains(contentType.ToLower()))
+                    {
+                        dateTime = DateTime.Now.ToString("yyyyMMddHHmmssffff");
+                        string fileName = "Logo_" + dateTime + ext.ToLower();
+                        LogoPath = Path.Combine(Server.MapPath("~/Content/UserUpload/ClubManagement"), fileName);
+                        Model.Logo = "/Content/UserUpload/ClubManagement/" + fileName;
+                    }
+                    else
+                    {
+                        this.AddNotificationMessage(new NotificationModel()
+                        {
+                            NotificationType = NotificationMessage.INFORMATION,
+                            Message = "Invalid image format.",
+                            Title = NotificationMessage.INFORMATION.ToString(),
+                        });
+                        allowRedirectfile = true;
+
+                    }
+                }
+
+                if (CoverPhoto_Certificate != null)
+                {
+                    var contentType = CoverPhoto_Certificate.ContentType;
+                    var ext = Path.GetExtension(CoverPhoto_Certificate.FileName);
+                    if (allowedContentType.Contains(contentType.ToLower()))
+                    {
+                        dateTime = DateTime.Now.ToString("yyyyMMddHHmmssffff");
+                        string fileName = "CoverPhoto_" + dateTime + ext.ToLower();
+                        coverPhotoPath = Path.Combine(Server.MapPath("~/Content/UserUpload/ClubManagement"), fileName);
+                        Model.CoverPhoto = "/Content/UserUpload/ClubManagement/" + fileName;
+                    }
+                    else
+                    {
+                        this.AddNotificationMessage(new NotificationModel()
+                        {
+                            NotificationType = NotificationMessage.INFORMATION,
+                            Message = "Invalid image format.",
+                            Title = NotificationMessage.INFORMATION.ToString(),
+                        });
+                        allowRedirectfile = true;
+
+                    }
+                }
+                if (allowRedirectfile == true)
+                {
+                    //Model.BusinessCertificate =  Business_Certificate.FileName;
+                    //Model.CoverPhoto =  CoverPhoto_Certificate.FileName;
+                    //Model.Logo=  Logo_Certificate.FileName;
+                    TempData["ManageClubModel"] = Model;
+                    TempData["RenderId"] = "Manage";
+                    return RedirectToAction("ClubList", "ClubManagement");
+                }
+
+                ManageClubCommon commonModel = Model.MapObject<ManageClubCommon>();
+                commonModel.ActionUser = ApplicationUtilities.GetSessionValue("Username").ToString();
+                commonModel.ActionIP = ApplicationUtilities.GetIP();
+                if (!string.IsNullOrEmpty(commonModel.AgentId))
+                {
+                    commonModel.AgentId = commonModel.AgentId.DecryptParameter();
+                    if (string.IsNullOrEmpty(commonModel.AgentId))
+                    {
+                        this.AddNotificationMessage(new NotificationModel()
+                        {
+                            NotificationType = NotificationMessage.INFORMATION,
+                            Message = "Invalid club details.",
+                            Title = NotificationMessage.INFORMATION.ToString(),
+                        });
+
+                        TempData["ManageClubModel"] = Model;
+                        TempData["RenderId"] = "Manage";
+                        return RedirectToAction("ClubList", "ClubManagement");
+                    }
+                }
+                if (!string.IsNullOrEmpty(commonModel.holdId))
+                {
+                    commonModel.holdId = commonModel.holdId.DecryptParameter();
+                    if (string.IsNullOrEmpty(commonModel.holdId))
+                    {
+                        this.AddNotificationMessage(new NotificationModel()
+                        {
+                            NotificationType = NotificationMessage.INFORMATION,
+                            Message = "Invalid club details.",
+                            Title = NotificationMessage.INFORMATION.ToString(),
+                        });
+
+                        TempData["ManageClubModel"] = Model;
+                        TempData["RenderId"] = "Manage";
+                        return RedirectToAction("ClubList", "ClubManagement");
+                    }
+                }
+                commonModel.LocationId = LocationDDL?.DecryptParameter();
+                commonModel.BusinessType = BusinessTypeDDL?.DecryptParameter();
+                commonModel.Holiday = commonModel.Holiday?.DecryptParameter();
+                commonModel.Prefecture = commonModel.Prefecture?.DecryptParameter();
+                var returntype = string.Empty;
+                commonModel.PlanDetailList.ForEach(planList =>
+                {
+                    planList.PlanIdentityList.ForEach(planIdentity =>
+                    {
+                        string decryptedDescription = planIdentity.name.ToLower() == "plan" ? planIdentity.IdentityDescription.DecryptParameter() : planIdentity.IdentityDescription;
+                        planIdentity.StaticDataValue = planIdentity.StaticDataValue.DecryptParameter();
+                        planIdentity.IdentityDescription = planIdentity.name.ToLower() == "plan" ? decryptedDescription : planIdentity.IdentityDescription;
+
+                    });
+                });
+                var dbResponse = _BUSS.ManageClub(commonModel);
+                if (dbResponse != null && dbResponse.Code == 0)
+                {
+                    if (Business_Certificate != null) ApplicationUtilities.ResizeImage(Business_Certificate, businessCertificatePath);
+                    if (Logo_Certificate != null) ApplicationUtilities.ResizeImage(Logo_Certificate, LogoPath);
+                    if (CoverPhoto_Certificate != null) ApplicationUtilities.ResizeImage(CoverPhoto_Certificate, coverPhotoPath);
+                    this.AddNotificationMessage(new NotificationModel()
+                    {
+                        NotificationType = dbResponse.Code == ResponseCode.Success ? NotificationMessage.SUCCESS : NotificationMessage.INFORMATION,
+                        Message = dbResponse.Message ?? "Failed",
+                        Title = dbResponse.Code == ResponseCode.Success ? NotificationMessage.SUCCESS.ToString() : NotificationMessage.INFORMATION.ToString()
+                    });
+
+                    return RedirectToAction("ClubList", "ClubManagement");
+                }
+                else
+                {
+                    this.AddNotificationMessage(new NotificationModel()
+                    {
+                        NotificationType = NotificationMessage.INFORMATION,
+                        Message = dbResponse.Message ?? "Failed",
+                        Title = NotificationMessage.INFORMATION.ToString()
+                    });
+
+                    TempData["ManageClubModel"] = Model;
+                    TempData["RenderId"] = "Manage";
+                    return RedirectToAction("ClubList", "ClubManagement");
+                }
+            }
+            var errorMessages = ModelState.Where(x => x.Value.Errors.Count > 0)
+                                  .SelectMany(x => x.Value.Errors.Select(e => $"{x.Key}: {e.ErrorMessage}"))
+                                  .ToList();
+
+            var notificationModels = errorMessages.Select(errorMessage => new NotificationModel
+            {
+                NotificationType = NotificationMessage.INFORMATION,
+                Message = errorMessage,
+                Title = NotificationMessage.INFORMATION.ToString(),
+            }).ToArray();
+            AddNotificationMessage(notificationModels);
+            var errors = ModelState.Where(x => x.Value.Errors.Count > 0).Select(x => new { x.Key }).ToList();
+            TempData["ManageClubModel"] = Model;
+            TempData["RenderId"] = "Manage";
+
+            return RedirectToAction("ClubList", "ClubManagement");
+        }
+
+
+        [HttpPost, ValidateAntiForgeryToken]
+        public ActionResult ApproveRejectClub(string holdid,string type)
+        {
+            ClubDetailModel response = new ClubDetailModel();
+            var id = holdid.DecryptParameter();
+            if (string.IsNullOrEmpty(id))
+            {
+                this.ShowPopup(1, "Invalid club details");
+                return RedirectToAction("ClubList");
+            }
+            var culture = Request.Cookies["culture"]?.Value;
+            culture = string.IsNullOrEmpty(culture) ? "ja" : culture;
+            if (type.ToLower()=="a")
+            {
+                type = "rc_a";
+            }
+            else if(type.ToLower() == "r")
+            {
+                type = "rc_r";
+            }
+            var dbResponse = _BUSS.ManageApproveReject(id, type, culture);
+            response.AgentId = null;
+            response.UserId = null;
+            this.AddNotificationMessage(new NotificationModel()
+            {
+                NotificationType = dbResponse.Code == ResponseCode.Success ? NotificationMessage.SUCCESS : NotificationMessage.INFORMATION,
+                Message = dbResponse.Message ?? "Something went wrong. Please try again later",
+                Title = dbResponse.Code == ResponseCode.Success ? NotificationMessage.SUCCESS.ToString() : NotificationMessage.INFORMATION.ToString()
+            });
+            return Json(dbResponse.Message, JsonRequestBehavior.AllowGet);
+        }
+        [HttpGet]
+        public ActionResult ManagePendingClub(string holdId = "")
+        {
+            var culture = Request.Cookies["culture"]?.Value;
+            culture = string.IsNullOrEmpty(culture) ? "ja" : culture;
+            ManageClubModel model = new ManageClubModel();
+            if (!string.IsNullOrEmpty(holdId))
+            {
+                var id = holdId.DecryptParameter();
+                if (string.IsNullOrEmpty(id))
+                {
+                    this.AddNotificationMessage(new NotificationModel()
+                    {
+                        NotificationType = NotificationMessage.INFORMATION,
+                        Message = "Invalid club details",
+                        Title = NotificationMessage.INFORMATION.ToString(),
+                    });
+                    return RedirectToAction("ClubList", "ClubManagement");
+                }
+                var dbResponse = _BUSS.GetClubPendingDetails(id, culture);
+                //List<PlanListCommon> planlist = _BUSS.GetClubPlanIdentityList(culture);
+                //model.PlanDetailList = planlist.MapObjects<PlanList>();
+
+                model = dbResponse.MapObject<ManageClubModel>();
+
+                ViewBag.PlansList = ApplicationUtilities.LoadDropdownList("CLUBPLANS") as Dictionary<string, string>;
+
+                model.PlanDetailList.ForEach(planList =>
+                {
+                    planList.PlanIdentityList.ForEach(planIdentity =>
+                    {
+                        // Encrypt specific properties                        
+                        planIdentity.StaticDataValue = planIdentity.StaticDataValue.EncryptParameter(); // Call your encryption method here                                      
+                        planIdentity.IdentityDescription = planIdentity.name.ToLower() == "plan" ? planIdentity.IdentityDescription.EncryptParameter() : planIdentity.IdentityDescription; // Call your encryption method here
+                        planIdentity.PlanId = planIdentity.name.ToLower() == "plan" ? ViewBag.PlansList[planIdentity.IdentityDescription] : planIdentity.IdentityDescription;  // Call your encryption method here
+
+                    });
+                });
+
+                model.AgentId = model.AgentId.EncryptParameter();
+                //model.LocationId = !string.IsNullOrEmpty(model.LocationId) ? model.LocationId.EncryptParameter() : null;
+                //model.BusinessType = !string.IsNullOrEmpty(model.BusinessType) ? model.BusinessType.EncryptParameter() : null;
+                model.LocationDDL = !string.IsNullOrEmpty(model.LocationId) ? model.LocationId.EncryptParameter() : null;
+                model.BusinessTypeDDL = !string.IsNullOrEmpty(model.BusinessType) ? model.BusinessType.EncryptParameter() : null;
+                model.Prefecture = !string.IsNullOrEmpty(model.Prefecture) ? model.Prefecture.EncryptParameter() : null;
+                model.Holiday = !string.IsNullOrEmpty(model.Holiday) ? model.Holiday.EncryptParameter() : null;
+            }
+            TempData["ManageClubModel"] = model;
+            TempData["RenderId"] = "Manage";
+            TempData["EditPlan"] = model;
+
+            return RedirectToAction("ClubList", "ClubManagement");
+        }
+
+        #region Manage Manager
+        [HttpGet]
+        public ActionResult ManageManager(string AgentId = "")
+        {
+            ManageManagerModel model = new ManageManagerModel();
+            var agentid = AgentId;
+            var culture = System.Threading.Thread.CurrentThread.CurrentCulture.ToString();
+            ViewBag.EventType = ApplicationUtilities.LoadDropdownValuesList("EVENTTYPE", "", "", culture);
+            if (!string.IsNullOrEmpty(AgentId))
+            {
+                
+                    var id = AgentId.DecryptParameter();
+                    
+                    if (string.IsNullOrEmpty(id))
+                    {
+                        this.AddNotificationMessage(new NotificationModel()
+                        {
+                            NotificationType = NotificationMessage.INFORMATION,
+                            Message = "Invalid event details",
+                            Title = NotificationMessage.INFORMATION.ToString(),
+                        });
+                    return RedirectToAction("ClubList", "ClubManagement");
+                }
+                    
+                    var dbResponse = _BUSS.GetManagerDetails(id);
+                    model = dbResponse.MapObject<ManageManagerModel>();
+                    model.ManagerId = model.ManagerId.EncryptParameter();
+                    model.ClubId = AgentId;              
+            }
+            TempData["ManageManagerModel"] = model;
+            TempData["RenderId"] = "ManageManager";
+
+            return RedirectToAction("ClubList", "ClubManagement");
+        }
+        [HttpPost, ValidateAntiForgeryToken]
+        public ActionResult ManageManager(ManageManagerModel Model)
+        {
+            //string[] updatedValues = form.GetValues("checkedValues");
+            var Request = new ManageManagerModel();
+            var ClubId = !string.IsNullOrEmpty(Model.ClubId) ? Model.ClubId.DecryptParameter() : null;
+            var managerID = String.Empty;
+            if (string.IsNullOrEmpty(ClubId))
+            {
+                this.AddNotificationMessage(new NotificationModel()
+                {
+                    NotificationType = NotificationMessage.INFORMATION,
+                    Message = "Invalid details",
+                    Title = NotificationMessage.INFORMATION.ToString(),
+                });
+                return RedirectToAction("ClubList", "ClubManagement");
+            }
+            if (!string.IsNullOrEmpty(Model.ManagerId))
+            {
+                managerID=!string.IsNullOrEmpty(Model.ManagerId) ? Model.ManagerId.DecryptParameter() : null;
+            }
+            if (ModelState.IsValid)
+            {
+                var dbRequest = Model.MapObject<ManageManagerCommon>();
+                dbRequest.ClubId = ClubId;
+                dbRequest.ManagerId = managerID;                
+                dbRequest.ActionUser = ApplicationUtilities.GetSessionValue("Username").ToString();
+                dbRequest.ActionIP = ApplicationUtilities.GetIP();
+                var dbResponse = _BUSS.ManageManager(dbRequest);
+                if (dbResponse != null && dbResponse.Code == 0)
+                {
+                    this.AddNotificationMessage(new NotificationModel()
+                    {
+                        NotificationType = NotificationMessage.SUCCESS,
+                        Message = dbResponse.Message ?? "Success",
+                        Title = NotificationMessage.SUCCESS.ToString(),
+                    });
+                    return RedirectToAction("ClubList", "ClubManagement");
+                }
+                else
+                {
+                    this.AddNotificationMessage(new NotificationModel()
+                    {
+                        NotificationType = NotificationMessage.INFORMATION,
+                        Message = dbResponse.Message ?? "Failed",
+                        Title = NotificationMessage.INFORMATION.ToString(),
+                    });
+                    TempData["ManageManagerModel"] = Model;
+                    TempData["RenderId"] = "ManageManager";
+                    return RedirectToAction("ClubList", "ClubManagement");
+                }
+            }
+            var errorMessages = ModelState.Where(x => x.Value.Errors.Count > 0)
+                                 .SelectMany(x => x.Value.Errors.Select(e => $"{x.Key}: {e.ErrorMessage}"))
+                                 .ToList();
+
+            var notificationModels = errorMessages.Select(errorMessage => new NotificationModel
+            {
+                NotificationType = NotificationMessage.INFORMATION,
+                Message = errorMessage,
+                Title = NotificationMessage.INFORMATION.ToString(),
+            }).ToArray();
+            AddNotificationMessage(notificationModels);
+            var errors = ModelState.Where(x => x.Value.Errors.Count > 0).Select(x => new { x.Key }).ToList();
+            TempData["ManageManagerModel"] = Model;
+            TempData["RenderId"] = "ManageManager";
+            return RedirectToAction("ClubList", "ClubManagement");
+        }
+
+        #endregion
         #region "Tag Management"
         [HttpGet]
         public ActionResult ManageTag(string ClubId = "")

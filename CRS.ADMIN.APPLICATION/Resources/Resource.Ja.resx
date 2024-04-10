@@ -286,6 +286,18 @@
     <value>事業の種類</value>
     <comment>Club Management</comment>
   </data>
+  <data name="BusinessInfo" xml:space="preserve">
+    <value>ビジネス情報</value>
+    <comment>ClubManagement</comment>
+  </data>
+  <data name="BusinessLicenseNumber" xml:space="preserve">
+    <value>営業許可番号</value>
+    <comment>ClubManagement</comment>
+  </data>
+  <data name="BusinessLicenseNumber_Placeholder" xml:space="preserve">
+    <value>営業許可番号</value>
+    <comment>ClubManagement</comment>
+  </data>
   <data name="Calendar" xml:space="preserve">
     <value>カレンダー</value>
   </data>
@@ -319,6 +331,10 @@
   <data name="Clear All" xml:space="preserve">
     <value>クリア</value>
     <comment>Roles Management</comment>
+  </data>
+  <data name="ClosingDate" xml:space="preserve">
+    <value>締め日</value>
+    <comment>ClubManagement</comment>
   </data>
   <data name="Club" xml:space="preserve">
     <value>クラブ</value>
@@ -408,6 +424,10 @@
     <value>会社名を入力してください</value>
     <comment>Club Management</comment>
   </data>
+  <data name="CompanyAddress" xml:space="preserve">
+    <value>営業所の所在地</value>
+    <comment>ClubManagement</comment>
+  </data>
   <data name="Configure" xml:space="preserve">
     <value>自己設定</value>
     <comment>Recommendation Management</comment>
@@ -427,6 +447,10 @@
   <data name="Constellation Group" xml:space="preserve">
     <value>コンステレーショングループ</value>
     <comment>Host Management</comment>
+  </data>
+  <data name="ContactName" xml:space="preserve">
+    <value>担当者名</value>
+    <comment>ClubManagement</comment>
   </data>
   <data name="Converted Customers" xml:space="preserve">
     <value>リファーラル</value>
@@ -671,6 +695,14 @@
     <value>グループ名を入力してください</value>
     <comment>Club Management</comment>
   </data>
+  <data name="GroupNameEng" xml:space="preserve">
+    <value>グループ名</value>
+    <comment>ClubManagement</comment>
+  </data>
+  <data name="GroupNameJap" xml:space="preserve">
+    <value>グループ名（カタカナ</value>
+    <comment>ClubManagement</comment>
+  </data>
   <data name="GroupSupportMsg" xml:space="preserve">
     <value>グループに基づいてリクエストを管理する</value>
     <comment>Rcommendation Management</comment>
@@ -766,6 +798,10 @@
     <value>六月</value>
     <comment>Dashboard</comment>
   </data>
+  <data name="KYCDocument" xml:space="preserve">
+    <value>アップロード (本人確認種類)</value>
+    <comment>ClubManagement</comment>
+  </data>
   <data name="LandlineNumber" xml:space="preserve">
     <value>固定電話番号</value>
     <comment>ClubManagement</comment>
@@ -809,6 +845,10 @@
   <data name="Latitude Placeholder" xml:space="preserve">
     <value>緯度を入力してください</value>
     <comment>Club Management</comment>
+  </data>
+  <data name="LicenseIssuedDate" xml:space="preserve">
+    <value>営業許可取得日</value>
+    <comment>ClubManagement</comment>
   </data>
   <data name="Lifestyle" xml:space="preserve">
     <value>ライフスタイル</value>
@@ -921,6 +961,17 @@
     <value>プロファイルのセキュリティを管理する</value>
     <comment>Security</comment>
   </data>
+  <data name="ManageClubManager" xml:space="preserve">
+    <value>マネージャー情報の管理</value>
+    <comment>ClubManagement</comment>
+  </data>
+  <data name="Manager" xml:space="preserve">
+    <value />
+  </data>
+  <data name="ManagerName" xml:space="preserve">
+    <value>店舗責任者名</value>
+    <comment>ClubManagement</comment>
+  </data>
   <data name="Map Link" xml:space="preserve">
     <value>マップリンク</value>
     <comment>Location Management</comment>
@@ -950,6 +1001,10 @@
   <data name="Min Value" xml:space="preserve">
     <value>最小値</value>
     <comment>Commission Management</comment>
+  </data>
+  <data name="MobileNumber" xml:space="preserve">
+    <value>電話番号</value>
+    <comment>ClubManagement</comment>
   </data>
   <data name="Monday" xml:space="preserve">
     <value>月</value>
@@ -1262,6 +1317,14 @@
   <data name="Report" xml:space="preserve">
     <value>報告</value>
     <comment>Dashboard</comment>
+  </data>
+  <data name="Representative1" xml:space="preserve">
+    <value>担当者　1</value>
+    <comment>ClubManagement</comment>
+  </data>
+  <data name="Representative2" xml:space="preserve">
+    <value>担当者　2</value>
+    <comment>ClubManagement</comment>
   </data>
   <data name="Requested Date" xml:space="preserve">
     <value>登録日</value>

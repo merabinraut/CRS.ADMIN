@@ -4,6 +4,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     var _ManageClubModel = Model.ManageClubModel as CRS.ADMIN.APPLICATION.Models.ClubManagement.ManageClubModel;
     var _ManageTag = Model.ManageTag as CRS.ADMIN.APPLICATION.Models.TagManagement.ManageTag;
+    var _ManageManager = Model.ManageManager as CRS.ADMIN.APPLICATION.Models.ClubManagerModel.ManageManagerModel;
 }
 
 <div class="px-8 py-4">
@@ -199,6 +200,7 @@
                                                     <div class="flex gap-[7px]">
                                                         @* <i class="las la-eye text-[20px] cursor-pointer text-[#A6A6A6]"></i>*@
                                                         <i class="las la-edit text-[20px] cursor-pointer text-[#A6A6A6]" onclick="ManageClubGetDetailsFunction('@item.AgentId');"></i>
+                                                        <img src="/Content/assets/images/manager-setting.svg" onclick="ManageClubManagerFunction('@item.AgentId');">
                                                         <i class="las la-tag text-[20px] cursor-pointer text-[#C8B477]" onclick="ManageClubTagFunction('@item.AgentId');"></i>
                                                         <i class=" las la-trash-alt text-[20px] cursor-pointer text-[#CB3F3F]" onclick="BlockUnblockFunction('@item.AgentId');"></i>
                                                         <i class="las la-user text-[20px] cursor-pointer text-[#A6A6A6]" onclick="HostRedirectFunction('@item.AgentId');"></i>
@@ -241,7 +243,7 @@
 </div>
 <!-- add new host from -->
 @Html.Partial("_ManageTagPartialView", _ManageTag)
-
+@Html.Partial("_ManageManagerPartialView", _ManageManager)
 <!-- Confirmation  -->
 <div id="add-new-host-modal-save" tabindex="-1" aria-hidden="true"
      class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full"
@@ -307,7 +309,7 @@
 
 @section scripts
 {
-
+    <script src="~/Content/assets_new/js/calendar-management.js"></script>
     <script>
         const checkbox = document.getElementById('tag1');
         const tagInput = document.getElementById('tagInput');
@@ -449,6 +451,7 @@
     </script>
     <script>
         $(document).ready(function () {
+
             $('select').select2({
                 minimumResultsForSearch: Infinity
             });
@@ -460,6 +463,10 @@
             else if (PopUpRenderValue != null && PopUpRenderValue != "" && PopUpRenderValue == "ManageTag") {
                  var element = document.getElementById('add-new-host-tag');
                  element.classList.remove('translate-x-full');
+            }
+            else if (PopUpRenderValue != null && PopUpRenderValue != "" && PopUpRenderValue == "ManageManager") {
+                var element = document.getElementById('add-new-host-manager');
+                element.classList.remove('translate-x-full');
             }
             var tag1Status = $('#Tag1Status').val();
             var tag2Status = $('#Tag2Status').val();
@@ -614,6 +621,9 @@
         function ManageClubGetDetailsFunction(i) {
             window.location.href = '/ClubManagement/ManageClub?AgentId=' + i;
         }
+        function ManageClubManagerFunction(i) {
+            window.location.href = '/ClubManagement/ManageManager?AgentId=' + i;
+        }
 
         function CancelFunction() {
             location.reload();
@@ -633,20 +643,69 @@
     </script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
+            //var selectElement = document.querySelector('#large[name="BusinessTypeDDL"]');
+            $('#large[name="BusinessTypeDDL"]').change(function () {
+                var selectedValue = $(this).val();
+                if (selectedValue == "xEc3wYi731ZOCLT1X0UrWw77tt4yh788qqw77tt4yh788qqw") {
+                    $("#Corp_id").show();
+                    $("#corp_representive1").show();
+                    $("#corpdetail_representive1").show();
+                    $("#corp_representive2").show();
+                    $("#corpdetail_representive2").show();
+                }
+                else {
+                    $("#Corp_id").hide();
+                    $("#corp_representive1").hide();
+                    $("#corpdetail_representive1").hide();
+                    $("#corp_representive2").hide();
+                    $("#corpdetail_representive2").hide();
+                }
+            });
                 const page_size = @ViewBag.PageSize;
                 const total_data = @ViewBag.TotalData;
                 const start_index_val = @ViewBag.StartIndex;
                 let URL = "/ClubManagement/ClubList";
                 let search_filter = $('#default-search').val();
                 URL = addQueryParam(URL, 'SearchFilter', search_filter);
-                LoadPagination(page_size, total_data, start_index_val, URL);
-            });
+            LoadPagination(page_size, total_data, start_index_val, URL);
+
+         $("#LicenseIssuedDate").val("@_ManageClubModel.LicenseIssuedDate");
+           jQuery(function ($) {
+           $.datepicker.regional['ja'] = {
+           closeText: '閉じる',
+           prevText: '&#x3c;前',
+           nextText: '次&#x3e;',
+           currentText: '今日',
+           monthNames: ['1月', '2月', '3月', '4月', '5月', '6月',
+           '7月', '8月', '9月', '10月', '11月', '12月'],
+           monthNamesShort: ['1月', '2月', '3月', '4月', '5月', '6月',
+           '7月', '8月', '9月', '10月', '11月', '12月'],
+           dayNames: ['日曜日', '月曜日', '火曜日', '水曜日', '木曜日', '金曜日', '土曜日'],
+           dayNamesShort: ['日', '月', '火', '水', '木', '金', '土'],
+           dayNamesMin: ['日', '月', '火', '水', '木', '金', '土'],
+           weekHeader: '週',
+           dateFormat: 'yy/mm/dd',
+           firstDay: 0,
+           isRTL: false,
+           showMonthAfterYear: true,
+           yearSuffix: '年'
+           };
+           $.datepicker.setDefaults($.datepicker.regional['ja']);
+           $("#LicenseIssuedDate").datepicker({
+           minDate: new Date(),
+          /* maxDate: 15,*/
+           defaultDate: '@_ManageClubModel.LicenseIssuedDate'
+           });
+
+        });
     </script>
+
+
     <script>
         var optionCount = $('select[name="PlanDetailList[0].PlanIdentityList[0].IdentityDescription"] option').length;
         var plansDiv = document.querySelectorAll('#container .plans');
         $('.default_select').select2({
-            
+
         });
         var plansDivsCounts = plansDiv.length;
         if (plansDivsCounts>optionCount) {
@@ -723,7 +782,7 @@
         var selectedOptions = {};
         var isdocready = false;
         var firstrow = false;
- 
+
         function repeatContent() {
             if (plansDivsCounts < optionCount) {
                 var originalContent = document.getElementById('container');
@@ -819,7 +878,7 @@
                 var selector = '#' + id;
                 $(selector).select2();
                 $(".error").text("");
-                
+
                 if (optionCount == parseInt( rowcouunt + 1)) {
                     document.getElementById("addrow").disabled = true;
                 }

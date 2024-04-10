@@ -286,6 +286,18 @@
     <value>Business Type</value>
     <comment>Club Management</comment>
   </data>
+  <data name="BusinessInfo" xml:space="preserve">
+    <value>Business Info</value>
+    <comment>ClubManagement</comment>
+  </data>
+  <data name="BusinessLicenseNumber" xml:space="preserve">
+    <value>Business License Number</value>
+    <comment>ClubManagement</comment>
+  </data>
+  <data name="BusinessLicenseNumber_Placeholder" xml:space="preserve">
+    <value>Business License Number</value>
+    <comment>ClubManagement</comment>
+  </data>
   <data name="Calendar" xml:space="preserve">
     <value>Calendar</value>
   </data>
@@ -319,6 +331,10 @@
   <data name="Clear All" xml:space="preserve">
     <value>Clear All</value>
     <comment>Roles Management</comment>
+  </data>
+  <data name="ClosingDate" xml:space="preserve">
+    <value>Closing Date</value>
+    <comment>ClubManagement</comment>
   </data>
   <data name="Club" xml:space="preserve">
     <value>Club</value>
@@ -408,6 +424,10 @@
     <value>Enter company name</value>
     <comment>Club Management</comment>
   </data>
+  <data name="CompanyAddress" xml:space="preserve">
+    <value>Company Address</value>
+    <comment>ClubManagement</comment>
+  </data>
   <data name="Configure" xml:space="preserve">
     <value>Configure</value>
     <comment>Recommendation Management</comment>
@@ -427,6 +447,10 @@
   <data name="Constellation Group" xml:space="preserve">
     <value>Constellation Group</value>
     <comment>Host Management</comment>
+  </data>
+  <data name="ContactName" xml:space="preserve">
+    <value>Contact Name</value>
+    <comment>ClubManagement</comment>
   </data>
   <data name="Converted Customers" xml:space="preserve">
     <value>Converted Customers</value>
@@ -671,6 +695,14 @@
     <value>Enter group name</value>
     <comment>Club Management</comment>
   </data>
+  <data name="GroupNameEng" xml:space="preserve">
+    <value>Group Name (English)</value>
+    <comment>ClubManagement</comment>
+  </data>
+  <data name="GroupNameJap" xml:space="preserve">
+    <value>Group Name (Katakana)</value>
+    <comment>ClubManagement</comment>
+  </data>
   <data name="GroupSupportMsg" xml:space="preserve">
     <value>Manage the requests according to the groups.</value>
     <comment>Rcommendation Management</comment>
@@ -766,6 +798,10 @@
     <value>Jun</value>
     <comment>Dashboard</comment>
   </data>
+  <data name="KYCDocument" xml:space="preserve">
+    <value>KYC Document</value>
+    <comment>ClubManagement</comment>
+  </data>
   <data name="LandlineNumber" xml:space="preserve">
     <value>Landline Number</value>
     <comment>ClubManagement</comment>
@@ -809,6 +845,10 @@
   <data name="Latitude Placeholder" xml:space="preserve">
     <value>Enter Latitude</value>
     <comment>Club Management</comment>
+  </data>
+  <data name="LicenseIssuedDate" xml:space="preserve">
+    <value>License Issued Date</value>
+    <comment>ClubManagement</comment>
   </data>
   <data name="Lifestyle" xml:space="preserve">
     <value>Lifestyle</value>
@@ -921,6 +961,14 @@
     <value>Manage your profile security</value>
     <comment>Security</comment>
   </data>
+  <data name="ManageClubManager" xml:space="preserve">
+    <value>Manage Manager Info</value>
+    <comment>ClubManagement</comment>
+  </data>
+  <data name="ManagerName" xml:space="preserve">
+    <value>Manager Name</value>
+    <comment>ClubManagement</comment>
+  </data>
   <data name="Map Link" xml:space="preserve">
     <value>Map Link</value>
     <comment>Location Management</comment>
@@ -950,6 +998,10 @@
   <data name="Min Value" xml:space="preserve">
     <value>Min Value</value>
     <comment>Commission Management</comment>
+  </data>
+  <data name="MobileNumber" xml:space="preserve">
+    <value>Mobile Number</value>
+    <comment>ClubManagement</comment>
   </data>
   <data name="Monday" xml:space="preserve">
     <value>Mon</value>
@@ -1258,6 +1310,14 @@
   <data name="Report" xml:space="preserve">
     <value>Report</value>
     <comment>Dashboard</comment>
+  </data>
+  <data name="Representative1" xml:space="preserve">
+    <value>Representative 1</value>
+    <comment>ClubManagement</comment>
+  </data>
+  <data name="Representative2" xml:space="preserve">
+    <value>Representative 2</value>
+    <comment>ClubManagement</comment>
   </data>
   <data name="Requested Date" xml:space="preserve">
     <value>Requested Date</value>

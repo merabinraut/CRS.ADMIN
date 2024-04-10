@@ -250,3 +250,7 @@ VALUES
 INSERT INTO tbl_static_data_type ([StaticDataType], [StaticDataName], [StaticDataDescription], [ActionUser], [ActionDate], [Status])
 VALUES
 (  39, 'Input Type', 'Input Type', 'kiran.acharya', N'2024-02-12T15:39:25.57', 'A' )
+
+INSERT INTO tbl_static_data_type ([StaticDataType], [StaticDataName], [StaticDataDescription], [ActionUser], [ActionDate], [Status])
+VALUES
+(  45, 'Closing Date', 'Club Closing Date', 'kiran.acharya', N'2024-02-12T15:39:25.57', 'A' )
