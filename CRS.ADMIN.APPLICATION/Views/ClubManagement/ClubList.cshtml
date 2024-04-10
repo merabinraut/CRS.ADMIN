@@ -22,10 +22,7 @@
         <div id="tab1" class="tab-content-plane">
             <div class="flex flex-col gap-8">
                 <div id="tab1" class="tab-content">
-                    <div class="flex justify-between pb-[24px]">
-                        <form action="/ClubManagement/ClubList" method="get">
-
-                            <div class="flex gap-4 mb-8">
+                            <div class="flex gap-4 mb-8 border-b ">
                                 <div id="tab1Link" class="styleCss active px-1 pb-4 cursor-pointer active" onclick="changeTab('all', 'tab1Link')">
                                     Approved
                                 </div>
@@ -37,6 +34,9 @@
                                     Rejected
                                 </div>
                             </div>
+                    <div class="flex justify-between pb-[24px]">
+                        <form action="/ClubManagement/ClubList" method="get">
+
 
                             <div class="relative input-search-wrapper">
                                 <div class="absolute inset-y-0 left-0 flex items-center pl-[16px] pointer-events-none">
@@ -256,7 +256,7 @@
 
                         <div class="table-tab">
                             <div class="px-[12px] py-[16px] flex justify-between entry-export-container">
-                                <div class="flex items-center select-entries" id="ShowEntries-Id1">
+                                <div class="flex items-center select-entries" id="ShowEntries-Id-2">
                                 </div>
                             </div>
                             <div class="relative overflow-x-auto">
@@ -412,22 +412,21 @@
                                                 </div>
                                             </td>
                                         </tr>
-                                        SN++;
 
                                     </tbody>
                                 </table>
 
                             </div>
                             <div class="pagination-club">
-                                <div class="show-entry" id="Entries-Id">
+                                <div class="show-entry" id="Entries-Id-2">
                                 </div>
                                 <div class="flex gap-[12px]">
-                                    <div class="btn btn-secondary-box-shadow" id="prev-btn">
+                                    <div class="btn btn-secondary-box-shadow" id="prev-btn-2">
                                         @CRS.ADMIN.APPLICATION.Resources.Resource.Previous
                                     </div>
-                                    <div class="flex gap-[12px]" id="pagination-id">
+                                    <div class="flex gap-[12px]" id="pagination-id-2">
                                     </div>
-                                    <div class="btn btn-secondary-box-shadow" id="next-btn">
+                                    <div class="btn btn-secondary-box-shadow" id="next-btn-2">
                                         @CRS.ADMIN.APPLICATION.Resources.Resource.Next
                                     </div>
                                 </div>
@@ -441,7 +440,7 @@
 
                         <div class="table-tab">
                             <div class="px-[12px] py-[16px] flex justify-between entry-export-container">
-                                <div class="flex items-center select-entries" id="ShowEntries-Id">
+                                <div class="flex items-center select-entries" id="ShowEntries-Id-3">
                                 </div>
                             </div>
                             <div class="relative overflow-x-auto">
@@ -572,22 +571,22 @@
                                                 </div>
                                             </td>
                                         </tr>
-                                      
+
 
                                     </tbody>
                                 </table>
 
                             </div>
                             <div class="pagination-club">
-                                <div class="show-entry" id="Entries-Id">
+                                <div class="show-entry" id="Entries-Id-3">
                                 </div>
                                 <div class="flex gap-[12px]">
-                                    <div class="btn btn-secondary-box-shadow" id="prev-btn">
+                                    <div class="btn btn-secondary-box-shadow" id="prev-btn-3">
                                         @CRS.ADMIN.APPLICATION.Resources.Resource.Previous
                                     </div>
-                                    <div class="flex gap-[12px]" id="pagination-id">
+                                    <div class="flex gap-[12px]" id="pagination-id-3">
                                     </div>
-                                    <div class="btn btn-secondary-box-shadow" id="next-btn">
+                                    <div class="btn btn-secondary-box-shadow" id="next-btn-3">
                                         @CRS.ADMIN.APPLICATION.Resources.Resource.Next
                                     </div>
                                 </div>
@@ -596,7 +595,7 @@
                     </div>
 
 
-                    <div id="Rejected" class="pane" style="display: none;">Content of Tab 3</div>
+@*                    <div id="Rejected" class="pane" style="display: none;">Content of Tab 3</div>*@
                 </div>
             </div>
         </div>
@@ -1002,9 +1001,32 @@
                 let URL = "/ClubManagement/ClubList";
                 let search_filter = $('#default-search').val();
                 URL = addQueryParam(URL, 'SearchFilter', search_filter);
-                LoadPagination(page_size, total_data, start_index_val, URL);
-            });
+            LoadPagination(page_size, total_data, start_index_val, URL);
+
+            const page_size2 = @ViewBag.PageSize;
+                const total_data2 = @ViewBag.TotalData;
+                const start_index_val2 = @ViewBag.StartIndex;
+                let URL2 = "/ClubManagement/ClubList";
+                let search_filter2 = $('#default-search').val();
+            URL2 = addQueryParam(URL, 'SearchFilter', search_filter);
+            dynamicStartIndexLabel = "StartIndex2";
+            dynamicPageSizeLabel = "PageSize2";
+            LoadPagination(page_size2, total_data2, start_index_val2, URL2, 'pagination-id-2', 'prev-btn-2', 'next-btn-2', 'ShowEntries-Id-2', 'Entries-Id-2');
+
+             const page_size3 = @ViewBag.PageSize;
+             const total_data3 = @ViewBag.TotalData;
+             const start_index_val3 = @ViewBag.StartIndex;
+             let URL3 = "/ClubManagement/ClubList";
+             let search_filter3 = $('#default-search').val();
+         URL3 = addQueryParam(URL, 'SearchFilter', search_filter);
+         dynamicStartIndexLabel = "StartIndex3";
+         dynamicPageSizeLabel = "PageSize3";
+         LoadPagination(page_size3, total_data3, start_index_val3, URL3, 'pagination-id-3', 'prev-btn-3', 'next-btn-3', 'ShowEntries-Id-3', 'Entries-Id-3');
+        });
+
+
     </script>
+
     <script>
         var optionCount = $('select[name="PlanDetailList[0].PlanIdentityList[0].IdentityDescription"] option').length;
         var plansDiv = document.querySelectorAll('#container .plans');
