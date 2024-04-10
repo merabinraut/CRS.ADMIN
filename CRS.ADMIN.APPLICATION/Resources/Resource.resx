@@ -838,6 +838,10 @@
     <value>Location Title</value>
     <comment>Location Management</comment>
   </data>
+  <data name="LocationSubtitle" xml:space="preserve">
+    <value>Location Subtitle</value>
+    <comment>Location Management</comment>
+  </data>
   <data name="Log out" xml:space="preserve">
     <value>Log out</value>
   </data>

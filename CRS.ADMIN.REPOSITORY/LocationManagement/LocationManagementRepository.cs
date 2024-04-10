@@ -25,6 +25,7 @@ namespace CRS.ADMIN.REPOSITORY.LocationManagement
                     {
                         LocationId = item["LocationID"].ToString(),
                         LocationName = item["LocationName"].ToString(),
+                        LocationSubtitle = item["LocationSubtitle"].ToString(),
                         LocationImage = item["LocationImage"].ToString(),
                         LocationStatus = item["LocationStatus"].ToString(),
                         TotalClubs = item["ClubCount"].ToString()
@@ -47,6 +48,7 @@ namespace CRS.ADMIN.REPOSITORY.LocationManagement
                 {
                     LocationId = dataTable.Rows[0]["LocationId"].ToString(),
                     LocationName = dataTable.Rows[0]["LocationName"].ToString(),
+                    LocationSubtitle = dataTable.Rows[0]["LocationSubtitle"].ToString(),
                     LocationImage = dataTable.Rows[0]["LocationImage"].ToString(),
                     LocationURL = dataTable.Rows[0]["LocationURL"].ToString(),
                     Latitude = dataTable.Rows[0]["Latitude"].ToString(),
@@ -67,6 +69,7 @@ namespace CRS.ADMIN.REPOSITORY.LocationManagement
             sql += $" @Flag='{flag}'";
             sql += ", @LocationId=" + _dao.FilterString(locationCommon.LocationId);
             sql += ", @LocationName=N" + _dao.FilterString(locationCommon.LocationName);
+            sql += ", @LocationSubtitle=N" + _dao.FilterString(locationCommon.LocationSubtitle);
             sql += ", @LocationImage=" + _dao.FilterString(locationCommon.LocationImage);
             sql += ", @LocationURL=" + _dao.FilterString(locationCommon.LocationURL);
             sql += ", @Latitude=" + _dao.FilterString(locationCommon.Latitude);
