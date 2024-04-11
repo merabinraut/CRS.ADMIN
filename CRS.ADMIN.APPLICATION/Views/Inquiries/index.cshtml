@@ -67,17 +67,7 @@
                             </th>
                             <th scope="col" class="p-[12px]">
                                 <div class="flex w-max">
-                                    Club_Profile
-                                    <div class="relative pl-[5px]">
-                                        <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
-                                        <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
-                                    </div>
-                                </div>
-                            </th>
-
-                            <th scope="col" class="p-[12px]">
-                                <div class="flex w-max">
-                                    Phone_Number
+                                    Nickname
                                     <div class="relative pl-[5px]">
                                         <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
                                         <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
@@ -86,7 +76,7 @@
                             </th>
                             <th scope="col" class="p-[12px]">
                                 <div class="flex w-max">
-                                    Rank
+                                    Email Address
                                     <div class="relative pl-[5px]">
                                         <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
                                         <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
@@ -95,7 +85,7 @@
                             </th>
                             <th scope="col" class="p-[12px]">
                                 <div class="flex w-max">
-                                    Ratings
+                                    Message
                                     <div class="relative pl-[5px]">
                                         <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
                                         <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
@@ -104,16 +94,7 @@
                             </th>
                             <th scope="col" class="p-[12px]">
                                 <div class="flex w-max">
-                                    Address
-                                    <div class="relative pl-[5px]">
-                                        <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
-                                        <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
-                                    </div>
-                                </div>
-                            </th>
-                            <th scope="col" class="p-[12px]">
-                                <div class="flex w-max">
-                                    Created_On
+                                    Posted Date
                                     <div class="relative pl-[5px]">
                                         <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
                                         <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
@@ -122,7 +103,7 @@
                             </th>
                             <th scope="col" class="p-[12px]">
                                 <div class="flex  w-max ">
-                                    Updated_On
+                                    Action
                                     <div class="relative pl-[5px]">
                                         <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
                                         <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
@@ -138,45 +119,28 @@
                                 1
                             </td>
                             <td class="p-[12px]">
-                                <div class="round-image-text flex gap-[12px] w-max">
-                                    <img class="w-[32px] h-[32px] rounded-full" src="ClubLogo" />
-
-                                    <div class="flex justify-between w-full">
-                                        <div class="text-image grid flex-none ">
-                                            <div class="text-sm font-semibold text-[#101828] ">ClubNameEng</div>
-
-                                            <div class="">
-                                                ClubCategory
-                                            </div>
-
-                                        </div>
-                                    </div>
+                                <div class="">
+                                    ClubCategory
                                 </div>
                             </td>
                             <td class="p-[12px]">
-                                03-6302-131
+                                yuhoshi@gmail.com
                             </td>
                             <td class="p-[12px]">
-                                10
-                            </td>
-                            <td class="p-[12px]">
-                                5
-                            </td>
-                            <td class="p-[12px]">
-                                <div class="w-max">
-                                    歌舞伎町
-
+                                <div class="w-max content-container" id="long-content" onclick="toggleContent()">
+                                    🤐 I have something on my mind that's been bothering me, but I'm not sure how to express it. Can we talk about it? 💬🤔
+                                   
                                 </div>
                             </td>
                             <td class="p-[12px]">
                                 <div class="w-max">
-                                    2024年02月21日 11:43:09
+                                    Apr 1, 2023
                                 </div>
                             </td>
                             <td class="p-[12px]">
                                 <div class="w-max">
 
-                                    2024年02月21日 11:43:09
+
                                 </div>
                             </td>
                         </tr>
@@ -208,28 +172,65 @@
 </div>
 
 
-@*<script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const page_size = @ViewBag.PageSize;
-            const total_data = @ViewBag.TotalData;
-            const start_index_val = @ViewBag.StartIndex;
-            let URL = "/Inquiries/index";
-            let search_filter = $('#default-search').val();
-            URL = addQueryParam(URL, 'SearchFilter', search_filter);
-            LoadPagination(page_size, total_data, start_index_val, URL);
-        });
-    </script>*@
 
-
-<script>
-     document.addEventListener('DOMContentLoaded', function () {
-             const page_size = @ViewBag.PageSize;
-             const total_data = @ViewBag.TotalData;
-             const start_index_val = @ViewBag.StartIndex;
-         let URL = "/Inquiries/index";
-             let search_filter = $('#default-search').val();
-             //URL = addQueryParam(URL, 'SearchFilter', search_filter);
-         LoadPagination(page_size, total_data, start_index_val, URL);
+@section scripts
+{
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const page_size = @ViewBag.PageSize;
+        const total_data = @ViewBag.TotalData;
+        const start_index_val = @ViewBag.StartIndex;
+        let URL = "/Inquiries/index";
+        let search_filter = $('#default-search').val();
+        URL = addQueryParam(URL, 'SearchFilter', search_filter);
+        LoadPagination(page_size, total_data, start_index_val, URL);
     });
-</script>
+    </script>
 
+
+    <script>
+    function toggleContent() {
+        var content = document.getElementById("long-content");
+        var btn = document.querySelector(".see-more-btn");
+
+        if (content.style.maxWidth) {
+            content.style.maxWidth = null;
+           
+        } else {
+            content.style.maxWidth = "563px"; // Initial width to show
+            content.style.overflow="hidden";
+            content.style.textOverflow = "ellipsis";
+            content.style.whiteSpace = "nowrap";
+
+        
+        }
+    }
+
+    // Check if the content width exceeds the threshold and show the button accordingly
+    document.addEventListener("DOMContentLoaded", function() {
+        var content = document.getElementById("long-content");
+        var btn = document.querySelector(".see-more-btn");
+
+        if (content.clientWidth < content.scrollWidth) {
+            btn.style.display = "block";
+        } else {
+            btn.style.display = "none";
+        }
+    });
+    </script>
+}
+
+<style>
+    .content-container {
+        max-width: 500px; /* Initial width to show */
+     /*   white-space: nowrap;*/
+       /* overflow: hidden;
+        text-overflow: ellipsis;*/
+    }
+
+    .see-more-btn {
+        /* Hide initially */
+        margin-top: 10px;
+        cursor: pointer;
+    }
+</style>
