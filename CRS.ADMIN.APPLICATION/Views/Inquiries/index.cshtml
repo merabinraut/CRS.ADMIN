@@ -1,0 +1,235 @@
+﻿@model CRS.ADMIN.APPLICATION.Models.Inquiries.InquiriesModel
+
+<div class="px-8 py-4">
+
+    <div class="flex flex-col  gap-6">
+
+        <div>
+            <div class="heading-title">
+                Inquiries
+            </div>
+            <div class="span-title-light-gray">
+                Manage the inquiries that has been made by customers.
+            </div>
+        </div>
+
+        <div class="flex justify-between pb-[24px]">
+            <form action="/Inquiries/index" method="get">
+
+
+                <div class="relative input-search-wrapper">
+                    <div class="absolute inset-y-0 left-0 flex items-center pl-[16px] pointer-events-none">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21" fill="none">
+                            <path d="M17.5 18L13.875 14.375M15.8333 9.66667C15.8333 13.3486 12.8486 16.3333 9.16667 16.3333C5.48477 16.3333 2.5 13.3486 2.5 9.66667C2.5 5.98477 5.48477 3 9.16667 3C12.8486 3 15.8333 5.98477 15.8333 9.66667Z"
+                                  stroke="#667085" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                    </div>
+                    <input type="search"
+                           id="default-search"
+                           class="input-search block w-full "
+                           placeholder="@CRS.ADMIN.APPLICATION.Resources.Resource.Search"
+                           value=""
+                           name="SearchFilter">
+                </div>
+            </form>
+            <div class="flex gap-2 items-center border px-4 py-[10px] border-[#D75A8B] rounded-[8px]">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                    <path d="M5.625 2.5V3.125H3.125V16.875H16.875V3.125H14.375V2.5H13.125V3.125H6.875V2.5H5.625ZM4.375 4.375H5.625V5H6.875V4.375H13.125V5H14.375V4.375H15.625V5.625H4.375V4.375ZM4.375 6.875H15.625V15.625H4.375V6.875ZM8.125 8.125V9.375H9.375V8.125H8.125ZM10.625 8.125V9.375H11.875V8.125H10.625ZM13.125 8.125V9.375H14.375V8.125H13.125ZM5.625 10.625V11.875H6.875V10.625H5.625ZM8.125 10.625V11.875H9.375V10.625H8.125ZM10.625 10.625V11.875H11.875V10.625H10.625ZM13.125 10.625V11.875H14.375V10.625H13.125ZM5.625 13.125V14.375H14.375V13.125H5.625Z" fill="#D75A8B" />
+                </svg>
+                <div class="text-[#D75A8B] ">
+                    Apr 1 - Apr 15
+                </div>
+            </div>
+
+        </div>
+
+        @*table section*@
+
+
+
+        <div class="table-tab">
+            <div class="px-[12px] py-[16px] flex justify-between entry-export-container">
+                <div class="flex items-center select-entries" id="ShowEntries-Id">
+                </div>
+            </div>
+            <div class="relative overflow-x-auto">
+                <table class="w-full text-left club-table">
+                    <thead class="club-table-thead">
+                        <tr>
+                            <th scope="col" class="p-[12px]">
+                                <div class="flex w-max">
+                                    S.N
+                                    <div class="relative pl-[5px]">
+                                        <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                        <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                    </div>
+                                </div>
+                            </th>
+                            <th scope="col" class="p-[12px]">
+                                <div class="flex w-max">
+                                    Club_Profile
+                                    <div class="relative pl-[5px]">
+                                        <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                        <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                    </div>
+                                </div>
+                            </th>
+
+                            <th scope="col" class="p-[12px]">
+                                <div class="flex w-max">
+                                    Phone_Number
+                                    <div class="relative pl-[5px]">
+                                        <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                        <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                    </div>
+                                </div>
+                            </th>
+                            <th scope="col" class="p-[12px]">
+                                <div class="flex w-max">
+                                    Rank
+                                    <div class="relative pl-[5px]">
+                                        <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                        <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                    </div>
+                                </div>
+                            </th>
+                            <th scope="col" class="p-[12px]">
+                                <div class="flex w-max">
+                                    Ratings
+                                    <div class="relative pl-[5px]">
+                                        <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                        <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                    </div>
+                                </div>
+                            </th>
+                            <th scope="col" class="p-[12px]">
+                                <div class="flex w-max">
+                                    Address
+                                    <div class="relative pl-[5px]">
+                                        <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                        <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                    </div>
+                                </div>
+                            </th>
+                            <th scope="col" class="p-[12px]">
+                                <div class="flex w-max">
+                                    Created_On
+                                    <div class="relative pl-[5px]">
+                                        <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                        <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                    </div>
+                                </div>
+                            </th>
+                            <th scope="col" class="p-[12px]">
+                                <div class="flex  w-max ">
+                                    Updated_On
+                                    <div class="relative pl-[5px]">
+                                        <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                        <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                    </div>
+                                </div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        <tr class="bg-white border-b ">
+                            <td class="p-[12px]">
+                                1
+                            </td>
+                            <td class="p-[12px]">
+                                <div class="round-image-text flex gap-[12px] w-max">
+                                    <img class="w-[32px] h-[32px] rounded-full" src="ClubLogo" />
+
+                                    <div class="flex justify-between w-full">
+                                        <div class="text-image grid flex-none ">
+                                            <div class="text-sm font-semibold text-[#101828] ">ClubNameEng</div>
+
+                                            <div class="">
+                                                ClubCategory
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="p-[12px]">
+                                03-6302-131
+                            </td>
+                            <td class="p-[12px]">
+                                10
+                            </td>
+                            <td class="p-[12px]">
+                                5
+                            </td>
+                            <td class="p-[12px]">
+                                <div class="w-max">
+                                    歌舞伎町
+
+                                </div>
+                            </td>
+                            <td class="p-[12px]">
+                                <div class="w-max">
+                                    2024年02月21日 11:43:09
+                                </div>
+                            </td>
+                            <td class="p-[12px]">
+                                <div class="w-max">
+
+                                    2024年02月21日 11:43:09
+                                </div>
+                            </td>
+                        </tr>
+
+
+                    </tbody>
+                </table>
+
+            </div>
+            <div class="pagination-club">
+                <div class="show-entry" id="Entries-Id">
+                </div>
+                <div class="flex gap-[12px]">
+                    <div class="btn btn-secondary-box-shadow" id="prev-btn">
+                        @CRS.ADMIN.APPLICATION.Resources.Resource.Previous
+                    </div>
+                    <div class="flex gap-[12px]" id="pagination-id">
+                    </div>
+                    <div class="btn btn-secondary-box-shadow" id="next-btn">
+                        @CRS.ADMIN.APPLICATION.Resources.Resource.Next
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+</div>
+
+
+@*<script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const page_size = @ViewBag.PageSize;
+            const total_data = @ViewBag.TotalData;
+            const start_index_val = @ViewBag.StartIndex;
+            let URL = "/Inquiries/index";
+            let search_filter = $('#default-search').val();
+            URL = addQueryParam(URL, 'SearchFilter', search_filter);
+            LoadPagination(page_size, total_data, start_index_val, URL);
+        });
+    </script>*@
+
+
+<script>
+     document.addEventListener('DOMContentLoaded', function () {
+             const page_size = @ViewBag.PageSize;
+             const total_data = @ViewBag.TotalData;
+             const start_index_val = @ViewBag.StartIndex;
+         let URL = "/Inquiries/index";
+             let search_filter = $('#default-search').val();
+             //URL = addQueryParam(URL, 'SearchFilter', search_filter);
+         LoadPagination(page_size, total_data, start_index_val, URL);
+    });
+</script>
+
