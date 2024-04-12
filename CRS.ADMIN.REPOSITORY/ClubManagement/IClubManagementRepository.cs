@@ -11,8 +11,8 @@ namespace CRS.ADMIN.REPOSITORY.ClubManagement
         List<ClubListCommon> GetClubList(PaginationFilterCommon Request);
         List<ClubListCommon> GetClubPendingList(PaginationFilterCommon Request);
         List<ClubListCommon> GetClubRejectedList(PaginationFilterCommon Request);
-        ClubDetailCommon GetClubPendingDetails(string AgentId, String culture = "");
-        CommonDbResponse ManageApproveReject(string holdId, string flag, String culture = "");
+        ClubDetailCommon GetClubPendingDetails(string AgentId,  String holdId = "",String culture = "");
+        CommonDbResponse ManageApproveReject(string holdId, string flag, string AgentId, String culture = "");
         ClubDetailCommon GetClubDetails(string AgentId, String culture = "");
         CommonDbResponse ManageClub(ManageClubCommon Request);
         CommonDbResponse ManageClubStatus(string AgentId, string Status, Common Request);

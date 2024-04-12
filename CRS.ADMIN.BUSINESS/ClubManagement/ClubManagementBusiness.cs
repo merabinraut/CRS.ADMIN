@@ -32,13 +32,13 @@ namespace CRS.ADMIN.BUSINESS.ClubManagement
         {
             return _REPO.GetClubRejectedList(Request);
         }
-        public ClubDetailCommon GetClubPendingDetails(string AgentId, String culture = "")
+        public ClubDetailCommon GetClubPendingDetails(string AgentId, String holdId = "", String culture = "")
         {
-            return _REPO.GetClubPendingDetails(AgentId, culture);
+            return _REPO.GetClubPendingDetails(AgentId, holdId, culture);
         }
-        public CommonDbResponse ManageApproveReject(string holdId, string flag, String culture = "")
+        public CommonDbResponse ManageApproveReject(string holdId, string flag, string AgentId, String culture = "")
         {
-            return _REPO.ManageApproveReject(holdId, flag, culture);
+            return _REPO.ManageApproveReject(holdId, flag, AgentId, culture);
         }
         public List<PlanListCommon> GetClubPlanIdentityList(string culture)
         {

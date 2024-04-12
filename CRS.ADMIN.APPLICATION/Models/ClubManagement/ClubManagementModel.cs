@@ -37,6 +37,7 @@ namespace CRS.ADMIN.APPLICATION.Models.ClubManagement
         public string ClubLogo { get; set; }
         public string Sno { get; set; }
         public string ClubCategory { get; set; }
+        public string holdStatus { get; set; }
     }
 
     public class ClubDetailModel
