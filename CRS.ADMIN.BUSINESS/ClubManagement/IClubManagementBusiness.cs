@@ -12,7 +12,7 @@ namespace CRS.ADMIN.BUSINESS.ClubManagement
         List<ClubListCommon> GetClubPendingList(PaginationFilterCommon Request);
         List<ClubListCommon> GetClubRejectedList(PaginationFilterCommon Request);
         ClubDetailCommon GetClubPendingDetails(string AgentId, String holdId = "", String culture = "");
-        CommonDbResponse ManageApproveReject(string holdId, string flag, string AgentId, String culture = "");
+        CommonDbResponse ManageApproveReject(string holdId, string flag, string AgentId, String culture = "", ManageClubCommon Request=null);
         ClubDetailCommon GetClubDetails(string AgentId, String culture = "");
         CommonDbResponse ManageClub(ManageClubCommon Request);
         CommonDbResponse ManageClubStatus(string AgentId, string Status, Common Request);

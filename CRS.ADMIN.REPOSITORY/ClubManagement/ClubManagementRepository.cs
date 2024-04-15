@@ -29,7 +29,7 @@ namespace CRS.ADMIN.REPOSITORY.ClubManagement
         public List<ClubListCommon> GetClubList(PaginationFilterCommon Request)
         {
             var response = new List<ClubListCommon>();
-            string SQL = "EXEC sproc_club_management @Flag='gclist'";
+            string SQL = "EXEC sproc_club_management_approvalrejection @Flag='gclist'";
             SQL += !string.IsNullOrEmpty(Request.SearchFilter) ? ",@SearchFilter=N" + _DAO.FilterString(Request.SearchFilter) : null;
             SQL += ",@Skip=" + Request.Skip;
             SQL += ",@Take=" + Request.Take;
@@ -69,7 +69,7 @@ namespace CRS.ADMIN.REPOSITORY.ClubManagement
         public List<ClubListCommon> GetClubPendingList(PaginationFilterCommon Request)
         {
             var response = new List<ClubListCommon>();
-            string SQL = "EXEC sproc_club_management @Flag='gcplist'";
+            string SQL = "EXEC sproc_club_management_approvalrejection @Flag='gcplist'";
             SQL += !string.IsNullOrEmpty(Request.SearchFilter) ? ",@SearchFilter=N" + _DAO.FilterString(Request.SearchFilter) : null;
             SQL += ",@Skip=" + Request.Skip;
             SQL += ",@Take=" + Request.Take;
@@ -99,7 +99,7 @@ namespace CRS.ADMIN.REPOSITORY.ClubManagement
         public List<ClubListCommon> GetClubRejectedList(PaginationFilterCommon Request)
         {
             var response = new List<ClubListCommon>();
-            string SQL = "EXEC sproc_club_management @Flag='gcrlist'";
+            string SQL = "EXEC sproc_club_management_approvalrejection @Flag='gcrlist'";
             SQL += !string.IsNullOrEmpty(Request.SearchFilter) ? ",@SearchFilter=N" + _DAO.FilterString(Request.SearchFilter) : null;
             SQL += ",@Skip=" + Request.Skip;
             SQL += ",@Take=" + Request.Take;
@@ -129,7 +129,7 @@ namespace CRS.ADMIN.REPOSITORY.ClubManagement
             var plan = new List<planIdentityDataCommon>();
             var PlanListCommon = new List<PlanListCommon>();
             ClubDetailCommon ClubDetail = new ClubDetailCommon();
-            string SQL1 = "EXEC sproc_club_management @Flag='gcp_pd'";
+            string SQL1 = "EXEC sproc_club_management_approvalrejection @Flag='g_cphpd'";
             SQL1 += ",@AgentId=" + _DAO.FilterString(AgentId);
             SQL1 += ",@holdId=" + _DAO.FilterString(holdId);
             var dbResponse1 = _DAO.ExecuteDataTable(SQL1);
@@ -193,7 +193,7 @@ namespace CRS.ADMIN.REPOSITORY.ClubManagement
 
             }
 
-            string SQL = "EXEC sproc_club_management @Flag='gc_pd'";
+            string SQL = "EXEC sproc_club_management_approvalrejection @Flag='g_chpd'";
             SQL += ",@AgentId=" + _DAO.FilterString(AgentId);
             SQL += ",@holdId=" + _DAO.FilterString(holdId);
             var dbResponse = _DAO.ExecuteDataRow(SQL);
@@ -273,8 +273,16 @@ namespace CRS.ADMIN.REPOSITORY.ClubManagement
         public CommonDbResponse ManageClub(ManageClubCommon Request)
         {
             var Response = new CommonDbResponse();
-            string SQL = "EXEC sproc_club_management ";
-            SQL += string.IsNullOrEmpty(Request.holdId) ? "@Flag='rch'" : "@Flag='mch'";
+            string SQL = "EXEC sproc_club_management_approvalrejection ";
+            if (!string.IsNullOrEmpty(Request.AgentId))
+            {
+
+                SQL +=  "@Flag='r_cmth'" ;
+            }
+            else
+            {
+                SQL += string.IsNullOrEmpty(Request.holdId) ? "@Flag='r_ch'" : "@Flag='m_ch'";
+            }            
             if (string.IsNullOrEmpty(Request.holdId))
             {
                 SQL += ",@LoginId=N" + _DAO.FilterString(Request.LoginId);
@@ -354,13 +362,13 @@ namespace CRS.ADMIN.REPOSITORY.ClubManagement
 
                 foreach (var planIdentity in planList.PlanIdentityList)
                 {
-                    string SQL2 = "EXEC sproc_club_management ";
-                    SQL2 += "@Flag='icph'";
+                    string SQL2 = "EXEC sproc_club_management_approvalrejection ";
+                    SQL2 += "@Flag='r_cph'";
                     SQL2 += ",@ClubPlanTypeId=" + _DAO.FilterString(planIdentity.StaticDataValue);
                     SQL2 += ",@Description=N" + _DAO.FilterString(planIdentity.IdentityDescription);
                     SQL2 += ",@PlanListId=" + _DAO.FilterString(Convert.ToString(i));
                     //SQL2 += ",@ClubId=" + _DAO.FilterString(string.IsNullOrEmpty(Request.AgentId) ? Response.Extra1 : Request.AgentId);
-                    SQL2 += ",@ClubId=" + Response.Extra1;
+                    SQL2 += ",@ClubId=" + _DAO.FilterString(!string.IsNullOrEmpty(Response.Extra1) ? Response.Extra1 : null ) ;
                     SQL2 += ",@AgentId=" + _DAO.FilterString(!string.IsNullOrEmpty(Request.AgentId) ?  Request.AgentId:null);
                     SQL2 += ",@ActionPlatform=" + _DAO.FilterString(Request.ActionPlatform);
                     SQL2 += ",@ActionUser=" + _DAO.FilterString(Request.ActionUser);
@@ -432,13 +440,41 @@ namespace CRS.ADMIN.REPOSITORY.ClubManagement
             //return _DAO.ParseCommonDbResponse(SQL);
         }
 
-        public CommonDbResponse ManageApproveReject(string holdId,string flag,string AgentId, String culture = "")
+        public CommonDbResponse ManageApproveReject(string holdId,string flag,string AgentId, String culture = "", ManageClubCommon Request=null)
         {
-            string sp_name = "sproc_club_management ";
+            var Response = new CommonDbResponse();
+            string sp_name = "sproc_club_management_approvalrejection ";
             sp_name += " @flag=" + _DAO.FilterString(flag);
             sp_name += ",@holdId =" + _DAO.FilterString(holdId);
             sp_name += ",@AgentId =" + _DAO.FilterString(AgentId);
-            return _DAO.ParseCommonDbResponse(sp_name);
+            Response= _DAO.ParseCommonDbResponse(sp_name);
+            var i = 0;
+            if(flag== "rcm_a")
+            {
+
+                foreach (var planList in Request.PlanDetailList)
+                {
+
+                    foreach (var planIdentity in planList.PlanIdentityList)
+                    {
+                        string SQL2 = "EXEC sproc_club_management_approvalrejection ";
+                        SQL2 += "@Flag='r_cp_ma'";
+                        SQL2 += ",@ClubPlanTypeId=" + _DAO.FilterString(planIdentity.StaticDataValue);
+                        SQL2 += ",@Description=N" + _DAO.FilterString(planIdentity.IdentityDescription);
+                        SQL2 += ",@PlanListId=" + _DAO.FilterString(Convert.ToString(i));
+                        //SQL2 += ",@ClubId=" + _DAO.FilterString(string.IsNullOrEmpty(Request.AgentId) ? Response.Extra1 : Request.AgentId);
+                        SQL2 += ",@ClubId=" + _DAO.FilterString(!string.IsNullOrEmpty(Response.Extra1) ? Response.Extra1 : null);
+                        SQL2 += ",@AgentId=" + _DAO.FilterString(!string.IsNullOrEmpty(Request.AgentId) ? Request.AgentId : null);
+                        SQL2 += ",@ActionPlatform=" + _DAO.FilterString(Request.ActionPlatform);
+                        SQL2 += ",@ActionUser=" + _DAO.FilterString(Request.ActionUser);
+                        SQL2 += ",@Id=" + _DAO.FilterString(string.IsNullOrEmpty(Request.holdId) ? null : planIdentity.Id);
+                        _DAO.ParseCommonDbResponse(SQL2);
+                    }
+                    i++;
+                }
+            }
+                  
+            return Response;
         }
 
 
@@ -511,7 +547,7 @@ namespace CRS.ADMIN.REPOSITORY.ClubManagement
             var plan = new List<planIdentityDataCommon>();
             var PlanListCommon = new List<PlanListCommon>();
             ClubDetailCommon ClubDetail = new ClubDetailCommon();
-            string SQL1 = "EXEC sproc_club_management @Flag='gcpd'";
+            string SQL1 = "EXEC sproc_club_management_approvalrejection @Flag='gcpd'";
             SQL1 += ",@AgentId=" + _DAO.FilterString(AgentId);
             var dbResponse1 = _DAO.ExecuteDataTable(SQL1);
             var response = new List<planIdentityDataCommon>();
@@ -574,7 +610,7 @@ namespace CRS.ADMIN.REPOSITORY.ClubManagement
 
                 }
            
-            string SQL = "EXEC sproc_club_management @Flag='gcd'";
+            string SQL = "EXEC sproc_club_management_approvalrejection @Flag='gcd'";
             SQL += ",@AgentId=" + _DAO.FilterString(AgentId);
             var dbResponse = _DAO.ExecuteDataRow(SQL);
             if (dbResponse != null)

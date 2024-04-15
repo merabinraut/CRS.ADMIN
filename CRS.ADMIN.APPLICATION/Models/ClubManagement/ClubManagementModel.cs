@@ -11,6 +11,7 @@ namespace CRS.ADMIN.APPLICATION.Models.ClubManagement
     public class ClubManagementCommonModel
     {
         public string SearchFilter { get; set; }
+        public string ListType { get; set; }
         public List<ClubListModel> ClubListModel { get; set; }
         public List<ClubListModel> ClubPendingListModel { get; set; }
         public List<ClubListModel> ClubRejectedListModel { get; set; }

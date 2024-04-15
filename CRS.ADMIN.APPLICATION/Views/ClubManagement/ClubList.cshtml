@@ -9,6 +9,7 @@
 
 <div class="px-8 py-4">
     @Html.AntiForgeryToken()
+   
     <!-- title  -->
     <div class="flex flex-col  gap-6">
         <div>
@@ -38,7 +39,7 @@
                     <div class="flex justify-between pb-[24px]">
                         <form action="/ClubManagement/ClubList" method="get">
 
-
+                            @Html.HiddenFor(model => model.ListType)
                             <div class="relative input-search-wrapper">
                                 <div class="absolute inset-y-0 left-0 flex items-center pl-[16px] pointer-events-none">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21" fill="none">
@@ -213,7 +214,7 @@
                                                 </td>
                                                 <td class="p-[12px]">
                                                     <div class="flex gap-[7px]">
-                                                        @if ( item.holdStatus!="P")
+                                                        @if (item.holdStatus != "P")
                                                         {
                                                             <i class="las la-edit text-[20px] cursor-pointer text-[#A6A6A6]" onclick="ManageClubGetDetailsFunction('@item.AgentId');"></i>
                                                             <img src="/Content/assets/images/manager-setting.svg" onclick="ManageClubManagerFunction('@item.AgentId');">
@@ -387,8 +388,8 @@
                                                     <td class="p-[12px]">
                                                         <div class="flex gap-[7px]">
                                                             @*<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                                                <path d="M18.75 3.02344C18.1758 3.02344 17.6133 3.24609 17.1797 3.67969L9.75 11.0859L9.58594 11.25L9.53906 11.4844L9.02344 14.1094L8.78906 15.2109L9.89062 14.9766L12.5156 14.4609L12.75 14.4141L12.9141 14.25L20.3203 6.82031C21.1846 5.95605 21.1846 4.54395 20.3203 3.67969C19.8867 3.24609 19.3242 3.02344 18.75 3.02344ZM18.75 4.47656C18.9258 4.47656 19.0986 4.56738 19.2656 4.73438C19.5996 5.06836 19.5996 5.43164 19.2656 5.76562L12 13.0312L10.7109 13.2891L10.9688 12L18.2344 4.73438C18.4014 4.56738 18.5742 4.47656 18.75 4.47656ZM3 6V21H18V11.1094L16.5 12.6094V19.5H4.5V7.5H11.3906L12.8906 6H3Z" fill="#989898" />
-                                                            </svg>*@
+                                                                    <path d="M18.75 3.02344C18.1758 3.02344 17.6133 3.24609 17.1797 3.67969L9.75 11.0859L9.58594 11.25L9.53906 11.4844L9.02344 14.1094L8.78906 15.2109L9.89062 14.9766L12.5156 14.4609L12.75 14.4141L12.9141 14.25L20.3203 6.82031C21.1846 5.95605 21.1846 4.54395 20.3203 3.67969C19.8867 3.24609 19.3242 3.02344 18.75 3.02344ZM18.75 4.47656C18.9258 4.47656 19.0986 4.56738 19.2656 4.73438C19.5996 5.06836 19.5996 5.43164 19.2656 5.76562L12 13.0312L10.7109 13.2891L10.9688 12L18.2344 4.73438C18.4014 4.56738 18.5742 4.47656 18.75 4.47656ZM3 6V21H18V11.1094L16.5 12.6094V19.5H4.5V7.5H11.3906L12.8906 6H3Z" fill="#989898" />
+                                                                </svg>*@
                                                             <div onclick="EditPendingClub('@item.SNO','@item.AgentId');" style="cursor: pointer;">
                                                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                                                                     <path d="M18.75 3.02344C18.1758 3.02344 17.6133 3.24609 17.1797 3.67969L9.75 11.0859L9.58594 11.25L9.53906 11.4844L9.02344 14.1094L8.78906 15.2109L9.89062 14.9766L12.5156 14.4609L12.75 14.4141L12.9141 14.25L20.3203 6.82031C21.1846 5.95605 21.1846 4.54395 20.3203 3.67969C19.8867 3.24609 19.3242 3.02344 18.75 3.02344ZM18.75 4.47656C18.9258 4.47656 19.0986 4.56738 19.2656 4.73438C19.5996 5.06836 19.5996 5.43164 19.2656 5.76562L12 13.0312L10.7109 13.2891L10.9688 12L18.2344 4.73438C18.4014 4.56738 18.5742 4.47656 18.75 4.47656ZM3 6V21H18V11.1094L16.5 12.6094V19.5H4.5V7.5H11.3906L12.8906 6H3Z" fill="#989898" />
@@ -473,7 +474,7 @@
                                                     </div>
                                                 </div>
                                             </th>
-                                            
+
                                             <th scope="col" class="p-[12px]">
                                                 <div class="flex w-max">
                                                     Location
@@ -548,58 +549,58 @@
                                                             @item.UpdatedDate
                                                         </div>
                                                     </td>
-                                                  
+
                                                 </tr>
                                                 SNR++;
                                             }
                                         }
                                         @*<tr class="bg-white border-b ">
-            <td class="p-[12px]">
-                1
-            </td>
-            <td class="p-[12px]">
-                <div class="round-image-text flex gap-[12px] w-max">
-                    <img class="w-[32px] h-[32px] rounded-full" src="ClubLogo" />
+                                                <td class="p-[12px]">
+                                                    1
+                                                </td>
+                                                <td class="p-[12px]">
+                                                    <div class="round-image-text flex gap-[12px] w-max">
+                                                        <img class="w-[32px] h-[32px] rounded-full" src="ClubLogo" />
 
-                    <div class="flex justify-between w-full">
-                        <div class="text-image grid flex-none ">
-                            <div class="text-sm font-semibold text-[#101828] ">ClubNameEng</div>
+                                                        <div class="flex justify-between w-full">
+                                                            <div class="text-image grid flex-none ">
+                                                                <div class="text-sm font-semibold text-[#101828] ">ClubNameEng</div>
 
-                            <div class="">
-                                ClubCategory.ToUpper()
-                            </div>
+                                                                <div class="">
+                                                                    ClubCategory.ToUpper()
+                                                                </div>
 
-                        </div>
-                    </div>
-                </div>
-            </td>
-            <td class="p-[12px]">
-                03-6302-131
-            </td>
-            <td class="p-[12px]">
-                10
-            </td>
-            <td class="p-[12px]">
-                5
-            </td>
-            <td class="p-[12px]">
-                <div class="w-max">
-                    歌舞伎町
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td class="p-[12px]">
+                                                    03-6302-131
+                                                </td>
+                                                <td class="p-[12px]">
+                                                    10
+                                                </td>
+                                                <td class="p-[12px]">
+                                                    5
+                                                </td>
+                                                <td class="p-[12px]">
+                                                    <div class="w-max">
+                                                        歌舞伎町
 
-                </div>
-            </td>
-            <td class="p-[12px]">
-                <div class="w-max">
-                    2024年02月21日 11:43:09
-                </div>
-            </td>
-            <td class="p-[12px]">
-                <div class="w-max">
+                                                    </div>
+                                                </td>
+                                                <td class="p-[12px]">
+                                                    <div class="w-max">
+                                                        2024年02月21日 11:43:09
+                                                    </div>
+                                                </td>
+                                                <td class="p-[12px]">
+                                                    <div class="w-max">
 
-                    2024年02月21日 11:43:09
-                </div>
-            </td>
-        </tr>*@
+                                                        2024年02月21日 11:43:09
+                                                    </div>
+                                                </td>
+                                            </tr>*@
 
 
                                     </tbody>
@@ -842,7 +843,6 @@
     </script>
     <script>
         $(document).ready(function () {
-            debugger;
             if ($("#holdId").val() != "" || $("#AgentId").val() != "") {
                 var val = $('#large[name="BusinessTypeDDL"]').find("option:selected").text().trim();
                 if (val.toLowerCase() == "corporation") {
@@ -862,7 +862,6 @@
             }
 
             $('#large[name="BusinessTypeDDL"]').change(function () {
-                debugger;
                 var selectedValue = $(this).find("option:selected").text().trim();
                 if (selectedValue.toLowerCase() == "corporation") {
                     $("#Corp_id").show();
@@ -1072,37 +1071,71 @@
             window.location.href = '/ClubManagement/ManageTag?ClubId=' + i;
         }
         function ApproveRejectClubManagerFunction(i, j, k) {
-            debugger;
             window.location.href = '/ClubManagement/ApproveRejectClub?holdid=' + i + '&type=' + j+ '&AgentId=' + k;
         }
         function EditPendingClub(i,j) {
             window.location.href = '/ClubManagement/ManagePendingClub?AgentId=' + j + '&holdId=' + i;
         }
+        function addQueryParam2(url, paramName, paramValue, paramName2, paramValue2) {
+            // Add the first query parameter
+            if (paramValue != null && paramValue != "") {
+                // Check if it's the first parameter, if so, use "?" else use "&"
+                url += url.includes('?') ? `&${paramName}=${paramValue}` : `?${paramName}=${paramValue}`;
+            }
+
+            // Add the second query parameter
+            if (paramValue2 != null && paramValue2 != "") {
+                url += url.includes('?') ? `&${paramName2}=${paramValue2}` : `?${paramName2}=${paramValue2}`;
+            }
+
+            return url;
+        }
     </script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            //var selectElement = document.querySelector('#large[name="BusinessTypeDDL"]');
-            function addQueryParam2(url, paramName, paramValue, paramName2, paramValue2) {
-                // Add the first query parameter
-                if (paramValue != null && paramValue != "") {
-                    // Check if it's the first parameter, if so, use "?" else use "&"
-                    url += url.includes('?') ? `&${paramName}=${paramValue}` : `?${paramName}=${paramValue}`;
-                }
-
-                // Add the second query parameter
-                if (paramValue2 != null && paramValue2 != "") {
-                    url += url.includes('?') ? `&${paramName2}=${paramValue2}` : `?${paramName2}=${paramValue2}`;
-                }
-
-                return url;
+     
+            if ($("#ListType").val().toLowerCase() == "p") {
+                changeTab('pending', 'tab2Link')
+                const page_size2 = @ViewBag.PageSize2;
+                const total_data2 = @ViewBag.TotalData2;
+                const start_index_val2 = @ViewBag.StartIndex2;
+                let URL2 = "/ClubManagement/ClubList";
+                let search_filter2 = $('#default-search').val();
+                URL2 = addQueryParam2(URL2, 'SearchFilter', search_filter2, 'value', 'p');
+                dynamicStartIndexLabel = "StartIndex2";
+                dynamicPageSizeLabel = "PageSize2";
+                LoadPagination(page_size2, total_data2, start_index_val2, URL2, 'pagination-id-2', 'prev-btn-2', 'next-btn-2', 'ShowEntries-Id-2', 'Entries-Id-2');
+                
             }
-                const page_size = @ViewBag.PageSize;
-                const total_data = @ViewBag.TotalData;
-                const start_index_val = @ViewBag.StartIndex;
-                let URL = "/ClubManagement/ClubList";
-                let search_filter = $('#default-search').val();
-            URL = addQueryParam(URL, 'SearchFilter', search_filter);
-            LoadPagination(page_size, total_data, start_index_val, URL);
+            else if ($("#ListType").val().toLowerCase() == "r") {
+                changeTab('rejected', 'tab3Link')
+                const page_size3 = @ViewBag.PageSize3;
+                const total_data3 = @ViewBag.TotalData3;
+                const start_index_val3 = @ViewBag.StartIndex3;
+                let URL3 = "/ClubManagement/ClubList";
+                let search_filter3 = $('#default-search').val();
+                URL3 = addQueryParam2(URL3, 'SearchFilter', search_filter3, 'value', 'r');
+                dynamicStartIndexLabel = "StartIndex3";
+                dynamicPageSizeLabel = "PageSize3";
+                LoadPagination(page_size3, total_data3, start_index_val3, URL3, 'pagination-id-3', 'prev-btn-3', 'next-btn-3', 'ShowEntries-Id-3', 'Entries-Id-3');
+               
+            }
+            else
+            {
+                changeTab('all', 'tab1Link')
+             const page_size = @ViewBag.PageSize;
+             const total_data = @ViewBag.TotalData;
+             const start_index_val = @ViewBag.StartIndex;
+             let URL = "/ClubManagement/ClubList";
+             let search_filter = $('#default-search').val();
+             URL = addQueryParam(URL, 'SearchFilter', search_filter);
+                LoadPagination(page_size, total_data, start_index_val, URL);
+                dynamicStartIndexLabel = "StartIndex";
+                dynamicPageSizeLabel = "PageSize";
+             
+            }
+
+
            $("#LicenseIssuedDate").val("@_ManageClubModel.LicenseIssuedDate");
             jQuery(function ($) {
                 $.datepicker.regional['ja'] = {
@@ -1132,26 +1165,7 @@
                 });
             })
 
-            debugger;
-            const page_size2 = @ViewBag.PageSize2;
-            const total_data2 = @ViewBag.TotalData2;
-            const start_index_val2 = @ViewBag.StartIndex2;
-            let URL2 = "/ClubManagement/ClubList";
-            let search_filter2 = $('#default-search').val();
-            URL2 = addQueryParam2(URL2, 'SearchFilter', search_filter, 'value', 'p');
-            dynamicStartIndexLabel = "StartIndex2";
-            dynamicPageSizeLabel = "PageSize2";
-            LoadPagination(page_size2, total_data2, start_index_val2, URL2, 'pagination-id-2', 'prev-btn-2', 'next-btn-2', 'ShowEntries-Id-2', 'Entries-Id-2');
 
-             const page_size3 = @ViewBag.PageSize3;
-             const total_data3 = @ViewBag.TotalData3;
-             const start_index_val3 = @ViewBag.StartIndex3;
-             let URL3 = "/ClubManagement/ClubList";
-             let search_filter3 = $('#default-search').val();
-            URL3 = addQueryParam2(URL3, 'SearchFilter', search_filter, 'value', 'r');
-         dynamicStartIndexLabel = "StartIndex3";
-         dynamicPageSizeLabel = "PageSize3";
-         LoadPagination(page_size3, total_data3, start_index_val3, URL3, 'pagination-id-3', 'prev-btn-3', 'next-btn-3', 'ShowEntries-Id-3', 'Entries-Id-3');
         });
 
 
@@ -1386,7 +1400,7 @@
     </script>
 
     @* tab for all, pending, rejected *@
-    <script>
+<script>
         document.getElementById('tab1Link').style.color = '#D75A8B';
         document.getElementById('tab1Link').style.borderBottom = '#D75A8B 2px solid';
 
@@ -1420,6 +1434,15 @@
                 document.getElementById('tab2Link').style.color = '';
                 document.getElementById('tab3Link').style.borderBottom = '';
                 document.getElementById('tab3Link').style.color = '';
+                 const page_size = @ViewBag.PageSize;
+                 const total_data = @ViewBag.TotalData;
+                 const start_index_val = @ViewBag.StartIndex;
+                 let URL = "/ClubManagement/ClubList";
+                 let search_filter = $('#default-search').val();               
+                URL = addQueryParam(URL, 'SearchFilter', search_filter);
+                dynamicStartIndexLabel = "StartIndex";
+                dynamicPageSizeLabel = "PageSize";
+                 LoadPagination(page_size, total_data, start_index_val, URL);
 
             } else if (selectedLinkId === 'tab2Link') {
                 document.getElementById('tab3Link').style.borderBottom = '';
@@ -1428,6 +1451,16 @@
                 document.getElementById('tab1Link').style.borderBottom = '';
                 document.getElementById('tab2Link').style.color = '#D75A8B';
                 document.getElementById('tab2Link').style.borderBottom = '#D75A8B 2px solid';
+                const page_size2 = @ViewBag.PageSize2;
+                const total_data2 = @ViewBag.TotalData2;
+                const start_index_val2 = @ViewBag.StartIndex2;
+                let URL2 = "/ClubManagement/ClubList";
+                let search_filter2 = $('#default-search').val();
+                URL2 = addQueryParam2(URL2, 'SearchFilter', search_filter2, 'value', 'p');
+                dynamicStartIndexLabel = "StartIndex2";
+                dynamicPageSizeLabel = "PageSize2";
+                LoadPagination(page_size2, total_data2, start_index_val2, URL2, 'pagination-id-2', 'prev-btn-2', 'next-btn-2', 'ShowEntries-Id-2', 'Entries-Id-2');
+
 
             } else {
                 document.getElementById('tab1Link').style.borderBottom = '';
@@ -1436,10 +1469,20 @@
                 document.getElementById('tab1Link').style.color = ''; // Reset color for other link
                 document.getElementById('tab3Link').style.color = '#D75A8B';
                 document.getElementById('tab3Link').style.borderBottom = '#D75A8B 2px solid';
+                 const page_size3 = @ViewBag.PageSize3;
+                 const total_data3 = @ViewBag.TotalData3;
+                 const start_index_val3 = @ViewBag.StartIndex3;
+                 let URL3 = "/ClubManagement/ClubList";
+                 let search_filter3 = $('#default-search').val();
+                 URL3 = addQueryParam2(URL3, 'SearchFilter', search_filter3, 'value', 'r');
+                 dynamicStartIndexLabel = "StartIndex3";
+                 dynamicPageSizeLabel = "PageSize3";
+                 LoadPagination(page_size3, total_data3, start_index_val3, URL3, 'pagination-id-3', 'prev-btn-3', 'next-btn-3', 'ShowEntries-Id-3', 'Entries-Id-3');
+
             }
         }
 
-    </script>
+</script>
 
 
 }

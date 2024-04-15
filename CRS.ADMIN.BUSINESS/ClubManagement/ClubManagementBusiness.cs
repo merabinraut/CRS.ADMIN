@@ -36,9 +36,9 @@ namespace CRS.ADMIN.BUSINESS.ClubManagement
         {
             return _REPO.GetClubPendingDetails(AgentId, holdId, culture);
         }
-        public CommonDbResponse ManageApproveReject(string holdId, string flag, string AgentId, String culture = "")
+        public CommonDbResponse ManageApproveReject(string holdId, string flag, string AgentId, String culture = "", ManageClubCommon Request = null)
         {
-            return _REPO.ManageApproveReject(holdId, flag, AgentId, culture);
+            return _REPO.ManageApproveReject(holdId, flag, AgentId, culture,Request);
         }
         public List<PlanListCommon> GetClubPlanIdentityList(string culture)
         {

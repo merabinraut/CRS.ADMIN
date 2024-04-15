@@ -52,10 +52,10 @@
                         @Html.HiddenFor(model => model.KYCDocument)
                     }
 
-                    if (!string.IsNullOrEmpty(Model.LoginId))
+                    @*if (!string.IsNullOrEmpty(Model.LoginId))
                     {
                         @Html.HiddenFor(model => model.LoginId)
-                    }
+                    }*@
                     <div class="flex gap-2 ">
                         <div class="flex items-center gap-2 profile-steps add-new-host-wizard  active" id="step1">
                             <div class="steps-number ">
@@ -384,7 +384,7 @@
                                     </label>
                                     <div class="number-input w-full">
 
-                                        @if (!string.IsNullOrEmpty(Model.AgentId))
+                                        @if (!string.IsNullOrEmpty(Model.AgentId) || !string.IsNullOrEmpty(Model.holdId))
                                         {
                                             <div class="flag-section" style="background: #e5e5e5;">
                                                 <div class="japan-flag" style="background: white;">
@@ -437,7 +437,7 @@
                                     <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
                                         @CRS.ADMIN.APPLICATION.Resources.Resource.Email
                                     </label>
-                                    @if (!string.IsNullOrEmpty(Model.AgentId))
+                                    @if (!string.IsNullOrEmpty(Model.AgentId) || !string.IsNullOrEmpty(Model.holdId))
                                     {
                                         @Html.HiddenFor(model => model.Email)
                                         <input type="text" class="w-full" placeholder="e.g abc@gmail.om" name="@CRS.ADMIN.APPLICATION.Resources.Resource.Email" value="@Model.Email" disabled>
@@ -461,8 +461,9 @@
                                     <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
                                         @CRS.ADMIN.APPLICATION.Resources.Resource.Username
                                     </label>
-                                    @if (!string.IsNullOrEmpty(Model.AgentId))
+                                    @if (!string.IsNullOrEmpty(Model.AgentId) || !string.IsNullOrEmpty(Model.holdId))
                                     {
+                                        @Html.HiddenFor(model => model.LoginId)
                                         <input type="text" class="w-full" placeholder="@CRS.ADMIN.APPLICATION.Resources.Resource.Username" name="LoginId" value="@Model.LoginId" disabled>
                                     }
                                     else
