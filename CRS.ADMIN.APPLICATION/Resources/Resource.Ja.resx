@@ -878,6 +878,10 @@
     <value>場所のタイトル</value>
     <comment>Location Management</comment>
   </data>
+  <data name="LocationSubtitle" xml:space="preserve">
+    <value>場所のタイトル</value>
+    <comment>Location Management</comment>
+  </data>
   <data name="Log out" xml:space="preserve">
     <value>ログアウト</value>
   </data>

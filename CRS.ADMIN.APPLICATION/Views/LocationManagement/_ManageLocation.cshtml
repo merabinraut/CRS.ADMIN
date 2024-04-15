@@ -35,6 +35,15 @@
                             @Html.ValidationMessageFor(m => m.LocationName)
                         </span>
                     </div>
+                    <div class="input-field-common">
+                        <label class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.LocationSubtitle
+                        </label>
+                        @Html.TextBoxFor(model => model.LocationSubtitle, new { @class = "w-full rounded-[4px]", @placeholder = CRS.ADMIN.APPLICATION.Resources.Resource.LocationSubtitle, @style = "border-radius:4px !important", @onkeypress = "return isAlphabetWithSpace(event)", autocomplete = "off", @maxLength = "50" })
+                        <span class="validationMessage">
+                            @Html.ValidationMessageFor(m => m.LocationSubtitle)
+                        </span>
+                    </div>
                     <div>
                         <label for="gallery" class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
                             @CRS.ADMIN.APPLICATION.Resources.Resource.Gallery
