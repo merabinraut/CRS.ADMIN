@@ -145,6 +145,9 @@ namespace CRS.ADMIN.REPOSITORY.PlanManagement
             sql += ", @ExtraField3=N" + _dao.FilterString(planManagementCommon.ExtraField3);
             sql += ", @PlanCategory=" + _dao.FilterString(planManagementCommon.PlanCategory);
             sql += ", @NoOfPeople=" + planManagementCommon.NoOfPeople;
+            sql += ", @StrikePrice=" + _dao.FilterString(planManagementCommon.StrikePrice);
+            //sql += ", @IsStrikeOut=" + _dao.FilterString(planManagementCommon.IsStrikeOut);
+            sql += ", @IsStrikeOut=" + _dao.FilterString("A");
             return _dao.ParseCommonDbResponse(sql);
         }
 

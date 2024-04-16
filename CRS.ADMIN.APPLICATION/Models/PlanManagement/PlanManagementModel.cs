@@ -62,6 +62,8 @@ namespace CRS.ADMIN.APPLICATION.Models.PlanManagement
         public string ExtraField2 { get; set; }
         public string ExtraField3 { get; set; }
         public string ActionDate { get; set; }
+        public string StrikePrice { get; set; }
+        public string IsStrikeOut { get; set; }
     }
 
     public class PlanDetailModel
