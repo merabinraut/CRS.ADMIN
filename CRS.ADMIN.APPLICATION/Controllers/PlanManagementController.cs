@@ -230,7 +230,12 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             }
             common.ActionUser = ApplicationUtilities.GetSessionValue("Username").ToString();
             common.ActionIP = ApplicationUtilities.GetIP();
-
+            if (string.IsNullOrEmpty(common.IsStrikeOut))
+                common.IsStrikeOut = "D";
+            else if (common.IsStrikeOut.Trim().ToUpper() == "ON")
+                common.IsStrikeOut = "A";
+            else
+                common.IsStrikeOut = "D";
             var serviceResp = _business.ManagePlan(common);
             if (serviceResp != null && serviceResp.Code == ResponseCode.Success)
             {
