@@ -4,10 +4,12 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     var _ManageClubModel = Model.ManageClubModel as CRS.ADMIN.APPLICATION.Models.ClubManagement.ManageClubModel;
     var _ManageTag = Model.ManageTag as CRS.ADMIN.APPLICATION.Models.TagManagement.ManageTag;
+    var _ManageManager = Model.ManageManager as CRS.ADMIN.APPLICATION.Models.ClubManagerModel.ManageManagerModel;
 }
 
 <div class="px-8 py-4">
     @Html.AntiForgeryToken()
+   
     <!-- title  -->
     <div class="flex flex-col  gap-6">
         <div>
@@ -22,22 +24,22 @@
         <div id="tab1" class="tab-content-plane">
             <div class="flex flex-col gap-8">
                 <div id="tab1" class="tab-content">
-                            <div class="flex gap-4 mb-8 border-b ">
-                                <div id="tab1Link" class="styleCss active px-1 pb-4 cursor-pointer active" onclick="changeTab('all', 'tab1Link')">
-                                    Approved
-                                </div>
-                                <div id="tab2Link" class="styleCss px-1 pb-4 cursor-pointer" onclick="changeTab('pending', 'tab2Link')">
-                                    Pending 
-                                </div>
+                    <div class="flex gap-4 mb-8 border-b ">
+                        <div id="tab1Link" class="styleCss active px-1 pb-4 cursor-pointer active" onclick="changeTab('all', 'tab1Link')">
+                            Approved
+                        </div>
+                        <div id="tab2Link" class="styleCss px-1 pb-4 cursor-pointer" onclick="changeTab('pending', 'tab2Link')">
+                            Pending
+                        </div>
 
-                                <div id="tab3Link" class="styleCss px-1 pb-4 cursor-pointer" onclick="changeTab('rejected', 'tab3Link')">
-                                    Rejected
-                                </div>
-                            </div>
+                        <div id="tab3Link" class="styleCss px-1 pb-4 cursor-pointer" onclick="changeTab('rejected', 'tab3Link')">
+                            Rejected
+                        </div>
+                    </div>
                     <div class="flex justify-between pb-[24px]">
                         <form action="/ClubManagement/ClubList" method="get">
 
-
+                            @Html.HiddenFor(model => model.ListType)
                             <div class="relative input-search-wrapper">
                                 <div class="absolute inset-y-0 left-0 flex items-center pl-[16px] pointer-events-none">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21" fill="none">
@@ -212,18 +214,26 @@
                                                 </td>
                                                 <td class="p-[12px]">
                                                     <div class="flex gap-[7px]">
+                                                        @if (item.holdStatus != "P")
+                                                        {
+                                                            <i class="las la-edit text-[20px] cursor-pointer text-[#A6A6A6]" onclick="ManageClubGetDetailsFunction('@item.AgentId');"></i>
+                                                            <img src="/Content/assets/images/manager-setting.svg" onclick="ManageClubManagerFunction('@item.AgentId');">
+                                                            <i class="las la-tag text-[20px] cursor-pointer text-[#C8B477]" onclick="ManageClubTagFunction('@item.AgentId');"></i>
+                                                            <i class=" las la-trash-alt text-[20px] cursor-pointer text-[#CB3F3F]" onclick="BlockUnblockFunction('@item.AgentId');"></i>
+                                                            <i class="las la-user text-[20px] cursor-pointer text-[#A6A6A6]" onclick="HostRedirectFunction('@item.AgentId');"></i>
+                                                            <i class="las la-calendar-check text-[20px] cursor-pointer text-[#A6A6A6]" onclick="window.location.href='/ScheduleManagement/ClubScheduleManagement?ClubId=' + '@item.AgentId'"></i>
+                                                            <img src="/Content/assets/images/notice.svg" alt="notice" class="cursor-pointer h-[20px] aspect-square" onclick="window.location.href='/ClubManagement/EventList?ClubId=' + '@item.AgentId'     " data-drawer-target="add-new-notice-tag" data-drawer-show="add-new-notice-tag" data-drawer-placement="right" data-drawer-backdrop="false" aria-controls="drawer-disabled-backdrop">
+                                                            <div>
+                                                                <a onclick="ClubGalleryRedirectFunction('@item.AgentId');">
+                                                                    <i class="las la-image text-[#C8B477] text-[20px] mt-[1px] cursor-pointer"></i>
+                                                                </a>
+                                                            </div>
+                                                        }
+
                                                         @* <i class="las la-eye text-[20px] cursor-pointer text-[#A6A6A6]"></i>*@
-                                                        <i class="las la-edit text-[20px] cursor-pointer text-[#A6A6A6]" onclick="ManageClubGetDetailsFunction('@item.AgentId');"></i>
-                                                        <i class="las la-tag text-[20px] cursor-pointer text-[#C8B477]" onclick="ManageClubTagFunction('@item.AgentId');"></i>
-                                                        <i class=" las la-trash-alt text-[20px] cursor-pointer text-[#CB3F3F]" onclick="BlockUnblockFunction('@item.AgentId');"></i>
-                                                        <i class="las la-user text-[20px] cursor-pointer text-[#A6A6A6]" onclick="HostRedirectFunction('@item.AgentId');"></i>
-                                                        <i class="las la-calendar-check text-[20px] cursor-pointer text-[#A6A6A6]" onclick="window.location.href='/ScheduleManagement/ClubScheduleManagement?ClubId=' + '@item.AgentId'"></i>
-                                                        <img src="/Content/assets/images/notice.svg" alt="notice" class="cursor-pointer h-[20px] aspect-square" onclick="window.location.href='/ClubManagement/EventList?ClubId=' + '@item.AgentId'     " data-drawer-target="add-new-notice-tag" data-drawer-show="add-new-notice-tag" data-drawer-placement="right" data-drawer-backdrop="false" aria-controls="drawer-disabled-backdrop">
-                                                        <div>
-                                                            <a onclick="ClubGalleryRedirectFunction('@item.AgentId');">
-                                                                <i class="las la-image text-[#C8B477] text-[20px] mt-[1px] cursor-pointer"></i>
-                                                            </a>
-                                                        </div>
+
+
+
                                                     </div>
                                                 </td>
                                             </tr>
@@ -274,7 +284,7 @@
                                             </th>
                                             <th scope="col" class="p-[12px]">
                                                 <div class="flex w-max">
-                                                    Club_Profile
+                                                    Club Profile
                                                     <div class="relative pl-[5px]">
                                                         <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
                                                         <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
@@ -284,7 +294,7 @@
 
                                             <th scope="col" class="p-[12px]">
                                                 <div class="flex w-max">
-                                                    Phone_Number
+                                                    Phone Number
                                                     <div class="relative pl-[5px]">
                                                         <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
                                                         <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
@@ -293,34 +303,17 @@
                                             </th>
                                             <th scope="col" class="p-[12px]">
                                                 <div class="flex w-max">
-                                                    Rank
+                                                    Location
                                                     <div class="relative pl-[5px]">
                                                         <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
                                                         <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
                                                     </div>
                                                 </div>
                                             </th>
+
                                             <th scope="col" class="p-[12px]">
                                                 <div class="flex w-max">
-                                                    Ratings
-                                                    <div class="relative pl-[5px]">
-                                                        <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
-                                                        <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
-                                                    </div>
-                                                </div>
-                                            </th>
-                                            <th scope="col" class="p-[12px]">
-                                                <div class="flex w-max">
-                                                    Address
-                                                    <div class="relative pl-[5px]">
-                                                        <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
-                                                        <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
-                                                    </div>
-                                                </div>
-                                            </th>
-                                            <th scope="col" class="p-[12px]">
-                                                <div class="flex w-max">
-                                                    Created_On
+                                                    Created On
                                                     <div class="relative pl-[5px]">
                                                         <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
                                                         <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
@@ -329,7 +322,7 @@
                                             </th>
                                             <th scope="col" class="p-[12px]">
                                                 <div class="flex  w-max ">
-                                                    Updated_On
+                                                    Updated On
                                                     <div class="relative pl-[5px]">
                                                         <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
                                                         <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
@@ -348,70 +341,76 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        @{
+                                            int SNP = 1;
+                                            foreach (var item in Model.ClubPendingListModel)
+                                            {
+                                                <tr class="bg-white border-b ">
+                                                    <td class="p-[12px]">
+                                                        @SNP
+                                                    </td>
+                                                    <td class="p-[12px]">
+                                                        <div class="round-image-text flex gap-[12px] w-max">
+                                                            <img class="w-[32px] h-[32px] rounded-full" src="@item.ClubLogo" />
 
-                                        <tr class="bg-white border-b ">
-                                            <td class="p-[12px]">
-                                                1
-                                            </td>
-                                            <td class="p-[12px]">
-                                                <div class="round-image-text flex gap-[12px] w-max">
-                                                    <img class="w-[32px] h-[32px] rounded-full" src="ClubLogo" />
-
-                                                    <div class="flex justify-between w-full">
-                                                        <div class="text-image grid flex-none ">
-                                                            <div class="text-sm font-semibold text-[#101828] ">ClubNameEng</div>
-
-                                                            <div class="">
-                                                                ClubCategory.ToUpper()
+                                                            <div class="flex justify-between w-full">
+                                                                <div class="text-image grid flex-none ">
+                                                                    <div class="text-sm font-semibold text-[#101828] ">@item.ClubNameEng</div>
+                                                                    @if (!string.IsNullOrEmpty(item.ClubCategory))
+                                                                    {
+                                                                        <div class="@item.ClubCategory.ToLower()">
+                                                                            @item.ClubCategory.ToUpper()
+                                                                        </div>
+                                                                    }
+                                                                </div>
                                                             </div>
-
                                                         </div>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td class="p-[12px]">
-                                                03-6302-131
-                                            </td>
-                                            <td class="p-[12px]">
-                                                10
-                                            </td>
-                                            <td class="p-[12px]">
-                                                5
-                                            </td>
-                                            <td class="p-[12px]">
-                                                <div class="w-max">
-                                                    歌舞伎町
+                                                    </td>
+                                                    <td class="p-[12px]">
+                                                        @item.MobileNumber
+                                                    </td>
 
-                                                </div>
-                                            </td>
-                                            <td class="p-[12px]">
-                                                <div class="w-max">
-                                                    2024年02月21日 11:43:09
-                                                </div>
-                                            </td>
-                                            <td class="p-[12px]">
-                                                <div class="w-max">
-
-                                                    2024年02月21日 11:43:09
-                                                </div>
-                                            </td>
-                                            <td class="p-[12px]">
-                                                <div class="flex gap-[7px]">
-                                                    @* <i class="las la-eye text-[20px] cursor-pointer text-[#A6A6A6]"></i>*@
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                                        <path d="M18.75 3.02344C18.1758 3.02344 17.6133 3.24609 17.1797 3.67969L9.75 11.0859L9.58594 11.25L9.53906 11.4844L9.02344 14.1094L8.78906 15.2109L9.89062 14.9766L12.5156 14.4609L12.75 14.4141L12.9141 14.25L20.3203 6.82031C21.1846 5.95605 21.1846 4.54395 20.3203 3.67969C19.8867 3.24609 19.3242 3.02344 18.75 3.02344ZM18.75 4.47656C18.9258 4.47656 19.0986 4.56738 19.2656 4.73438C19.5996 5.06836 19.5996 5.43164 19.2656 5.76562L12 13.0312L10.7109 13.2891L10.9688 12L18.2344 4.73438C18.4014 4.56738 18.5742 4.47656 18.75 4.47656ZM3 6V21H18V11.1094L16.5 12.6094V19.5H4.5V7.5H11.3906L12.8906 6H3Z" fill="#989898" />
-                                                    </svg>
-
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                                        <path d="M3.75 3.75V20.25H20.25V3.75H3.75ZM5.25 5.25H18.75V18.75H5.25V5.25ZM15.9609 8.46094L10.5 13.9219L8.03906 11.4609L6.96094 12.5391L9.96094 15.5391L10.5 16.0547L11.0391 15.5391L17.0391 9.53906L15.9609 8.46094Z" fill="#28A745" />
-                                                    </svg>
-
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                                        <path d="M3.75 3.75V20.25H20.25V3.75H3.75ZM5.25 5.25H18.75V18.75H5.25V5.25ZM8.76562 7.73438L7.71094 8.78906L10.9219 12L7.66406 15.2578L8.71875 16.3125L11.9766 13.0547L15.2109 16.2891L16.2656 15.2344L13.0312 12L16.2188 8.8125L15.1641 7.75781L11.9766 10.9453L8.76562 7.73438Z" fill="#CB3F3F" />
-                                                    </svg>
-                                                </div>
-                                            </td>
-                                        </tr>
+                                                    <td class="p-[12px]">
+                                                        <div class="w-max">
+                                                            @item.Location
+                                                        </div>
+                                                    </td>
+                                                    <td class="p-[12px]">
+                                                        <div class="w-max">
+                                                            @item.CreatedDate
+                                                        </div>
+                                                    </td>
+                                                    <td class="p-[12px]">
+                                                        <div class="w-max">
+                                                            @item.UpdatedDate
+                                                        </div>
+                                                    </td>
+                                                    <td class="p-[12px]">
+                                                        <div class="flex gap-[7px]">
+                                                            @*<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                                                    <path d="M18.75 3.02344C18.1758 3.02344 17.6133 3.24609 17.1797 3.67969L9.75 11.0859L9.58594 11.25L9.53906 11.4844L9.02344 14.1094L8.78906 15.2109L9.89062 14.9766L12.5156 14.4609L12.75 14.4141L12.9141 14.25L20.3203 6.82031C21.1846 5.95605 21.1846 4.54395 20.3203 3.67969C19.8867 3.24609 19.3242 3.02344 18.75 3.02344ZM18.75 4.47656C18.9258 4.47656 19.0986 4.56738 19.2656 4.73438C19.5996 5.06836 19.5996 5.43164 19.2656 5.76562L12 13.0312L10.7109 13.2891L10.9688 12L18.2344 4.73438C18.4014 4.56738 18.5742 4.47656 18.75 4.47656ZM3 6V21H18V11.1094L16.5 12.6094V19.5H4.5V7.5H11.3906L12.8906 6H3Z" fill="#989898" />
+                                                                </svg>*@
+                                                            <div onclick="EditPendingClub('@item.SNO','@item.AgentId');" style="cursor: pointer;">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                                                    <path d="M18.75 3.02344C18.1758 3.02344 17.6133 3.24609 17.1797 3.67969L9.75 11.0859L9.58594 11.25L9.53906 11.4844L9.02344 14.1094L8.78906 15.2109L9.89062 14.9766L12.5156 14.4609L12.75 14.4141L12.9141 14.25L20.3203 6.82031C21.1846 5.95605 21.1846 4.54395 20.3203 3.67969C19.8867 3.24609 19.3242 3.02344 18.75 3.02344ZM18.75 4.47656C18.9258 4.47656 19.0986 4.56738 19.2656 4.73438C19.5996 5.06836 19.5996 5.43164 19.2656 5.76562L12 13.0312L10.7109 13.2891L10.9688 12L18.2344 4.73438C18.4014 4.56738 18.5742 4.47656 18.75 4.47656ZM3 6V21H18V11.1094L16.5 12.6094V19.5H4.5V7.5H11.3906L12.8906 6H3Z" fill="#989898" />
+                                                                </svg>
+                                                            </div>
+                                                            <div onclick="ApproveRejectClubManagerFunction('@item.SNO','a','@item.AgentId');" style="cursor: pointer;">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                                                    <path d="M3.75 3.75V20.25H20.25V3.75H3.75ZM5.25 5.25H18.75V18.75H5.25V5.25ZM15.9609 8.46094L10.5 13.9219L8.03906 11.4609L6.96094 12.5391L9.96094 15.5391L10.5 16.0547L11.0391 15.5391L17.0391 9.53906L15.9609 8.46094Z" fill="#28A745" />
+                                                                </svg>
+                                                            </div>
+                                                            <div onclick="ApproveRejectClubManagerFunction('@item.SNO','r','@item.AgentId');" style="cursor: pointer;">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                                                    <path d="M3.75 3.75V20.25H20.25V3.75H3.75ZM5.25 5.25H18.75V18.75H5.25V5.25ZM8.76562 7.73438L7.71094 8.78906L10.9219 12L7.66406 15.2578L8.71875 16.3125L11.9766 13.0547L15.2109 16.2891L16.2656 15.2344L13.0312 12L16.2188 8.8125L15.1641 7.75781L11.9766 10.9453L8.76562 7.73438Z" fill="#CB3F3F" />
+                                                                </svg>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                SNP++;
+                                            }
+                                        }
 
                                     </tbody>
                                 </table>
@@ -475,27 +474,10 @@
                                                     </div>
                                                 </div>
                                             </th>
+
                                             <th scope="col" class="p-[12px]">
                                                 <div class="flex w-max">
-                                                    Rank
-                                                    <div class="relative pl-[5px]">
-                                                        <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
-                                                        <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
-                                                    </div>
-                                                </div>
-                                            </th>
-                                            <th scope="col" class="p-[12px]">
-                                                <div class="flex w-max">
-                                                    Ratings
-                                                    <div class="relative pl-[5px]">
-                                                        <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
-                                                        <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
-                                                    </div>
-                                                </div>
-                                            </th>
-                                            <th scope="col" class="p-[12px]">
-                                                <div class="flex w-max">
-                                                    Address
+                                                    Location
                                                     <div class="relative pl-[5px]">
                                                         <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
                                                         <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
@@ -523,54 +505,102 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        @{
+                                            int SNR = 1;
+                                            foreach (var item in Model.ClubRejectedListModel)
+                                            {
+                                                <tr class="bg-white border-b ">
+                                                    <td class="p-[12px]">
+                                                        @SNR
+                                                    </td>
+                                                    <td class="p-[12px]">
+                                                        <div class="round-image-text flex gap-[12px] w-max">
+                                                            <img class="w-[32px] h-[32px] rounded-full" src="@item.ClubLogo" />
 
-                                        <tr class="bg-white border-b ">
-                                            <td class="p-[12px]">
-                                                1
-                                            </td>
-                                            <td class="p-[12px]">
-                                                <div class="round-image-text flex gap-[12px] w-max">
-                                                    <img class="w-[32px] h-[32px] rounded-full" src="ClubLogo" />
-
-                                                    <div class="flex justify-between w-full">
-                                                        <div class="text-image grid flex-none ">
-                                                            <div class="text-sm font-semibold text-[#101828] ">ClubNameEng</div>
-
-                                                            <div class="">
-                                                                ClubCategory.ToUpper()
+                                                            <div class="flex justify-between w-full">
+                                                                <div class="text-image grid flex-none ">
+                                                                    <div class="text-sm font-semibold text-[#101828] ">@item.ClubNameEng</div>
+                                                                    @if (!string.IsNullOrEmpty(item.ClubCategory))
+                                                                    {
+                                                                        <div class="@item.ClubCategory.ToLower()">
+                                                                            @item.ClubCategory.ToUpper()
+                                                                        </div>
+                                                                    }
+                                                                </div>
                                                             </div>
+                                                        </div>
+                                                    </td>
+                                                    <td class="p-[12px]">
+                                                        @item.MobileNumber
+                                                    </td>
 
+                                                    <td class="p-[12px]">
+                                                        <div class="w-max">
+                                                            @item.Location
+                                                        </div>
+                                                    </td>
+                                                    <td class="p-[12px]">
+                                                        <div class="w-max">
+                                                            @item.CreatedDate
+                                                        </div>
+                                                    </td>
+                                                    <td class="p-[12px]">
+                                                        <div class="w-max">
+                                                            @item.UpdatedDate
+                                                        </div>
+                                                    </td>
+
+                                                </tr>
+                                                SNR++;
+                                            }
+                                        }
+                                        @*<tr class="bg-white border-b ">
+                                                <td class="p-[12px]">
+                                                    1
+                                                </td>
+                                                <td class="p-[12px]">
+                                                    <div class="round-image-text flex gap-[12px] w-max">
+                                                        <img class="w-[32px] h-[32px] rounded-full" src="ClubLogo" />
+
+                                                        <div class="flex justify-between w-full">
+                                                            <div class="text-image grid flex-none ">
+                                                                <div class="text-sm font-semibold text-[#101828] ">ClubNameEng</div>
+
+                                                                <div class="">
+                                                                    ClubCategory.ToUpper()
+                                                                </div>
+
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                            </td>
-                                            <td class="p-[12px]">
-                                                03-6302-131
-                                            </td>
-                                            <td class="p-[12px]">
-                                                10
-                                            </td>
-                                            <td class="p-[12px]">
-                                                5
-                                            </td>
-                                            <td class="p-[12px]">
-                                                <div class="w-max">
-                                                    歌舞伎町
+                                                </td>
+                                                <td class="p-[12px]">
+                                                    03-6302-131
+                                                </td>
+                                                <td class="p-[12px]">
+                                                    10
+                                                </td>
+                                                <td class="p-[12px]">
+                                                    5
+                                                </td>
+                                                <td class="p-[12px]">
+                                                    <div class="w-max">
+                                                        歌舞伎町
 
-                                                </div>
-                                            </td>
-                                            <td class="p-[12px]">
-                                                <div class="w-max">
-                                                    2024年02月21日 11:43:09
-                                                </div>
-                                            </td>
-                                            <td class="p-[12px]">
-                                                <div class="w-max">
+                                                    </div>
+                                                </td>
+                                                <td class="p-[12px]">
+                                                    <div class="w-max">
+                                                        2024年02月21日 11:43:09
+                                                    </div>
+                                                </td>
+                                                <td class="p-[12px]">
+                                                    <div class="w-max">
 
-                                                    2024年02月21日 11:43:09
-                                                </div>
-                                            </td>
-                                        </tr>
+                                                        2024年02月21日 11:43:09
+                                                    </div>
+                                                </td>
+                                            </tr>*@
 
 
                                     </tbody>
@@ -595,7 +625,7 @@
                     </div>
 
 
-@*                    <div id="Rejected" class="pane" style="display: none;">Content of Tab 3</div>*@
+                    @*                    <div id="Rejected" class="pane" style="display: none;">Content of Tab 3</div>*@
                 </div>
             </div>
         </div>
@@ -603,7 +633,7 @@
 </div>
 <!-- add new host from -->
 @Html.Partial("_ManageTagPartialView", _ManageTag)
-
+@Html.Partial("_ManageManagerPartialView", _ManageManager)
 <!-- Confirmation  -->
 <div id="add-new-host-modal-save" tabindex="-1" aria-hidden="true"
      class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full"
@@ -669,7 +699,9 @@
 
 @section scripts
 {
-
+    <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
+    <script src="~/Content/assets_new/js/calendar-management.js"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
     <script>
         const checkbox = document.getElementById('tag1');
         const tagInput = document.getElementById('tagInput');
@@ -811,6 +843,44 @@
     </script>
     <script>
         $(document).ready(function () {
+            if ($("#holdId").val() != "" || $("#AgentId").val() != "") {
+                var val = $('#large[name="BusinessTypeDDL"]').find("option:selected").text().trim();
+                if (val.toLowerCase() == "corporation") {
+                    $("#Corp_id").show();
+                    $("#corp_representive1").show();
+                    $("#corpdetail_representive1").show();
+                    $("#corp_representive2").show();
+                    $("#corpdetail_representive2").show();
+                }
+                else {
+                    $("#Corp_id").hide();
+                    $("#corp_representive1").hide();
+                    $("#corpdetail_representive1").hide();
+                    $("#corp_representive2").hide();
+                    $("#corpdetail_representive2").hide();
+                }
+            }
+
+            $('#large[name="BusinessTypeDDL"]').change(function () {
+                var selectedValue = $(this).find("option:selected").text().trim();
+                if (selectedValue.toLowerCase() == "corporation") {
+                    $("#Corp_id").show();
+                    $("#corp_representive1").show();
+                    $("#corpdetail_representive1").show();
+                    $("#corp_representive2").show();
+                    $("#corpdetail_representive2").show();
+                }
+                else {
+                    $("#Corp_id").hide();
+                    $("#corp_representive1").hide();
+                    $("#corpdetail_representive1").hide();
+                    $("#corp_representive2").hide();
+                    $("#corpdetail_representive2").hide();
+                }
+            });
+
+
+
             $('select').select2({
                 minimumResultsForSearch: Infinity
             });
@@ -822,6 +892,10 @@
             else if (PopUpRenderValue != null && PopUpRenderValue != "" && PopUpRenderValue == "ManageTag") {
                  var element = document.getElementById('add-new-host-tag');
                  element.classList.remove('translate-x-full');
+            }
+            else if (PopUpRenderValue != null && PopUpRenderValue != "" && PopUpRenderValue == "ManageManager") {
+                var element = document.getElementById('add-new-host-manager');
+                element.classList.remove('translate-x-full');
             }
             var tag1Status = $('#Tag1Status').val();
             var tag2Status = $('#Tag2Status').val();
@@ -977,6 +1051,10 @@
             window.location.href = '/ClubManagement/ManageClub?AgentId=' + i;
         }
 
+        function ManageClubManagerFunction(i) {
+            window.location.href = '/ClubManagement/ManageManager?AgentId=' + i;
+        }
+
         function CancelFunction() {
             location.reload();
         }
@@ -992,36 +1070,102 @@
         function ManageClubTagFunction(i) {
             window.location.href = '/ClubManagement/ManageTag?ClubId=' + i;
         }
+        function ApproveRejectClubManagerFunction(i, j, k) {
+            window.location.href = '/ClubManagement/ApproveRejectClub?holdid=' + i + '&type=' + j+ '&AgentId=' + k;
+        }
+        function EditPendingClub(i,j) {
+            window.location.href = '/ClubManagement/ManagePendingClub?AgentId=' + j + '&holdId=' + i;
+        }
+        function addQueryParam2(url, paramName, paramValue, paramName2, paramValue2) {
+            // Add the first query parameter
+            if (paramValue != null && paramValue != "") {
+                // Check if it's the first parameter, if so, use "?" else use "&"
+                url += url.includes('?') ? `&${paramName}=${paramValue}` : `?${paramName}=${paramValue}`;
+            }
+
+            // Add the second query parameter
+            if (paramValue2 != null && paramValue2 != "") {
+                url += url.includes('?') ? `&${paramName2}=${paramValue2}` : `?${paramName2}=${paramValue2}`;
+            }
+
+            return url;
+        }
     </script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-                const page_size = @ViewBag.PageSize;
-                const total_data = @ViewBag.TotalData;
-                const start_index_val = @ViewBag.StartIndex;
-                let URL = "/ClubManagement/ClubList";
-                let search_filter = $('#default-search').val();
-                URL = addQueryParam(URL, 'SearchFilter', search_filter);
-            LoadPagination(page_size, total_data, start_index_val, URL);
-
-            const page_size2 = @ViewBag.PageSize;
-                const total_data2 = @ViewBag.TotalData;
-                const start_index_val2 = @ViewBag.StartIndex;
+     
+            if ($("#ListType").val().toLowerCase() == "p") {
+                changeTab('pending', 'tab2Link')
+                const page_size2 = @ViewBag.PageSize2;
+                const total_data2 = @ViewBag.TotalData2;
+                const start_index_val2 = @ViewBag.StartIndex2;
                 let URL2 = "/ClubManagement/ClubList";
                 let search_filter2 = $('#default-search').val();
-            URL2 = addQueryParam(URL, 'SearchFilter', search_filter);
-            dynamicStartIndexLabel = "StartIndex2";
-            dynamicPageSizeLabel = "PageSize2";
-            LoadPagination(page_size2, total_data2, start_index_val2, URL2, 'pagination-id-2', 'prev-btn-2', 'next-btn-2', 'ShowEntries-Id-2', 'Entries-Id-2');
+                URL2 = addQueryParam2(URL2, 'SearchFilter', search_filter2, 'value', 'p');
+                dynamicStartIndexLabel = "StartIndex2";
+                dynamicPageSizeLabel = "PageSize2";
+                LoadPagination(page_size2, total_data2, start_index_val2, URL2, 'pagination-id-2', 'prev-btn-2', 'next-btn-2', 'ShowEntries-Id-2', 'Entries-Id-2');
+                
+            }
+            else if ($("#ListType").val().toLowerCase() == "r") {
+                changeTab('rejected', 'tab3Link')
+                const page_size3 = @ViewBag.PageSize3;
+                const total_data3 = @ViewBag.TotalData3;
+                const start_index_val3 = @ViewBag.StartIndex3;
+                let URL3 = "/ClubManagement/ClubList";
+                let search_filter3 = $('#default-search').val();
+                URL3 = addQueryParam2(URL3, 'SearchFilter', search_filter3, 'value', 'r');
+                dynamicStartIndexLabel = "StartIndex3";
+                dynamicPageSizeLabel = "PageSize3";
+                LoadPagination(page_size3, total_data3, start_index_val3, URL3, 'pagination-id-3', 'prev-btn-3', 'next-btn-3', 'ShowEntries-Id-3', 'Entries-Id-3');
+               
+            }
+            else
+            {
+                changeTab('all', 'tab1Link')
+             const page_size = @ViewBag.PageSize;
+             const total_data = @ViewBag.TotalData;
+             const start_index_val = @ViewBag.StartIndex;
+             let URL = "/ClubManagement/ClubList";
+             let search_filter = $('#default-search').val();
+             URL = addQueryParam(URL, 'SearchFilter', search_filter);
+                LoadPagination(page_size, total_data, start_index_val, URL);
+                dynamicStartIndexLabel = "StartIndex";
+                dynamicPageSizeLabel = "PageSize";
+             
+            }
 
-             const page_size3 = @ViewBag.PageSize;
-             const total_data3 = @ViewBag.TotalData;
-             const start_index_val3 = @ViewBag.StartIndex;
-             let URL3 = "/ClubManagement/ClubList";
-             let search_filter3 = $('#default-search').val();
-         URL3 = addQueryParam(URL, 'SearchFilter', search_filter);
-         dynamicStartIndexLabel = "StartIndex3";
-         dynamicPageSizeLabel = "PageSize3";
-         LoadPagination(page_size3, total_data3, start_index_val3, URL3, 'pagination-id-3', 'prev-btn-3', 'next-btn-3', 'ShowEntries-Id-3', 'Entries-Id-3');
+
+           $("#LicenseIssuedDate").val("@_ManageClubModel.LicenseIssuedDate");
+            jQuery(function ($) {
+                $.datepicker.regional['ja'] = {
+                    closeText: '閉じる',
+                    prevText: '&#x3c;前',
+                    nextText: '次&#x3e;',
+                    currentText: '今日',
+                    monthNames: ['1月', '2月', '3月', '4月', '5月', '6月',
+                        '7月', '8月', '9月', '10月', '11月', '12月'],
+                    monthNamesShort: ['1月', '2月', '3月', '4月', '5月', '6月',
+                        '7月', '8月', '9月', '10月', '11月', '12月'],
+                    dayNames: ['日曜日', '月曜日', '火曜日', '水曜日', '木曜日', '金曜日', '土曜日'],
+                    dayNamesShort: ['日', '月', '火', '水', '木', '金', '土'],
+                    dayNamesMin: ['日', '月', '火', '水', '木', '金', '土'],
+                    weekHeader: '週',
+                    dateFormat: 'yy/mm/dd',
+                    firstDay: 0,
+                    isRTL: false,
+                    showMonthAfterYear: true,
+                    yearSuffix: '年'
+                };
+                $.datepicker.setDefaults($.datepicker.regional['ja']);
+                $("#LicenseIssuedDate").datepicker({
+                    minDate: new Date(),
+                    /* maxDate: 15,*/
+                    defaultDate: '@_ManageClubModel.LicenseIssuedDate'
+                });
+            })
+
+
         });
 
 
@@ -1256,7 +1400,7 @@
     </script>
 
     @* tab for all, pending, rejected *@
-    <script>
+<script>
         document.getElementById('tab1Link').style.color = '#D75A8B';
         document.getElementById('tab1Link').style.borderBottom = '#D75A8B 2px solid';
 
@@ -1290,6 +1434,15 @@
                 document.getElementById('tab2Link').style.color = '';
                 document.getElementById('tab3Link').style.borderBottom = '';
                 document.getElementById('tab3Link').style.color = '';
+                 const page_size = @ViewBag.PageSize;
+                 const total_data = @ViewBag.TotalData;
+                 const start_index_val = @ViewBag.StartIndex;
+                 let URL = "/ClubManagement/ClubList";
+                 let search_filter = $('#default-search').val();               
+                URL = addQueryParam(URL, 'SearchFilter', search_filter);
+                dynamicStartIndexLabel = "StartIndex";
+                dynamicPageSizeLabel = "PageSize";
+                 LoadPagination(page_size, total_data, start_index_val, URL);
 
             } else if (selectedLinkId === 'tab2Link') {
                 document.getElementById('tab3Link').style.borderBottom = '';
@@ -1298,6 +1451,16 @@
                 document.getElementById('tab1Link').style.borderBottom = '';
                 document.getElementById('tab2Link').style.color = '#D75A8B';
                 document.getElementById('tab2Link').style.borderBottom = '#D75A8B 2px solid';
+                const page_size2 = @ViewBag.PageSize2;
+                const total_data2 = @ViewBag.TotalData2;
+                const start_index_val2 = @ViewBag.StartIndex2;
+                let URL2 = "/ClubManagement/ClubList";
+                let search_filter2 = $('#default-search').val();
+                URL2 = addQueryParam2(URL2, 'SearchFilter', search_filter2, 'value', 'p');
+                dynamicStartIndexLabel = "StartIndex2";
+                dynamicPageSizeLabel = "PageSize2";
+                LoadPagination(page_size2, total_data2, start_index_val2, URL2, 'pagination-id-2', 'prev-btn-2', 'next-btn-2', 'ShowEntries-Id-2', 'Entries-Id-2');
+
 
             } else {
                 document.getElementById('tab1Link').style.borderBottom = '';
@@ -1306,10 +1469,20 @@
                 document.getElementById('tab1Link').style.color = ''; // Reset color for other link
                 document.getElementById('tab3Link').style.color = '#D75A8B';
                 document.getElementById('tab3Link').style.borderBottom = '#D75A8B 2px solid';
+                 const page_size3 = @ViewBag.PageSize3;
+                 const total_data3 = @ViewBag.TotalData3;
+                 const start_index_val3 = @ViewBag.StartIndex3;
+                 let URL3 = "/ClubManagement/ClubList";
+                 let search_filter3 = $('#default-search').val();
+                 URL3 = addQueryParam2(URL3, 'SearchFilter', search_filter3, 'value', 'r');
+                 dynamicStartIndexLabel = "StartIndex3";
+                 dynamicPageSizeLabel = "PageSize3";
+                 LoadPagination(page_size3, total_data3, start_index_val3, URL3, 'pagination-id-3', 'prev-btn-3', 'next-btn-3', 'ShowEntries-Id-3', 'Entries-Id-3');
+
             }
         }
 
-    </script>
+</script>
 
 
 }

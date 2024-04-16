@@ -9,6 +9,10 @@ namespace CRS.ADMIN.BUSINESS.ClubManagement
     public interface IClubManagementBusiness
     {
         List<ClubListCommon> GetClubList(PaginationFilterCommon Request);
+        List<ClubListCommon> GetClubPendingList(PaginationFilterCommon Request);
+        List<ClubListCommon> GetClubRejectedList(PaginationFilterCommon Request);
+        ClubDetailCommon GetClubPendingDetails(string AgentId, String holdId = "", String culture = "");
+        CommonDbResponse ManageApproveReject(string holdId, string flag, string AgentId, String culture = "", ManageClubCommon Request=null);
         ClubDetailCommon GetClubDetails(string AgentId, String culture = "");
         CommonDbResponse ManageClub(ManageClubCommon Request);
         CommonDbResponse ManageClubStatus(string AgentId, string Status, Common Request);
@@ -35,6 +39,10 @@ namespace CRS.ADMIN.BUSINESS.ClubManagement
         List<EventListCommon> GetEventList(PaginationFilterCommon Request, string AgentId);
         CommonDbResponse ManageEvent(EventCommon Request);
         EventCommon GetEventDetails(string AgentId, string EventId);
+        #endregion
+        #region club Manager
+        ManageManagerCommon GetManagerDetails(string AgentId);
+        CommonDbResponse ManageManager(ManageManagerCommon request);
         #endregion
     }
 }
