@@ -1,0 +1,116 @@
+@model CRS.ADMIN.APPLICATION.Models.ClubManagerModel.ManageManagerModel
+<div id="add-new-host-manager"
+     class="drawer-close-disable  flex justify-end fixed top-0 right-0 z-40 h-screen overflow-y-auto transition-transform translate-x-full"
+     tabindex="-1" aria-labelledby="add-new-host-club" aria-modal="true" role="dialog">
+    <div class="bg-white w-[616px] drawer-container relative">
+        <div class="drawer-form-container sticky top-0 z-[5] ">
+            <div class="drawer-form flex justify-between bg-secondary-color-pink py-[16px] px-[24px] h-[56px]">
+                <div>
+                    @CRS.ADMIN.APPLICATION.Resources.Resource.ManageClubManager
+                </div>
+                <button type="button" data-drawer-hide="add-new-host-manager" aria-controls="add-new-host-manager"
+                        class="text-[20px]">
+                    <i class="las la-window-close text-white" onclick="CancelFunction()"></i>
+                </button>
+            </div>
+        </div>
+        <div class="p-[24px]">
+            @using (Html.BeginForm("ManageManager", "ClubManagement", FormMethod.Post, new { @id = "ManageManagerForm", enctype = "multipart/form-data" }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.HiddenFor(model => model.ManagerId);
+                @Html.HiddenFor(model => model.ClubId);
+
+                <div class="py-4 grid gap-6">
+                    <div class="input-field-common" id="tagInput3">
+                        <div class="input-field-common">
+                            <label for="date" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.ManagerName
+                            </label>
+                            @Html.TextBoxFor(model => model.ManagerName, new
+                       {
+                           @class = "w-full",
+                           @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.ManagerName,
+                           autocomplete = "off",
+                           @maxLength = "50"
+                       })
+
+                            <span class="error">
+                                @Html.ValidationMessageFor(m => m.ManagerName)
+                            </span>
+                        </div>
+                    </div>
+
+
+                    <div class="input-field-common" id="tagInput4">
+                        <div class="input-field-common">
+                            <label for="date" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Email
+                            </label>
+                            @Html.TextBoxFor(model => model.Email, new
+                       {
+                           @class = "w-full",
+                           @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.Email,
+                           autocomplete = "off",
+                           @maxLength = "200"
+                       })
+                            <span class="error">
+                                @Html.ValidationMessageFor(m => m.Email)
+                            </span>
+
+                        </div>
+
+
+                    </div>
+                    <div class="input-field-common">
+                        <div class="input-field-common">
+                            <label class="block mb-4 text-sm font-medium text-secondary-100 ">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.MobileNumber
+                            </label>
+                            <div class="number-input">
+                                <div class="flag-section">
+                                    <div class="japan-flag" style="border: 1px solid #dbd6d6;">
+                                        <div></div>
+                                    </div>
+                                    <div>
+                                        +81
+                                    </div>
+                                    <div class="line-y">
+
+                                    </div>
+
+                                </div>
+                                @Html.TextBoxFor(model => model.MobileNumber, new
+                             {
+                               @class = "w-full",
+                               @placeholder = CRS.ADMIN.APPLICATION.Resources.Resource.MobileNumber,
+                               @onkeypress = "return isNumber(event)",
+                               autocomplete = "off",
+                               @maxLength = "11"
+                           })
+                            </div>
+                           
+                        </div>
+                    </div>
+
+                </div>
+                <!-- for submit button -->
+                <div class="py-4 flex justify-end">
+                    <div class="flex gap-6">
+                        <button class="btn btn-secondary rounded-[4px]" type="button" data-drawer-hide="add-new-host-tag"
+                                aria-controls="add-new-host-tag" onclick="CancelFunction();">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Cancel
+                        </button>
+                        <button class="btn btn-primary-default rounded-[4px]" type="submit"> @CRS.ADMIN.APPLICATION.Resources.Resource.Submit</button>
+
+
+                    </div>
+
+                </div>
+            }
+        </div>
+    </div>
+</div>
+<script>
+
+</script>

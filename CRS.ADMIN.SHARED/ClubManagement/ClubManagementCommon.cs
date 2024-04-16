@@ -20,6 +20,8 @@ namespace CRS.ADMIN.SHARED.ClubManagement
         public string Sno { get; set; }
         public string ClubLogo { get; set; }
         public string ClubCategory { get; set; }
+        public string holdStatus { get; set; }
+
     }
 
     public class ClubDetailCommon
@@ -72,8 +74,21 @@ namespace CRS.ADMIN.SHARED.ClubManagement
         public string LandLineNumber { get; set; } 
         public string Line { get; set; }
         public string ceoFullName { get; set; }
-        
+        public string holdId { get; set; }
         public List<PlanListCommon> PlanDetailList { get; set; } = new List<PlanListCommon>();
+        public string CompanyAddress { get; set; }
+        public string KYCDocument { get; set; }
+        public string BusinessLicenseNumber { get; set; }
+        public string LicenseIssuedDate { get; set; }
+        public string Representative1_ContactName { get; set; }
+        public string Representative1_MobileNo { get; set; }
+        public string Representative1_Email { get; set; }
+        public string Representative2_ContactName { get; set; }
+        public string Representative2_MobileNo { get; set; }
+        public string Representative2_Email { get; set; }
+        public string ClosingDate { get; set; }
+        public string GroupName2 { get; set; }
+        
     }
 
     public class ManageClubCommon : Common
@@ -127,8 +142,23 @@ namespace CRS.ADMIN.SHARED.ClubManagement
         public string Pref { get; set; }
         public object data { get; set; }
         public List<PlanListCommon> PlanDetailList { get; set; } = new List<PlanListCommon>();
+        public string GroupName2 { get; set; }
+        public string CompanyAddress { get; set; }
+        public string KYCDocument { get; set; }
+        public string BusinessLicenseNumber { get; set; }
+        public string LicenseIssuedDate { get; set; }
+        public string Representative1_ContactName { get; set; }
+        public string Representative1_MobileNo { get; set; }
+        public string Representative1_Email { get; set; }
+        public string Representative2_ContactName { get; set; }
+        public string Representative2_MobileNo { get; set; }
+
+        public string Representative2_Email { get; set; }
+        public string ClosingDate { get; set; }
+        public string holdId { get; set; }
     }
 
+    
 
     public class PlanListCommon
     {

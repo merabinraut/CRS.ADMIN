@@ -1,4 +1,5 @@
-﻿using CRS.ADMIN.APPLICATION.Models.TagManagement;
+﻿using CRS.ADMIN.APPLICATION.Models.ClubManagerModel;
+using CRS.ADMIN.APPLICATION.Models.TagManagement;
 using DocumentFormat.OpenXml.Drawing.Charts;
 using DocumentFormat.OpenXml.Wordprocessing;
 using System.Collections.Generic;
@@ -10,9 +11,13 @@ namespace CRS.ADMIN.APPLICATION.Models.ClubManagement
     public class ClubManagementCommonModel
     {
         public string SearchFilter { get; set; }
+        public string ListType { get; set; }
         public List<ClubListModel> ClubListModel { get; set; }
+        public List<ClubListModel> ClubPendingListModel { get; set; }
+        public List<ClubListModel> ClubRejectedListModel { get; set; }
         public ManageClubModel ManageClubModel { get; set; }
         public ManageTag ManageTag { get; set; }
+        public ManageManagerModel ManageManager { get; set; }
         public List<AvailabilityTagModel> GetAvailabilityList { get; set; }
     }
     public class ClubListModel
@@ -33,6 +38,7 @@ namespace CRS.ADMIN.APPLICATION.Models.ClubManagement
         public string ClubLogo { get; set; }
         public string Sno { get; set; }
         public string ClubCategory { get; set; }
+        public string holdStatus { get; set; }
     }
 
     public class ClubDetailModel
@@ -128,10 +134,14 @@ namespace CRS.ADMIN.APPLICATION.Models.ClubManagement
         [DisplayName("Business Type")]
         [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
         public string BusinessType { get; set; }
-        [DisplayName("Group Name")]
+        [DisplayName("Group Name (English)")]
         [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
         [MaxLength(50, ErrorMessage = "Maximum 50 characters allowed")]
         public string GroupName { get; set; }
+        [DisplayName("Group Name (Katakana)")]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
+        [MaxLength(50, ErrorMessage = "Maximum 50 characters allowed")]
+        public string GroupName2 { get; set; }
         [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
         [MaxLength(200, ErrorMessage = "Maximum 200 characters allowed")]
         public string Description { get; set; }
@@ -215,6 +225,21 @@ namespace CRS.ADMIN.APPLICATION.Models.ClubManagement
         public string BusinessTypeDDL { get; set; }
 
         public List<PlanList> PlanDetailList { get; set; } = new List<PlanList>();
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
+        public string CompanyAddress { get; set; }
+        public string KYCDocument { get; set; }
+        public string BusinessLicenseNumber { get; set; }
+        public string LicenseIssuedDate { get; set; }
+        public string Representative1_ContactName { get; set; }
+        public string Representative1_MobileNo { get; set; }
+        public string Representative1_Email { get; set; }
+        public string Representative2_ContactName { get; set; }
+        public string Representative2_MobileNo { get; set; }
+
+        public string Representative2_Email { get; set; }
+        public string ClosingDate { get; set; }
+        public string holdId { get; set; }
+
         // public List<planIdentityDataModel> PlanList { get; set; }
     }
 

@@ -103,3 +103,11 @@ VALUES
 (  172, 38, 'Review 3', '/ReviewManagement/Review3', 'A', 'rabin.raut', '::1', GETDATE() ),
 (  173, 38, 'Review 4', '/ReviewManagement/Review4', 'A', 'rabin.raut', '::1', GETDATE() ),
 (  174, 38, 'Review Details', '/ReviewManagement/ReviewDetails', 'A', 'rabin.raut', '::1', GETDATE() )
+
+
+INSERT INTO tbl_application_functions 
+(FunctionId, MenuId, FunctionName, FunctionURL, Status, ActionUser, ActionIP, ActionDate)
+VALUES
+(
+ '147', '14', 'Manage Manager', '/ClubManagement/ManageManager', 'A', 'kiran.acharya', '::1', GETDATE()
+)

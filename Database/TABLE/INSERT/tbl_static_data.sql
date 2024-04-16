@@ -501,3 +501,39 @@ VALUES
 (  39, N'Dropdown', '1', 'Dropdown', N'', NULL, NULL, NULL, 'A', 'kiran.acharya', N'2024-02-12T15:41:15.33' ),
 (  39, N'Text Box', '2', 'Text Box', N'', NULL, NULL, NULL, 'A', 'kiran.acharya', N'2024-02-12T15:41:15.33' ),
 (  39, N'Time', '3', 'Time', N'', NULL, NULL, NULL, 'A', 'kiran.acharya', N'2024-02-12T15:41:15.33' )
+
+
+
+INSERT INTO tbl_static_data ( [StaticDataType], [StaticDataLabel], [StaticDataValue], [StaticDataDescription], [AdditionalValue1], [AdditionalValue2], [AdditionalValue3], [AdditionalValue4], [Status], [ActionUser], [ActionDate])
+VALUES
+(  45, N'1', '1', '', N'', NULL, NULL, NULL, 'A', 'kiran.acharya', N'2024-02-12T15:41:15.33' ),
+(  45, N'2', '2', '', N'', NULL, NULL, NULL, 'A', 'kiran.acharya', N'2024-02-12T15:41:15.33' ),
+(  45, N'3', '3', '', N'', NULL, NULL, NULL, 'A', 'kiran.acharya', N'2024-02-12T15:41:15.33' ),
+(  45, N'4', '4', '', N'', NULL, NULL, NULL, 'A', 'kiran.acharya', N'2024-02-12T15:41:15.33' ),
+(  45, N'5', '5', '', N'', NULL, NULL, NULL, 'A', 'kiran.acharya', N'2024-02-12T15:41:15.33' ),
+(  45, N'6', '6', '', N'', NULL, NULL, NULL, 'A', 'kiran.acharya', N'2024-02-12T15:41:15.33' ),
+(  45, N'7', '7', '', N'', NULL, NULL, NULL, 'A', 'kiran.acharya', N'2024-02-12T15:41:15.33' ),
+(  45, N'8', '8', '', N'', NULL, NULL, NULL, 'A', 'kiran.acharya', N'2024-02-12T15:41:15.33' ),
+(  45, N'9', '9', '', N'', NULL, NULL, NULL, 'A', 'kiran.acharya', N'2024-02-12T15:41:15.33' ),
+(  45, N'10', '10', '', N'', NULL, NULL, NULL, 'A', 'kiran.acharya', N'2024-02-12T15:41:15.33' ),
+(  45, N'11', '11', '', N'', NULL, NULL, NULL, 'A', 'kiran.acharya', N'2024-02-12T15:41:15.33' ),
+(  45, N'12', '12', '', N'', NULL, NULL, NULL, 'A', 'kiran.acharya', N'2024-02-12T15:41:15.33' ),
+(  45, N'13', '13', '', N'', NULL, NULL, NULL, 'A', 'kiran.acharya', N'2024-02-12T15:41:15.33' ),
+(  45, N'14', '14', '', N'', NULL, NULL, NULL, 'A', 'kiran.acharya', N'2024-02-12T15:41:15.33' ),
+(  45, N'15', '15', '', N'', NULL, NULL, NULL, 'A', 'kiran.acharya', N'2024-02-12T15:41:15.33' ),
+(  45, N'16', '16', '', N'', NULL, NULL, NULL, 'A', 'kiran.acharya', N'2024-02-12T15:41:15.33' ),
+(  45, N'17', '17', '', N'', NULL, NULL, NULL, 'A', 'kiran.acharya', N'2024-02-12T15:41:15.33' ),
+(  45, N'18', '18', '', N'', NULL, NULL, NULL, 'A', 'kiran.acharya', N'2024-02-12T15:41:15.33' ),
+(  45, N'19', '19', '', N'', NULL, NULL, NULL, 'A', 'kiran.acharya', N'2024-02-12T15:41:15.33' ),
+(  45, N'20', '20', '', N'', NULL, NULL, NULL, 'A', 'kiran.acharya', N'2024-02-12T15:41:15.33' ),
+(  45, N'21', '21', '', N'', NULL, NULL, NULL, 'A', 'kiran.acharya', N'2024-02-12T15:41:15.33' ),
+(  45, N'22', '22', '', N'', NULL, NULL, NULL, 'A', 'kiran.acharya', N'2024-02-12T15:41:15.33' ),
+(  45, N'23', '23', '', N'', NULL, NULL, NULL, 'A', 'kiran.acharya', N'2024-02-12T15:41:15.33' ),
+(  45, N'24', '24', '', N'', NULL, NULL, NULL, 'A', 'kiran.acharya', N'2024-02-12T15:41:15.33' ),
+(  45, N'25', '25', '', N'', NULL, NULL, NULL, 'A', 'kiran.acharya', N'2024-02-12T15:41:15.33' ),
+(  45, N'26', '26', '', N'', NULL, NULL, NULL, 'A', 'kiran.acharya', N'2024-02-12T15:41:15.33' ),
+(  45, N'27', '27', '', N'', NULL, NULL, NULL, 'A', 'kiran.acharya', N'2024-02-12T15:41:15.33' ),
+(  45, N'28', '28', '', N'', NULL, NULL, NULL, 'A', 'kiran.acharya', N'2024-02-12T15:41:15.33' ),
+(  45, N'29', '29', '', N'', NULL, NULL, NULL, 'A', 'kiran.acharya', N'2024-02-12T15:41:15.33' ),
+(  45, N'30', '30', '', N'', NULL, NULL, NULL, 'A', 'kiran.acharya', N'2024-02-12T15:41:15.33' ),
+(  45, N'31', '31', '', N'', NULL, NULL, NULL, 'A', 'kiran.acharya', N'2024-02-12T15:41:15.33' )
