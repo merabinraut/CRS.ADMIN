@@ -180,136 +180,188 @@
                         </span>
                     </div>
                     <div class="input-field-common">
-                        <label class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                        <label class="block mb-[12px] text-sm font-medium text-secondary-100 flex justify-between">
                             @CRS.ADMIN.APPLICATION.Resources.Resource.Price
+
+                            <div class="flex items-center gap-1">
+                                <input style="padding:0" class="rounded-0" type="checkbox" id="chkShowInput" onclick="toggleInputField()" />
+                                    Strike Out
+                            </div>
+
                         </label>
                         @Html.TextBoxFor(model => model.Price, new { @class = "w-full rounded-[4px]", @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.Price, @style = "border-radius:4px !important", @onkeypress = "return isNumber(event)", autocomplete = "off", @maxLength = "7" })
                         <span class="error">
                             @Html.ValidationMessageFor(m => m.Price)
                         </span>
                     </div>
-                    <div class="input-field-common">
-                        <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
-                            @CRS.ADMIN.APPLICATION.Resources.Resource.Liquor
+                    <div class="input-field-common" id="txtInputField" style="display: none;">
+                        <label class="block mb-[12px] text-sm font-medium text-secondary-100">
+                            Offer Price
                         </label>
-                        <select id="large" name="Liquor" class=" default_select select-common block w-full "
-                                style="width: 100%;" required>
-                            @foreach (var item in ViewBag.LiquorList as IEnumerable<SelectListItem>)
-                            {
-                                var selectedId = Model.Liquor as string;
-                                if (item.Value == selectedId)
-                                {
-                                    <option value="@item.Value" selected>@item.Text</option>
-                                }
-                                else
-                                {
-                                    <option value="@item.Value">
-                                        @item.Text
-                                    </option>
-                                }
-                            }
-                        </select>
-                        <span class="error">
-                            @Html.ValidationMessageFor(m => m.Liquor)
-                        </span>
-                    </div>
-                    <div class="input-field-common">
-                        <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
-                            @CRS.ADMIN.APPLICATION.Resources.Resource.Nomination
-                        </label>
-                        <select id="large" name="Nomination" class=" default_select select-common block w-full "
-                                style="width: 100%;" required>
-                            @for (int i = 1; i <= 10; i++)
-                            {
-                                var selectedId = Model.Nomination as string;
-                                if (i.ToString() == selectedId)
-                                {
-                                    <option value="@i" selected>@i</option>
-                                }
-                                else
-                                {
-                                    <option value="@i">
-                                        @i
-                                    </option>
-                                }
-                            }
-                        </select>
-                        <span class="error">
-                            @Html.ValidationMessageFor(m => m.Nomination)
-                        </span>
+                        <input type="text" placeholder="0" class="w-full"/>
                     </div>
 
-                    <div class="input-field-common">
-                        <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
-                            @CRS.ADMIN.APPLICATION.Resources.Resource.NoOfPeople
-                        </label>
-                        <select name="NoOfPeople" class=" default_select select-common block w-full "
-                                style="width: 100%;" required>
-                            @for (int i = 1; i <= 10; i++)
-                            {
-                                var selectedId = Model.NoOfPeople;
-                                if (i == selectedId)
-                                {
-                                    <option value="@i" selected>@i</option>
-                                }
-                                else
-                                {
-                                    <option value="@i">
-                                        @i
-                                    </option>
-                                }
-                            }
-                        </select>
-                        <span class="error">
-                            @Html.ValidationMessageFor(m => m.NoOfPeople)
-                        </span>
-                    </div>
 
-                    <div class="input-field-common">
-                        <label class="block mb-[12px] text-sm font-medium text-secondary-100 ">
-                            @CRS.ADMIN.APPLICATION.Resources.Resource.Remarks
-                        </label>
-                        @Html.TextAreaFor(model => model.Remarks, new { @class = "w-full", @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.Remarks, @onkeypress = "return isNumberWithDot(event)", autocomplete = "off", @maxLength = 200 })
-                        <span class="error">
-                            @Html.ValidationMessageFor(m => m.Remarks)
-                        </span>
+
+                        <div class="input-field-common">
+                            <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Liquor
+                            </label>
+                            <select id="large" name="Liquor" class=" default_select select-common block w-full "
+                                    style="width: 100%;" required>
+                                @foreach (var item in ViewBag.LiquorList as IEnumerable<SelectListItem>)
+                                {
+                                    var selectedId = Model.Liquor as string;
+                                    if (item.Value == selectedId)
+                                    {
+                                        <option value="@item.Value" selected>@item.Text</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@item.Value">
+                                            @item.Text
+                                        </option>
+                                    }
+                                }
+                            </select>
+                            <span class="error">
+                                @Html.ValidationMessageFor(m => m.Liquor)
+                            </span>
+                        </div>
+                        <div class="input-field-common">
+                            <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Nomination
+                            </label>
+                            <select id="large" name="Nomination" class=" default_select select-common block w-full "
+                                    style="width: 100%;" required>
+                                @for (int i = 1; i <= 10; i++)
+                                {
+                                    var selectedId = Model.Nomination as string;
+                                    if (i.ToString() == selectedId)
+                                    {
+                                        <option value="@i" selected>@i</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@i">
+                                            @i
+                                        </option>
+                                    }
+                                }
+                            </select>
+                            <span class="error">
+                                @Html.ValidationMessageFor(m => m.Nomination)
+                            </span>
+                        </div>
+
+                        <div class="input-field-common">
+                            <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.NoOfPeople
+                            </label>
+                            <select name="NoOfPeople" class=" default_select select-common block w-full "
+                                    style="width: 100%;" required>
+                                @for (int i = 1; i <= 10; i++)
+                                {
+                                    var selectedId = Model.NoOfPeople;
+                                    if (i == selectedId)
+                                    {
+                                        <option value="@i" selected>@i</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@i">
+                                            @i
+                                        </option>
+                                    }
+                                }
+                            </select>
+                            <span class="error">
+                                @Html.ValidationMessageFor(m => m.NoOfPeople)
+                            </span>
+                        </div>
+
+                        <div class="input-field-common">
+                            <label class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Remarks
+                            </label>
+                            @Html.TextAreaFor(model => model.Remarks, new { @class = "w-full", @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.Remarks, @onkeypress = "return isNumberWithDot(event)", autocomplete = "off", @maxLength = 200 })
+                            <span class="error">
+                                @Html.ValidationMessageFor(m => m.Remarks)
+                            </span>
+                        </div>
+                        <div class="btn w-max px-4 border-primary-100 text-primary-100 gap-2 rounded-[4px] "
+                             style="border: 1px dashed;" id="addNewBtnToggle">
+                            <i class="las la-plus-circle text-[18px]"></i> @CRS.ADMIN.APPLICATION.Resources.Resource.Add_New
+                        </div>
+                        <div class="input-field-common toggleable">
+                            <label class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Additional_Field 1
+                            </label>
+                            @Html.TextBoxFor(model => model.ExtraField1, new { @class = "w-full rounded-[4px]", @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.Enter_Additional_Information, @style = "border-radius:4px !important", @onkeypress = "return isAlphabateOnly(event)", autocomplete = "off" })
+                        </div>
+                        <div class="input-field-common toggleable">
+                            <label class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Additional_Field 2
+                            </label>
+                            @Html.TextBoxFor(model => model.ExtraField2, new { @class = "w-full rounded-[4px]", @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.Enter_Additional_Information, @style = "border-radius:4px !important", @onkeypress = "return isAlphabateOnly(event)", autocomplete = "off" })
+                        </div>
+                        <div class="input-field-common toggleable">
+                            <label class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Additional_Field 3
+                            </label>
+                            @Html.TextBoxFor(model => model.ExtraField3, new { @class = "w-full rounded-[4px]", @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.Enter_Additional_Information, @style = "border-radius:4px !important", @onkeypress = "return isAlphabateOnly(event)", autocomplete = "off" })
+                        </div>
                     </div>
-                    <div class="btn w-max px-4 border-primary-100 text-primary-100 gap-2 rounded-[4px] "
-                         style="border: 1px dashed;" id="addNewBtnToggle">
-                        <i class="las la-plus-circle text-[18px]"></i> @CRS.ADMIN.APPLICATION.Resources.Resource.Add_New
-                    </div>
-                    <div class="input-field-common toggleable">
-                        <label class="block mb-[12px] text-sm font-medium text-secondary-100 ">
-                            @CRS.ADMIN.APPLICATION.Resources.Resource.Additional_Field 1
-                        </label>
-                        @Html.TextBoxFor(model => model.ExtraField1, new { @class = "w-full rounded-[4px]", @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.Enter_Additional_Information, @style = "border-radius:4px !important", @onkeypress = "return isAlphabateOnly(event)", autocomplete = "off" })
-                    </div>
-                    <div class="input-field-common toggleable">
-                        <label class="block mb-[12px] text-sm font-medium text-secondary-100 ">
-                            @CRS.ADMIN.APPLICATION.Resources.Resource.Additional_Field 2
-                        </label>
-                        @Html.TextBoxFor(model => model.ExtraField2, new { @class = "w-full rounded-[4px]", @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.Enter_Additional_Information, @style = "border-radius:4px !important", @onkeypress = "return isAlphabateOnly(event)", autocomplete = "off" })
-                    </div>
-                    <div class="input-field-common toggleable">
-                        <label class="block mb-[12px] text-sm font-medium text-secondary-100 ">
-                            @CRS.ADMIN.APPLICATION.Resources.Resource.Additional_Field 3
-                        </label>
-                        @Html.TextBoxFor(model => model.ExtraField3, new { @class = "w-full rounded-[4px]", @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.Enter_Additional_Information, @style = "border-radius:4px !important", @onkeypress = "return isAlphabateOnly(event)", autocomplete = "off" })
+                    <div class="flex justify-end ">
+                        <div class="flex gap-6">
+                            <button class="resetForm btn btn-primary-normal rounded-[4px] px-8 text-sm"
+                                    data-drawer-hide="add-new-host-club" id="CancelId" type="button">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Cancel
+                            </button>
+                            <button class="resetForm btn btn-primary-default px-8 rounded-[4px]  text-sm leading-[10px]"
+                                    id="saveData" type="submit">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Submit
+                            </button>
+                        </div>
                     </div>
                 </div>
-                <div class="flex justify-end ">
-                    <div class="flex gap-6">
-                        <button class="resetForm btn btn-primary-normal rounded-[4px] px-8 text-sm"
-                                data-drawer-hide="add-new-host-club" id="CancelId" type="button">
-                            @CRS.ADMIN.APPLICATION.Resources.Resource.Cancel
-                        </button>
-                        <button class="resetForm btn btn-primary-default px-8 rounded-[4px]  text-sm leading-[10px]"
-                                id="saveData" type="submit">
-                            @CRS.ADMIN.APPLICATION.Resources.Resource.Submit
-                        </button>
-                    </div>
-                </div>
-            </div>
         }
     </div>
 </div>
+
+<style>
+    input[type="checkbox"] {
+        color:#fff;
+        appearance: none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        width: 16px;
+        height: 16px;
+        border: 2px solid red;
+        border-radius: 0px;
+        outline: none;
+        cursor: pointer;
+    }
+
+        /* Custom tick mark */
+        input[type="checkbox"]::before {
+            content: "";
+            display: inline-block;
+            width: 10px;
+            height: 5px;
+            border-left: 2px solid transparent; /* Color of the tick mark */
+            border-bottom: 2px solid transparent; /* Color of the tick mark */
+            transform: rotate(-45deg);
+            position: relative;
+            top: -8px;
+            left: 2px;
+        }
+        input[type="checkbox"]:checked {
+            border: 2px solid #D75A8B;
+        }
+        /* Change tick mark color when checkbox is checked */
+        input[type="checkbox"]:checked::before {
+            border-color: #D75A8B; /* Change this color to whatever you want */
+        }
+
+</style>
