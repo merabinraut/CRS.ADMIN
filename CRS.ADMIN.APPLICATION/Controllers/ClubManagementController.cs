@@ -54,7 +54,9 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             else response.ManageTag = new ManageTag();
             if (TempData.ContainsKey("ManageManagerModel")) response.ManageManager = TempData["ManageManagerModel"] as ManageManagerModel;
             else response.ManageManager = new ManageManagerModel();
-
+            if (TempData.ContainsKey("ClubHoldDetails")) response.ClubHoldModel = TempData["ClubHoldDetails"] as ManageClubModel;
+            else response.ClubHoldModel = new ManageClubModel();
+            
 
             if (TempData.ContainsKey("AvailabilityModel")) response.GetAvailabilityList = TempData["AvailabilityModel"] as List<AvailabilityTagModel>;
             else response.ManageTag.GetAvailabilityTagModel = new List<AvailabilityTagModel>();
@@ -166,6 +168,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             ViewBag.TotalData2 = dbResponsePending != null && dbResponsePending.Any() ? dbResponsePending[0].TotalRecords : 0;
             ViewBag.TotalData3 = dbResponseRejected != null && dbResponseRejected.Any() ? dbResponseRejected[0].TotalRecords : 0;
             response.SearchFilter = !string.IsNullOrEmpty(SearchFilter) ? SearchFilter : null;
+
             return View(response);
         }
 
@@ -691,7 +694,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
         }
 
         [HttpPost, ValidateAntiForgeryToken]
-        public ActionResult ManageClub(ManageClubModel Model, HttpPostedFileBase Business_Certificate, HttpPostedFileBase Logo_Certificate, HttpPostedFileBase CoverPhoto_Certificate, HttpPostedFileBase KYC_Document, string LocationDDL, string BusinessTypeDDL)
+        public ActionResult ManageClub(ManageClubModel Model, HttpPostedFileBase Business_Certificate, HttpPostedFileBase Logo_Certificate, HttpPostedFileBase CoverPhoto_Certificate, HttpPostedFileBase KYCDocument_Certificate, string LocationDDL, string BusinessTypeDDL)
         {
             string ErrorMessage = string.Empty;
 
@@ -729,8 +732,26 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             string coverPhotoPath = "";
             var allowedContentType = AllowedImageContentType();
             string dateTime = "";
-            ModelState.Remove("LoginId");
-            ModelState.Remove("CompanyName");
+            if (Model.BusinessType=="1")
+            {
+                ModelState.AddModelError("Representative1_ContactName", "Required");
+                ModelState.AddModelError("Representative1_MobileNo", "Required");
+                ModelState.AddModelError("Representative1_Email", "Required");
+                ModelState.AddModelError("Representative2_ContactName", "Required");
+                ModelState.AddModelError("Representative2_MobileNo", "Required");
+                ModelState.AddModelError("Representative2_Email", "Required");                
+            }
+            else
+            {
+                ModelState.Remove("Representative1_ContactName");
+                ModelState.Remove("Representative1_MobileNo");
+                ModelState.Remove("Representative1_Email");
+                ModelState.Remove("Representative2_ContactName");
+                ModelState.Remove("Representative2_MobileNo");
+                ModelState.Remove("Representative2_Email");
+                ModelState.Remove("CompanyName");
+            }
+            //ModelState.Remove("LoginId");
             if (ModelState.IsValid)
             {
                 if (isduplicate == true)
@@ -776,7 +797,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                             ErrorMessage = "Cover photo required";
                             allowRedirect = true;
                         }
-                        else if (KYC_Document == null && string.IsNullOrEmpty(Model.KYCDocument))
+                        else if (KYCDocument_Certificate == null && string.IsNullOrEmpty(Model.KYCDocument))
                         {
                             ErrorMessage = "KYC document required";
                             allowRedirect = true;
@@ -821,10 +842,10 @@ namespace CRS.ADMIN.APPLICATION.Controllers
 
                     }
                 }
-                if (KYC_Document != null)
+                if (KYCDocument_Certificate != null)
                 {
-                    var contentType = KYC_Document.ContentType;
-                    var ext = Path.GetExtension(KYC_Document.FileName);
+                    var contentType = KYCDocument_Certificate.ContentType;
+                    var ext = Path.GetExtension(KYCDocument_Certificate.FileName);
                     if (allowedContentType.Contains(contentType.ToLower()))
                     {
 
@@ -961,6 +982,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                     if (Business_Certificate != null) ApplicationUtilities.ResizeImage(Business_Certificate, businessCertificatePath);
                     if (Logo_Certificate != null) ApplicationUtilities.ResizeImage(Logo_Certificate, LogoPath);
                     if (CoverPhoto_Certificate != null) ApplicationUtilities.ResizeImage(CoverPhoto_Certificate, coverPhotoPath);
+                    if (KYCDocument_Certificate != null) ApplicationUtilities.ResizeImage(KYCDocument_Certificate, kycDocumentPath);
                     this.AddNotificationMessage(new NotificationModel()
                     {
                         NotificationType = dbResponse.Code == ResponseCode.Success ? NotificationMessage.SUCCESS : NotificationMessage.INFORMATION,
@@ -1054,7 +1076,44 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             return RedirectToAction("ClubList", "ClubManagement");
         }
 
+        [HttpGet]
+        [OverrideActionFilters]
+        public ActionResult ClubHoldDetails(string Holdid = "")
+        {
+            var ResponseModel = new ManageClubModel();
+            //var availabilityInfo = new List<AvailabilityTagModel>();
+            var Id = Holdid?.DecryptParameter();
+            if (string.IsNullOrEmpty(Id))
+            {
+                this.AddNotificationMessage(new NotificationModel()
+                {
+                    NotificationType = NotificationMessage.INFORMATION,
+                    Message = "Invalid details",
+                    Title = NotificationMessage.INFORMATION.ToString(),
+                });
+                return RedirectToAction("ClubList", "ClubManagement");
+            }
+            else
+            {
 
+                var dbResponseInfo = _BUSS.GetClubPendingDetails("",Id,"");
+                
+                //var dbAvailabilityInfo = _BUSS.GetAvailabilityList(cId);
+                ResponseModel = dbResponseInfo.MapObject<ManageClubModel>();
+                ResponseModel.LocationDDL = !string.IsNullOrEmpty(ResponseModel.LocationId) ? ResponseModel.LocationId.EncryptParameter() : null;
+                ResponseModel.BusinessTypeDDL = !string.IsNullOrEmpty(ResponseModel.BusinessType) ? ResponseModel.BusinessType.EncryptParameter() : null;
+                ResponseModel.Prefecture = !string.IsNullOrEmpty(ResponseModel.Prefecture) ? ResponseModel.Prefecture.EncryptParameter() : null;
+                ViewBag.Pref = DDLHelper.LoadDropdownList("PREF") as Dictionary<string, string>;                
+                ViewBag.LocationDDLList = ApplicationUtilities.LoadDropdownList("LOCATIONDDL") as Dictionary<string, string>;
+                ViewBag.BusinessTypeDDL = ApplicationUtilities.LoadDropdownList("BUSINESSTYPEDDL") as Dictionary<string, string>;
+                ResponseModel.Prefecture = ViewBag.Pref.ContainsKey(ResponseModel.Prefecture) ? ViewBag.Pref[ResponseModel.Prefecture] : "";
+                ResponseModel.LocationDDL = ViewBag.LocationDDLList.ContainsKey(ResponseModel.LocationDDL) ? ViewBag.LocationDDLList[ResponseModel.LocationDDL] : "";
+                ResponseModel.BusinessTypeDDL = ViewBag.BusinessTypeDDL.ContainsKey(ResponseModel.BusinessTypeDDL) ? ViewBag.BusinessTypeDDL[ResponseModel.BusinessTypeDDL] : "";
+                TempData["ClubHoldDetails"] = ResponseModel;
+                TempData["RenderId"] = "ClubHoldDetails";               
+                return RedirectToAction("ClubList", "ClubManagement");
+            }
+        }
         #region Manage Manager
         [HttpGet]
         public ActionResult ManageManager(string AgentId = "")

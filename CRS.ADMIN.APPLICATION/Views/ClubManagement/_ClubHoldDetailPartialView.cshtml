@@ -1,0 +1,242 @@
+﻿@model CRS.ADMIN.APPLICATION.Models.ClubManagement.ManageClubModel
+<div id="add-new-club-hold-details"
+     class="drawer-close-disable  flex justify-end fixed top-0 right-0 z-40 h-screen overflow-y-auto transition-transform translate-x-full"
+     tabindex="-1" aria-labelledby="add-new-club-hold-details" aria-modal="true" role="dialog">
+    <div class="bg-white w-[616px] drawer-container relative">
+        <div class="drawer-form-container sticky top-0 z-[5] ">
+            <div class="drawer-form flex justify-between bg-secondary-color-pink py-[16px] px-[24px] h-[56px]">
+                <div>
+                    @CRS.ADMIN.APPLICATION.Resources.Resource.Club_Profile
+                </div>
+                <button type="button" data-drawer-hide="add-new-club-hold-details" aria-controls="add-new-club-hold-details"
+                        class="text-[20px]">
+                    <i class="las la-window-close text-white" onclick="CancelFunction()"></i>
+                </button>
+            </div>
+        </div>
+        <div class="p-[24px]">
+
+            <div class="my-5">
+                @*<div class="font-bold text-[20px] pb-5 px-8 pt-8">
+                    Club Profile
+                </div>*@
+
+
+                <div class="pt-4 px-8">
+
+                    <div class="flex gap-1">
+                        <div class="border border-[#D75A8B] w-[1px] ">
+                        </div>
+
+                        <div class="text-[#D75A8B] font-[600] text-[16px]">
+                            Club Info
+                        </div>
+                    </div>
+
+                    <div class="grid  gap-2 mt-2">
+                        <div class=" grid grid-cols-2">
+                            <p class="text-[#7A7A7A] text-[14px]">
+                                Club Name (Eng):
+                            </p>
+                            <p class="text-[#3E3E3E] text-[14px] leading-[12px] font-bold" style="margin-top:4px;">
+                             @Model.ClubName1
+                            </p>
+                        </div>
+                        <div class=" grid grid-cols-2">
+                            <p class="text-[#7A7A7A] text-[14px]">
+                                Club Name (Katakana):
+                            </p>
+                            <p class="text-[#3E3E3E] text-[14px] leading-[12px] font-bold" style="margin-top:4px;">
+
+                                @Model.ClubName2
+                            </p>
+                        </div>
+                        <div class=" grid grid-cols-2">
+                            <p class="text-[#7A7A7A] text-[14px]">
+                                Location:
+                            </p>
+                            <p class="text-[#3E3E3E] text-[14px] leading-[12px] font-bold" style="margin-top:4px;">
+
+                                @Model.LocationDDL
+                            </p>
+                        </div>
+                        <div class=" grid grid-cols-2">
+                            <p class="text-[#7A7A7A] text-[14px]">
+                                Postal Code:
+                            </p>
+                            <p class="text-[#3E3E3E] text-[14px] leading-[12px] font-bold" style="margin-top:4px;">
+
+                                〒  @Model.PostalCode
+                            </p>
+                        </div>
+                        <div class=" grid grid-cols-2">
+                            <p class="text-[#7A7A7A] text-[14px]">
+                                Prefecture:
+                            </p>
+                            <p class="text-[#3E3E3E] text-[14px] leading-[12px] font-bold" style="margin-top:4px;">
+                                @Model.Prefecture
+                            </p>
+                        </div>
+                        <div class=" grid grid-cols-2">
+                            <p class="text-[#7A7A7A] text-[14px]">
+                                City:
+                            </p>
+                            <p class="text-[#3E3E3E] text-[14px] leading-[12px] font-bold" style="margin-top:4px;">
+
+                                @Model.City
+                            </p>
+                        </div>
+                        <div class=" grid grid-cols-2">
+                            <p class="text-[#7A7A7A] text-[14px]">
+                                Street:
+                            </p>
+                            <p class="text-[#3E3E3E] text-[14px] leading-[12px] font-bold" style="margin-top:4px;">
+
+                                @Model.Street
+                            </p>
+                        </div>
+                        <div class=" grid grid-cols-2">
+                            <p class="text-[#7A7A7A] text-[14px]">
+                                Building & Room No.:
+                            </p>
+                            <p class="text-[#3E3E3E] text-[14px] leading-[12px] font-bold" style="margin-top:4px;">
+
+                                @Model.BuildingRoomNo
+                            </p>
+                        </div>
+                        <div class=" grid grid-cols-2">
+                            <p class="text-[#7A7A7A] text-[14px]">
+                                Landline Number:
+                            </p>
+                            <p class="text-[#3E3E3E] text-[14px] leading-[12px] font-bold" style="margin-top:4px;">
+
+                                @Model.LandlineNumber
+                            </p>
+                        </div>
+                        <div class=" grid grid-cols-2">
+                            <p class="text-[#7A7A7A] text-[14px]">
+                                Group Name (Eng):
+                            </p>
+                            <p class="text-[#3E3E3E] text-[14px] leading-[12px] font-bold" style="margin-top:4px;">
+
+                                @Model.GroupName
+                            </p>
+                        </div>
+                        <div class=" grid grid-cols-2">
+                            <p class="text-[#7A7A7A] text-[14px]">
+                                Group Name (Katakana):
+                            </p>
+                            <p class="text-[#3E3E3E] text-[14px] leading-[12px] font-bold" style="margin-top:4px;">
+
+                                @Model.GroupName2
+                            </p>
+                        </div>
+
+                    </div>
+
+                    <div class="flex gap-1 mt-[20px]">
+                        <div class="border border-[#D75A8B] w-[1px] ">
+                        </div>
+
+                        <div class="text-[#D75A8B] font-[600] text-[16px]">
+                            Business Info
+                        </div>
+                    </div>
+
+                    <div class="grid  gap-2 mt-2" style="width:100%">
+                        <div class=" grid grid-cols-2">
+                            <p class="text-[#7A7A7A] text-[14px]">
+                                Business Type:
+                            </p>
+                            <p class="text-[#3E3E3E] text-[14px] leading-[12px] font-bold" style="margin-top:4px;">
+
+                                @Model.BusinessTypeDDL
+                            </p>
+                        </div>
+                        <div class=" grid grid-cols-2">
+                            <p class="text-[#7A7A7A] text-[14px]">
+                                CEO Full Name:
+                            </p>
+                            <p class="text-[#3E3E3E] text-[14px] leading-[12px] font-bold" style="margin-top:4px;">
+
+                                @Model.ceoFullName
+                            </p>
+                        </div>
+                        <div class=" grid grid-cols-2">
+                            @*if corporate then only this field shown*@
+                            <p class="text-[#7A7A7A] text-[14px]">
+                                Company Name:
+                            </p>
+                            <p class="text-[#3E3E3E] text-[14px] leading-[12px] font-bold" style="margin-top:4px;">
+
+
+                                @Model.CompanyName
+                            </p>
+                        </div>
+                        <div class=" grid grid-cols-2">
+                            <p class="text-[#7A7A7A] text-[14px]">
+                                KYC Document
+                            </p>
+                            <img class="text-[#3E3E3E] h-[116px] w-[230px] text-[14px] leading-[12px] font-bold"
+                                 src="@Model.KYCDocument" />
+
+
+                        </div>
+                        <div class=" grid grid-cols-2">
+                            <p class="text-[#7A7A7A] text-[14px]">
+                                Business Certificate
+                            </p>
+                            <img class="text-[#3E3E3E] h-[116px] w-[230px] text-[14px] leading-[12px] font-bold"
+                                src="@Model.BusinessCertificate" />
+
+
+                        </div>
+                    </div>
+
+
+                    <!-- third section -->
+                    <div class="flex gap-1 mt-[20px]">
+                        <div class="border border-[#D75A8B] w-[1px] ">
+                        </div>
+
+                        <div class="text-[#D75A8B] font-[600] text-[16px]">
+                            User Info
+                        </div>
+                    </div>
+                    <div class="grid  gap-2 mt-2">
+                        <div class=" grid grid-cols-2">
+                            <p class="text-[#7A7A7A] text-[14px] max-w-[183px] w-full">
+                                Mobile Number (Easily reachable):
+                            </p>
+                            <p class="text-[#3E3E3E] text-[14px] leading-[12px] font-bold" style="margin-top:4px;">
+
+                                +81
+                                @Model.MobileNumber
+                            </p>
+                        </div>
+                        <div class=" grid grid-cols-2">
+                            <p class="text-[#7A7A7A] text-[14px]">
+                                Email Address:
+                            </p>
+                            <p class="text-[#3E3E3E] text-[14px] leading-[12px] font-bold" style="margin-top:4px;">
+
+                                @Model.Email
+                            </p>
+                        </div>
+                        <div class=" grid grid-cols-2">
+                            <p class="text-[#7A7A7A] text-[14px]">
+                                Club Username:
+                            </p>
+                            <p class="text-[#3E3E3E] text-[14px] leading-[12px] font-bold" style="margin-top:4px;">
+
+                                @Model.LoginId
+                            </p>
+                        </div>
+                    </div>
+                </div>
+               
+            </div>
+
+            </div>
+        </div>
+    </div>

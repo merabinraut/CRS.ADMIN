@@ -16,6 +16,7 @@ namespace CRS.ADMIN.APPLICATION.Models.ClubManagement
         public List<ClubListModel> ClubPendingListModel { get; set; }
         public List<ClubListModel> ClubRejectedListModel { get; set; }
         public ManageClubModel ManageClubModel { get; set; }
+        public ManageClubModel ClubHoldModel { get; set; }
         public ManageTag ManageTag { get; set; }
         public ManageManagerModel ManageManager { get; set; }
         public List<AvailabilityTagModel> GetAvailabilityList { get; set; }
@@ -39,6 +40,7 @@ namespace CRS.ADMIN.APPLICATION.Models.ClubManagement
         public string Sno { get; set; }
         public string ClubCategory { get; set; }
         public string holdStatus { get; set; }
+        public string ActionPlatform { get; set; }
     }
 
     public class ClubDetailModel
@@ -228,15 +230,17 @@ namespace CRS.ADMIN.APPLICATION.Models.ClubManagement
         [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
         public string CompanyAddress { get; set; }
         public string KYCDocument { get; set; }
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
         public string BusinessLicenseNumber { get; set; }
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
         public string LicenseIssuedDate { get; set; }
         public string Representative1_ContactName { get; set; }
         public string Representative1_MobileNo { get; set; }
         public string Representative1_Email { get; set; }
         public string Representative2_ContactName { get; set; }
         public string Representative2_MobileNo { get; set; }
-
         public string Representative2_Email { get; set; }
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
         public string ClosingDate { get; set; }
         public string holdId { get; set; }
 
