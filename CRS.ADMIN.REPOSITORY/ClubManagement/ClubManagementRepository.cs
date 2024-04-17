@@ -87,7 +87,8 @@ namespace CRS.ADMIN.REPOSITORY.ClubManagement
                         Location = _DAO.ParseColumnValue(item, "LocationName").ToString(),
                         CreatedDate = _DAO.ParseColumnValue(item, "CreatedDate").ToString(),
                         UpdatedDate = _DAO.ParseColumnValue(item, "UpdatedDate").ToString(),                       
-                        ClubLogo = _DAO.ParseColumnValue(item, "ClubLogo").ToString(),                      
+                        ClubLogo = _DAO.ParseColumnValue(item, "ClubLogo").ToString(),
+                        ActionPlatform = _DAO.ParseColumnValue(item, "ActionPlatform").ToString(),
                         TotalRecords = Convert.ToInt32(_DAO.ParseColumnValue(item, "TotalRecords").ToString()),
                         SNO = Convert.ToInt32(_DAO.ParseColumnValue(item, "holdId").ToString()),
                         AgentId = _DAO.ParseColumnValue(item, "AgentId").ToString()

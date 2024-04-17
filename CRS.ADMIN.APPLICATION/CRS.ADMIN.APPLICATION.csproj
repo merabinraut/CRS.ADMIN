@@ -300,6 +300,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resource.Ja.resx</DependentUpon>
     </Compile>
+    <None Include="Views\ClubManagement\_ClubHoldDetailPartialView.cshtml" />
     <None Include="Views\ClubManagement\_ManageClubPartialView.cshtml" />
   </ItemGroup>
   <ItemGroup>
