@@ -313,6 +313,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Assign Points.
+        /// </summary>
+        public static string Assign_Points {
+            get {
+                return ResourceManager.GetString("Assign Points", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Assign Privileges for.
         /// </summary>
         public static string Assign_Privileges_for {
@@ -1573,6 +1582,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Informations regarding points category type.
+        /// </summary>
+        public static string Informations_regarding_points_category_type {
+            get {
+                return ResourceManager.GetString("Informations regarding points category type", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Instagram.
         /// </summary>
         public static string Instagram {
@@ -1942,6 +1960,24 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Manage Points Category Type.
+        /// </summary>
+        public static string Manage_Points_Category_Type {
+            get {
+                return ResourceManager.GetString("Manage Points Category Type", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Manage Points Setup.
+        /// </summary>
+        public static string Manage_Points_Setup {
+            get {
+                return ResourceManager.GetString("Manage Points Setup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Manage Promotion.
         /// </summary>
         public static string Manage_Promotion {
@@ -1983,6 +2019,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         public static string Manage_user_roles_and_their_privileges {
             get {
                 return ResourceManager.GetString("Manage user roles and their privileges", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Manage your points detail..
+        /// </summary>
+        public static string Manage_your_points_detail {
+            get {
+                return ResourceManager.GetString("Manage your points detail", resourceCulture);
             }
         }
         
@@ -2514,6 +2559,24 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         public static string Platinum {
             get {
                 return ResourceManager.GetString("Platinum", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Points.
+        /// </summary>
+        public static string Points {
+            get {
+                return ResourceManager.GetString("Points", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Points Setup.
+        /// </summary>
+        public static string Points_Setup {
+            get {
+                return ResourceManager.GetString("Points Setup", resourceCulture);
             }
         }
         

@@ -1,0 +1,213 @@
+@model CRS.ADMIN.APPLICATION.Models.PointSetup.PointSetupModel
+@{
+    ViewBag.Title = "User Type List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="px-8 py-4">
+    @Html.AntiForgeryToken()
+    <!-- title  -->
+    <div class="flex flex-col  gap-6">
+        <div>
+            <div class="heading-title">
+                @CRS.ADMIN.APPLICATION.Resources.Resource.Points_Setup
+            </div>
+            <div class="span-title-light-gray">
+                @CRS.ADMIN.APPLICATION.Resources.Resource.Manage_your_points_detail
+            </div>
+        </div>
+        <!-- container  -->
+        <div id="tab1" class="tab-content-plane">
+            <div class="flex flex-col gap-8">
+                <div id="tab1" class="tab-content">
+                    <div class="flex gap-4 mb-8 border-b ">
+                        <div id="tab1Link" class="styleCss active px-1 pb-4 cursor-pointer active" onclick="changeTab('points', 'tab1Link')">
+                            points
+                        </div>
+                        <div id="tab2Link" class="styleCss px-1 pb-4 cursor-pointer" onclick="changeTab('assignpoint', 'tab2Link')">
+                            Assign Points
+                        </div>
+                    </div>
+                    <div class="flex justify-between pb-[24px]">
+
+
+                        <form action="/ClubManagement/EventList" method="get">
+                            @*<input type="hidden" name="ClubId" value="@Model.UserTypeList.R">*@
+                            <div class="relative input-search-wrapper">
+                                <div class="absolute inset-y-0 left-0 flex items-center pl-[16px] pointer-events-none">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21" fill="none">
+                                        <path d="M17.5 18L13.875 14.375M15.8333 9.66667C15.8333 13.3486 12.8486 16.3333 9.16667 16.3333C5.48477 16.3333 2.5 13.3486 2.5 9.66667C2.5 5.98477 5.48477 3 9.16667 3C12.8486 3 15.8333 5.98477 15.8333 9.66667Z"
+                                              stroke="#667085" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round" />
+                                    </svg>
+                                </div>
+                                <input type="search"
+                                       id="default-search"
+                                       class="input-search block w-full "
+                                       placeholder="@CRS.ADMIN.APPLICATION.Resources.Resource.Search"
+                                       value="@Model.SearchFilter"
+                                       name="SearchFilter">
+                            </div>
+                        </form>
+
+                    </div>
+
+                    <div id="points" class="pane active table-tab">
+                        <div class="px-[12px] py-[16px] flex justify-between entry-export-container">
+                            <div class="flex items-center select-entries" id="ShowEntries-Id">
+                            </div>
+                        </div>
+                        <div class="relative overflow-x-auto">
+                            <table class="w-full text-left club-table" id="table-id">
+                                <thead class="club-table-thead">
+                                    <tr>
+                                        <th scope="col" class="p-[12px]">
+                                            <div class="flex w-max">
+                                                S.N
+                                                <div class="relative pl-[5px]">
+                                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                                </div>
+                                            </div>
+                                        </th>
+                                        <th scope="col" class="p-[12px]">
+                                            <div class="flex w-max">
+                                                @CRS.ADMIN.APPLICATION.Resources.Resource.User_Type
+                                                <div class="relative pl-[5px]">
+                                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                                </div>
+                                            </div>
+                                        </th>
+
+                                        <th scope="col" class="p-[12px]">
+                                            <div class="flex w-max">
+                                                @CRS.ADMIN.APPLICATION.Resources.Resource.Action
+                                                <div class="relative pl-[5px]">
+                                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                                </div>
+                                            </div>
+                                        </th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @{
+                                        if (Model.UserTypeList.Count > 0)
+                                        {
+                                            int SN = 1;
+                                            foreach (var item in Model.UserTypeList)
+                                            {
+                                                <tr class="bg-white border-b ">
+                                                    <td class="p-[12px]">
+                                                        @SN
+                                                    </td>
+                                                    <td class="p-[12px]">
+                                                        @item.RoleTypeName
+                                                    </td>
+
+                                                    <td class="p-[12px]">
+                                                        <div class="flex gap-[7px]">
+
+                                                            <i class="las la-eye text-[20px] cursor-pointer text-[#A6A6A6]" onclick="ViewUserPointsCategory('@item.RoleTypeId')"></i>
+
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                SN++;
+                                            }
+                                        }
+
+                                    }
+                                </tbody>
+                            </table>
+
+                        </div>
+                        <div class="pagination-club">
+                            <div class="show-entry" id="Entries-Id">
+                            </div>
+                            <div class="flex gap-[12px]">
+                                <div class="btn btn-secondary-box-shadow" id="prev-btn">
+                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Previous
+                                </div>
+                                <div class="flex gap-[12px]" id="pagination-id">
+                                </div>
+                                <div class="btn btn-secondary-box-shadow" id="next-btn">
+                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Next
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="assignpoint" class="pane" style="display: none;">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts
+{
+
+    <script>
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const page_size = @ViewBag.PageSize;
+        const total_data = @ViewBag.TotalData;
+        const start_index_val = @ViewBag.StartIndex;
+        let URL = "/PointSetup/PointSetupUserTypeList";
+        let search_filter = $('#default-search').val();
+        URL = addQueryParam(URL, 'SearchFilter', search_filter);
+        LoadPagination(page_size, total_data, start_index_val, URL);
+
+    });
+    function ViewUserPointsCategory(i) {
+            debugger
+            window.location.href = '/PointSetup/PointsCategoryList?RoleTypeId=' + i;
+        }
+    </script>
+    <script>
+     document.getElementById('tab1Link').style.color = '#D75A8B';
+     document.getElementById('tab1Link').style.borderBottom = '#D75A8B 2px solid';
+
+     function changeTab(selectedTabId, selectedLinkId) {
+         var tabLinks = document.querySelectorAll('.styleCss');
+         var tabContents = document.querySelectorAll('.pane');
+
+         // Toggle active class for tab links
+         tabLinks.forEach(function (link) {
+             if (link.id === selectedLinkId) {
+                 link.classList.add('active');
+             } else {
+                 link.classList.remove('active');
+             }
+         });
+
+         // Toggle display for tab contents
+         tabContents.forEach(function (content) {
+             if (content.id === selectedTabId) {
+                 content.style.display = 'block';
+             } else {
+                 content.style.display = 'none';
+             }
+         });
+         // Change color for tab links
+         if (selectedLinkId === 'tab1Link') {
+             document.getElementById('tab1Link').style.color = '#D75A8B';
+             document.getElementById('tab1Link').style.borderBottom = '#D75A8B 2px solid';
+             document.getElementById('tab2Link').style.borderBottom = '';
+             document.getElementById('tab2Link').style.color = '';
+             
+             
+
+         } else if (selectedLinkId === 'tab2Link') {
+             document.getElementById('tab1Link').style = ''; // Reset color for other link
+             document.getElementById('tab1Link').style.borderBottom = '';
+             document.getElementById('tab2Link').style.color = '#D75A8B';
+             document.getElementById('tab2Link').style.borderBottom = '#D75A8B 2px solid';
+            
+
+         } 
+     }
+
+    </script>
+}
