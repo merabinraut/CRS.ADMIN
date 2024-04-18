@@ -227,6 +227,10 @@
     <value>Assign Functions for</value>
     <comment>Roles Management</comment>
   </data>
+  <data name="Assign Points" xml:space="preserve">
+    <value>Assign Points</value>
+    <comment>Points Setup</comment>
+  </data>
   <data name="Assign Privileges for" xml:space="preserve">
     <value>Assign Privileges for</value>
     <comment>Roles Management</comment>
@@ -779,6 +783,10 @@
     <value>Info</value>
     <comment>Dashboard</comment>
   </data>
+  <data name="Informations regarding points category type" xml:space="preserve">
+    <value>Informations regarding points category type</value>
+    <comment>Points Setup</comment>
+  </data>
   <data name="Instagram" xml:space="preserve">
     <value>Instagram</value>
     <comment>Club Management</comment>
@@ -941,6 +949,14 @@
     <value>Manage Location</value>
     <comment>Location Management</comment>
   </data>
+  <data name="Manage Points Category Type" xml:space="preserve">
+    <value>Manage Points Category Type</value>
+    <comment>Points Setup</comment>
+  </data>
+  <data name="Manage Points Setup" xml:space="preserve">
+    <value>Manage Points Setup</value>
+    <comment>Points Setup</comment>
+  </data>
   <data name="Manage Promotion" xml:space="preserve">
     <value>Manage Promotion</value>
     <comment>Promotion Management</comment>
@@ -960,6 +976,10 @@
   <data name="Manage user roles and their privileges" xml:space="preserve">
     <value>Manage user roles and their privileges</value>
     <comment>Roles &amp; Privileges</comment>
+  </data>
+  <data name="Manage your points detail" xml:space="preserve">
+    <value>Manage your points detail.</value>
+    <comment>Points Setup</comment>
   </data>
   <data name="Manage your profile security" xml:space="preserve">
     <value>Manage your profile security</value>
@@ -1192,6 +1212,14 @@
   <data name="Platinum" xml:space="preserve">
     <value>Platinum</value>
     <comment>Club Management</comment>
+  </data>
+  <data name="Points" xml:space="preserve">
+    <value>Points</value>
+    <comment>Points Setup</comment>
+  </data>
+  <data name="Points Setup" xml:space="preserve">
+    <value>Points Setup</value>
+    <comment>Points Setup</comment>
   </data>
   <data name="Position" xml:space="preserve">
     <value>Position</value>

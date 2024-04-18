@@ -227,6 +227,10 @@
     <value>機能の割り当て</value>
     <comment>Roles Management</comment>
   </data>
+  <data name="Assign Points" xml:space="preserve">
+    <value>ポイントを割り当てる</value>
+    <comment>Points Setup</comment>
+  </data>
   <data name="Assign Privileges for" xml:space="preserve">
     <value>特権の割り当て</value>
     <comment>Roles Management</comment>
@@ -779,6 +783,10 @@
     <value>情報</value>
     <comment>Dashboard</comment>
   </data>
+  <data name="Informations regarding points category type" xml:space="preserve">
+    <value>ポイントカテゴリータイプに関する情報</value>
+    <comment>Points Setup</comment>
+  </data>
   <data name="Instagram" xml:space="preserve">
     <value>インスタグラム</value>
     <comment>Club Management</comment>
@@ -941,6 +949,14 @@
     <value>場所の管理</value>
     <comment>Location Management</comment>
   </data>
+  <data name="Manage Points Category Type" xml:space="preserve">
+    <value>ポイントカテゴリータイプを管理する</value>
+    <comment>Points Setup</comment>
+  </data>
+  <data name="Manage Points Setup" xml:space="preserve">
+    <value>ポイントスラブを管理する</value>
+    <comment>Points Setup</comment>
+  </data>
   <data name="Manage Promotion" xml:space="preserve">
     <value>プロモーションの管理</value>
     <comment>Promotion Management</comment>
@@ -960,6 +976,10 @@
   <data name="Manage user roles and their privileges" xml:space="preserve">
     <value>ユーザーロールとその権限を管理します。</value>
     <comment>Roles &amp; Privileges</comment>
+  </data>
+  <data name="Manage your points detail" xml:space="preserve">
+    <value>ポイントの詳細を管理してください。</value>
+    <comment>Points Setup</comment>
   </data>
   <data name="Manage your profile security" xml:space="preserve">
     <value>プロファイルのセキュリティを管理する</value>
@@ -1199,6 +1219,14 @@
   <data name="Platinum" xml:space="preserve">
     <value>プラチナ</value>
     <comment>Club Management</comment>
+  </data>
+  <data name="Points" xml:space="preserve">
+    <value>ポイント</value>
+    <comment>Points Setup</comment>
+  </data>
+  <data name="Points Setup" xml:space="preserve">
+    <value>ポイント設定</value>
+    <comment>Points Setup</comment>
   </data>
   <data name="Position" xml:space="preserve">
     <value>位置</value>
