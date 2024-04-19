@@ -250,7 +250,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             viewModel.ManageCommissionDetailAddEdit.CategoryId = CategoryId;
             viewModel.ManageCommissionDetailAddEdit.CategoryName = CategoryName;
             ViewBag.IsBackAllowed = true;
-            ViewBag.BackButtonURL = "/CommissionManagement/SubCategoryList";
+            ViewBag.BackButtonURL = "/CommissionManagement/SubCategoryList?CategoryId=" + ViewBag.CategoryId + "&CategoryName=" + ViewBag.CategoryName;
             return View(viewModel);
         }
 
