@@ -2662,6 +2662,7 @@
     <Content Include="Views\ClubManagement\_ManageEvent.cshtml" />
     <Content Include="Views\ClubManagement\_ManageManagerPartialView.cshtml" />
     <Content Include="Views\Inquiries\index.cshtml" />
+    <Content Include="Views\CommissionManagement\SubCategoryList.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

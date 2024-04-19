@@ -11,6 +11,7 @@ using System.Web.Mvc;
 
 namespace CRS.ADMIN.APPLICATION.Controllers
 {
+    [OverrideActionFilters]
     public class CommissionManagementController : BaseController
     {
         private readonly ICommissionManagementBusiness _CategoryBuss;
@@ -455,6 +456,15 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             return Json(new { commissionLists }, JsonRequestBehavior.AllowGet);
         }
 
+        #endregion
+
+        #region SubCategory Section
+        public ActionResult SubCategoryList(string CategoryId, string CategoryName = "")
+        {
+            ViewBag.CategoryId = CategoryId;
+            ViewBag.CategoryName = CategoryName;
+            return View();
+        }
         #endregion
     }
 }
