@@ -302,6 +302,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resource.Ja.resx</DependentUpon>
     </Compile>
+    <None Include="Views\PointSetup\PointsCategorySlabList.cshtml" />
+    <None Include="Views\PointSetup\_ManagePointsSlabPartialView.cshtml" />
     <None Include="Views\PointSetup\_ManagePointsCategoryPartialView.cshtml" />
     <None Include="Views\ClubManagement\_ClubHoldDetailPartialView.cshtml" />
     <None Include="Views\ClubManagement\_ManageClubPartialView.cshtml" />

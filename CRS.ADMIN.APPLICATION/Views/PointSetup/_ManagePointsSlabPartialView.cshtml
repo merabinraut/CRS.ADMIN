@@ -1,0 +1,381 @@
+@model CRS.ADMIN.APPLICATION.Models.PointSetup.CategorySlabModel
+<div id="add-new-category-slab"
+     class="drawer-close-disable  flex justify-end fixed top-0 right-0 z-40 h-screen overflow-y-auto transition-transform translate-x-full"
+     tabindex="-1" aria-labelledby="add-new-category-slab" aria-modal="true" role="dialog">
+    <div class="bg-white w-[616px] drawer-container relative">
+        <div class="drawer-form-container sticky top-0 z-[5] ">
+            <div class="drawer-form flex justify-between bg-secondary-color-pink py-[16px] px-[24px] h-[56px]">
+                <div>
+                    @CRS.ADMIN.APPLICATION.Resources.Resource.Manage_Points_Setup
+                </div>
+                <button type="button" data-drawer-hide="add-new-category-slab" aria-controls="add-new-category-slab"
+                        class="text-[20px]">
+                    <i class="las la-window-close text-white" onclick="CancelFunction()"></i>
+                </button>
+            </div>
+        </div>
+        <div class="p-[24px]">
+            @using (Html.BeginForm("ManageCategoryPointsSlab", "PointSetup", FormMethod.Post, new { @id = "ManageCategoryPointsSlabForm" }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.HiddenFor(model => model.RoleTypeId);
+                @Html.HiddenFor(model => model.CategoryId);
+                @Html.HiddenFor(model => model.CategorySlabId);
+            <div class="grid gap-4">
+                <div class="grid grid-cols-2 gap-x-4 gap-y-5">
+                    <div class="input-field-common mb-[20px]" id="">
+                        <div class="input-field-common">
+                            <label for="date" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.FromAmount
+                            </label>
+                            @Html.TextBoxFor(model => model.FromAmount, new
+                         {
+                           @class = "w-full",
+                           @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.FromAmount,
+                           @autocomplete = "off",
+                           @type = "text"
+                       })
+                            <span class="error">
+                                @Html.ValidationMessageFor(m => m.FromAmount)
+                            </span>
+                        </div>
+                    </div>
+                    <div class="input-field-common mb-[20px]" id="">
+                        <div class="input-field-common">
+                            <label for="date" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.ToAmount
+                            </label>
+                            @Html.TextBoxFor(model => model.ToAmount, new
+                                {
+                                @class = "w-full",
+                                @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.ToAmount,
+                                autocomplete = "off"
+                                })
+                            <span class="error">
+                                @Html.ValidationMessageFor(m => m.ToAmount)
+                            </span>
+
+                        </div>
+                    </div>
+                </div>
+
+                @if (Model.RoleTypeId.DecryptParameter() == "6")
+                {
+                    <p>  @CRS.ADMIN.APPLICATION.Resources.Resource.Affiliate_A</p>
+
+                    <div class="input-field-common">
+                        <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.PointType
+                        </label>
+                        <select id="large" name="pointType" class=" default_select select-common block w-full "
+                                style="width: 100%;">
+                            @foreach (var item in ViewBag.PointTypeDDLList as IEnumerable<SelectListItem>)
+                            {
+                                var selectedId = ViewBag.PointTypeIdKey as string;
+                                if (item.Value == selectedId)
+                                {
+                                    <option value="@item.Value" selected>
+                                        @item.Text
+                                    </option>
+                                }
+                                else
+                                {
+                                    <option value="@item.Value">
+                                        @item.Text
+                                    </option>
+                                }
+                            }
+                        </select>
+                    </div>
+                    <div class="input-field-common mb-[20px]" id="">
+                        <div class="input-field-common">
+                            <label for="date" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.PointValue
+                            </label>
+                            @Html.TextBoxFor(model => model.PointValue, new
+                                {
+                                @class = "w-full",
+                                @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.PointValue,
+                                autocomplete = "off"
+                                })
+                            <span class="error">
+                                @Html.ValidationMessageFor(m => m.PointValue)
+                            </span>
+
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-x-4 gap-y-5">
+                        <div class="input-field-common mb-[20px]" id="">
+                            <div class="input-field-common">
+                                <label for="date" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Min_Value
+                                </label>
+                                @Html.TextBoxFor(model => model.MinValue, new
+                             {
+                               @class = "w-full",
+                               @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.Min_Value,
+                               @autocomplete = "off",
+                               @type = "text"
+                           })
+                                <span class="error">
+                                    @Html.ValidationMessageFor(m => m.MinValue)
+                                </span>
+                            </div>
+                        </div>
+                        <div class="input-field-common mb-[20px]" id="">
+                            <div class="input-field-common">
+                                <label for="date" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Max_Value
+                                </label>
+                                @Html.TextBoxFor(model => model.MaxValue, new
+                                    {
+                                    @class = "w-full",
+                                    @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.Max_Value,
+                                    autocomplete = "off"
+                                    })
+                                <span class="error">
+                                    @Html.ValidationMessageFor(m => m.MaxValue)
+                                </span>
+
+                            </div>
+                        </div>
+                    </div>
+                    <p>  @CRS.ADMIN.APPLICATION.Resources.Resource.Affiliate_B</p>
+
+                    <div class="input-field-common">
+                        <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.PointType
+                        </label>
+                        <select id="large" name="pointType2" class=" default_select select-common block w-full "
+                                style="width: 100%;">
+                            @foreach (var item in ViewBag.PointTypeDDLList as IEnumerable<SelectListItem>)
+                            {
+                                var selectedId = ViewBag.PointTypeIdKey2 as string;
+                                if (item.Value == selectedId)
+                                {
+                                    <option value="@item.Value" selected>
+                                        @item.Text
+                                    </option>
+                                }
+                                else
+                                {
+                                    <option value="@item.Value">
+                                        @item.Text
+                                    </option>
+                                }
+                            }
+                        </select>
+                    </div>
+                    <div class="input-field-common mb-[20px]" id="">
+                        <div class="input-field-common">
+                            <label for="date" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.PointValue
+                            </label>
+                            @Html.TextBoxFor(model => model.PointValue2, new
+                                {
+                                @class = "w-full",
+                                @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.PointValue,
+                                autocomplete = "off"
+                                })
+                            <span class="error">
+                                @Html.ValidationMessageFor(m => m.PointValue2)
+                            </span>
+
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-x-4 gap-y-5">
+                        <div class="input-field-common mb-[20px]" id="">
+                            <div class="input-field-common">
+                                <label for="date" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Min_Value
+                                </label>
+                                @Html.TextBoxFor(model => model.MinValue2, new
+                             {
+                               @class = "w-full",
+                               @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.Min_Value,
+                               @autocomplete = "off",
+                               @type = "text"
+                           })
+                                <span class="error">
+                                    @Html.ValidationMessageFor(m => m.MinValue2)
+                                </span>
+                            </div>
+                        </div>
+                        <div class="input-field-common mb-[20px]" id="">
+                            <div class="input-field-common">
+                                <label for="date" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Max_Value
+                                </label>
+                                @Html.TextBoxFor(model => model.MaxValue2, new
+                                    {
+                                    @class = "w-full",
+                                    @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.Max_Value,
+                                    autocomplete = "off"
+                                    })
+                                <span class="error">
+                                    @Html.ValidationMessageFor(m => m.MaxValue2)
+                                </span>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <p>  @CRS.ADMIN.APPLICATION.Resources.Resource.Affiliate_C</p>
+
+                    <div class="input-field-common">
+                        <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.PointType
+                        </label>
+                        <select id="large" name="pointType3" class=" default_select select-common block w-full "
+                                style="width: 100%;">
+                            @foreach (var item in ViewBag.PointTypeDDLList as IEnumerable<SelectListItem>)
+                            {
+                                var selectedId = ViewBag.PointTypeIdKey3 as string;
+                                if (item.Value == selectedId)
+                                {
+                                    <option value="@item.Value" selected>
+                                        @item.Text
+                                    </option>
+                                }
+                                else
+                                {
+                                    <option value="@item.Value">
+                                        @item.Text
+                                    </option>
+                                }
+                            }
+                        </select>
+                    </div>
+                    <div class="input-field-common mb-[20px]" id="">
+                        <div class="input-field-common">
+                            <label for="date" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.PointValue
+                            </label>
+                            @Html.TextBoxFor(model => model.PointValue3, new
+                                {
+                                @class = "w-full",
+                                @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.PointValue,
+                                autocomplete = "off"
+                                })
+                            <span class="error">
+                                @Html.ValidationMessageFor(m => m.PointValue3)
+                            </span>
+
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-x-4 gap-y-5">
+                        <div class="input-field-common mb-[20px]" id="">
+                            <div class="input-field-common">
+                                <label for="date" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Min_Value
+                                </label>
+                                @Html.TextBoxFor(model => model.MinValue3, new
+                             {
+                               @class = "w-full",
+                               @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.Min_Value,
+                               @autocomplete = "off",
+                               @type = "text"
+                           })
+                                <span class="error">
+                                    @Html.ValidationMessageFor(m => m.MinValue3)
+                                </span>
+                            </div>
+                        </div>
+                        <div class="input-field-common mb-[20px]" id="">
+                            <div class="input-field-common">
+                                <label for="date" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Max_Value
+                                </label>
+                                @Html.TextBoxFor(model => model.MaxValue3, new
+                                    {
+                                    @class = "w-full",
+                                    @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.Max_Value,
+                                    autocomplete = "off"
+                                    })
+                                <span class="error">
+                                    @Html.ValidationMessageFor(m => m.MaxValue3)
+                                </span>
+
+                            </div>
+                        </div>
+                    </div>
+
+                }
+                else
+                {
+                    <div class="input-field-common">
+                        <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.PointType
+                        </label>
+                        <select id="large" name="pointType" class=" default_select select-common block w-full "
+                                style="width: 100%;">
+                            @foreach (var item in ViewBag.PointTypeDDLList as IEnumerable<SelectListItem>)
+                            {
+                                var selectedId = ViewBag.PointTypeIdKey as string;
+                                if (item.Value == selectedId)
+                                {
+                                    <option value="@item.Value" selected>
+                                        @item.Text
+                                    </option>
+                                }
+                                else
+                                {
+                                    <option value="@item.Value">
+                                        @item.Text
+                                    </option>
+                                }
+                            }
+                        </select>
+                    </div>
+                    <div class="input-field-common mb-[20px]" id="">
+                        <div class="input-field-common">
+                            <label for="date" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.PointValue
+                            </label>
+                            @Html.TextAreaFor(model => model.PointValue, new
+                                {
+                                @class = "w-full",
+                                @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.PointValue,
+                                autocomplete = "off"
+                                })
+                            <span class="error">
+                                @Html.ValidationMessageFor(m => m.PointValue)
+                            </span>
+
+                        </div>
+                    </div>
+                }
+
+
+
+
+
+
+
+
+
+
+
+            </div>
+
+                <!-- for submit button -->
+                <div class="py-4 flex justify-end">
+                    <div class="flex gap-6">
+                        <button class="btn btn-secondary rounded-[4px]" type="button" data-drawer-hide="add-new-host-tag"
+                                aria-controls="add-new-host-tag" onclick="CancelFunction();">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Cancel
+                        </button>
+                        <button class="btn btn-primary-default rounded-[4px]" type="submit"> @CRS.ADMIN.APPLICATION.Resources.Resource.Submit</button>
+
+
+                    </div>
+
+                </div>
+
+            }
+        </div>
+    </div>
+</div>

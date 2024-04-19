@@ -40,8 +40,8 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             };
             var dbResponse = _BUSS.GetUsertypeList(dbRequest);
            
-            objPointSetupModel.UserTypeList = dbResponse.MapObjects<UserTypeModel>();            
-                               
+            objPointSetupModel.UserTypeList = dbResponse.MapObjects<UserTypeModel>();
+            
             if (dbResponse.Count > 0)
             {
 
@@ -62,6 +62,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             var objPointSetupModel = new PointSetupModel();
             if (TempData.ContainsKey("ManageCategoryModel")) objPointSetupModel.ManageCategory = TempData["ManageCategoryModel"] as CategoryModel;
             else objPointSetupModel.ManageCategory = new CategoryModel();
+            objPointSetupModel.ManageCategory.RoleTypeId = RoleTypeId;
             if (TempData.ContainsKey("RenderId")) RenderId = TempData["RenderId"].ToString();
             ViewBag.PopUpRenderValue = !string.IsNullOrEmpty(RenderId) ? RenderId : null;
             PaginationFilterCommon dbRequest = new PaginationFilterCommon()
@@ -76,7 +77,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             if (dbResponse.Count > 0)
             {
                 objPointSetupModel.CategoryList.ForEach(x => x.RoleTypeId = !string.IsNullOrEmpty(x.RoleTypeId) ? x.RoleTypeId.EncryptParameter() : x.RoleTypeId);
-                objPointSetupModel.CategoryList.ForEach(x => x.CategoryId = !string.IsNullOrEmpty(x.CategoryId) ? x.CategoryId.EncryptParameter() : x.RoleTypeId);
+                objPointSetupModel.CategoryList.ForEach(x => x.CategoryId = !string.IsNullOrEmpty(x.CategoryId) ? x.CategoryId.EncryptParameter() : x.CategoryId);
 
             }
             ViewBag.StartIndex = StartIndex;
@@ -275,19 +276,278 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                     objCategoryCommon.CategoryId = categoryId;
                     objCategoryCommon.RoleTypeId = roleTypeId;
                     objCategoryCommon.Status = status;
+                    objCategoryCommon.ActionUser = ApplicationUtilities.GetSessionValue("Username").ToString();
+                    objCategoryCommon.ActionIP = ApplicationUtilities.GetIP();
                     var dbResponse = _BUSS.BlockUnblockCategory(objCategoryCommon);
                     model = dbResponse.MapObject<CategoryModel>();
                     model.RoleTypeId = model.RoleTypeId.EncryptParameter();
                     model.CategoryId = model.CategoryId.EncryptParameter();
                 }
             }
-            TempData["ManageCategoryModel"] = model;
-            TempData["RenderId"] = "Manage";
-
             return RedirectToAction("PointsCategoryList", "PointSetup", new
             {
                 RoleTypeId = roleTypeId
             });
         }
+
+        [HttpGet]
+        public ActionResult PointsCategorySlabList(string roleTypeId,string categoryId, string SearchFilter = "",  int StartIndex = 0, int PageSize = 10)
+        {
+            ViewBag.SearchFilter = null;
+            Session["CurrentURL"] = "/PointSetup/ManagePointsCategory";
+            string RenderId = "";
+            var objPointSetupModel = new PointSetupModel();
+            if (TempData.ContainsKey("ManageCategorySlab")) objPointSetupModel.ManageCategorySlab = TempData["ManageCategorySlab"] as CategorySlabModel;
+            else objPointSetupModel.ManageCategorySlab = new CategorySlabModel();
+            objPointSetupModel.ManageCategorySlab.RoleTypeId = roleTypeId;
+            objPointSetupModel.ManageCategorySlab.CategoryId= categoryId;
+            if (TempData.ContainsKey("RenderId")) RenderId = TempData["RenderId"].ToString();
+            ViewBag.PopUpRenderValue = !string.IsNullOrEmpty(RenderId) ? RenderId : null;
+            PaginationFilterCommon dbRequest = new PaginationFilterCommon()
+            {
+                Skip = StartIndex,
+                Take = PageSize,
+                SearchFilter = !string.IsNullOrEmpty(SearchFilter) ? SearchFilter : null
+            };
+            var dbResponse = _BUSS.GetCategorySlabList(dbRequest, roleTypeId.DecryptParameter(),categoryId.DecryptParameter());
+
+            objPointSetupModel.CategorySlabList = dbResponse.MapObjects<CategorySlabModel>();
+            if (dbResponse.Count > 0)
+            {
+                objPointSetupModel.CategorySlabList.ForEach(x => x.RoleTypeId = !string.IsNullOrEmpty(x.RoleTypeId) ? x.RoleTypeId.EncryptParameter() : x.RoleTypeId);
+                objPointSetupModel.CategorySlabList.ForEach(x => x.CategoryId = !string.IsNullOrEmpty(x.CategoryId) ? x.CategoryId.EncryptParameter() : x.CategoryId);
+                objPointSetupModel.CategorySlabList.ForEach(x => x.CategorySlabId = !string.IsNullOrEmpty(x.CategorySlabId) ? x.CategorySlabId.EncryptParameter() : x.CategorySlabId);
+
+            }
+            ViewBag.PointTypeDDLList = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("COMMISSIONPERCENTAGETYPELIST") as Dictionary<string, string>, null, "--- Select ---");
+            ViewBag.PointTypeIdKey = objPointSetupModel.ManageCategorySlab.PointType;
+            ViewBag.StartIndex = StartIndex;
+            ViewBag.PageSize = PageSize;
+            ViewBag.TotalData = dbResponse != null && dbResponse.Any() ? dbResponse[0].TotalRecords : 0;
+            objPointSetupModel.SearchFilter = null;
+            return View(objPointSetupModel);
+        }
+        [HttpGet]
+        public ActionResult ManageCategoryPointsSlab(string roleTypeId = "", string categoryId = "",string categorySlabId = "")
+        {
+            CategorySlabModel model = new CategorySlabModel();
+            var culture = System.Threading.Thread.CurrentThread.CurrentCulture.ToString();
+           
+            if (!string.IsNullOrEmpty(roleTypeId))
+            {
+                if (!string.IsNullOrEmpty(categoryId))
+                {
+                    var id = roleTypeId.DecryptParameter();
+                    var catid = categoryId.DecryptParameter();
+                    if (string.IsNullOrEmpty(id))
+                    {
+                        this.AddNotificationMessage(new NotificationModel()
+                        {
+                            NotificationType = NotificationMessage.INFORMATION,
+                            Message = "Invalid role type details",
+                            Title = NotificationMessage.INFORMATION.ToString(),
+                        });
+                        TempData["ManageCategorySlab"] = model;
+                        TempData["RenderId"] = "Manage";
+                        return RedirectToAction("PointsCategorySlabList", "PointSetup", new
+                        {
+                            RoleTypeId = roleTypeId,
+                            CategoryId = categoryId
+                        });
+                    }
+                    if (string.IsNullOrEmpty(catid))
+                    {
+                        this.AddNotificationMessage(new NotificationModel()
+                        {
+                            NotificationType = NotificationMessage.INFORMATION,
+                            Message = "Invalid category details",
+                            Title = NotificationMessage.INFORMATION.ToString(),
+                        });
+                        TempData["ManageCategorySlab"] = model;
+                        TempData["RenderId"] = "Manage";
+                        return RedirectToAction("PointsCategorySlabList", "PointSetup", new
+                        {
+                            RoleTypeId = roleTypeId,
+                            CategoryId = categoryId
+                        });
+                    }
+                    if (!string.IsNullOrEmpty(categorySlabId))
+                    {
+                        var categoryslabid = categorySlabId.DecryptParameter();
+                        var dbResponse = _BUSS.GetCategorySlabDetails(id, catid, categoryslabid);                      
+                        model = dbResponse.MapObject<CategorySlabModel>();
+                    }
+                                                                 
+                    model.RoleTypeId = model.RoleTypeId.EncryptParameter();
+                    model.CategoryId = model.CategoryId.EncryptParameter();
+                }
+            }
+            TempData["ManageCategorySlab"] = model;
+            TempData["RenderId"] = "Manage";
+
+            return RedirectToAction("PointsCategorySlabList", "PointSetup", new
+            {
+                RoleTypeId = roleTypeId,
+                CategoryId = categoryId
+            });
+        }
+       
+        [HttpPost, ValidateAntiForgeryToken]
+        public ActionResult ManageCategoryPointsSlab(CategorySlabModel Model)
+        {
+            string ErrorMessage = string.Empty;
+            if (string.IsNullOrEmpty(Model.RoleTypeId) && !string.IsNullOrEmpty(Model.CategoryId))
+            {
+                ErrorMessage = "Invalid details.";
+                this.AddNotificationMessage(new NotificationModel()
+                {
+                    NotificationType = NotificationMessage.INFORMATION,
+                    Message = ErrorMessage ?? "Something went wrong. Please try again later.",
+                    Title = NotificationMessage.INFORMATION.ToString(),
+                });
+
+                return RedirectToAction("PointsCategorySlabList", "PointSetup", new
+                {
+                    RoleTypeId = Model.RoleTypeId,
+                    CategoryId = Model.CategoryId
+                });
+            }
+
+            if (ModelState.IsValid)
+            {
+                CategorySlabCommon commonModel = Model.MapObject<CategorySlabCommon>();
+                commonModel.RoleTypeId = Model.RoleTypeId.DecryptParameter();
+                commonModel.PointType = Model.PointType.DecryptParameter();
+                commonModel.CategoryId = Model.CategoryId.DecryptParameter();
+                commonModel.ActionUser = ApplicationUtilities.GetSessionValue("Username").ToString();
+                commonModel.ActionIP = ApplicationUtilities.GetIP();
+                if (!string.IsNullOrEmpty(commonModel.CategorySlabId) )
+                {
+                    commonModel.CategorySlabId = Model.CategorySlabId.DecryptParameter();
+                    if (string.IsNullOrEmpty(commonModel.CategorySlabId))
+                    {
+                        this.AddNotificationMessage(new NotificationModel()
+                        {
+                            NotificationType = NotificationMessage.INFORMATION,
+                            Message = "Invalid category points details.",
+                            Title = NotificationMessage.INFORMATION.ToString(),
+                        });
+                        TempData["ManageCategorySlab"] = Model;
+                        TempData["RenderId"] = "Manage";
+                        return RedirectToAction("PointsCategorySlabList", "PointSetup", new
+                        {
+                            RoleTypeId = Model.RoleTypeId,
+                            CategoryId = Model.CategoryId
+                        });
+                    }
+                }
+                var dbResponse = _BUSS.ManageCategorySlab(commonModel);
+                if (dbResponse != null && dbResponse.Code == 0)
+                {
+
+                    this.AddNotificationMessage(new NotificationModel()
+                    {
+                        NotificationType = dbResponse.Code == ResponseCode.Success ? NotificationMessage.SUCCESS : NotificationMessage.INFORMATION,
+                        Message = dbResponse.Message ?? "Success",
+                        Title = dbResponse.Code == ResponseCode.Success ? NotificationMessage.SUCCESS.ToString() : NotificationMessage.INFORMATION.ToString()
+                    });
+                    return RedirectToAction("PointsCategorySlabList", "PointSetup", new
+                    {
+                        RoleTypeId = Model.RoleTypeId,
+                        CategoryId = Model.CategoryId
+                    });
+                }
+                else
+                {
+                    this.AddNotificationMessage(new NotificationModel()
+                    {
+                        NotificationType = NotificationMessage.INFORMATION,
+                        Message = dbResponse.Message ?? "Failed",
+                        Title = NotificationMessage.INFORMATION.ToString()
+                    });
+                    TempData["ManageCategorySlab"] = Model;
+                    TempData["RenderId"] = "Manage";
+                    return RedirectToAction("PointsCategorySlabList", "PointSetup", new
+                    {
+                        RoleTypeId = Model.RoleTypeId,
+                        CategoryId = Model.CategoryId
+                    });
+                }
+            }
+            var errorMessages = ModelState.Where(x => x.Value.Errors.Count > 0)
+                                  .SelectMany(x => x.Value.Errors.Select(e => $"{x.Key}: {e.ErrorMessage}"))
+                                  .ToList();
+
+            var notificationModels = errorMessages.Select(errorMessage => new NotificationModel
+            {
+                NotificationType = NotificationMessage.INFORMATION,
+                Message = errorMessage,
+                Title = NotificationMessage.INFORMATION.ToString(),
+            }).ToArray();
+            AddNotificationMessage(notificationModels);
+            var errors = ModelState.Where(x => x.Value.Errors.Count > 0).Select(x => new { x.Key }).ToList();
+            TempData["ManageCategorySlab"] = Model;
+            TempData["RenderId"] = "Manage";
+            return RedirectToAction("PointsCategorySlabList", "PointSetup", new
+            {
+                RoleTypeId = Model.RoleTypeId,
+                CategoryId = Model.CategoryId
+            });
+        }
+
+        [HttpGet]
+        public ActionResult DeleteCategoryPointsSlab(string roleTypeId = "", string categoryId = "", string categorySlabId = "")
+        {
+            CategoryModel model = new CategoryModel();
+            var culture = System.Threading.Thread.CurrentThread.CurrentCulture.ToString();
+
+            if (string.IsNullOrEmpty(roleTypeId) && string.IsNullOrEmpty(categoryId))
+            {
+                this.AddNotificationMessage(new NotificationModel()
+                {
+                    NotificationType = NotificationMessage.INFORMATION,
+                    Message = "Invalid category details",
+                    Title = NotificationMessage.INFORMATION.ToString(),
+                });
+                return RedirectToAction("PointsCategorySlabList", "PointSetup", new
+                {
+                    RoleTypeId = roleTypeId,
+                    CategoryId = categoryId
+                });
+            }
+            var roleid = roleTypeId.DecryptParameter();
+            var catid = categoryId.DecryptParameter();
+            if (!string.IsNullOrEmpty(categorySlabId))
+            {
+                this.AddNotificationMessage(new NotificationModel()
+                {
+                    NotificationType = NotificationMessage.INFORMATION,
+                    Message = "Invalid category details",
+                    Title = NotificationMessage.INFORMATION.ToString(),
+                });
+                return RedirectToAction("PointsCategoryList", "PointSetup", new
+                {
+                    RoleTypeId = roleTypeId
+                });
+            }
+            var categoryslabid = categorySlabId.DecryptParameter();
+            CategorySlabCommon objCategorySlabCommon = new CategorySlabCommon();
+            objCategorySlabCommon.CategoryId = catid;
+            objCategorySlabCommon.CategorySlabId = categoryslabid;
+            objCategorySlabCommon.RoleTypeId = roleid;
+            objCategorySlabCommon.ActionUser = ApplicationUtilities.GetSessionValue("Username").ToString();
+            objCategorySlabCommon.ActionIP = ApplicationUtilities.GetIP();
+            var dbResponse = _BUSS.DeleteCategorySlab(objCategorySlabCommon);
+            model = dbResponse.MapObject<CategoryModel>();
+            model.RoleTypeId = model.RoleTypeId.EncryptParameter();
+            model.CategoryId = model.CategoryId.EncryptParameter();  
+           
+            return RedirectToAction("PointsCategorySlabList", "PointSetup", new
+            {
+                RoleTypeId = roleTypeId,
+                CategoryId = categoryId
+            });
+        }
+
     }
 }

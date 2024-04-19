@@ -11,10 +11,15 @@ namespace CRS.ADMIN.REPOSITORY.PointSetup
 {
     public interface IPointSetupRepository
     {
-        List<UserTypeCommon> GetUsertypeList(PaginationFilterCommon Request);
-        List<CategoryCommon> GetCategoryList(PaginationFilterCommon Request, string RoleTypeId = "");
+        List<UserTypeCommon> GetUsertypeList(PaginationFilterCommon objPaginationFilterCommon);
+        List<CategoryCommon> GetCategoryList(PaginationFilterCommon objPaginationFilterCommon, string roleTypeId = "");
         CategoryCommon GetCategoryDetails(string roletypeId = "", string categoryId = "");
-        CommonDbResponse ManageCategory(CategoryCommon Request);
-        CommonDbResponse BlockUnblockCategory(CategoryCommon Request);
+        CommonDbResponse ManageCategory(CategoryCommon objCategoryCommon);
+        CommonDbResponse BlockUnblockCategory(CategoryCommon objCategoryCommon);
+        List<CategorySlabCommon> GetCategorySlabList(PaginationFilterCommon objPaginationFilterCommon, string roleTypeId = "", string categoryId = "");
+        CategorySlabCommon GetCategorySlabDetails(string roletypeId = "", string categoryId = "", string categorySlabId = "");
+        CommonDbResponse ManageCategorySlab(CategorySlabCommon objCategorySlabCommon);
+        CommonDbResponse DeleteCategorySlab(CategorySlabCommon objCategorySlabCommon);
     }
 }
+

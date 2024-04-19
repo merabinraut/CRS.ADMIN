@@ -124,11 +124,38 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Affiliate A.
+        /// </summary>
+        public static string Affiliate_A {
+            get {
+                return ResourceManager.GetString("Affiliate A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Affiliate Amount.
         /// </summary>
         public static string Affiliate_Amount {
             get {
                 return ResourceManager.GetString("Affiliate Amount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Affiliate B.
+        /// </summary>
+        public static string Affiliate_B {
+            get {
+                return ResourceManager.GetString("Affiliate B", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Affiliate C.
+        /// </summary>
+        public static string Affiliate_C {
+            get {
+                return ResourceManager.GetString("Affiliate C", resourceCulture);
             }
         }
         
@@ -1281,6 +1308,24 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         public static string From_Date {
             get {
                 return ResourceManager.GetString("From Date", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to From Amount.
+        /// </summary>
+        public static string FromAmount {
+            get {
+                return ResourceManager.GetString("FromAmount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to From Amount (¥).
+        /// </summary>
+        public static string FromAmountSlab {
+            get {
+                return ResourceManager.GetString("FromAmountSlab", resourceCulture);
             }
         }
         
@@ -2581,6 +2626,24 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Point Type.
+        /// </summary>
+        public static string PointType {
+            get {
+                return ResourceManager.GetString("PointType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Point Value.
+        /// </summary>
+        public static string PointValue {
+            get {
+                return ResourceManager.GetString("PointValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Position.
         /// </summary>
         public static string Position {
@@ -3321,6 +3384,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
+        public static string String {
+            get {
+                return ResourceManager.GetString("String", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
         public static string String1 {
             get {
                 return ResourceManager.GetString("String1", resourceCulture);
@@ -3423,6 +3495,24 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         public static string To_Date {
             get {
                 return ResourceManager.GetString("To Date", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to To Amount.
+        /// </summary>
+        public static string ToAmount {
+            get {
+                return ResourceManager.GetString("ToAmount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to To Amount (¥).
+        /// </summary>
+        public static string ToAmountSlab {
+            get {
+                return ResourceManager.GetString("ToAmountSlab", resourceCulture);
             }
         }
         

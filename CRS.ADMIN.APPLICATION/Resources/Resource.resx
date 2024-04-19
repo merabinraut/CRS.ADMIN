@@ -143,9 +143,21 @@
     <value>Affiliate</value>
     <comment>Dashboard</comment>
   </data>
+  <data name="Affiliate A" xml:space="preserve">
+    <value>Affiliate A</value>
+    <comment>Point Setup</comment>
+  </data>
   <data name="Affiliate Amount" xml:space="preserve">
     <value>Affiliate Amount</value>
     <comment>Affiliate Management</comment>
+  </data>
+  <data name="Affiliate B" xml:space="preserve">
+    <value>Affiliate B</value>
+    <comment>Point Setup</comment>
+  </data>
+  <data name="Affiliate C" xml:space="preserve">
+    <value>Affiliate C</value>
+    <comment>Point Setup</comment>
   </data>
   <data name="Affiliate Expenses" xml:space="preserve">
     <value>Affiliate Expenses</value>
@@ -650,6 +662,14 @@
   <data name="From Date" xml:space="preserve">
     <value>From Date</value>
     <comment>Reservation Ledger</comment>
+  </data>
+  <data name="FromAmount" xml:space="preserve">
+    <value>From Amount</value>
+    <comment>Point Setup</comment>
+  </data>
+  <data name="FromAmountSlab" xml:space="preserve">
+    <value>From Amount (¥)</value>
+    <comment>Point Setup</comment>
   </data>
   <data name="Gallery" xml:space="preserve">
     <value>Gallery</value>
@@ -1221,6 +1241,14 @@
     <value>Points Setup</value>
     <comment>Points Setup</comment>
   </data>
+  <data name="PointType" xml:space="preserve">
+    <value>Point Type</value>
+    <comment>Point Setup</comment>
+  </data>
+  <data name="PointValue" xml:space="preserve">
+    <value>Point Value</value>
+    <comment>Point Setup</comment>
+  </data>
   <data name="Position" xml:space="preserve">
     <value>Position</value>
     <comment>Host Management</comment>
@@ -1542,6 +1570,9 @@
     <value>Street</value>
     <comment>ClubManagement</comment>
   </data>
+  <data name="String" xml:space="preserve">
+    <value />
+  </data>
   <data name="String1" xml:space="preserve">
     <value />
   </data>
@@ -1587,6 +1618,14 @@
   <data name="To Date" xml:space="preserve">
     <value>To Date</value>
     <comment>Reservation Ledger</comment>
+  </data>
+  <data name="ToAmount" xml:space="preserve">
+    <value>To Amount</value>
+    <comment>Point Setup</comment>
+  </data>
+  <data name="ToAmountSlab" xml:space="preserve">
+    <value>To Amount (¥)</value>
+    <comment>Point Setup</comment>
   </data>
   <data name="Today" xml:space="preserve">
     <value>Today</value>

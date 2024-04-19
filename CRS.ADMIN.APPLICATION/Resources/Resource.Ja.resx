@@ -143,9 +143,21 @@
     <value>アフィリエイト</value>
     <comment>Dashboard</comment>
   </data>
+  <data name="Affiliate A" xml:space="preserve">
+    <value>アフィリエイトA</value>
+    <comment>Point Setup</comment>
+  </data>
   <data name="Affiliate Amount" xml:space="preserve">
     <value>アフィリエイト金額</value>
     <comment>Affiliate Management</comment>
+  </data>
+  <data name="Affiliate B" xml:space="preserve">
+    <value>アフィリエイトB</value>
+    <comment>Point Setup</comment>
+  </data>
+  <data name="Affiliate C" xml:space="preserve">
+    <value>アフィリエイトC</value>
+    <comment>Point Setup</comment>
   </data>
   <data name="Affiliate Expenses" xml:space="preserve">
     <value>アフィリエイト費用</value>
@@ -650,6 +662,14 @@
   <data name="From Date" xml:space="preserve">
     <value>開始日</value>
     <comment>Reservation Ledger</comment>
+  </data>
+  <data name="FromAmount" xml:space="preserve">
+    <value>金額から</value>
+    <comment>Point Setup</comment>
+  </data>
+  <data name="FromAmountSlab" xml:space="preserve">
+    <value>金額から（¥）</value>
+    <comment>Point Setup</comment>
   </data>
   <data name="Gallery" xml:space="preserve">
     <value>ギャラリー</value>
@@ -1228,6 +1248,14 @@
     <value>ポイント設定</value>
     <comment>Points Setup</comment>
   </data>
+  <data name="PointType" xml:space="preserve">
+    <value>ポイントタイプ</value>
+    <comment>Point Setup</comment>
+  </data>
+  <data name="PointValue" xml:space="preserve">
+    <value>ポイント値</value>
+    <comment>Point Setup</comment>
+  </data>
   <data name="Position" xml:space="preserve">
     <value>位置</value>
     <comment>Host Management</comment>
@@ -1591,6 +1619,14 @@
   <data name="To Date" xml:space="preserve">
     <value>現在まで</value>
     <comment>Reservation Ledger</comment>
+  </data>
+  <data name="ToAmount" xml:space="preserve">
+    <value>金額まで</value>
+    <comment>Point Setup</comment>
+  </data>
+  <data name="ToAmountSlab" xml:space="preserve">
+    <value>金額から（¥）</value>
+    <comment>Point Setup</comment>
   </data>
   <data name="Today" xml:space="preserve">
     <value>今日</value>

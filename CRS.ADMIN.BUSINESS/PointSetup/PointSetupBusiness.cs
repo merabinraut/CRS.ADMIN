@@ -19,25 +19,43 @@ namespace CRS.ADMIN.BUSINESS.PointSetup
             _REPO = REPO;
         }
 
-        public List<UserTypeCommon> GetUsertypeList(PaginationFilterCommon Request)
+        public List<UserTypeCommon> GetUsertypeList(PaginationFilterCommon objPaginationFilterCommon)
         {
-            return _REPO.GetUsertypeList(Request);
+            return _REPO.GetUsertypeList(objPaginationFilterCommon);
         }
-        public List<CategoryCommon> GetCategoryList(PaginationFilterCommon Request, string RoleTypeId="")
+        public List<CategoryCommon> GetCategoryList(PaginationFilterCommon objPaginationFilterCommon, string roleTypeId="")
         {
-            return _REPO.GetCategoryList(Request,RoleTypeId);
+            return _REPO.GetCategoryList(objPaginationFilterCommon, roleTypeId);
         }
         public CategoryCommon GetCategoryDetails(string roletypeId= "", string categoryId = "")
         {
             return _REPO.GetCategoryDetails(roletypeId, categoryId);
         }
-        public CommonDbResponse ManageCategory(CategoryCommon Request)
+        public CommonDbResponse ManageCategory(CategoryCommon objCategoryCommon)
         {
-            return _REPO.ManageCategory(Request);
+            return _REPO.ManageCategory(objCategoryCommon);
         } 
-        public CommonDbResponse BlockUnblockCategory(CategoryCommon Request)
+        public CommonDbResponse BlockUnblockCategory(CategoryCommon objCategoryCommon)
         {
-            return _REPO.BlockUnblockCategory(Request);
+            return _REPO.BlockUnblockCategory(objCategoryCommon);
+        }
+
+        public List<CategorySlabCommon> GetCategorySlabList(PaginationFilterCommon objPaginationFilterCommon, string roleTypeId = "", string categoryId = "")
+        {
+            return _REPO.GetCategorySlabList(objPaginationFilterCommon,roleTypeId,categoryId);
+        }
+        public CategorySlabCommon GetCategorySlabDetails(string roletypeId = "", string categoryId = "", string categorySlabId = "")
+        {
+            return _REPO.GetCategorySlabDetails(roletypeId,categoryId,categorySlabId);
+        }
+        public CommonDbResponse ManageCategorySlab(CategorySlabCommon objCategorySlabCommon)
+        {
+            return _REPO.ManageCategorySlab(objCategorySlabCommon);
+        }
+        public CommonDbResponse DeleteCategorySlab(CategorySlabCommon objCategorySlabCommon)
+        {
+            return _REPO.DeleteCategorySlab(objCategorySlabCommon);
         }
     }
 }
+

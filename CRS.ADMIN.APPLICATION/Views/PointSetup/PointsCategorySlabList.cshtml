@@ -1,8 +1,8 @@
 @model CRS.ADMIN.APPLICATION.Models.PointSetup.PointSetupModel
 @{
-    ViewBag.Title = "User Type List";
+    ViewBag.Title = "Points Slab List";
     Layout = "~/Views/Shared/_Layout.cshtml";
-    var _ManageCategory = Model.ManageCategory as CRS.ADMIN.APPLICATION.Models.PointSetup.CategoryModel;
+    var _ManagePointSlab = Model.ManageCategorySlab as CRS.ADMIN.APPLICATION.Models.PointSetup.CategorySlabModel;
 }
 <div class="px-8 py-4">
     @Html.AntiForgeryToken()
@@ -10,10 +10,10 @@
     <div class="flex flex-col  gap-6">
         <div>
             <div class="heading-title">
-                @CRS.ADMIN.APPLICATION.Resources.Resource.Manage_Points_Category_Type
+                @CRS.ADMIN.APPLICATION.Resources.Resource.Points_Setup
             </div>
             <div class="span-title-light-gray">
-                @CRS.ADMIN.APPLICATION.Resources.Resource.Informations_regarding_points_category_type
+                @CRS.ADMIN.APPLICATION.Resources.Resource.Manage_your_points_detail
             </div>
         </div>
         <!-- container  -->
@@ -21,7 +21,9 @@
             <div class="flex flex-col gap-8">
                 <div id="tab1" class="tab-content">
                     <div class="flex justify-between pb-[24px]">
-                        <form action="/PointSetup/ManageCategory" method="get">
+
+
+                        <form action="/PointSetup/PointsCategorySlabList" method="get">
                             @*<input type="hidden" name="ClubId" value="@Model.UserTypeList.R">*@
                             <div class="relative input-search-wrapper">
                                 <div class="absolute inset-y-0 left-0 flex items-center pl-[16px] pointer-events-none">
@@ -43,8 +45,8 @@
                                 <img src="~/Content/assets_new/images/club/download-solid.svg">@CRS.ADMIN.APPLICATION.Resources.Resource.Export
                             </div>
 
-                            <div class="btn btn-primary gap-[8px] h-[40px]" data-drawer-target="add-new-category"
-                                 data-drawer-show="add-new-category" data-drawer-placement="right" data-drawer-backdrop="false"
+                            <div class="btn btn-primary gap-[8px] h-[40px]" data-drawer-target="add-new-category-slab"
+                                 data-drawer-show="add-new-category-slab" data-drawer-placement="right" data-drawer-backdrop="false"
                                  aria-controls="drawer-disabled-backdrop" id="add-new-id">
                                 <img src="~/Content/assets_new/images/plus-circle-solid.svg" />
                                 @CRS.ADMIN.APPLICATION.Resources.Resource.Add_New
@@ -52,7 +54,8 @@
                         </div>
 
                     </div>
-                    <div class="table-tab">
+
+                    <div id="points" class="pane active table-tab">
                         <div class="px-[12px] py-[16px] flex justify-between entry-export-container">
                             <div class="flex items-center select-entries" id="ShowEntries-Id">
                             </div>
@@ -72,7 +75,7 @@
                                         </th>
                                         <th scope="col" class="p-[12px]">
                                             <div class="flex w-max">
-                                                @CRS.ADMIN.APPLICATION.Resources.Resource.Category_Name
+                                                @CRS.ADMIN.APPLICATION.Resources.Resource.FromAmountSlab
                                                 <div class="relative pl-[5px]">
                                                     <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
                                                     <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
@@ -81,7 +84,7 @@
                                         </th>
                                         <th scope="col" class="p-[12px]">
                                             <div class="flex w-max">
-                                                @CRS.ADMIN.APPLICATION.Resources.Resource.Created_By
+                                                @CRS.ADMIN.APPLICATION.Resources.Resource.ToAmountSlab
                                                 <div class="relative pl-[5px]">
                                                     <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
                                                     <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
@@ -90,16 +93,7 @@
                                         </th>
                                         <th scope="col" class="p-[12px]">
                                             <div class="flex w-max">
-                                                @CRS.ADMIN.APPLICATION.Resources.Resource.Created_On
-                                                <div class="relative pl-[5px]">
-                                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
-                                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
-                                                </div>
-                                            </div>
-                                        </th>
-                                        <th scope="col" class="p-[12px]">
-                                            <div class="flex w-max">
-                                                @CRS.ADMIN.APPLICATION.Resources.Resource.Status
+                                                @CRS.ADMIN.APPLICATION.Resources.Resource.Value
                                                 <div class="relative pl-[5px]">
                                                     <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
                                                     <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
@@ -120,45 +114,31 @@
                                 </thead>
                                 <tbody>
                                     @{
-                                        if (Model.CategoryList.Count > 0)
+                                        if (Model.CategorySlabList.Count > 0)
                                         {
                                             int SN = 1;
-                                            foreach (var item in Model.CategoryList)
+                                            foreach (var item in Model.CategorySlabList)
                                             {
                                                 <tr class="bg-white border-b ">
                                                     <td class="p-[12px]">
                                                         @SN
                                                     </td>
                                                     <td class="p-[12px]">
-                                                        @item.CategoryName
+                                                        @item.FromAmount
                                                     </td>
                                                     <td class="p-[12px]">
-                                                        @item.CreatedBy
+                                                        @item.ToAmount
                                                     </td>
                                                     <td class="p-[12px]">
-                                                        @item.CreatedOn
-                                                    </td>
-                                                    <td class="p-[12px]">
-                                                        @if (!string.IsNullOrEmpty(item.Status) && item.Status.Trim().ToUpper() == "A")
-                                                        {
-                                                            <div class="approved">
-                                                                Active
-                                                            </div>
-                                                        }
-                                                        else
-                                                        {
-                                                            <div class="blocked">
-                                                                Blocked
-                                                            </div>
-                                                        }
+                                                        @item.PointValue
                                                     </td>
 
                                                     <td class="p-[12px]">
                                                         <div class="flex gap-[7px]">
-                                                            <i class="las la-eye text-[20px] cursor-pointer text-[#A6A6A6]" onclick="ViewCategory('@item.RoleTypeId','@item.CategoryId');"></i>
-                                                            <i class="las la-edit text-[20px] cursor-pointer text-[#A6A6A6]" onclick="EditCategory('@item.RoleTypeId','@item.CategoryId');"></i>
-                                                            
-                                                                <i class="las la-trash-alt text-[20px] cursor-pointer text-[#CB3F3F]" onclick="BlockUnblockFunction('@item.RoleTypeId','@item.CategoryId','D');"></i>
+
+                                                            <i class="las la-edit text-[20px] cursor-pointer text-[#A6A6A6]" onclick="EditPointsSlab('@item.RoleTypeId','@item.CategoryId','@item.CategorySlabId')"></i>
+                                                            <i class="las la-trash text-[20px] cursor-pointer text-[#A6A6A6]" onclick="DeletePointsSlab('@item.RoleTypeId','@item.CategoryId','@item.CategorySlabId')"></i>
+
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -186,47 +166,43 @@
                             </div>
                         </div>
                     </div>
+
+                    <div id="assignpoint" class="pane" style="display: none;">
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-@Html.Partial("_ManagePointsCategoryPartialView", _ManageCategory)
+@Html.Partial("_ManagePointsSlabPartialView", _ManagePointSlab)
 
 @section scripts
 {
 
     <script>
-        $(document).ready(function () {
-        var PopUpRenderValue = '@ViewBag.PopUpRenderValue';
-         if (PopUpRenderValue != null && PopUpRenderValue != "" && PopUpRenderValue == "Manage") {
-             var element = document.getElementById('add-new-category');
-        element.classList.remove('translate-x-full');
-        }
-        });
+     $(document).ready(function () {
+     var PopUpRenderValue = '@ViewBag.PopUpRenderValue';
+      if (PopUpRenderValue != null && PopUpRenderValue != "" && PopUpRenderValue == "Manage") {
+          var element = document.getElementById('add-new-category-slab');
+     element.classList.remove('translate-x-full');
+     }
+     });
+    document.addEventListener('DOMContentLoaded', function () {
+        const page_size = @ViewBag.PageSize;
+        const total_data = @ViewBag.TotalData;
+        const start_index_val = @ViewBag.StartIndex;
+        let URL = "/PointSetup/PointsCategorySlabList";
+        let search_filter = $('#default-search').val();
+        URL = addQueryParam(URL, 'SearchFilter', search_filter);
+        LoadPagination(page_size, total_data, start_index_val, URL);
 
-    //function ViewUserPointsCategory(i) {
-    //    window.location.href = '/PointSetup/ManagePointsCategory?RoleTypeId=' + i ;
-    //    }
-
-        document.addEventListener('DOMContentLoaded', function () {
-            const page_size = @ViewBag.PageSize;
-            const total_data = @ViewBag.TotalData;
-            const start_index_val = @ViewBag.StartIndex;
-            let URL = "/PointSetup/PointSetupUserTypeList";
-            let search_filter = $('#default-search').val();
-            URL = addQueryParam(URL, 'SearchFilter', search_filter);
-            LoadPagination(page_size, total_data, start_index_val, URL);
-
-        });
-          function EditCategory(i, j) {
-            window.location.href = '/PointSetup/ManageCategory?roleTypeId=' + i + '&categoryId=' + j;;
-        }
-        function BlockUnblockFunction(i, j,k) {
-            window.location.href = '/PointSetup/BlockUnblockCategory?roleTypeId=' + i + '&categoryId=' + j+ '&status=' + k;
-        }
-        function ViewCategory(i, j) {
-            window.location.href = '/PointSetup/PointsCategorySlabList?roleTypeId=' + i + '&categoryId=' + j;;
-        }
+    });
+        function EditPointsSlab(i,j,k) {
+            window.location.href = '/PointSetup/ManageCategoryPointsSlab?roleTypeId=' + i + '&categoryId=' + j + '&categorySlabId=' + k;
+    }
+       function DeletePointsSlab(i,j,k) {
+           window.location.href = '/PointSetup/PointsCategoryList?roleTypeId=' + i + '&categoryId=' + j + '&categorySlabId=' + k;
+    }
     </script>
+
 }

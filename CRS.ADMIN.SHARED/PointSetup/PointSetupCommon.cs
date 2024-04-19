@@ -12,6 +12,7 @@ namespace CRS.ADMIN.SHARED.PointSetup
         public string SearchFilter { get; set; }
         public List<CategoryCommon> CategoryListl = new List<CategoryCommon>();
         public List<UserTypeCommon> UserTypeList = new List<UserTypeCommon>();
+        public List<CategorySlabCommon> CategorySlabList = new List<CategorySlabCommon>();
     }
     public class UserTypeCommon : PaginationResponseCommon
     {
@@ -28,5 +29,29 @@ namespace CRS.ADMIN.SHARED.PointSetup
         public string CreatedOn { get; set; }
         public string CreatedBy { get; set; }
         public string Status { get; set; }
+    }
+    public class CategorySlabCommon : PaginationResponseCommon
+    {
+        public string CategoryName { get; set; }
+        public string CategoryId { get; set; }
+        public string FromAmount { get; set; }
+        public string ToAmount { get; set; }
+        public string PointType { get; set; }
+        public string PointValue { get; set; }
+        public string CreatedOn { get; set; }
+        public string CreatedBy { get; set; }
+        public string Status { get; set; }
+        public string RoleTypeId { get; set; }
+        public string CategorySlabId { get; set; }
+        public string MinValue { get; set; }
+        public string MaxValue { get; set; }
+        public string PointType2 { get; set; }
+        public string PointValue2 { get; set; }
+        public string MinValue2 { get; set; }
+        public string MaxValue2 { get; set; }
+        public string PointType3 { get; set; }
+        public string PointValue3 { get; set; }
+        public string MinValue3 { get; set; }
+        public string MaxValue3 { get; set; }
     }
 }
