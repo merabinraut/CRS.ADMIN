@@ -15,7 +15,7 @@ namespace CRS.ADMIN.BUSINESS.CommissionManagement
         #endregion
 
         #region Commission Setup
-        List<CommissionDetailCommon> GetCommissionDetailList(string CategoryId);
+        List<CommissionDetailCommon> GetCommissionDetailList(string CategoryId,string AdminCmsTypeId);
         CommissionDetailCommon GetCommissionDetailById(string CategoryDetailId);
         CommonDbResponse ManageCommissionDetail(ManageCommissionDetailCommon Request);
         CommonDbResponse DeleteCommissionDetail(string CategoryId, string CategoryDetailId, Common Request);
@@ -23,6 +23,7 @@ namespace CRS.ADMIN.BUSINESS.CommissionManagement
 
         #region Assign Commission
         CommonDbResponse AssignCommission(AssignCommissionCommon Request);
+        List<AdminCommissionCommon> GetAdminCommissionList();
         #endregion
     }
 }

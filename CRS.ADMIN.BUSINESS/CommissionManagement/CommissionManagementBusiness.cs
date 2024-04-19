@@ -38,9 +38,9 @@ namespace CRS.ADMIN.BUSINESS.CommissionManagement
         #endregion
 
         #region Commission Setup
-        public List<CommissionDetailCommon> GetCommissionDetailList(string CategoryId)
+        public List<CommissionDetailCommon> GetCommissionDetailList(string CategoryId, string AdminCmsTypeId)
         {
-            return _REPO.GetCommissionDetailList(CategoryId);
+            return _REPO.GetCommissionDetailList(CategoryId, AdminCmsTypeId);
         }
 
         public CommissionDetailCommon GetCommissionDetailById(string CategoryDetailId)
@@ -63,6 +63,11 @@ namespace CRS.ADMIN.BUSINESS.CommissionManagement
         public CommonDbResponse AssignCommission(AssignCommissionCommon Request)
         {
             return _REPO.AssignCommission(Request);
+        }
+
+        public List<AdminCommissionCommon> GetAdminCommissionList()
+        {
+            return _REPO.GetAdminCommissionList();
         }
 
         #endregion
