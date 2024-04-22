@@ -233,6 +233,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             {
                 x.CategoryDetailId = x.CategoryDetailId.EncryptParameter();
                 x.CategoryId = x.CategoryId.EncryptParameter();
+                x.AdminCommissionTypeId = x.AdminCommissionTypeId.EncryptParameter();
             });
 
             if (TempData.ContainsKey("ManageCommissionDetailModel"))
@@ -280,7 +281,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                     Message = "Something went wrong",
                     Title = NotificationMessage.INFORMATION.ToString(),
                 });
-                return RedirectToAction("CommissionDetailList", new { CategoryId = id, CategoryName });
+                return RedirectToAction("CommissionDetailList", new { CategoryId = id, CategoryName, AdminCommissionTypeId = AdminCommissionTypeId });
             }
 
             var viewModel = commissionDetailCommon.MapObject<ManageCommissionDetailModel>();
@@ -289,7 +290,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             viewModel.CommissionPercentageType = viewModel?.CommissionPercentageType?.EncryptParameter();
             TempData["ManageCommissionDetailModel"] = viewModel;
             TempData["RenderId"] = "Manage";
-            return RedirectToAction("CommissionDetailList", new { CategoryId = CategoryId, CategoryName });
+            return RedirectToAction("CommissionDetailList", new { CategoryId = CategoryId, CategoryName, AdminCommissionTypeId = AdminCommissionTypeId });
         }
 
         [HttpPost, ValidateAntiForgeryToken]

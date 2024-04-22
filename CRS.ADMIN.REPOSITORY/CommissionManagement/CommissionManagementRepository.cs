@@ -134,6 +134,7 @@ namespace CRS.ADMIN.REPOSITORY.CommissionManagement
                         MinCommissionValue = _DAO.ParseColumnValue(item, "MinCommissionValue").ToString(),
                         MaxCommissionValue = _DAO.ParseColumnValue(item, "MaxCommissionValue").ToString(),
                         CategoryName = _DAO.ParseColumnValue(item, "CategoryName").ToString(),
+                        AdminCommissionTypeId = _DAO.ParseColumnValue(item, "AdminCommissionTypeId").ToString(),
                     });
                 }
             }

@@ -175,7 +175,7 @@
                                     </td>
                                     <td class="p-[12px]">
                                         <div class="flex gap-[7px] justify-center text-[16px] ">
-                                            <div onclick="ManageCommissionDetail('@item.CategoryDetailId', '@item.CategoryId', '@item.CategoryName')">
+                                            <div onclick="ManageCommissionDetail('@item.CategoryDetailId', '@item.CategoryId', '@item.CategoryName','@item.AdminCommissionTypeId')">
                                                 <svg class="svg-inline--fa fa-pen-to-square text-[#989898] cursor-pointer"
                                                      aria-hidden="true" focusable="false" data-prefix="far"
                                                      data-icon="pen-to-square" role="img" xmlns="http://www.w3.org/2000/svg"
@@ -224,8 +224,8 @@
         }
     });
 
-    function ManageCommissionDetail(i, j, k) {
-        window.location.href = '/CommissionManagement/ManageCommissionDetail?id=' + i + "&&CategoryId=" + j + "&&CategoryName=" + k;
+    function ManageCommissionDetail(i, j, k, l) {
+        window.location.href = '/CommissionManagement/ManageCommissionDetail?id=' + i + "&&CategoryId=" + j + "&&CategoryName=" + k + "&&AdminCommissionTypeId=" + l;
     }
 
     const handleCommissionDelete = (categoryId, categoryDetailId, categoryName) => {
