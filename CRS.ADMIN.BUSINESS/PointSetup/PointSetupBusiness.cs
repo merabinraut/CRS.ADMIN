@@ -56,6 +56,10 @@ namespace CRS.ADMIN.BUSINESS.PointSetup
         {
             return _REPO.DeleteCategorySlab(objCategorySlabCommon);
         }
+        public CommonDbResponse AssignCategory(PointSetupCommon objPointSetupCommon)
+        {
+            return _REPO.AssignCategory(objPointSetupCommon);
+        }
     }
 }
 

@@ -1605,7 +1605,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             }
             var culture = System.Threading.Thread.CurrentThread.CurrentCulture.ToString();
             ViewBag.PopUpRenderValue = !string.IsNullOrEmpty(RenderId) ? RenderId : null;
-            ViewBag.EventType = ApplicationUtilities.LoadDropdownValuesList("EVENTTYPE", "", "", culture);
+            ViewBag.EventType = ApplicationUtilities.LoadDropdownValuesList("EVENTTYPECLUB", "", "", culture);
             ViewBag.StartIndex = StartIndex;
             ViewBag.PageSize = PageSize;
             ViewBag.TotalData = dbResponse != null && dbResponse.Any() ? dbResponse[0].TotalRecords : 0;
@@ -1856,7 +1856,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             EventModel model = new EventModel();
             var agentid = AgentId;
             var culture = System.Threading.Thread.CurrentThread.CurrentCulture.ToString();
-            ViewBag.EventType = ApplicationUtilities.LoadDropdownValuesList("EVENTTYPE", "", "", culture);
+            ViewBag.EventType = ApplicationUtilities.LoadDropdownValuesList("EVENTTYPECLUB", "", "", culture);
             if (!string.IsNullOrEmpty(AgentId))
             {
                 if (!string.IsNullOrEmpty(EventId))

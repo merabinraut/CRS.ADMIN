@@ -21,5 +21,6 @@ namespace CRS.ADMIN.BUSINESS.PointSetup
         CategorySlabCommon GetCategorySlabDetails(string roletypeId = "", string categoryId = "", string categorySlabId = "");
         CommonDbResponse ManageCategorySlab(CategorySlabCommon objCategorySlabCommon);
         CommonDbResponse DeleteCategorySlab(CategorySlabCommon objCategorySlabCommon);
+        CommonDbResponse AssignCategory(PointSetupCommon objPointSetupCommon);
     }
 }

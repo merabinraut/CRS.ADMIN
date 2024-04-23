@@ -916,6 +916,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Current Category.
+        /// </summary>
+        public static string Current_Category {
+            get {
+                return ResourceManager.GetString("Current Category", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Current Commission Category.
         /// </summary>
         public static string Current_Commission_Category {
@@ -2212,6 +2221,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to New Category.
+        /// </summary>
+        public static string New_Category {
+            get {
+                return ResourceManager.GetString("New Category", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to New Commission Category.
         /// </summary>
         public static string New_Commission_Category {
@@ -2613,6 +2631,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         public static string Points {
             get {
                 return ResourceManager.GetString("Points", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Points Category Type.
+        /// </summary>
+        public static string Points_Category_Type {
+            get {
+                return ResourceManager.GetString("Points Category Type", resourceCulture);
             }
         }
         

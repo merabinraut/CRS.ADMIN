@@ -21,10 +21,10 @@
                 <div id="tab1" class="tab-content">
                     <div class="flex gap-4 mb-8 border-b ">
                         <div id="tab1Link" class="styleCss active px-1 pb-4 cursor-pointer active" onclick="changeTab('points', 'tab1Link')">
-                            points
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Points
                         </div>
                         <div id="tab2Link" class="styleCss px-1 pb-4 cursor-pointer" onclick="changeTab('assignpoint', 'tab2Link')">
-                            Assign Points
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Assign_Points
                         </div>
                     </div>
                     <div class="flex justify-between pb-[24px]">
@@ -32,20 +32,20 @@
 
                         <form action="/ClubManagement/EventList" method="get">
                             @*<input type="hidden" name="ClubId" value="@Model.UserTypeList.R">*@
-                            <div class="relative input-search-wrapper">
-                                <div class="absolute inset-y-0 left-0 flex items-center pl-[16px] pointer-events-none">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21" fill="none">
-                                        <path d="M17.5 18L13.875 14.375M15.8333 9.66667C15.8333 13.3486 12.8486 16.3333 9.16667 16.3333C5.48477 16.3333 2.5 13.3486 2.5 9.66667C2.5 5.98477 5.48477 3 9.16667 3C12.8486 3 15.8333 5.98477 15.8333 9.66667Z"
-                                              stroke="#667085" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round" />
-                                    </svg>
-                                </div>
-                                <input type="search"
-                                       id="default-search"
-                                       class="input-search block w-full "
-                                       placeholder="@CRS.ADMIN.APPLICATION.Resources.Resource.Search"
-                                       value="@Model.SearchFilter"
-                                       name="SearchFilter">
-                            </div>
+                            @*<div class="relative input-search-wrapper">
+                                    <div class="absolute inset-y-0 left-0 flex items-center pl-[16px] pointer-events-none">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21" fill="none">
+                                            <path d="M17.5 18L13.875 14.375M15.8333 9.66667C15.8333 13.3486 12.8486 16.3333 9.16667 16.3333C5.48477 16.3333 2.5 13.3486 2.5 9.66667C2.5 5.98477 5.48477 3 9.16667 3C12.8486 3 15.8333 5.98477 15.8333 9.66667Z"
+                                                  stroke="#667085" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round" />
+                                        </svg>
+                                    </div>
+                                    <input type="search"
+                                           id="default-search"
+                                           class="input-search block w-full "
+                                           placeholder="@CRS.ADMIN.APPLICATION.Resources.Resource.Search"
+                                           value="@Model.SearchFilter"
+                                           name="SearchFilter">
+                                </div>*@
                         </form>
 
                     </div>
@@ -138,7 +138,126 @@
                         </div>
                     </div>
 
+
                     <div id="assignpoint" class="pane" style="display: none;">
+                        @using (Html.BeginForm("AssingPointsCategory", "PointSetup", new { }, FormMethod.Post, new { @id = "form" }))
+                        {
+                            @Html.AntiForgeryToken();
+                            <div class="grid grid-cols-3 gap-x-12">
+                                <div class="input-field-common">
+                                    <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
+                                        @CRS.ADMIN.APPLICATION.Resources.Resource.User_Type
+                                    </label>
+                                    <select id="large" name="UserTypeId" class=" default_select select-common block w-full "
+                                            style="width: 100%;">
+                                        @foreach (var item in ViewBag.RoleTypeList as IEnumerable<SelectListItem>)
+                                        {
+                                            var selectedId = ViewBag.UserTypeIdKey as string;
+                                            if (item.Value == selectedId)
+                                            {
+                                                <option value="@item.Value" selected>
+                                                    @item.Text
+                                                </option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@item.Value">
+                                                    @item.Text
+                                                </option>
+                                            }
+                                        }
+                                    </select>
+                                    <span class="error">
+                                        @Html.ValidationMessageFor(m => m.UserTypeId)
+                                    </span>
+                                </div>
+                                <div class="input-field-common">
+                                    <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
+                                        @CRS.ADMIN.APPLICATION.Resources.Resource.User_Name
+                                    </label>
+                                    <select id="large" name="AgentId" class=" default_select select-common block w-full "
+                                            style="width: 100%;">
+                                        @foreach (var item in ViewBag.UserList as IEnumerable<SelectListItem>)
+                                        {
+                                            var selectedId = ViewBag.AgentIdKey as string;
+                                            if (item.Value == selectedId)
+                                            {
+                                                <option value="@item.Value" selected>
+                                                    @item.Text
+                                                </option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@item.Value">
+                                                    @item.Text
+                                                </option>
+                                            }
+                                        }
+                                    </select>
+                                    <span class="error">
+                                        @Html.ValidationMessageFor(m => m.AgentId)
+                                    </span>
+                                </div>
+
+                                <div class="input-field-common">
+                                    <label for="date" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                                        @CRS.ADMIN.APPLICATION.Resources.Resource.Current_Category
+                                    </label>
+                                    @Html.TextBoxFor(model => model.CurrentCategoryId, new
+                               {
+                                   @class = "w-full",
+                                   @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.Current_Category,
+                                   @autocomplete = "off",
+                                   @type = "text"
+                               })
+                                    <span class="error">
+                                        @Html.ValidationMessageFor(m => m.CurrentCategoryId)
+                                    </span>
+                                </div>
+
+
+
+                                <div class="input-field-common">
+                                    <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
+                                        @CRS.ADMIN.APPLICATION.Resources.Resource.New_Category
+                                    </label>
+                                    <select id="large" name="NewCategoryId" class=" default_select select-common block w-full "
+                                            style="width: 100%;">
+                                        @foreach (var item in ViewBag.PointsCategoryList as IEnumerable<SelectListItem>)
+                                        {
+                                            var selectedId = ViewBag.NewCategoryIdKey as string;
+                                            if (item.Value == selectedId)
+                                            {
+                                                <option value="@item.Value" selected>
+                                                    @item.Text
+                                                </option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@item.Value">
+                                                    @item.Text
+                                                </option>
+                                            }
+                                        }
+                                    </select>
+                                    <span class="error">
+                                        @Html.ValidationMessageFor(m => m.NewCategoryId)
+                                    </span>
+                                </div>
+
+
+
+                            </div>
+
+                            <br />
+                            <div class="row">
+                                <div class="col-md-12">
+                                    @*<button type="button" class=" btn-sm bg-primary mr-2 text-[#D75A8B]  border-dashed bg-[#D75A8B] text-white rounded-[4px] px-2 py-1"  onclick="window.history.back();"><i class="fa fa-arrow-left mr-2"></i>Back</button>*@
+                                    <button type="button" class=" btn-sm bg-primary mr-2 text-[#D75A8B]  border-dashed bg-[#D75A8B] text-white rounded-[4px] px-2 py-1" onclick="SubmitFunction()"> @CRS.ADMIN.APPLICATION.Resources.Resource.Submit </button>
+                                </div>
+                            </div>
+                            @*</div>*@
+                        }
                     </div>
                 </div>
             </div>
@@ -166,48 +285,154 @@
         }
     </script>
     <script>
-     document.getElementById('tab1Link').style.color = '#D75A8B';
-     document.getElementById('tab1Link').style.borderBottom = '#D75A8B 2px solid';
+        document.getElementById('tab1Link').style.color = '#D75A8B';
+        document.getElementById('tab1Link').style.borderBottom = '#D75A8B 2px solid';
 
-     function changeTab(selectedTabId, selectedLinkId) {
-         var tabLinks = document.querySelectorAll('.styleCss');
-         var tabContents = document.querySelectorAll('.pane');
+        function changeTab(selectedTabId, selectedLinkId) {
+            var tabLinks = document.querySelectorAll('.styleCss');
+            var tabContents = document.querySelectorAll('.pane');
 
-         // Toggle active class for tab links
-         tabLinks.forEach(function (link) {
-             if (link.id === selectedLinkId) {
-                 link.classList.add('active');
-             } else {
-                 link.classList.remove('active');
+            // Toggle active class for tab links
+            tabLinks.forEach(function (link) {
+                if (link.id === selectedLinkId) {
+                    link.classList.add('active');
+                } else {
+                    link.classList.remove('active');
+                }
+            });
+
+            // Toggle display for tab contents
+            tabContents.forEach(function (content) {
+                if (content.id === selectedTabId) {
+                    content.style.display = 'block';
+                } else {
+                    content.style.display = 'none';
+                }
+            });
+            // Change color for tab links
+            if (selectedLinkId === 'tab1Link') {
+                document.getElementById('tab1Link').style.color = '#D75A8B';
+                document.getElementById('tab1Link').style.borderBottom = '#D75A8B 2px solid';
+                document.getElementById('tab2Link').style.borderBottom = '';
+                document.getElementById('tab2Link').style.color = '';
+
+
+
+            } else if (selectedLinkId === 'tab2Link') {
+                document.getElementById('tab1Link').style = ''; // Reset color for other link
+                document.getElementById('tab1Link').style.borderBottom = '';
+                document.getElementById('tab2Link').style.color = '#D75A8B';
+                document.getElementById('tab2Link').style.borderBottom = '#D75A8B 2px solid';
+
+
+            }
+        }
+
+    </script>
+    <script>
+       $('#large[name="UserTypeId"]').change(function () {
+           var UserTypeId = $(this).find("option:selected").val().trim();
+         $.ajax({
+             type: 'GET',
+             async: true,
+             url: '@Url.Action("GetUserListByRoleTypeId")',
+             dataType: 'json',
+             data: {  RoleTypeId: UserTypeId },
+             success: function (response) {
+                 $("#points").css("display", "none");
+                 $("#assignpoint").css("display", "block");
+                 $('#large[name="AgentId"]').prop("disabled", true);
+                 $("#CurrentCategoryId").val('');
+                 $('#large[name="AgentId"]').empty();
+                 $('#large[name="NewCategoryId"]').empty();
+                 $('#form [data-valmsg-for="UserTypeId"]').html("");
+                 if (response.userNameList.length > 0) {
+                     $('#large[name="AgentId"]').append($("<option>").val("").text("--- Select ---"));
+                     $.each(response.userNameList, function (i, value) {
+                         $('#large[name="AgentId"]').append($("<option>").val(value.Value).text(value.Text));
+                     });
+                     $('#large[name="AgentId"]').prop("disabled", false);
+                 }
+                 else {
+                     $('#large[name="AgentId"]').empty();
+                 }
+                 if (response.categoryNamelist.length > 0) {
+                     $('#large[name="NewCategoryId"]').append($("<option>").val("").text("--- Select ---"));
+                     $.each(response.categoryNamelist, function (i, value) {
+                         $('#large[name="NewCategoryId"]').append($("<option>").val(value.Value).text(value.Text));
+                     });
+                     $('#large[name="NewCategoryId"]').prop("disabled", false);
+                 }
+                 else {
+                     $('#large[name="NewCategoryId"]').empty();
+                 }
+             },
+             error: function (ex) {
+                 alert('Failed to retrive details.' + ex);
              }
          });
+         return false;
+        });
 
-         // Toggle display for tab contents
-         tabContents.forEach(function (content) {
-             if (content.id === selectedTabId) {
-                 content.style.display = 'block';
-             } else {
-                 content.style.display = 'none';
-             }
-         });
-         // Change color for tab links
-         if (selectedLinkId === 'tab1Link') {
-             document.getElementById('tab1Link').style.color = '#D75A8B';
-             document.getElementById('tab1Link').style.borderBottom = '#D75A8B 2px solid';
-             document.getElementById('tab2Link').style.borderBottom = '';
-             document.getElementById('tab2Link').style.color = '';
-             
-             
 
-         } else if (selectedLinkId === 'tab2Link') {
-             document.getElementById('tab1Link').style = ''; // Reset color for other link
-             document.getElementById('tab1Link').style.borderBottom = '';
-             document.getElementById('tab2Link').style.color = '#D75A8B';
-             document.getElementById('tab2Link').style.borderBottom = '#D75A8B 2px solid';
-            
+        $('#large[name="AgentId"]').change(function () {
+        var UserTypeId = $('#large[name="UserTypeId"]').val();
+        var AgentId = $(this).find("option:selected").val().trim();
+        $.ajax({
+        type: 'GET',
+        async: true,
+        url: '@Url.Action("GetPointsCategoryListByAgentId")',
+        dataType: 'json',
+             data: { RoleTypeId: UserTypeId, AgentId: AgentId },
+             success: function (response) {
+                 $('#form [data-valmsg-for="AgentId"]').html("");
+                 $("#points").css("display", "none");
+                 $("#assignpoint").css("display", "block");
+                 $("#CurrentCategoryId").val(response);
 
-         } 
-     }
+        },
+        error: function (ex) {
+            alert('Failed to retrive details.' + ex);
+        }
+        });
+         return false;
+        });
 
+        $('#large[name="NewCategoryId"]').change(function () {
+            $('#form [data-valmsg-for="NewCategoryId"]').html("");
+        });
+
+        function SubmitFunction(e) {
+            $("#ConfirmButton").attr('disabled', true);
+            const UserTypeId = $('#large[name="UserTypeId"]').val();
+            const AgentId = $('#large[name="AgentId"]').val()
+            const NewCategoryId = $('#large[name="NewCategoryId"]').val();
+            var valid = true;
+            if (UserTypeId === null || UserTypeId === "") {
+                $('#form [data-valmsg-for="UserTypeId"]').html("Required");
+                valid = false;
+            }
+
+            if (AgentId === null || AgentId === "") {
+                $('#form [data-valmsg-for="AgentId"]').html("Required");
+                valid = false;
+
+            }
+            if (NewCategoryId === null || NewCategoryId === "") {
+                $('#form [data-valmsg-for="NewCategoryId"]').html("Required");
+                valid = false;
+
+            }
+            if (valid) {
+                $("#form").submit();
+            }
+            else {
+                $("#ConfirmButton").attr('disabled', false);
+                $("#points").addcss("display", "none");
+                $("#assignpoint").addcss("display", "block");
+            }
+
+
+        }
     </script>
 }

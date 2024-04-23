@@ -1109,7 +1109,22 @@ namespace CRS.ADMIN.APPLICATION.Library
                     dbResponse = _CommonBuss.GetDropDown("042", search1, search2);
                     dbResponse.ForEach(item => { response.Add(item.Key.EncryptParameter(), item.Value); });
                     return response;
-                
+                case "USERTYPENAME":
+                    dbResponse = _CommonBuss.GetDropDown("044", search1, search2);
+                    dbResponse.ForEach(item => {
+                        response.Add
+                        //(item.Key.EncryptParameter(), culture == "en-US" ? item.Value.Text: item.Value.JapaneseValue);
+                        (item.Key.EncryptParameter(), item.Value);
+                    });
+                    return response;
+                case "POINTSCATEGORY":
+                    dbResponse = _CommonBuss.GetDropDown("045", search1, search2);
+                    dbResponse.ForEach(item => {
+                        response.Add
+                        //(item.Key.EncryptParameter(), culture == "en-US" ? item.Value.Text: item.Value.JapaneseValue);
+                        (item.Key.EncryptParameter(), item.Value);
+                    });
+                    return response;
 
                 default: return response;
             }
@@ -1133,6 +1148,15 @@ namespace CRS.ADMIN.APPLICATION.Library
                         (item.Key.EncryptParameter(),  item.Value);
                     });
                     return response;
+                case "EVENTTYPECLUB":
+                    dbResponse = _CommonBuss.GetDropDownValues("043", search1, search2, culture);
+                    dbResponse.ForEach(item => {
+                        response.Add
+                        //(item.Key.EncryptParameter(), culture == "en-US" ? item.Value.Text: item.Value.JapaneseValue);
+                        (item.Key.EncryptParameter(), item.Value);
+                    });
+                    return response;
+                
                 //case "PREF":
                 //    dbResponse = _CommonBuss.GetDropDownValues("041", search1, search2, culture);
                 //    dbResponse.ForEach(item => {

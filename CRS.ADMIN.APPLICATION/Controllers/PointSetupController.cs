@@ -8,9 +8,11 @@ using CRS.ADMIN.SHARED;
 using CRS.ADMIN.SHARED.ClubManagement;
 using CRS.ADMIN.SHARED.PaginationManagement;
 using CRS.ADMIN.SHARED.PointSetup;
+using Microsoft.Office.Interop.Excel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Web;
 using System.Web.Mvc;
@@ -26,7 +28,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             _BUSS = BUSS;
         }
         [HttpGet]
-        public ActionResult PointSetupUserTypeList(string SearchFilter = "",  int StartIndex = 0, int PageSize = 10)
+        public ActionResult PointSetupUserTypeList(string SearchFilter = "", int StartIndex = 0, int PageSize = 10)
         {
             ViewBag.SearchFilter = null;
             Session["CurrentURL"] = "/PointSetup/PointSetupUserTypeList";
@@ -39,22 +41,31 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 SearchFilter = !string.IsNullOrEmpty(SearchFilter) ? SearchFilter : null
             };
             var dbResponse = _BUSS.GetUsertypeList(dbRequest);
-           
-            objPointSetupModel.UserTypeList = dbResponse.MapObjects<UserTypeModel>();
-            
+            var filteredItems = dbResponse
+            .Where(item => item.RoleTypeId == "3" || item.RoleTypeId == "4" || item.RoleTypeId == "6")
+            .ToList();
+            objPointSetupModel.UserTypeList = filteredItems.MapObjects<UserTypeModel>();
+
             if (dbResponse.Count > 0)
             {
 
                 objPointSetupModel.UserTypeList.ForEach(x => x.RoleTypeId = !string.IsNullOrEmpty(x.RoleTypeId) ? x.RoleTypeId.EncryptParameter() : x.RoleTypeId);
 
             }
+            var dictionary = new Dictionary<string, string>();
+            objPointSetupModel.UserTypeList.ForEach(item => { dictionary.Add(item.RoleTypeId, item.RoleTypeName); });
+            ViewBag.RoleTypeList = ApplicationUtilities.SetDDLValue(dictionary, null, "--- Select ---");
+            var dictionaryempty = new Dictionary<string, string>();
+            ViewBag.UserList = ApplicationUtilities.SetDDLValue(dictionaryempty, null, "--- Select ---");
+            ViewBag.PointsCategoryList = ApplicationUtilities.SetDDLValue(dictionaryempty, null, "--- Select ---");
             ViewBag.StartIndex = StartIndex;
             ViewBag.PageSize = PageSize;
             ViewBag.TotalData = dbResponse != null && dbResponse.Any() ? dbResponse[0].TotalRecords : 0;
             return View(objPointSetupModel);
         }
+        #region Points category
         [HttpGet]
-        public ActionResult PointsCategoryList(string RoleTypeId ,string SearchFilter = "", string value = "", int StartIndex = 0, int PageSize = 10)
+        public ActionResult PointsCategoryList(string RoleTypeId, string SearchFilter = "", string value = "", int StartIndex = 0, int PageSize = 10)
         {
             ViewBag.SearchFilter = null;
             Session["CurrentURL"] = "/PointSetup/ManagePointsCategory";
@@ -72,7 +83,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 SearchFilter = !string.IsNullOrEmpty(SearchFilter) ? SearchFilter : null
             };
             var dbResponse = _BUSS.GetCategoryList(dbRequest, RoleTypeId.DecryptParameter());
-            
+
             objPointSetupModel.CategoryList = dbResponse.MapObjects<CategoryModel>();
             if (dbResponse.Count > 0)
             {
@@ -80,6 +91,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 objPointSetupModel.CategoryList.ForEach(x => x.CategoryId = !string.IsNullOrEmpty(x.CategoryId) ? x.CategoryId.EncryptParameter() : x.CategoryId);
 
             }
+            ViewBag.RoleName = objPointSetupModel.CategoryList.FirstOrDefault().RoleName;
             ViewBag.StartIndex = StartIndex;
             ViewBag.PageSize = PageSize;
             ViewBag.TotalData = dbResponse != null && dbResponse.Any() ? dbResponse[0].TotalRecords : 0;
@@ -89,9 +101,9 @@ namespace CRS.ADMIN.APPLICATION.Controllers
         [HttpGet]
         public ActionResult ManageCategory(string roleTypeId = "", string categoryId = "")
         {
-            CategoryModel model = new CategoryModel();            
+            CategoryModel model = new CategoryModel();
             var culture = System.Threading.Thread.CurrentThread.CurrentCulture.ToString();
-            
+
             if (!string.IsNullOrEmpty(roleTypeId))
             {
                 if (!string.IsNullOrEmpty(categoryId))
@@ -157,7 +169,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                     RoleTypeId = Model.RoleTypeId
                 });
             }
-              
+
             if (ModelState.IsValid)
             {
                 CategoryCommon commonModel = Model.MapObject<CategoryCommon>();
@@ -186,7 +198,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 var dbResponse = _BUSS.ManageCategory(commonModel);
                 if (dbResponse != null && dbResponse.Code == 0)
                 {
-                   
+
                     this.AddNotificationMessage(new NotificationModel()
                     {
                         NotificationType = dbResponse.Code == ResponseCode.Success ? NotificationMessage.SUCCESS : NotificationMessage.INFORMATION,
@@ -235,7 +247,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
         }
 
         [HttpGet]
-        public ActionResult BlockUnblockCategory(string roleTypeId = "", string categoryId = "",string status = "")
+        public ActionResult BlockUnblockCategory(string roleTypeId = "", string categoryId = "", string status = "")
         {
             CategoryModel model = new CategoryModel();
             var culture = System.Threading.Thread.CurrentThread.CurrentCulture.ToString();
@@ -273,8 +285,8 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                         });
                     }
                     CategoryCommon objCategoryCommon = new CategoryCommon();
-                    objCategoryCommon.CategoryId = categoryId;
-                    objCategoryCommon.RoleTypeId = roleTypeId;
+                    objCategoryCommon.CategoryId = catid;
+                    objCategoryCommon.RoleTypeId = id;
                     objCategoryCommon.Status = status;
                     objCategoryCommon.ActionUser = ApplicationUtilities.GetSessionValue("Username").ToString();
                     objCategoryCommon.ActionIP = ApplicationUtilities.GetIP();
@@ -290,8 +302,11 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             });
         }
 
+        #endregion
+
+        #region Points setup
         [HttpGet]
-        public ActionResult PointsCategorySlabList(string roleTypeId,string categoryId, string SearchFilter = "",  int StartIndex = 0, int PageSize = 10)
+        public ActionResult PointsCategorySlabList(string roleTypeId, string categoryId, string SearchFilter = "", int StartIndex = 0, int PageSize = 10)
         {
             ViewBag.SearchFilter = null;
             Session["CurrentURL"] = "/PointSetup/ManagePointsCategory";
@@ -300,7 +315,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             if (TempData.ContainsKey("ManageCategorySlab")) objPointSetupModel.ManageCategorySlab = TempData["ManageCategorySlab"] as CategorySlabModel;
             else objPointSetupModel.ManageCategorySlab = new CategorySlabModel();
             objPointSetupModel.ManageCategorySlab.RoleTypeId = roleTypeId;
-            objPointSetupModel.ManageCategorySlab.CategoryId= categoryId;
+            objPointSetupModel.ManageCategorySlab.CategoryId = categoryId;
             if (TempData.ContainsKey("RenderId")) RenderId = TempData["RenderId"].ToString();
             ViewBag.PopUpRenderValue = !string.IsNullOrEmpty(RenderId) ? RenderId : null;
             PaginationFilterCommon dbRequest = new PaginationFilterCommon()
@@ -309,7 +324,13 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 Take = PageSize,
                 SearchFilter = !string.IsNullOrEmpty(SearchFilter) ? SearchFilter : null
             };
-            var dbResponse = _BUSS.GetCategorySlabList(dbRequest, roleTypeId.DecryptParameter(),categoryId.DecryptParameter());
+
+            ViewBag.Categorys = ApplicationUtilities.LoadDropdownList("POINTSCATEGORY", roleTypeId.DecryptParameter()) as Dictionary<string, string>;
+            ViewBag.Category = !string.IsNullOrEmpty(objPointSetupModel.ManageCategorySlab.CategoryId) ? ViewBag.Categorys[objPointSetupModel.ManageCategorySlab.CategoryId] : null;
+
+            //Vievar wBag.Category = selectedItems.Select(item => item.Text).ToString();
+            
+            var dbResponse = _BUSS.GetCategorySlabList(dbRequest, roleTypeId.DecryptParameter(), categoryId.DecryptParameter());
 
             objPointSetupModel.CategorySlabList = dbResponse.MapObjects<CategorySlabModel>();
             if (dbResponse.Count > 0)
@@ -321,6 +342,13 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             }
             ViewBag.PointTypeDDLList = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("COMMISSIONPERCENTAGETYPELIST") as Dictionary<string, string>, null, "--- Select ---");
             ViewBag.PointTypeIdKey = objPointSetupModel.ManageCategorySlab.PointType;
+            ViewBag.PointTypeIdKey = objPointSetupModel.ManageCategorySlab.PointType;
+            if (objPointSetupModel.ManageCategorySlab.RoleTypeId.DecryptParameter() == "6")
+            {
+                ViewBag.PointTypeIdKey2 = objPointSetupModel.ManageCategorySlab.PointType2;
+                ViewBag.PointTypeIdKey3 = objPointSetupModel.ManageCategorySlab.PointType3;
+            }
+     
             ViewBag.StartIndex = StartIndex;
             ViewBag.PageSize = PageSize;
             ViewBag.TotalData = dbResponse != null && dbResponse.Any() ? dbResponse[0].TotalRecords : 0;
@@ -328,11 +356,11 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             return View(objPointSetupModel);
         }
         [HttpGet]
-        public ActionResult ManageCategoryPointsSlab(string roleTypeId = "", string categoryId = "",string categorySlabId = "")
+        public ActionResult ManageCategoryPointsSlab(string roleTypeId = "", string categoryId = "", string categorySlabId = "")
         {
             CategorySlabModel model = new CategorySlabModel();
             var culture = System.Threading.Thread.CurrentThread.CurrentCulture.ToString();
-           
+
             if (!string.IsNullOrEmpty(roleTypeId))
             {
                 if (!string.IsNullOrEmpty(categoryId))
@@ -374,12 +402,21 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                     if (!string.IsNullOrEmpty(categorySlabId))
                     {
                         var categoryslabid = categorySlabId.DecryptParameter();
-                        var dbResponse = _BUSS.GetCategorySlabDetails(id, catid, categoryslabid);                      
+                        var dbResponse = _BUSS.GetCategorySlabDetails(id, catid, categoryslabid);
                         model = dbResponse.MapObject<CategorySlabModel>();
                     }
-                                                                 
+                    if (model.RoleTypeId == "6")
+                    {
+                        ViewBag.PointTypeIdKey2 = model.PointType2;
+                        ViewBag.PointTypeIdKey3 = model.PointType3;
+                    }
                     model.RoleTypeId = model.RoleTypeId.EncryptParameter();
+                    model.CategorySlabId = model.CategorySlabId.EncryptParameter();
                     model.CategoryId = model.CategoryId.EncryptParameter();
+                    model.PointType = model.PointType.EncryptParameter();
+                    model.PointType2 = model.PointType2.EncryptParameter();
+                    model.PointType3 = model.PointType3.EncryptParameter();
+
                 }
             }
             TempData["ManageCategorySlab"] = model;
@@ -391,7 +428,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 CategoryId = categoryId
             });
         }
-       
+
         [HttpPost, ValidateAntiForgeryToken]
         public ActionResult ManageCategoryPointsSlab(CategorySlabModel Model)
         {
@@ -418,10 +455,16 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 CategorySlabCommon commonModel = Model.MapObject<CategorySlabCommon>();
                 commonModel.RoleTypeId = Model.RoleTypeId.DecryptParameter();
                 commonModel.PointType = Model.PointType.DecryptParameter();
+                if (commonModel.RoleTypeId == "6")
+                {
+                    commonModel.PointType2 = Model.PointType2.DecryptParameter();
+                    commonModel.PointType3 = Model.PointType3.DecryptParameter();
+                }
+
                 commonModel.CategoryId = Model.CategoryId.DecryptParameter();
                 commonModel.ActionUser = ApplicationUtilities.GetSessionValue("Username").ToString();
                 commonModel.ActionIP = ApplicationUtilities.GetIP();
-                if (!string.IsNullOrEmpty(commonModel.CategorySlabId) )
+                if (!string.IsNullOrEmpty(commonModel.CategorySlabId))
                 {
                     commonModel.CategorySlabId = Model.CategorySlabId.DecryptParameter();
                     if (string.IsNullOrEmpty(commonModel.CategorySlabId))
@@ -517,7 +560,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             }
             var roleid = roleTypeId.DecryptParameter();
             var catid = categoryId.DecryptParameter();
-            if (!string.IsNullOrEmpty(categorySlabId))
+            if (string.IsNullOrEmpty(categorySlabId))
             {
                 this.AddNotificationMessage(new NotificationModel()
                 {
@@ -527,7 +570,8 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 });
                 return RedirectToAction("PointsCategoryList", "PointSetup", new
                 {
-                    RoleTypeId = roleTypeId
+                    RoleTypeId = roleTypeId,
+                    CategoryId = categoryId
                 });
             }
             var categoryslabid = categorySlabId.DecryptParameter();
@@ -537,17 +581,141 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             objCategorySlabCommon.RoleTypeId = roleid;
             objCategorySlabCommon.ActionUser = ApplicationUtilities.GetSessionValue("Username").ToString();
             objCategorySlabCommon.ActionIP = ApplicationUtilities.GetIP();
+            objCategorySlabCommon.Status = "D";
             var dbResponse = _BUSS.DeleteCategorySlab(objCategorySlabCommon);
             model = dbResponse.MapObject<CategoryModel>();
             model.RoleTypeId = model.RoleTypeId.EncryptParameter();
-            model.CategoryId = model.CategoryId.EncryptParameter();  
-           
+            model.CategoryId = model.CategoryId.EncryptParameter();
+
             return RedirectToAction("PointsCategorySlabList", "PointSetup", new
             {
                 RoleTypeId = roleTypeId,
                 CategoryId = categoryId
             });
         }
+        #endregion
 
+        #region Assign points setup
+
+        [HttpGet, OverrideActionFilters]
+        public JsonResult GetUserListByRoleTypeId(string RoleTypeId)
+        {
+            List<SelectListItem> userNameList = new List<SelectListItem>();
+            List<SelectListItem> categoryNamelist = new List<SelectListItem>();
+            RoleTypeId = !string.IsNullOrEmpty(RoleTypeId) ? RoleTypeId.DecryptParameter() : null;
+            if (!string.IsNullOrEmpty(RoleTypeId))
+                userNameList = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("USERTYPENAME", RoleTypeId) as Dictionary<string, string>, "--- Select ---");
+            categoryNamelist = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("POINTSCATEGORY", RoleTypeId) as Dictionary<string, string>, "--- Select ---");
+            var data = new
+            {
+                userNameList = new SelectList(userNameList, "Value", "Text"),
+                categoryNamelist = new SelectList(categoryNamelist, "Value", "Text")
+            };
+
+            //ViewBag.AgentIdKey = userNameList;
+            //ViewBag.NewCategoryIdKey = categoryNamelist;
+            // Allow GET requests
+            return Json(data, JsonRequestBehavior.AllowGet);
+
+        }
+
+        [HttpGet, OverrideActionFilters]
+        public JsonResult GetPointsCategoryListByAgentId(string RoleTypeId, string AgentId)
+        {
+            List<SelectListItem> userNameList = new List<SelectListItem>();
+            List<SelectListItem> categoryNamelist = new List<SelectListItem>();
+            RoleTypeId = !string.IsNullOrEmpty(RoleTypeId) ? RoleTypeId.DecryptParameter() : null;
+            AgentId = !string.IsNullOrEmpty(AgentId) ? AgentId.DecryptParameter() : null;
+            PointSetupCommon objPointSetupCommon = new PointSetupCommon();
+            objPointSetupCommon.UserTypeId = RoleTypeId;
+            var currentcategory = new CommonDbResponse();
+            var currentcategoryname = string.Empty;
+            objPointSetupCommon.AgentId = AgentId;
+            if (!(string.IsNullOrEmpty(RoleTypeId)) && !(string.IsNullOrEmpty(AgentId)))
+                currentcategory = _BUSS.AssignCategory(objPointSetupCommon);
+            if (currentcategory.Code == 0)
+            {
+                currentcategoryname = currentcategory.Message;
+            }
+
+            return Json(currentcategoryname, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost, ValidateAntiForgeryToken]
+        public ActionResult AssingPointsCategory(PointSetupModel Model)
+        {
+            string ErrorMessage = string.Empty;
+            if (string.IsNullOrEmpty(Model.UserTypeId))
+            {
+                ErrorMessage = "Role type is required.";
+                this.AddNotificationMessage(new NotificationModel()
+                {
+                    NotificationType = NotificationMessage.INFORMATION,
+                    Message = ErrorMessage ?? "Something went wrong. Please try again later.",
+                    Title = NotificationMessage.INFORMATION.ToString(),
+                });
+
+                return RedirectToAction("PointSetupUserTypeList", "PointSetup");
+            }
+            if(string.IsNullOrEmpty(Model.AgentId))
+            {
+                ErrorMessage = "User name is required.";
+                this.AddNotificationMessage(new NotificationModel()
+                {
+                    NotificationType = NotificationMessage.INFORMATION,
+                    Message = ErrorMessage ?? "Something went wrong. Please try again later.",
+                    Title = NotificationMessage.INFORMATION.ToString(),
+                });
+
+                return RedirectToAction("PointSetupUserTypeList", "PointSetup");
+            }
+
+            if(string.IsNullOrEmpty(Model.NewCategoryId))
+            {
+                ErrorMessage = "New category name is required.";
+                this.AddNotificationMessage(new NotificationModel()
+                {
+                    NotificationType = NotificationMessage.INFORMATION,
+                    Message = ErrorMessage ?? "Something went wrong. Please try again later.",
+                    Title = NotificationMessage.INFORMATION.ToString(),
+                });
+
+                return RedirectToAction("PointSetupUserTypeList", "PointSetup");
+            }
+
+            if (ModelState.IsValid)
+            {
+                var dbResponse = new CommonDbResponse();
+                PointSetupCommon objPointSetupCommon = new PointSetupCommon();
+                objPointSetupCommon.UserTypeId = Model.UserTypeId.DecryptParameter();
+                objPointSetupCommon.NewCategoryId = Model.NewCategoryId.DecryptParameter();
+                objPointSetupCommon.AgentId = Model.AgentId.DecryptParameter();
+                if (!(string.IsNullOrEmpty(Model.UserTypeId)) && !(string.IsNullOrEmpty(Model.NewCategoryId))&& !(string.IsNullOrEmpty(Model.AgentId)))
+                    dbResponse = _BUSS.AssignCategory(objPointSetupCommon);
+                if (dbResponse.Code== 0)
+                {
+                    this.AddNotificationMessage(new NotificationModel()
+                    {
+                        NotificationType = dbResponse.Code == ResponseCode.Success ? NotificationMessage.SUCCESS : NotificationMessage.INFORMATION,
+                        Message = dbResponse.Message ?? "Success",
+                        Title = dbResponse.Code == ResponseCode.Success ? NotificationMessage.SUCCESS.ToString() : NotificationMessage.INFORMATION.ToString()
+                    });
+                }
+                else
+                {
+                    this.AddNotificationMessage(new NotificationModel()
+                    {
+                        NotificationType = NotificationMessage.INFORMATION,
+                        Message = dbResponse.Message ?? "Failed",
+                        Title = NotificationMessage.INFORMATION.ToString()
+                    });
+                }
+                
+                return RedirectToAction("PointSetupUserTypeList", "PointSetup");
+
+            }
+            return RedirectToAction("PointSetupUserTypeList", "PointSetup");
+        }
+        #endregion
     }
 }

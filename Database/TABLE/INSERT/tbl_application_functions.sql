@@ -111,3 +111,54 @@ VALUES
 (
  '147', '14', 'Manage Manager', '/ClubManagement/ManageManager', 'A', 'kiran.acharya', '::1', GETDATE()
 )
+
+INSERT INTO dbo.tbl_application_functions (FunctionId, MenuId, FunctionName, FunctionURL, Status, ActionUser, ActionIP, ActionDate, AdditionalValue)
+VALUES (150, 39, 'Point Setup User Type List', '/PointSetup/PointSetupUserTypeList', 'A', NULL, NULL, NULL, NULL)
+GO
+INSERT INTO dbo.tbl_application_functions (FunctionId, MenuId, FunctionName, FunctionURL, Status, ActionUser, ActionIP, ActionDate, AdditionalValue)
+VALUES (151, 39, 'Points Category List', '/PointSetup/PointsCategoryList', 'A', NULL, NULL, NULL, NULL)
+GO
+
+INSERT INTO dbo.tbl_application_functions (FunctionId, MenuId, FunctionName, FunctionURL, Status, ActionUser, ActionIP, ActionDate, AdditionalValue)
+VALUES (152, 39, 'Manage Category', '/PointSetup/ManageCategory', 'A', NULL, NULL, NULL, NULL)
+GO
+
+INSERT INTO dbo.tbl_application_functions (FunctionId, MenuId, FunctionName, FunctionURL, Status, ActionUser, ActionIP, ActionDate, AdditionalValue)
+VALUES (153, 39, 'Points Category Slab List', '/PointSetup/PointsCategorySlabList', 'A', NULL, NULL, NULL, NULL)
+GO
+
+INSERT INTO dbo.tbl_application_functions (FunctionId, MenuId, FunctionName, FunctionURL, Status, ActionUser, ActionIP, ActionDate, AdditionalValue)
+VALUES (154, 39, 'Manage Category Points Slab', '/PointSetup/ManageCategoryPointsSlab', 'A', NULL, NULL, NULL, NULL)
+GO
+INSERT INTO dbo.tbl_application_functions (FunctionId, MenuId, FunctionName, FunctionURL, Status, ActionUser, ActionIP, ActionDate, AdditionalValue)
+VALUES (155, 39, 'Block unblock Category', '/PointSetup/BlockUnblockCategory', 'A', NULL, NULL, NULL, NULL)
+GO
+
+INSERT INTO dbo.tbl_application_functions (FunctionId, MenuId, FunctionName, FunctionURL, Status, ActionUser, ActionIP, ActionDate, AdditionalValue)
+VALUES (156, 39, 'Delete Category Points', '/PointSetup/DeleteCategoryPointsSlab', 'A', NULL, NULL, NULL, NULL)
+GO
+
+INSERT INTO dbo.tbl_application_functions (FunctionId, MenuId, FunctionName, FunctionURL, Status, ActionUser, ActionIP, ActionDate, AdditionalValue)
+VALUES (157, 39, 'Assing Points Category', '/PointSetup/AssingPointsCategory', 'A', NULL, NULL, NULL, NULL)
+GO
+
+
+INSERT INTO tbl_application_functions 
+(FunctionId, MenuId, FunctionName, FunctionURL, Status, ActionUser, ActionIP, ActionDate)
+VALUES
+(
+ '147', '14', 'Manage Manager', '/ClubManagement/ManageManager', 'A', 'kiran.acharya', '::1', GETDATE()
+)
+INSERT INTO tbl_application_functions 
+(FunctionId, MenuId, FunctionName, FunctionURL, Status, ActionUser, ActionIP, ActionDate)
+VALUES
+(
+ '148', '14', 'Approve Reject Club', '/ClubManagement/ApproveRejectClub', 'A', 'kiran.acharya', '::1', GETDATE()
+)
+
+INSERT INTO tbl_application_functions 
+(FunctionId, MenuId, FunctionName, FunctionURL, Status, ActionUser, ActionIP, ActionDate)
+VALUES
+(
+ '149', '14', 'Manage Pending Club', '/ClubManagement/ManagePendingClub', 'A', 'kiran.acharya', '::1', GETDATE()
+)

@@ -21,20 +21,23 @@ namespace CRS.ADMIN.REPOSITORY.PointSetup
         public List<UserTypeCommon> GetUsertypeList(PaginationFilterCommon objPaginationFilterCommon)
         {
             var response = new List<UserTypeCommon>();
-            string SQL = "EXEC sproc_tbl_roles_select ";
-            SQL += !string.IsNullOrEmpty(objPaginationFilterCommon.SearchFilter) ? ",@SearchFilter=N" + _DAO.FilterString(objPaginationFilterCommon.SearchFilter) : null;            
-            SQL += " @Skip=" + objPaginationFilterCommon.Skip;
-            SQL += ",@Take=" + objPaginationFilterCommon.Take;
+            string SQL = "EXEC sproc_tbl_static_data_select ";
+            //SQL += !string.IsNullOrEmpty(objPaginationFilterCommon.SearchFilter) ? ",@SearchFilter=N" + _DAO.FilterString(objPaginationFilterCommon.SearchFilter) : null;            
+            //SQL += " @Skip=" + objPaginationFilterCommon.Skip;
+            //SQL += ",@Take=" + objPaginationFilterCommon.Take;
             var dbResponse = _DAO.ExecuteDataTable(SQL);
             if (dbResponse != null)
             {
-                foreach (DataRow item in dbResponse.Rows)
+                var filteredRows = dbResponse.Rows.Cast<DataRow>()
+                        .Where(row => row["StaticDataType"] != DBNull.Value && Convert.ToInt32(row["StaticDataType"]) == 1);
+
+                foreach (DataRow item in filteredRows)
                 {
                     response.Add(new UserTypeCommon()
                     {
-                        SNO = Convert.ToInt32(_DAO.ParseColumnValue(item, "Sno")),
-                        RoleTypeId = Convert.ToString(_DAO.ParseColumnValue(item, "RoleType")),
-                        RoleTypeName = Convert.ToString(_DAO.ParseColumnValue(item, "RoleName"))
+                        SNO = Convert.ToInt32(_DAO.ParseColumnValue(item, "Id")),
+                        RoleTypeId = Convert.ToString(_DAO.ParseColumnValue(item, "StaticDataValue")),
+                        RoleTypeName = Convert.ToString(_DAO.ParseColumnValue(item, "StaticDataLabel"))
 
                     });
                 }
@@ -58,6 +61,7 @@ namespace CRS.ADMIN.REPOSITORY.PointSetup
                     {
                         SNO = Convert.ToInt32(_DAO.ParseColumnValue(item, "Sno")),
                         RoleTypeId = Convert.ToString(_DAO.ParseColumnValue(item, "RoleType")),
+                        RoleName = Convert.ToString(_DAO.ParseColumnValue(item, "RoleName")),
                         CategoryId = Convert.ToString(_DAO.ParseColumnValue(item, "Id")),
                         CategoryName = Convert.ToString(_DAO.ParseColumnValue(item, "CategoryName")),
                         CategoryDescription = Convert.ToString(_DAO.ParseColumnValue(item, "Description")),
@@ -108,11 +112,11 @@ namespace CRS.ADMIN.REPOSITORY.PointSetup
         public CommonDbResponse BlockUnblockCategory(CategoryCommon objCategoryCommon)
         {
             string SQL = "EXEC sproc_point_category_blockunblock ";         
-            SQL += ",@RoleType=" + _DAO.FilterString(objCategoryCommon.RoleTypeId);
+            SQL += " @RoleType=" + _DAO.FilterString(objCategoryCommon.RoleTypeId);
             SQL += ",@Id=" + _DAO.FilterString(objCategoryCommon.CategoryId);
             SQL += ",@ActionUser=" + _DAO.FilterString(objCategoryCommon.ActionUser);
             SQL += ",@ActionIP=" + _DAO.FilterString(objCategoryCommon.ActionIP);
-            SQL += ",@Status=" + _DAO.FilterString(objCategoryCommon.ActionIP);
+            SQL += ",@Status=" + _DAO.FilterString(objCategoryCommon.Status);
             return _DAO.ParseCommonDbResponse(SQL);
         }
 
@@ -159,7 +163,7 @@ namespace CRS.ADMIN.REPOSITORY.PointSetup
             {
                 return new CategorySlabCommon()
                 {
-                    //SNO = Convert.ToInt32(_DAO.ParseColumnValue(dbResponse, "Sno")),
+                    CategorySlabId = Convert.ToString(_DAO.ParseColumnValue(dbResponse, "Id")),
                     RoleTypeId = Convert.ToString(_DAO.ParseColumnValue(dbResponse, "RoleType")),
                     CategoryId = Convert.ToString(_DAO.ParseColumnValue(dbResponse, "CategoryId")),
                     CategoryName = Convert.ToString(_DAO.ParseColumnValue(dbResponse, "CategoryName")),
@@ -167,6 +171,16 @@ namespace CRS.ADMIN.REPOSITORY.PointSetup
                     PointType = Convert.ToString(_DAO.ParseColumnValue(dbResponse, "PointType")),
                     ToAmount = Convert.ToString(_DAO.ParseColumnValue(dbResponse, "ToAmount")),
                     PointValue = Convert.ToString(_DAO.ParseColumnValue(dbResponse, "PointValue")),
+                    PointValue2 = Convert.ToString(_DAO.ParseColumnValue(dbResponse, "PointValue2")),
+                    PointValue3 = Convert.ToString(_DAO.ParseColumnValue(dbResponse, "PointValue3")),
+                    PointType2 = Convert.ToString(_DAO.ParseColumnValue(dbResponse, "PointType2")),
+                    PointType3 = Convert.ToString(_DAO.ParseColumnValue(dbResponse, "PointType3")),
+                    MinValue = Convert.ToString(_DAO.ParseColumnValue(dbResponse, "MinValue")),
+                    MinValue2 = Convert.ToString(_DAO.ParseColumnValue(dbResponse, "MinValue2")),
+                    MinValue3 = Convert.ToString(_DAO.ParseColumnValue(dbResponse, "MinValue3")),
+                    MaxValue = Convert.ToString(_DAO.ParseColumnValue(dbResponse, "MaxValue")),
+                    MaxValue2 = Convert.ToString(_DAO.ParseColumnValue(dbResponse, "MaxValue2")),
+                    MaxValue3 = Convert.ToString(_DAO.ParseColumnValue(dbResponse, "MaxValue3")),
 
                 };
             }
@@ -184,6 +198,16 @@ namespace CRS.ADMIN.REPOSITORY.PointSetup
             SQL += ",@CategoryId=" + _DAO.FilterString(objCategorySlabCommon.CategoryId);
             SQL += ",@ActionUser=" + _DAO.FilterString(objCategorySlabCommon.ActionUser);
             SQL += ",@ActionIP=" + _DAO.FilterString(objCategorySlabCommon.ActionIP);
+            SQL += ",@PointType2=" + _DAO.FilterString(objCategorySlabCommon.PointType2);
+            SQL += ",@PointValue2=" + _DAO.FilterString(objCategorySlabCommon.PointValue2);
+            SQL += ",@PointType3=" + _DAO.FilterString(objCategorySlabCommon.PointType3);
+            SQL += ",@PointValue3=" + _DAO.FilterString(objCategorySlabCommon.PointValue3);
+            SQL += ",@MinValue=" + _DAO.FilterString(objCategorySlabCommon.MinValue);
+            SQL += ",@MaxValue=" + _DAO.FilterString(objCategorySlabCommon.MaxValue);
+            SQL += ",@MinValue2=" + _DAO.FilterString(objCategorySlabCommon.MinValue2);
+            SQL += ",@MaxValue2=" + _DAO.FilterString(objCategorySlabCommon.MaxValue2);
+            SQL += ",@MinValue3=" + _DAO.FilterString(objCategorySlabCommon.MinValue3);
+            SQL += ",@MaxValue3=" + _DAO.FilterString(objCategorySlabCommon.MaxValue3);
             //SQL += ",@CategoryId=" + _DAO.FilterString(objCategorySlabCommon.CategoryId);
             //SQL += ",@Min=" + _DAO.FilterString(objCategorySlabCommon.MinValue);
             //SQL += ",@Max=" + _DAO.FilterString(objCategorySlabCommon.MaxValue);
@@ -198,6 +222,17 @@ namespace CRS.ADMIN.REPOSITORY.PointSetup
             SQL += ",@Status=" + _DAO.FilterString(objCategorySlabCommon.Status);
             SQL += ",@ActionUser=" + _DAO.FilterString(objCategorySlabCommon.ActionUser);
             SQL += ",@ActionIP=" + _DAO.FilterString(objCategorySlabCommon.ActionIP);
+            return _DAO.ParseCommonDbResponse(SQL);
+        }
+        #endregion
+
+        #region Assign Category
+        public CommonDbResponse AssignCategory(PointSetupCommon objPointSetupCommon)
+        {
+            string SQL = "EXEC sproc_point_category_assign ";
+            SQL += " @RoleTypeId=" + _DAO.FilterString(objPointSetupCommon.UserTypeId);
+            SQL += ",@CategoryId=" + _DAO.FilterString(objPointSetupCommon.NewCategoryId);
+            SQL += ",@AgentId=" + _DAO.FilterString(objPointSetupCommon.AgentId);
             return _DAO.ParseCommonDbResponse(SQL);
         }
         #endregion

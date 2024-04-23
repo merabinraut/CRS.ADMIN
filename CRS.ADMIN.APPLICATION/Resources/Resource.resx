@@ -492,6 +492,10 @@
     <value>Created On</value>
     <comment>Roles &amp; Privileges</comment>
   </data>
+  <data name="Current Category" xml:space="preserve">
+    <value>Current Category</value>
+    <comment>Point Setup</comment>
+  </data>
   <data name="Current Commission Category" xml:space="preserve">
     <value>Current Commission Category</value>
     <comment>Commission Management</comment>
@@ -1059,6 +1063,10 @@
     <value>Months</value>
     <comment>Dashboard</comment>
   </data>
+  <data name="New Category" xml:space="preserve">
+    <value>New Category</value>
+    <comment>Point Setup</comment>
+  </data>
   <data name="New Commission Category" xml:space="preserve">
     <value>New Commission Category</value>
     <comment>Commission Management</comment>
@@ -1236,6 +1244,10 @@
   <data name="Points" xml:space="preserve">
     <value>Points</value>
     <comment>Points Setup</comment>
+  </data>
+  <data name="Points Category Type" xml:space="preserve">
+    <value>Points Category Type</value>
+    <comment>PointSetup</comment>
   </data>
   <data name="Points Setup" xml:space="preserve">
     <value>Points Setup</value>
