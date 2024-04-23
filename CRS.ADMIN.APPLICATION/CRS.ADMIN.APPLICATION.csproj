@@ -241,6 +241,7 @@
     <Compile Include="Controllers\NotificationManagementController.cs" />
     <Compile Include="Controllers\PaymentManagementController.cs" />
     <Compile Include="Controllers\PlanManagementController.cs" />
+    <Compile Include="Controllers\PointManagementController.cs" />
     <Compile Include="Controllers\PointSetupController.cs" />
     <Compile Include="Controllers\ProfileManagementController.cs" />
     <Compile Include="Controllers\PromotionManagementController.cs" />
@@ -311,6 +312,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resource.Ja.resx</DependentUpon>
     </Compile>
+    <Content Include="Views\PointManagement\index.cshtml" />
     <None Include="Views\PointSetup\_ManagePointsCategoryPartialView.cshtml" />
     <None Include="Views\ClubManagement\_ClubHoldDetailPartialView.cshtml" />
     <None Include="Views\ClubManagement\_ManageClubPartialView.cshtml" />
@@ -2665,12 +2667,9 @@
     <Content Include="Views\ClubManagement\EventList.cshtml" />
     <Content Include="Views\ClubManagement\_ManageEvent.cshtml" />
     <Content Include="Views\ClubManagement\_ManageManagerPartialView.cshtml" />
-
     <Content Include="Views\Inquiries\index.cshtml" />
-
     <Content Include="Views\PointSetup\PointSetupUserTypeList.cshtml" />
     <Content Include="Views\PointSetup\PointsCategoryList.cshtml" />
-
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
