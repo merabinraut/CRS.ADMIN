@@ -2275,6 +2275,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No.
+        /// </summary>
+        public static string No {
+            get {
+                return ResourceManager.GetString("No", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No File Choosen.
         /// </summary>
         public static string No_File_Choosen {
@@ -2406,6 +2415,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         public static string Password {
             get {
                 return ResourceManager.GetString("Password", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to password reset confirmation.
+        /// </summary>
+        public static string password_reset_confirmation {
+            get {
+                return ResourceManager.GetString("password reset confirmation", resourceCulture);
             }
         }
         
@@ -3882,6 +3900,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         public static string Year {
             get {
                 return ResourceManager.GetString("Year", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Yes.
+        /// </summary>
+        public static string Yes {
+            get {
+                return ResourceManager.GetString("Yes", resourceCulture);
             }
         }
     }

@@ -1089,6 +1089,10 @@
   <data name="Next" xml:space="preserve">
     <value>次</value>
   </data>
+  <data name="No" xml:space="preserve">
+    <value>キャンセル</value>
+    <comment>Customer Management</comment>
+  </data>
   <data name="No File Choosen" xml:space="preserve">
     <value>ファイルが選択されていません</value>
     <comment>Location Management</comment>
@@ -1148,6 +1152,10 @@
   <data name="Password" xml:space="preserve">
     <value>パスワード</value>
     <comment>Login Page</comment>
+  </data>
+  <data name="password reset confirmation" xml:space="preserve">
+    <value>のパスワードをリセットしてもよろしいですか</value>
+    <comment>Customer Management</comment>
   </data>
   <data name="Payment" xml:space="preserve">
     <value>支払い</value>
@@ -1790,5 +1798,9 @@
   <data name="Year" xml:space="preserve">
     <value>年</value>
     <comment>Host Management</comment>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>確認</value>
+    <comment>Customer Management</comment>
   </data>
 </root>

@@ -188,7 +188,15 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             };
             var dbResponse = _BUSS.ResetCustomerPassword(aId, commonRequest);
             response = dbResponse;
-            return Json(response.SetMessageInTempData(this));
+            this.AddNotificationMessage(new NotificationModel()
+            {
+                NotificationType = response.Code == ResponseCode.Success ? NotificationMessage.SUCCESS : NotificationMessage.INFORMATION,
+                Message = response.Message ?? "Something went wrong. Please try again later",
+                Title = response.Code == ResponseCode.Success ? NotificationMessage.SUCCESS.ToString() : NotificationMessage.INFORMATION.ToString()
+            });
+            return Json(JsonRequestBehavior.AllowGet);
         }
+
+
     }
 }

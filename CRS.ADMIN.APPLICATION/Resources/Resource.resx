@@ -1086,6 +1086,10 @@
   <data name="Next" xml:space="preserve">
     <value>Next</value>
   </data>
+  <data name="No" xml:space="preserve">
+    <value>No</value>
+    <comment>Customer Management</comment>
+  </data>
   <data name="No File Choosen" xml:space="preserve">
     <value>No File Choosen</value>
     <comment>Location Management</comment>
@@ -1145,6 +1149,10 @@
   <data name="Password" xml:space="preserve">
     <value>PASSWORD</value>
     <comment>Login Page</comment>
+  </data>
+  <data name="password reset confirmation" xml:space="preserve">
+    <value>password reset confirmation</value>
+    <comment>Customer Management</comment>
   </data>
   <data name="Payment" xml:space="preserve">
     <value>Payment</value>
@@ -1789,5 +1797,9 @@
   <data name="Year" xml:space="preserve">
     <value>Year</value>
     <comment>Host Management</comment>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>Yes</value>
+    <comment>Customer Management</comment>
   </data>
 </root>
