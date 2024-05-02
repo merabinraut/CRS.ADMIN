@@ -116,7 +116,10 @@ namespace CRS.ADMIN.REPOSITORY.PlanManagement
                     ExtraField2 = dataTable.Rows[0]["AdditionalValue2"].ToString(),
                     ExtraField3 = dataTable.Rows[0]["AdditionalValue3"].ToString(),
                     PlanCategory = dataTable.Rows[0]["PlanCategory"].ToString(),
-                    NoOfPeople = !string.IsNullOrEmpty(dataTable.Rows[0]["NoOfPeople"].ToString()) ? Convert.ToInt32(dataTable.Rows[0]["NoOfPeople"].ToString()) : 0
+                    NoOfPeople = !string.IsNullOrEmpty(dataTable.Rows[0]["NoOfPeople"].ToString()) ? Convert.ToInt32(dataTable.Rows[0]["NoOfPeople"].ToString()) : 0,
+                    StrikePrice = dataTable.Rows[0]["StrikePrice"].ToString(),
+                    IsStrikeOut = dataTable.Rows[0]["IsStrikeOut"].ToString()
+
                 };
             }
             return new PlanManagementCommon();
