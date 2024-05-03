@@ -667,6 +667,10 @@
     <value>From Date</value>
     <comment>Reservation Ledger</comment>
   </data>
+  <data name="From User" xml:space="preserve">
+    <value>From User</value>
+    <comment>Points Management</comment>
+  </data>
   <data name="FromAmount" xml:space="preserve">
     <value>From Amount</value>
     <comment>Point Setup</comment>
@@ -973,6 +977,10 @@
     <value>Manage Location</value>
     <comment>Location Management</comment>
   </data>
+  <data name="Manage Points" xml:space="preserve">
+    <value>Manage Points</value>
+    <comment>Points Management</comment>
+  </data>
   <data name="Manage Points Category Type" xml:space="preserve">
     <value>Manage Points Category Type</value>
     <comment>Points Setup</comment>
@@ -1249,17 +1257,33 @@
     <value>Platinum</value>
     <comment>Club Management</comment>
   </data>
+  <data name="Point Requests" xml:space="preserve">
+    <value>Point Requests</value>
+    <comment>Points Management</comment>
+  </data>
   <data name="Points" xml:space="preserve">
     <value>Points</value>
     <comment>Points Setup</comment>
+  </data>
+  <data name="Points Balance Statement" xml:space="preserve">
+    <value>Points Balance Statement</value>
+    <comment>Points Management</comment>
   </data>
   <data name="Points Category Type" xml:space="preserve">
     <value>Points Category Type</value>
     <comment>PointSetup</comment>
   </data>
+  <data name="Points Management" xml:space="preserve">
+    <value>Points Management</value>
+    <comment>Points Management</comment>
+  </data>
   <data name="Points Setup" xml:space="preserve">
     <value>Points Setup</value>
     <comment>Points Setup</comment>
+  </data>
+  <data name="Points Transfer" xml:space="preserve">
+    <value>Points Transfer</value>
+    <comment>Points Management</comment>
   </data>
   <data name="PointType" xml:space="preserve">
     <value>Point Type</value>
@@ -1399,6 +1423,10 @@
     <value>Representative 2</value>
     <comment>ClubManagement</comment>
   </data>
+  <data name="Request Amount" xml:space="preserve">
+    <value>Request Amount</value>
+    <comment>Points Management</comment>
+  </data>
   <data name="Requested Date" xml:space="preserve">
     <value>Requested Date</value>
     <comment>Affiliate Management</comment>
@@ -1421,6 +1449,10 @@
   <data name="Reset" xml:space="preserve">
     <value>Reset</value>
     <comment>Roles Management</comment>
+  </data>
+  <data name="Retrieve" xml:space="preserve">
+    <value>Retrieve</value>
+    <comment>Points Management</comment>
   </data>
   <data name="Review and rating supporting text" xml:space="preserve">
     <value>Manage club’s and their host’s review &amp; ratings.</value>
@@ -1532,6 +1564,10 @@
     <value>Select Location</value>
     <comment>Club Management</comment>
   </data>
+  <data name="Self Request" xml:space="preserve">
+    <value>Self-Request</value>
+    <comment>Points Management</comment>
+  </data>
   <data name="September" xml:space="preserve">
     <value>Sep</value>
     <comment>Dashboard</comment>
@@ -1607,6 +1643,10 @@
     <value>Sun</value>
     <comment>Dashboard</comment>
   </data>
+  <data name="System Transfer" xml:space="preserve">
+    <value>System Transfer</value>
+    <comment>Points Management</comment>
+  </data>
   <data name="Tag" xml:space="preserve">
     <value>Tag</value>
     <comment>Club Management</comment>
@@ -1638,6 +1678,10 @@
   <data name="To Date" xml:space="preserve">
     <value>To Date</value>
     <comment>Reservation Ledger</comment>
+  </data>
+  <data name="To User" xml:space="preserve">
+    <value>To User</value>
+    <comment>Points Management</comment>
   </data>
   <data name="ToAmount" xml:space="preserve">
     <value>To Amount</value>
@@ -1699,6 +1743,26 @@
     <value>Total Visitors</value>
     <comment>Reservation Ledger</comment>
   </data>
+  <data name="Transaction Date" xml:space="preserve">
+    <value>Transaction Date</value>
+    <comment>Points Management</comment>
+  </data>
+  <data name="Transaction ID" xml:space="preserve">
+    <value>Transaction ID</value>
+    <comment>Points Management</comment>
+  </data>
+  <data name="Transaction Type" xml:space="preserve">
+    <value>Transaction Type</value>
+    <comment>Points Management</comment>
+  </data>
+  <data name="Transfer" xml:space="preserve">
+    <value>Transfer</value>
+    <comment>Points Management</comment>
+  </data>
+  <data name="Transfer Type" xml:space="preserve">
+    <value>Transfer Type</value>
+    <comment>Points Management</comment>
+  </data>
   <data name="Tuesday" xml:space="preserve">
     <value>Tue</value>
     <comment>Dashboard</comment>
@@ -1721,6 +1785,10 @@
   </data>
   <data name="Updated On" xml:space="preserve">
     <value>Updated On</value>
+  </data>
+  <data name="User" xml:space="preserve">
+    <value>User</value>
+    <comment>Points Management</comment>
   </data>
   <data name="User Email" xml:space="preserve">
     <value>User Email</value>

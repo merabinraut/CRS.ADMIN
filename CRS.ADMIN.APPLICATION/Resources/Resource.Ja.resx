@@ -667,6 +667,10 @@
     <value>開始日</value>
     <comment>Reservation Ledger</comment>
   </data>
+  <data name="From User" xml:space="preserve">
+    <value>送信ユーザー</value>
+    <comment>Points Management</comment>
+  </data>
   <data name="FromAmount" xml:space="preserve">
     <value>金額から</value>
     <comment>Point Setup</comment>
@@ -973,6 +977,10 @@
     <value>場所の管理</value>
     <comment>Location Management</comment>
   </data>
+  <data name="Manage Points" xml:space="preserve">
+    <value>ポイントを管理する</value>
+    <comment>Points Management</comment>
+  </data>
   <data name="Manage Points Category Type" xml:space="preserve">
     <value>ポイントカテゴリータイプを管理する</value>
     <comment>Points Setup</comment>
@@ -1256,17 +1264,33 @@
     <value>プラチナ</value>
     <comment>Club Management</comment>
   </data>
+  <data name="Point Requests" xml:space="preserve">
+    <value>ポイントリクエスト</value>
+    <comment>Points Management</comment>
+  </data>
   <data name="Points" xml:space="preserve">
     <value>ポイント</value>
     <comment>Points Setup</comment>
+  </data>
+  <data name="Points Balance Statement" xml:space="preserve">
+    <value>ポイント残高明細</value>
+    <comment>Points Management</comment>
   </data>
   <data name="Points Category Type" xml:space="preserve">
     <value>ポイントカテゴリタイプ</value>
     <comment>PointSetup</comment>
   </data>
+  <data name="Points Management" xml:space="preserve">
+    <value>ポイント</value>
+    <comment>Points Management</comment>
+  </data>
   <data name="Points Setup" xml:space="preserve">
     <value>ポイント設定</value>
     <comment>Points Setup</comment>
+  </data>
+  <data name="Points Transfer" xml:space="preserve">
+    <value>ポイント転送</value>
+    <comment>Points Management</comment>
   </data>
   <data name="PointType" xml:space="preserve">
     <value>ポイントタイプ</value>
@@ -1406,6 +1430,10 @@
     <value>担当者　2</value>
     <comment>ClubManagement</comment>
   </data>
+  <data name="Request Amount" xml:space="preserve">
+    <value>リクエスト金額</value>
+    <comment>Points Management</comment>
+  </data>
   <data name="Requested Date" xml:space="preserve">
     <value>登録日</value>
     <comment>Affiliate Management</comment>
@@ -1428,6 +1456,10 @@
   <data name="Reset" xml:space="preserve">
     <value>リセット</value>
     <comment>Roles Management</comment>
+  </data>
+  <data name="Retrieve" xml:space="preserve">
+    <value>取り戻す</value>
+    <comment>Points Management</comment>
   </data>
   <data name="Review and rating supporting text" xml:space="preserve">
     <value>クラブとそのホストのレビューと評価を管理する。</value>
@@ -1539,6 +1571,10 @@
     <value>住所選択してください</value>
     <comment>Club Management</comment>
   </data>
+  <data name="Self Request" xml:space="preserve">
+    <value>自己依頼</value>
+    <comment>Points Management</comment>
+  </data>
   <data name="September" xml:space="preserve">
     <value>九月</value>
     <comment>Dashboard</comment>
@@ -1608,6 +1644,10 @@
     <value>日</value>
     <comment>Dashboard</comment>
   </data>
+  <data name="System Transfer" xml:space="preserve">
+    <value>システム転送</value>
+    <comment>Points Management</comment>
+  </data>
   <data name="Tag" xml:space="preserve">
     <value>鬼ごっこ</value>
     <comment>Club Management</comment>
@@ -1639,6 +1679,10 @@
   <data name="To Date" xml:space="preserve">
     <value>現在まで</value>
     <comment>Reservation Ledger</comment>
+  </data>
+  <data name="To User" xml:space="preserve">
+    <value>受信ユーザー</value>
+    <comment>Points Management</comment>
   </data>
   <data name="ToAmount" xml:space="preserve">
     <value>金額まで</value>
@@ -1700,6 +1744,26 @@
     <value>総顧客数</value>
     <comment>Reservation Ledger</comment>
   </data>
+  <data name="Transaction Date" xml:space="preserve">
+    <value>取引日時</value>
+    <comment>Points Management</comment>
+  </data>
+  <data name="Transaction ID" xml:space="preserve">
+    <value>取引 ID</value>
+    <comment>Points Management</comment>
+  </data>
+  <data name="Transaction Type" xml:space="preserve">
+    <value>取引タイプ</value>
+    <comment>Points Management</comment>
+  </data>
+  <data name="Transfer" xml:space="preserve">
+    <value>転送</value>
+    <comment>Points Management</comment>
+  </data>
+  <data name="Transfer Type" xml:space="preserve">
+    <value>転送タイプ</value>
+    <comment>Points Management</comment>
+  </data>
   <data name="Tuesday" xml:space="preserve">
     <value>火</value>
     <comment>Dashboard</comment>
@@ -1722,6 +1786,10 @@
   </data>
   <data name="Updated On" xml:space="preserve">
     <value>更新日</value>
+  </data>
+  <data name="User" xml:space="preserve">
+    <value>ユーザー</value>
+    <comment>Points Management</comment>
   </data>
   <data name="User Email" xml:space="preserve">
     <value>ユーザーのメールアドレス</value>

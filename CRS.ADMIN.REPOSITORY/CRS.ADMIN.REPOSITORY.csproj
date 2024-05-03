@@ -132,6 +132,8 @@
     <Compile Include="PlanManagement\PlanManagementRepository.cs" />
     <Compile Include="PointSetup\IPointSetupRepository.cs" />
     <Compile Include="PointSetup\PointSetupRepository.cs" />
+    <Compile Include="PointsManagement\IPointsManagementRepository.cs" />
+    <Compile Include="PointsManagement\PointsManagementRepository.cs" />
     <Compile Include="ProfileManagement\IProfileManagementRepository.cs" />
     <Compile Include="ProfileManagement\ProfileManagementRepository.cs" />
     <Compile Include="PromotionManagement\IPromotionManagementRepository.cs" />

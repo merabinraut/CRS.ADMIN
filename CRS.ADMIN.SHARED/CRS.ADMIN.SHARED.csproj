@@ -123,6 +123,7 @@
     <Compile Include="PaymentManagement\PaymentManagementCommon.cs" />
     <Compile Include="PlanManagement\PlanManagementCommon.cs" />
     <Compile Include="PointSetup\PointSetupCommon.cs" />
+    <Compile Include="PointsManagement\PointsManagementCommon.cs" />
     <Compile Include="PromotionManagement\PromotionManagementCommon.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RecommendationManagement\RecommendationManagementCommon.cs" />

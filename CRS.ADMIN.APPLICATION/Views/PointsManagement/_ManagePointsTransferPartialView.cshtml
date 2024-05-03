@@ -1,0 +1,218 @@
+@model CRS.ADMIN.APPLICATION.Models.PointsManagement.PointsTansferModel
+<style>
+    .transferType{
+        display:inline-flex;
+       gap:24px
+    } 
+
+        .transferType > div > input {
+            background: #fff;
+            outline: 2px solid #66666666;
+            border: none;
+            margin-right: 10px
+        }
+
+        .transferType > div > input:checked {
+            background: #D75A8B;
+            border: none;
+            outline: 2px solid #D75A8B;
+        }
+            .transferType > div > input:not(:focus) {
+                /*background: #D75A8B;
+                border: none;
+                outline: 2px solid #D75A8B;*/
+              /*  border-width: 1px;*/
+                border: 2px solid #fff;
+            }
+</style>
+
+<div id="add-new-points"
+     class="drawer-close-disable  flex justify-end fixed top-0 right-0 z-40 h-screen overflow-y-auto transition-transform translate-x-full"
+     tabindex="-1" aria-labelledby="add-new-points" aria-modal="true" role="dialog">
+    <div class="bg-white w-[616px] drawer-container relative">
+        <div class="drawer-form-container sticky top-0 z-[5] ">
+            <div class="drawer-form flex justify-between bg-secondary-color-pink py-[16px] px-[24px] h-[56px]">
+                <div>
+                    @CRS.ADMIN.APPLICATION.Resources.Resource.Manage_Points
+                </div>
+                <button type="button" data-drawer-hide="add-new-points" aria-controls="add-new-points"
+                        class="text-[20px]">
+                    <i class="las la-window-close text-white" onclick="CancelFunction()"></i>
+                </button>
+            </div>
+        </div>
+        <div class="p-[24px]">
+            @using (Html.BeginForm("ManagePoints", "PointsManagement", FormMethod.Post, new { @id = "ManagePointsForm", enctype = "multipart/form-data" }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.HiddenFor(model => model.Id);
+                <div class="grid gap-4">
+                    <div class=" mb-[20px]" id="">
+                        <div class="transferType">
+
+                            @*<label>
+                                    @Html.RadioButtonFor(model => model.TransferType, "Transfer", new { @id = "transfer" })   @CRS.ADMIN.APPLICATION.Resources.Resource.Transfer
+                                </label>
+                                <label>
+                                    @Html.RadioButtonFor(model => model.TransferType, "Retrieve", new { @id = "retrieve" })   @CRS.ADMIN.APPLICATION.Resources.Resource.Retrieve
+                                </label>*@
+                            <div>
+
+                                <input type="radio" name="TransferType" class="cls_trftype" value="Transfer"/>
+                                <label for="transfertype">Transfer</label>
+                            </div>
+                            <div>
+
+                                <input type="radio" name="TransferType"  class="cls_trftype" value="Retrieve"/>
+                                <label for="retrieve">Retrieve</label>
+                            </div>
+
+                            <span class="error">
+                                @Html.ValidationMessageFor(m => m.TransferType)
+                            </span>
+                        </div>
+                    </div>
+                    <div class="input-field-common">
+                        <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.User_Type
+                        </label>
+                        <select id="large" class=" default_select select-common block w-full "
+                                style="width: 100%;" name="UserTypeId">
+                            @foreach (var item in ViewBag.UserTypeList as IEnumerable<SelectListItem>)
+                            {
+                                var selectedId = ViewBag.UserTypeIdKey as string;
+                                if (item.Value == selectedId)
+                                {
+                                    <option value="@item.Value" selected>
+                                        @item.Text
+                                    </option>
+                                }
+                                else
+                                {
+                                    <option value="@item.Value">
+                                        @item.Text
+                                    </option>
+                                }
+                            }
+                        </select>
+                        <span class="error">
+                            @Html.ValidationMessageFor(m => m.UserTypeId)
+                        </span>
+                    </div>
+                    <div class="input-field-common mb-[20px]" id="">
+                        <div class="input-field-common">
+                            <label for="date" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.User
+                            </label>
+                            <select id="large" name="UserId" class=" default_select select-common block w-full "
+                                    style="width: 100%;">
+                                @foreach (var item in ViewBag.UserList as IEnumerable<SelectListItem>)
+                                {
+                                    var selectedId = ViewBag.AgentIdKey as string;
+                                    if (item.Value == selectedId)
+                                    {
+                                        <option value="@item.Value" selected>
+                                            @item.Text
+                                        </option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@item.Value">
+                                            @item.Text
+                                        </option>
+                                    }
+                                }
+                            </select>
+                            <span class="error">
+                                @Html.ValidationMessageFor(m => m.UserId)
+                            </span>
+                        </div>
+                    </div>
+                    <div class="input-field-common mb-[20px]" id="">
+                        <div class="input-field-common">
+                            <label for="date" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Points
+                            </label>
+                            @Html.TextBoxFor(model => model.Points, new
+                       {
+                           @class = "w-full",
+                           @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.Points,
+                           autocomplete = "off",
+                           @type = "text"
+                       })
+                            <span class="error">
+                                @Html.ValidationMessageFor(m => m.Points)
+                            </span>
+
+                        </div>
+                    </div>
+                    <div class="input-field-common mb-[20px]" id="">
+                        <div class="input-field-common">
+                            <label for="date" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Remarks
+                            </label>
+                            @Html.TextAreaFor(model => model.Remarks, new
+                                {
+                                @class = "w-full",
+                                @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.Remarks,
+                                autocomplete = "off"
+                                })
+                            <span class="error">
+                                @Html.ValidationMessageFor(m => m.Remarks)
+                            </span>
+
+                        </div>
+                    </div>
+
+
+                    <div>
+                        <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Image
+                        </label>
+                        <div class="file-upload-common">
+                            <label for="file_input_Image" class="custom-file-upload w-[123px] bg-[#CC527A] flex-none ">
+                                <span>@CRS.ADMIN.APPLICATION.Resources.Resource.Choose_Images</span>
+                            </label>
+                            @*<input type="hidden" name="Business_Certificate" value="@Model.Business_Certificate"/>*@
+                            <input id="file_input_Image" class="file-input" type="file" name="Image_Certificate" value="@Model.Image"
+                                   style="display:none;">
+                            <p id="file_name_Image"
+                               class="file-name w-max h-[23px] overflow-hidden pl-2 text-xs text-[#686868] leading-[25px]">
+                                @if (string.IsNullOrEmpty(Model.Image))
+                                {
+                                    @CRS.ADMIN.APPLICATION.Resources.Resource.No_File_Choosen
+                                }
+                                else
+                                {
+                                    string fileName = Path.GetFileName(Model.Image);
+                                    @fileName
+                                }
+                            </p>
+                        </div>
+                        <div class="text-xs text-error mt-[8px]">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Note:
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Image_should_be_in_HEIF_format
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.and_Maximum_file_size_is_5_MB .
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- for submit button -->
+                <div class="py-4 flex justify-end">
+                    <div class="flex gap-6">
+                        <button class="btn btn-secondary rounded-[4px]" type="button" data-drawer-hide="add-new-points"
+                                aria-controls="add-new-points" onclick="CancelFunction();">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Cancel
+                        </button>
+                        <button class="btn btn-primary-default rounded-[4px]" type="submit"> @CRS.ADMIN.APPLICATION.Resources.Resource.Submit</button>
+
+
+                    </div>
+
+                </div>
+
+            }
+        </div>
+    </div>
+</div>

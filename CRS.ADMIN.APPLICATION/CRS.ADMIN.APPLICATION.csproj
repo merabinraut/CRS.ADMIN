@@ -234,6 +234,7 @@
     <Compile Include="Controllers\PaymentManagementController.cs" />
     <Compile Include="Controllers\PlanManagementController.cs" />
     <Compile Include="Controllers\PointSetupController.cs" />
+    <Compile Include="Controllers\PointsManagementController.cs" />
     <Compile Include="Controllers\ProfileManagementController.cs" />
     <Compile Include="Controllers\PromotionManagementController.cs" />
     <Compile Include="Controllers\RecommendationManagementController.cs" />
@@ -278,6 +279,7 @@
     <Compile Include="Models\PaymentManagement\PaymentManagementModel.cs" />
     <Compile Include="Models\PlanManagement\PlanManagementModel.cs" />
     <Compile Include="Models\PointSetup\PointSetupModel.cs" />
+    <Compile Include="Models\PointsManagement\PointsManagementModel.cs" />
     <Compile Include="Models\PromotionManagement\PromotionManagementModel.cs" />
     <Compile Include="Models\RecommendationManagementV2\RecommendationManagementV2Model.cs" />
     <Compile Include="Models\RecommendationManagement\RecommendationManagementModel.cs" />
@@ -302,6 +304,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resource.Ja.resx</DependentUpon>
     </Compile>
+    <Content Include="Views\PointsManagement\_ManagePointsRequestPartialView.cshtml" />
+    <None Include="Views\PointsManagement\_ManagePointsTransferPartialView.cshtml" />
+    <None Include="Views\PointsManagement\PointsTransferList.cshtml" />
     <None Include="Views\PointSetup\PointsCategorySlabList.cshtml" />
     <None Include="Views\PointSetup\_ManagePointsSlabPartialView.cshtml" />
     <None Include="Views\PointSetup\_ManagePointsCategoryPartialView.cshtml" />
@@ -313,6 +318,7 @@
     <Folder Include="Content\userupload\ClubManagement\Event\" />
     <Folder Include="Content\userupload\Host\" />
     <Folder Include="Content\userupload\LocationImages\" />
+    <Folder Include="Content\userupload\PointsManagement\" />
     <Folder Include="Content\userupload\PromotionalImages\" />
     <Folder Include="Properties\PublishProfiles\" />
     <Folder Include="Views\LogManagement\" />

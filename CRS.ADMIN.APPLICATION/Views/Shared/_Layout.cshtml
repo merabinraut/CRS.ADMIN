@@ -324,6 +324,22 @@
                 </a>
             }
             <!-- -----  -->
+            @if (ApplicationUtilities.HasMenuRight("/PointsManagement/PointsTransferList"))
+            {
+                if (!string.IsNullOrEmpty(CurrentURL) && CurrentURL.Trim().ToUpper() == "/POINTSMANAGEMENT/POINTTRANSFERLIST") { MenuActiveClass = "menuActive"; }
+                else { MenuActiveClass = string.Empty; }
+                <a href="@Url.Action("PointsTransferList", "PointsManagement")">
+                    <div class="menuContainer @MenuActiveClass">
+                        <div class="menu-icon w-max">
+                            <img src="~/Content/assets_new/images/affiliate.svg" class="image" />
+                            <img src="~/Content/assets_new/images/affiliate-active.svg" class="active-image" />
+
+                        </div>
+                        <div class="label">@CRS.ADMIN.APPLICATION.Resources.Resource.Points_Management</div>
+                    </div>
+                </a>
+            }
+            <!-- -----  -->
             @if (ApplicationUtilities.HasMenuRight("/PaymentManagement/Index"))
             {
                 if (!string.IsNullOrEmpty(CurrentURL) && CurrentURL.Trim().ToUpper() == "/PAYMENTMANAGEMENT/INDEX") { MenuActiveClass = "menuActive"; }

@@ -26,15 +26,27 @@ namespace CRS.ADMIN.APPLICATION.Helper
             switch (forMethod.ToUpper())
             {
                 case "PAYMENTMETHODLIST":
-                    dbResponse = _CommonBuss.GetDropDownLanguage("1", search1, search2,"");
+                    dbResponse = _CommonBuss.GetDropDownLanguage("1", search1, search2, "");
                     dbResponse.ForEach(item => { response.Add(item.StaticValue.EncryptParameter(), GetLocalizedLabel(item, culture)); });
                     return response;
                 case "PREF":
-                    dbResponse = _CommonBuss.GetDropDownLanguage("3", search1, search2,"");
+                    dbResponse = _CommonBuss.GetDropDownLanguage("3", search1, search2, "");
                     dbResponse.ForEach(item => { response.Add(item.StaticValue.EncryptParameter(), GetLocalizedLabel(item, culture)); });
                     return response;
                 case "HOLIDAY":
-                    dbResponse = _CommonBuss.GetDropDownLanguage("4", search1, search2,"");
+                    dbResponse = _CommonBuss.GetDropDownLanguage("4", search1, search2, "");
+                    dbResponse.ForEach(item => { response.Add(item.StaticValue.EncryptParameter(), GetLocalizedLabel(item, culture)); });
+                    return response;
+
+                case "USERTYPELIST":
+                    dbResponse = _CommonBuss.GetDropDownLanguage("14", search1, search2, "");
+                    var filteredList = dbResponse
+                    .Where(item => item.StaticValue == "3" || item.StaticValue == "4" || item.StaticValue == "6")
+                    .ToList();
+                    filteredList.ForEach(item => { response.Add(item.StaticValue.EncryptParameter(), GetLocalizedLabel(item, culture)); });
+                    return response; 
+                case "TRANSACTIONTYPE":
+                    dbResponse = _CommonBuss.GetDropDownLanguage("15", search1, search2, "");
                     dbResponse.ForEach(item => { response.Add(item.StaticValue.EncryptParameter(), GetLocalizedLabel(item, culture)); });
                     return response;
 
