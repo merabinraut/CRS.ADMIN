@@ -22,10 +22,13 @@ namespace CRS.ADMIN.REPOSITORY.PointsManagement
         {
             var response = new List<PointsTansferReportCommon>();
             string SQL = "EXEC sproc_admin_point_transfer_retrieve_select ";
-            SQL += !string.IsNullOrEmpty(objPaginationFilterCommon.SearchFilter) ? ",@SearchFilter=N" + _DAO.FilterString(objPaginationFilterCommon.SearchFilter) : " @SearchFilter=null ";            
-            SQL += !string.IsNullOrEmpty(objPointsTansferReportCommon.UserType) ? " @UserTypeId=" + objPointsTansferReportCommon.UserType: " @UserTypeId=null " ;
-            SQL += !string.IsNullOrEmpty(objPointsTansferReportCommon.UserName) ?  ",@UserId=" + objPointsTansferReportCommon.UserName: ",@UserId=null";
-            SQL += !string.IsNullOrEmpty(objPointsTansferReportCommon.TransferTypeId) ? " ,@TransactionType=" + objPointsTansferReportCommon.TransferTypeId: " ,@TransactionType =null";
+            SQL += !string.IsNullOrEmpty(objPaginationFilterCommon.SearchFilter) ? " @SearchFilter=N" + _DAO.FilterString(objPaginationFilterCommon.SearchFilter) : " @SearchFilter=null ";            
+            SQL += !string.IsNullOrEmpty(objPointsTansferReportCommon.UserType) ? " ,@UserTypeId=" + _DAO.FilterString(objPointsTansferReportCommon.UserType): " ,@UserTypeId=null " ;
+            SQL += !string.IsNullOrEmpty(objPointsTansferReportCommon.UserName) ?  ",@UserId=" + _DAO.FilterString(objPointsTansferReportCommon.UserName): ",@UserId=null";
+            SQL += !string.IsNullOrEmpty(objPointsTansferReportCommon.TransferTypeId) ? " ,@TransactionType=" + _DAO.FilterString(objPointsTansferReportCommon.TransferTypeId): " ,@TransactionType =null";
+            SQL += !string.IsNullOrEmpty(objPointsTansferReportCommon.FromDate) ? ",@FromDate=" +_DAO.FilterString(objPointsTansferReportCommon.FromDate) : ",@FromDate=null";
+            SQL += !string.IsNullOrEmpty(objPointsTansferReportCommon.ToDate) ? " ,@ToDate=" + _DAO.FilterString(objPointsTansferReportCommon.ToDate): " ,@ToDate =null";
+
             SQL += " ,@Skip=" + objPaginationFilterCommon.Skip;
             SQL += ",@Take=" + objPaginationFilterCommon.Take;
             var dbResponse = _DAO.ExecuteDataTable(SQL);

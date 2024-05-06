@@ -66,25 +66,8 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             ViewBag.UserTypeIdKey= !string.IsNullOrEmpty( UserType)? UserType : null;
             ViewBag.UsernameIdKey = !string.IsNullOrEmpty(UserName) ? UserName : null;
             ViewBag.TransferTypeIdKey = !string.IsNullOrEmpty(TransferTypeId) ? TransferTypeId : null;
-
             var dbResponse = _BUSS.GetPointTransferList(Commonmodel,dbRequest);
-            objPointsManagementModel.PointsTansferReportList = dbResponse.MapObjects<PointsTansferReportModel>();
-            //var filteredItems = dbResponse
-            //.Where(item => item.RoleTypeId == "3" || item.RoleTypeId == "4" || item.RoleTypeId == "6")
-            //.ToList();
-            //objPointSetupModel.UserTypeList = filteredItems.MapObjects<UserTypeModel>();
-
-            //if (dbResponse.Count > 0)
-            //{
-
-            //    objPointSetupModel.UserTypeList.ForEach(x => x.RoleTypeId = !string.IsNullOrEmpty(x.RoleTypeId) ? x.RoleTypeId.EncryptParameter() : x.RoleTypeId);
-
-            //}
-            //var dictionary = new Dictionary<string, string>();
-            //objPointSetupModel.UserTypeList.ForEach(item => { dictionary.Add(item.RoleTypeId, item.RoleTypeName); });
-            //ViewBag.RoleTypeList = ApplicationUtilities.SetDDLValue(dictionary, null, "--- Select ---");
-            //var dictionaryempty = new Dictionary<string, string>();
-            //ViewBag.UserList = ApplicationUtilities.SetDDLValue(dictionaryempty, null, "--- Select ---");
+            objPointsManagementModel.PointsTansferReportList = dbResponse.MapObjects<PointsTansferReportModel>();         
             if (TempData.ContainsKey("ManagePointsModel")) objPointsManagementModel.ManagePointsTansfer = TempData["ManagePointsModel"] as PointsTansferModel;
             else objPointsManagementModel.ManagePointsTansfer = new PointsTansferModel();
             if (TempData.ContainsKey("ManagePointsRequestModel")) objPointsManagementModel.ManagePointsRequest = TempData["ManagePointsRequestModel"] as PointsRequestModel;
@@ -106,6 +89,8 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             ViewBag.TotalData2 =  0;
             ViewBag.TotalData3 =0;
             ViewBag.TotalData4 =  0;
+            objPointsManagementModel.FromDate = FromDate;
+            objPointsManagementModel.ToDate = ToDate;
             return View(objPointsManagementModel);  
         }
 
