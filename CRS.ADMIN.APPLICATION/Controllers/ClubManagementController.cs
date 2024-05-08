@@ -1118,7 +1118,9 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 ResponseModel.BusinessTypeDDL = ViewBag.BusinessTypeDDL.ContainsKey(ResponseModel.BusinessTypeDDL) ? ViewBag.BusinessTypeDDL[ResponseModel.BusinessTypeDDL] : "";
                 TempData["ClubHoldDetails"] = ResponseModel;
                 TempData["RenderId"] = "ClubHoldDetails";               
-                return RedirectToAction("ClubList", "ClubManagement");
+                return RedirectToAction("ClubList", "ClubManagement", new {value='p'}
+                    
+                    );
             }
         }
         #region Manage Manager

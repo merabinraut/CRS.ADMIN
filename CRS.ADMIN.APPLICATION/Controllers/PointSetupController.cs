@@ -91,7 +91,11 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 objPointSetupModel.CategoryList.ForEach(x => x.CategoryId = !string.IsNullOrEmpty(x.CategoryId) ? x.CategoryId.EncryptParameter() : x.CategoryId);
 
             }
-            ViewBag.RoleName = objPointSetupModel.CategoryList.FirstOrDefault().RoleName;
+            var dbResponserolename = _BUSS.GetUsertypeList(dbRequest);
+            var filteredItems = dbResponserolename
+            .Where(item => item.RoleTypeId == RoleTypeId.DecryptParameter() )
+            .ToList();
+            ViewBag.RoleName = filteredItems.FirstOrDefault().RoleTypeName;
             ViewBag.StartIndex = StartIndex;
             ViewBag.PageSize = PageSize;
             ViewBag.TotalData = dbResponse != null && dbResponse.Any() ? dbResponse[0].TotalRecords : 0;
