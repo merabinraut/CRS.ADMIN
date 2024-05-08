@@ -119,6 +119,7 @@ namespace CRS.ADMIN.REPOSITORY.PlanManagement
                     NoOfPeople = !string.IsNullOrEmpty(dataTable.Rows[0]["NoOfPeople"].ToString()) ? Convert.ToInt32(dataTable.Rows[0]["NoOfPeople"].ToString()) : 0,
                     StrikePrice = dataTable.Rows[0]["StrikePrice"].ToString(),
                     IsStrikeOut = dataTable.Rows[0]["IsStrikeOut"].ToString()
+
                 };
             }
             return new PlanManagementCommon();

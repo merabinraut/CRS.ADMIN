@@ -2,6 +2,7 @@
 using CRS.ADMIN.SHARED.CommissionManagement;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 
 namespace CRS.ADMIN.REPOSITORY.CommissionManagement
 {
@@ -110,11 +111,12 @@ namespace CRS.ADMIN.REPOSITORY.CommissionManagement
         #endregion
 
         #region Commission Setup
-        public List<CommissionDetailCommon> GetCommissionDetailList(string CategoryId)
+        public List<CommissionDetailCommon> GetCommissionDetailList(string CategoryId, string AdminCmsTypeId)
         {
             var response = new List<CommissionDetailCommon>();
             string SQL = "EXEC sproc_commission_detail_management @Flag='gcdl'";
             SQL += ",@CategoryId=" + _DAO.FilterString(CategoryId);
+            SQL += ",@AdminCommissionTypeId=" + _DAO.FilterString(AdminCmsTypeId);
             var dbResponse = _DAO.ExecuteDataTable(SQL);
             if (dbResponse != null && dbResponse.Rows.Count > 0)
             {
@@ -132,6 +134,7 @@ namespace CRS.ADMIN.REPOSITORY.CommissionManagement
                         MinCommissionValue = _DAO.ParseColumnValue(item, "MinCommissionValue").ToString(),
                         MaxCommissionValue = _DAO.ParseColumnValue(item, "MaxCommissionValue").ToString(),
                         CategoryName = _DAO.ParseColumnValue(item, "CategoryName").ToString(),
+                        AdminCommissionTypeId = _DAO.ParseColumnValue(item, "AdminCommissionTypeId").ToString(),
                     });
                 }
             }
@@ -167,6 +170,7 @@ namespace CRS.ADMIN.REPOSITORY.CommissionManagement
             var SQL = "EXEC sproc_commission_detail_management ";
             SQL += !string.IsNullOrEmpty(Request.CategoryDetailId) ? "@Flag='ucd'" : "@Flag='icd'";
             SQL += ",@CategoryId=" + _DAO.FilterString(Request.CategoryId);
+            SQL += ",@AdminCommissionTypeId=" + _DAO.FilterString(Request.AdminCommissionTypeId);
             SQL += ",@ActionUser=" + _DAO.FilterString(Request.ActionUser);
             SQL += ",@ActionIP=" + _DAO.FilterString(Request.ActionIP);
             SQL += ",@FromAmount=" + _DAO.FilterString(Request.FromAmount);
@@ -203,6 +207,14 @@ namespace CRS.ADMIN.REPOSITORY.CommissionManagement
             SQL += ",@ActionUser=" + _DAO.FilterString(Request.ActionUser);
             SQL += ",@ActionIP=" + _DAO.FilterString(Request.ActionIP);
             return _DAO.ParseCommonDbResponse(SQL);
+        }
+
+        public List<AdminCommissionCommon> GetAdminCommissionList()
+        {
+            string sp_name = "EXEC sproc_admin_admincommissiontype";
+            var dbResponseInfo = _DAO.ExecuteDataTable(sp_name);
+            if (dbResponseInfo != null && dbResponseInfo.Rows.Count > 0) return _DAO.DataTableToListObject<AdminCommissionCommon>(dbResponseInfo).ToList();
+            return new List<AdminCommissionCommon>();
         }
 
         #endregion

@@ -19,6 +19,7 @@ namespace CRS.ADMIN.APPLICATION.Models.CommissionManagement
     public class ManageCommissionDetailModel
     {
         public string CategoryId { get; set; }
+        public string AdminCommissionTypeId { get; set; }
         public string CategoryName { get; set; }
         public string CategoryDetailId { get; set; }
         public string FromAmount { get; set; }

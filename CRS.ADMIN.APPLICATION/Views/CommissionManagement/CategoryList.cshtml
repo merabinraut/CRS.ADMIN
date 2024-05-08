@@ -193,7 +193,7 @@
                                                 <td class="p-[12px]">
                                                     <div class="flex gap-[7px] justify-center text-[16px] ">
                                                         <div class="cursor-pointer"
-                                                             onclick="viewCategoryList('@item.CategoryId','@item.CategoryName')">
+                                                             onclick="viewSubCategoryList('@item.CategoryId','@item.CategoryName')">
                                                             <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 25 25"
                                                                  fill="none">
                                                                 <g clip-path="url(#clip0_4164_81696)">
@@ -371,8 +371,9 @@
 
     const handleCancelClick = () => location.reload();
 
-    const viewCategoryList = (categoryId, categoryName) => {
-        window.location.href = `/CommissionManagement/CommissionDetailList?CategoryId=${encodeURIComponent(categoryId)}&CategoryName=${encodeURIComponent(categoryName)}`;
+        const viewSubCategoryList = (categoryId, categoryName) => {
+        //window.location.href = `/CommissionManagement/CommissionDetailList?CategoryId=${encodeURIComponent(categoryId)}&CategoryName=${encodeURIComponent(categoryName)}`;
+            window.location.href = `/CommissionManagement/AdminCommissionList?CategoryId=${encodeURIComponent(categoryId)}&CategoryName=${encodeURIComponent(categoryName)}`;
     }
     </script>
 
