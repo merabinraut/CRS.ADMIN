@@ -1096,6 +1096,10 @@ namespace CRS.ADMIN.APPLICATION.Library
                     dbResponse = _CommonBuss.GetDropDown("038", search1, search2);
                     dbResponse.ForEach(item => { response.Add(item.Key.EncryptParameter(), item.Value); });
                     return response;
+                case "HEIGHTLIST":
+                    dbResponse = _CommonBuss.GetDropDown("046", search1, search2);
+                    dbResponse.ForEach(item => { response.Add(item.Key.EncryptParameter(), item.Value); });
+                    return response;
                 case "USERSTATUSDDL":
                     response = new Dictionary<string, string>();
                     response.Add("A".EncryptParameter(), "Active");
@@ -1109,6 +1113,7 @@ namespace CRS.ADMIN.APPLICATION.Library
                     dbResponse = _CommonBuss.GetDropDown("042", search1, search2);
                     dbResponse.ForEach(item => { response.Add(item.Key.EncryptParameter(), item.Value); });
                     return response;
+              
                 case "USERTYPENAME":
                     dbResponse = _CommonBuss.GetDropDown("044", search1, search2);
                     dbResponse.ForEach(item => {

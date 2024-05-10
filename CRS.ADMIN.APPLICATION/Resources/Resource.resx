@@ -332,6 +332,10 @@
     <value>CEO Full Name</value>
     <comment>Club Management</comment>
   </data>
+  <data name="Choose Icons" xml:space="preserve">
+    <value>Choose Icon</value>
+    <comment>Host Management</comment>
+  </data>
   <data name="Choose Images" xml:space="preserve">
     <value>Choose Images</value>
     <comment>Location Management</comment>
@@ -785,6 +789,10 @@
   </data>
   <data name="HotSkills" xml:space="preserve">
     <value>HOT-SKILLS</value>
+    <comment>Host Management</comment>
+  </data>
+  <data name="Icon Image" xml:space="preserve">
+    <value>Icon Image</value>
     <comment>Host Management</comment>
   </data>
   <data name="Image" xml:space="preserve">

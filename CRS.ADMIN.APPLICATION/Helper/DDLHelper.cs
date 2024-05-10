@@ -49,6 +49,10 @@ namespace CRS.ADMIN.APPLICATION.Helper
                     dbResponse = _CommonBuss.GetDropDownLanguage("15", search1, search2, "");
                     dbResponse.ForEach(item => { response.Add(item.StaticValue.EncryptParameter(), GetLocalizedLabel(item, culture)); });
                     return response;
+                case "BIRTHPLACE":
+                    dbResponse = _CommonBuss.GetDropDownLanguage("16", search1, search2, "");
+                    dbResponse.ForEach(item => { response.Add(item.StaticValue.EncryptParameter(), GetLocalizedLabel(item, culture)); });
+                    return response;
 
                 default:
                     return response;

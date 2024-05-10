@@ -45,7 +45,9 @@ namespace CRS.ADMIN.REPOSITORY.HostManagement
                         TotalVisitors = _DAO.ParseColumnValue(item, "TotalVisitors").ToString(),
                         HostImage = _DAO.ParseColumnValue(item, "HostImage").ToString(),
                         TotalRecords = Convert.ToInt32(_DAO.ParseColumnValue(item, "TotalRecords").ToString()),
-                        SNO = Convert.ToInt32(_DAO.ParseColumnValue(item, "SNO").ToString())
+                        SNO = Convert.ToInt32(_DAO.ParseColumnValue(item, "SNO").ToString()),
+                        Height = _DAO.ParseColumnValue(item, "Height").ToString(),
+                        Address = _DAO.ParseColumnValue(item, "Address").ToString()
                     });
                 }
             }
@@ -119,6 +121,7 @@ namespace CRS.ADMIN.REPOSITORY.HostManagement
             SQL += ",@ActionPlatform=" + _DAO.FilterString(Request.ActionPlatform);
             SQL += ",@ImagePath=" + _DAO.FilterString(Request.ImagePath);
             SQL += ",@Line=" + _DAO.FilterString(Request.Line);
+            SQL += ",@IconImagePath=" + _DAO.FilterString(Request.IconImagePath);
             SQL += string.IsNullOrEmpty(Request.Address) ? ",@Address=" + _DAO.FilterString(Request.Address) : ",@Address=N" + _DAO.FilterString(Request.Address); 
             SQL += string.IsNullOrEmpty(Request.HostIntroduction) ? ",@HostIntroduction=" + _DAO.FilterString(Request.HostIntroduction) : ",@HostIntroduction=N" + _DAO.FilterString(Request.HostIntroduction);  
             Response = _DAO.ParseCommonDbResponse(SQL);

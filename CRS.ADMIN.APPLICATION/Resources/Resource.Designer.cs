@@ -556,6 +556,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Choose Icon.
+        /// </summary>
+        public static string Choose_Icons {
+            get {
+                return ResourceManager.GetString("Choose Icons", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Choose Images.
         /// </summary>
         public static string Choose_Images {
@@ -1587,6 +1596,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         public static string HotSkills {
             get {
                 return ResourceManager.GetString("HotSkills", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Icon Image.
+        /// </summary>
+        public static string Icon_Image {
+            get {
+                return ResourceManager.GetString("Icon Image", resourceCulture);
             }
         }
         
