@@ -290,6 +290,7 @@
     <Compile Include="Models\PlanManagement\PlanManagementModel.cs" />
     <Compile Include="Models\PointSetup\PointSetupModel.cs" />
     <Compile Include="Models\PointsManagement\PointsManagementModel.cs" />
+    <Compile Include="Models\PointsManagement\PointsRequestManagementModel.cs" />
     <Compile Include="Models\PromotionManagement\PromotionManagementModel.cs" />
     <Compile Include="Models\RecommendationManagementV2\RecommendationManagementV2Model.cs" />
     <Compile Include="Models\RecommendationManagement\RecommendationManagementModel.cs" />
@@ -2678,6 +2679,7 @@
     <Content Include="Views\PointSetup\PointsCategoryList.cshtml" />
     <Content Include="Views\Inquiries\index.cshtml" />
     <Content Include="Views\CommissionManagement\AdminCommissionList.cshtml" />
+    <Content Include="Views\PointsManagement\_PointRequestListPartialView.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
