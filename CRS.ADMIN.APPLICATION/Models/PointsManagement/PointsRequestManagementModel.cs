@@ -1,4 +1,6 @@
-﻿namespace CRS.ADMIN.APPLICATION.Models.PointsManagement
+﻿using CRS.ADMIN.SHARED;
+
+namespace CRS.ADMIN.APPLICATION.Models.PointsManagement
 {
     public class PointsRequestListModel
     {
@@ -11,5 +13,14 @@
         public string Remarks { get; set; }
         public string UpdatedBy { get; set; }
         public string UpdatedDate { get; set; }
+    }
+    public class ManageClubPointRequestModel
+    {
+        public string AgentId { get; set; }
+        public string UserId { get; set; }
+        public string TxnId { get; set; }
+        public string Status { get; set; }
+        public string AdminRemark { get; set; }
+        public string ImageURL { get; set; }
     }
 }

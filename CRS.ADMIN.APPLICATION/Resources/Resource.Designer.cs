@@ -250,6 +250,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Amount Transferred.
+        /// </summary>
+        public static string AmountTransferred {
+            get {
+                return ResourceManager.GetString("AmountTransferred", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to and Maximum file size is 5 MB.
         /// </summary>
         public static string and_Maximum_file_size_is_5_MB {
@@ -2518,6 +2527,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Payment Method.
+        /// </summary>
+        public static string PaymentMethod {
+            get {
+                return ResourceManager.GetString("PaymentMethod", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Pending Requests.
         /// </summary>
         public static string Pending_Requests {
@@ -3054,6 +3072,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         public static string Requested_Date {
             get {
                 return ResourceManager.GetString("Requested Date", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Request Id.
+        /// </summary>
+        public static string RequestId {
+            get {
+                return ResourceManager.GetString("RequestId", resourceCulture);
             }
         }
         
@@ -3873,6 +3900,24 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         public static string Updated_On {
             get {
                 return ResourceManager.GetString("Updated On", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Updated By.
+        /// </summary>
+        public static string UpdatedBy {
+            get {
+                return ResourceManager.GetString("UpdatedBy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Updated Date.
+        /// </summary>
+        public static string UpdatedDate {
+            get {
+                return ResourceManager.GetString("UpdatedDate", resourceCulture);
             }
         }
         

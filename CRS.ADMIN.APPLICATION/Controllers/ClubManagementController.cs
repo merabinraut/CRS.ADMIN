@@ -2,29 +2,18 @@
 using CRS.ADMIN.APPLICATION.Library;
 using CRS.ADMIN.APPLICATION.Models.ClubManagement;
 using CRS.ADMIN.APPLICATION.Models.ClubManagerModel;
-using CRS.ADMIN.APPLICATION.Models.HostManagement;
 using CRS.ADMIN.APPLICATION.Models.TagManagement;
 using CRS.ADMIN.BUSINESS.ClubManagement;
 using CRS.ADMIN.SHARED;
 using CRS.ADMIN.SHARED.ClubManagement;
-using CRS.ADMIN.SHARED.Home;
 using CRS.ADMIN.SHARED.PaginationManagement;
-using DocumentFormat.OpenXml.Drawing.Diagrams;
-using DocumentFormat.OpenXml.EMMA;
-using DocumentFormat.OpenXml.Spreadsheet;
-using DocumentFormat.OpenXml.Wordprocessing;
-using Microsoft.Office.Interop.Excel;
-using Syncfusion.XlsIO.Implementation.PivotAnalysis;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Net;
 using System.Net.Http;
-using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Mvc;
-using static Google.Apis.Requests.BatchRequest;
 
 namespace CRS.ADMIN.APPLICATION.Controllers
 {
@@ -56,7 +45,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             else response.ManageManager = new ManageManagerModel();
             if (TempData.ContainsKey("ClubHoldDetails")) response.ClubHoldModel = TempData["ClubHoldDetails"] as ManageClubModel;
             else response.ClubHoldModel = new ManageClubModel();
-            
+
 
             if (TempData.ContainsKey("AvailabilityModel")) response.GetAvailabilityList = TempData["AvailabilityModel"] as List<AvailabilityTagModel>;
             else response.ManageTag.GetAvailabilityTagModel = new List<AvailabilityTagModel>();
@@ -69,14 +58,14 @@ namespace CRS.ADMIN.APPLICATION.Controllers
 
             PaginationFilterCommon dbRequestpending = new PaginationFilterCommon()
             {
-                Skip =  StartIndex2 ,
-                Take =  PageSize2 ,
+                Skip = StartIndex2,
+                Take = PageSize2,
                 SearchFilter = value == "p" ? !string.IsNullOrEmpty(SearchFilter) ? SearchFilter : null : null
             };
             PaginationFilterCommon dbRequestreject = new PaginationFilterCommon()
             {
-                Skip =  StartIndex3,
-                Take =  PageSize3,
+                Skip = StartIndex3,
+                Take = PageSize3,
                 SearchFilter = value == "r" ? !string.IsNullOrEmpty(SearchFilter) ? SearchFilter : null : null
             };
             var dbResponse = _BUSS.GetClubList(dbRequestall);
@@ -739,14 +728,14 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             string coverPhotoPath = "";
             var allowedContentType = AllowedImageContentType();
             string dateTime = "";
-            if (Model.BusinessType=="1")
+            if (Model.BusinessType == "1")
             {
                 ModelState.AddModelError("Representative1_ContactName", "Required");
                 ModelState.AddModelError("Representative1_MobileNo", "Required");
                 ModelState.AddModelError("Representative1_Email", "Required");
                 ModelState.AddModelError("Representative2_ContactName", "Required");
                 ModelState.AddModelError("Representative2_MobileNo", "Required");
-                ModelState.AddModelError("Representative2_Email", "Required");                
+                ModelState.AddModelError("Representative2_Email", "Required");
             }
             else
             {
@@ -1103,23 +1092,23 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             else
             {
 
-                var dbResponseInfo = _BUSS.GetClubPendingDetails("",Id,"");
-                
+                var dbResponseInfo = _BUSS.GetClubPendingDetails("", Id, "");
+
                 //var dbAvailabilityInfo = _BUSS.GetAvailabilityList(cId);
                 ResponseModel = dbResponseInfo.MapObject<ManageClubModel>();
                 ResponseModel.LocationDDL = !string.IsNullOrEmpty(ResponseModel.LocationId) ? ResponseModel.LocationId.EncryptParameter() : null;
                 ResponseModel.BusinessTypeDDL = !string.IsNullOrEmpty(ResponseModel.BusinessType) ? ResponseModel.BusinessType.EncryptParameter() : null;
                 ResponseModel.Prefecture = !string.IsNullOrEmpty(ResponseModel.Prefecture) ? ResponseModel.Prefecture.EncryptParameter() : null;
-                ViewBag.Pref = DDLHelper.LoadDropdownList("PREF") as Dictionary<string, string>;                
+                ViewBag.Pref = DDLHelper.LoadDropdownList("PREF") as Dictionary<string, string>;
                 ViewBag.LocationDDLList = ApplicationUtilities.LoadDropdownList("LOCATIONDDL") as Dictionary<string, string>;
                 ViewBag.BusinessTypeDDL = ApplicationUtilities.LoadDropdownList("BUSINESSTYPEDDL") as Dictionary<string, string>;
                 ResponseModel.Prefecture = ViewBag.Pref.ContainsKey(ResponseModel.Prefecture) ? ViewBag.Pref[ResponseModel.Prefecture] : "";
                 ResponseModel.LocationDDL = ViewBag.LocationDDLList.ContainsKey(ResponseModel.LocationDDL) ? ViewBag.LocationDDLList[ResponseModel.LocationDDL] : "";
                 ResponseModel.BusinessTypeDDL = ViewBag.BusinessTypeDDL.ContainsKey(ResponseModel.BusinessTypeDDL) ? ViewBag.BusinessTypeDDL[ResponseModel.BusinessTypeDDL] : "";
                 TempData["ClubHoldDetails"] = ResponseModel;
-                TempData["RenderId"] = "ClubHoldDetails";               
-                return RedirectToAction("ClubList", "ClubManagement", new {value='p'}
-                    
+                TempData["RenderId"] = "ClubHoldDetails";
+                return RedirectToAction("ClubList", "ClubManagement", new { value = 'p' }
+
                     );
             }
         }
@@ -1952,7 +1941,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
 
         #endregion
 
-   
+
 
     }
 }

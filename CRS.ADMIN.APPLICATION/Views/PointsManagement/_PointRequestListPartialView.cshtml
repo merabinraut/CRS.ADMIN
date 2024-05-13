@@ -1,6 +1,6 @@
-﻿<form action="/PointsManagement/PointsTransferList" method="get">
+﻿@model CRS.ADMIN.APPLICATION.Models.PointsManagement.PointRequestCommonModel
+<form action="/PointsManagement/PointsTransferList" method="get">
     <div class="flex justify-between pb-[24px]">
-        @Html.HiddenFor(model => model.ListType)
         <div class="relative input-search-wrapper">
             <div class="absolute inset-y-0 left-0 flex items-center pl-[16px] pointer-events-none">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21" fill="none">
@@ -13,19 +13,17 @@
                    class="input-search block w-full "
                    placeholder="@CRS.ADMIN.APPLICATION.Resources.Resource.Search"
                    value="@Model.SearchFilter"
-                   name="SearchFilter">
+                   name="SearchFilter4">
         </div>
 
         <div class="flex gap-6">
-            @*<div class="export-button h-[40px]" onclick="exportExcel('table-id', 'Club')">
-                    <img src="~/Content/assets_new/images/club/download-solid.svg">@CRS.ADMIN.APPLICATION.Resources.Resource.Export
-                </div>*@
-
-            <div class="btn btn-primary gap-[8px] h-[40px]" data-drawer-target="add-new-points"
-                 data-drawer-show="add-new-points" data-drawer-placement="right" data-drawer-backdrop="false"
-                 aria-controls="drawer-disabled-backdrop" id="add-new-id">
-                <img src="~/Content/assets_new/images/plus-circle-solid.svg" />
-                @CRS.ADMIN.APPLICATION.Resources.Resource.Add_New
+            <div class="flex gap-6">
+                <div class="btn btn-primary gap-[8px] h-[40px]" data-drawer-target="add-new-points-request"
+                     data-drawer-show="add-new-points-request" data-drawer-placement="right" data-drawer-backdrop="false"
+                     aria-controls="drawer-disabled-backdrop" id="add-new-points-id">
+                    <img src="~/Content/assets_new/images/plus-circle-solid.svg" />
+                    @CRS.ADMIN.APPLICATION.Resources.Resource.Self_Request
+                </div>
             </div>
         </div>
     </div>
@@ -33,13 +31,13 @@
     <div class="grid grid-cols-3 gap-x-12 table-tab filteroutlinepadding">
         <div class="input-field-common filteroutlinepadding">
             <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
-                @CRS.ADMIN.APPLICATION.Resources.Resource.User_Type
+                @CRS.ADMIN.APPLICATION.Resources.Resource.Location
             </label>
-            <select id="large" name="UserType" class=" default_select select-common block w-full "
+            <select id="large" name="LocationId4" class=" default_select select-common block w-full "
                     style="width: 100%;">
-                @foreach (var item in ViewBag.UserTypeList as IEnumerable<SelectListItem>)
+                @foreach (var item in ViewBag.LocationIdList as IEnumerable<SelectListItem>)
                 {
-                    var selectedId = ViewBag.UserTypeIdKey as string;
+                    var selectedId = Model.LocationId as string;
                     if (item.Value == selectedId)
                     {
                         <option value="@item.Value" selected>
@@ -55,45 +53,38 @@
                 }
             </select>
             <span class="error">
-                @Html.ValidationMessageFor(m => m.UserType)
+                @Html.ValidationMessageFor(m => m.LocationId)
             </span>
         </div>
-        <div class="input-field-common filteroutlinepadding">
-            <label for="date" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
-                @CRS.ADMIN.APPLICATION.Resources.Resource.Username
-            </label>
-            <select id="large" name="UserName" class=" default_select select-common block w-full "
-                    style="width: 100%;">
-                @foreach (var item in ViewBag.FilterUserList as IEnumerable<SelectListItem>)
-                {
-                    var selectedId = ViewBag.UsernameIdKey as string;
-                    if (item.Value == selectedId)
-                    {
-                        <option value="@item.Value" selected>
-                            @item.Text
-                        </option>
-                    }
-                    else
-                    {
-                        <option value="@item.Value">
-                            @item.Text
-                        </option>
-                    }
-                }
-            </select>
-            <span class="error">
-                @Html.ValidationMessageFor(m => m.UserName)
-            </span>
+
+        <div class="input-field-common mb-[20px]">
+            <div class="input-field-common filteroutlinepadding">
+                <label for="date" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                    @CRS.ADMIN.APPLICATION.Resources.Resource.ClubName
+                </label>
+                @Html.TextBox("ClubName4", Model.ClubName, new
+           {
+               @class = "w-full",
+               @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.ClubName,
+               @autocomplete = "off",
+               @type = "text"
+           })
+
+                <span class="error">
+                    @Html.ValidationMessageFor(m => m.ClubName)
+                </span>
+            </div>
         </div>
+
         <div class="input-field-common filteroutlinepadding">
             <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
-                @CRS.ADMIN.APPLICATION.Resources.Resource.Transfer_Type
+                @CRS.ADMIN.APPLICATION.Resources.Resource.PaymentMethod
             </label>
-            <select id="large" name="TransferTypeId" class=" default_select select-common block w-full "
+            <select id="large" name="PaymentMethodId4" class=" default_select select-common block w-full "
                     style="width: 100%;">
-                @foreach (var item in ViewBag.TransferTypeIdList as IEnumerable<SelectListItem>)
+                @foreach (var item in ViewBag.CLUBTOADMINPaymentMethodListIdList as IEnumerable<SelectListItem>)
                 {
-                    var selectedId = ViewBag.TransferTypeIdKey as string;
+                    var selectedId = Model.PaymentMethodId as string;
                     if (item.Value == selectedId)
                     {
                         <option value="@item.Value" selected>
@@ -109,7 +100,7 @@
                 }
             </select>
             <span class="error">
-                @Html.ValidationMessageFor(m => m.TransferTypeId)
+                @Html.ValidationMessageFor(m => m.PaymentMethodId)
             </span>
         </div>
 
@@ -118,14 +109,15 @@
                 <label for="date" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
                     @CRS.ADMIN.APPLICATION.Resources.Resource.From_Date
                 </label>
-                @Html.TextBoxFor(model => model.FromDate, new
+                @Html.TextBox("FromDate4", Model.FromDate, new
                {
-               @class = "w-full",
-               @placeholder = "YYYY/MM/DD",
-               @autocomplete = "off",
-               @type = "text",
-                 @readonly = "readonly"
-                  })
+                   @class = "w-full",
+                   @placeholder = "YYYY/MM/DD",
+                   @autocomplete = "off",
+                   @type = "text",
+                   @readonly = "readonly",
+                   @id = "FromDate4"
+               })
                 <span class="error">
                     @Html.ValidationMessageFor(m => m.FromDate)
                 </span>
@@ -136,20 +128,22 @@
                 <label for="date" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
                     @CRS.ADMIN.APPLICATION.Resources.Resource.To_Date
                 </label>
-                @Html.TextBoxFor(model => model.ToDate, new
-           {
-               @class = "w-full",
-               @placeholder = "YYYY/MM/DD",
-               @autocomplete = "off",
-               @type = "text",
-                 @readonly = "readonly"
+                @Html.TextBox("ToDate4", Model.ToDate, new
+                  {
+                      @class = "w-full",
+                      @placeholder = "YYYY/MM/DD",
+                      @autocomplete = "off",
+                      @type = "text",
+                      @readonly = "readonly",
+                      @id = "ToDate4"
                   })
+
                 <span class="error">
                     @Html.ValidationMessageFor(m => m.ToDate)
                 </span>
             </div>
         </div>
-
+        <br />
         <div>
             <div class="py-4 flex justify-end">
                 <div class="flex gap-6">
@@ -184,7 +178,7 @@
                 </th>
                 <th scope="col" class="p-[12px]">
                     <div class="flex w-max">
-                        @CRS.ADMIN.APPLICATION.Resources.Resource.Transaction_ID
+                        @CRS.ADMIN.APPLICATION.Resources.Resource.RequestId
                         <div class="relative pl-[5px]">
                             <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
                             <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
@@ -195,7 +189,7 @@
 
                 <th scope="col" class="p-[12px]">
                     <div class="flex w-max">
-                        @CRS.ADMIN.APPLICATION.Resources.Resource.Transaction_Date
+                        @CRS.ADMIN.APPLICATION.Resources.Resource.Requested_Date
                         <div class="relative pl-[5px]">
                             <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
                             <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
@@ -205,7 +199,7 @@
 
                 <th scope="col" class="p-[12px]">
                     <div class="flex w-max">
-                        @CRS.ADMIN.APPLICATION.Resources.Resource.Transaction_Type
+                        @CRS.ADMIN.APPLICATION.Resources.Resource.ClubName
                         <div class="relative pl-[5px]">
                             <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
                             <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
@@ -215,7 +209,7 @@
 
                 <th scope="col" class="p-[12px]">
                     <div class="flex w-max">
-                        @CRS.ADMIN.APPLICATION.Resources.Resource.User_Type
+                        @CRS.ADMIN.APPLICATION.Resources.Resource.PaymentMethod
                         <div class="relative pl-[5px]">
                             <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
                             <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
@@ -225,7 +219,7 @@
 
                 <th scope="col" class="p-[12px]">
                     <div class="flex w-max">
-                        @CRS.ADMIN.APPLICATION.Resources.Resource.From_User
+                        @CRS.ADMIN.APPLICATION.Resources.Resource.AmountTransferred
                         <div class="relative pl-[5px]">
                             <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
                             <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
@@ -234,7 +228,7 @@
                 </th>
                 <th scope="col" class="p-[12px]">
                     <div class="flex w-max">
-                        @CRS.ADMIN.APPLICATION.Resources.Resource.To_User
+                        @CRS.ADMIN.APPLICATION.Resources.Resource.Status
                         <div class="relative pl-[5px]">
                             <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
                             <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
@@ -243,51 +237,87 @@
                 </th>
                 <th scope="col" class="p-[12px]">
                     <div class="flex w-max">
-                        @CRS.ADMIN.APPLICATION.Resources.Resource.Points
+                        @CRS.ADMIN.APPLICATION.Resources.Resource.Remarks
                         <div class="relative pl-[5px]">
                             <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
                             <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
                         </div>
                     </div>
                 </th>
-
-
+                <th scope="col" class="p-[12px]">
+                    <div class="flex w-max">
+                        @CRS.ADMIN.APPLICATION.Resources.Resource.UpdatedBy
+                        <div class="relative pl-[5px]">
+                            <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                            <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                        </div>
+                    </div>
+                </th>
+                <th scope="col" class="p-[12px]">
+                    <div class="flex w-max">
+                        @CRS.ADMIN.APPLICATION.Resources.Resource.UpdatedDate
+                        <div class="relative pl-[5px]">
+                            <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                            <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                        </div>
+                    </div>
+                </th>
+                <th scope="col" class="p-[12px]">
+                    <div class="flex w-max">
+                        @CRS.ADMIN.APPLICATION.Resources.Resource.Action
+                        <div class="relative pl-[5px]">
+                            <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                            <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                        </div>
+                    </div>
+                </th>
             </tr>
         </thead>
         <tbody>
             @{
-                if (Model.PointsTansferReportList.Count > 0)
+                if (Model.PointRequestsListModel.Count > 0)
                 {
                     int SN = 1;
-                    foreach (var item in Model.PointsTansferReportList)
+                    foreach (var item in Model.PointRequestsListModel)
                     {
                         <tr class="bg-white border-b ">
                             <td class="p-[12px]">
                                 @SN
                             </td>
                             <td class="p-[12px]">
-                                @item.TransactionId
+                                @item.RequestId
                             </td>
                             <td class="p-[12px]">
-                                @item.TransactionDate
+                                @item.RequestedDate
                             </td>
                             <td class="p-[12px]">
-                                @item.TransactionType
+                                @item.ClubName
                             </td>
                             <td class="p-[12px]">
-                                @item.UserType
+                                @item.PaymentMethod
                             </td>
                             <td class="p-[12px]">
-                                @item.FromUser
+                                @item.AmountTransferred
                             </td>
                             <td class="p-[12px]">
-                                @item.ToUser
+                                @item.Status
                             </td>
                             <td class="p-[12px]">
-                                @item.Points
+                                @item.Remarks
                             </td>
-
-
+                            <td class="p-[12px]">
+                                @item.UpdatedBy
+                            </td>
+                            <td class="p-[12px]">
+                                @item.UpdatedDate
+                            </td>
+                            <td class="p-[12px]">
+                                <i class="las la-window-close text-[24px] text-[#CB3F3F] cursor-pointer " data-modal-target="popup-modal-reject" data-modal-toggle="popup-modal-reject" alt=""
+                                   onclick="InitateRejectRequest('@item.AgentId', '@item.UserId', '@item.RequestId')" />
+                                <img src="/Content/assets_new/images/check-square.svg"
+                                     data-modal-target="popup-modal-accept"
+                                     data-modal-toggle="popup-modal-accept" alt="" class="cursor-pointer" onclick="InitateApproveRequest('@item.AgentId', '@item.UserId', '@item.RequestId')" />
+                            </td>
                         </tr>
                         SN++;
                     }
@@ -309,6 +339,109 @@
         </div>
         <div class="btn btn-secondary-box-shadow" id="next-btn">
             @CRS.ADMIN.APPLICATION.Resources.Resource.Next
+        </div>
+    </div>
+</div>
+
+<div id="popup-modal-accept" tabindex="-1"
+     class="fixed top-0 left-0 right-0 z-50 hidden p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
+    <div class="relative w-full max-w-md max-h-full">
+        <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+            <div class="p-6 text-start">
+                <div class=" pb-[11px] border-b border-[rgba(44, 44, 44, 0.08)] text-base font-semibold text-secondary-100">
+                    @CRS.ADMIN.APPLICATION.Resources.Resource.Confirmation
+                    <button type="button"
+                            class="absolute top-4 right-3 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                            data-modal-hide="popup-modal-accept">
+                        <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                             viewBox="0 0 14 14">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                  d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                        </svg>
+                    </button>
+                </div>
+                <div>
+                    <div class="pt-[20px] text-base text-secondary-100" id="AcceptRequestId">
+                        @CRS.ADMIN.APPLICATION.Resources.Resource.RecommendationAcceptWarnMsg
+                    </div>
+                    <div class="flex gap-2 justify-end mt-[45px]">
+                        <input id="RejectAgentId" value="" hidden />
+                        <input id="RejectUserId" value="" hidden />
+                        <input id="RejectTxnId" value="" hidden />
+                        <div class="input-field-common">
+                            <label for="ConfirmationAdminRemark" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Remarks
+                                <br>
+                                <textarea id="ConfirmationAdminRemark" name="ConfirmationAdminRemark" rows="4" cols="50">
+                                </textarea>
+                            </label>
+                        </div>
+                        <div>
+                            <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Image
+                            </label>
+                            <div class="file-upload-common">
+                                <label for="file_input_cover" class="custom-file-upload bg-[#CC527A] w-[123px] flex-none ">
+                                    <span>  @CRS.ADMIN.APPLICATION.Resources.Resource.Choose_Images</span>
+                                </label>
+                                <input id="file_input_cover" class="file-input" name="ConfirmationImageURL" type="file" value="" style="display:none;">
+                                <p id="file_name_logo"
+                                   class="file-name w-max h-[23px] overflow-hidden pl-2 text-xs text-[#686868] leading-[25px]">
+                                    @CRS.ADMIN.APPLICATION.Resources.Resource.No_File_Choosen
+                                </p>
+                            </div>
+                            <div class="text-xs text-error mt-[8px]">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Note:
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Image_should_be_in_HEIF_format
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.and_Maximum_file_size_is_5_MB .
+                            </div>
+                        </div>
+                        <div class="btn btn-secondary w-[110px]" data-modal-hide="popup-modal-accept">@CRS.ADMIN.APPLICATION.Resources.Resource.Cancel</div>
+                        <div class="btn btn-primary w-[110px]" onclick="ApproveClubPointRequestFunction()">@CRS.ADMIN.APPLICATION.Resources.Resource.Confirm</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="popup-modal-reject" tabindex="-1"
+     class="fixed top-0 left-0 right-0 z-50 hidden p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
+    <div class="relative w-full max-w-md max-h-full">
+        <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+            <div class="p-6 text-start">
+                <div class=" pb-[11px] border-b border-[rgba(44, 44, 44, 0.08)] text-base font-semibold text-secondary-100">
+                    @CRS.ADMIN.APPLICATION.Resources.Resource.Confirmation
+                    <button type="button"
+                            class="absolute top-4 right-3 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                            data-modal-hide="popup-modal-reject">
+                        <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                             viewBox="0 0 14 14">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                  d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                        </svg>
+                    </button>
+                </div>
+                <div>
+                    <div class="pt-[20px] text-base  text-secondary-100">
+                        @CRS.ADMIN.APPLICATION.Resources.Resource.RecommendationAcceptWarnMsg
+                    </div>
+                    <div class="flex gap-2 justify-end mt-[45px]">
+                        <input id="ConfirmationAgentId" value="" hidden />
+                        <input id="ConfirmationUserId" value="" hidden />
+                        <input id="ConfirmationTxnId" value="" hidden />
+                        <div class="input-field-common">
+                            <label for="RejectAdminRemark" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Remarks
+                                <br>
+                                <textarea id="RejectAdminRemark" name="RejectAdminRemark" rows="4" cols="50">
+                                 </textarea>
+                            </label>
+                        </div>
+                        <div class="btn btn-secondary w-[110px]" data-modal-hide="popup-modal-accept">@CRS.ADMIN.APPLICATION.Resources.Resource.Cancel</div>
+                        <div class="btn btn-primary w-[110px]" onclick="RejectClubPointRequestFunction()">@CRS.ADMIN.APPLICATION.Resources.Resource.Confirm</div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
