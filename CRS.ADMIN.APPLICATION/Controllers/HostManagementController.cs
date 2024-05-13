@@ -87,7 +87,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             ViewBag.BirthPlaceDdl = ApplicationUtilities.SetDDLValue(DDLHelper.LoadDropdownList("BIRTHPLACE") as Dictionary<string, string>, null, "--- Select ---");
             ViewBag.heightlistddl = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("HEIGHTLIST") as Dictionary<string, string>, null, "--- Select ---");
             ViewBag.BirthPlacekey = ResponseModel.ManageHostModel.Address;
-            ViewBag.heightlistkey= ResponseModel.ManageHostModel.Height;
+            ViewBag.heightlistkey = ResponseModel.ManageHostModel.Height;
             ViewBag.StartIndex = StartIndex;
             ViewBag.PageSize = PageSize;
             ViewBag.TotalData = dbResponse != null && dbResponse.Any() ? dbResponse[0].TotalRecords : 0;
@@ -144,15 +144,18 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 {
                     DateTime dob = DateTime.ParseExact(dbResponse.DOB, "yyyy-MM-dd", CultureInfo.InvariantCulture);
                     model.BirthYear = dob.Year.ToString();
-                    model.BirthMonth = dob.Month.ToString().PadLeft(2,'0');
+                    model.BirthMonth = dob.Month.ToString().PadLeft(2, '0');
                     model.BirthDate = dob.Day.ToString().PadLeft(2, '0');
-                }              
+                }
                 model.ConstellationGroup = model.ConstellationGroup?.EncryptParameter();
                 model.BloodType = model.BloodType?.EncryptParameter();
                 model.PreviousOccupation = model.PreviousOccupation?.EncryptParameter();
                 model.LiquorStrength = model.LiquorStrength?.EncryptParameter();
                 model.HostLogo = dbResponse.ImagePath;
+                model.HostIconImage = dbResponse.IconImagePath;
                 model.Rank = dbResponse.Rank.EncryptParameter();
+                model.Address = dbResponse.Address.EncryptParameter();
+                model.Height = dbResponse.Height.EncryptParameter();
                 model.HostIdentityDataModel.ForEach(x => x.IdentityLabel = (!string.IsNullOrEmpty(culture) && culture == "en") ? x.IdentityLabelEnglish : x.IdentityLabelJapanese);
                 model.HostIdentityDataModel.ForEach(x => x.IdentityType = x.IdentityType.EncryptParameter());
                 model.HostIdentityDataModel.ForEach(x => x.IdentityValue = x.IdentityValue.EncryptParameter());
@@ -165,7 +168,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
 
         [HttpPost, ValidateAntiForgeryToken]
         public ActionResult ManageHost(ManageHostModel Model, string ZodiacSignsDDLKey, string BloodGroupDDLKey,
-            string OccupationDDLKey, string LiquorStrengthDDLKey, string BirthYearKey, string BirthMonthKey, string BirthDayKey, HttpPostedFileBase HostLogoFile,HttpPostedFileBase HostIconImageFile)
+            string OccupationDDLKey, string LiquorStrengthDDLKey, string BirthYearKey, string BirthMonthKey, string BirthDayKey, HttpPostedFileBase HostLogoFile, HttpPostedFileBase HostIconImageFile)
         {
             //Model.BirthYear = BirthYearKey;
             //Model.BirthMonth = BirthMonthKey;
@@ -180,12 +183,9 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             if (!string.IsNullOrEmpty(BloodGroupDDLKey?.DecryptParameter())) ModelState.Remove("BloodType");
             if (!string.IsNullOrEmpty(OccupationDDLKey?.DecryptParameter())) ModelState.Remove("PreviousOccupation");
             if (!string.IsNullOrEmpty(LiquorStrengthDDLKey?.DecryptParameter())) ModelState.Remove("LiquorStrength");
-            if (!string.IsNullOrEmpty(BirthYearKey) && !string.IsNullOrEmpty(BirthMonthKey) && !string.IsNullOrEmpty(BirthDayKey))
+            if (!string.IsNullOrEmpty(Model.DOB))
             {
-                if (BirthYearKey != "YYYY" && BirthMonthKey != "MM" && BirthDayKey != "DD")
-                {
-                    ModelState.Remove("DOB");
-                }
+                ModelState.Remove("DOB");
             }
             if (HostLogoFile == null)
             {
@@ -273,9 +273,9 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 if (allowedContentType.Contains(contentType.ToLower()))
                 {
                     var dateTime = DateTime.Now.ToString("yyyyMMddHHmmssffff");
-                    string fileName = "host_pi_" + dateTime + ext.ToLower();
-                    ImagePath2 = Path.Combine(Server.MapPath("~/Content/UserUpload/Host"), fileName);
-                    Model.HostIconImage = "/Content/UserUpload/Host/" + fileName;
+                    string fileName_icon = "host_pi_" + dateTime + ext.ToLower();
+                    ImagePath2 = Path.Combine(Server.MapPath("~/Content/UserUpload/Host"), fileName_icon);
+                    Model.HostIconImage = "/Content/UserUpload/Host/" + fileName_icon;
                 }
                 else
                 {
@@ -312,7 +312,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 requestCommon.LiquorStrength = LiquorStrengthDDLKey?.DecryptParameter();
                 requestCommon.Address = Model.Address?.DecryptParameter();
                 requestCommon.Height = Model.Height?.DecryptParameter();
-                requestCommon.DOB = string.Concat(BirthYearKey, '-', BirthMonthKey, '-', BirthDayKey);
+                requestCommon.DOB = Model.DOB; //string.Concat(BirthYearKey, '-', BirthMonthKey, '-', BirthDayKey);
                 requestCommon.ActionUser = ApplicationUtilities.GetSessionValue("Username").ToString();
                 requestCommon.ActionIP = ApplicationUtilities.GetIP();
                 requestCommon.ImagePath = Model.HostLogo;

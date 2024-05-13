@@ -81,6 +81,7 @@ namespace CRS.ADMIN.REPOSITORY.HostManagement
                     Rank = _DAO.ParseColumnValue(dbResponse, "Rank").ToString(),
                     Line = _DAO.ParseColumnValue(dbResponse, "Line").ToString(),
                     ImagePath = _DAO.ParseColumnValue(dbResponse, "ImagePath").ToString(),
+                    IconImagePath = _DAO.ParseColumnValue(dbResponse, "IconImagePath").ToString(),
                     Address = _DAO.ParseColumnValue(dbResponse, "Address").ToString(),
                     HostNameJapanese = _DAO.ParseColumnValue(dbResponse, "HostNameJapanese").ToString(),
                     HostIntroduction = _DAO.ParseColumnValue(dbResponse, "HostIntroduction").ToString(),
