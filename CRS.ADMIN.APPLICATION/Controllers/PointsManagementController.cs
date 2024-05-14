@@ -97,11 +97,13 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 SearchFilter = SearchFilter4,
                 ClubName = ClubName4,
                 FromDate = FromDate4,
-                ToDate = ToDate4
+                ToDate = ToDate4                
             };
             PointRequestListFilterCommon getPointRequest = objPointsManagementModel.PointRequestCommonModel.MapObject<PointRequestListFilterCommon>();
             getPointRequest.LocationId = getPointRequest?.LocationId?.DecryptParameter() ?? string.Empty;
             getPointRequest.PaymentMethodId = getPointRequest?.PaymentMethodId?.DecryptParameter() ?? string.Empty;
+            getPointRequest.Skip = StartIndex4;
+            getPointRequest.Take = PageSize4;
             var getPointRequestListDBResponse = _BUSS.GetPointRequestList(getPointRequest);
             objPointsManagementModel.PointRequestCommonModel.PointRequestsListModel = getPointRequestListDBResponse.MapObjects<PointRequestsListModel>();
             objPointsManagementModel.PointRequestCommonModel.PointRequestsListModel.ForEach(x =>
@@ -109,7 +111,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 x.AgentId = x?.AgentId?.EncryptParameter();
                 x.UserId = x?.UserId?.EncryptParameter();
             });
-            ViewBag.TotalData4 = objPointsManagementModel?.PointRequestCommonModel?.PointRequestsListModel?.FirstOrDefault().RowsTotal ?? "0";
+            ViewBag.TotalData4 = objPointsManagementModel?.PointRequestCommonModel?.PointRequestsListModel.Count > 0 ? objPointsManagementModel?.PointRequestCommonModel?.PointRequestsListModel?.FirstOrDefault().RowsTotal ?? "0" : "0";
             return View(objPointsManagementModel);
         }
 
