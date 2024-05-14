@@ -493,7 +493,6 @@
 
 
           $('#large[name="UserTypeId"]').change(function () {
-          debugger;
               var UserTypeId = $(this).find("option:selected").val().trim();
               $('#large[name="UserId"]').prop("disabled", true);
             $.ajax({
@@ -522,7 +521,6 @@
             return false;
           });
         $('#large[name="UserType"]').change(function () {
-            debugger;
             var UserTypeId = $(this).find("option:selected").val().trim();
             $('#large[name="UserName"]').prop("disabled", true);
               $.ajax({
@@ -615,7 +613,6 @@
                 var transfertype = $("#TransferTypeId").val();
                 var FromDate = $("#FromDate").val();
                 var ToDate = $("#ToDate").val();
-                debugger
                 let URL = "/PointsManagement/PointsTransferList?UserTypeId=" + usertypeid + "&UserName=" + username + "&TransferTypeId=" + transfertype + "&FromDate=" + FromDate + "&ToDate=" + ToDate;
                 let search_filter = $('#default-search').val();
                 URL = addQueryParam(URL, 'SearchFilter', search_filter);
@@ -762,7 +759,6 @@
     </script>
     <script>
         function InitateRejectRequest(AgentId, UserId, RequestId) {
-            debugger;
             $('#RejectAgentId').val(AgentId);
             $('#RejectUserId').val(UserId);
             $('#RejectTxnId').val(RequestId);
@@ -808,7 +804,6 @@
         }
 
         function RejectClubPointRequestFunction() {
-            debugger;
             let { AgentId, UserId, TxnId, AdminRemark } = {
                 AgentId: $('#RejectAgentId').val(),
                 UserId: $('#RejectUserId').val(),
