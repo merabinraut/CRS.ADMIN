@@ -24,6 +24,7 @@
         public string Remarks { get; set; }
         public string UpdatedBy { get; set; }
         public string UpdatedDate { get; set; }
+        public string RowsTotal { get; set; }
     }
 
     public class ManageClubPointRequestCommon : Common

@@ -1267,6 +1267,12 @@
     <value>Point Requests</value>
     <comment>Points Management</comment>
   </data>
+  <data name="PointRequestAcceptMessage" xml:space="preserve">
+    <value>Are you sure you want to approve this request ?</value>
+  </data>
+  <data name="PointRequestRejectMessage" xml:space="preserve">
+    <value>Are you sure you want to reject this request ?</value>
+  </data>
   <data name="Points" xml:space="preserve">
     <value>Points</value>
     <comment>Points Setup</comment>

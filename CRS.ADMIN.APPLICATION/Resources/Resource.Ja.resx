@@ -1274,6 +1274,12 @@
     <value>ポイントリクエスト</value>
     <comment>Points Management</comment>
   </data>
+  <data name="PointRequestAcceptMessage" xml:space="preserve">
+    <value>のこのリクエストを承認してもよろしいですか？</value>
+  </data>
+  <data name="PointRequestRejectMessage" xml:space="preserve">
+    <value>このリクエストを拒否してもよろしいですか？</value>
+  </data>
   <data name="Points" xml:space="preserve">
     <value>ポイント</value>
     <comment>Points Setup</comment>

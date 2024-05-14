@@ -88,13 +88,12 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             ViewBag.TotalData = dbResponse != null && dbResponse.Any() ? dbResponse[0].TotalRecords : 0;
             ViewBag.TotalData2 = 0;
             ViewBag.TotalData3 = 0;
-            ViewBag.TotalData4 = 0;
             objPointsManagementModel.FromDate = FromDate;
             objPointsManagementModel.ToDate = ToDate;
             objPointsManagementModel.PointRequestCommonModel = new PointRequestCommonModel()
             {
-                LocationId = LocationId4?.DecryptParameter() ?? string.Empty,
-                PaymentMethodId = PaymentMethodId4?.DecryptParameter() ?? string.Empty,
+                LocationId = LocationId4,
+                PaymentMethodId = PaymentMethodId4,
                 SearchFilter = SearchFilter4,
                 ClubName = ClubName4,
                 FromDate = FromDate4,
@@ -110,6 +109,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 x.AgentId = x?.AgentId?.EncryptParameter();
                 x.UserId = x?.UserId?.EncryptParameter();
             });
+            ViewBag.TotalData4 = objPointsManagementModel?.PointRequestCommonModel?.PointRequestsListModel?.FirstOrDefault().RowsTotal ?? "0";
             return View(objPointsManagementModel);
         }
 

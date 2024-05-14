@@ -2689,6 +2689,24 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to approve this request ?.
+        /// </summary>
+        public static string PointRequestAcceptMessage {
+            get {
+                return ResourceManager.GetString("PointRequestAcceptMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to reject this request ?.
+        /// </summary>
+        public static string PointRequestRejectMessage {
+            get {
+                return ResourceManager.GetString("PointRequestRejectMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Points.
         /// </summary>
         public static string Points {

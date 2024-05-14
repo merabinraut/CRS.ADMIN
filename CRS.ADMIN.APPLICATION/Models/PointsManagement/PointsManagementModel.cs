@@ -86,5 +86,6 @@ namespace CRS.ADMIN.APPLICATION.Models.PointsManagement
         public string Remarks { get; set; }
         public string UpdatedBy { get; set; }
         public string UpdatedDate { get; set; }
+        public string RowsTotal { get; set; }
     }
 }

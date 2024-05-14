@@ -588,9 +588,17 @@
                 const page_size4 = @ViewBag.PageSize4;
                 const total_data4 = @ViewBag.TotalData4;
                 const start_index_val4 = @ViewBag.StartIndex4;
-                let URL4 = "/ClubManagement/ClubList";
+                var LocationId4 = $("#LocationId4").val();
+                var ClubName4 = $("#ClubName4").val();
+                var PaymentMethodId4 = $("#PaymentMethodId4").val();
+                var FromDate4 = $("#FromDate4").val();
+                var ToDate4 = $("#ToDate4").val();
+                let URL4 = "/PointsManagement/PointsTransferList?FromDate4=" + FromDate4 + "&ToDate4=" + ToDate4 +
+                    '&PaymentMethodId4=' + PaymentMethodId4 + '&ClubName4=' + ClubName4 +
+                    '&LocationId4=' + LocationId4;
+
                 let search_filter4 = $('#default-search').val();
-                URL4 = addQueryParam2(URL4, 'SearchFilter', search_filter3, 'value', 'pr');
+                URL4 = addQueryParam2(URL4, 'SearchFilter', search_filter4, 'value', 'pr');
                 dynamicStartIndexLabel = "StartIndex4";
                 dynamicPageSizeLabel = "PageSize4";
                 LoadPagination(page_size4, total_data4, start_index_val4, URL4, 'pagination-id-4', 'prev-btn-4', 'next-btn-4', 'ShowEntries-Id-4', 'Entries-Id-4');
@@ -736,6 +744,7 @@
 
     <script>
         function CancelFunction() {
+            history.replaceState({}, document.title, window.location.pathname);
             location.reload();
         }
         document.getElementById('tab1Link').style.color = '#D75A8B';
@@ -776,11 +785,12 @@
                 TxnId: $('#ConfirmationTxnId').val(),
                 AdminRemark: $('#ConfirmationAdminRemark').val()
             };
-            let data = {
-                AgentId, UserId, TxnId, AdminRemark, __RequestVerificationToken: $('input[name="__RequestVerificationToken"]').val(), Status: 'S'
-            }
-            var jsonData = JSON.stringify(data);
-            formData.append('data', jsonData);
+            formData.append('__RequestVerificationToken', $('input[name="__RequestVerificationToken"]').val());
+            formData.append('AgentId', AgentId);
+            formData.append('UserId', UserId);
+            formData.append('TxnId', TxnId);
+            formData.append('AdminRemark', AdminRemark);
+            formData.append('Status', 'S');
             $.ajax({
                 type: 'POST',
                 async: true,
