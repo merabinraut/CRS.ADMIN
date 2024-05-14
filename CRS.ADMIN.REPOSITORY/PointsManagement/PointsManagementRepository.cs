@@ -96,15 +96,14 @@ namespace CRS.ADMIN.REPOSITORY.PointsManagement
         {
             string SQL = "EXEC sproc_admin_manage_club_to_admin_payment_transaction ";
             SQL += "@AgentId=" + _DAO.FilterString(request.AgentId);
-            SQL += "@UserId=" + _DAO.FilterString(request.UserId);
-            SQL += "@TxnId=" + _DAO.FilterString(request.TxnId);
-            SQL += "@Status=" + _DAO.FilterString(request.Status);
-            SQL += "@AdminRemark=N" + _DAO.FilterString(request.AdminRemark);
-            SQL += "@ImageURL=" + _DAO.FilterString(request.ImageURL);
-            SQL += "@ImageURL=" + _DAO.FilterString(request.ImageURL);
-            SQL += "@ActionUser=" + _DAO.FilterString(request.ActionUser);
-            SQL += "@ActionIP=" + _DAO.FilterString(request.ActionIP);
-            SQL += "@ActionPlatform=" + _DAO.FilterString(request.ActionPlatform);
+            SQL += ",@UserId=" + _DAO.FilterString(request.UserId);
+            SQL += ",@TxnId=" + _DAO.FilterString(request.TxnId);
+            SQL += ",@Status=" + _DAO.FilterString(request.Status);
+            SQL += ",@AdminRemark=N" + _DAO.FilterString(request.AdminRemark);
+            SQL += ",@ImageURL=" + _DAO.FilterString(request.ImageURL);
+            SQL += ",@ActionUser=" + _DAO.FilterString(request.ActionUser);
+            SQL += ",@ActionIP=" + _DAO.FilterString(request.ActionIP);
+            SQL += ",@ActionPlatform=" + _DAO.FilterString(request.ActionPlatform);
             return _DAO.ParseCommonDbResponse(SQL);
         }
         #endregion

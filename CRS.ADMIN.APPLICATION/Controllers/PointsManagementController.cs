@@ -272,7 +272,6 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             var dbRequest = request.MapObject<ManageClubPointRequestCommon>();
             dbRequest.AgentId = dbRequest?.AgentId?.DecryptParameter() ?? string.Empty;
             dbRequest.UserId = dbRequest?.UserId?.DecryptParameter() ?? string.Empty;
-            dbRequest.TxnId = dbRequest?.TxnId?.DecryptParameter() ?? string.Empty;
             if (string.IsNullOrEmpty(dbRequest.AgentId) ||
                 string.IsNullOrEmpty(dbRequest.UserId) ||
                 string.IsNullOrEmpty(dbRequest.TxnId))
