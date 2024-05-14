@@ -335,6 +335,10 @@
     <value>CEOフルネーム</value>
     <comment>ClubManagement</comment>
   </data>
+  <data name="Choose Icons" xml:space="preserve">
+    <value>アイコン</value>
+    <comment>Host Management</comment>
+  </data>
   <data name="Choose Images" xml:space="preserve">
     <value>画像の選択</value>
     <comment>Location Management</comment>
@@ -788,6 +792,10 @@
   </data>
   <data name="HotSkills" xml:space="preserve">
     <value>ホットスキル</value>
+    <comment>Host Management</comment>
+  </data>
+  <data name="Icon Image" xml:space="preserve">
+    <value>アイコン画像</value>
     <comment>Host Management</comment>
   </data>
   <data name="Image" xml:space="preserve">

@@ -18,6 +18,9 @@ namespace CRS.ADMIN.SHARED.HostManagement
         public string Ratings { get; set; }
         public string TotalVisitors { get; set; }
         public string HostImage { get; set; }
+        public string Address { get; set; }
+        public string Height { get; set; }
+      
     }
 
     public class ManageHostCommon : Common
@@ -38,6 +41,7 @@ namespace CRS.ADMIN.SHARED.HostManagement
         public string TwitterLink { get; set; }
         public string InstagramLink { get; set; }
         public string ImagePath { get; set; }
+        public string IconImagePath { get; set; }
         public string Line { get; set; }
         public string Address { get; set; }
         public string HostNameJapanese { get; set; }
@@ -52,5 +56,6 @@ namespace CRS.ADMIN.SHARED.HostManagement
         public string IdentityValue { get; set; }
         public string IdentityDDLType { get; set; }
         public string IdentityDescription { get; set; }
+        public string InputType { get; set; }
     }
 }
