@@ -1,5 +1,6 @@
 ﻿using CRS.ADMIN.APPLICATION.Helper;
 using CRS.ADMIN.APPLICATION.Library;
+using CRS.ADMIN.APPLICATION.Models;
 using CRS.ADMIN.APPLICATION.Models.ClubManagement;
 using CRS.ADMIN.APPLICATION.Models.ClubManagerModel;
 using CRS.ADMIN.APPLICATION.Models.TagManagement;
@@ -12,6 +13,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
@@ -34,7 +36,6 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             string RenderId = "";
             var culture = Request.Cookies["culture"]?.Value;
             culture = string.IsNullOrEmpty(culture) ? "ja" : culture;
-            //var ss = GetPostalCodeInfo("1000001");
             var response = new ClubManagementCommonModel();
             if (TempData.ContainsKey("ManageClubModel")) response.ManageClubModel = TempData["ManageClubModel"] as ManageClubModel;
             else response.ManageClubModel = new ManageClubModel();
@@ -1376,6 +1377,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             {
                 item.AgentId = item.AgentId?.EncryptParameter();
                 item.GalleryId = item.GalleryId?.EncryptParameter();
+                item.ImagePath = ImageHelper.ProcessedImage(item.ImagePath);
             }
             ReturnModel.ManageGalleryImageModel.AgentId = ClubId;
             ViewBag.PopUpRenderValue = !string.IsNullOrEmpty(RenderId) ? RenderId : null;
@@ -1427,7 +1429,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
         }
 
         [HttpPost, ValidateAntiForgeryToken]
-        public ActionResult ManageGallery(ManageGalleryImageModel Model, HttpPostedFileBase Image_Path)
+        public async Task<ActionResult> ManageGallery(ManageGalleryImageModel Model, HttpPostedFileBase Image_Path)
         {
             var aId = Model.AgentId?.DecryptParameter();
 
@@ -1482,7 +1484,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                     }
                 }
             }
-            string ImagePath = "";
+            string fileName = string.Empty;
             var allowedContentType = AllowedImageContentType();
             if (Image_Path != null)
             {
@@ -1490,10 +1492,8 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 var ext = Path.GetExtension(Image_Path.FileName);
                 if (allowedContentType.Contains(contentType.ToLower()))
                 {
-                    var dateTime = DateTime.Now.ToString("yyyyMMddHHmmssffff");
-                    string fileName = "GalleryImage_" + dateTime + ext.ToLower();
-                    ImagePath = Path.Combine(Server.MapPath("~/Content/UserUpload/ClubManagement/Gallery"), fileName);
-                    Model.ImagePath = "/Content/UserUpload/ClubManagement/Gallery/" + fileName;
+                    fileName = $"{AWSBucketFolderNameModel.CLUB}/ClubGallery_{DateTime.Now.ToString("yyyyMMddHHmmssffff")}{ext.ToLower()}";
+                    Model.ImagePath = $"/{fileName}";
                 }
                 else
                 {
@@ -1516,8 +1516,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             var dbResponse = _BUSS.ManageGalleryImage(dbRequest);
             if (dbResponse != null && dbResponse.Code == 0)
             {
-                if (Image_Path != null) ApplicationUtilities.ResizeImage(Image_Path, ImagePath);
-                //if (Image_Path != null) Image_Path.SaveAs(ImagePath);
+                if (Image_Path != null) await ImageHelper.ImageUpload(fileName, Image_Path);
                 this.AddNotificationMessage(new NotificationModel()
                 {
                     NotificationType = dbResponse.Code == ResponseCode.Success ? NotificationMessage.SUCCESS : NotificationMessage.INFORMATION,
