@@ -1,9 +1,9 @@
-﻿using CRS.ADMIN.APPLICATION.Library;
+﻿using CRS.ADMIN.APPLICATION.Helper;
+using CRS.ADMIN.APPLICATION.Library;
 using CRS.ADMIN.APPLICATION.Models.ReviewAndRatingsManagement;
 using CRS.ADMIN.BUSINESS.ReviewAndRatingsManagement;
 using CRS.ADMIN.SHARED;
 using CRS.ADMIN.SHARED.PaginationManagement;
-using DocumentFormat.OpenXml.Wordprocessing;
 using System.Linq;
 using System.Web.Mvc;
 
@@ -27,7 +27,12 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             if (reviewCommon != null && reviewCommon.Count > 0)
             {
                 reviewAndRatingsViewModel.Reviews = reviewCommon.MapObjects<ReviewModel>();
-                reviewAndRatingsViewModel.Reviews.ForEach(x => x.ReviewId = x.ReviewId.EncryptParameter());
+                reviewAndRatingsViewModel.Reviews.ForEach(x =>
+                    {
+                        x.ReviewId = x.ReviewId.EncryptParameter();
+                        x.UserImage = ImageHelper.ProcessedImage(x.UserImage);
+                    }
+                );
             }
             ViewBag.SearchFilter = searchText;
             ViewBag.StartIndex = StartIndex;

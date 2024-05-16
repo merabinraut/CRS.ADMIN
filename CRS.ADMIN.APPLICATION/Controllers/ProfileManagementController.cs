@@ -1,4 +1,6 @@
-﻿using CRS.ADMIN.APPLICATION.Library;
+﻿using CRS.ADMIN.APPLICATION.Helper;
+using CRS.ADMIN.APPLICATION.Library;
+using CRS.ADMIN.APPLICATION.Models;
 using CRS.ADMIN.APPLICATION.Models.UserProfileManagement;
 using CRS.ADMIN.BUSINESS.ProfileManagement;
 using CRS.ADMIN.SHARED;
@@ -6,6 +8,7 @@ using CRS.ADMIN.SHARED.ProfileManagement;
 using System;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
@@ -28,6 +31,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             };
             var data = _business.ShowUserProfile(common);
             var viewModel = data.MapObject<UserProfileModel>();
+            viewModel.ProfileImage = ImageHelper.ProcessedImage(viewModel.ProfileImage);
             return View(viewModel);
         }
 
@@ -123,7 +127,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
         }
 
         [HttpPost]
-        public JsonResult ChangeProfileImage(HttpPostedFileBase file)
+        public async Task<JsonResult> ChangeProfileImage(HttpPostedFileBase file)
         {
             var common = new UserProfileCommon();
             string FileLocationPath = "/Content/userupload/admin/";
@@ -138,13 +142,11 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 var contentType = file.ContentType;
                 var allowedContentType = new[] { "image/png", "image/jpeg", "image/HEIF", "image/heif" };
                 var ext = Path.GetExtension(file.FileName);
-                string filepath;
+                string fileName = string.Empty;
                 if (allowedContentType.Contains(contentType.ToLower()))
                 {
-                    string datet = DateTime.Now.ToString("yyyyMMddHHmmssffff");
-                    string myfilename = "AdminImg_" + datet + ext.ToLower();
-                    filepath = Path.Combine(Server.MapPath(FileLocationPath), myfilename);
-                    common.AdminLogoPath = "/Content/userupload/admin/" + myfilename;
+                    fileName = $"{AWSBucketFolderNameModel.ADMIN}/AdminProfileImage_{DateTime.Now.ToString("yyyyMMddHHmmssffff")}{ext.ToLower()}";
+                    common.AdminLogoPath = $"/{fileName}";
                 }
                 else
                 {
@@ -162,9 +164,8 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 var dbresp = _business.ChangeProfileImage(common);
                 if (dbresp.Code == 0)
                 {
-                    ApplicationUtilities.ResizeImage(file, filepath);
-                    Session["ProfileImage"] = common.AdminLogoPath;
-
+                    await ImageHelper.ImageUpload(fileName, file);
+                    Session["ProfileImage"] = ImageHelper.ProcessedImage(common.AdminLogoPath);
                     AddNotificationMessage(new NotificationModel()
                     {
                         NotificationType = NotificationMessage.SUCCESS,
