@@ -29,7 +29,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
         }
 
         [HttpGet]
-        public ActionResult PointsTransferList(string UserType = "",string UserName = "",string TransferTypeId = "",string FromDate = "",string ToDate = "", string SearchFilter = "", string value = "", int StartIndex = 0, int PageSize = 10, int StartIndex2 = 0, int PageSize2 = 10, int StartIndex3 = 0, int PageSize3 = 10, int StartIndex4 = 0, int PageSize4 = 10)
+        public ActionResult PointsTransferList(string UserType = "", string UserName = "", string TransferTypeId = "", string FromDate = "", string ToDate = "", string SearchFilter = "", string value = "", int StartIndex = 0, int PageSize = 10, int StartIndex2 = 0, int PageSize2 = 10, int StartIndex3 = 0, int PageSize3 = 10, int StartIndex4 = 0, int PageSize4 = 10, string SearchFilter4 = "", string LocationId4 = "", string ClubName4 = "", string PaymentMethodId4 = "", string FromDate4 = "", string ToDate4 = "")
         {
             ViewBag.SearchFilter = SearchFilter;
             Session["CurrentURL"] = "/PointsManagement/PointsTransferList";
@@ -46,36 +46,36 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             };
             ViewBag.UserTypeList = ApplicationUtilities.SetDDLValue(DDLHelper.LoadDropdownList("USERTYPELIST") as Dictionary<string, string>, null, "--- Select ---");
             ViewBag.TransferTypeIdList = ApplicationUtilities.SetDDLValue(DDLHelper.LoadDropdownList("TRANSACTIONTYPE") as Dictionary<string, string>, null, "--- Select ---");
+            ViewBag.LocationIdList = ApplicationUtilities.SetDDLValue(DDLHelper.LoadDropdownList("LOCATIONLIST") as Dictionary<string, string>, null, "--- Select ---");
+            ViewBag.CLUBTOADMINPaymentMethodListIdList = ApplicationUtilities.SetDDLValue(DDLHelper.LoadDropdownList("CLUBTOADMINPAYMENTMETHODLIST") as Dictionary<string, string>, null, "--- Select ---");
             var dictionaryempty = new Dictionary<string, string>();
-            if (string.IsNullOrEmpty( UserType))
+            if (string.IsNullOrEmpty(UserType))
             {
                 ViewBag.FilterUserList = ApplicationUtilities.SetDDLValue(dictionaryempty, null, "--- Select ---");
             }
             else
             {
-                ViewBag.FilterUserList = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("USERTYPENAME", UserType.DecryptParameter()) as Dictionary<string, string>, null,"--- Select ---");
+                ViewBag.FilterUserList = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("USERTYPENAME", UserType.DecryptParameter()) as Dictionary<string, string>, null, "--- Select ---");
             }
-            
+
             ViewBag.UserList = ApplicationUtilities.SetDDLValue(dictionaryempty, null, "--- Select ---");
             PointsManagementCommon Commonmodel = new PointsManagementCommon();
-            Commonmodel.UserType=!string.IsNullOrEmpty( UserType)? UserType.DecryptParameter():null;
-            Commonmodel.UserName = !string.IsNullOrEmpty(UserName) ? UserName.DecryptParameter(): null;
-            Commonmodel.TransferTypeId = !string.IsNullOrEmpty(TransferTypeId) ? TransferTypeId.DecryptParameter() : null; 
+            Commonmodel.UserType = !string.IsNullOrEmpty(UserType) ? UserType.DecryptParameter() : null;
+            Commonmodel.UserName = !string.IsNullOrEmpty(UserName) ? UserName.DecryptParameter() : null;
+            Commonmodel.TransferTypeId = !string.IsNullOrEmpty(TransferTypeId) ? TransferTypeId.DecryptParameter() : null;
             Commonmodel.FromDate = !string.IsNullOrEmpty(FromDate) ? FromDate : null;
             Commonmodel.ToDate = !string.IsNullOrEmpty(ToDate) ? ToDate : null;
-            ViewBag.UserTypeIdKey= !string.IsNullOrEmpty( UserType)? UserType : null;
+            ViewBag.UserTypeIdKey = !string.IsNullOrEmpty(UserType) ? UserType : null;
             ViewBag.UsernameIdKey = !string.IsNullOrEmpty(UserName) ? UserName : null;
             ViewBag.TransferTypeIdKey = !string.IsNullOrEmpty(TransferTypeId) ? TransferTypeId : null;
-            var dbResponse = _BUSS.GetPointTransferList(Commonmodel,dbRequest);
-            objPointsManagementModel.PointsTansferReportList = dbResponse.MapObjects<PointsTansferReportModel>();         
+            var dbResponse = _BUSS.GetPointTransferList(Commonmodel, dbRequest);
+            objPointsManagementModel.PointsTansferReportList = dbResponse.MapObjects<PointsTansferReportModel>();
             if (TempData.ContainsKey("ManagePointsModel")) objPointsManagementModel.ManagePointsTansfer = TempData["ManagePointsModel"] as PointsTansferModel;
             else objPointsManagementModel.ManagePointsTansfer = new PointsTansferModel();
             if (TempData.ContainsKey("ManagePointsRequestModel")) objPointsManagementModel.ManagePointsRequest = TempData["ManagePointsRequestModel"] as PointsRequestModel;
             else objPointsManagementModel.ManagePointsRequest = new PointsRequestModel();
             if (TempData.ContainsKey("RenderId")) RenderId = TempData["RenderId"].ToString();
-            //ViewBag.PointsCategoryList = ApplicationUtilities.SetDDLValue(dictionaryempty, null, "--- Select ---");
             ViewBag.PopUpRenderValue = !string.IsNullOrEmpty(RenderId) ? RenderId : null;
-            int defaultPageSize = 10;
             ViewBag.StartIndex = StartIndex;
             ViewBag.PageSize = PageSize;
             ViewBag.StartIndex2 = StartIndex2;
@@ -86,12 +86,33 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             ViewBag.PageSize4 = PageSize4;
             objPointsManagementModel.ListType = value;
             ViewBag.TotalData = dbResponse != null && dbResponse.Any() ? dbResponse[0].TotalRecords : 0;
-            ViewBag.TotalData2 =  0;
-            ViewBag.TotalData3 =0;
-            ViewBag.TotalData4 =  0;
+            ViewBag.TotalData2 = 0;
+            ViewBag.TotalData3 = 0;
             objPointsManagementModel.FromDate = FromDate;
             objPointsManagementModel.ToDate = ToDate;
-            return View(objPointsManagementModel);  
+            objPointsManagementModel.PointRequestCommonModel = new PointRequestCommonModel()
+            {
+                LocationId = LocationId4,
+                PaymentMethodId = PaymentMethodId4,
+                SearchFilter = SearchFilter4,
+                ClubName = ClubName4,
+                FromDate = FromDate4,
+                ToDate = ToDate4                
+            };
+            PointRequestListFilterCommon getPointRequest = objPointsManagementModel.PointRequestCommonModel.MapObject<PointRequestListFilterCommon>();
+            getPointRequest.LocationId = getPointRequest?.LocationId?.DecryptParameter() ?? string.Empty;
+            getPointRequest.PaymentMethodId = getPointRequest?.PaymentMethodId?.DecryptParameter() ?? string.Empty;
+            getPointRequest.Skip = StartIndex4;
+            getPointRequest.Take = PageSize4;
+            var getPointRequestListDBResponse = _BUSS.GetPointRequestList(getPointRequest);
+            objPointsManagementModel.PointRequestCommonModel.PointRequestsListModel = getPointRequestListDBResponse.MapObjects<PointRequestsListModel>();
+            objPointsManagementModel.PointRequestCommonModel.PointRequestsListModel.ForEach(x =>
+            {
+                x.AgentId = x?.AgentId?.EncryptParameter();
+                x.UserId = x?.UserId?.EncryptParameter();
+            });
+            ViewBag.TotalData4 = objPointsManagementModel?.PointRequestCommonModel?.PointRequestsListModel.Count > 0 ? objPointsManagementModel?.PointRequestCommonModel?.PointRequestsListModel?.FirstOrDefault().RowsTotal ?? "0" : "0";
+            return View(objPointsManagementModel);
         }
 
         //[HttpGet]
@@ -108,13 +129,13 @@ namespace CRS.ADMIN.APPLICATION.Controllers
         [HttpPost, ValidateAntiForgeryToken]
         public ActionResult ManagePoints(PointsTansferModel objPointsTansferModel, HttpPostedFileBase Image_Certificate)
         {
-           
+
             var culture = System.Threading.Thread.CurrentThread.CurrentCulture.ToString();
             string ErrorMessage = string.Empty;
             string ImageCertificatePath = "";
             if (ModelState.IsValid)
             {
-                if (Image_Certificate == null )
+                if (Image_Certificate == null)
                 {
                     bool allowRedirect = false;
 
@@ -138,7 +159,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                     }
                 }
                 string dateTime = "";
-                  bool allowRedirectfile = false;
+                bool allowRedirectfile = false;
                 var allowedContentType = AllowedImageContentType();
                 if (Image_Certificate != null)
                 {
@@ -173,7 +194,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 if (dbResponse != null && dbResponse.Code == 0)
                 {
                     if (Image_Certificate != null) ApplicationUtilities.ResizeImage(Image_Certificate, ImageCertificatePath);
-                   
+
                     this.AddNotificationMessage(new NotificationModel()
                     {
                         NotificationType = dbResponse.Code == ResponseCode.Success ? NotificationMessage.SUCCESS : NotificationMessage.INFORMATION,
@@ -202,7 +223,6 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             return RedirectToAction("PointsTransferList", "PointsManagement");
         }
 
-
         [HttpPost, ValidateAntiForgeryToken]
         public ActionResult ManagePointsRequest(PointsRequestModel objPointsRequestModel)
         {
@@ -211,7 +231,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             string ErrorMessage = string.Empty;
             string ImageCertificatePath = "";
             if (ModelState.IsValid)
-            {                                             
+            {
                 PointsRequestCommon commonModel = objPointsRequestModel.MapObject<PointsRequestCommon>();
                 //commonModel.ActionUser = ApplicationUtilities.GetSessionValue("Username").ToString();
                 commonModel.ActionUser = ApplicationUtilities.GetSessionValue("Userid").ToString().DecryptParameter();
@@ -219,7 +239,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 var dbResponse = _BUSS.ManagePointsRequest(commonModel);
                 if (dbResponse != null && dbResponse.Code == 0)
                 {
-                    
+
                     this.AddNotificationMessage(new NotificationModel()
                     {
                         NotificationType = dbResponse.Code == ResponseCode.Success ? NotificationMessage.SUCCESS : NotificationMessage.INFORMATION,
@@ -246,6 +266,72 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             TempData["ManagePointsRequestModel"] = objPointsRequestModel;
             TempData["RenderId"] = "ManagePoints";
             return RedirectToAction("PointsTransferList", "PointsManagement");
+        }
+
+        [HttpPost, ValidateAntiForgeryToken, OverrideActionFilters]
+        public JsonResult ManageClubPointRequest(ManageClubPointRequestModel request, HttpPostedFileBase Image)
+        {
+            var dbRequest = request.MapObject<ManageClubPointRequestCommon>();
+            dbRequest.AgentId = dbRequest?.AgentId?.DecryptParameter() ?? string.Empty;
+            dbRequest.UserId = dbRequest?.UserId?.DecryptParameter() ?? string.Empty;
+            if (string.IsNullOrEmpty(dbRequest.AgentId) ||
+                string.IsNullOrEmpty(dbRequest.UserId) ||
+                string.IsNullOrEmpty(dbRequest.TxnId))
+            {
+                this.AddNotificationMessage(new NotificationModel()
+                {
+                    NotificationType = NotificationMessage.INFORMATION,
+                    Message = "Invalid request",
+                    Title = NotificationMessage.INFORMATION.ToString(),
+                });
+                return Json("Invalid request", JsonRequestBehavior.AllowGet);
+            }
+            if (dbRequest.Status.Trim().ToUpper() == "S" && Image == null)
+            {
+                this.AddNotificationMessage(new NotificationModel()
+                {
+                    NotificationType = NotificationMessage.INFORMATION,
+                    Message = "Image required",
+                    Title = NotificationMessage.INFORMATION.ToString(),
+                });
+                return Json("Image required", JsonRequestBehavior.AllowGet);
+            }
+            string ImagePath = "";
+            var allowedContentType = AllowedImageContentType();
+            if (Image != null)
+            {
+                var contentType = Image.ContentType;
+                var ext = Path.GetExtension(Image.FileName);
+                if (allowedContentType.Contains(contentType.ToLower()))
+                {
+                    var dateTime = DateTime.Now.ToString("yyyyMMddHHmmssffff");
+                    string fileName = "ClubPointRequestReceiptImage_" + dateTime + ext.ToLower();
+                    ImagePath = Path.Combine(Server.MapPath("~/Content/UserUpload/admin/Receipt"), fileName);
+                    dbRequest.ImageURL = "/Content/UserUpload/admin/Receipt/" + fileName;
+                }
+                else
+                {
+                    this.AddNotificationMessage(new NotificationModel()
+                    {
+                        NotificationType = NotificationMessage.INFORMATION,
+                        Message = "Invalid image format.",
+                        Title = NotificationMessage.INFORMATION.ToString(),
+                    });
+                    return Json("Invalid image format.", JsonRequestBehavior.AllowGet);
+                }
+            }
+            dbRequest.ActionUser = ApplicationUtilities.GetSessionValue("Username").ToString();
+            dbRequest.ActionIP = ApplicationUtilities.GetIP();
+            var dbResponse = _BUSS.ManageClubPointRequest(dbRequest);
+            if (dbResponse != null && dbResponse.Code == ResponseCode.Success)
+                if (Image != null) ApplicationUtilities.ResizeImage(Image, ImagePath);
+            this.AddNotificationMessage(new NotificationModel()
+            {
+                NotificationType = dbResponse.Code == ResponseCode.Success ? NotificationMessage.SUCCESS : NotificationMessage.INFORMATION,
+                Message = dbResponse.Message ?? "Something went wrong. Please try again later",
+                Title = dbResponse.Code == ResponseCode.Success ? NotificationMessage.SUCCESS.ToString() : NotificationMessage.INFORMATION.ToString()
+            });
+            return Json(dbResponse.Message, JsonRequestBehavior.AllowGet);
         }
     }
 }

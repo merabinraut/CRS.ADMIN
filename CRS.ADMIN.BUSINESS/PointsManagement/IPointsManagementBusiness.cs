@@ -1,11 +1,7 @@
 ﻿using CRS.ADMIN.SHARED;
 using CRS.ADMIN.SHARED.PaginationManagement;
 using CRS.ADMIN.SHARED.PointsManagement;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CRS.ADMIN.BUSINESS.PointsManagement
 {
@@ -14,5 +10,9 @@ namespace CRS.ADMIN.BUSINESS.PointsManagement
         List<PointsTansferReportCommon> GetPointTransferList(PointsManagementCommon objPointsTansferReportCommon = null, PaginationFilterCommon objPaginationFilterCommon = null);
         CommonDbResponse ManagePoints(PointsTansferCommon objPointsTansferCommon);
         CommonDbResponse ManagePointsRequest(PointsRequestCommon objPointsRequestCommon);
+        #region Point transfer List
+        List<PointRequestListCommon> GetPointRequestList(PointRequestListFilterCommon request);
+        CommonDbResponse ManageClubPointRequest(ManageClubPointRequestCommon request);
+        #endregion
     }
 }

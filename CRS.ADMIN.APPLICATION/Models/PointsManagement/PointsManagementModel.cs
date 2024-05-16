@@ -15,8 +15,9 @@ namespace CRS.ADMIN.APPLICATION.Models.PointsManagement
         public string TransferTypeId { get; set; }
         public string FromDate { get; set; }
         public string ToDate { get; set; }
-
+        public PointRequestCommonModel PointRequestCommonModel { get; set; } = new PointRequestCommonModel();
     }
+
     public class PointsTansferModel
     {
         [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
@@ -35,6 +36,7 @@ namespace CRS.ADMIN.APPLICATION.Models.PointsManagement
         public string Status { get; set; }
         public string Id { get; set; }
     }
+
     public class PointsTansferReportModel
     {
         public string TransactionId { get; set; }
@@ -47,8 +49,18 @@ namespace CRS.ADMIN.APPLICATION.Models.PointsManagement
         public string Remarks { get; set; }
         public string TransferTypeId { get; set; }
         public string UserTypeId { get; set; }
-        
+    }
 
+    public class PointRequestCommonModel
+    {
+        public string SearchFilter { get; set; }
+        public string LocationId { get; set; }
+        public string ClubName { get; set; }
+        public string PaymentMethodId { get; set; }
+        public string FromDate { get; set; }
+        public string ToDate { get; set; }
+        public PointsRequestModel PointsRequestModel { get; set; } = new PointsRequestModel();
+        public List<PointRequestsListModel> PointRequestsListModel { get; set; } = new List<PointRequestsListModel>();
     }
     public class PointsRequestModel
     {
@@ -59,6 +71,21 @@ namespace CRS.ADMIN.APPLICATION.Models.PointsManagement
         public string Remarks { get; set; }
         public string ActionIp { get; set; }
         public string ActionUser { get; set; }
+    }
 
+    public class PointRequestsListModel
+    {
+        public string AgentId { get; set; }
+        public string UserId { get; set; }
+        public string RequestId { get; set; }
+        public string RequestedDate { get; set; }
+        public string ClubName { get; set; }
+        public string PaymentMethod { get; set; }
+        public string AmountTransferred { get; set; }
+        public string Status { get; set; }
+        public string Remarks { get; set; }
+        public string UpdatedBy { get; set; }
+        public string UpdatedDate { get; set; }
+        public string RowsTotal { get; set; }
     }
 }

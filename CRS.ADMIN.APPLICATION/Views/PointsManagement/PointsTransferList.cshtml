@@ -4,6 +4,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     var _ManagePointsModel = Model.ManagePointsTansfer as CRS.ADMIN.APPLICATION.Models.PointsManagement.PointsTansferModel;
     var _ManagePointsRequestModel = Model.ManagePointsRequest as CRS.ADMIN.APPLICATION.Models.PointsManagement.PointsRequestModel;
+    var _PointRequestCommonModel = Model.PointRequestCommonModel as CRS.ADMIN.APPLICATION.Models.PointsManagement.PointRequestCommonModel;
 }
 <style>
     .filterborder {
@@ -381,40 +382,7 @@
 
                     </div>
                     <div id="pointsrequest" class="pane" style="display: none;">
-                        <div class="flex justify-between pb-[24px]">
-
-
-                            <!--<form action="/ClubManagement/EventList" method="get">-->
-                            @*<input type="hidden" name="ClubId" value="@Model.UserTypeList.R">*@
-                            <!--@Html.HiddenFor(model => model.ListType)
-                                <div class="relative input-search-wrapper">
-                                    <div class="absolute inset-y-0 left-0 flex items-center pl-[16px] pointer-events-none">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21" fill="none">
-                                            <path d="M17.5 18L13.875 14.375M15.8333 9.66667C15.8333 13.3486 12.8486 16.3333 9.16667 16.3333C5.48477 16.3333 2.5 13.3486 2.5 9.66667C2.5 5.98477 5.48477 3 9.16667 3C12.8486 3 15.8333 5.98477 15.8333 9.66667Z"
-                                                  stroke="#667085" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round" />
-                                        </svg>
-                                    </div>
-                                    <input type="search"
-                                           id="default-search"
-                                           class="input-search block w-full "
-                                           placeholder="@CRS.ADMIN.APPLICATION.Resources.Resource.Search"
-                                           value="@Model.SearchFilter"
-                                           name="SearchFilter">
-                                </div>
-                            </form>-->
-                            <div class="flex gap-6">
-                                @*<div class="export-button h-[40px]" onclick="exportExcel('table-id', 'Club')">
-                                        <img src="~/Content/assets_new/images/club/download-solid.svg">@CRS.ADMIN.APPLICATION.Resources.Resource.Export
-                                    </div>*@
-
-                                <div class="btn btn-primary gap-[8px] h-[40px]" data-drawer-target="add-new-points-request"
-                                     data-drawer-show="add-new-points-request" data-drawer-placement="right" data-drawer-backdrop="false"
-                                     aria-controls="drawer-disabled-backdrop" id="add-new-points-id">
-                                    <img src="~/Content/assets_new/images/plus-circle-solid.svg" />
-                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Self_Request
-                                </div>
-                            </div>
-                        </div>
+                        @Html.Partial("_PointRequestListPartialView", _PointRequestCommonModel)
                     </div>
                 </div>
             </div>
@@ -428,8 +396,8 @@
 @section scripts
 {
     <script src="~/Content/assets_new/js/calendar-management.js"></script>
-   @* <script src="~/Content/assets_new/js/jquery.min.js"></script>*@
-        <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
+    @* <script src="~/Content/assets_new/js/jquery.min.js"></script>*@
+    <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
     <script>
         $("input[name='TransferType'][value='Transfer']").prop("checked", true);
         //$(".cls_trftype").click(function () {
@@ -525,7 +493,6 @@
 
 
           $('#large[name="UserTypeId"]').change(function () {
-          debugger;
               var UserTypeId = $(this).find("option:selected").val().trim();
               $('#large[name="UserId"]').prop("disabled", true);
             $.ajax({
@@ -554,7 +521,6 @@
             return false;
           });
         $('#large[name="UserType"]').change(function () {
-            debugger;
             var UserTypeId = $(this).find("option:selected").val().trim();
             $('#large[name="UserName"]').prop("disabled", true);
               $.ajax({
@@ -620,9 +586,17 @@
                 const page_size4 = @ViewBag.PageSize4;
                 const total_data4 = @ViewBag.TotalData4;
                 const start_index_val4 = @ViewBag.StartIndex4;
-                let URL4 = "/ClubManagement/ClubList";
+                var LocationId4 = $("#LocationId4").val();
+                var ClubName4 = $("#ClubName4").val();
+                var PaymentMethodId4 = $("#PaymentMethodId4").val();
+                var FromDate4 = $("#FromDate4").val();
+                var ToDate4 = $("#ToDate4").val();
+                let URL4 = "/PointsManagement/PointsTransferList?FromDate4=" + FromDate4 + "&ToDate4=" + ToDate4 +
+                    '&PaymentMethodId4=' + PaymentMethodId4 + '&ClubName4=' + ClubName4 +
+                    '&LocationId4=' + LocationId4;
+
                 let search_filter4 = $('#default-search').val();
-                URL4 = addQueryParam2(URL4, 'SearchFilter', search_filter3, 'value', 'pr');
+                URL4 = addQueryParam2(URL4, 'SearchFilter', search_filter4, 'value', 'pr');
                 dynamicStartIndexLabel = "StartIndex4";
                 dynamicPageSizeLabel = "PageSize4";
                 LoadPagination(page_size4, total_data4, start_index_val4, URL4, 'pagination-id-4', 'prev-btn-4', 'next-btn-4', 'ShowEntries-Id-4', 'Entries-Id-4');
@@ -630,7 +604,6 @@
             }
             else
             {
-                debugger;
                 changeTab('pointstransfer', 'tab1Link')
                 const page_size = @ViewBag.PageSize;
                 const total_data = @ViewBag.TotalData;
@@ -640,13 +613,11 @@
                 var transfertype = $("#TransferTypeId").val();
                 var FromDate = $("#FromDate").val();
                 var ToDate = $("#ToDate").val();
-                debugger
                 let URL = "/PointsManagement/PointsTransferList?UserTypeId=" + usertypeid + "&UserName=" + username + "&TransferTypeId=" + transfertype + "&FromDate=" + FromDate + "&ToDate=" + ToDate;
                 let search_filter = $('#default-search').val();
                 URL = addQueryParam(URL, 'SearchFilter', search_filter);
                 LoadPagination(page_size, total_data, start_index_val, URL);
             }
-            debugger;
 
 
                 $("#FromDate").val("@Model.FromDate");
@@ -704,31 +675,77 @@
                $.datepicker.setDefaults($.datepicker.regional['ja']);
                $("#ToDate").datepicker({
                  /*  maxDate: new Date(),*/
-              
+
                defaultDate: '@Model.ToDate'
                });
                });
+
+               $("#FromDate4").val("@_PointRequestCommonModel.FromDate");
+               jQuery(function ($) {
+               $.datepicker.regional['ja'] = {
+               closeText: '閉じる',
+               prevText: '&#x3c;前',
+               nextText: '次&#x3e;',
+               currentText: '今日',
+               monthNames: ['1月', '2月', '3月', '4月', '5月', '6月',
+               '7月', '8月', '9月', '10月', '11月', '12月'],
+               monthNamesShort: ['1月', '2月', '3月', '4月', '5月', '6月',
+               '7月', '8月', '9月', '10月', '11月', '12月'],
+               dayNames: ['日曜日', '月曜日', '火曜日', '水曜日', '木曜日', '金曜日', '土曜日'],
+               dayNamesShort: ['日', '月', '火', '水', '木', '金', '土'],
+               dayNamesMin: ['日', '月', '火', '水', '木', '金', '土'],
+               weekHeader: '週',
+               dateFormat: 'yy/mm/dd',
+               firstDay: 0,
+               isRTL: false,
+               showMonthAfterYear: true,
+               yearSuffix: '年'
+               };
+               $.datepicker.setDefaults($.datepicker.regional['ja']);
+               $("#FromDate4").datepicker({
+               defaultDate: '@_PointRequestCommonModel.FromDate'
+               });
+               });
+
+
+            $("#ToDate4").val("@_PointRequestCommonModel.ToDate");
+              jQuery(function ($) {
+              $.datepicker.regional['ja'] = {
+              closeText: '閉じる',
+              prevText: '&#x3c;前',
+              nextText: '次&#x3e;',
+              currentText: '今日',
+              monthNames: ['1月', '2月', '3月', '4月', '5月', '6月',
+              '7月', '8月', '9月', '10月', '11月', '12月'],
+              monthNamesShort: ['1月', '2月', '3月', '4月', '5月', '6月',
+              '7月', '8月', '9月', '10月', '11月', '12月'],
+              dayNames: ['日曜日', '月曜日', '火曜日', '水曜日', '木曜日', '金曜日', '土曜日'],
+              dayNamesShort: ['日', '月', '火', '水', '木', '金', '土'],
+              dayNamesShort: ['日', '月', '火', '水', '木', '金', '土'],
+              dayNamesMin: ['日', '月', '火', '水', '木', '金', '土'],
+              weekHeader: '週',
+              dateFormat: 'yy/mm/dd',
+              firstDay: 0,
+              isRTL: false,
+              showMonthAfterYear: true,
+              yearSuffix: '年'
+              };
+              $.datepicker.setDefaults($.datepicker.regional['ja']);
+              $("#ToDate4").datepicker({
+              defaultDate: '@_PointRequestCommonModel.ToDate'
+              });
+              });
          });
 
     </script>
 
     <script>
         function CancelFunction() {
+            history.replaceState({}, document.title, window.location.pathname);
             location.reload();
         }
         document.getElementById('tab1Link').style.color = '#D75A8B';
         document.getElementById('tab1Link').style.borderBottom = '#D75A8B 2px solid';
-
-        //$('input[type="radio"]').click(function () {
-        //    var value = $(this).val(); // Get the value of the clicked radio button
-        //    // Perform actions based on the clicked radio button
-        //    if (value === 'Transfer') {
-
-        //    } else if (value === 'Retrieve') {
-
-        //    }
-        //});
-
 
         var PopUpRenderValue = '@ViewBag.PopUpRenderValue';
        if (PopUpRenderValue != null && PopUpRenderValue != "" && PopUpRenderValue == "Manage") {
@@ -739,38 +756,76 @@
             var element = document.getElementById('add-new-points-request');
             element.classList.remove('translate-x-full');
         }
+    </script>
+    <script>
+        function InitateRejectRequest(AgentId, UserId, RequestId) {
+            $('#RejectAgentId').val(AgentId);
+            $('#RejectUserId').val(UserId);
+            $('#RejectTxnId').val(RequestId);
+        }
 
-        //function SubmitFunction(e) {
-        //    $("#ConfirmButton").attr('disabled', true);
-        //    const UserTypeId = $('#large[name="UserTypeId"]').val();
-        //    const AgentId = $('#large[name="AgentId"]').val()
-        //    const NewCategoryId = $('#large[name="NewCategoryId"]').val();
-        //    var valid = true;
-        //    if (UserTypeId === null || UserTypeId === "") {
-        //        $('#form [data-valmsg-for="UserTypeId"]').html("Required");
-        //        valid = false;
-        //    }
+        function InitateApproveRequest(AgentId, UserId, RequestId) {
+            $('#ConfirmationAgentId').val(AgentId);
+            $('#ConfirmationUserId').val(UserId);
+            $('#ConfirmationTxnId').val(RequestId);
+        }
 
-        //    if (AgentId === null || AgentId === "") {
-        //        $('#form [data-valmsg-for="AgentId"]').html("Required");
-        //        valid = false;
+        function ApproveClubPointRequestFunction() {
+            var fileInput = document.getElementById('file_input_cover');
+            var file = fileInput.files[0];
+            var formData = new FormData();
+            formData.append('Image', file);
+            let { AgentId, UserId, TxnId, AdminRemark } = {
+                AgentId: $('#ConfirmationAgentId').val(),
+                UserId: $('#ConfirmationUserId').val(),
+                TxnId: $('#ConfirmationTxnId').val(),
+                AdminRemark: $('#ConfirmationAdminRemark').val()
+            };
+            formData.append('__RequestVerificationToken', $('input[name="__RequestVerificationToken"]').val());
+            formData.append('AgentId', AgentId);
+            formData.append('UserId', UserId);
+            formData.append('TxnId', TxnId);
+            formData.append('AdminRemark', AdminRemark);
+            formData.append('Status', 'S');
+            $.ajax({
+                type: 'POST',
+                async: true,
+                url: "/PointsManagement/ManageClubPointRequest",
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (responseData) {
+                    window.location.reload();
+                },
+                error: function (ex) {
+                    window.location.reload();
+                }
+            });
+        }
 
-        //    }
-        //    if (NewCategoryId === null || NewCategoryId === "") {
-        //        $('#form [data-valmsg-for="NewCategoryId"]').html("Required");
-        //        valid = false;
+        function RejectClubPointRequestFunction() {
+            let { AgentId, UserId, TxnId, AdminRemark } = {
+                AgentId: $('#RejectAgentId').val(),
+                UserId: $('#RejectUserId').val(),
+                TxnId: $('#RejectTxnId').val(),
+                AdminRemark: $('#RejectAdminRemark').val(),
+            };
 
-        //    }
-        //    if (valid) {
-        //        $("#form").submit();
-        //    }
-        //    else {
-        //        $("#ConfirmButton").attr('disabled', false);
-        //        $("#points").addcss("display", "none");
-        //        $("#assignpoint").addcss("display", "block");
-        //    }
-
-
-        //}
+            $.ajax({
+                type: 'POST',
+                async: true,
+                url: "/PointsManagement/ManageClubPointRequest",
+                dataType: 'json',
+                data: {
+                    __RequestVerificationToken: $('input[name="__RequestVerificationToken"]').val(), AgentId, UserId, TxnId, AdminRemark, Status: 'R'
+                },
+                success: function (responseData) {
+                    window.location.reload();
+                },
+                error: function (ex) {
+                    window.location.reload();
+                }
+            });
+        }
     </script>
 }

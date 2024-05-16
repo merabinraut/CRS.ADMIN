@@ -199,6 +199,9 @@
     <value>All</value>
     <comment>Customer Management</comment>
   </data>
+  <data name="AmountTransferred" xml:space="preserve">
+    <value>Amount Transferred</value>
+  </data>
   <data name="and Maximum file size is 5 MB" xml:space="preserve">
     <value>and Maximum file size is 5 MB</value>
     <comment>Location Management</comment>
@@ -1202,6 +1205,9 @@
     <value>Payment Status</value>
     <comment>Payment Management</comment>
   </data>
+  <data name="PaymentMethod" xml:space="preserve">
+    <value>Payment Method</value>
+  </data>
   <data name="Pending Requests" xml:space="preserve">
     <value>Pending Requests</value>
     <comment>Recommendation Management</comment>
@@ -1268,6 +1274,12 @@
   <data name="Point Requests" xml:space="preserve">
     <value>Point Requests</value>
     <comment>Points Management</comment>
+  </data>
+  <data name="PointRequestAcceptMessage" xml:space="preserve">
+    <value>Are you sure you want to approve this request ?</value>
+  </data>
+  <data name="PointRequestRejectMessage" xml:space="preserve">
+    <value>Are you sure you want to reject this request ?</value>
   </data>
   <data name="Points" xml:space="preserve">
     <value>Points</value>
@@ -1438,6 +1450,9 @@
   <data name="Requested Date" xml:space="preserve">
     <value>Requested Date</value>
     <comment>Affiliate Management</comment>
+  </data>
+  <data name="RequestId" xml:space="preserve">
+    <value>Request Id</value>
   </data>
   <data name="Requests" xml:space="preserve">
     <value>Requests</value>
@@ -1793,6 +1808,12 @@
   </data>
   <data name="Updated On" xml:space="preserve">
     <value>Updated On</value>
+  </data>
+  <data name="UpdatedBy" xml:space="preserve">
+    <value>Updated By</value>
+  </data>
+  <data name="UpdatedDate" xml:space="preserve">
+    <value>Updated Date</value>
   </data>
   <data name="User" xml:space="preserve">
     <value>User</value>

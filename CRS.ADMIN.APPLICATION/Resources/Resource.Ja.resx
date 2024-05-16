@@ -199,6 +199,9 @@
     <value>全て</value>
     <comment>Customer Management</comment>
   </data>
+  <data name="AmountTransferred" xml:space="preserve">
+    <value>振込金額</value>
+  </data>
   <data name="and Maximum file size is 5 MB" xml:space="preserve">
     <value>最大ファイルサイズは5MBです</value>
     <comment>Location Management</comment>
@@ -1205,6 +1208,9 @@
     <value>支払い状況</value>
     <comment>Payment Management</comment>
   </data>
+  <data name="PaymentMethod" xml:space="preserve">
+    <value>支払方法</value>
+  </data>
   <data name="Pending Requests" xml:space="preserve">
     <value>保留中リクエスト</value>
     <comment>Recommendation Management</comment>
@@ -1275,6 +1281,12 @@
   <data name="Point Requests" xml:space="preserve">
     <value>ポイントリクエスト</value>
     <comment>Points Management</comment>
+  </data>
+  <data name="PointRequestAcceptMessage" xml:space="preserve">
+    <value>のこのリクエストを承認してもよろしいですか？</value>
+  </data>
+  <data name="PointRequestRejectMessage" xml:space="preserve">
+    <value>このリクエストを拒否してもよろしいですか？</value>
   </data>
   <data name="Points" xml:space="preserve">
     <value>ポイント</value>
@@ -1445,6 +1457,9 @@
   <data name="Requested Date" xml:space="preserve">
     <value>登録日</value>
     <comment>Affiliate Management</comment>
+  </data>
+  <data name="RequestId" xml:space="preserve">
+    <value>リクエストID</value>
   </data>
   <data name="Requests" xml:space="preserve">
     <value>リクエスト</value>
@@ -1793,6 +1808,12 @@
     <comment>Recommendation Management</comment>
   </data>
   <data name="Updated On" xml:space="preserve">
+    <value>更新日</value>
+  </data>
+  <data name="UpdatedBy" xml:space="preserve">
+    <value>更新者</value>
+  </data>
+  <data name="UpdatedDate" xml:space="preserve">
     <value>更新日</value>
   </data>
   <data name="User" xml:space="preserve">

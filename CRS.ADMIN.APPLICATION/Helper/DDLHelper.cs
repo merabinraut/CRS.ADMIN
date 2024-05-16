@@ -53,6 +53,14 @@ namespace CRS.ADMIN.APPLICATION.Helper
                     dbResponse = _CommonBuss.GetDropDownLanguage("16", search1, search2, "");
                     dbResponse.ForEach(item => { response.Add(item.StaticValue.EncryptParameter(), GetLocalizedLabel(item, culture)); });
                     return response;
+                case "LOCATIONLIST":
+                    dbResponse = _CommonBuss.GetDropDownLanguage("17", search1, search2, "");
+                    dbResponse.ForEach(item => { response.Add(item.StaticValue.EncryptParameter(), GetLocalizedLabel(item, culture)); });
+                    return response;
+                case "CLUBTOADMINPAYMENTMETHODLIST":
+                    dbResponse = _CommonBuss.GetDropDownLanguage("18", search1, search2, "");
+                    dbResponse.ForEach(item => { response.Add(item.StaticValue.EncryptParameter(), GetLocalizedLabel(item, culture)); });
+                    return response;
 
                 default:
                     return response;
