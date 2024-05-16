@@ -1,4 +1,5 @@
-﻿using CRS.ADMIN.APPLICATION.Library;
+﻿using CRS.ADMIN.APPLICATION.Helper;
+using CRS.ADMIN.APPLICATION.Library;
 using CRS.ADMIN.APPLICATION.Models.RecommendationManagementV2;
 using CRS.ADMIN.BUSINESS.RecommendationManagement_V2;
 using CRS.ADMIN.SHARED;
@@ -39,6 +40,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 item.ClubId = item.ClubId.EncryptParameter();
                 item.DisplayId = item.DisplayId.EncryptParameter();
                 item.LocationId = item.LocationId.EncryptParameter();
+                item.ClubLogo = ImageHelper.ProcessedImage(item.ClubLogo);
             }
             return View(responseInfo);
         }
@@ -230,6 +232,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             CommonRecommendationModel responseinfo = new CommonRecommendationModel();
             var dbResponseInfo = _business.GetClubRequestListByHomePage(LocationId, SearchFilter);
             responseinfo.GetClubRequestListByHomePage = dbResponseInfo.MapObjects<HomePageClubRequestListModel>();
+            responseinfo.GetClubRequestListByHomePage.ForEach(x => x.ClubLogo = ImageHelper.ProcessedImage(x.ClubLogo));
             ViewBag.LocationId = locationid;
             ViewBag.SearchFilter = SearchFilter;
             TempData["OriginalUrl"] = Request.Url.ToString();
@@ -243,6 +246,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             CommonRecommendationModel responseinfo = new CommonRecommendationModel();
             var dbResponseInfo = _business.GetClubRequestListBySearchPage(LocationId, SearchFilter);
             responseinfo.GetClubRequestListBySearchPage = dbResponseInfo.MapObjects<SearchPageClubRequestListModel>();
+            responseinfo.GetClubRequestListBySearchPage.ForEach(x => x.ClubLogo = ImageHelper.ProcessedImage(x.ClubLogo));
             ViewBag.LocationId = locationid;
             ViewBag.SearchFilter = SearchFilter;
             TempData["OriginalUrl"] = Request.Url.ToString();
@@ -282,6 +286,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 item.ClubId = item.ClubId.EncryptParameter();
                 item.DisplayId = item.DisplayId.EncryptParameter();
                 item.RecommendationId = item.RecommendationId.EncryptParameter();
+                item.ClubLogo = ImageHelper.ProcessedImage(item.ClubLogo);
             }
             ViewBag.LocationId = locationid;
             ViewBag.GroupId = groupid;
@@ -838,6 +843,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 item.ClubId = item.ClubId.EncryptParameter();
                 item.HostId = item.HostId.EncryptParameter();
                 item.RecommendationHostId = item.RecommendationHostId.EncryptParameter();
+                item.HostImage = ImageHelper.ProcessedImage(item.HostImage);
             }
             ViewBag.LocationId = locationid;
             ViewBag.GroupId = groupId;
@@ -912,6 +918,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             if (!string.IsNullOrEmpty(displayid)) DisplayId = displayid.DecryptParameter();
             var dbResponseInfo = _business.GetSearchAndHomePageClubRecommendationReqHostList(RecommendationHoldId, ClubId, LocationId, DisplayId);
             responseInfo.GetHomeAndSearchRecommendationHostList = dbResponseInfo.MapObjects<SearchAndHomePageRecommendationReqHostListModel>();
+            responseInfo.GetHomeAndSearchRecommendationHostList.ForEach(x => x.HostImage = ImageHelper.ProcessedImage(x.HostImage));
             return View(responseInfo);
         }
         #endregion

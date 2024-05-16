@@ -1,4 +1,6 @@
-﻿using CRS.ADMIN.APPLICATION.Library;
+﻿using CRS.ADMIN.APPLICATION.Helper;
+using CRS.ADMIN.APPLICATION.Library;
+using CRS.ADMIN.APPLICATION.Models;
 using CRS.ADMIN.APPLICATION.Models.PromotionManagement;
 using CRS.ADMIN.BUSINESS.PromotionManagement;
 using CRS.ADMIN.SHARED;
@@ -7,6 +9,7 @@ using CRS.ADMIN.SHARED.PromotionManagement;
 using System;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
@@ -32,6 +35,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             {
                 item.Id = item.Id?.EncryptParameter();
                 item.IsDeleted = item.IsDeleted.Trim().ToUpper() == "FALSE" ? "A" : "B";
+                item.ImagePath = ImageHelper.ProcessedImage(item.ImagePath);
             }
             string RenderId = "";
             if (TempData.ContainsKey("PromotionManagementModel")) ResponseModel.PromotionManagementModel = TempData["PromotionManagementModel"] as PromotionManagementModel;
@@ -65,7 +69,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             return RedirectToAction("GetPromotionalImages", "PromotionManagement");
         }
         [HttpPost, ValidateAntiForgeryToken]
-        public ActionResult ManagePromotionalImage(PromotionManagementModel promotionManagementModel, HttpPostedFileBase ImagePathFile)
+        public async Task<ActionResult> ManagePromotionalImage(PromotionManagementModel promotionManagementModel, HttpPostedFileBase ImagePathFile)
         {
             if (!ModelState.IsValid)
             {
@@ -107,7 +111,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 }
             }
             var promoImageCommon = promotionManagementModel.MapObject<PromotionManagementCommon>();
-            string imgPath = string.Empty;
+            string fileName = string.Empty;
             var allowedContenttype = AllowedImageContentType();
             if (ImagePathFile != null)
             {
@@ -115,10 +119,8 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 var ext = Path.GetExtension(ImagePathFile.FileName);
                 if (allowedContenttype.Contains(contentType.ToLower()))
                 {
-                    string datet = DateTime.Now.ToString("yyyyMMddHHmmssffff");
-                    string myfilename = "PromoImg_" + datet + ext.ToLower();
-                    imgPath = Path.Combine(Server.MapPath("~/Content/userupload/PromotionalImages/"), myfilename);
-                    promoImageCommon.ImagePath = "/Content/userupload/PromotionalImages/" + myfilename;
+                    fileName = $"{AWSBucketFolderNameModel.ADMIN}/PromotionalImage_{DateTime.Now.ToString("yyyyMMddHHmmssffff")}{ext.ToLower()}";
+                    promoImageCommon.ImagePath = $"/{fileName}";
                 }
                 else
                 {
@@ -139,7 +141,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             var serviceResp = _business.EditPromotionalImage(promoImageCommon);
             if (serviceResp != null && serviceResp.Code == ResponseCode.Success)
             {
-                if (ImagePathFile != null) ApplicationUtilities.ResizeImage(ImagePathFile, imgPath);
+                if (ImagePathFile != null) await ImageHelper.ImageUpload(fileName, ImagePathFile);
                 this.AddNotificationMessage(new NotificationModel()
                 {
                     NotificationType = NotificationMessage.SUCCESS,

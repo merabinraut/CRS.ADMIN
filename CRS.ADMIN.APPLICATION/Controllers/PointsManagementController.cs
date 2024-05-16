@@ -1,22 +1,18 @@
 using CRS.ADMIN.APPLICATION.Helper;
 using CRS.ADMIN.APPLICATION.Library;
-using CRS.ADMIN.APPLICATION.Models.ClubManagement;
-using CRS.ADMIN.APPLICATION.Models.PointSetup;
+using CRS.ADMIN.APPLICATION.Models;
 using CRS.ADMIN.APPLICATION.Models.PointsManagement;
-using CRS.ADMIN.BUSINESS.PointSetup;
 using CRS.ADMIN.BUSINESS.PointsManagement;
 using CRS.ADMIN.SHARED;
-using CRS.ADMIN.SHARED.ClubManagement;
 using CRS.ADMIN.SHARED.PaginationManagement;
 using CRS.ADMIN.SHARED.PointsManagement;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
-using static Google.Apis.Requests.BatchRequest;
 
 namespace CRS.ADMIN.APPLICATION.Controllers
 {
@@ -97,7 +93,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 SearchFilter = SearchFilter4,
                 ClubName = ClubName4,
                 FromDate = FromDate4,
-                ToDate = ToDate4                
+                ToDate = ToDate4
             };
             PointRequestListFilterCommon getPointRequest = objPointsManagementModel.PointRequestCommonModel.MapObject<PointRequestListFilterCommon>();
             getPointRequest.LocationId = getPointRequest?.LocationId?.DecryptParameter() ?? string.Empty;
@@ -127,12 +123,10 @@ namespace CRS.ADMIN.APPLICATION.Controllers
 
         //}
         [HttpPost, ValidateAntiForgeryToken]
-        public ActionResult ManagePoints(PointsTansferModel objPointsTansferModel, HttpPostedFileBase Image_Certificate)
+        public async Task<ActionResult> ManagePoints(PointsTansferModel objPointsTansferModel, HttpPostedFileBase Image_Certificate)
         {
-
             var culture = System.Threading.Thread.CurrentThread.CurrentCulture.ToString();
             string ErrorMessage = string.Empty;
-            string ImageCertificatePath = "";
             if (ModelState.IsValid)
             {
                 if (Image_Certificate == null)
@@ -142,7 +136,6 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                     if (Image_Certificate == null && string.IsNullOrEmpty(objPointsTansferModel.Image))
                     {
                         ErrorMessage = "Image required";
-
                         allowRedirect = true;
                     }
                     if (allowRedirect)
@@ -158,7 +151,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                         return RedirectToAction("PointsTransferList", "PointsManagement");
                     }
                 }
-                string dateTime = "";
+                string fileName = string.Empty;
                 bool allowRedirectfile = false;
                 var allowedContentType = AllowedImageContentType();
                 if (Image_Certificate != null)
@@ -167,11 +160,8 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                     var ext = Path.GetExtension(Image_Certificate.FileName);
                     if (allowedContentType.Contains(contentType.ToLower()))
                     {
-
-                        dateTime = DateTime.Now.ToString("yyyyMMddHHmmssffff");
-                        string fileName = "ImageCertificate_" + dateTime + ext.ToLower();
-                        ImageCertificatePath = Path.Combine(Server.MapPath("~/Content/UserUpload/PointsManagement"), fileName);
-                        objPointsTansferModel.Image = "/Content/UserUpload/PointsManagement/" + fileName;
+                        fileName = $"{AWSBucketFolderNameModel.DOCUMENTS}/ImageCertificate_{DateTime.Now.ToString("yyyyMMddHHmmssffff")}{ext.ToLower()}";
+                        objPointsTansferModel.Image = $"/{fileName}";
                     }
                     else
                     {
@@ -182,7 +172,6 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                             Title = NotificationMessage.INFORMATION.ToString(),
                         });
                         allowRedirectfile = true;
-
                     }
                 }
                 PointsTansferCommon commonModel = objPointsTansferModel.MapObject<PointsTansferCommon>();
@@ -193,8 +182,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 var dbResponse = _BUSS.ManagePoints(commonModel);
                 if (dbResponse != null && dbResponse.Code == 0)
                 {
-                    if (Image_Certificate != null) ApplicationUtilities.ResizeImage(Image_Certificate, ImageCertificatePath);
-
+                    if (Image_Certificate != null) await ImageHelper.ImageUpload(fileName, Image_Certificate);
                     this.AddNotificationMessage(new NotificationModel()
                     {
                         NotificationType = dbResponse.Code == ResponseCode.Success ? NotificationMessage.SUCCESS : NotificationMessage.INFORMATION,
@@ -229,11 +217,9 @@ namespace CRS.ADMIN.APPLICATION.Controllers
 
             var culture = System.Threading.Thread.CurrentThread.CurrentCulture.ToString();
             string ErrorMessage = string.Empty;
-            string ImageCertificatePath = "";
             if (ModelState.IsValid)
             {
                 PointsRequestCommon commonModel = objPointsRequestModel.MapObject<PointsRequestCommon>();
-                //commonModel.ActionUser = ApplicationUtilities.GetSessionValue("Username").ToString();
                 commonModel.ActionUser = ApplicationUtilities.GetSessionValue("Userid").ToString().DecryptParameter();
                 commonModel.ActionIp = ApplicationUtilities.GetIP();
                 var dbResponse = _BUSS.ManagePointsRequest(commonModel);
@@ -269,7 +255,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
         }
 
         [HttpPost, ValidateAntiForgeryToken, OverrideActionFilters]
-        public JsonResult ManageClubPointRequest(ManageClubPointRequestModel request, HttpPostedFileBase Image)
+        public async Task<JsonResult> ManageClubPointRequest(ManageClubPointRequestModel request, HttpPostedFileBase Image)
         {
             var dbRequest = request.MapObject<ManageClubPointRequestCommon>();
             dbRequest.AgentId = dbRequest?.AgentId?.DecryptParameter() ?? string.Empty;
@@ -296,7 +282,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 });
                 return Json("Image required", JsonRequestBehavior.AllowGet);
             }
-            string ImagePath = "";
+            string fileName = string.Empty;
             var allowedContentType = AllowedImageContentType();
             if (Image != null)
             {
@@ -304,10 +290,8 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 var ext = Path.GetExtension(Image.FileName);
                 if (allowedContentType.Contains(contentType.ToLower()))
                 {
-                    var dateTime = DateTime.Now.ToString("yyyyMMddHHmmssffff");
-                    string fileName = "ClubPointRequestReceiptImage_" + dateTime + ext.ToLower();
-                    ImagePath = Path.Combine(Server.MapPath("~/Content/UserUpload/admin/Receipt"), fileName);
-                    dbRequest.ImageURL = "/Content/UserUpload/admin/Receipt/" + fileName;
+                    fileName = $"{AWSBucketFolderNameModel.DOCUMENTS}/ClubPointRequestReceiptImage_{DateTime.Now.ToString("yyyyMMddHHmmssffff")}{ext.ToLower()}";
+                    dbRequest.ImageURL = $"/{fileName}";
                 }
                 else
                 {
@@ -324,7 +308,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             dbRequest.ActionIP = ApplicationUtilities.GetIP();
             var dbResponse = _BUSS.ManageClubPointRequest(dbRequest);
             if (dbResponse != null && dbResponse.Code == ResponseCode.Success)
-                if (Image != null) ApplicationUtilities.ResizeImage(Image, ImagePath);
+                if (Image != null) await ImageHelper.ImageUpload(fileName, Image);
             this.AddNotificationMessage(new NotificationModel()
             {
                 NotificationType = dbResponse.Code == ResponseCode.Success ? NotificationMessage.SUCCESS : NotificationMessage.INFORMATION,

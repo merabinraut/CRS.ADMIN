@@ -7,6 +7,7 @@
         public string BucketName { get; set; }
         public int TimeoutDurationInMin { get; set; }
         public string BaseURL { get; set; }
+        public string NoImageURL { get; set; }
     }
 
     public class AmazonConfigruation

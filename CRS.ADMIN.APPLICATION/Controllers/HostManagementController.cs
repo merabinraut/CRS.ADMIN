@@ -1,5 +1,6 @@
 ﻿using CRS.ADMIN.APPLICATION.Helper;
 using CRS.ADMIN.APPLICATION.Library;
+using CRS.ADMIN.APPLICATION.Models;
 using CRS.ADMIN.APPLICATION.Models.HostManagement;
 using CRS.ADMIN.BUSINESS.HostManagement;
 using CRS.ADMIN.SHARED;
@@ -12,6 +13,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using static Google.Apis.Requests.BatchRequest;
@@ -60,6 +62,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             {
                 item.HostId = item.HostId?.EncryptParameter();
                 item.AgentId = item.AgentId?.EncryptParameter();
+                item.HostImage = ImageHelper.ProcessedImage(item.HostImage);
             }
 
             if (string.IsNullOrEmpty(ResponseModel.ManageHostModel.AgentId) && string.IsNullOrEmpty(ResponseModel.ManageHostModel.HostId))
@@ -172,7 +175,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
         }
 
         [HttpPost, ValidateAntiForgeryToken]
-        public ActionResult ManageHost(ManageHostModel Model, string ZodiacSignsDDLKey, string BloodGroupDDLKey,
+        public async Task<ActionResult> ManageHost(ManageHostModel Model, string ZodiacSignsDDLKey, string BloodGroupDDLKey,
             string OccupationDDLKey, string LiquorStrengthDDLKey, string BirthYearKey, string BirthMonthKey, string BirthDayKey, HttpPostedFileBase HostLogoFile, HttpPostedFileBase HostIconImageFile)
         {
             //Model.BirthYear = BirthYearKey;
@@ -243,8 +246,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 }
             }
 
-            string ImagePath = "";
-
+            string HostLogoFileName = string.Empty;
             var allowedContentType = AllowedImageContentType();
             if (HostLogoFile != null)
             {
@@ -252,10 +254,8 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 var ext = Path.GetExtension(HostLogoFile.FileName);
                 if (allowedContentType.Contains(contentType.ToLower()))
                 {
-                    var dateTime = DateTime.Now.ToString("yyyyMMddHHmmssffff");
-                    string fileName = "host_pi_" + dateTime + ext.ToLower();
-                    ImagePath = Path.Combine(Server.MapPath("~/Content/UserUpload/Host"), fileName);
-                    Model.HostLogo = "/Content/UserUpload/Host/" + fileName;
+                    HostLogoFileName = $"{AWSBucketFolderNameModel.HOST}/Logo_{DateTime.Now.ToString("yyyyMMddHHmmssffff")}{ext.ToLower()}";
+                    Model.HostLogo = $"/{HostLogoFileName}";
                 }
                 else
                 {
@@ -270,17 +270,15 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                     return RedirectToAction("HostList", "HostManagement", new { AgentId = Model.AgentId });
                 }
             }
-            string ImagePath2 = "";
+            string HostIconImageFileName = string.Empty;
             if (HostIconImageFile != null)
             {
                 var contentType = HostIconImageFile.ContentType;
                 var ext = Path.GetExtension(HostIconImageFile.FileName);
                 if (allowedContentType.Contains(contentType.ToLower()))
                 {
-                    var dateTime = DateTime.Now.ToString("yyyyMMddHHmmssffff");
-                    string fileName_icon = "host_pi_" + dateTime + ext.ToLower();
-                    ImagePath2 = Path.Combine(Server.MapPath("~/Content/UserUpload/Host"), fileName_icon);
-                    Model.HostIconImage = "/Content/UserUpload/Host/" + fileName_icon;
+                    HostIconImageFileName = $"{AWSBucketFolderNameModel.HOST}/IconImage_{DateTime.Now.ToString("yyyyMMddHHmmssffff")}{ext.ToLower()}";
+                    Model.HostIconImage = $"/{HostIconImageFileName}";
                 }
                 else
                 {
@@ -317,7 +315,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 requestCommon.LiquorStrength = LiquorStrengthDDLKey?.DecryptParameter();
                 requestCommon.Address = Model.Address?.DecryptParameter();
                 requestCommon.Height = Model.Height?.DecryptParameter();
-                requestCommon.DOB = Model.DOB; //string.Concat(BirthYearKey, '-', BirthMonthKey, '-', BirthDayKey);
+                requestCommon.DOB = Model.DOB;
                 requestCommon.ActionUser = ApplicationUtilities.GetSessionValue("Username").ToString();
                 requestCommon.ActionIP = ApplicationUtilities.GetIP();
                 requestCommon.ImagePath = Model.HostLogo;
@@ -328,8 +326,8 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 var dbResponse = _buss.ManageHost(requestCommon);
                 if (dbResponse != null && dbResponse.Code == 0)
                 {
-                    if (HostLogoFile != null) ApplicationUtilities.ResizeImage(HostLogoFile, ImagePath);
-                    if (HostIconImageFile != null) ApplicationUtilities.ResizeImage(HostIconImageFile, ImagePath2);
+                    if (HostLogoFile != null) await ImageHelper.ImageUpload(HostLogoFileName, HostLogoFile);
+                    if (HostIconImageFile != null) await ImageHelper.ImageUpload(HostIconImageFileName, HostIconImageFile);
                     this.AddNotificationMessage(new NotificationModel()
                     {
                         NotificationType = NotificationMessage.SUCCESS,
@@ -487,6 +485,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 item.AgentId = AgentId;
                 item.HostId = HostId;
                 item.GalleryId = item.GalleryId?.EncryptParameter();
+                item.ImagePath = ImageHelper.ProcessedImage(item.ImagePath);
             }
             ReturnModel.HostManageGalleryImageModel.AgentId = AgentId;
             ReturnModel.HostManageGalleryImageModel.HostId = HostId;
@@ -534,7 +533,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
         }
 
         [HttpPost, ValidateAntiForgeryToken]
-        public ActionResult ManageGallery(HostManageGalleryImageModel Model, HttpPostedFileBase Image_Path)
+        public async Task<ActionResult> ManageGallery(HostManageGalleryImageModel Model, HttpPostedFileBase Image_Path)
         {
             var aId = Model.AgentId?.DecryptParameter();
             var hId = Model.HostId?.DecryptParameter();
@@ -589,7 +588,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                     }
                 }
             }
-            string ImagePath = "";
+            string fileName = string.Empty;
             var allowedContentType = AllowedImageContentType();
             if (Image_Path != null)
             {
@@ -597,10 +596,8 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 var ext = Path.GetExtension(Image_Path.FileName);
                 if (allowedContentType.Contains(contentType.ToLower()))
                 {
-                    var dateTime = DateTime.Now.ToString("yyyyMMddHHmmssffff");
-                    string fileName = "GalleryImage_" + dateTime + ext.ToLower();
-                    ImagePath = Path.Combine(Server.MapPath("~/Content/UserUpload/Host/Gallery"), fileName);
-                    Model.ImagePath = "/Content/UserUpload/Host/Gallery/" + fileName;
+                    fileName = $"{AWSBucketFolderNameModel.HOST}/GalleryImage_{DateTime.Now.ToString("yyyyMMddHHmmssffff")}{ext.ToLower()}";
+                    Model.ImagePath = $"/{fileName}";
                 }
                 else
                 {
@@ -624,7 +621,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             var dbResponse = _buss.ManageGalleryImage(dbRequest);
             if (dbResponse != null && dbResponse.Code == 0)
             {
-                if (Image_Path != null) ApplicationUtilities.ResizeImage(Image_Path, ImagePath);
+                if (Image_Path != null) await ImageHelper.ImageUpload(fileName, Image_Path);
                 this.AddNotificationMessage(new NotificationModel()
                 {
                     NotificationType = dbResponse.Code == ResponseCode.Success ? NotificationMessage.SUCCESS : NotificationMessage.INFORMATION,

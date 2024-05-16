@@ -1,4 +1,6 @@
-﻿using CRS.ADMIN.APPLICATION.Library;
+﻿using CRS.ADMIN.APPLICATION.Helper;
+using CRS.ADMIN.APPLICATION.Library;
+using CRS.ADMIN.APPLICATION.Models;
 using CRS.ADMIN.APPLICATION.Models.LocationManagement;
 using CRS.ADMIN.BUSINESS.LocationManagement;
 using CRS.ADMIN.SHARED;
@@ -6,6 +8,7 @@ using CRS.ADMIN.SHARED.LocationManagement;
 using System;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
@@ -82,7 +85,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
         }
 
         [HttpPost, ValidateAntiForgeryToken]
-        public ActionResult ManageLocation(LocationModel Model, HttpPostedFileBase LocationImageFile)
+        public async Task<ActionResult> ManageLocation(LocationModel Model, HttpPostedFileBase LocationImageFile)
         {
             if (!ModelState.IsValid)
             {
@@ -124,7 +127,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             }
 
             var common = Model?.MapObject<LocationCommon>();
-            string imgPath = "";
+            string fileName = string.Empty;
             var allowedContentType = AllowedImageContentType();
             if (LocationImageFile != null)
             {
@@ -132,10 +135,8 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 var ext = Path.GetExtension(LocationImageFile.FileName);
                 if (allowedContentType.Contains(contentType.ToLower()))
                 {
-                    string datet = DateTime.Now.ToString("yyyyMMddHHmmssffff");
-                    string myfilename = "LocationImg_" + datet + ext.ToLower();
-                    imgPath = Path.Combine(Server.MapPath("~/Content/userupload/LocationImages/"), myfilename);
-                    common.LocationImage = "/Content/userupload/LocationImages/" + myfilename;
+                    fileName = $"{AWSBucketFolderNameModel.ADMIN}/LocationImage_{DateTime.Now.ToString("yyyyMMddHHmmssffff")}{ext.ToLower()}";
+                    common.LocationImage = $"/{fileName}";
                 }
                 else
                 {
@@ -157,7 +158,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             var serviceResp = _business.ManageLocation(common);
             if (serviceResp.Code == ResponseCode.Success)
             {
-                if (LocationImageFile != null) ApplicationUtilities.ResizeImage(LocationImageFile, imgPath);
+                if (LocationImageFile != null) await ImageHelper.ImageUpload(fileName, LocationImageFile);
                 this.AddNotificationMessage(new NotificationModel()
                 {
                     NotificationType = NotificationMessage.SUCCESS,

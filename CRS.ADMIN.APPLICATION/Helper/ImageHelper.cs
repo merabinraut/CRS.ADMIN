@@ -43,10 +43,9 @@ namespace CRS.ADMIN.APPLICATION.Helper
 
         public static string ProcessedImage(string imageURL, bool useDefaultImage = false)
         {
-            string response = string.Empty;
-            if (useDefaultImage)
-                response = "/Content/assets/images/customer/demo-image.jpeg";
-            response = $"{_AmazonS3Configruation.BaseURL}/{_AmazonS3Configruation.BucketName}/{imageURL.TrimStart('/')}";
+            string response = $"{_AmazonS3Configruation.BaseURL}/{_AmazonS3Configruation.BucketName}/{_AmazonS3Configruation.NoImageURL.TrimStart('/')}";
+            if (!useDefaultImage && !string.IsNullOrEmpty(imageURL))
+                response = $"{_AmazonS3Configruation.BaseURL}/{_AmazonS3Configruation.BucketName}/{imageURL.TrimStart('/')}";
             return response;
         }
 
