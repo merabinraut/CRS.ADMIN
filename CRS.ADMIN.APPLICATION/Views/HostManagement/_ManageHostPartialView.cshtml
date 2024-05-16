@@ -577,7 +577,7 @@
                                             {
                                                 <div>
                                                     @{
-                                                        var valueRange = Model.HostIdentityDataModel[i].IdentityDescription == null ? "20" : Model.HostIdentityDataModel[i].IdentityDescription;
+                                                        var valueRange = string.IsNullOrEmpty(Model.HostIdentityDataModel[i].IdentityDescription) || Model.HostIdentityDataModel[i].IdentityDescription == "0" ? "20" : Model.HostIdentityDataModel[i].IdentityDescription;
                                                     }
                                                     <input type="range" class="sliderBlue" min="0" max="100" value="@valueRange" step="@valueRange" id="myRange_@k" oninput="updateRangeValue(@k, this.value)" />
                                                     @*<input type="range" min="0" max="100" value="20" step="20" oninput="updateRangeValue(@k, this.value)">*@
@@ -650,7 +650,7 @@
                                             {
                                                 <div>
                                                     @{
-                                                        var valueRange = Model.HostIdentityDataModel[i].IdentityDescription == null ? "20" : Model.HostIdentityDataModel[i].IdentityDescription;
+                                                        var valueRange = string.IsNullOrEmpty(Model.HostIdentityDataModel[i].IdentityDescription) || Model.HostIdentityDataModel[i].IdentityDescription == "0" ? "20" : Model.HostIdentityDataModel[i].IdentityDescription;
                                                     }
                                                     <input type="range" class="sliderBlue" min="0" max="100" value="@valueRange" step="@valueRange" id="myRange_@k" oninput="updateRangeValue(@k, this.value)" />
                                                     <p id="rangeValue_@k" name="">@valueRange</p>
@@ -712,7 +712,7 @@
                                         {
                                             <div>
                                                 @{
-                                                    var valueRange = Model.HostIdentityDataModel[i].IdentityDescription == null ? "20" : Model.HostIdentityDataModel[i].IdentityDescription;
+                                                    var valueRange = string.IsNullOrEmpty(Model.HostIdentityDataModel[i].IdentityDescription) || Model.HostIdentityDataModel[i].IdentityDescription=="0" ? "20" : Model.HostIdentityDataModel[i].IdentityDescription;
                                                 }
                                                 <input type="range" class="sliderBlue" min="0" max="100" value="@valueRange" step="@valueRange" id="myRange_@k" oninput="updateRangeValue(@k, this.value)" />
                                                 <p id="rangeValue_@k" name="">@valueRange</p>
