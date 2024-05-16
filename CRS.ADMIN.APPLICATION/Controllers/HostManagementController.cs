@@ -138,14 +138,19 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 }
                 var dbResponse = _buss.GetHostDetail(aId, hId);
                 model = dbResponse.MapObject<ManageHostModel>();
+                if (!string.IsNullOrEmpty(model.DOB))
+                    model.DOB = DateTime.Parse(model.DOB).ToString("yyyy-MM-dd");
                 model.AgentId = AgentId;
                 model.HostId = HostId;
-                if (!string.IsNullOrEmpty(dbResponse.DOB))
+                if (!string.IsNullOrEmpty(model.DOB))
                 {
-                    DateTime dob = DateTime.ParseExact(dbResponse.DOB, "yyyy-MM-dd", CultureInfo.InvariantCulture);
-                    model.BirthYear = dob.Year.ToString();
-                    model.BirthMonth = dob.Month.ToString().PadLeft(2, '0');
-                    model.BirthDate = dob.Day.ToString().PadLeft(2, '0');
+                    DateTime dob;
+                    if (DateTime.TryParseExact(model.DOB, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out dob))
+                    {
+                        model.BirthYear = dob.Year.ToString();
+                        model.BirthMonth = dob.Month.ToString("00");
+                        model.BirthDate = dob.Day.ToString("00");
+                    }
                 }
                 model.ConstellationGroup = model.ConstellationGroup?.EncryptParameter();
                 model.BloodType = model.BloodType?.EncryptParameter();
