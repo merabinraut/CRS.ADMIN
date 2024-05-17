@@ -118,16 +118,39 @@
                                     <label for="email" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
                                         @CRS.ADMIN.APPLICATION.Resources.Resource.Position
                                     </label>
-                                    @Html.TextBoxFor(model => model.Position, new
-                                    {
-                                       @class = "w-full",
-                                       @placeholder = CRS.ADMIN.APPLICATION.Resources.Resource.Position,
-                                       //@onkeypress = "return isAlphabetWithSpace(event)",
-                                       autocomplete = "off",
-                                       @maxLength = "100"
-                                    })
+                                    @*@Html.TextBoxFor(model => model.Position, new
+                                        {
+                                           @class = "w-full",
+                                           @placeholder = CRS.ADMIN.APPLICATION.Resources.Resource.Position,
+                                           //@onkeypress = "return isAlphabetWithSpace(event)",
+                                           autocomplete = "off",
+                                           @maxLength = "100"
+                                        })
+                                        <span class="error">
+                                            @Html.ValidationMessageFor(m => m.Position)
+                                        </span>*@
+
+                                    <select id="large" class="select-common block w-full " name="Position">
+                                        @foreach (var item in ViewBag.positionddl as IEnumerable<SelectListItem>)
+                                        {
+                                            var selectedId = ViewBag.postitionkey as string;
+                                            if (item.Value == selectedId)
+                                            {
+                                                <option value="@item.Value" selected>
+                                                    @item.Text
+                                                </option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@item.Value">
+                                                    @item.Text
+                                                </option>
+                                            }
+                                        }
+                                    </select>
+
                                     <span class="error">
-                                        @Html.ValidationMessageFor(m => m.Position)
+                                        @Html.ValidationMessageFor(m => m.Address)
                                     </span>
                                 </div>
                                 <div class="input-field-common">
@@ -229,14 +252,14 @@
                                         @CRS.ADMIN.APPLICATION.Resources.Resource.Birth_Date
                                     </label>
                                     <div class="select-date-common flex gap-[16px]">
-                           
-                                         @Html.TextBoxFor(model => model.BirthYear, new
-                                        {
-                                            @class = "input-common block w-[100px]",
-                                            @placeholder = "YYYY",
-                                            @autocomplete = "off",
-                                            @maxlength = "4"
-                                        })
+
+                                        @Html.TextBoxFor(model => model.BirthYear, new
+                                       {
+                                           @class = "input-common block w-[100px]",
+                                           @placeholder = "YYYY",
+                                           @autocomplete = "off",
+                                           @maxlength = "4"
+                                       })
                                         @Html.TextBoxFor(model => model.BirthMonth, new
                                             {
                                             @class = "input-common block w-[100px]",
@@ -244,13 +267,13 @@
                                             @autocomplete = "off",
                                             @maxlength = "2"
                                             })
-                                         @Html.TextBoxFor(model => model.BirthDate, new
-                                            {
-                                            @class = "input-common block w-[100px]",
-                                            @placeholder = "DD",
-                                            @autocomplete = "off",
-                                            @maxlength = "2"
-                                            })
+                                        @Html.TextBoxFor(model => model.BirthDate, new
+                                           {
+                                           @class = "input-common block w-[100px]",
+                                           @placeholder = "DD",
+                                           @autocomplete = "off",
+                                           @maxlength = "2"
+                                           })
                                         @*<input id="birthYear" class="input-common block w-[100px]" type="text" name="BirthYearKey" value="@ViewBag.BirthYear" maxlength="4" placeholder="YYYY">
                                             <input id="birthMonth" class="input-common block w-[100px]" type="text" name="BirthMonthKey" value="@ViewBag.BirthMonth" maxlength="2" placeholder="MM">
                                             <input id="birthDay" class="input-common block w-[100px]" type="text" name="BirthDayKey" value="@ViewBag.BirthDate" maxlength="2" placeholder="DD">*@
@@ -712,7 +735,7 @@
                                         {
                                             <div>
                                                 @{
-                                                    var valueRange = string.IsNullOrEmpty(Model.HostIdentityDataModel[i].IdentityDescription) || Model.HostIdentityDataModel[i].IdentityDescription=="0" ? "20" : Model.HostIdentityDataModel[i].IdentityDescription;
+                                                    var valueRange = string.IsNullOrEmpty(Model.HostIdentityDataModel[i].IdentityDescription) || Model.HostIdentityDataModel[i].IdentityDescription == "0" ? "20" : Model.HostIdentityDataModel[i].IdentityDescription;
                                                 }
                                                 <input type="range" class="sliderBlue" min="0" max="100" value="@valueRange" step="@valueRange" id="myRange_@k" oninput="updateRangeValue(@k, this.value)" />
                                                 <p id="rangeValue_@k" name="">@valueRange</p>
