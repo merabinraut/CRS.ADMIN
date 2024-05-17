@@ -1,4 +1,10 @@
 ﻿@model CRS.ADMIN.APPLICATION.Models.HostManagement.ManageHostModel
+
+<style>
+    .sliderBlue {
+        accent-color: #d75a8b;
+    }
+</style>
 <div id="add-new-host"
      class="drawer-close-disable  flex justify-end fixed top-0 right-0 z-40 h-screen overflow-y-auto transition-transform translate-x-full"
      tabindex="-1" aria-labelledby="add-new-host-club" aria-modal="true" role="dialog">
@@ -21,6 +27,7 @@
                     @Html.AntiForgeryToken()
                     @Html.HiddenFor(model => model.AgentId)
                     @Html.HiddenFor(model => model.HostLogo)
+                    @Html.HiddenFor(model => model.HostIconImage)
                     if (!string.IsNullOrEmpty(Model.HostId))
                     {
                         @Html.HiddenFor(model => model.HostId)
@@ -150,6 +157,7 @@
                                     </span>
                                 </div>
                             </div>
+
                             <div>
                                 <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
                                     @CRS.ADMIN.APPLICATION.Resources.Resource.ProfileImage
@@ -180,70 +188,73 @@
                                     @CRS.ADMIN.APPLICATION.Resources.Resource.and_Maximum_file_size_is_5_MB .
                                 </div>
                             </div>
+
+                            @*Icon Image*@
+                            <div>
+                                <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
+                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Icon_Image
+                                </label>
+                                <div class="file-upload-common">
+                                    <label for="file_input_business_icon" class="custom-file-upload w-[128px] flex-none text-ellipsis-customer ">
+                                        <span>
+                                            @CRS.ADMIN.APPLICATION.Resources.Resource.Choose_Icons
+                                        </span>
+                                    </label>
+                                    <input id="file_input_business_icon" class="file-input" type="file" name="HostIconImageFile" value="@Model.HostIconImage"
+                                           style="display:none;">
+                                    <p id="file_name_bussiness_certificate"
+                                       class="file-name w-max h-[23px] overflow-hidden pl-2 text-xs text-[#686868] leading-[25px]">
+                                        @if (string.IsNullOrEmpty(Model.HostIconImage))
+                                        {
+                                            @CRS.ADMIN.APPLICATION.Resources.Resource.No_File_Choosen
+                                        }
+                                        else
+                                        {
+                                            string fileName1 = Path.GetFileName(Model.HostIconImage);
+                                            @fileName1
+                                        }
+                                </div>
+                                <div class="text-xs text-error mt-[8px]">
+                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Note:
+                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Image_should_be_in_HEIF_format
+                                    @CRS.ADMIN.APPLICATION.Resources.Resource.and_Maximum_file_size_is_5_MB .
+                                </div>
+                            </div>
+
+                            @*----------*@
+
                             <div class="grid gap-[16px]">
                                 <div class="input-field-common">
                                     <label for="email" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
                                         @CRS.ADMIN.APPLICATION.Resources.Resource.Birth_Date
                                     </label>
                                     <div class="select-date-common flex gap-[16px]">
-                                        @{
-                                            DateTime date = (!string.IsNullOrEmpty(Model.DOB) && Model.DOB.Trim().ToUpper() != "YYYY-MM-DD") ? Convert.ToDateTime(Model.DOB) : DateTime.Now;
-                                            int SplitYear = date.Year;
-                                            int SplitMonth = date.Month;
-                                            int SplitDay = date.Day;
-                                        }
-                                        <select id="large" class="select-common block w-[100px]" name="BirthYearKey">
-                                            <option selected>YYYY</option>
-                                            @{
-                                                DateTime currentDate = DateTime.Now;
-                                                int currentYear = currentDate.Year;
-                                                List<int> last100Years = new List<int>();
-                                                int startYear = currentYear - 200;
-                                                for (int year = currentYear; year >= startYear; year--)
-                                                {
-                                                    last100Years.Add(year);
-                                                }
-                                                foreach (var item in last100Years)
-                                                {
-                                                    if ((!string.IsNullOrEmpty(Model.DOB) && Model.DOB.Trim().ToUpper() != "YYYY-MM-DD") && SplitYear == item)
-                                                    {
-                                                        <option value="@item" selected>@item</option>
-                                                    }
-                                                    else
-                                                    {
-                                                        <option value="@item">@item</option>
-                                                    }
-                                                }
-                                            }
-                                        </select>
-                                        <select id="large" class="select-common block w-[100px] " name="BirthMonthKey">
-                                            <option selected>MM</option>
-                                            @for (int i = 1; i < 13; i++)
+                           
+                                         @Html.TextBoxFor(model => model.BirthYear, new
+                                        {
+                                            @class = "input-common block w-[100px]",
+                                            @placeholder = "YYYY",
+                                            @autocomplete = "off",
+                                            @maxlength = "4"
+                                        })
+                                        @Html.TextBoxFor(model => model.BirthMonth, new
                                             {
-                                                if ((!string.IsNullOrEmpty(Model.DOB) && Model.DOB.Trim().ToUpper() != "YYYY-MM-DD") && SplitMonth == i)
-                                                {
-                                                    <option value="@i" selected>@i</option>
-                                                }
-                                                else
-                                                {
-                                                    <option value="@i">@i</option>
-                                                }
-                                            }
-                                        </select>
-                                        <select id="large" class="select-common block w-[100px] " name="BirthDayKey">
-                                            <option selected>DD</option>
-                                            @for (int i = 1; i < 33; i++)
+                                            @class = "input-common block w-[100px]",
+                                            @placeholder = "MM",
+                                            @autocomplete = "off",
+                                            @maxlength = "2"
+                                            })
+                                         @Html.TextBoxFor(model => model.BirthDate, new
                                             {
-                                                if ((!string.IsNullOrEmpty(Model.DOB) && Model.DOB.Trim().ToUpper() != "YYYY-MM-DD") && SplitDay == i)
-                                                {
-                                                    <option value="@i" selected>@i</option>
-                                                }
-                                                else
-                                                {
-                                                    <option value="@i">@i</option>
-                                                }
-                                            }
-                                        </select>
+                                            @class = "input-common block w-[100px]",
+                                            @placeholder = "DD",
+                                            @autocomplete = "off",
+                                            @maxlength = "2"
+                                            })
+                                        @*<input id="birthYear" class="input-common block w-[100px]" type="text" name="BirthYearKey" value="@ViewBag.BirthYear" maxlength="4" placeholder="YYYY">
+                                            <input id="birthMonth" class="input-common block w-[100px]" type="text" name="BirthMonthKey" value="@ViewBag.BirthMonth" maxlength="2" placeholder="MM">
+                                            <input id="birthDay" class="input-common block w-[100px]" type="text" name="BirthDayKey" value="@ViewBag.BirthDate" maxlength="2" placeholder="DD">*@
+
                                     </div>
 
                                 </div>
@@ -293,14 +304,25 @@
                                     <label for="email" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
                                         @CRS.ADMIN.APPLICATION.Resources.Resource.BirthPlace
                                     </label>
+                                    <select id="large" class="select-common block w-full " name="Address">
+                                        @foreach (var item in ViewBag.BirthPlaceDdl as IEnumerable<SelectListItem>)
+                                        {
+                                            var selectedId = ViewBag.BirthPlacekey as string;
+                                            if (item.Value == selectedId)
+                                            {
+                                                <option value="@item.Value" selected>
+                                                    @item.Text
+                                                </option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@item.Value">
+                                                    @item.Text
+                                                </option>
+                                            }
+                                        }
+                                    </select>
 
-                                    @Html.TextBoxFor(model => model.Address, new
-                                    {
-                                       @class = "w-full",
-                                       @placeholder = CRS.ADMIN.APPLICATION.Resources.Resource.BirthPlace,
-                                       autocomplete = "off",
-                                       maxLength = "50"
-                                    })
                                     <span class="error">
                                         @Html.ValidationMessageFor(m => m.Address)
                                     </span>
@@ -388,14 +410,24 @@
                                     <label for="email" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
                                         @CRS.ADMIN.APPLICATION.Resources.Resource.Height
                                     </label>
-                                    @Html.TextBoxFor(model => model.Height, new
-                                    {
-                                       @class = "w-full",
-                                       @placeholder = CRS.ADMIN.APPLICATION.Resources.Resource.Height,
-                                       @onkeypress = "return isNumber(event)",
-                                       autocomplete = "off",
-                                       maxLength = "3"
-                                    })
+                                    <select id="large" class="select-common block w-full " name="Height">
+                                        @foreach (var item in ViewBag.heightlistddl as IEnumerable<SelectListItem>)
+                                        {
+                                            var selectedId = ViewBag.heightlistkey as string;
+                                            if (item.Value == selectedId)
+                                            {
+                                                <option value="@item.Value" selected>
+                                                    @item.Text
+                                                </option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@item.Value">
+                                                    @item.Text
+                                                </option>
+                                            }
+                                        }
+                                    </select>
                                     <span class="error">
                                         @Html.ValidationMessageFor(m => m.Height)
                                     </span>
@@ -513,6 +545,9 @@
                             </div>
                         </div>
                     </div>
+
+                    @*Hot skills*@
+
                     <div id="content3" class="content-section" style="display: none;">
                         <div class="grid gap-4 py-[10px]">
                             <div class="flex gap-2 text-primary-300 text-sm font-semibold items-center mt-[10px]">
@@ -522,73 +557,62 @@
                                 <div class="bg-[#F4F4F4] h-[1px] w-full">
                                 </div>
                             </div>
+
                             <div class="grid grid-cols-2 gap-x-5 gap-y-4">
+                                @{
+                                    int k = 0;
+                                }
                                 @for (int i = 0; i < Model.HostIdentityDataModel.Count; i++)
                                 {
                                     if (Model.HostIdentityDataModel[i].IdentityType == "31".EncryptParameter())
                                     {
-                                        <div class="input-field-common">
+                                        <div @*  class="input-field-common"*@>
                                             <label class="block mb-[12px] text-sm font-medium text-secondary-text-2">
                                                 @Model.HostIdentityDataModel[i].IdentityLabel
                                             </label>
                                             @Html.HiddenFor(model => Model.HostIdentityDataModel[i].IdentityType)
                                             @Html.HiddenFor(model => Model.HostIdentityDataModel[i].IdentityValue)
                                             @Html.HiddenFor(model => Model.HostIdentityDataModel[i].IdentityLabel)
-
-                                            <select class="select-common block w-full identity-ddl-class" name="HostIdentityDataModel[@i].IdentityDDLType" required>
-                                                @foreach (var item in ViewBag.SkillDDL as IEnumerable<SelectListItem>)
-                                                {
-                                                    var selectedId = Model.HostIdentityDataModel[i].IdentityDDLType;
-                                                    if (item.Value == selectedId)
-                                                    {
-                                                        <option value="@item.Value" selected>
-                                                            @item.Text
-                                                        </option>
+                                            @if (!string.IsNullOrEmpty(Model.HostIdentityDataModel[i].InputType) && Model.HostIdentityDataModel[i].InputType.ToUpper() == "RANGE")
+                                            {
+                                                <div>
+                                                    @{
+                                                        var valueRange = string.IsNullOrEmpty(Model.HostIdentityDataModel[i].IdentityDescription) || Model.HostIdentityDataModel[i].IdentityDescription == "0" ? "20" : Model.HostIdentityDataModel[i].IdentityDescription;
                                                     }
-                                                    else
-                                                    {
-                                                        <option value="@item.Value">
-                                                            @item.Text
-                                                        </option>
-                                                    }
-                                                }
-                                            </select>
-                                            <br />
-                                            @Html.TextBoxFor(model => Model.HostIdentityDataModel[i].IdentityDescription, new
+                                                    <input type="range" class="sliderBlue" min="0" max="100" value="@valueRange" step="@valueRange" id="myRange_@k" oninput="updateRangeValue(@k, this.value)" />
+                                                    @*<input type="range" min="0" max="100" value="20" step="20" oninput="updateRangeValue(@k, this.value)">*@
+                                                    @*<p id="rangeValues_@k" name="">@valueRange</p>*@
+                                                    <p id="rangeValue_@k" name="">@valueRange</p>
+                                                    @Html.HiddenFor(model => Model.HostIdentityDataModel[i].IdentityDescription, new
                                                {
-                                                   @class = "w-full",
-                                                   @placeholder = @Model.HostIdentityDataModel[i].IdentityLabel,
-                                                   @onkeypress = "return isNumber(event)",
-                                                   autocomplete = "off",
-                                                   @maxLength = "3",
-                                                   required = "required"
+                                                   @Value = valueRange,
+                                                   @id = "rangeValue2_" + k
                                                })
-                                            <span class="error">
-                                                @Html.ValidationMessageFor(model => Model.HostIdentityDataModel[i].IdentityDescription)
-                                            </span>
+                                                </div>
+                                            }
+                                            @if (!string.IsNullOrEmpty(Model.HostIdentityDataModel[i].InputType) && Model.HostIdentityDataModel[i].InputType.ToUpper() == "INPUT")
+                                            {
+                                                @Html.TextBoxFor(model => Model.HostIdentityDataModel[i].IdentityDescription, new
+                                                   {
+                                                       @class = "w-full",
+                                                       @placeholder = @Model.HostIdentityDataModel[i].IdentityLabel,
+                                                       @onkeypress = "return isNumber(event)",
+                                                       autocomplete = "off",
+                                                       @maxLength = "3",
+                                                       required = "required"
+                                                   })
+                                                <span class="error">
+                                                    @Html.ValidationMessageFor(model => Model.HostIdentityDataModel[i].IdentityDescription)
+                                                </span>
+                                            }
                                         </div>
+                                        k++;
                                     }
                                 }
-                                @*@foreach (var item in Model.HostIdentityDataModel.Where(x => x.IdentityType == "31").ToList())
-                                    {
-                                        <div class="input-field-common">
-                                            <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
-                                                @item.IdentityLabel
-                                            </label>
-                                            @Html.TextBoxFor(model => item.IdentityDescription, new
-                                            {
-                                                @class = "w-full",
-                                                @placeholder = @item.IdentityLabel,
-                                                @onkeypress = "return isNumber(event)",
-                                                autocomplete = "off",
-                                                @maxLength = "3"
-                                            })
-                                            <span class="error">
-                                                @Html.ValidationMessageFor(m => item.IdentityDescription)
-                                            </span>
-                                        </div>
-                                    }*@
                             </div>
+
+
+
                             <div class="flex gap-2 text-primary-300 text-sm font-semibold items-center mt-[10px]">
                                 <div class="flex-none">
                                     @CRS.ADMIN.APPLICATION.Resources.Resource.Personality
@@ -605,45 +629,51 @@
                                             <label class="block mb-[12px] text-sm font-medium text-secondary-text-2">
                                                 @Model.HostIdentityDataModel[i].IdentityLabel
                                             </label>
-                                            @Html.HiddenFor(model => Model.HostIdentityDataModel[i].IdentityType)
-                                            @Html.HiddenFor(model => Model.HostIdentityDataModel[i].IdentityValue)
-                                            @Html.HiddenFor(model => Model.HostIdentityDataModel[i].IdentityLabel)
-                                            @Html.TextBoxFor(model => Model.HostIdentityDataModel[i].IdentityDescription, new
+                                            @if (!string.IsNullOrEmpty(Model.HostIdentityDataModel[i].InputType) && Model.HostIdentityDataModel[i].InputType.ToUpper() == "INPUT")
                                             {
-                                                @class = "w-full",
-                                                @placeholder = @Model.HostIdentityDataModel[i].IdentityLabel,
-                                                //@onkeypress = "return isAlphabetWithSpace(event)",
-                                                autocomplete = "off",
-                                                @maxLength = "100"
-                                            })
-                                            <span class="error">
-                                                @Html.ValidationMessageFor(model => Model.HostIdentityDataModel[i].IdentityDescription)
-                                            </span>
+                                                @Html.HiddenFor(model => Model.HostIdentityDataModel[i].IdentityType)
+                                                @Html.HiddenFor(model => Model.HostIdentityDataModel[i].IdentityValue)
+                                                @Html.HiddenFor(model => Model.HostIdentityDataModel[i].IdentityLabel)
+                                                @Html.TextBoxFor(model => Model.HostIdentityDataModel[i].IdentityDescription, new
+                                                {
+                                                    @class = "w-full",
+                                                    @placeholder = @Model.HostIdentityDataModel[i].IdentityLabel,
+                                                    //@onkeypress = "return isAlphabetWithSpace(event)",
+                                                    autocomplete = "off",
+                                                    @maxLength = "100"
+                                                })
+                                                <span class="error">
+                                                    @Html.ValidationMessageFor(model => Model.HostIdentityDataModel[i].IdentityDescription)
+                                                </span>
+                                            }
+                                            @if (!string.IsNullOrEmpty(Model.HostIdentityDataModel[i].InputType) && Model.HostIdentityDataModel[i].InputType.ToUpper() == "RANGE")
+                                            {
+                                                <div>
+                                                    @{
+                                                        var valueRange = string.IsNullOrEmpty(Model.HostIdentityDataModel[i].IdentityDescription) || Model.HostIdentityDataModel[i].IdentityDescription == "0" ? "20" : Model.HostIdentityDataModel[i].IdentityDescription;
+                                                    }
+                                                    <input type="range" class="sliderBlue" min="0" max="100" value="@valueRange" step="@valueRange" id="myRange_@k" oninput="updateRangeValue(@k, this.value)" />
+                                                    <p id="rangeValue_@k" name="">@valueRange</p>
+
+                                                    @Html.HiddenFor(model => Model.HostIdentityDataModel[i].IdentityDescription, new
+                                               {
+                                                   @Value = valueRange,
+                                                   @id = "rangeValue_" + k,
+                                                   @oninput = "updateRangeInput('" + @k + "', this.value)"
+                                               })
+                                                </div>
+                                            }
                                         </div>
                                     }
                                 }
-                                @*@foreach (var item in Model.HostIdentityDataModel.Where(x => x.IdentityType == "32").ToList())
-                                    {
-                                        <div class="input-field-common">
-                                            <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
-                                                @item.IdentityLabel
-                                            </label>
-                                            @Html.TextBoxFor(model => item.IdentityDescription, new
-                                            {
-                                                @class = "w-full",
-                                                @placeholder = @item.IdentityLabel,
-                                                //@onkeypress = "return isAlphabetWithSpace(event)",
-                                                autocomplete = "off",
-                                                @maxLength = "100"
-                                            })
-                                            <span class="error">
-                                                @Html.ValidationMessageFor(m => item.IdentityDescription)
-                                            </span>
-                                        </div>
-                                    }*@
+
                             </div>
                         </div>
                     </div>
+
+
+                    @*-----------------------------------------------------*@
+
                     <div id="content4" class="content-section" style="display: none;">
                         <div class="grid gap-4 py-[10px]">
                             <div class="flex gap-2 text-primary-300 text-sm font-semibold items-center mt-[10px]">
@@ -661,42 +691,44 @@
                                         <label class="block mb-[12px] text-sm font-medium text-secondary-text-2">
                                             @Model.HostIdentityDataModel[i].IdentityLabel
                                         </label>
-                                        @Html.HiddenFor(model => Model.HostIdentityDataModel[i].IdentityType)
-                                        @Html.HiddenFor(model => Model.HostIdentityDataModel[i].IdentityValue)
-                                        @Html.HiddenFor(model => Model.HostIdentityDataModel[i].IdentityLabel)
-                                        @Html.TextAreaFor(model => Model.HostIdentityDataModel[i].IdentityDescription, new
+                                        @if (!string.IsNullOrEmpty(Model.HostIdentityDataModel[i].InputType) && Model.HostIdentityDataModel[i].InputType.ToUpper() == "INPUT")
                                         {
-                                            @class = "w-full",
-                                            @placeholder = @Model.HostIdentityDataModel[i].IdentityLabel,
-                                            //@onkeypress = "return isAlphabetWithSpace(event)",
-                                            autocomplete = "off",
-                                            @maxLength = "500"
-                                        })
-                                        <span class="error">
-                                            @Html.ValidationMessageFor(model => Model.HostIdentityDataModel[i].IdentityDescription)
-                                        </span>
+                                            @Html.HiddenFor(model => Model.HostIdentityDataModel[i].IdentityType)
+                                            @Html.HiddenFor(model => Model.HostIdentityDataModel[i].IdentityValue)
+                                            @Html.HiddenFor(model => Model.HostIdentityDataModel[i].IdentityLabel)
+                                            @Html.TextAreaFor(model => Model.HostIdentityDataModel[i].IdentityDescription, new
+                                            {
+                                                @class = "w-full",
+                                                @placeholder = @Model.HostIdentityDataModel[i].IdentityLabel,
+                                                //@onkeypress = "return isAlphabetWithSpace(event)",
+                                                autocomplete = "off",
+                                                @maxLength = "500"
+                                            })
+                                            <span class="error">
+                                                @Html.ValidationMessageFor(model => Model.HostIdentityDataModel[i].IdentityDescription)
+                                            </span>
+                                        }
+                                        else if (!string.IsNullOrEmpty(Model.HostIdentityDataModel[i].InputType) && Model.HostIdentityDataModel[i].InputType.ToUpper() == "RANGE")
+                                        {
+                                            <div>
+                                                @{
+                                                    var valueRange = string.IsNullOrEmpty(Model.HostIdentityDataModel[i].IdentityDescription) || Model.HostIdentityDataModel[i].IdentityDescription=="0" ? "20" : Model.HostIdentityDataModel[i].IdentityDescription;
+                                                }
+                                                <input type="range" class="sliderBlue" min="0" max="100" value="@valueRange" step="@valueRange" id="myRange_@k" oninput="updateRangeValue(@k, this.value)" />
+                                                <p id="rangeValue_@k" name="">@valueRange</p>
+
+                                                @Html.HiddenFor(model => Model.HostIdentityDataModel[i].IdentityDescription, new
+                                           {
+                                               @Value = valueRange,
+                                               @id = "rangeValue_" + k,
+                                               @oninput = "updateRangeInput('" + @k + "', this.value)"
+                                           })
+                                            </div>
+                                        }
+
                                     </div>
                                 }
                             }
-                            @*@foreach (var item in Model.HostIdentityDataModel.Where(x => x.IdentityType == "33").ToList())
-                                {
-                                    <div class="input-field-common">
-                                        <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
-                                            @item.IdentityLabel
-                                        </label>
-                                        @Html.TextAreaFor(model => item.IdentityDescription, new
-                                        {
-                                            @class = "w-full",
-                                            @placeholder = @item.IdentityLabel,
-                                            @onkeypress = "return isNumber(event)",
-                                            autocomplete = "off",
-                                            @maxLength = "3"
-                                        })
-                                        <span class="error">
-                                            @Html.ValidationMessageFor(m => item.IdentityDescription)
-                                        </span>
-                                    </div>
-                                }*@
                         </div>
                     </div>
                     <div class="flex justify-between ">
@@ -731,3 +763,42 @@
         </div>
     </div>
 </div>
+
+<script>
+    function updateRangeValue(k, value) {
+        document.getElementById("rangeValue_" + k).innerText = value;
+        $('#rangeValue2_' + k).val(value);
+    }
+    function updateRangeInput(k, value) {
+        // Update the range input value
+        $('#myRange_' + k).val(value);
+        //document.getElementById('myRange_' + k).value = value;
+    }
+
+    document.getElementById("birthYear").addEventListener("input", function () {
+        this.value = this.value.replace(/[^0-9]/g, '');
+        if (this.value.length > 4) {
+            this.value = this.value.slice(0, 4);
+        }
+    });
+
+    document.getElementById("birthMonth").addEventListener("input", function () {
+        this.value = this.value.replace(/[^0-9]/g, '');
+        if (this.value.length > 2) {
+            this.value = this.value.slice(0, 2);
+        }
+        if (parseInt(this.value) > 12) {
+            this.value = '12';
+        }
+    });
+
+    document.getElementById("birthDay").addEventListener("input", function () {
+        this.value = this.value.replace(/[^0-9]/g, '');
+        if (this.value.length > 2) {
+            this.value = this.value.slice(0, 2);
+        }
+        if (parseInt(this.value) > 31) {
+            this.value = '31';
+        }
+    });
+</script>

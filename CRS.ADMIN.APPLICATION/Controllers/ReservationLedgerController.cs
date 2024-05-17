@@ -1,4 +1,5 @@
-﻿using CRS.ADMIN.APPLICATION.Library;
+﻿using CRS.ADMIN.APPLICATION.Helper;
+using CRS.ADMIN.APPLICATION.Library;
 using CRS.ADMIN.APPLICATION.Models.ReservationLedger;
 using CRS.ADMIN.BUSINESS.ReservationLedger;
 using CRS.ADMIN.SHARED;
@@ -30,7 +31,12 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             };
             var dbResponse = _business.GetReservationLedgerList(dbRequest, cId, Date);
             var responseInfo = dbResponse.MapObjects<ReservationLedgerModel>();
-            responseInfo.ForEach(x => x.ClubId = x.ClubId.EncryptParameter());
+            responseInfo.ForEach(x =>
+                {
+                    x.ClubId = x.ClubId.EncryptParameter();
+                    x.ClubLogo = ImageHelper.ProcessedImage(x.ClubLogo);
+                }
+            );
             ViewBag.ClubDDL = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("CLUBLIST") as Dictionary<string, string>, null, "--- Select ---");
             ViewBag.ClubIdKey = ClubId;
             ViewBag.LedgerList = responseInfo;
@@ -68,7 +74,12 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             };
             var dbResponse = _business.GetReservationLedgerDetail(dbRequest, cId, Date);
             Response = dbResponse.MapObjects<ReservationLedgerDetailModel>();
-            Response.ForEach(x => x.ClubId = x.ClubId.EncryptParameter());
+            Response.ForEach(x =>
+                {
+                    x.ClubId = x.ClubId.EncryptParameter();
+                    x.CustomerImage = ImageHelper.ProcessedImage(x.CustomerImage);
+                }
+            );
             ViewBag.IsBackAllowed = true;
             ViewBag.BackButtonURL = "/ReservationLedger/ReservationLedgerList";
 

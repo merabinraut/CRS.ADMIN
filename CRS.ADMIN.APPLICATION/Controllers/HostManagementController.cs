@@ -1,14 +1,19 @@
-﻿using CRS.ADMIN.APPLICATION.Library;
+﻿using CRS.ADMIN.APPLICATION.Helper;
+using CRS.ADMIN.APPLICATION.Library;
+using CRS.ADMIN.APPLICATION.Models;
 using CRS.ADMIN.APPLICATION.Models.HostManagement;
 using CRS.ADMIN.BUSINESS.HostManagement;
 using CRS.ADMIN.SHARED;
 using CRS.ADMIN.SHARED.HostManagement;
 using CRS.ADMIN.SHARED.PaginationManagement;
+using DocumentFormat.OpenXml.Bibliography;
 using Microsoft.Ajax.Utilities;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using static Google.Apis.Requests.BatchRequest;
@@ -57,6 +62,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             {
                 item.HostId = item.HostId?.EncryptParameter();
                 item.AgentId = item.AgentId?.EncryptParameter();
+                item.HostImage = ImageHelper.ProcessedImage(item.HostImage);
             }
 
             if (string.IsNullOrEmpty(ResponseModel.ManageHostModel.AgentId) && string.IsNullOrEmpty(ResponseModel.ManageHostModel.HostId))
@@ -81,6 +87,10 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             ViewBag.RankDDL = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("RANKDDL") as Dictionary<string, string>, null, "--- Select ---");
             ViewBag.RankDDLKey = ResponseModel.ManageHostModel.Rank;
             ViewBag.SkillDDL = ApplicationUtilities.SetDDLValue(CustomLoadDropdownList("SKILLDDL") as Dictionary<string, string>, null, "--- Select ---");
+            ViewBag.BirthPlaceDdl = ApplicationUtilities.SetDDLValue(DDLHelper.LoadDropdownList("BIRTHPLACE") as Dictionary<string, string>, null, "--- Select ---");
+            ViewBag.heightlistddl = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("HEIGHTLIST") as Dictionary<string, string>, null, "--- Select ---");
+            ViewBag.BirthPlacekey = ResponseModel.ManageHostModel.Address;
+            ViewBag.heightlistkey = ResponseModel.ManageHostModel.Height;
             ViewBag.StartIndex = StartIndex;
             ViewBag.PageSize = PageSize;
             ViewBag.TotalData = dbResponse != null && dbResponse.Any() ? dbResponse[0].TotalRecords : 0;
@@ -131,14 +141,29 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 }
                 var dbResponse = _buss.GetHostDetail(aId, hId);
                 model = dbResponse.MapObject<ManageHostModel>();
+                if (!string.IsNullOrEmpty(model.DOB))
+                    model.DOB = DateTime.Parse(model.DOB).ToString("yyyy-MM-dd");
                 model.AgentId = AgentId;
                 model.HostId = HostId;
+                if (!string.IsNullOrEmpty(model.DOB))
+                {
+                    DateTime dob;
+                    if (DateTime.TryParseExact(model.DOB, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out dob))
+                    {
+                        model.BirthYear = dob.Year.ToString();
+                        model.BirthMonth = dob.Month.ToString("00");
+                        model.BirthDate = dob.Day.ToString("00");
+                    }
+                }
                 model.ConstellationGroup = model.ConstellationGroup?.EncryptParameter();
                 model.BloodType = model.BloodType?.EncryptParameter();
                 model.PreviousOccupation = model.PreviousOccupation?.EncryptParameter();
                 model.LiquorStrength = model.LiquorStrength?.EncryptParameter();
                 model.HostLogo = dbResponse.ImagePath;
+                model.HostIconImage = dbResponse.IconImagePath;
                 model.Rank = dbResponse.Rank.EncryptParameter();
+                model.Address = dbResponse.Address.EncryptParameter();
+                model.Height = dbResponse.Height.EncryptParameter();
                 model.HostIdentityDataModel.ForEach(x => x.IdentityLabel = (!string.IsNullOrEmpty(culture) && culture == "en") ? x.IdentityLabelEnglish : x.IdentityLabelJapanese);
                 model.HostIdentityDataModel.ForEach(x => x.IdentityType = x.IdentityType.EncryptParameter());
                 model.HostIdentityDataModel.ForEach(x => x.IdentityValue = x.IdentityValue.EncryptParameter());
@@ -150,13 +175,13 @@ namespace CRS.ADMIN.APPLICATION.Controllers
         }
 
         [HttpPost, ValidateAntiForgeryToken]
-        public ActionResult ManageHost(ManageHostModel Model, string ZodiacSignsDDLKey, string BloodGroupDDLKey,
-            string OccupationDDLKey, string LiquorStrengthDDLKey, string BirthYearKey, string BirthMonthKey, string BirthDayKey, HttpPostedFileBase HostLogoFile)
+        public async Task<ActionResult> ManageHost(ManageHostModel Model, string ZodiacSignsDDLKey, string BloodGroupDDLKey,
+            string OccupationDDLKey, string LiquorStrengthDDLKey, string BirthYearKey, string BirthMonthKey, string BirthDayKey, HttpPostedFileBase HostLogoFile, HttpPostedFileBase HostIconImageFile)
         {
-            Model.BirthYear = BirthYearKey;
-            Model.BirthMonth = BirthMonthKey;
-            Model.BirthDate = BirthDayKey;
-            Model.DOB = string.Concat(BirthYearKey, '-', BirthMonthKey, '-', BirthDayKey);
+            //Model.BirthYear = BirthYearKey;
+            //Model.BirthMonth = BirthMonthKey;
+            //Model.BirthDate = BirthDayKey;
+            Model.DOB = string.Concat(Model.BirthYear, '-', Model.BirthMonth, '-', Model.BirthDate);
             Model.ConstellationGroup = ZodiacSignsDDLKey;
             Model.BloodType = BloodGroupDDLKey;
             Model.PreviousOccupation = OccupationDDLKey;
@@ -166,12 +191,9 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             if (!string.IsNullOrEmpty(BloodGroupDDLKey?.DecryptParameter())) ModelState.Remove("BloodType");
             if (!string.IsNullOrEmpty(OccupationDDLKey?.DecryptParameter())) ModelState.Remove("PreviousOccupation");
             if (!string.IsNullOrEmpty(LiquorStrengthDDLKey?.DecryptParameter())) ModelState.Remove("LiquorStrength");
-            if (!string.IsNullOrEmpty(BirthYearKey) && !string.IsNullOrEmpty(BirthMonthKey) && !string.IsNullOrEmpty(BirthDayKey))
+            if (!string.IsNullOrEmpty(Model.DOB))
             {
-                if (BirthYearKey != "YYYY" && BirthMonthKey != "MM" && BirthDayKey != "DD")
-                {
-                    ModelState.Remove("DOB");
-                }
+                ModelState.Remove("DOB");
             }
             if (HostLogoFile == null)
             {
@@ -198,7 +220,33 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                     }
                 }
             }
-            string ImagePath = "";
+            if (HostIconImageFile == null)
+            {
+                if (string.IsNullOrEmpty(Model.HostIconImage))
+                {
+                    bool allowRedirect = false;
+                    var ErrorMessage = string.Empty;
+                    if (HostIconImageFile == null && string.IsNullOrEmpty(Model.HostIconImage))
+                    {
+                        ErrorMessage = "Image required";
+                        allowRedirect = true;
+                    }
+                    if (allowRedirect)
+                    {
+                        this.AddNotificationMessage(new NotificationModel()
+                        {
+                            NotificationType = NotificationMessage.INFORMATION,
+                            Message = ErrorMessage ?? "Something went wrong. Please try again later.",
+                            Title = NotificationMessage.INFORMATION.ToString(),
+                        });
+                        TempData["RenderId"] = "ManageHost";
+                        TempData["ManageHostModel"] = Model;
+                        return RedirectToAction("HostList", "HostManagement", new { AgentId = Model.AgentId });
+                    }
+                }
+            }
+
+            string HostLogoFileName = string.Empty;
             var allowedContentType = AllowedImageContentType();
             if (HostLogoFile != null)
             {
@@ -206,10 +254,31 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 var ext = Path.GetExtension(HostLogoFile.FileName);
                 if (allowedContentType.Contains(contentType.ToLower()))
                 {
-                    var dateTime = DateTime.Now.ToString("yyyyMMddHHmmssffff");
-                    string fileName = "host_pi_" + dateTime + ext.ToLower();
-                    ImagePath = Path.Combine(Server.MapPath("~/Content/UserUpload/Host"), fileName);
-                    Model.HostLogo = "/Content/UserUpload/Host/" + fileName;
+                    HostLogoFileName = $"{AWSBucketFolderNameModel.HOST}/Logo_{DateTime.Now.ToString("yyyyMMddHHmmssffff")}{ext.ToLower()}";
+                    Model.HostLogo = $"/{HostLogoFileName}";
+                }
+                else
+                {
+                    this.AddNotificationMessage(new NotificationModel()
+                    {
+                        NotificationType = NotificationMessage.INFORMATION,
+                        Message = "Invalid image format.",
+                        Title = NotificationMessage.INFORMATION.ToString(),
+                    });
+                    TempData["RenderId"] = "ManageHost";
+                    TempData["ManageHostModel"] = Model;
+                    return RedirectToAction("HostList", "HostManagement", new { AgentId = Model.AgentId });
+                }
+            }
+            string HostIconImageFileName = string.Empty;
+            if (HostIconImageFile != null)
+            {
+                var contentType = HostIconImageFile.ContentType;
+                var ext = Path.GetExtension(HostIconImageFile.FileName);
+                if (allowedContentType.Contains(contentType.ToLower()))
+                {
+                    HostIconImageFileName = $"{AWSBucketFolderNameModel.HOST}/IconImage_{DateTime.Now.ToString("yyyyMMddHHmmssffff")}{ext.ToLower()}";
+                    Model.HostIconImage = $"/{HostIconImageFileName}";
                 }
                 else
                 {
@@ -244,17 +313,21 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 requestCommon.BloodType = BloodGroupDDLKey?.DecryptParameter();
                 requestCommon.PreviousOccupation = OccupationDDLKey?.DecryptParameter();
                 requestCommon.LiquorStrength = LiquorStrengthDDLKey?.DecryptParameter();
-                requestCommon.DOB = string.Concat(BirthYearKey, '-', BirthMonthKey, '-', BirthDayKey);
+                requestCommon.Address = Model.Address?.DecryptParameter();
+                requestCommon.Height = Model.Height?.DecryptParameter();
+                requestCommon.DOB = Model.DOB;
                 requestCommon.ActionUser = ApplicationUtilities.GetSessionValue("Username").ToString();
                 requestCommon.ActionIP = ApplicationUtilities.GetIP();
                 requestCommon.ImagePath = Model.HostLogo;
+                requestCommon.IconImagePath = Model.HostIconImage;
                 requestCommon.HostIdentityDataModel.ForEach(x => x.IdentityType = x.IdentityType.DecryptParameter());
                 requestCommon.HostIdentityDataModel.ForEach(x => x.IdentityValue = x.IdentityValue.DecryptParameter());
                 requestCommon.HostIdentityDataModel.ForEach(x => x.IdentityDDLType = !string.IsNullOrEmpty(x.IdentityDDLType) ? x.IdentityDDLType.DecryptParameter() : null);
                 var dbResponse = _buss.ManageHost(requestCommon);
                 if (dbResponse != null && dbResponse.Code == 0)
                 {
-                    if (HostLogoFile != null) ApplicationUtilities.ResizeImage(HostLogoFile, ImagePath);
+                    if (HostLogoFile != null) await ImageHelper.ImageUpload(HostLogoFileName, HostLogoFile);
+                    if (HostIconImageFile != null) await ImageHelper.ImageUpload(HostIconImageFileName, HostIconImageFile);
                     this.AddNotificationMessage(new NotificationModel()
                     {
                         NotificationType = NotificationMessage.SUCCESS,
@@ -412,6 +485,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 item.AgentId = AgentId;
                 item.HostId = HostId;
                 item.GalleryId = item.GalleryId?.EncryptParameter();
+                item.ImagePath = ImageHelper.ProcessedImage(item.ImagePath);
             }
             ReturnModel.HostManageGalleryImageModel.AgentId = AgentId;
             ReturnModel.HostManageGalleryImageModel.HostId = HostId;
@@ -459,7 +533,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
         }
 
         [HttpPost, ValidateAntiForgeryToken]
-        public ActionResult ManageGallery(HostManageGalleryImageModel Model, HttpPostedFileBase Image_Path)
+        public async Task<ActionResult> ManageGallery(HostManageGalleryImageModel Model, HttpPostedFileBase Image_Path)
         {
             var aId = Model.AgentId?.DecryptParameter();
             var hId = Model.HostId?.DecryptParameter();
@@ -514,7 +588,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                     }
                 }
             }
-            string ImagePath = "";
+            string fileName = string.Empty;
             var allowedContentType = AllowedImageContentType();
             if (Image_Path != null)
             {
@@ -522,10 +596,8 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 var ext = Path.GetExtension(Image_Path.FileName);
                 if (allowedContentType.Contains(contentType.ToLower()))
                 {
-                    var dateTime = DateTime.Now.ToString("yyyyMMddHHmmssffff");
-                    string fileName = "GalleryImage_" + dateTime + ext.ToLower();
-                    ImagePath = Path.Combine(Server.MapPath("~/Content/UserUpload/Host/Gallery"), fileName);
-                    Model.ImagePath = "/Content/UserUpload/Host/Gallery/" + fileName;
+                    fileName = $"{AWSBucketFolderNameModel.HOST}/GalleryImage_{DateTime.Now.ToString("yyyyMMddHHmmssffff")}{ext.ToLower()}";
+                    Model.ImagePath = $"/{fileName}";
                 }
                 else
                 {
@@ -549,7 +621,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             var dbResponse = _buss.ManageGalleryImage(dbRequest);
             if (dbResponse != null && dbResponse.Code == 0)
             {
-                if (Image_Path != null) ApplicationUtilities.ResizeImage(Image_Path, ImagePath);
+                if (Image_Path != null) await ImageHelper.ImageUpload(fileName, Image_Path);
                 this.AddNotificationMessage(new NotificationModel()
                 {
                     NotificationType = dbResponse.Code == ResponseCode.Success ? NotificationMessage.SUCCESS : NotificationMessage.INFORMATION,

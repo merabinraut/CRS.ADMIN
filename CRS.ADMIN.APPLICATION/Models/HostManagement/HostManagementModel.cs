@@ -31,6 +31,8 @@ namespace CRS.ADMIN.APPLICATION.Models.HostManagement
         public string Ratings { get; set; }
         public string TotalVisitors { get; set; }
         public string HostImage { get; set; }
+        public string Height { get; set; }
+        public string Address { get; set; }
     }
 
     public class ManageHostModel
@@ -65,7 +67,7 @@ namespace CRS.ADMIN.APPLICATION.Models.HostManagement
         public string ConstellationGroup { get; set; }
         [Display(Name = "Height")]
         [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
-        [MaxLength(5, ErrorMessage = "Maximum 5 digit number allowed")]
+        //[MaxLength(5, ErrorMessage = "Maximum 5 digit number allowed")]
         public string Height { get; set; }
         [Display(Name = "Blood Type")]
         [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
@@ -95,6 +97,7 @@ namespace CRS.ADMIN.APPLICATION.Models.HostManagement
         public string BirthMonth { get; set; }
         public string BirthDate { get; set; }
         public string HostLogo { get; set; }
+        public string HostIconImage { get; set; }
         public string Address { get; set; }
         public List<HostIdentityDataModel> HostIdentityDataModel { get; set; } = new List<HostIdentityDataModel>();
     }
@@ -107,5 +110,6 @@ namespace CRS.ADMIN.APPLICATION.Models.HostManagement
         public string IdentityDescription { get; set; }
         public string IdentityLabelJapanese { get; set; }
         public string IdentityLabelEnglish { get; set; }
+        public string InputType { get; set; }
     }
 }

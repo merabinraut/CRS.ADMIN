@@ -1,4 +1,6 @@
-﻿using CRS.ADMIN.APPLICATION.Library;
+﻿using CRS.ADMIN.APPLICATION.Helper;
+using CRS.ADMIN.APPLICATION.Library;
+using CRS.ADMIN.APPLICATION.Models;
 using CRS.ADMIN.APPLICATION.Models.PlanManagement;
 using CRS.ADMIN.BUSINESS.CommonManagement;
 using CRS.ADMIN.BUSINESS.PlanManagement;
@@ -9,6 +11,7 @@ using Microsoft.Ajax.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
@@ -52,7 +55,12 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             };
             var planLists = _business.GetPlanList(dbRequest);
             ResModel.PlanManagementModel = planLists.MapObjects<PlanManagementModel>();
-            ResModel.PlanManagementModel.ForEach(x => x.PlanId = x.PlanId.EncryptParameter());
+            ResModel.PlanManagementModel.ForEach(x =>
+            {
+                x.PlanId = x.PlanId.EncryptParameter();
+                x.PlanImage = ImageHelper.ProcessedImage(x.PlanImage);
+                x.PlanImage2 = ImageHelper.ProcessedImage(x.PlanImage2);
+            });
             ResModel.PlanManagementModel.ForEach(x => x.PlanStatus = x.PlanStatus.Trim().ToUpper() == "A" ? "A" : "B");
 
             string RenderId = "";
@@ -125,7 +133,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
         }
 
         [HttpPost, ValidateAntiForgeryToken]
-        public ActionResult ManagePlan(PlanManagementModel model, HttpPostedFileBase ImageFile, HttpPostedFileBase ImageFile2)
+        public async Task<ActionResult> ManagePlan(PlanManagementModel model, HttpPostedFileBase ImageFile, HttpPostedFileBase ImageFile2)
         {
             if (!ModelState.IsValid)
             {
@@ -175,8 +183,8 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 TempData["RenderId"] = "Manage";
                 return RedirectToAction("PlanList", "PlanManagement");
             }
-            string imgPath = string.Empty;
-            string imgPath2 = string.Empty;
+            string PlanImageFileName = string.Empty;
+            string PlanImageFileName2 = string.Empty;
             if (ImageFile != null)
             {
                 var allowedContenttype = AllowedImageContentType();
@@ -185,10 +193,8 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 var ext = System.IO.Path.GetExtension(ImageFile.FileName);
                 if (allowedContenttype.Contains(contentType.ToLower()))
                 {
-                    string datet = DateTime.Now.ToString("yyyyMMddHHmmssffff");
-                    string myfilename = "PlanImg_" + datet + ext.ToLower();
-                    imgPath = System.IO.Path.Combine(Server.MapPath("~/Content/userupload/PlanManagement/"), myfilename);
-                    common.PlanImage = "/Content/userupload/PlanManagement/" + myfilename;
+                    PlanImageFileName = $"{AWSBucketFolderNameModel.ADMIN}/PlanImage_{DateTime.Now.ToString("yyyyMMddHHmmssffff")}{ext.ToLower()}";
+                    common.PlanImage = $"/{PlanImageFileName}";
                 }
                 else
                 {
@@ -210,10 +216,8 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 var ext2 = System.IO.Path.GetExtension(ImageFile2.FileName);
                 if (allowedContenttype.Contains(contentType2.ToLower()))
                 {
-                    string datet = DateTime.Now.ToString("yyyyMMddHHmmssffff");
-                    string myfilename2 = "PlanImg2_" + datet + ext2.ToLower();
-                    imgPath2 = System.IO.Path.Combine(Server.MapPath("~/Content/userupload/PlanManagement/"), myfilename2);
-                    common.PlanImage2 = "/Content/userupload/PlanManagement/" + myfilename2;
+                    PlanImageFileName2 = $"{AWSBucketFolderNameModel.ADMIN}/PlanImage2_{DateTime.Now.ToString("yyyyMMddHHmmssffff")}{ext2.ToLower()}";
+                    common.PlanImage2 = $"/{PlanImageFileName2}";
                 }
                 else
                 {
@@ -239,8 +243,8 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             var serviceResp = _business.ManagePlan(common);
             if (serviceResp != null && serviceResp.Code == ResponseCode.Success)
             {
-                if (ImageFile != null) ApplicationUtilities.ResizeImage(ImageFile, imgPath);
-                if (ImageFile2 != null) ApplicationUtilities.ResizeImage(ImageFile2, imgPath2);
+                if (ImageFile != null) await ImageHelper.ImageUpload(PlanImageFileName, ImageFile);
+                if (ImageFile2 != null) await ImageHelper.ImageUpload(PlanImageFileName2, ImageFile2);
                 this.AddNotificationMessage(new NotificationModel()
                 {
                     NotificationType = NotificationMessage.SUCCESS,

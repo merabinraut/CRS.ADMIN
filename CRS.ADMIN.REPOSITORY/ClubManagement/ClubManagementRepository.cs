@@ -1,19 +1,10 @@
 ﻿using CRS.ADMIN.SHARED;
 using CRS.ADMIN.SHARED.ClubManagement;
 using CRS.ADMIN.SHARED.PaginationManagement;
-using DocumentFormat.OpenXml.Math;
-using DocumentFormat.OpenXml.Office.CoverPageProps;
-using DocumentFormat.OpenXml.Office2010.Excel;
-using DocumentFormat.OpenXml.Office2016.Excel;
 using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Data;
-using System.Data.SqlClient;
 using System.Linq;
-using System.Net;
-using System.Numerics;
-using System.Text.RegularExpressions;
 
 namespace CRS.ADMIN.REPOSITORY.ClubManagement
 {
@@ -49,7 +40,7 @@ namespace CRS.ADMIN.REPOSITORY.ClubManagement
                         Location = _DAO.ParseColumnValue(item, "Location").ToString(),
                         CreatedDate = _DAO.ParseColumnValue(item, "CreatedDate").ToString(),
                         UpdatedDate = _DAO.ParseColumnValue(item, "UpdatedDate").ToString(),
-                        Rank =!string.IsNullOrEmpty( _DAO.ParseColumnValue(item, "Rank").ToString())? _DAO.ParseColumnValue(item, "Rank").ToString() :"",
+                        Rank = !string.IsNullOrEmpty(_DAO.ParseColumnValue(item, "Rank").ToString()) ? _DAO.ParseColumnValue(item, "Rank").ToString() : "",
                         Ratings = _DAO.ParseColumnValue(item, "Ratings").ToString(),
                         ClubLogo = _DAO.ParseColumnValue(item, "ClubLogo").ToString(),
                         ClubCategory = _DAO.ParseColumnValue(item, "ClubCategory").ToString(),
@@ -86,7 +77,7 @@ namespace CRS.ADMIN.REPOSITORY.ClubManagement
                         MobileNumber = _DAO.ParseColumnValue(item, "MobileNumber").ToString(),
                         Location = _DAO.ParseColumnValue(item, "LocationName").ToString(),
                         CreatedDate = _DAO.ParseColumnValue(item, "CreatedDate").ToString(),
-                        UpdatedDate = _DAO.ParseColumnValue(item, "UpdatedDate").ToString(),                       
+                        UpdatedDate = _DAO.ParseColumnValue(item, "UpdatedDate").ToString(),
                         ClubLogo = _DAO.ParseColumnValue(item, "ClubLogo").ToString(),
                         ActionPlatform = _DAO.ParseColumnValue(item, "ActionPlatform").ToString(),
                         TotalRecords = Convert.ToInt32(_DAO.ParseColumnValue(item, "TotalRecords").ToString()),
@@ -204,7 +195,7 @@ namespace CRS.ADMIN.REPOSITORY.ClubManagement
                 {
                     AgentId = _DAO.ParseColumnValue(dbResponse, "AgentId").ToString(),
                     holdId = _DAO.ParseColumnValue(dbResponse, "Id").ToString(),
-                   // UserId = _DAO.ParseColumnValue(dbResponse, "UserId").ToString(),
+                    // UserId = _DAO.ParseColumnValue(dbResponse, "UserId").ToString(),
                     LoginId = _DAO.ParseColumnValue(dbResponse, "LoginId").ToString(),
                     FirstName = _DAO.ParseColumnValue(dbResponse, "FirstName").ToString(),
                     MiddleName = _DAO.ParseColumnValue(dbResponse, "MiddleName").ToString(),
@@ -424,18 +415,18 @@ namespace CRS.ADMIN.REPOSITORY.ClubManagement
             if (!string.IsNullOrEmpty(Request.AgentId) && string.IsNullOrEmpty(Request.holdId))
             {
 
-                SQL +=  "@Flag='r_cmth'" ;
+                SQL += "@Flag='r_cmth'";
             }
             else
             {
                 SQL += string.IsNullOrEmpty(Request.holdId) ? "@Flag='r_ch'" : "@Flag='m_ch'";
-            }            
+            }
             if (string.IsNullOrEmpty(Request.holdId))
             {
                 SQL += ",@LoginId=N" + _DAO.FilterString(Request.LoginId);
                 SQL += ",@Email=" + _DAO.FilterString(Request.Email);
                 SQL += ",@MobileNumber=" + _DAO.FilterString(Request.MobileNumber);
-               
+
             }
             else
             {
@@ -465,7 +456,7 @@ namespace CRS.ADMIN.REPOSITORY.ClubManagement
             SQL += ",@ActionUser=" + _DAO.FilterString(Request.ActionUser);
             SQL += ",@ActionIP=" + _DAO.FilterString(Request.ActionIP);
             SQL += ",@ActionPlatform=" + _DAO.FilterString(Request.ActionPlatform);
-            SQL += ",@LocationId=" + _DAO.FilterString(Request.LocationId);          
+            SQL += ",@LocationId=" + _DAO.FilterString(Request.LocationId);
             SQL += ",@ceoFullName=N" + _DAO.FilterString(Request.ceoFullName);
             SQL += ",@Line=" + _DAO.FilterString(Request.Line);
             SQL += ",@ClubOpeningTime=" + _DAO.FilterString(Request.WorkingHrFrom);
@@ -500,8 +491,8 @@ namespace CRS.ADMIN.REPOSITORY.ClubManagement
                 SQL += ",@Representative2_MobileNo=" + _DAO.FilterString(Request.Representative2_MobileNo);
                 SQL += ",@Representative2_Email=" + _DAO.FilterString(Request.Representative2_Email);
             }
-               
-            
+
+
             Response = _DAO.ParseCommonDbResponse(SQL);
             if (Response.ErrorCode==0)
             {
@@ -509,29 +500,23 @@ namespace CRS.ADMIN.REPOSITORY.ClubManagement
                 foreach (var planList in Request.PlanDetailList)
                 {
 
-                    foreach (var planIdentity in planList.PlanIdentityList)
-                    {
-                        string SQL2 = "EXEC sproc_club_management_approvalrejection ";
-                        SQL2 += "@Flag='r_cph'";
-                        SQL2 += ",@ClubPlanTypeId=" + _DAO.FilterString(planIdentity.StaticDataValue);
-                        SQL2 += ",@Description=N" + _DAO.FilterString(planIdentity.IdentityDescription);
-                        SQL2 += ",@PlanListId=" + _DAO.FilterString(Convert.ToString(i));
-                        //SQL2 += ",@ClubId=" + _DAO.FilterString(string.IsNullOrEmpty(Request.AgentId) ? Response.Extra1 : Request.AgentId);
-                        SQL2 += ",@ClubId=" + _DAO.FilterString(!string.IsNullOrEmpty(Response.Extra1) ? Response.Extra1 : null);
-                        SQL2 += ",@AgentId=" + _DAO.FilterString(!string.IsNullOrEmpty(Request.AgentId) ? Request.AgentId : null);
-                        SQL2 += ",@ActionPlatform=" + _DAO.FilterString(Request.ActionPlatform);
-                        SQL2 += ",@ActionUser=" + _DAO.FilterString(Request.ActionUser);
-                        
-
-                            SQL2 += ",@Id=" + _DAO.FilterString(string.IsNullOrEmpty(Request.holdId) ? null : planIdentity.Id);
-                        
-                        
-                        _DAO.ParseCommonDbResponse(SQL2);
-                    }
-                    i++;
+                foreach (var planIdentity in planList.PlanIdentityList)
+                {
+                    string SQL2 = "EXEC sproc_club_management_approvalrejection ";
+                    SQL2 += "@Flag='r_cph'";
+                    SQL2 += ",@ClubPlanTypeId=" + _DAO.FilterString(planIdentity.StaticDataValue);
+                    SQL2 += ",@Description=N" + _DAO.FilterString(planIdentity.IdentityDescription);
+                    SQL2 += ",@PlanListId=" + _DAO.FilterString(Convert.ToString(i));
+                    //SQL2 += ",@ClubId=" + _DAO.FilterString(string.IsNullOrEmpty(Request.AgentId) ? Response.Extra1 : Request.AgentId);
+                    SQL2 += ",@ClubId=" + _DAO.FilterString(!string.IsNullOrEmpty(Response.Extra1) ? Response.Extra1 : null);
+                    SQL2 += ",@AgentId=" + _DAO.FilterString(!string.IsNullOrEmpty(Request.AgentId) ? Request.AgentId : null);
+                    SQL2 += ",@ActionPlatform=" + _DAO.FilterString(Request.ActionPlatform);
+                    SQL2 += ",@ActionUser=" + _DAO.FilterString(Request.ActionUser);
+                    SQL2 += ",@Id=" + _DAO.FilterString(string.IsNullOrEmpty(Request.holdId) ? null : planIdentity.Id);
+                    _DAO.ParseCommonDbResponse(SQL2);
                 }
+                i++;
             }
-            
 
             return Response;
             // Create a DataTable to hold the PlanIdentity data
@@ -595,16 +580,16 @@ namespace CRS.ADMIN.REPOSITORY.ClubManagement
             //return _DAO.ParseCommonDbResponse(SQL);
         }
 
-        public CommonDbResponse ManageApproveReject(string holdId,string flag,string AgentId, String culture = "", ManageClubCommon Request=null)
+        public CommonDbResponse ManageApproveReject(string holdId, string flag, string AgentId, String culture = "", ManageClubCommon Request = null)
         {
             var Response = new CommonDbResponse();
             string sp_name = "sproc_club_management_approvalrejection ";
             sp_name += " @flag=" + _DAO.FilterString(flag);
             sp_name += ",@holdId =" + _DAO.FilterString(holdId);
             sp_name += ",@AgentId =" + _DAO.FilterString(AgentId);
-            Response= _DAO.ParseCommonDbResponse(sp_name);
+            Response = _DAO.ParseCommonDbResponse(sp_name);
             var i = 0;
-            if(flag== "rcm_a")
+            if (flag == "rcm_a")
             {
 
                 foreach (var planList in Request.PlanDetailList)
@@ -628,7 +613,7 @@ namespace CRS.ADMIN.REPOSITORY.ClubManagement
                     i++;
                 }
             }
-                  
+
             return Response;
         }
 
@@ -641,7 +626,7 @@ namespace CRS.ADMIN.REPOSITORY.ClubManagement
             var response1 = new List<PlanListCommon>();
             var response = new List<planIdentityDataCommon>();
             string SQL = "EXEC sproc_club_management @Flag='cpi'";
-            
+
             var dbResponse = _DAO.ExecuteDataTable(SQL);
             if (dbResponse != null)
             {
@@ -656,19 +641,19 @@ namespace CRS.ADMIN.REPOSITORY.ClubManagement
                         japanese = _DAO.ParseColumnValue(item, "japanese").ToString(),
                         inputtype = _DAO.ParseColumnValue(item, "inputtype").ToString(),
                         name = _DAO.ParseColumnValue(item, "name").ToString(),
-                        IdentityLabel=culture.ToLower()=="en"? _DAO.ParseColumnValue(item, "English").ToString() : _DAO.ParseColumnValue(item, "japanese").ToString(),
+                        IdentityLabel = culture.ToLower() == "en" ? _DAO.ParseColumnValue(item, "English").ToString() : _DAO.ParseColumnValue(item, "japanese").ToString(),
                     });
                 }
-           
-            var planList = new PlanListCommon();
-            planList.PlanIdentityList.AddRange(response);
-            response1.Add(planList);
-        }
+
+                var planList = new PlanListCommon();
+                planList.PlanIdentityList.AddRange(response);
+                response1.Add(planList);
+            }
             return response1;
         }
         public List<planIdentityDataCommon> GetClubPlanIdentityListAddable(string culture)
         {
-           
+
             var response = new List<planIdentityDataCommon>();
             string SQL = "EXEC sproc_club_management @Flag='cpi'";
 
@@ -691,13 +676,13 @@ namespace CRS.ADMIN.REPOSITORY.ClubManagement
                     response.AddRange(response);
                 }
 
-               
-               
-               
+
+
+
             }
             return response;
         }
-        public ClubDetailCommon GetClubDetails(string AgentId,String culture="")
+        public ClubDetailCommon GetClubDetails(string AgentId, String culture = "")
         {
             var plan = new List<planIdentityDataCommon>();
             var PlanListCommon = new List<PlanListCommon>();
@@ -714,13 +699,13 @@ namespace CRS.ADMIN.REPOSITORY.ClubManagement
                 if (dbResponse1.Rows.Count > 0)
                 {
                     var code = String.Empty;
-                    
+
                     foreach (DataRow item in dbResponse1.Rows)
                     {
-                         code = _DAO.ParseColumnValue(item, "Code").ToString();
-                       
+                        code = _DAO.ParseColumnValue(item, "Code").ToString();
+
                     }
-                    if (code=="0")
+                    if (code == "0")
                     {
                         foreach (DataRow item in dbResponse1.Rows.Cast<DataRow>()
                                                        .Where(row => _DAO.ParseColumnValue(row, "PlanListId").ToString() == Convert.ToString(i)))
@@ -759,13 +744,13 @@ namespace CRS.ADMIN.REPOSITORY.ClubManagement
 
                         i++;
                     }
-                  
-                }
-
-                    // Add all items from the filtered list to PlanIdentityList
 
                 }
-           
+
+                // Add all items from the filtered list to PlanIdentityList
+
+            }
+
             string SQL = "EXEC sproc_club_management_approvalrejection @Flag='gcd'";
             SQL += ",@AgentId=" + _DAO.FilterString(AgentId);
             var dbResponse = _DAO.ExecuteDataRow(SQL);
@@ -822,7 +807,7 @@ namespace CRS.ADMIN.REPOSITORY.ClubManagement
                     GroupName2 = _DAO.ParseColumnValue(dbResponse, "GroupNamekatakana").ToString(),
                     CompanyAddress = _DAO.ParseColumnValue(dbResponse, "CompanyAddress").ToString(),
                     BusinessLicenseNumber = _DAO.ParseColumnValue(dbResponse, "BusinessLicenseNumber").ToString(),
-                    LicenseIssuedDate =!string.IsNullOrEmpty(_DAO.ParseColumnValue(dbResponse, "LicenseIssuedDate").ToString())? Convert.ToDateTime( _DAO.ParseColumnValue(dbResponse, "LicenseIssuedDate")).ToString("yyyy/MM/dd"): _DAO.ParseColumnValue(dbResponse, "LicenseIssuedDate").ToString(),
+                    LicenseIssuedDate = !string.IsNullOrEmpty(_DAO.ParseColumnValue(dbResponse, "LicenseIssuedDate").ToString()) ? Convert.ToDateTime(_DAO.ParseColumnValue(dbResponse, "LicenseIssuedDate")).ToString("yyyy/MM/dd") : _DAO.ParseColumnValue(dbResponse, "LicenseIssuedDate").ToString(),
                     ClosingDate = _DAO.ParseColumnValue(dbResponse, "ClosingDate").ToString(),
                     KYCDocument = _DAO.ParseColumnValue(dbResponse, "KYCDocument").ToString(),
                     Representative1_ContactName = _DAO.ParseColumnValue(dbResponse, "Representative1_ContactName").ToString(),
@@ -833,14 +818,14 @@ namespace CRS.ADMIN.REPOSITORY.ClubManagement
                     Representative2_MobileNo = _DAO.ParseColumnValue(dbResponse, "Representative2_MobileNo").ToString(),
                     GoogleMap = _DAO.ParseColumnValue(dbResponse, "LocationURL").ToString(),
                     PlanDetailList = listcomm
-                    
+
                 };
             }
-            
-      
+
+
             return new ClubDetailCommon();
         }
-        public ManageClubCommon GetPlanListByClub(string culture,string ClubId)
+        public ManageClubCommon GetPlanListByClub(string culture, string ClubId)
         {
 
             var response = new ManageClubCommon();
@@ -895,9 +880,9 @@ namespace CRS.ADMIN.REPOSITORY.ClubManagement
                 int i = 0;
                 if (dbResponse.Rows.Count > 0)
                 {
-                      
-                        foreach (DataRow item in dbResponse.Rows) 
-                        {
+
+                    foreach (DataRow item in dbResponse.Rows)
+                    {
                         List<planIdentityDataCommon> filteredPlan = new List<planIdentityDataCommon>();
                         if (_DAO.ParseColumnValue(item, "PlanListId").ToString() == Convert.ToString(i))
                         {
@@ -924,11 +909,11 @@ namespace CRS.ADMIN.REPOSITORY.ClubManagement
                             i++;
                         }
                     }
-               
+
                     // Add all items from the filtered list to PlanIdentityList
 
                 }
-                
+
             }
             return response;
         }
@@ -1006,7 +991,7 @@ namespace CRS.ADMIN.REPOSITORY.ClubManagement
         //    var i = 0;
         //    foreach (var planList in Request.PlanDetailList)
         //    {
-                
+
         //        foreach (var planIdentity in planList.PlanIdentityList)
         //        {
         //            string SQL2 = "EXEC sproc_club_management ";
@@ -1208,7 +1193,7 @@ namespace CRS.ADMIN.REPOSITORY.ClubManagement
             var dbResponseInfo = _DAO.ExecuteDataTable(sp_name);
             if (dbResponseInfo != null)
             {
-                foreach(DataRow data in dbResponseInfo.Rows)
+                foreach (DataRow data in dbResponseInfo.Rows)
                 {
                     responseInfo.Add(new AvailabilityTagModelCommon
                     {
@@ -1288,13 +1273,13 @@ namespace CRS.ADMIN.REPOSITORY.ClubManagement
             return _DAO.ParseCommonDbResponse(SQL);
         }
 
-        
+
 
         #endregion
 
         #region Event Management
 
-       public List<EventListCommon> GetEventList(PaginationFilterCommon Request,string AgentId)
+        public List<EventListCommon> GetEventList(PaginationFilterCommon Request, string AgentId)
         {
             var response = new List<EventListCommon>();
             string SQL = "EXEC sproc_event_management @Flag='gel'";
@@ -1334,7 +1319,7 @@ namespace CRS.ADMIN.REPOSITORY.ClubManagement
 
         public CommonDbResponse ManageEvent(EventCommon Request)
         {
-            string SQL = "EXEC sproc_event_management ";                      
+            string SQL = "EXEC sproc_event_management ";
             //SQL += "@Flag='I'";
             if (Request.flag == "del")
             {
@@ -1349,15 +1334,15 @@ namespace CRS.ADMIN.REPOSITORY.ClubManagement
             SQL += ",@EventType=" + _DAO.FilterString(Request.EventType);
             SQL += ",@Description=N" + _DAO.FilterString(Request.Description);
             SQL += string.IsNullOrEmpty(Request.Title) ? ",@EventTitle=" + _DAO.FilterString(Request.Title) : ",@EventTitle=N" + _DAO.FilterString(Request.Title);
-            SQL += string.IsNullOrEmpty(Request.Image) ? ",@ImagePath=" + _DAO.FilterString(Request.Image) : ",@ImagePath=N" + _DAO.FilterString(Request.Image);  
-            SQL += ",@AgentId=" + _DAO.FilterString(Request.AgentId); 
+            SQL += string.IsNullOrEmpty(Request.Image) ? ",@ImagePath=" + _DAO.FilterString(Request.Image) : ",@ImagePath=N" + _DAO.FilterString(Request.Image);
+            SQL += ",@AgentId=" + _DAO.FilterString(Request.AgentId);
             SQL += ",@ActionUser=" + _DAO.FilterString(Request.ActionUser);
             SQL += ",@ActionIP=" + _DAO.FilterString(Request.ActionIP);
             SQL += ",@ActionPlatform=" + _DAO.FilterString(Request.ActionPlatform);
             return _DAO.ParseCommonDbResponse(SQL);
         }
 
-        public EventCommon GetEventDetails(string AgentId,string EventId)
+        public EventCommon GetEventDetails(string AgentId, string EventId)
         {
             string SQL = "EXEC sproc_event_management @Flag='ged'";
             SQL += ",@AgentId=" + _DAO.FilterString(AgentId);
@@ -1366,7 +1351,7 @@ namespace CRS.ADMIN.REPOSITORY.ClubManagement
             if (dbResponse != null)
             {
                 return new EventCommon()
-                {                                 
+                {
                     EventDate = _DAO.ParseColumnValue(dbResponse, "Date").ToString(),
                     EventType = Convert.ToString(_DAO.ParseColumnValue(dbResponse, "EventType")),
                     EventTypeName = Convert.ToString(_DAO.ParseColumnValue(dbResponse, "EventTypeName")),
@@ -1386,7 +1371,7 @@ namespace CRS.ADMIN.REPOSITORY.ClubManagement
         public ManageManagerCommon GetManagerDetails(string AgentId)
         {
             string SQL = "EXEC sproc_admin_club_manager_management @Flag='s'";
-            SQL += ",@clubId=" + _DAO.FilterString(AgentId);           
+            SQL += ",@clubId=" + _DAO.FilterString(AgentId);
             var dbResponse = _DAO.ExecuteDataRow(SQL);
             if (dbResponse != null)
             {
@@ -1396,7 +1381,7 @@ namespace CRS.ADMIN.REPOSITORY.ClubManagement
                     Email = Convert.ToString(_DAO.ParseColumnValue(dbResponse, "EmailAddress")),
                     MobileNumber = Convert.ToString(_DAO.ParseColumnValue(dbResponse, "MobileNumber")),
                     ClubId = Convert.ToString(_DAO.ParseColumnValue(dbResponse, "ClubId")),
-                    ManagerId = Convert.ToString(_DAO.ParseColumnValue(dbResponse, "ManagerId")),                   
+                    ManagerId = Convert.ToString(_DAO.ParseColumnValue(dbResponse, "ManagerId")),
                 };
             }
             return new ManageManagerCommon();
@@ -1405,10 +1390,10 @@ namespace CRS.ADMIN.REPOSITORY.ClubManagement
         {
             string sp_name = "sproc_admin_club_manager_management ";
             sp_name += string.IsNullOrEmpty(Request.ManagerId) ? "@Flag='i'" : "@Flag='u'";
-            sp_name += ",@ClubId=" + _DAO.FilterString(Request.ClubId);         
+            sp_name += ",@ClubId=" + _DAO.FilterString(Request.ClubId);
             sp_name += ",@ManagerName=N" + _DAO.FilterString(Request.ManagerName);
             sp_name += ",@MobileNumber=" + _DAO.FilterString(Request.MobileNumber);
-            sp_name += ",@Email=" + _DAO.FilterString(Request.Email);            
+            sp_name += ",@Email=" + _DAO.FilterString(Request.Email);
             sp_name += ",@ActionUser=" + _DAO.FilterString(Request.ActionUser);
             sp_name += ",@ActionIp=" + _DAO.FilterString(Request.ActionIP);
             sp_name += ",@ManagerId=" + _DAO.FilterString(Request.ManagerId);

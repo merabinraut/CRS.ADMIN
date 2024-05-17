@@ -1,4 +1,5 @@
-﻿using CRS.ADMIN.APPLICATION.Library;
+﻿using CRS.ADMIN.APPLICATION.Helper;
+using CRS.ADMIN.APPLICATION.Library;
 using CRS.ADMIN.APPLICATION.Models.PaymentManagement;
 using CRS.ADMIN.BUSINESS.PaymentManagement;
 using CRS.ADMIN.SHARED;
@@ -34,7 +35,11 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 PaymentOverview = overViewCommon.MapObject<PaymentOverviewModel>(),
                 PaymentLogs = paymentLogsCommon.MapObjects<PaymentLogsModel>()
             };
-            paymentManagementModel.PaymentLogs.ForEach(x => x.ClubId.EncryptParameter());
+            paymentManagementModel.PaymentLogs.ForEach(x =>
+            {
+                x.ClubId = x.ClubId.EncryptParameter();
+                x.ClubLogo = ImageHelper.ProcessedImage(x.ClubLogo);
+            });
             ViewBag.SearchFilter = SearchText;
             ViewBag.StartIndex = StartIndex;
             ViewBag.PageSize = PageSize;
@@ -69,7 +74,11 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             };
             var paymentLedgerCommon = _business.GetPaymentLedgerDetail(cId, Date, dbRequest, FromDate, ToDate);
             var paymentLedgerModel = paymentLedgerCommon.MapObjects<PaymentLedgerModel>();
-            paymentLedgerModel.ForEach(x => x.ClubId = clubId.EncryptParameter());
+            paymentLedgerModel.ForEach(x =>
+            {
+                x.ClubId = clubId.EncryptParameter();
+                x.CustomerImage = ImageHelper.ProcessedImage(x.CustomerImage);
+            });
             ViewBag.IsBackAllowed = true;
             ViewBag.BackButtonURL = "/PaymentManagement/Index";
             ViewBag.StartIndex = StartIndex;

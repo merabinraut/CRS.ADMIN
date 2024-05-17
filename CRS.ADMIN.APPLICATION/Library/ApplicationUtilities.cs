@@ -7,14 +7,11 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
-using System.Drawing;
-using System.Drawing.Drawing2D;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
-using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Mvc;
 
@@ -1096,11 +1093,15 @@ namespace CRS.ADMIN.APPLICATION.Library
                     dbResponse = _CommonBuss.GetDropDown("038", search1, search2);
                     dbResponse.ForEach(item => { response.Add(item.Key.EncryptParameter(), item.Value); });
                     return response;
+                case "HEIGHTLIST":
+                    dbResponse = _CommonBuss.GetDropDown("046", search1, search2);
+                    dbResponse.ForEach(item => { response.Add(item.Key.EncryptParameter(), item.Value); });
+                    return response;
                 case "USERSTATUSDDL":
                     response = new Dictionary<string, string>();
                     response.Add("A".EncryptParameter(), "Active");
                     response.Add("B".EncryptParameter(), "Blocked");
-                    return response; 
+                    return response;
                 case "CLUBPLANS":
                     dbResponse = _CommonBuss.GetDropDown("040", search1, search2);
                     dbResponse.ForEach(item => { response.Add(item.Key.EncryptParameter(), item.Value); });
@@ -1109,9 +1110,11 @@ namespace CRS.ADMIN.APPLICATION.Library
                     dbResponse = _CommonBuss.GetDropDown("042", search1, search2);
                     dbResponse.ForEach(item => { response.Add(item.Key.EncryptParameter(), item.Value); });
                     return response;
+
                 case "USERTYPENAME":
                     dbResponse = _CommonBuss.GetDropDown("044", search1, search2);
-                    dbResponse.ForEach(item => {
+                    dbResponse.ForEach(item =>
+                    {
                         response.Add
                         //(item.Key.EncryptParameter(), culture == "en-US" ? item.Value.Text: item.Value.JapaneseValue);
                         (item.Key.EncryptParameter(), item.Value);
@@ -1119,7 +1122,8 @@ namespace CRS.ADMIN.APPLICATION.Library
                     return response;
                 case "POINTSCATEGORY":
                     dbResponse = _CommonBuss.GetDropDown("045", search1, search2);
-                    dbResponse.ForEach(item => {
+                    dbResponse.ForEach(item =>
+                    {
                         response.Add
                         //(item.Key.EncryptParameter(), culture == "en-US" ? item.Value.Text: item.Value.JapaneseValue);
                         (item.Key.EncryptParameter(), item.Value);
@@ -1131,32 +1135,35 @@ namespace CRS.ADMIN.APPLICATION.Library
         }
 
 
-        public static object LoadDropdownValuesList(string ForMethod, string search1 = "", string search2 = "",string culture="")
+        public static object LoadDropdownValuesList(string ForMethod, string search1 = "", string search2 = "", string culture = "")
         {
             var _CommonBuss = new CommonManagementBusiness();
             var dbResponse = new Dictionary<string, (string Text, string JapaneseValue, string culture)>();
-            var dbResponse1 = new Dictionary<string,  string>();
+            var dbResponse1 = new Dictionary<string, string>();
             //var response = new Dictionary<string ,string>();
-            var response = new Dictionary<string, (string Text, string JapaneseValue,string culture)>();
+            var response = new Dictionary<string, (string Text, string JapaneseValue, string culture)>();
             switch (ForMethod.ToUpper())
             {
-               
+
                 case "EVENTTYPE":
-                    dbResponse = _CommonBuss.GetDropDownValues("039", search1, search2,culture);                   
-                    dbResponse.ForEach(item => { response.Add
-                        //(item.Key.EncryptParameter(), culture == "en-US" ? item.Value.Text: item.Value.JapaneseValue);
-                        (item.Key.EncryptParameter(),  item.Value);
-                    });
-                    return response;
-                case "EVENTTYPECLUB":
-                    dbResponse = _CommonBuss.GetDropDownValues("043", search1, search2, culture);
-                    dbResponse.ForEach(item => {
+                    dbResponse = _CommonBuss.GetDropDownValues("039", search1, search2, culture);
+                    dbResponse.ForEach(item =>
+                    {
                         response.Add
                         //(item.Key.EncryptParameter(), culture == "en-US" ? item.Value.Text: item.Value.JapaneseValue);
                         (item.Key.EncryptParameter(), item.Value);
                     });
                     return response;
-                
+                case "EVENTTYPECLUB":
+                    dbResponse = _CommonBuss.GetDropDownValues("043", search1, search2, culture);
+                    dbResponse.ForEach(item =>
+                    {
+                        response.Add
+                        //(item.Key.EncryptParameter(), culture == "en-US" ? item.Value.Text: item.Value.JapaneseValue);
+                        (item.Key.EncryptParameter(), item.Value);
+                    });
+                    return response;
+
                 //case "PREF":
                 //    dbResponse = _CommonBuss.GetDropDownValues("041", search1, search2, culture);
                 //    dbResponse.ForEach(item => {
@@ -1178,7 +1185,7 @@ namespace CRS.ADMIN.APPLICATION.Library
             }
         }
 
-    
+
         public static string StaticEncryptData(this string textToEncrypt)
         {
             StringCipher cipher = new StringCipher("thisiscrsStaticEncryptDecryptData");
@@ -1231,6 +1238,29 @@ namespace CRS.ADMIN.APPLICATION.Library
                 }
             }
             return false;
+        }
+
+        public static T GetAppDataJsonConfigValue<T>(string keyName)
+        {
+            string path = HttpContext.Current.Server.MapPath(ConfigurationManager.AppSettings[keyName].ToString());
+            try
+            {
+                using (StreamReader s = new StreamReader(path))
+                {
+                    string json = s.ReadToEnd();
+                    return json.ToModel<T>();
+                }
+            }
+            catch (Exception)
+            {
+                return default;
+            }
+        }
+        public static T ToModel<T>(this string json)
+        {
+            T model = default(T);
+            model = JsonConvert.DeserializeObject<T>(json);
+            return model;
         }
     }
 }

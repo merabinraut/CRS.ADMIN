@@ -1,6 +1,6 @@
-﻿using CRS.ADMIN.APPLICATION.Library;
+﻿using CRS.ADMIN.APPLICATION.Helper;
+using CRS.ADMIN.APPLICATION.Library;
 using CRS.ADMIN.APPLICATION.Models.CommissionManagement;
-using CRS.ADMIN.APPLICATION.Models.LocationManagement;
 using CRS.ADMIN.BUSINESS.CommissionManagement;
 using CRS.ADMIN.SHARED;
 using CRS.ADMIN.SHARED.CommissionManagement;
@@ -29,6 +29,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             dbResponse.ForEach(x => x.CategoryId = x.CategoryId.EncryptParameter());
 
             viewModel.CommissionCategoryModelGrid = dbResponse.MapObjects<CommissionCategoryModel>();
+            viewModel.CommissionCategoryModelGrid.ForEach(x => x.CreatedByImage = ImageHelper.ProcessedImage(x.CreatedByImage));
 
             if (TempData.ContainsKey("ManageCategoryModel"))
                 viewModel.AddEditCommissionCategory = TempData["ManageCategoryModel"] as ManageCommissionCategoryModel;

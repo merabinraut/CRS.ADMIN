@@ -1,4 +1,5 @@
-﻿using CRS.ADMIN.APPLICATION.Library;
+﻿using CRS.ADMIN.APPLICATION.Helper;
+using CRS.ADMIN.APPLICATION.Library;
 using CRS.ADMIN.APPLICATION.Models.CustomerManagement;
 using CRS.ADMIN.BUSINESS.CustomerManagement;
 using CRS.ADMIN.SHARED;
@@ -29,7 +30,11 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             dbRequest.Take = PageSize;
             var dbResponse = _BUSS.GetCustomerList(dbRequest);
             Response.CustomerListModel = dbResponse.MapObjects<CustomerListModel>();
-            Response.CustomerListModel.ForEach(x => x.AgentId = x.AgentId.EncryptParameter());
+            Response.CustomerListModel.ForEach(x =>
+            {
+                x.AgentId = x.AgentId.EncryptParameter();
+                x.ProfileImage = ImageHelper.ProcessedImage(x.ProfileImage);
+            });
             ViewBag.StartIndex = StartIndex;
             ViewBag.PageSize = PageSize;
             ViewBag.TotalData = dbResponse != null && dbResponse.Any() ? dbResponse[0].TotalRecords : 0;

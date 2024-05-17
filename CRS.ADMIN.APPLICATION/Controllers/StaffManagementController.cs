@@ -1,4 +1,5 @@
-﻿using CRS.ADMIN.APPLICATION.Library;
+﻿using CRS.ADMIN.APPLICATION.Helper;
+using CRS.ADMIN.APPLICATION.Library;
 using CRS.ADMIN.APPLICATION.Models.CustomerManagement;
 using CRS.ADMIN.APPLICATION.Models.StaffManagement;
 using CRS.ADMIN.BUSINESS.StaffManagement;
@@ -39,6 +40,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             foreach (var item in responseInfo.StaffListModel)
             {
                 item.ActionDate = DateTime.Parse(item.ActionDate).ToString("MMM d, yyyy HH:mm:ss");
+                item.ProfileImage = ImageHelper.ProcessedImage(item.ProfileImage);
             }
             ViewBag.PopUpRenderValue = !string.IsNullOrEmpty(RenderId) ? RenderId : null;
             ViewBag.RoleDDL = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("ROLEDDL", "2", "") as Dictionary<string, string>, null, "--- Select ---");
