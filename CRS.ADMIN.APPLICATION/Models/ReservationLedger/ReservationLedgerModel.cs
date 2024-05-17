@@ -32,5 +32,6 @@
         public string ReservationType { get; set; }
         public string ClubVerification { get; set; }
         public string TransactionStatus { get; set; }
+        public string AdminRemarks { get; set; }
     }
 }
