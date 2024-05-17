@@ -38,7 +38,7 @@ namespace CRS.ADMIN.REPOSITORY.ProfileManagement
             if (dr != null)
             {
                 profile.UserId = userProfileCommon.UserId;
-                profile.Email = dr["EmailAddress"].ToString();
+                profile.Email =  dr["EmailAddress"].ToString();
                 profile.FullName = dr["fullName"].ToString();
                 profile.MobileNumber = dr["MobileNumber"].ToString();
                 profile.UserName = dr["userName"].ToString();
