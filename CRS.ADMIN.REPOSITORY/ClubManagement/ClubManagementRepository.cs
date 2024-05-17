@@ -494,30 +494,30 @@ namespace CRS.ADMIN.REPOSITORY.ClubManagement
 
 
             Response = _DAO.ParseCommonDbResponse(SQL);
-            if (Response.ErrorCode==0)
+            if (Response.ErrorCode == 0)
             {
                 var i = 0;
                 foreach (var planList in Request.PlanDetailList)
                 {
 
-                foreach (var planIdentity in planList.PlanIdentityList)
-                {
-                    string SQL2 = "EXEC sproc_club_management_approvalrejection ";
-                    SQL2 += "@Flag='r_cph'";
-                    SQL2 += ",@ClubPlanTypeId=" + _DAO.FilterString(planIdentity.StaticDataValue);
-                    SQL2 += ",@Description=N" + _DAO.FilterString(planIdentity.IdentityDescription);
-                    SQL2 += ",@PlanListId=" + _DAO.FilterString(Convert.ToString(i));
-                    //SQL2 += ",@ClubId=" + _DAO.FilterString(string.IsNullOrEmpty(Request.AgentId) ? Response.Extra1 : Request.AgentId);
-                    SQL2 += ",@ClubId=" + _DAO.FilterString(!string.IsNullOrEmpty(Response.Extra1) ? Response.Extra1 : null);
-                    SQL2 += ",@AgentId=" + _DAO.FilterString(!string.IsNullOrEmpty(Request.AgentId) ? Request.AgentId : null);
-                    SQL2 += ",@ActionPlatform=" + _DAO.FilterString(Request.ActionPlatform);
-                    SQL2 += ",@ActionUser=" + _DAO.FilterString(Request.ActionUser);
-                    SQL2 += ",@Id=" + _DAO.FilterString(string.IsNullOrEmpty(Request.holdId) ? null : planIdentity.Id);
-                    _DAO.ParseCommonDbResponse(SQL2);
+                    foreach (var planIdentity in planList.PlanIdentityList)
+                    {
+                        string SQL2 = "EXEC sproc_club_management_approvalrejection ";
+                        SQL2 += "@Flag='r_cph'";
+                        SQL2 += ",@ClubPlanTypeId=" + _DAO.FilterString(planIdentity.StaticDataValue);
+                        SQL2 += ",@Description=N" + _DAO.FilterString(planIdentity.IdentityDescription);
+                        SQL2 += ",@PlanListId=" + _DAO.FilterString(Convert.ToString(i));
+                        //SQL2 += ",@ClubId=" + _DAO.FilterString(string.IsNullOrEmpty(Request.AgentId) ? Response.Extra1 : Request.AgentId);
+                        SQL2 += ",@ClubId=" + _DAO.FilterString(!string.IsNullOrEmpty(Response.Extra1) ? Response.Extra1 : null);
+                        SQL2 += ",@AgentId=" + _DAO.FilterString(!string.IsNullOrEmpty(Request.AgentId) ? Request.AgentId : null);
+                        SQL2 += ",@ActionPlatform=" + _DAO.FilterString(Request.ActionPlatform);
+                        SQL2 += ",@ActionUser=" + _DAO.FilterString(Request.ActionUser);
+                        SQL2 += ",@Id=" + _DAO.FilterString(string.IsNullOrEmpty(Request.holdId) ? null : planIdentity.Id);
+                        _DAO.ParseCommonDbResponse(SQL2);
+                    }
+                    i++;
                 }
-                i++;
             }
-
             return Response;
             // Create a DataTable to hold the PlanIdentity data
             //DataTable table = new DataTable();
