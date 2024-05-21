@@ -259,6 +259,7 @@
     <Compile Include="Controllers\ScheduleManagementController.cs" />
     <Compile Include="Controllers\SMSLogController.cs" />
     <Compile Include="Controllers\StaffManagementController.cs" />
+    <Compile Include="Controllers\StaticDataManagementController.cs" />
     <Compile Include="CustomHelpers\CustomHtmlHelpers.cs" />
     <Compile Include="Filters\ActivityLogFilter.cs" />
     <Compile Include="Filters\SessionExpiryFilterAttribute.cs" />
@@ -343,6 +344,7 @@
     <Folder Include="Content\userupload\PromotionalImages\" />
     <Folder Include="Properties\PublishProfiles\" />
     <Folder Include="Views\LogManagement\" />
+    <Folder Include="Views\StaticDataManagement\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\assets\css\bootstrap.css" />

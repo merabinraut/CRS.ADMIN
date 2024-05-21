@@ -156,6 +156,8 @@
     <Compile Include="SMSLog\SMSRepository.cs" />
     <Compile Include="StaffManagement\IStaffManagementRepository.cs" />
     <Compile Include="StaffManagement\StaffManagementRepository.cs" />
+    <Compile Include="StaticDataManagement\IStaticDataManagementRepository.cs" />
+    <Compile Include="StaticDataManagement\StaticDataManagementRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
