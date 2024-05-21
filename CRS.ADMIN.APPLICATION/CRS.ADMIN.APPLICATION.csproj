@@ -326,6 +326,7 @@
     </Compile>
     <Content Include="Views\PointsManagement\_ManagePointsRequestPartialView.cshtml" />
     <Content Include="App_Data\AmazonConfigruation.json" />
+    <Content Include="Views\PointsManagement\_PointBalanceStatement.cshtml" />
     <None Include="Views\PointsManagement\_ManagePointsTransferPartialView.cshtml" />
     <None Include="Views\PointsManagement\PointsTransferList.cshtml" />
     <None Include="Views\PointSetup\PointsCategorySlabList.cshtml" />
@@ -2690,6 +2691,7 @@
     <Content Include="Views\Inquiries\index.cshtml" />
     <Content Include="Views\CommissionManagement\AdminCommissionList.cshtml" />
     <Content Include="Views\PointsManagement\_PointRequestListPartialView.cshtml" />
+    <Content Include="Views\PointsManagement\_GetSystemTransferReportAsync.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

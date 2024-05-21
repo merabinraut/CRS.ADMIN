@@ -934,6 +934,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Credit.
+        /// </summary>
+        public static string Credit {
+            get {
+                return ResourceManager.GetString("Credit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Current Category.
         /// </summary>
         public static string Current_Category {
@@ -1029,6 +1038,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         public static string Days {
             get {
                 return ResourceManager.GetString("Days", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Debit.
+        /// </summary>
+        public static string Debit {
+            get {
+                return ResourceManager.GetString("Debit", resourceCulture);
             }
         }
         
