@@ -6,6 +6,7 @@
     var paymentLog = Model.PaymentLogs as List<CRS.ADMIN.APPLICATION.Models.PaymentManagement.PaymentLogsModel>;
 }
 <link rel="stylesheet" href="//code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
+@Html.AntiForgeryToken()
 <div class="px-8 py-4 flex flex-col gap-8">
     <!-- booking information  -->
     <div class="flex justify-between items-center">
@@ -61,6 +62,7 @@
 @section scripts
 {
     <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
+
     <script>
         function getActiveButtonValue() {
             const activeButton = document.querySelector('.tab-link.active');
@@ -116,6 +118,7 @@
             lastThreeMonths.setMonth(currentDate.getMonth() - 3);
 
              $("#FromDate").val("@ViewBag.FromDate");
+             $("#FromDate2").val("@ViewBag.FromDate");
              jQuery(function ($) {
                  $.datepicker.regional['ja'] = {
                      closeText: '閉じる',
@@ -137,7 +140,7 @@
                      yearSuffix: '年'
                  };
                  $.datepicker.setDefaults($.datepicker.regional['ja']);
-                 $("#FromDate").datepicker({
+                 $("#FromDate2").datepicker({
                      minDate: lastThreeMonths,
                      maxDate: new Date(),
                      defaultDate: '@ViewBag.FromDate'
@@ -145,6 +148,7 @@
              });
 
             $("#ToDate").val("@ViewBag.ToDate");
+            $("#ToDate2").val("@ViewBag.ToDate");
              jQuery(function ($) {
                  $.datepicker.regional['ja'] = {
                      closeText: '閉じる',
@@ -166,7 +170,7 @@
                      yearSuffix: '年'
                  };
                  $.datepicker.setDefaults($.datepicker.regional['ja']);
-                 $("#ToDate").datepicker({
+                 $("#ToDate2").datepicker({
                      minDate: lastThreeMonths,
                      maxDate: new Date(),
                      defaultDate: '@ViewBag.ToDate'

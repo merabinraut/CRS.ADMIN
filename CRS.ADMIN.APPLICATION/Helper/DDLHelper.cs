@@ -61,7 +61,10 @@ namespace CRS.ADMIN.APPLICATION.Helper
                     dbResponse = _CommonBuss.GetDropDownLanguage("18", search1, search2, "");
                     dbResponse.ForEach(item => { response.Add(item.StaticValue.EncryptParameter(), GetLocalizedLabel(item, culture)); });
                     return response;
-
+                case "POSITIONLIST":
+                    dbResponse = _CommonBuss.GetDropDownLanguage("19", search1, search2, "");
+                    dbResponse.ForEach(item => { response.Add(item.StaticValue.EncryptParameter(), GetLocalizedLabel(item, culture)); });
+                    return response;
                 default:
                     return response;
             }

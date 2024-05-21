@@ -164,6 +164,7 @@ namespace CRS.ADMIN.SHARED.ClubManagement
     {
         public List<planIdentityDataCommon> PlanIdentityList { get; set; }
        = new List<planIdentityDataCommon>();
+      
     }
     public class planIdentityDataCommon
     {
@@ -177,5 +178,6 @@ namespace CRS.ADMIN.SHARED.ClubManagement
         public string PlanListId { get; set; }
         public string Id { get; set; }
         public string PlanId { get; set; }
+        public string PlanStatus { get; set; }
     }
 }

@@ -252,7 +252,9 @@
                                                         @if (item.holdStatus != "P")
                                                         {
                                                             <i class="las la-edit text-[20px] cursor-pointer text-[#A6A6A6]" onclick="ManageClubGetDetailsFunction('@item.AgentId');"></i>
-                                                            <img src="/Content/assets/images/manager-setting.svg" onclick="ManageClubManagerFunction('@item.AgentId');">
+                                                            @*<img src="/Content/assets/images/manager-setting.svg" onclick="ManageClubManagerFunction('@item.AgentId');">*@
+                                                            <i class="las la-user-friends text-[20px] cursor-pointer text-[#CB3F3F]" onclick="ManageClubManagerFunction('@item.AgentId');"></i>
+                                                            <i class="las la-trash-alt text-[20px] cursor-pointer text-[#CB3F3F]" onclick="BlockUnblockFunction('@item.AgentId');"></i>
                                                             <i class="las la-tag text-[20px] cursor-pointer text-[#C8B477]" onclick="ManageClubTagFunction('@item.AgentId');"></i>
                                                             <i class=" las la-trash-alt text-[20px] cursor-pointer text-[#CB3F3F]" onclick="BlockUnblockFunction('@item.AgentId');"></i>
                                                             <i class="las la-key text-[24px] text-[#C8B477] cursor-pointer" onclick="openResetCustomerPasswordModal('@item.ClubNameEng','@item.AgentId')" data-name="@item.ClubNameEng" data-id="@item.AgentId" data-modal-target="reset-customer-passwordconfirmation" data-modal-toggle="reset-customer-passwordconfirmation"></i>

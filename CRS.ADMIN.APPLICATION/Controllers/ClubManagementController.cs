@@ -184,8 +184,35 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                     return RedirectToAction("ClubList", "ClubManagement");
                 }
                 var dbResponse = _BUSS.GetClubDetails(id, culture);
-                //List<PlanListCommon> planlist = _BUSS.GetClubPlanIdentityList(culture);
-                //model.PlanDetailList = planlist.MapObjects<PlanList>();
+                List<PlanListCommon> planlist = new List<PlanListCommon>(dbResponse.PlanDetailList);
+                var i = 0;
+                foreach (var planDetail in planlist)
+                {
+                    // Filter the PlanIdentityList based on the condition where PlanStatus is not equal to "B"
+                    var filteredPlanIdentityList = planDetail.PlanIdentityList
+                          .Where(planIdentity => planIdentity.PlanStatus != "B")
+                          .ToList();
+                    if (filteredPlanIdentityList.Count>0)
+                    {
+                        var distinctPlanListIds = filteredPlanIdentityList
+                                                .Select(planIdentity => planIdentity.PlanListId)
+                                                .Distinct()
+                                                .ToList();
+
+                        // Filter the list again to remove elements with PlanStatus equal to "B" and whose PlanListId matches any of the distinct PlanListId values
+                        planDetail.PlanIdentityList = filteredPlanIdentityList
+                            .Where(planIdentity => !planIdentity.PlanListId.Contains("B") || !distinctPlanListIds.Contains(planIdentity.PlanListId))
+                            .ToList();
+                        i++;
+                    }
+                    else if (planDetail.PlanIdentityList.Any(planIdentity => planIdentity.PlanStatus == "B"))
+                    {
+                        dbResponse.PlanDetailList.RemoveAt(i);
+                        
+                    }
+
+                    
+                }
 
                 model = dbResponse.MapObject<ManageClubModel>();
 
@@ -342,9 +369,35 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 });
                 return RedirectToAction("ClubList", "ClubManagement");
             }
-            var dbResponse = _BUSS.GetClubPendingDetails(id, holdid, culture);
+            var dbResponse = _BUSS.GetplanPendingDetails(id, holdid, culture);
+            List<PlanListCommon> planlist = new List<PlanListCommon>(dbResponse.PlanDetailList);
+            var i = 0;
+            foreach (var planDetail in planlist)
+            {
+                // Filter the PlanIdentityList based on the condition where PlanStatus is not equal to "B"
+                var filteredPlanIdentityList = planDetail.PlanIdentityList
+                        .Where(planIdentity => planIdentity.PlanStatus != "B")
+                        .ToList();
+                if (filteredPlanIdentityList.Count > 0)
+                {
+                    var distinctPlanListIds = filteredPlanIdentityList
+                                            .Select(planIdentity => planIdentity.PlanListId)
+                                            .Distinct()
+                                            .ToList();
 
-            model = dbResponse.MapObject<ManageClubModel>();
+                    // Filter the list again to remove elements with PlanStatus equal to "B" and whose PlanListId matches any of the distinct PlanListId values
+                    planDetail.PlanIdentityList = filteredPlanIdentityList
+                        .Where(planIdentity => !planIdentity.PlanListId.Contains("B") || !distinctPlanListIds.Contains(planIdentity.PlanListId))
+                        .ToList();
+                    i++;
+                }
+                else if (planDetail.PlanIdentityList.Any(planIdentity => planIdentity.PlanStatus == "B"))
+                {
+                    dbResponse.PlanDetailList.RemoveAt(i);
+
+                }
+            }
+                model = dbResponse.MapObject<ManageClubModel>();
 
             ViewBag.PlansList = ApplicationUtilities.LoadDropdownList("CLUBPLANS") as Dictionary<string, string>;
 
@@ -641,6 +694,8 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 commonModel.Prefecture = commonModel.Prefecture?.DecryptParameter();
                 commonModel.ClosingDate = commonModel.ClosingDate?.DecryptParameter();
                 var returntype = string.Empty;
+
+
                 commonModel.PlanDetailList.ForEach(planList =>
                 {
                     planList.PlanIdentityList.ForEach(planIdentity =>
@@ -651,6 +706,46 @@ namespace CRS.ADMIN.APPLICATION.Controllers
 
                     });
                 });
+
+                var blockplanlistid = 1;
+
+
+                //for (int i = 0; i < commonModel.PlanDetailList.Count; i++)
+                //{
+                //    if (i == blockplanlistid)
+                //    {
+                //        List<planIdentityDataCommon> listForRow2 = new List<planIdentityDataCommon>();
+
+                //        planIdentityDataCommon item1ForRow2 = new planIdentityDataCommon
+                //        {
+                //            English = "EnglishValue1",
+                //            StaticDataValue = "StaticDataValue1",
+                //            japanese = "JapaneseValue1",
+                //            inputtype = "InputTypeValue1",
+                //            name = "NameValue1",
+                //            IdentityLabel = "IdentityLabelValue1",
+                //            IdentityDescription = "IdentityDescriptionValue1",
+                //            PlanListId = "PlanListIdValue1",
+                //            Id = "IdValue1",
+                //            PlanId = "PlanIdValue1"
+                //        };
+
+                //        listForRow2.Add(item1ForRow2);
+
+                //        commonModel.PlanDetailList[blockplanlistid].PlanIdentityList.Insert(blockplanlistid - 1, listForRow2);
+
+                //    }
+                //    else
+                //    {
+                //        commonModel.PlanDetailList[i].PlanIdentityList.ForEach(planIdentity =>
+                //        {
+                //            string decryptedDescription = planIdentity.name.ToLower() == "plan" ? planIdentity.IdentityDescription.DecryptParameter() : planIdentity.IdentityDescription;
+                //            planIdentity.StaticDataValue = planIdentity.StaticDataValue.DecryptParameter();
+                //            planIdentity.IdentityDescription = planIdentity.name.ToLower() == "plan" ? decryptedDescription : planIdentity.IdentityDescription;
+                //        });
+                //    }
+                //}
+
                 var dbResponse = _BUSS.ManageClub(commonModel);
                 if (dbResponse != null && dbResponse.Code == 0)
                 {
@@ -723,7 +818,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 if (!string.IsNullOrEmpty(id) && !string.IsNullOrEmpty(AgentId))
                 {
                     type = "rcm_a";
-                    var dbResponse1 = _BUSS.GetClubPendingDetails(AgentId, id, culture);
+                    var dbResponse1 = _BUSS.GetplanPendingDetails(AgentId, id, culture);
 
                     model = dbResponse1.MapObject<ManageClubCommon>();
 
@@ -777,12 +872,23 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 ResponseModel.LocationDDL = !string.IsNullOrEmpty(ResponseModel.LocationId) ? ResponseModel.LocationId.EncryptParameter() : null;
                 ResponseModel.BusinessTypeDDL = !string.IsNullOrEmpty(ResponseModel.BusinessType) ? ResponseModel.BusinessType.EncryptParameter() : null;
                 ResponseModel.Prefecture = !string.IsNullOrEmpty(ResponseModel.Prefecture) ? ResponseModel.Prefecture.EncryptParameter() : null;
-                ViewBag.Pref = DDLHelper.LoadDropdownList("PREF") as Dictionary<string, string>;
+                //ViewBag.Pref = DDLHelper.LoadDropdownList("PREF") as Dictionary<string, string>;
                 ViewBag.LocationDDLList = ApplicationUtilities.LoadDropdownList("LOCATIONDDL") as Dictionary<string, string>;
                 ViewBag.BusinessTypeDDL = ApplicationUtilities.LoadDropdownList("BUSINESSTYPEDDL") as Dictionary<string, string>;
-                ResponseModel.Prefecture = ViewBag.Pref.ContainsKey(ResponseModel.Prefecture) ? ViewBag.Pref[ResponseModel.Prefecture] : "";
+
+
+
+                ViewBag.Pref = DDLHelper.LoadDropdownList("PREF") as Dictionary<string, string>;
+                var value=string.Empty;
+                ResponseModel.Prefecture = (ResponseModel.Prefecture != null && ViewBag.Pref?.TryGetValue(ResponseModel.Prefecture, out value)) ? value : "";
+
+                //ResponseModel.Prefecture = ViewBag.Pref.ContainsKey(ResponseModel.Prefecture) ? ViewBag.Pref[ResponseModel.Prefecture] : "";
                 ResponseModel.LocationDDL = ViewBag.LocationDDLList.ContainsKey(ResponseModel.LocationDDL) ? ViewBag.LocationDDLList[ResponseModel.LocationDDL] : "";
-                ResponseModel.BusinessTypeDDL = ViewBag.BusinessTypeDDL.ContainsKey(ResponseModel.BusinessTypeDDL) ? ViewBag.BusinessTypeDDL[ResponseModel.BusinessTypeDDL] : "";
+                ViewBag.BusinessTypeDDL = ApplicationUtilities.LoadDropdownList("BUSINESSTYPEDDL") as Dictionary<string, string>;
+
+                ResponseModel.BusinessTypeDDL = (ResponseModel.BusinessTypeDDL != null && ViewBag.BusinessTypeDDL?.ContainsKey(ResponseModel.BusinessTypeDDL) == true)? ViewBag.BusinessTypeDDL[ResponseModel.BusinessTypeDDL]:"";
+
+                //ResponseModel.BusinessTypeDDL = ViewBag.BusinessTypeDDL.ContainsKey(ResponseModel.BusinessTypeDDL) ? ViewBag.BusinessTypeDDL[ResponseModel.BusinessTypeDDL] : "";
                 TempData["ClubHoldDetails"] = ResponseModel;
                 TempData["RenderId"] = "ClubHoldDetails";
                 return RedirectToAction("ClubList", "ClubManagement", new { value = 'p' }

@@ -5,6 +5,7 @@ using Amazon.S3.Transfer;
 using CRS.ADMIN.APPLICATION.Library;
 using CRS.ADMIN.APPLICATION.Models;
 using System;
+using System.Configuration;
 using System.IO;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -45,7 +46,10 @@ namespace CRS.ADMIN.APPLICATION.Helper
         {
             string response = $"{_AmazonS3Configruation.BaseURL}/{_AmazonS3Configruation.BucketName}/{_AmazonS3Configruation.NoImageURL.TrimStart('/')}";
             if (!useDefaultImage && !string.IsNullOrEmpty(imageURL))
-                response = $"{_AmazonS3Configruation.BaseURL}/{_AmazonS3Configruation.BucketName}/{imageURL.TrimStart('/')}";
+                if (imageURL.ToLower().Contains("/content/userupload"))
+                    response = $"{ConfigurationManager.AppSettings["ImageVirtualPath"].ToString()}/{imageURL.TrimStart('/')}";
+                else
+                    response = $"{_AmazonS3Configruation.BaseURL}/{_AmazonS3Configruation.BucketName}/{imageURL.TrimStart('/')}";
             return response;
         }
 

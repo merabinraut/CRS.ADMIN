@@ -89,8 +89,10 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             ViewBag.SkillDDL = ApplicationUtilities.SetDDLValue(CustomLoadDropdownList("SKILLDDL") as Dictionary<string, string>, null, "--- Select ---");
             ViewBag.BirthPlaceDdl = ApplicationUtilities.SetDDLValue(DDLHelper.LoadDropdownList("BIRTHPLACE") as Dictionary<string, string>, null, "--- Select ---");
             ViewBag.heightlistddl = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("HEIGHTLIST") as Dictionary<string, string>, null, "--- Select ---");
+            ViewBag.positionddl = ApplicationUtilities.SetDDLValue(DDLHelper.LoadDropdownList("POSITIONLIST") as Dictionary<string, string>, null, "--- Select ---");
             ViewBag.BirthPlacekey = ResponseModel.ManageHostModel.Address;
             ViewBag.heightlistkey = ResponseModel.ManageHostModel.Height;
+            ViewBag.postitionkey = ResponseModel.ManageHostModel.Position;
             ViewBag.StartIndex = StartIndex;
             ViewBag.PageSize = PageSize;
             ViewBag.TotalData = dbResponse != null && dbResponse.Any() ? dbResponse[0].TotalRecords : 0;
@@ -164,6 +166,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 model.Rank = dbResponse.Rank.EncryptParameter();
                 model.Address = dbResponse.Address.EncryptParameter();
                 model.Height = dbResponse.Height.EncryptParameter();
+                model.Position = dbResponse.Position.EncryptParameter();
                 model.HostIdentityDataModel.ForEach(x => x.IdentityLabel = (!string.IsNullOrEmpty(culture) && culture == "en") ? x.IdentityLabelEnglish : x.IdentityLabelJapanese);
                 model.HostIdentityDataModel.ForEach(x => x.IdentityType = x.IdentityType.EncryptParameter());
                 model.HostIdentityDataModel.ForEach(x => x.IdentityValue = x.IdentityValue.EncryptParameter());
@@ -220,31 +223,32 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                     }
                 }
             }
-            if (HostIconImageFile == null)
-            {
-                if (string.IsNullOrEmpty(Model.HostIconImage))
-                {
-                    bool allowRedirect = false;
-                    var ErrorMessage = string.Empty;
-                    if (HostIconImageFile == null && string.IsNullOrEmpty(Model.HostIconImage))
-                    {
-                        ErrorMessage = "Image required";
-                        allowRedirect = true;
-                    }
-                    if (allowRedirect)
-                    {
-                        this.AddNotificationMessage(new NotificationModel()
-                        {
-                            NotificationType = NotificationMessage.INFORMATION,
-                            Message = ErrorMessage ?? "Something went wrong. Please try again later.",
-                            Title = NotificationMessage.INFORMATION.ToString(),
-                        });
-                        TempData["RenderId"] = "ManageHost";
-                        TempData["ManageHostModel"] = Model;
-                        return RedirectToAction("HostList", "HostManagement", new { AgentId = Model.AgentId });
-                    }
-                }
-            }
+
+            //if (HostIconImageFile == null)
+            //{
+            //    if (string.IsNullOrEmpty(Model.HostIconImage))
+            //    {
+            //        bool allowRedirect = false;
+            //        var ErrorMessage = string.Empty;
+            //        //if (HostIconImageFile == null && string.IsNullOrEmpty(Model.HostIconImage))
+            //        //{
+            //        //    ErrorMessage = "Image required";
+            //        //    allowRedirect = true;
+            //        //}
+            //        if (allowRedirect)
+            //        {
+            //            this.AddNotificationMessage(new NotificationModel()
+            //            {
+            //                NotificationType = NotificationMessage.INFORMATION,
+            //                Message = ErrorMessage ?? "Something went wrong. Please try again later.",
+            //                Title = NotificationMessage.INFORMATION.ToString(),
+            //            });
+            //            TempData["RenderId"] = "ManageHost";
+            //            TempData["ManageHostModel"] = Model;
+            //            return RedirectToAction("HostList", "HostManagement", new { AgentId = Model.AgentId });
+            //        }
+            //    }
+            //}
 
             string HostLogoFileName = string.Empty;
             var allowedContentType = AllowedImageContentType();
@@ -292,7 +296,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                     TempData["ManageHostModel"] = Model;
                     return RedirectToAction("HostList", "HostManagement", new { AgentId = Model.AgentId });
                 }
-            }
+            }          
             if (ModelState.IsValid)
             {
                 var requestCommon = Model.MapObject<ManageHostCommon>();
@@ -315,6 +319,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 requestCommon.LiquorStrength = LiquorStrengthDDLKey?.DecryptParameter();
                 requestCommon.Address = Model.Address?.DecryptParameter();
                 requestCommon.Height = Model.Height?.DecryptParameter();
+                requestCommon.Position = Model.Position?.DecryptParameter();
                 requestCommon.DOB = Model.DOB;
                 requestCommon.ActionUser = ApplicationUtilities.GetSessionValue("Username").ToString();
                 requestCommon.ActionIP = ApplicationUtilities.GetIP();
