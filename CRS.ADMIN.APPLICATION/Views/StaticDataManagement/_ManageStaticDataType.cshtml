@@ -1,0 +1,82 @@
+﻿
+@model CRS.ADMIN.APPLICATION.Models.StaticDataManagement.ManageStaticDataType
+<div id="add-new"
+     class="drawer-close-disable  flex justify-end fixed top-0 right-0 z-40 h-screen overflow-y-auto transition-transform translate-x-full "
+     tabindex="-1" aria-labelledby="drawer-right-label">
+    <div class="bg-white w-[616px] drawer-container relative">
+        <div class="drawer-form-container sticky top-0 z-[5] ">
+            <div class="drawer-form flex justify-between bg-secondary-color-pink py-[16px] px-[24px] h-[56px]">
+                <div>
+                    Manage Static Data Type
+                </div>
+                <button type="button" data-drawer-hide="add-new" aria-controls="add-new"
+                        class="text-[20px]">
+                    <i class="las la-window-close text-white"></i>
+                </button>
+            </div>
+        </div>
+        @using (Html.BeginForm("ManageStaticDataType", "StaticDataManagement", FormMethod.Post, new { @id = "ManageStaticDataType", enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+            if (!string.IsNullOrEmpty(Model.Id))
+            {
+                @Html.HiddenFor(model => model.Id)
+            }
+            if (!string.IsNullOrEmpty(Model.StaticDataType))
+            {
+                @Html.HiddenFor(model => model.StaticDataType)
+            }
+            if (!string.IsNullOrEmpty(Model.StaticDataName))
+            {
+                @Html.HiddenFor(model => model.StaticDataName)
+            }
+            if (!string.IsNullOrEmpty(Model.StaticDataDescription))
+            {
+                @Html.HiddenFor(model => model.StaticDataDescription)
+            }
+            <div class="p-[24px]">
+                <div class=" py-4 grid gap-5">
+                    <div class="input-field-common">
+                        <label class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                            Static Data Name
+                        </label>
+                        @Html.TextBoxFor(model => model.StaticDataName, new
+                        {
+                            @class = "w-full rounded-[4px]",
+                            @style = "border-radius:4px !important",
+                            @maxlength = "30"
+                        })
+                        <span class="error">
+                            @Html.ValidationMessageFor(m => m.StaticDataName)
+                        </span>
+                    </div>
+                    <div class="input-field-common">
+                        <label class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                            Static Data Description
+                        </label>
+                        @Html.TextBoxFor(model => model.StaticDataDescription, new
+                        {
+                            @class = "w-full rounded-[4px]",
+                            @style = "border-radius:4px !important",
+                            @maxlength = "100"
+                        })
+                        <span class="error">
+                            @Html.ValidationMessageFor(m => m.StaticDataDescription)
+                        </span>
+                    </div>
+                </div>
+                <div class="flex justify-end mt-6 ">
+                    <div class="flex gap-6">
+                        <button class="resetForm btn btn-gray-white h-[40px] rounded-[4px] px-8 text-sm" onclick="CancelFunction()">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Cancel
+                        </button>
+                        <button class="resetForm btn btn-primary-default h-[40px] px-8 rounded-[4px]  text-sm leading-[10px]" id="saveData" type="submit">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Create
+                        </button>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+</div>

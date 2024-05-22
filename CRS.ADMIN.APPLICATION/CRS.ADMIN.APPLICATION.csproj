@@ -313,6 +313,7 @@
     <Compile Include="Models\ScheduleManagement\ScheduleManagementModel.cs" />
     <Compile Include="Models\SMSLog\SMSLogModel.cs" />
     <Compile Include="Models\StaffManagement\StaffManagementModel.cs" />
+    <Compile Include="Models\StaticDataManagement\StaticDataManagementModel.cs" />
     <Compile Include="Models\TagManagement\TagManagementModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\Resource.Designer.cs">
@@ -344,7 +345,6 @@
     <Folder Include="Content\userupload\PromotionalImages\" />
     <Folder Include="Properties\PublishProfiles\" />
     <Folder Include="Views\LogManagement\" />
-    <Folder Include="Views\StaticDataManagement\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\assets\css\bootstrap.css" />
@@ -2692,6 +2692,8 @@
     <Content Include="Views\Inquiries\index.cshtml" />
     <Content Include="Views\CommissionManagement\AdminCommissionList.cshtml" />
     <Content Include="Views\PointsManagement\_PointRequestListPartialView.cshtml" />
+    <Content Include="Views\StaticDataManagement\Index.cshtml" />
+    <Content Include="Views\StaticDataManagement\_ManageStaticDataType.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
