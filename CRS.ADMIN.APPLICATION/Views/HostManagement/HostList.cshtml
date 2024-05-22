@@ -196,7 +196,7 @@
                                                 </div>
                                             }
                                             <div>
-                                                <i class="las la-trash-alt text-[20px] cursor-pointer text-[#CB3F3F]" onclick="LangChangeAlert('Are you sure you want to delete this host?','Confirm','@item.AgentId', '@item.HostId','D')"></i>
+                                                <i class="las la-trash-alt text-[20px] cursor-pointer text-[#CB3F3F]" title="Delete Host" onclick="LangChangeAlert('Are you sure you want to delete this host?','Confirm','@item.AgentId', '@item.HostId','D')"></i>
                                             </div>
                                             @if (item.Status.Trim().ToUpper() == "B")
                                             {
