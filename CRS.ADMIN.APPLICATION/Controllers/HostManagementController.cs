@@ -458,6 +458,41 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             return Json(response.Message, JsonRequestBehavior.AllowGet);
         }
 
+        [HttpPost, ValidateAntiForgeryToken, OverrideActionFilters]
+        public JsonResult DeleteHostAsync(string AgentId, string HostId)
+        {
+            var response = new CommonDbResponse();
+            var aId = AgentId.DecryptParameter();
+            var hId = !string.IsNullOrEmpty(HostId) ? HostId.DecryptParameter() : null;
+            if (string.IsNullOrEmpty(aId) || string.IsNullOrEmpty(hId))
+            {
+                this.AddNotificationMessage(new NotificationModel()
+                {
+                    NotificationType = NotificationMessage.INFORMATION,
+                    Message = "Invalid details",
+                    Title = NotificationMessage.INFORMATION.ToString()
+                });
+                return Json(response.Message, JsonRequestBehavior.AllowGet);
+            }
+            var commonRequest = new Common()
+            {
+                ActionIP = ApplicationUtilities.GetIP(),
+                ActionUser = ApplicationUtilities.GetSessionValue("Username").ToString()
+            };
+            string status = "D";
+            var dbResponse = _buss.ManageHostStatus(aId, hId, status, commonRequest);
+            response = dbResponse;
+            this.AddNotificationMessage(new NotificationModel()
+            {
+                NotificationType = response.Code == ResponseCode.Success ? NotificationMessage.SUCCESS : NotificationMessage.INFORMATION,
+                Message = response.Message ?? "Failed",
+                Title = response.Code == ResponseCode.Success ? NotificationMessage.SUCCESS.ToString() : NotificationMessage.INFORMATION.ToString()
+            });
+            return Json(response.Message, JsonRequestBehavior.AllowGet);
+        }
+
+
+
         #region Gallery Management
         [HttpGet]
         public ActionResult GalleryManagement(string AgentId, string HostId, string SearchFilter = "")
