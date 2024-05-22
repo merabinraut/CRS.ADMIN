@@ -3,7 +3,6 @@ using CRS.ADMIN.APPLICATION.Models.StaticDataManagement;
 using CRS.ADMIN.BUSINESS.StaticDataManagement;
 using CRS.ADMIN.SHARED;
 using CRS.ADMIN.SHARED.StaticDataManagement;
-using DocumentFormat.OpenXml.Office2010.Excel;
 using System.Web.Mvc;
 
 namespace CRS.ADMIN.APPLICATION.Controllers
@@ -135,6 +134,13 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 });
                 return RedirectToAction("Index");
             }
+        }
+        #endregion
+
+        #region MANAGE STATIC DATA
+        public ActionResult StaticDataIndex()
+        {
+            return View();
         }
         #endregion
     }
