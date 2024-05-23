@@ -72,6 +72,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             var dbResponse = _BUSS.GetClubList(dbRequestall);
             var dbResponsePending = _BUSS.GetClubPendingList(dbRequestpending);
             var dbResponseRejected = _BUSS.GetClubRejectedList(dbRequestreject);
+            ViewBag.PlansList = ApplicationUtilities.LoadDropdownList("CLUBPLANS") as Dictionary<string, string>;
             if (TempData.ContainsKey("EditPlan"))
             {
 
@@ -104,6 +105,10 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                         planList.PlanIdentityList.ForEach(planIdentity =>
                         {
                             planIdentity.StaticDataValue = planIdentity.StaticDataValue.EncryptParameter(); // Call your encryption method here
+                            planIdentity.IdentityDescription = planIdentity.name.ToLower() == "plan" ? planIdentity.IdentityDescription.EncryptParameter() : planIdentity.IdentityDescription; // Call your encryption method here
+                            planIdentity.PlanId = planIdentity.name.ToLower() == "plan" ? ViewBag.PlansList[planIdentity.IdentityDescription] : planIdentity.IdentityDescription;  // Call your encryption method here
+                            planIdentity.IdentityDescription = planIdentity.name.ToLower() == "status" ?( string.IsNullOrEmpty(planIdentity.IdentityDescription)? "B" : planIdentity.IdentityDescription) : planIdentity.IdentityDescription;  // Call your encryption method here
+
                         });
                     });
                 }
@@ -129,8 +134,8 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 item.ClubLogo = ImageHelper.ProcessedImage(item.ClubLogo);
             });
             ViewBag.Pref = DDLHelper.LoadDropdownList("PREF") as Dictionary<string, string>;
-            ViewBag.Holiday = DDLHelper.LoadDropdownList("Holiday") as Dictionary<string, string>;
-            ViewBag.PlansList = ApplicationUtilities.LoadDropdownList("CLUBPLANS") as Dictionary<string, string>;
+            ViewBag.Holiday = ApplicationUtilities.SetDDLValue(DDLHelper.LoadDropdownList("Holiday") as Dictionary<string, string>, null, "--- Select ---");
+
             ViewBag.PopUpRenderValue = !string.IsNullOrEmpty(RenderId) ? RenderId : null;
             ViewBag.LocationDDLList = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("LOCATIONDDL") as Dictionary<string, string>, null, "--- Select ---");
             ViewBag.BusinessTypeDDL = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("BUSINESSTYPEDDL") as Dictionary<string, string>, null, "");
@@ -143,7 +148,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             ViewBag.LocationIdKey = response.ManageClubModel.LocationDDL;
 
             ViewBag.PrefIdKey = !string.IsNullOrEmpty(response.ManageClubModel.Prefecture) ? ViewBag.Pref[response.ManageClubModel.Prefecture] : null;
-            ViewBag.HolidayIdKey = !string.IsNullOrEmpty(response.ManageClubModel.Holiday) ? ViewBag.Holiday[response.ManageClubModel.Holiday] : null;
+            ViewBag.HolidayIdKey = !string.IsNullOrEmpty(response.ManageClubModel.Holiday) ? response.ManageClubModel.Holiday : null;
             ViewBag.BusinessTypeKey = response.ManageClubModel.BusinessTypeDDL;
             ViewBag.ClosingDate = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("CLOSINGDATE") as Dictionary<string, string>, null, "--- Select ---");
             ViewBag.ClosingDateIdKey = response.ManageClubModel.ClosingDate;
@@ -430,11 +435,10 @@ namespace CRS.ADMIN.APPLICATION.Controllers
 
         [HttpPost, ValidateAntiForgeryToken]
         public async Task<ActionResult> ManageClub(ManageClubModel Model, HttpPostedFileBase Business_Certificate, HttpPostedFileBase Logo_Certificate, HttpPostedFileBase CoverPhoto_Certificate, HttpPostedFileBase KYCDocument_Certificate, string LocationDDL, string BusinessTypeDDL)
-        {
+       {
             string ErrorMessage = string.Empty;
-
-            if (!string.IsNullOrEmpty(BusinessTypeDDL?.DecryptParameter())) ModelState.Remove("BusinessType");
-            if (!string.IsNullOrEmpty(LocationDDL?.DecryptParameter())) ModelState.Remove("LocationId");
+            //if (!string.IsNullOrEmpty(BusinessTypeDDL?.DecryptParameter())) ModelState.Remove("BusinessType");
+            //if (!string.IsNullOrEmpty(LocationDDL?.DecryptParameter())) ModelState.Remove("LocationId");
             ViewBag.PlansList = ApplicationUtilities.LoadDropdownList("CLUBPLANS") as Dictionary<string, string>;
             ModelState.Remove("LocationURL");
             string concatenateplanvalue = string.Empty;
@@ -467,23 +471,42 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             string coverPhotoPath = "";
             var allowedContentType = AllowedImageContentType();
             string dateTime = "";
-            if (Model.BusinessType == "1")
+            if (Model.BusinessTypeDDL.DecryptParameter() == "1")
             {
-                ModelState.AddModelError("Representative1_ContactName", "Required");
-                ModelState.AddModelError("Representative1_MobileNo", "Required");
-                ModelState.AddModelError("Representative1_Email", "Required");
-                ModelState.AddModelError("Representative2_ContactName", "Required");
-                ModelState.AddModelError("Representative2_MobileNo", "Required");
-                ModelState.AddModelError("Representative2_Email", "Required");
+                if (string.IsNullOrEmpty(Model.Representative1_ContactName))
+                {
+                    ModelState.AddModelError("Representative1_ContactName", "Required");
+                }
+                if (string.IsNullOrEmpty(Model.Representative1_MobileNo))
+                {
+                    ModelState.AddModelError("Representative1_MobileNo", "Required");
+                }
+                if (string.IsNullOrEmpty(Model.Representative1_Email))
+                {
+                    ModelState.AddModelError("Representative1_Email", "Required");
+                }
+                if (string.IsNullOrEmpty(Model.Representative2_ContactName))
+                {
+                    ModelState.AddModelError("Representative2_ContactName", "Required");
+                }
+                if (string.IsNullOrEmpty(Model.Representative2_MobileNo))
+                {
+                    ModelState.AddModelError("Representative2_MobileNo", "Required");
+                }
+                if (string.IsNullOrEmpty(Model.Representative2_Email))
+                {
+                    ModelState.AddModelError("Representative2_Email", "Required");
+                }
+                                
             }
             else
             {
-                ModelState.Remove("Representative1_ContactName");
-                ModelState.Remove("Representative1_MobileNo");
-                ModelState.Remove("Representative1_Email");
-                ModelState.Remove("Representative2_ContactName");
-                ModelState.Remove("Representative2_MobileNo");
-                ModelState.Remove("Representative2_Email");
+                //ModelState.Remove("Representative1_ContactName");
+                //ModelState.Remove("Representative1_MobileNo");
+                //ModelState.Remove("Representative1_Email");
+                //ModelState.Remove("Representative2_ContactName");
+                //ModelState.Remove("Representative2_MobileNo");
+                //ModelState.Remove("Representative2_Email");
                 ModelState.Remove("CompanyName");
             }
             //ModelState.Remove("LoginId");

@@ -1,5 +1,6 @@
 using CRS.ADMIN.BUSINESS.AffiliateManagement;
 using CRS.ADMIN.BUSINESS.ClubManagement;
+using CRS.ADMIN.BUSINESS.ClubPlanManagement;
 using CRS.ADMIN.BUSINESS.CommissionManagement;
 using CRS.ADMIN.BUSINESS.CommonManagement;
 using CRS.ADMIN.BUSINESS.CustomerManagement;
@@ -71,6 +72,7 @@ namespace CRS.ADMIN.APPLICATION
             container.RegisterType<IEmailLogBusiness, EmailLogBusiness>();
             container.RegisterType<IPointSetupBusiness, PointSetupBusiness>();
             container.RegisterType<IPointsManagementBusiness, PointsManagementBusiness>();
+            container.RegisterType<IClubPlanManagementBusiness, ClubPlanManagementBusiness>();
             return container;
         }
     }

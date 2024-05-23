@@ -1,0 +1,237 @@
+@model CRS.ADMIN.APPLICATION.Models.ClubManagement.ManageClubPlanModel
+@{
+    var rowcouunt = 0;
+    var id = "";
+}
+
+<style>
+    .select-width .select2-container {
+        width: 100%;
+    }
+
+    .select2-container {
+        width: 100% !important;
+    }
+</style>
+<<div id="add-club-plan" class="drawer-close-disable  flex justify-end fixed top-0 right-0 z-40 h-screen overflow-y-auto transition-transform translate-x-full "
+      tabindex="-1" aria-labelledby="drawer-right-label">
+    <div class="bg-white w-[863px] drawer-container relative">
+        <div class="drawer-form-container sticky top-0 z-[5] ">
+            <div class="drawer-form flex justify-between bg-secondary-color-pink py-[16px] px-[24px] h-[56px]">
+                <div>  @CRS.ADMIN.APPLICATION.Resources.Resource.Plan_list</div>
+                <button type="button" data-drawer-hide="add-club-plan" aria-controls="add-club-plan" onclick="CancelFunction()"
+                        class="text-[20px]">
+                    <i class="las la-window-close text-white"></i>
+                </button>
+            </div>
+        </div>
+
+        <div class="p-[24px]">
+
+            <div class=" py-4 grid gap-6">
+                @using (Html.BeginForm("ManageClubPlan", "ClubPlanManagement", FormMethod.Post, new { @id = "ManageClubPlanForm", enctype = "multipart/form-data" }))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true)
+                    @Html.HiddenFor(model => model.ClubId)
+                    <div id="content4" class="content-section">
+                        <div class="grid gap-4 py-[10px]">
+
+
+                            <!-- for Plan list -->
+                            <div class="flex gap-2 text-primary-300 text-sm font-semibold items-center mt-[10px]">
+                                <div class="flex-none uppercase">@CRS.ADMIN.APPLICATION.Resources.Resource.Plan_list</div>
+                                <div class="bg-[#F4F4F4] h-[1px] w-full">
+                                </div>
+                            </div>
+                            <div class="grid  gap-4">
+
+
+
+                                <div id="container">
+
+
+                                    @for (int i = 0; i < Model.ClubPlanDetailList.Count; i++)
+                                    {
+                                        var planList = Model.ClubPlanDetailList[i];
+                                        id = i + "_large";
+                                        <div class="plans">
+                                            <div class="grid grid-cols-3 gap-x-4 gap-y-5">
+
+                                                @for (int j = 0; j < planList.PlanIdentityList.Count; j++)
+                                                {
+                                                    var planIdentity = planList.PlanIdentityList[j];
+                                                    if (@Model.ClubPlanDetailList[i].PlanIdentityList[j].inputtype.ToLower() == "dropdown")
+                                                    {
+                                                        <div class="input-field-common">
+                                                            <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
+                                                                @Model.ClubPlanDetailList[i].PlanIdentityList[j].IdentityLabel
+                                                            </label>
+                                                            @Html.HiddenFor(model => model.ClubPlanDetailList[i].PlanIdentityList[j].name, new { @class = "name" })
+                                                            @Html.HiddenFor(model => model.ClubPlanDetailList[i].PlanIdentityList[j].StaticDataValue, new { @class = "StaticDataValue" })
+                                                            @Html.HiddenFor(model => model.ClubPlanDetailList[i].PlanIdentityList[j].PlanId, new { @class = "PlanId" })
+                                                            @Html.HiddenFor(model => model.ClubPlanDetailList[i].PlanIdentityList[j].PlanListId, new { @class = "PlanListId" })
+                                                            @Html.HiddenFor(model => model.ClubPlanDetailList[i].PlanIdentityList[j].IdentityDescription, new { @class = "IdentityDescriptions" })
+                                                            @Html.HiddenFor(model => model.ClubPlanDetailList[i].PlanIdentityList[j].Id, new { @class = "Id" })
+                                                            @Html.HiddenFor(model => model.ClubPlanDetailList[i].PlanIdentityList[j].IdentityLabel, new { @class = "IdentityLabel" })
+                                                            @Html.HiddenFor(model => model.ClubPlanDetailList[i].PlanIdentityList[j].inputtype, new { @class = "inputtype" })
+                                                            <select id=@id class="default_select select-common block w-full"
+                                                                    style="width: 100%;" name="PlanDetailList[@i].PlanIdentityList[@j].IdentityDescription" disabled>
+                                                                @foreach (KeyValuePair<string, string> item in ViewBag.PlansList as Dictionary<string, string>)
+                                                                {
+                                                                    var selectedId = Model.ClubPlanDetailList[i].PlanIdentityList[j].PlanId;
+                                                                    if (item.Value == selectedId)
+                                                                    {
+                                                                        <option value="@item.Key" selected>
+                                                                            @item.Value
+                                                                        </option>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <option value="@item.Key">
+                                                                            @item.Value
+                                                                        </option>
+                                                                    }
+                                                                }
+                                                            </select>
+
+                                                        </div>
+                                                    }
+                                                    else if (@Model.ClubPlanDetailList[i].PlanIdentityList[j].inputtype.ToLower() == "textbox")
+                                                    {
+                                            <div class="input-field-common">
+                                                <label class="block mb-[12px] text-sm font-medium text-secondary-text-2">
+                                                    @Model.ClubPlanDetailList[i].PlanIdentityList[j].IdentityLabel
+                                                </label>
+                                                @Html.HiddenFor(model => model.ClubPlanDetailList[i].PlanIdentityList[j].name, new { @class = "name" })
+                                                @Html.HiddenFor(model => model.ClubPlanDetailList[i].PlanIdentityList[j].StaticDataValue, new { @class = "StaticDataValue" })
+                                                @*@Html.HiddenFor(model => model.ClubPlanDetailList[i].PlanIdentityList[j].PlanId, new { @class = "PlanId" })*@
+                                                @Html.HiddenFor(model => model.ClubPlanDetailList[i].PlanIdentityList[j].PlanListId, new { @class = "PlanListId" })
+                                                @Html.HiddenFor(model => model.ClubPlanDetailList[i].PlanIdentityList[j].Id, new { @class = "Id" })
+                                                @Html.HiddenFor(model => model.ClubPlanDetailList[i].PlanIdentityList[j].inputtype, new { @class = "inputtype" })
+                                                @Html.HiddenFor(model => model.ClubPlanDetailList[i].PlanIdentityList[j].IdentityLabel, new { @class = "IdentityLabel" })
+                                                @Html.TextBoxFor(model => model.ClubPlanDetailList[i].PlanIdentityList[j].IdentityDescription, new
+                                           {
+                                               @class = "w-full",
+                                               @placeholder = Model.ClubPlanDetailList[i].PlanIdentityList[j].IdentityLabel,
+                                               //@onkeypress = "return isAlphabetWithSpace(event)",
+                                               autocomplete = "off",
+                                               @maxLength = "100"
+                                        ,
+
+                                           })
+                                                <span class="error">
+                                                    @Html.ValidationMessageFor(model => Model.ClubPlanDetailList[i].PlanIdentityList[j].IdentityDescription)
+                                                </span>
+                                            </div>
+                                                    }
+                                                    else if (@Model.ClubPlanDetailList[i].PlanIdentityList[j].inputtype.ToLower() == "time")
+                                                    {
+                                            <div class="input-field-common">
+                                                <label for="instagram" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                                                    @Model.ClubPlanDetailList[i].PlanIdentityList[j].IdentityLabel
+                                                </label>
+                                                @Html.HiddenFor(model => model.ClubPlanDetailList[i].PlanIdentityList[j].name, new { @class = "name" })
+                                                @Html.HiddenFor(model => model.ClubPlanDetailList[i].PlanIdentityList[j].StaticDataValue, new { @class = "StaticDataValue" })
+                                                @*@Html.HiddenFor(model => model.ClubPlanDetailList[i].PlanIdentityList[j].PlanId, new { @class = "PlanId" })*@
+                                                @Html.HiddenFor(model => model.ClubPlanDetailList[i].PlanIdentityList[j].PlanListId, new { @class = "PlanListId" })
+                                                @Html.HiddenFor(model => model.ClubPlanDetailList[i].PlanIdentityList[j].Id, new { @class = "Id" })
+                                                @Html.HiddenFor(model => model.ClubPlanDetailList[i].PlanIdentityList[j].inputtype, new { @class = "inputtype" })
+                                                @Html.HiddenFor(model => model.ClubPlanDetailList[i].PlanIdentityList[j].IdentityLabel, new { @class = "IdentityLabel" })
+                                                @Html.TextBoxFor(model => model.ClubPlanDetailList[i].PlanIdentityList[j].IdentityDescription, new
+                                           {
+                                               @class = "w-full",
+                                               @placeholder = "HH:MM",
+                                               //@onkeypress = "return isNumber(event)",
+                                               autocomplete = "off",
+                                               @maxLength = "30",
+
+                                               @type = "time"
+                                           })
+                                                <span class="error">
+                                                    @Html.ValidationMessageFor(model => Model.ClubPlanDetailList[i].PlanIdentityList[j].IdentityDescription)
+                                                </span>
+                                                @*<input type="time" class="w-full" placeholder="HH:MM" name="lastOrderTime" required>*@
+                                                <!-- <span class="error">Validation msg</span> -->
+                                            </div>
+                                                    }
+                                                    else if (@Model.ClubPlanDetailList[i].PlanIdentityList[j].inputtype.ToLower() == "toggle")
+                                                    {
+                                                        <div class="toogle-common">
+                                                            <label class="relative inline-flex items-center cursor-pointer">
+                                                                @Html.HiddenFor(model => model.ClubPlanDetailList[i].PlanIdentityList[j].name, new { @class = "name" })
+                                                                @Html.HiddenFor(model => model.ClubPlanDetailList[i].PlanIdentityList[j].StaticDataValue, new { @class = "StaticDataValue" })
+                                                                @*@Html.HiddenFor(model => model.ClubPlanDetailList[i].PlanIdentityList[j].PlanId, new { @class = "PlanId" })*@
+                                                                @Html.HiddenFor(model => model.ClubPlanDetailList[i].PlanIdentityList[j].PlanListId, new { @class = "PlanListId" })
+                                                                @Html.HiddenFor(model => model.ClubPlanDetailList[i].PlanIdentityList[j].Id, new { @class = "Id" })
+                                                                @Html.HiddenFor(model => model.ClubPlanDetailList[i].PlanIdentityList[j].inputtype, new { @class = "inputtype" })
+                                                                @Html.HiddenFor(model => model.ClubPlanDetailList[i].PlanIdentityList[j].IdentityDescription, new { @class = "IdentityDescription" })
+                                                                @Html.HiddenFor(model => model.ClubPlanDetailList[i].PlanIdentityList[j].IdentityLabel, new { @class = "IdentityLabel" })
+                                                                @if (@Model.ClubPlanDetailList[i].PlanIdentityList[j].IdentityDescription.ToLower() == "a")
+                                                                {
+                                                                    <input type="checkbox" value="@Model.ClubPlanDetailList[i].PlanIdentityList[j].IdentityDescription" name="PlanDetailList[@i].PlanIdentityList[@j].IdentityDescription" class="sr-only peer toogle1" id="toogle1" checked>
+
+                                                                }
+                                                                else
+                                                                {
+                                                                    <input type="checkbox" value="@Model.ClubPlanDetailList[i].PlanIdentityList[j].IdentityDescription" name="PlanDetailList[@i].PlanIdentityList[@j].IdentityDescription" class="sr-only toogle1" id="toogle2">
+
+                                                                }
+                                                                <div class="w-7 h-4 bg-white rounded-full border border-[#A6A6A6] peer peer-focus:ring-4 peer-focus:ring-blue-300 peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[3.8px] after:left-[2px] after:border-[#A6A6A6] after:bg-[#A6A6A6] after:border after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:after:border-white peer-checked:border-secondary-color-pink peer-checked:bg-secondary-color-pink peer-checked:after:bg-white">
+                                                                </div>
+                                                                <span class="pl-2 text-sm font-medium text-secondary-100">
+                                                                    @Model.ClubPlanDetailList[i].PlanIdentityList[j].IdentityLabel
+                                                                </span>
+                                                            </label>
+                                                        </div>
+
+                                                    }
+                                                }
+
+
+                                            </div>
+
+
+                                        </div>
+
+                                    }
+
+                                    <br />
+
+                                    <!-- for max reservation code -->
+
+
+                                </div>
+
+
+                                <div id="originalContent">
+
+                                </div>
+
+
+                                <div class="flex gap-2 text-primary-300 text-sm font-semibold items-center mt-[10px]">
+                                    <!-- <div class="flex-none uppercase">plan fee</div> -->
+                                    <div class="bg-[#F4F4F4] h-[1px] w-full">
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex justify-end py-4">
+                        <div class="flex gap-6">
+                            <a>
+                                <button class="resetForm btn btn-primary-default h-[40px] px-8 rounded-[4px]  text-sm leading-[10px]" type="submit" id="submit-button-id">
+                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Submit
+                                </button>
+                            </a>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+

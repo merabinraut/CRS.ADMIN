@@ -180,4 +180,30 @@ namespace CRS.ADMIN.SHARED.ClubManagement
         public string PlanId { get; set; }
         public string PlanStatus { get; set; }
     }
+    public class ManageClubPlanCommon
+    {
+        public string SearchFilter { get; set; }
+        public string ClubId { get; set; }
+        public ManageClubPlan ManageClubPlanModel { get; set; }
+        public List<ClubplanListCommon> planList { get; set; } = new List<ClubplanListCommon>();
+    }
+    public class ManageClubPlan:Common
+    {
+        public string ClubId { get; set; }
+        public List<PlanListCommon> ClubPlanDetailList { get; set; } = new List<PlanListCommon>();
+    }
+    public class ClubplanListCommon
+    {
+        public string Id { get; set; }
+        public string PlanId { get; set; }
+        public string PlanName { get; set; }
+        public string LastEntryTime { get; set; }
+        public string LastOrderTime { get; set; }
+        public string NoofPeople { get; set; }
+        public string Status { get; set; }
+        public string CreatedDate { get; set; }
+        public string UpdatedDate { get; set; }
+        public string ClubId { get; set; }
+    }
+
 }

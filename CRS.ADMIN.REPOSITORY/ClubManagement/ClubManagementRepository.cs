@@ -621,35 +621,77 @@ namespace CRS.ADMIN.REPOSITORY.ClubManagement
 
 
 
-        public List<PlanListCommon> GetClubPlanIdentityList(string culture)
-        {
-            var response1 = new List<PlanListCommon>();
-            var response = new List<planIdentityDataCommon>();
-            string SQL = "EXEC sproc_club_management @Flag='cpi'";
+        //public List<PlanListCommon> GetClubPlanIdentityList(string culture)
+        //{
+        //    var response1 = new List<PlanListCommon>();
+        //    var response = new List<planIdentityDataCommon>();
+        //    string SQL = "EXEC sproc_club_management @Flag='cpi'";
 
-            var dbResponse = _DAO.ExecuteDataTable(SQL);
-            if (dbResponse != null)
+        //    var dbResponse = _DAO.ExecuteDataTable(SQL);
+        //    if (dbResponse != null)
+        //    {
+
+
+        //        foreach (DataRow item in dbResponse.Rows)
+        //        {
+        //            response.Add(new planIdentityDataCommon()
+        //            {
+        //                StaticDataValue = _DAO.ParseColumnValue(item, "StaticDataValue").ToString(),
+        //                English = _DAO.ParseColumnValue(item, "English").ToString(),
+        //                japanese = _DAO.ParseColumnValue(item, "japanese").ToString(),
+        //                inputtype = _DAO.ParseColumnValue(item, "inputtype").ToString(),
+        //                name = _DAO.ParseColumnValue(item, "name").ToString(),
+        //                IdentityLabel = culture.ToLower() == "en" ? _DAO.ParseColumnValue(item, "English").ToString() : _DAO.ParseColumnValue(item, "japanese").ToString(),
+        //            });
+        //        }
+
+        //        var planList = new PlanListCommon();
+        //        planList.PlanIdentityList.AddRange(response);
+        //        response1.Add(planList);
+        //    }
+        //    return response1;
+        //}
+        public List<PlanListCommon> GetClubPlanIdentityList(string culture)
+        
+        {
+            var plan = new List<planIdentityDataCommon>();
+            var PlanListCommon = new List<PlanListCommon>();
+            string SQL1 = "EXEC sproc_club_management_approvalrejection @Flag='planlst'";
+            string SQL2 = "EXEC sproc_club_management_approvalrejection @Flag='cpi'";
+            var dbResponse1 = _DAO.ExecuteDataTable(SQL1);
+            var dbResponse2 = _DAO.ExecuteDataTable(SQL2);
+            var response = new List<planIdentityDataCommon>();
+            List<PlanListCommon> listcomm = new List<PlanListCommon>();
+            int i = 0;
+            if (dbResponse1.Rows.Count > 0)
             {
 
-
-                foreach (DataRow item in dbResponse.Rows)
+                foreach (DataRow row in dbResponse1.Rows)
                 {
-                    response.Add(new planIdentityDataCommon()
+                    List<planIdentityDataCommon> filteredPlan = new List<planIdentityDataCommon>();
+                    foreach (DataRow rows in dbResponse2.Rows)
                     {
-                        StaticDataValue = _DAO.ParseColumnValue(item, "StaticDataValue").ToString(),
-                        English = _DAO.ParseColumnValue(item, "English").ToString(),
-                        japanese = _DAO.ParseColumnValue(item, "japanese").ToString(),
-                        inputtype = _DAO.ParseColumnValue(item, "inputtype").ToString(),
-                        name = _DAO.ParseColumnValue(item, "name").ToString(),
-                        IdentityLabel = culture.ToLower() == "en" ? _DAO.ParseColumnValue(item, "English").ToString() : _DAO.ParseColumnValue(item, "japanese").ToString(),
-                    });
-                }
+                        filteredPlan.Add(new planIdentityDataCommon()
+                        {
+                            StaticDataValue = _DAO.ParseColumnValue(rows, "StaticDataValue").ToString(),
+                            English = _DAO.ParseColumnValue(rows, "English").ToString(),
+                            PlanListId = Convert.ToString(i),
+                            japanese = _DAO.ParseColumnValue(rows, "japanese").ToString(),
+                            inputtype = _DAO.ParseColumnValue(rows, "inputtype").ToString(),
+                            IdentityDescription = (_DAO.ParseColumnValue(rows, "StaticDataValue").ToString() == "1") ? _DAO.ParseColumnValue(row, "planId").ToString() : "",
+                            name = _DAO.ParseColumnValue(rows, "name").ToString(),
+                            IdentityLabel = culture.ToLower() == "en" ? _DAO.ParseColumnValue(rows, "English").ToString() : _DAO.ParseColumnValue(rows, "japanese").ToString(),
+                        }); ; ;
 
-                var planList = new PlanListCommon();
-                planList.PlanIdentityList.AddRange(response);
-                response1.Add(planList);
+                    }
+                    response.AddRange(filteredPlan);
+                    listcomm.Add(new PlanListCommon { PlanIdentityList = filteredPlan });
+                    i++;
+                }
+                  
+                
             }
-            return response1;
+            return listcomm;
         }
         public List<planIdentityDataCommon> GetClubPlanIdentityListAddable(string culture)
         {

@@ -233,6 +233,7 @@
     <Compile Include="Controllers\AffiliateManagementController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\ClubManagementController.cs" />
+    <Compile Include="Controllers\ClubPlanManagementController.cs" />
     <Compile Include="Controllers\CommissionManagementController.cs" />
     <Compile Include="Controllers\CustomerManagementController.cs" />
     <Compile Include="Controllers\EmailLogController.cs" />
@@ -324,8 +325,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resource.Ja.resx</DependentUpon>
     </Compile>
+    <None Include="Views\ClubPlanManagement\_ManageClubPlanPartialView.cshtml" />
     <Content Include="Views\PointsManagement\_ManagePointsRequestPartialView.cshtml" />
     <Content Include="App_Data\AmazonConfigruation.json" />
+    <Content Include="Views\ClubPlanManagement\ClubPlanList.cshtml" />
     <None Include="Views\PointsManagement\_ManagePointsTransferPartialView.cshtml" />
     <None Include="Views\PointsManagement\PointsTransferList.cshtml" />
     <None Include="Views\PointSetup\PointsCategorySlabList.cshtml" />
