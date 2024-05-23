@@ -16,6 +16,7 @@ namespace CRS.ADMIN.REPOSITORY.StaticDataManagement
         #region MANAGE STATIC DATA
         List<StaticDataModelCommon> GetStaticDataList(string staticDataTypeId);
         ManageStaticDataCommon GetStaticDataDetail(string id);
+        CommonDbResponse ManageStaticData(ManageStaticDataCommon commonModel);
         #endregion
     }
 }

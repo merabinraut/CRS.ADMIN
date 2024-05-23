@@ -84,12 +84,24 @@ namespace CRS.ADMIN.REPOSITORY.StaticDataManagement
                 {
                     Id = _dao.ParseColumnValue(dbResponse, "Id").ToString(),
                     StaticDataType = _dao.ParseColumnValue(dbResponse, "StaticDataType").ToString(),
-                    StaticDataName = _dao.ParseColumnValue(dbResponse, "StaticDataName").ToString(),
+                    StaticDataLabel = _dao.ParseColumnValue(dbResponse, "StaticDataLabel").ToString(),
                     StaticDataDescription = _dao.ParseColumnValue(dbResponse, "StaticDataDescription").ToString(),
                     Status = _dao.ParseColumnValue(dbResponse, "Status").ToString(),
                 };
             }
             return new ManageStaticDataCommon();
+        }
+
+        public CommonDbResponse ManageStaticData(ManageStaticDataCommon commonModel)
+        {
+            string sp_name = "EXEC sproc_admin__manage_static_data ";
+            sp_name += string.IsNullOrEmpty(commonModel.Id) ? "@Flag='msd'" : "@Flag='umsd'";
+            sp_name += ",@StaticDataLabel" + _dao.FilterString(commonModel.StaticDataLabel);
+            sp_name += ",@StaticDataDescription=" + _dao.FilterString(commonModel.StaticDataDescription);
+            sp_name += ",@StaticDataType=" + _dao.FilterString(commonModel.StaticDataType);
+            sp_name += ",@Status=" + _dao.FilterString("A");
+            sp_name += ",@ActionUser=" + _dao.FilterString(commonModel.ActionUser);
+            return _dao.ParseCommonDbResponse(sp_name);
         }
         #endregion
     }

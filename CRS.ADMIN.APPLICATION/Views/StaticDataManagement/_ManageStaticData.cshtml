@@ -27,9 +27,9 @@
             {
                 @Html.HiddenFor(model => model.StaticDataType)
             }
-            if (!string.IsNullOrEmpty(Model.StaticDataName))
+            if (!string.IsNullOrEmpty(Model.StaticDataLabel))
             {
-                @Html.HiddenFor(model => model.StaticDataName)
+                @Html.HiddenFor(model => model.StaticDataLabel)
             }
             if (!string.IsNullOrEmpty(Model.StaticDataDescription))
             {
@@ -41,14 +41,14 @@
                         <label class="block mb-[12px] text-sm font-medium text-secondary-100 ">
                             Static Data Name
                         </label>
-                        @Html.TextBoxFor(model => model.StaticDataName, new
+                        @Html.TextBoxFor(model => model.StaticDataLabel, new
                         {
                             @class = "w-full rounded-[4px]",
                             @style = "border-radius:4px !important",
                             @maxlength = "30"
                         })
                         <span class="error">
-                            @Html.ValidationMessageFor(m => m.StaticDataName)
+                            @Html.ValidationMessageFor(m => m.StaticDataLabel)
                         </span>
                     </div>
                     <div class="input-field-common">

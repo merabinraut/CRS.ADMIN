@@ -152,6 +152,26 @@
                  element.classList.remove('translate-x-full');
              }
          });
+        function CancelFunction() {
+            location.reload();
+        }
+        function deleteStaticDataType(id) {
+            $.ajax({
+                type: 'POST',
+                async: true,
+                url: "/StaticDataManagement/DeleteStaticData?id=" + id,
+                dataType: 'json',
+                data: {
+                    __RequestVerificationToken: $('input[name="__RequestVerificationToken"]').val(),
+                },
+                success: function () {
+                    window.location.reload();
+                },
+                error: function (ex) {
+
+                }
+            });
+        }
     </script>
 }
 

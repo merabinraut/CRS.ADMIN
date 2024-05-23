@@ -84,7 +84,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                     AddNotificationMessage(new NotificationModel()
                     {
                         NotificationType = NotificationMessage.SUCCESS,
-                        Message = dbResponse.Message ?? "Static Data Added Successfully",
+                        Message = dbResponse.Message ?? "Static Data Type Added Successfully",
                         Title = NotificationMessage.SUCCESS.ToString()
                     });
                 }
@@ -186,10 +186,49 @@ namespace CRS.ADMIN.APPLICATION.Controllers
 
         }
         [HttpPost, ValidateAntiForgeryToken]
-        public ActionResult ManageStaticData()
+        public ActionResult ManageStaticData(ManageStaticData Model)
+        {
+            if (ModelState.IsValid)
+            {
+                ManageStaticDataCommon commonModel = Model.MapObject<ManageStaticDataCommon>();
+                commonModel.ActionUser = ApplicationUtilities.GetSessionValue("Username").ToString();
+                if (!string.IsNullOrEmpty(commonModel.Id))
+                    commonModel.Id = commonModel.Id.DecryptParameter();
+                var dbResponse = _business.ManageStaticData(commonModel);
+                if (dbResponse != null)
+                {
+                    AddNotificationMessage(new NotificationModel()
+                    {
+                        NotificationType = NotificationMessage.INFORMATION,
+                        Message = dbResponse.Message ?? "Something went wrong try again later",
+                        Title = NotificationMessage.INFORMATION.ToString(),
+                    });
+                    TempData["ManageStaticData"] = Model;
+                    TempData["RenderId"] = "Manage";
+                    return RedirectToAction("StaticDataIndex");
+                }
+                else
+                {
+                    AddNotificationMessage(new NotificationModel()
+                    {
+                        NotificationType = NotificationMessage.SUCCESS,
+                        Message = dbResponse.Message ?? "Static Data Added Successfully",
+                        Title = NotificationMessage.SUCCESS.ToString(),
+                    });
+                    return RedirectToAction("StaticDataIndex");
+                }
+            }
+            else
+            {
+                return RedirectToAction("StaticDataIndex");
+            }
+        }
+        [HttpPost,ValidateAntiForgeryToken]     
+        public ActionResult DeleteStaticData(string id = "")
         {
             return View();
         }
+        
         #endregion
     }
 }

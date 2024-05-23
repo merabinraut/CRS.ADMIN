@@ -28,8 +28,14 @@ namespace CRS.ADMIN.APPLICATION.Models.StaticDataManagement
         public string AdditionalValue2 { get; set; }
         public string StaticDataLabel { get; set; }
     }
-    public class ManageStaticData : StaticDataModel
+    public class ManageStaticData 
     {
-      
+        public string Id { get; set; }
+        public string StaticDataType { get; set; }
+        public string StaticDataLabel { get; set; }
+        public string StaticDataDescription { get; set; }
+        public string AdditionalValue1 { get; set; }
+        public string AdditionalValue2 { get; set; }
+        public string Status { get; set; }
     }
 }
