@@ -225,6 +225,7 @@ namespace CRS.ADMIN.REPOSITORY.ClubManagement
                     LocationId = _DAO.ParseColumnValue(dbResponse, "LocationId").ToString(),
                     CompanyName = _DAO.ParseColumnValue(dbResponse, "CompanyName").ToString(),
                     LandLineNumber = _DAO.ParseColumnValue(dbResponse, "LandLineNumber").ToString(),
+                    LandLineCode = _DAO.ParseColumnValue(dbResponse, "LandLineCode").ToString(),
                     Line = _DAO.ParseColumnValue(dbResponse, "Line").ToString(),
                     ceoFullName = _DAO.ParseColumnValue(dbResponse, "ceoFullName").ToString(),
                     WorkingHrTo = _DAO.ParseColumnValue(dbResponse, "ClubClosingTime").ToString(),

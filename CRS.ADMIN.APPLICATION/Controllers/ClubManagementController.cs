@@ -882,7 +882,10 @@ namespace CRS.ADMIN.APPLICATION.Controllers
 
                 //var dbAvailabilityInfo = _BUSS.GetAvailabilityList(cId);
                 ResponseModel = dbResponseInfo.MapObject<ManageClubModel>();
-                ResponseModel.LocationDDL = !string.IsNullOrEmpty(ResponseModel.LocationId) ? ResponseModel.LocationId.EncryptParameter() : null;
+                ResponseModel.LandlineNumber = !string.IsNullOrEmpty(ResponseModel.LandLineCode)
+                    ? ResponseModel.LandLineCode + '-' + ResponseModel.LandlineNumber
+                    : ResponseModel.LandlineNumber; ResponseModel.LocationDDL = !string.IsNullOrEmpty(ResponseModel.LocationId) ? ResponseModel.LocationId.EncryptParameter() : null;
+
                 ResponseModel.BusinessTypeDDL = !string.IsNullOrEmpty(ResponseModel.BusinessType) ? ResponseModel.BusinessType.EncryptParameter() : null;
                 ResponseModel.Prefecture = !string.IsNullOrEmpty(ResponseModel.Prefecture) ? ResponseModel.Prefecture.EncryptParameter() : null;
                 //ViewBag.Pref = DDLHelper.LoadDropdownList("PREF") as Dictionary<string, string>;
