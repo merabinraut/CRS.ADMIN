@@ -25,10 +25,11 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             else responseInfo.ManageStaticDataType = new ManageStaticDataType();
             if (TempData.ContainsKey("RenderId")) RenderId = TempData["RenderId"].ToString();
             var dbResponseInfo = _business.GetStatiDataTypeList(SearchText);
-            responseInfo.GetStaticDataTypeList = dbResponseInfo.MapObjects<StaticDataManagementModel>();
+            responseInfo.GetStaticDataTypeList = dbResponseInfo.MapObjects<StaticDataTypeModel>();
             foreach (var item in responseInfo.GetStaticDataTypeList)
             {
                 item.Id = item.Id.EncryptParameter();
+                item.StaticDataType = item.StaticDataType.EncryptParameter();
             }
             ViewBag.PopUpRenderValue = !string.IsNullOrEmpty(RenderId) ? RenderId : null;
             return View(responseInfo);
@@ -138,7 +139,54 @@ namespace CRS.ADMIN.APPLICATION.Controllers
         #endregion
 
         #region MANAGE STATIC DATA
-        public ActionResult StaticDataIndex()
+        public ActionResult StaticDataIndex(string staticDataTypeId = "")
+        {
+            Session["CurrentUrl"] = "/StaticDataManagement/StaticDataIndex";
+            string RenderId = "";
+            StaticDataManagement responseInfo = new StaticDataManagement();
+            if (TempData.ContainsKey("ManageStaticData")) responseInfo.ManageStaticData = TempData["ManageStaticData"] as ManageStaticData;
+            else responseInfo.ManageStaticData = new ManageStaticData();
+            if (TempData.ContainsKey("RenderId")) RenderId = TempData["RenderId"].ToString();
+            var StaticDataTypeId = "";
+            if (!string.IsNullOrEmpty(staticDataTypeId))
+                StaticDataTypeId = staticDataTypeId.DecryptParameter();
+            var dbResponseInfo = _business.GetStaticDataList(StaticDataTypeId);
+            responseInfo.GetStaticDataList = dbResponseInfo.MapObjects<StaticDataModel>();
+            foreach (var item in responseInfo.GetStaticDataList)
+            {
+                item.Id = item.Id.EncryptParameter();
+                item.StaticDataType = item.StaticDataType.EncryptParameter();
+            }
+            return View(responseInfo);
+        }
+        [HttpGet]
+        public ActionResult ManageStaticData(string id = "")
+        {
+            ManageStaticData model = new ManageStaticData();
+            if (!string.IsNullOrEmpty(id))
+            {
+                string Id = id.DecryptParameter();
+                var dbResponse = _business.GetStaticDataDetail(Id);
+                model = dbResponse.MapObject<ManageStaticData>();
+                model.Id = Id.EncryptParameter();
+                TempData["ManageStaticData"] = model;
+                TempData["RenderId"] = "Manage";
+                return RedirectToAction("StaticDataIndex");
+            }
+            else
+            {
+                AddNotificationMessage(new NotificationModel()
+                {
+                    NotificationType = NotificationMessage.INFORMATION,
+                    Message = "Invalid details",
+                    Title = NotificationMessage.INFORMATION.ToString(),
+                });
+                return RedirectToAction("StaticDataIndex");
+            }
+
+        }
+        [HttpPost, ValidateAntiForgeryToken]
+        public ActionResult ManageStaticData()
         {
             return View();
         }

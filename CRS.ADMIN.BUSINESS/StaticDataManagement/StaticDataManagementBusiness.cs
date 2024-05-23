@@ -23,14 +23,26 @@ namespace CRS.ADMIN.BUSINESS.StaticDataManagement
             return _repo.GetStaticDataTypeDetail(id);
         }
 
-        public List<StaticDataManagementCommon> GetStatiDataTypeList(string SearchText = "")
+        public List<StaticDataTypeCommon> GetStatiDataTypeList(string SearchText = "")
         {
             return _repo.GetStatiDataTypeList(SearchText);
         }
 
         public CommonDbResponse ManageStaticDataType(ManageStaticDataTypeCommon commonModel)
         {
-           return _repo.ManageStaticDataType(commonModel);
+            return _repo.ManageStaticDataType(commonModel);
+        }
+        #endregion
+
+        #region MANAGE STATIC DATA
+        public List<StaticDataModelCommon> GetStaticDataList(string staticDataTypeId)
+        {
+            return _repo.GetStaticDataList(staticDataTypeId);
+        }
+
+        public ManageStaticDataCommon GetStaticDataDetail(string id)
+        {
+            return _repo.GetStaticDataDetail(id);
         }
         #endregion
     }

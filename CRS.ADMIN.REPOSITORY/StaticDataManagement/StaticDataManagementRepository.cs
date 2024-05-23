@@ -21,6 +21,7 @@ namespace CRS.ADMIN.REPOSITORY.StaticDataManagement
             sp_name += ",@ActionUser" + _dao.FilterString(request.ActionUser);
             return _dao.ParseCommonDbResponse(sp_name);
         }
+
         public ManageStaticDataTypeCommon GetStaticDataTypeDetail(string id)
         {
             string sp_name = "EXEC sproc_tbl_static_data_Type_Select ";
@@ -40,18 +41,18 @@ namespace CRS.ADMIN.REPOSITORY.StaticDataManagement
             return new ManageStaticDataTypeCommon();
         }
 
-        public List<StaticDataManagementCommon> GetStatiDataTypeList(string SearchText = "")
+        public List<StaticDataTypeCommon> GetStatiDataTypeList(string SearchText = "")
         {
             string sp_name = "EXEC sproc_tbl_static_data_type_list ";
             sp_name += "@Search=" + _dao.FilterString(SearchText);
             var dbResponseInfo = _dao.ExecuteDataTable(sp_name);
-            if (dbResponseInfo != null && dbResponseInfo.Rows.Count > 0) return _dao.DataTableToListObject<StaticDataManagementCommon>(dbResponseInfo).ToList();
-            return new List<StaticDataManagementCommon>();
+            if (dbResponseInfo != null && dbResponseInfo.Rows.Count > 0) return _dao.DataTableToListObject<StaticDataTypeCommon>(dbResponseInfo).ToList();
+            return new List<StaticDataTypeCommon>();
         }
 
         public CommonDbResponse ManageStaticDataType(ManageStaticDataTypeCommon commonModel)
         {
-            string sp_name = "sproc_tbl_static_data_Type_InserUpdate ";
+            string sp_name = "EXEC sproc_tbl_static_data_Type_InserUpdate ";
             sp_name += "@Id=" + _dao.FilterString(commonModel.Id);
             sp_name += ",@StaticDataType=" + _dao.FilterString(commonModel.StaticDataType);
             sp_name += ",@StaticDataName=" + _dao.FilterString(commonModel.StaticDataName);
@@ -59,6 +60,36 @@ namespace CRS.ADMIN.REPOSITORY.StaticDataManagement
             sp_name += ",@Status=" + _dao.FilterString("A");
             sp_name += ",@ActionUser=" + _dao.FilterString(commonModel.ActionUser);
             return _dao.ParseCommonDbResponse(sp_name);
+        }
+        #endregion
+
+        #region MANAGE STATIC DATA
+        public List<StaticDataModelCommon> GetStaticDataList(string staticDataTypeId)
+        {
+            string sp_name = "EXEC sproc_admin__manage_static_data @Flag='gsdl'";
+            sp_name += ",@StaticDataType=" + _dao.FilterString(staticDataTypeId);
+            var dbResponseInfo = _dao.ExecuteDataTable(sp_name);
+            if (dbResponseInfo != null && dbResponseInfo.Rows.Count > 0) return _dao.DataTableToListObject<StaticDataModelCommon>(dbResponseInfo).ToList();
+            return new List<StaticDataModelCommon>();
+        }
+
+        public ManageStaticDataCommon GetStaticDataDetail(string id)
+        {
+            string sp_name = "EXEC sproc_admin__manage_static_data @Flag='gsdd'";
+            sp_name += " @Id=" + _dao.FilterString(id);
+            var dbResponse = _dao.ExecuteDataRow(sp_name);
+            if (dbResponse != null)
+            {
+                return new ManageStaticDataCommon()
+                {
+                    Id = _dao.ParseColumnValue(dbResponse, "Id").ToString(),
+                    StaticDataType = _dao.ParseColumnValue(dbResponse, "StaticDataType").ToString(),
+                    StaticDataName = _dao.ParseColumnValue(dbResponse, "StaticDataName").ToString(),
+                    StaticDataDescription = _dao.ParseColumnValue(dbResponse, "StaticDataDescription").ToString(),
+                    Status = _dao.ParseColumnValue(dbResponse, "Status").ToString(),
+                };
+            }
+            return new ManageStaticDataCommon();
         }
         #endregion
     }

@@ -8,9 +8,14 @@ namespace CRS.ADMIN.REPOSITORY.StaticDataManagement
     {
         #region MANAGE STATIC DATA TYPE
         ManageStaticDataTypeCommon GetStaticDataTypeDetail(string id);
-        List<StaticDataManagementCommon> GetStatiDataTypeList(string SearchText);
+        List<StaticDataTypeCommon> GetStatiDataTypeList(string SearchText);
         CommonDbResponse ManageStaticDataType(ManageStaticDataTypeCommon commonModel);
         CommonDbResponse DeleteStaticDataType(ManageStaticDataTypeCommon request);
+        #endregion
+
+        #region MANAGE STATIC DATA
+        List<StaticDataModelCommon> GetStaticDataList(string staticDataTypeId);
+        ManageStaticDataCommon GetStaticDataDetail(string id);
         #endregion
     }
 }

@@ -2694,6 +2694,8 @@
     <Content Include="Views\PointsManagement\_PointRequestListPartialView.cshtml" />
     <Content Include="Views\StaticDataManagement\Index.cshtml" />
     <Content Include="Views\StaticDataManagement\_ManageStaticDataType.cshtml" />
+    <Content Include="Views\StaticDataManagement\StaticDataIndex.cshtml" />
+    <Content Include="Views\StaticDataManagement\_ManageStaticData.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
