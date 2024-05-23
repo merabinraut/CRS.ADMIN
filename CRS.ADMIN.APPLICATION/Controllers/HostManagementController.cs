@@ -144,7 +144,15 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 var dbResponse = _buss.GetHostDetail(aId, hId);
                 model = dbResponse.MapObject<ManageHostModel>();
                 if (!string.IsNullOrEmpty(model.DOB))
-                    model.DOB = DateTime.Parse(model.DOB).ToString("yyyy-MM-dd");
+                {
+                    DateTime parsedDate;
+                    if (DateTime.TryParse(model.DOB, out parsedDate))
+                    {
+                        model.DOB = parsedDate.ToString("yyyy-MM-dd");
+                    }
+                }
+                //    model.DOB = DateTime.Parse(model.DOB).ToString("yyyy-MM-dd");
+                
                 model.AgentId = AgentId;
                 model.HostId = HostId;
                 if (!string.IsNullOrEmpty(model.DOB))

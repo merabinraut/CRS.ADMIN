@@ -44,6 +44,7 @@ namespace CRS.ADMIN.APPLICATION.Models.ClubManagement
         public string ClubCategory { get; set; }
         public string holdStatus { get; set; }
         public string ActionPlatform { get; set; }
+        public string LandLineCode { get; set; }
     }
 
     public class ClubDetailModel
@@ -125,8 +126,9 @@ namespace CRS.ADMIN.APPLICATION.Models.ClubManagement
         [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
         [RegularExpression("^[0-9]{11}$", ErrorMessage = "The field must be a 11-digit number.")]
         public string MobileNumber { get; set; }    
+
         [DisplayName("Landline Number")]      
-        [RegularExpression("^[0-9]{10}$", ErrorMessage = "The field must be a 10-digit number.")]
+        [RegularExpression("^[0-9]{10}$", ErrorMessage = "The field must be a 8-digit number.")]
         public string LandlineNumber { get; set; }
         [DisplayName("Club Name (English)")]
         [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
@@ -246,6 +248,7 @@ namespace CRS.ADMIN.APPLICATION.Models.ClubManagement
         [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
         public string ClosingDate { get; set; }
         public string holdId { get; set; }
+        public string LandLineCode { get; set; }
 
         // public List<planIdentityDataModel> PlanList { get; set; }
     }

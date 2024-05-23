@@ -21,6 +21,7 @@ namespace CRS.ADMIN.SHARED.ClubManagement
         public string ClubLogo { get; set; }
         public string ClubCategory { get; set; }
         public string holdStatus { get; set; }
+        public string LandLineCode { get; set; }
 
     }
 
@@ -88,6 +89,7 @@ namespace CRS.ADMIN.SHARED.ClubManagement
         public string Representative2_Email { get; set; }
         public string ClosingDate { get; set; }
         public string GroupName2 { get; set; }
+        public string LandLineCode { get; set; }
         
     }
 
@@ -156,6 +158,7 @@ namespace CRS.ADMIN.SHARED.ClubManagement
         public string Representative2_Email { get; set; }
         public string ClosingDate { get; set; }
         public string holdId { get; set; }
+        public string LandLineCode { get; set; }
     }
 
     
@@ -179,5 +182,6 @@ namespace CRS.ADMIN.SHARED.ClubManagement
         public string Id { get; set; }
         public string PlanId { get; set; }
         public string PlanStatus { get; set; }
+        public string LandLineCode { get; set; }
     }
 }

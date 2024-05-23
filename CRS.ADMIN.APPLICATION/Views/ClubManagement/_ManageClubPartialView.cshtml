@@ -6,6 +6,12 @@
     var id = "";
 }
 
+<style>
+
+    .landline-number-input {
+        padding: 1px !important;
+    }
+</style>
 
 <div id="add-new-host-club" class="drawer-close-disable  flex justify-end fixed top-0 right-0 z-40 h-screen overflow-y-auto transition-transform translate-x-full "
      tabindex="-1" aria-labelledby="drawer-right-label">
@@ -53,9 +59,9 @@
                     }
 
                     @*if (!string.IsNullOrEmpty(Model.LoginId))
-                    {
-                        @Html.HiddenFor(model => model.LoginId)
-                    }*@
+                        {
+                            @Html.HiddenFor(model => model.LoginId)
+                        }*@
                     <div class="flex gap-2 ">
                         <div class="flex items-center gap-2 profile-steps add-new-host-wizard  active" id="step1">
                             <div class="steps-number ">
@@ -349,29 +355,80 @@
                                     <label class="block mb-4 text-sm font-medium text-secondary-100 ">
                                         @CRS.ADMIN.APPLICATION.Resources.Resource.LandlineNumber
                                     </label>
-                                    <div class="number-input w-full">
-                                        <div class="flag-section">
-                                            <div class="japan-flag" style="border: 1px solid #dbd6d6;">
-                                                <div></div>
-                                            </div>
-                                            <div>
-                                                +81
-                                            </div>
-                                            <div class="line-y">
+                                    @*<div class="number-input w-full">
 
-                                            </div>
+                                            <select id="large" name="CountryCode" class=" default_select select-common block w-full "
+                                                    style="width: text-2%;">
+                                                @foreach (var item in ViewBag.CountryCodeDDL as IEnumerable<SelectListItem>)
+                                                {
+                                                    var selectedId = ViewBag.CountryCodeDDLKey as string;
+                                                    if (item.Value == selectedId)
+                                                    {
+                                                        <option value="@item.Value" selected>
+                                                            @item.Value
+                                                        </option>
+                                                    }
+                                                    else
+                                                    {
+                                                        <option value="@item.Value">
+                                                            @item.Value
+                                                        </option>
+                                                    }
+                                                }
+                                            </select>
+                                            @Html.TextBoxFor(model => model.LandlineNumber, new
+                                           {
+                                               @class = "w-full",
+                                               @placeholder = "090-6490-3254",
+                                               @onkeypress = "return isNumber(event)",
+                                               autocomplete = "off",
+                                               @maxLength = "8"
+                                           })
 
-                                        </div>
+
+                                        </div>*@
+
+
+                                    <div class="w-full flex">
+                                        <select id="large" name="LandLineCode" class="default_select select-common block"
+                                                style=" width:40%">
+                                            @foreach (var item in ViewBag.CountryCodeDDL as IEnumerable<SelectListItem>)
+                                            {
+                                                var selectedId = ViewBag.CountryCodeDDLKey as string;
+                                                if (item.Value == selectedId)
+                                                {
+                                                    <option value="@item.Value" selected>
+                                                        @item.Value
+                                                    </option>
+                                                }
+                                                else
+                                                {
+                                                    <option value="@item.Value">
+                                                        @item.Value
+                                                    </option>
+                                                }
+                                            }
+                                        </select>
+                                        @*@Html.TextBoxFor(model => model.LandlineNumber, new
+                                            {
+
+                                                @placeholder = "090-6490-3254",
+                                                @onkeypress = "return isNumber(event)",
+                                                autocomplete = "off",
+                                                @maxLength = "8",
+                                                @class="landline-number-input",
+                                                style = "width:70% ; padding:10px 5px"
+                                            })*@
+
                                         @Html.TextBoxFor(model => model.LandlineNumber, new
                                    {
                                        @class = "w-full",
                                        @placeholder = "090-6490-3254",
                                        @onkeypress = "return isNumber(event)",
                                        autocomplete = "off",
-                                       @maxLength = "10"
+                                       @maxLength = "8",
+                                       @style = "width:70% ; padding:10px 5px;margin-left:0px;"
                                    })
-
-
                                     </div>
                                     <span class="error">
                                         @Html.ValidationMessageFor(m => m.LandlineNumber)
