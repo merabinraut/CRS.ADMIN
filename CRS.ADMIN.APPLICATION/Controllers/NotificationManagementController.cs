@@ -8,7 +8,7 @@ using System.Web.Mvc;
 
 namespace CRS.ADMIN.APPLICATION.Controllers
 {
-    public class NotificationManagementController : Controller
+    public class NotificationManagementController : BaseController
     {
         private readonly INotificationManagementBusiness _buss;
         public NotificationManagementController(INotificationManagementBusiness buss)
