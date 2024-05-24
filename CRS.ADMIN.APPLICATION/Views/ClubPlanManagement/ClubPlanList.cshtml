@@ -3,7 +3,6 @@
     ViewBag.Title = "Club Plan List";
     Layout = "~/Views/Shared/_Layout.cshtml";
     var _ManageClubPlanModel = Model.ManageClubPlanModel as CRS.ADMIN.APPLICATION.Models.ClubManagement.ManageClubPlanModel;
-    var ss = "";
 }
 
 <div class="px-8 py-4">
@@ -12,31 +11,31 @@
     <div class="flex flex-col  gap-6">
         <div>
             <div class="heading-title">
-                @CRS.ADMIN.APPLICATION.Resources.Resource.Host_Management
+                @CRS.ADMIN.APPLICATION.Resources.Resource.Plan_list
             </div>
             <div class="span-title-light-gray">
-                @CRS.ADMIN.APPLICATION.Resources.Resource.Host_Management_Supporting_Text
+                @CRS.ADMIN.APPLICATION.Resources.Resource.Club_Management_Supporting_Text
             </div>
         </div>
         <div class="flex justify-between pb-[24px]">
-            <form action="/HostManagement/HostList" method="get">
-                <div class="relative input-search-wrapper">
-                    <div class="absolute inset-y-0 left-0 flex items-center pl-[16px] pointer-events-none">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21" fill="none">
-                            <path d="M17.5 18L13.875 14.375M15.8333 9.66667C15.8333 13.3486 12.8486 16.3333 9.16667 16.3333C5.48477 16.3333 2.5 13.3486 2.5 9.66667C2.5 5.98477 5.48477 3 9.16667 3C12.8486 3 15.8333 5.98477 15.8333 9.66667Z"
-                                  stroke="#667085" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round" />
-                        </svg>
+            @*<form action="/HostManagement/HostList" method="get">
+                    <div class="relative input-search-wrapper">
+                        <div class="absolute inset-y-0 left-0 flex items-center pl-[16px] pointer-events-none">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21" fill="none">
+                                <path d="M17.5 18L13.875 14.375M15.8333 9.66667C15.8333 13.3486 12.8486 16.3333 9.16667 16.3333C5.48477 16.3333 2.5 13.3486 2.5 9.66667C2.5 5.98477 5.48477 3 9.16667 3C12.8486 3 15.8333 5.98477 15.8333 9.66667Z"
+                                      stroke="#667085" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                        </div>
+                        <input name="AgentId" value="@ViewBag.AgentId" hidden />
+                        <input type="search"
+                               id="default-search"
+                               class="input-search block w-full "
+                               placeholder="@CRS.ADMIN.APPLICATION.Resources.Resource.Search"
+                               value="@ViewBag.SearchFilter"
+                               name="SearchFilter">
+                        <input type="submit" value="Submit" hidden>
                     </div>
-                    <input name="AgentId" value="@ViewBag.AgentId" hidden />
-                    <input type="search"
-                           id="default-search"
-                           class="input-search block w-full "
-                           placeholder="@CRS.ADMIN.APPLICATION.Resources.Resource.Search"
-                           value="@ViewBag.SearchFilter"
-                           name="SearchFilter">
-                    <input type="submit" value="Submit" hidden>
-                </div>
-            </form>
+                </form>*@
             <div class="flex gap-6">
                 @*<div class="export-button h-[40px]" onclick="exportCSVExcel();">
                         <img src="~/Content/assets_new/images/club/download-solid.svg"> @CRS.ADMIN.APPLICATION.Resources.Resource.Export
@@ -186,10 +185,17 @@
                                     </td>
                                     <td class="p-[12px]">
                                         <div class="flex gap-[7px]">
-                                            <i class="las la-edit text-[20px] cursor-pointer text-[#A6A6A6]" onclick="ManageClubGetDetailsFunction('@item.ClubId','@item.Id');"></i>
-                                            
-                                            @* <i class="las la-eye text-[20px] cursor-pointer text-[#A6A6A6]"></i>*@
+                                            <i class="las la-edit text-[20px] cursor-pointer text-[#A6A6A6]" onclick="ManageClubPlanFunction('@Model.ClubId','@item.Id');"></i>
+                                            @if (item.Status.Trim().ToUpper() == "A")
+                                            {
+                                                <i class="las la-trash-alt text-[20px] cursor-pointer text-[#CB3F3F]" title="Block Club Plan" onclick="BlockFunction('@Model.ClubId','@item.Id')"></i>
 
+                                            }
+                                            else
+                                            {
+                                                <i class="las la-unlock cursor-pointer text-[#697DBF] text-[18px]" title="Unblock Club Plan" onclick="UnBlockFunction('@Model.ClubId','@item.Id')"></i>
+
+                                            }
 
 
                                         </div>
@@ -224,7 +230,14 @@
 </div>
 @section scripts
 {
+    <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
     <script>
+        var PopUpRenderValue = '@ViewBag.PopUpRenderValue';
+         if (PopUpRenderValue != null && PopUpRenderValue != "" && PopUpRenderValue == "Manage") {
+             var element = document.getElementById('add-club-plan');
+              element.classList.remove('translate-x-full');
+        }
+
   document.addEventListener('DOMContentLoaded', function () {
           const page_size = @ViewBag.PageSize;
           const total_data = @ViewBag.TotalData;
@@ -237,19 +250,28 @@
           LoadPagination(page_size, total_data, start_index_val, URL);
   });
         $(document).ready(function () {
-            const checkboxclub = document.getElementByClass('toogle1');
-           
-            checkboxclub.addEventListener('change', function () {
+            $(".IdentityDescription").find("input[type='checkbox']:not(.input-validation-error)");
+            $(".toogle1").change(function () {
                 debugger;
-                var nameAttributeValue = $('.toogle1').attr('name');
+                var nameAttributeValue = this.name;
                 if (this.checked) {
                     $('input[name="' + nameAttributeValue + '"]').val('A');
                 } else {
-                    //tagInput.style.display = 'none';
+
                     $('input[name="' + nameAttributeValue + '"]').val('B');
                 }
             });
+
         });
 
+        function ManageClubPlanFunction(i, j) {
+            window.location.href = '/ClubPlanManagement/ManageClubPlan?AgentId=' + i + '&Id=' + j
+        }
+        function BlockFunction(i, j) {
+            window.location.href = '/ClubPlanManagement/BlockUnblockPlan?AgentId=' + i + '&Id=' + j+ '&Status=B'
+        }
+        function UnBlockFunction(i, j) {
+            window.location.href = '/ClubPlanManagement/BlockUnblockPlan?AgentId=' + i + '&Id=' + j + '&Status=A'
+        }
     </script>
 }

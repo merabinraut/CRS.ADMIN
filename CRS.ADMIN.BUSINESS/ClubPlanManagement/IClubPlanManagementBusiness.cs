@@ -15,5 +15,7 @@ namespace CRS.ADMIN.BUSINESS.ClubPlanManagement
         List<PlanListCommon> GetClubPlanIdentityList(string culture, string clubid);
         CommonDbResponse ManageClubPlan(ManageClubPlan Request);
         List<ClubplanListCommon> GetClubPlanList(string culture, string clubid);
+        List<PlanListCommon> EditClubPlanIdentityList(string culture, string clubid, string planlistid);
+        CommonDbResponse BlockUnblockPlan(ClubplanListCommon objClubplanListCommon = null, string ActionUser = null, string ActionIp = null);
     }
 }

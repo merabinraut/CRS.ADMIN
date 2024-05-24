@@ -29,5 +29,13 @@ namespace CRS.ADMIN.BUSINESS.ClubPlanManagement
         {
             return _REPO.GetClubPlanList(culture,clubid);
         }
+        public List<PlanListCommon> EditClubPlanIdentityList(string culture, string clubid, string planlistid)
+        {
+            return _REPO.EditClubPlanIdentityList(culture,clubid, planlistid);
+        }
+        public CommonDbResponse BlockUnblockPlan(ClubplanListCommon objClubplanListCommon = null, string ActionUser = null, string ActionIp = null)
+        {
+            return _REPO.BlockUnblockPlan(objClubplanListCommon,ActionUser,ActionIp);
+        }
     }
 }
