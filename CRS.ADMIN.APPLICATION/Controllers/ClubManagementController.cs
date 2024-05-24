@@ -145,8 +145,11 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             ViewBag.ClubCategoryDDLKey = response.ManageTag.Tag3CategoryName;
             ViewBag.LocationIdKey = response.ManageClubModel.LocationDDL;
 
-            ViewBag.PrefIdKey = !string.IsNullOrEmpty(response.ManageClubModel.Prefecture) ? ViewBag.Pref[response.ManageClubModel.Prefecture] : null;
-            ViewBag.HolidayIdKey = !string.IsNullOrEmpty(response.ManageClubModel.Holiday) ? ViewBag.Holiday[response.ManageClubModel.Holiday] : null;
+            //ViewBag.PrefIdKey = !string.IsNullOrEmpty(response.ManageClubModel.Prefecture) ? ViewBag.Pref[response.ManageClubModel.Prefecture] : null;
+            ViewBag.PrefIdKey = !string.IsNullOrEmpty(response.ManageClubModel.Prefecture) && ViewBag.Pref.ContainsKey(response.ManageClubModel.Prefecture) ? ViewBag.Pref[response.ManageClubModel.Prefecture] : null;
+            //ViewBag.HolidayIdKey = !string.IsNullOrEmpty(response.ManageClubModel.Holiday) ? ViewBag.Holiday[response.ManageClubModel.Holiday] : null;
+            ViewBag.HolidayIdKey = !string.IsNullOrEmpty(response.ManageClubModel.Holiday) && ViewBag.Holiday.ContainsKey(response.ManageClubModel.Holiday) ? ViewBag.Holiday[response.ManageClubModel.Holiday] : null;
+
             ViewBag.BusinessTypeKey = response.ManageClubModel.BusinessTypeDDL;
             ViewBag.CountryCodeDDLKey = response.ManageClubModel.LandLineCode;
 
@@ -199,7 +202,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                     var filteredPlanIdentityList = planDetail.PlanIdentityList
                           .Where(planIdentity => planIdentity.PlanStatus != "B")
                           .ToList();
-                    if (filteredPlanIdentityList.Count>0)
+                    if (filteredPlanIdentityList.Count > 0)
                     {
                         var distinctPlanListIds = filteredPlanIdentityList
                                                 .Select(planIdentity => planIdentity.PlanListId)
@@ -215,10 +218,10 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                     else if (planDetail.PlanIdentityList.Any(planIdentity => planIdentity.PlanStatus == "B"))
                     {
                         dbResponse.PlanDetailList.RemoveAt(i);
-                        
+
                     }
 
-                    
+
                 }
 
                 model = dbResponse.MapObject<ManageClubModel>();
@@ -408,7 +411,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
 
                 }
             }
-                model = dbResponse.MapObject<ManageClubModel>();
+            model = dbResponse.MapObject<ManageClubModel>();
 
             ViewBag.PlansList = ApplicationUtilities.LoadDropdownList("CLUBPLANS") as Dictionary<string, string>;
 
@@ -895,14 +898,14 @@ namespace CRS.ADMIN.APPLICATION.Controllers
 
 
                 ViewBag.Pref = DDLHelper.LoadDropdownList("PREF") as Dictionary<string, string>;
-                var value=string.Empty;
+                var value = string.Empty;
                 ResponseModel.Prefecture = (ResponseModel.Prefecture != null && ViewBag.Pref?.TryGetValue(ResponseModel.Prefecture, out value)) ? value : "";
 
                 //ResponseModel.Prefecture = ViewBag.Pref.ContainsKey(ResponseModel.Prefecture) ? ViewBag.Pref[ResponseModel.Prefecture] : "";
                 ResponseModel.LocationDDL = ViewBag.LocationDDLList.ContainsKey(ResponseModel.LocationDDL) ? ViewBag.LocationDDLList[ResponseModel.LocationDDL] : "";
                 ViewBag.BusinessTypeDDL = ApplicationUtilities.LoadDropdownList("BUSINESSTYPEDDL") as Dictionary<string, string>;
 
-                ResponseModel.BusinessTypeDDL = (ResponseModel.BusinessTypeDDL != null && ViewBag.BusinessTypeDDL?.ContainsKey(ResponseModel.BusinessTypeDDL) == true)? ViewBag.BusinessTypeDDL[ResponseModel.BusinessTypeDDL]:"";
+                ResponseModel.BusinessTypeDDL = (ResponseModel.BusinessTypeDDL != null && ViewBag.BusinessTypeDDL?.ContainsKey(ResponseModel.BusinessTypeDDL) == true) ? ViewBag.BusinessTypeDDL[ResponseModel.BusinessTypeDDL] : "";
 
                 //ResponseModel.BusinessTypeDDL = ViewBag.BusinessTypeDDL.ContainsKey(ResponseModel.BusinessTypeDDL) ? ViewBag.BusinessTypeDDL[ResponseModel.BusinessTypeDDL] : "";
                 TempData["ClubHoldDetails"] = ResponseModel;
