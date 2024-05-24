@@ -1,7 +1,7 @@
 ﻿
 
 @model CRS.ADMIN.APPLICATION.Models.StaticDataManagement.ManageStaticData
-<div id="add-new"
+<div id="add-new_static_data"
      class="drawer-close-disable  flex justify-end fixed top-0 right-0 z-40 h-screen overflow-y-auto transition-transform translate-x-full "
      tabindex="-1" aria-labelledby="drawer-right-label">
     <div class="bg-white w-[616px] drawer-container relative">
@@ -10,7 +10,7 @@
                 <div>
                     Manage Static Data Type
                 </div>
-                <button type="button" data-drawer-hide="add-new" aria-controls="add-new"
+                <button type="button" data-drawer-hide="add-new_static_data" aria-controls="add-new_static_data"
                         class="text-[20px]">
                     <i class="las la-window-close text-white"></i>
                 </button>
@@ -23,20 +23,22 @@
             {
                 @Html.HiddenFor(model => model.Id)
             }
-            if (!string.IsNullOrEmpty(Model.StaticDataType))
-            {
-                @Html.HiddenFor(model => model.StaticDataType)
-            }
-            if (!string.IsNullOrEmpty(Model.StaticDataLabel))
-            {
-                @Html.HiddenFor(model => model.StaticDataLabel)
-            }
-            if (!string.IsNullOrEmpty(Model.StaticDataDescription))
-            {
-                @Html.HiddenFor(model => model.StaticDataDescription)
-            }
             <div class="p-[24px]">
                 <div class=" py-4 grid gap-5">
+                    <div class="input-field-common">
+                        <label class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                            Static Data Type Id
+                        </label>
+                        @Html.TextBoxFor(model => model.StaticDataType, new
+                        {
+                            @class = "w-full rounded-[4px]",
+                            @style = "border-radius:4px !important",
+                            @maxlength = "30"
+                        })
+                        <span class="error">
+                            @Html.ValidationMessageFor(m => m.StaticDataType)
+                        </span>
+                    </div>
                     <div class="input-field-common">
                         <label class="block mb-[12px] text-sm font-medium text-secondary-100 ">
                             Static Data Name
@@ -63,6 +65,20 @@
                         })
                         <span class="error">
                             @Html.ValidationMessageFor(m => m.StaticDataDescription)
+                        </span>
+                    </div>
+                    <div class="input-field-common">
+                        <label class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                            Static Data Description
+                        </label>
+                        @Html.TextBoxFor(model => model.StaticDataValue, new
+                        {
+                            @class = "w-full rounded-[4px]",
+                            @style = "border-radius:4px !important",
+                            @maxlength = "100"
+                        })
+                        <span class="error">
+                            @Html.ValidationMessageFor(m => m.StaticDataValue)
                         </span>
                     </div>
                 </div>

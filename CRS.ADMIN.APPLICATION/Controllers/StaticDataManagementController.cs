@@ -29,7 +29,6 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             foreach (var item in responseInfo.GetStaticDataTypeList)
             {
                 item.Id = item.Id.EncryptParameter();
-                item.StaticDataType = item.StaticDataType.EncryptParameter();
             }
             ViewBag.PopUpRenderValue = !string.IsNullOrEmpty(RenderId) ? RenderId : null;
             return View(responseInfo);
@@ -73,25 +72,26 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 {
                     AddNotificationMessage(new NotificationModel()
                     {
-                        NotificationType = NotificationMessage.INFORMATION,
-                        Message = dbResponse.Message ?? "Something went wrong try again later",
-                        Title = NotificationMessage.WARNING.ToString()
-                    });
+                        NotificationType = NotificationMessage.SUCCESS,
+                        Message = dbResponse.Message ?? "Static Data Type Added Successfully",
+                        Title = NotificationMessage.SUCCESS.ToString()
+                    });                   
                     return RedirectToAction("Index");
                 }
                 else
                 {
                     AddNotificationMessage(new NotificationModel()
                     {
-                        NotificationType = NotificationMessage.SUCCESS,
-                        Message = dbResponse.Message ?? "Static Data Type Added Successfully",
-                        Title = NotificationMessage.SUCCESS.ToString()
+                        NotificationType = NotificationMessage.INFORMATION,
+                        Message = dbResponse.Message ?? "Something went wrong try again later",
+                        Title = NotificationMessage.WARNING.ToString()
                     });
+                    return RedirectToAction("Index");
                 }
             }
             TempData["ManageStaticDataType"] = model;
             TempData["RenderId"] = "Manage";
-            return RedirectToAction("Index");
+            return RedirectToAction("Index");           
         }
         [HttpPost, ValidateAntiForgeryToken]
         public ActionResult DeleteStaticDataType(string id = "")
@@ -119,7 +119,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                     AddNotificationMessage(new NotificationModel()
                     {
                         NotificationType = NotificationMessage.SUCCESS,
-                        Message = dbResponse.Message ?? "Staff has been deleted successfully",
+                        Message = dbResponse.Message ?? "Data has been deleted successfully",
                         Title = NotificationMessage.SUCCESS.ToString()
                     });
                     return Json(dbResponse.SetMessageInTempData(this));
@@ -147,16 +147,13 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             if (TempData.ContainsKey("ManageStaticData")) responseInfo.ManageStaticData = TempData["ManageStaticData"] as ManageStaticData;
             else responseInfo.ManageStaticData = new ManageStaticData();
             if (TempData.ContainsKey("RenderId")) RenderId = TempData["RenderId"].ToString();
-            var StaticDataTypeId = "";
-            if (!string.IsNullOrEmpty(staticDataTypeId))
-                StaticDataTypeId = staticDataTypeId.DecryptParameter();
-            var dbResponseInfo = _business.GetStaticDataList(StaticDataTypeId);
+            var dbResponseInfo = _business.GetStaticDataList(staticDataTypeId);
             responseInfo.GetStaticDataList = dbResponseInfo.MapObjects<StaticDataModel>();
             foreach (var item in responseInfo.GetStaticDataList)
             {
                 item.Id = item.Id.EncryptParameter();
-                item.StaticDataType = item.StaticDataType.EncryptParameter();
             }
+            ViewBag.StaticDataTypeId = staticDataTypeId;
             return View(responseInfo);
         }
         [HttpGet]
@@ -223,12 +220,50 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 return RedirectToAction("StaticDataIndex");
             }
         }
-        [HttpPost,ValidateAntiForgeryToken]     
+        [HttpPost, ValidateAntiForgeryToken]
         public ActionResult DeleteStaticData(string id = "")
         {
-            return View();
+            if (!string.IsNullOrEmpty(id))
+            {
+                var request = new ManageStaticDataCommon()
+                {
+                    ActionUser = ApplicationUtilities.GetSessionValue("Username").ToString(),
+                    Id = id.DecryptParameter(),
+                };
+                var dbResponse = _business.DeleteStaticData(request);
+                if (dbResponse == null)
+                {
+                    AddNotificationMessage(new NotificationModel()
+                    {
+                        NotificationType = NotificationMessage.WARNING,
+                        Message = dbResponse.Message ?? "Something went wrong try again later",
+                        Title = NotificationMessage.WARNING.ToString()
+                    });
+                    return Json(dbResponse.SetMessageInTempData(this));
+                }
+                else
+                {
+                    AddNotificationMessage(new NotificationModel()
+                    {
+                        NotificationType = NotificationMessage.SUCCESS,
+                        Message = dbResponse.Message ?? "Static Data has been deleted successfully",
+                        Title = NotificationMessage.SUCCESS.ToString()
+                    });
+                    return Json(dbResponse.SetMessageInTempData(this));
+                }
+            }
+            else
+            {
+                AddNotificationMessage(new NotificationModel()
+                {
+                    NotificationType = NotificationMessage.SUCCESS,
+                    Message = "Invalid Request",
+                    Title = NotificationMessage.SUCCESS.ToString()
+                });
+                return RedirectToAction("Index");
+            }
         }
-        
+
         #endregion
     }
 }

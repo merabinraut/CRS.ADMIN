@@ -29,6 +29,7 @@
         public string StaticDataLabel { get; set; }
         public string StaticDataDescription { get; set; }
         public string Status { get; set; }
+        public string StaticDataValue { get; set; }
     }
 
 }

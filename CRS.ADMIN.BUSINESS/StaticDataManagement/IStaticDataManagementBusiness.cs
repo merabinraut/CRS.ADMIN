@@ -18,6 +18,7 @@ namespace CRS.ADMIN.BUSINESS.StaticDataManagement
         List<StaticDataModelCommon> GetStaticDataList(string staticDataTypeId);
         ManageStaticDataCommon GetStaticDataDetail(string id);
         CommonDbResponse ManageStaticData(ManageStaticDataCommon commonModel);
+        CommonDbResponse DeleteStaticData(ManageStaticDataCommon request);
         #endregion
     }
 }

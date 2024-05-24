@@ -21,21 +21,23 @@
             if (!string.IsNullOrEmpty(Model.Id))
             {
                 @Html.HiddenFor(model => model.Id)
-            }
-            if (!string.IsNullOrEmpty(Model.StaticDataType))
-            {
-                @Html.HiddenFor(model => model.StaticDataType)
-            }
-            if (!string.IsNullOrEmpty(Model.StaticDataName))
-            {
-                @Html.HiddenFor(model => model.StaticDataName)
-            }
-            if (!string.IsNullOrEmpty(Model.StaticDataDescription))
-            {
-                @Html.HiddenFor(model => model.StaticDataDescription)
-            }
+            }            
             <div class="p-[24px]">
                 <div class=" py-4 grid gap-5">
+                    <div class="input-field-common">
+                        <label class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                            Static Data Type Id
+                        </label>
+                        @Html.TextBoxFor(model => model.StaticDataType, new
+                        {
+                            @class = "w-full rounded-[4px]",
+                            @style = "border-radius:4px !important",
+                            @maxlength = "30"
+                        })
+                        <span class="error">
+                            @Html.ValidationMessageFor(m => m.StaticDataType)
+                        </span>
+                    </div>
                     <div class="input-field-common">
                         <label class="block mb-[12px] text-sm font-medium text-secondary-100 ">
                             Static Data Name

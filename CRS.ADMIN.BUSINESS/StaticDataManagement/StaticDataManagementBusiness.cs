@@ -49,6 +49,11 @@ namespace CRS.ADMIN.BUSINESS.StaticDataManagement
         {
             return _repo.ManageStaticData(commonModel);
         }
+
+        public CommonDbResponse DeleteStaticData(ManageStaticDataCommon request)
+        {
+            return _repo.DeleteStaticData(request);
+        }
         #endregion
     }
 }

@@ -34,8 +34,8 @@
                        name="SearchText">
             </div>
         </form>
-        <div class="btn btn-primary gap-[8px] h-[40px]" data-drawer-target="add-new"
-             data-drawer-show="add-new" data-drawer-placement="right" data-drawer-backdrop="false"
+        <div class="btn btn-primary gap-[8px] h-[40px]" data-drawer-target="add-new_static_data"
+             data-drawer-show="add-new_static_data" data-drawer-placement="right" data-drawer-backdrop="false"
              aria-controls="drawer-disabled-backdrop">
             <img src="~/Content/assets_new/images/plus-circle-solid.svg">
             @CRS.ADMIN.APPLICATION.Resources.Resource.Add_New
@@ -56,6 +56,15 @@
                         <th scope="col" class="p-[12px]">
                             <div class="flex w-max">
                                 S.N
+                                <div class="relative pl-[5px]">
+                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                </div>
+                            </div>
+                        </th>
+                        <th scope="col" class="p-[12px]">
+                            <div class="flex w-max">
+                                Static Data Type Id
                                 <div class="relative pl-[5px]">
                                     <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
                                     <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
@@ -101,6 +110,9 @@
                                     @sno
                                 </td>
                                 <td class="p-[12px]">
+                                    @item.StaticDataType
+                                </td>
+                                <td class="p-[12px]">
                                     @item.StaticDataLabel
                                 </td>
                                 <td class="p-[12px]">
@@ -112,7 +124,7 @@
                                             <i class="fa-regular fa-pen-to-square text-[#989898] cursor-pointer" onclick="edit('@item.Id')"></i>
                                         </div>
                                         <div>
-                                            <i class="fa-solid fa-trash-can text-primary-100 cursor-pointer" onclick="deleteStaticDataType('@item.Id')"></i>
+                                            <i class="fa-solid fa-trash-can text-primary-100 cursor-pointer" onclick="deleteStaticData('@item.Id')"></i>
                                         </div>
                                     </div>
                                 </td>
@@ -148,18 +160,21 @@
              })
              var popUpRenderValue = '@ViewBag.PopUpRenderValue';
              if (popUpRenderValue != null && popUpRenderValue != "" && popUpRenderValue == "Manage") {
-                 var element = document.getElementById('add-new');
+                 var element = document.getElementById('add-new_static_data');
                  element.classList.remove('translate-x-full');
              }
          });
+        function edit(id) {
+            window.location.href = '/StaticDataManagement/ManageStaticData?id=' + id;
+        }
         function CancelFunction() {
             location.reload();
         }
-        function deleteStaticDataType(id) {
+        function deleteStaticData(id) {
             $.ajax({
                 type: 'POST',
                 async: true,
-                url: "/StaticDataManagement/DeleteStaticData?id=" + id,
+                url: "/StaticDataManagement/DeleteStaticData?id=" + id+"&staticDataTypeId="+'@ViewBag.StaticDataTypeId',
                 dataType: 'json',
                 data: {
                     __RequestVerificationToken: $('input[name="__RequestVerificationToken"]').val(),

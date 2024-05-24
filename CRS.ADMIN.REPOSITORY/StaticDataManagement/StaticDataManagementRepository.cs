@@ -76,7 +76,7 @@ namespace CRS.ADMIN.REPOSITORY.StaticDataManagement
         public ManageStaticDataCommon GetStaticDataDetail(string id)
         {
             string sp_name = "EXEC sproc_admin__manage_static_data @Flag='gsdd'";
-            sp_name += " @Id=" + _dao.FilterString(id);
+            sp_name += ",@Id=" + _dao.FilterString(id);
             var dbResponse = _dao.ExecuteDataRow(sp_name);
             if (dbResponse != null)
             {
@@ -96,11 +96,20 @@ namespace CRS.ADMIN.REPOSITORY.StaticDataManagement
         {
             string sp_name = "EXEC sproc_admin__manage_static_data ";
             sp_name += string.IsNullOrEmpty(commonModel.Id) ? "@Flag='msd'" : "@Flag='umsd'";
-            sp_name += ",@StaticDataLabel" + _dao.FilterString(commonModel.StaticDataLabel);
+            sp_name += ",@StaticDataLabel=" + _dao.FilterString(commonModel.StaticDataLabel);
             sp_name += ",@StaticDataDescription=" + _dao.FilterString(commonModel.StaticDataDescription);
             sp_name += ",@StaticDataType=" + _dao.FilterString(commonModel.StaticDataType);
+            sp_name += ",@StaticDataValue=" + _dao.FilterString(commonModel.StaticDataValue);
             sp_name += ",@Status=" + _dao.FilterString("A");
             sp_name += ",@ActionUser=" + _dao.FilterString(commonModel.ActionUser);
+            return _dao.ParseCommonDbResponse(sp_name);
+        }
+
+        public CommonDbResponse DeleteStaticData(ManageStaticDataCommon request)
+        {
+            string sp_name = "EXEC sproc_tbl_static_data_Delete ";
+            sp_name += "@Id=" + _dao.FilterString(request.Id);
+            sp_name += ",@ActionUser=" + _dao.FilterString(request.ActionUser);
             return _dao.ParseCommonDbResponse(sp_name);
         }
         #endregion

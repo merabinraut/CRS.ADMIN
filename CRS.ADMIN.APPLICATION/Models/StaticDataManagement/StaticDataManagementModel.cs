@@ -37,5 +37,6 @@ namespace CRS.ADMIN.APPLICATION.Models.StaticDataManagement
         public string AdditionalValue1 { get; set; }
         public string AdditionalValue2 { get; set; }
         public string Status { get; set; }
+        public string StaticDataValue { get; set; }
     }
 }
