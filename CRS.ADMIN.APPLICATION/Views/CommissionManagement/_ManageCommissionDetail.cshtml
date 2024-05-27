@@ -24,6 +24,7 @@
                 @Html.HiddenFor(model => model.CategoryDetailId)
                 @Html.HiddenFor(model => model.CategoryName)
                 @Html.HiddenFor(model => model.AdminCommissionTypeId)
+                @Html.HiddenFor(model => model.CommissionType)
 
                 @Html.AntiForgeryToken()
                 <div class="pb-[16px] grid gap-4">
@@ -32,7 +33,7 @@
                             <label class="block mb-[12px] text-sm font-medium text-secondary-100 ">
                                 @CRS.ADMIN.APPLICATION.Resources.Resource.From_Amount
                             </label>
-                            @Html.TextBoxFor(model => model.FromAmount, new { @class = "w-full rounded-[4px]", @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.From_Amount, @style = "border-radius:4px !important", @onkeypress = "return isNumberWithDot(event)", autocomplete = "off", @maxLength = "50" })
+                            @Html.TextBoxFor(model => model.FromAmount, new { @class = "w-full rounded-[4px]", @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.From_Amount, @style = "border-radius:4px !important", @onkeypress = "return isNumber(event)", autocomplete = "off", @maxLength = "7" })
                             <span class="error">
                                 @Html.ValidationMessageFor(model => model.FromAmount)
                             </span>
@@ -41,7 +42,7 @@
                             <label class="block mb-[12px] text-sm font-medium text-secondary-100 ">
                                 @CRS.ADMIN.APPLICATION.Resources.Resource.To_Amount
                             </label>
-                            @Html.TextBoxFor(model => model.ToAmount, new { @class = "w-full rounded-[4px]", @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.To_Amount, @style = "border-radius:4px !important", @onkeypress = "return isNumberWithDot(event)", autocomplete = "off", @maxLength = "50" })
+                            @Html.TextBoxFor(model => model.ToAmount, new { @class = "w-full rounded-[4px]", @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.To_Amount, @style = "border-radius:4px !important", @onkeypress = "return isNumber(event)", autocomplete = "off", @maxLength = "7" })
                             <span class="error">
                                 @Html.ValidationMessageFor(model => model.ToAmount)
                             </span>
@@ -79,7 +80,7 @@
                             @CRS.ADMIN.APPLICATION.Resources.Resource.Value
                         </label>
 
-                        @Html.TextBoxFor(model => model.CommissionValue, new { @class = "w-full rounded-[4px]", @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.Value, @style = "border-radius:4px !important", @onkeypress = "return isNumberWithDot(event)", autocomplete = "off", @maxLength = "50" })
+                        @Html.TextBoxFor(model => model.CommissionValue, new { @class = "w-full rounded-[4px]", @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.Value, @style = "border-radius:4px !important", @onkeypress = "return isNumber(event)", autocomplete = "off", @maxLength = "7" })
                         <span class="error">
                             @Html.ValidationMessageFor(model => model.CommissionValue)
                         </span>
@@ -90,7 +91,7 @@
                             <label class="block mb-[12px] text-sm font-medium text-secondary-100 ">
                                 @CRS.ADMIN.APPLICATION.Resources.Resource.Min_Value
                             </label>
-                            @Html.TextBoxFor(model => model.MinCommissionValue, new { @class = "w-full rounded-[4px]", @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.Min_Value, @style = "border-radius:4px !important", @onkeypress = "return isNumberWithDot(event)", autocomplete = "off", @maxLength = "50" })
+                            @Html.TextBoxFor(model => model.MinCommissionValue, new { @class = "w-full rounded-[4px]", @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.Min_Value, @style = "border-radius:4px !important", @onkeypress = "return isNumber(event)", autocomplete = "off", @maxLength = "7" })
                             <span class="error">
                                 @Html.ValidationMessageFor(model => model.MinCommissionValue)
                             </span>
@@ -99,7 +100,7 @@
                             <label class="block mb-[12px] text-sm font-medium text-secondary-100 ">
                                 @CRS.ADMIN.APPLICATION.Resources.Resource.Max_Value
                             </label>
-                            @Html.TextBoxFor(model => model.MaxCommissionValue, new { @class = "w-full rounded-[4px]", @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.Max_Value, @style = "border-radius:4px !important", @onkeypress = "return isNumberWithDot(event)", autocomplete = "off", @maxLength = "50" })
+                            @Html.TextBoxFor(model => model.MaxCommissionValue, new { @class = "w-full rounded-[4px]", @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.Max_Value, @style = "border-radius:4px !important", @onkeypress = "return isNumber(event)", autocomplete = "off", @maxLength = "7" })
                             <span class="error">
                                 @Html.ValidationMessageFor(model => model.MaxCommissionValue)
                             </span>

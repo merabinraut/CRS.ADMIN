@@ -323,7 +323,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                     Title = NotificationMessage.SUCCESS.ToString(),
                     NotificationType = NotificationMessage.SUCCESS
                 });
-                return RedirectToAction("CommissionDetailList", new { CategoryId = Request.CategoryId, CategoryName = Request.CategoryName });
+                return RedirectToAction("CommissionDetailList", new { CategoryId = Request.CategoryId, CategoryName = Request.CategoryName, AdminCommissionTypeId = Request.AdminCommissionTypeId });
             }
             else
             {
@@ -335,7 +335,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 });
                 TempData["ManageCommissionDetailModel"] = Request.MapObject<ManageCommissionDetailModel>();
                 TempData["RenderId"] = "Manage";
-                return RedirectToAction("CommissionDetailList", new { CategoryId = Request.CategoryId, CategoryName = Request.CategoryName });
+                return RedirectToAction("CommissionDetailList", new { CategoryId = Request.CategoryId, CategoryName = Request.CategoryName, AdminCommissionTypeId = Request.AdminCommissionTypeId });
             }
         }
 
@@ -466,7 +466,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
         #region AdminCommission Section
         public ActionResult AdminCommissionList(string CategoryId, string CategoryName = "")
         {
-            Session["CurrentURL"] = "/CommissionManagement/AdminCommissionList";
+            Session["CurrentURL"] = "/CommissionManagement/CategoryList";
             List<AdminCommissionModel> responseInfo = new List<AdminCommissionModel>();
             var dbAdminResponseInfo = _CategoryBuss.GetAdminCommissionList();
             responseInfo = dbAdminResponseInfo.MapObjects<AdminCommissionModel>();
