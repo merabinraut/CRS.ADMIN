@@ -107,17 +107,6 @@ namespace CRS.ADMIN.APPLICATION.Models.ClubManagement
         [MinLength(3, ErrorMessage = "Minimum 3 characters required")]
         [MaxLength(16, ErrorMessage = "Maximum 16 characters allowed")]
         public string LoginId { get; set; }
-        //[DisplayName("First Name")]
-        //[Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
-        //[MaxLength(50, ErrorMessage = "Maximum 50 characters allowed")]
-        //public string FirstName { get; set; }
-        //[DisplayName("Middle Name")]
-        //[MaxLength(50, ErrorMessage = "Maximum 50 characters allowed")]
-        //public string MiddleName { get; set; }
-        //[DisplayName("Last Name")]
-        //[Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
-        //[MaxLength(50, ErrorMessage = "Maximum 50 characters allowed")]
-        //public string LastName { get; set; }
         [DisplayName("Email Address")]
         [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
         [MaxLength(75, ErrorMessage = "Maximum 75 characters allowed")]
@@ -128,7 +117,7 @@ namespace CRS.ADMIN.APPLICATION.Models.ClubManagement
         public string MobileNumber { get; set; }    
 
         [DisplayName("Landline Number")]      
-        [RegularExpression("^[0-9]{10}$", ErrorMessage = "The field must be a 8-digit number.")]
+        [RegularExpression("^[0-9]{8}$", ErrorMessage = "The field must be a 8-digit number.")]
         public string LandlineNumber { get; set; }
         [DisplayName("Club Name (English)")]
         [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
