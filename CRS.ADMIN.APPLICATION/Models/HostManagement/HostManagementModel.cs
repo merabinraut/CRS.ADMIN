@@ -52,8 +52,8 @@ namespace CRS.ADMIN.APPLICATION.Models.HostManagement
         [MaxLength(500, ErrorMessage = "Maximum 500 characters allowed")]
         public string HostIntroduction { get; set; }
         [Display(Name = "Position")]
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
-        [MaxLength(50, ErrorMessage = "Maximum 50 characters allowed")]
+        //[Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
+        //[MaxLength(50, ErrorMessage = "Maximum 50 characters allowed")]
         public string Position { get; set; }
         [Display(Name = "Rank")]
         //[Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
