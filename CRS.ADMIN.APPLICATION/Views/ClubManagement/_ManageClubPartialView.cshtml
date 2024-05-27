@@ -363,7 +363,7 @@
 
                                         </div>
                                         @Html.TextBoxFor(model => model.LandlineNumber, new
-                                   {
+                                     {
                                        @class = "w-full",
                                        @placeholder = "090-6490-3254",
                                        @onkeypress = "return isNumber(event)",
@@ -1314,7 +1314,7 @@
                             </div>
 
                             <!-- for Plan list -->
-                            <div class="flex gap-2 text-primary-300 text-sm font-semibold items-center mt-[10px]">
+                           @* <div class="flex gap-2 text-primary-300 text-sm font-semibold items-center mt-[10px]">
                                 <div class="flex-none uppercase">@CRS.ADMIN.APPLICATION.Resources.Resource.Plan_list</div>
                                 <div class="bg-[#F4F4F4] h-[1px] w-full">
                                 </div>
@@ -1424,7 +1424,7 @@
                                                             <span class="error">
                                                                 @Html.ValidationMessageFor(model => Model.PlanDetailList[i].PlanIdentityList[j].IdentityDescription)
                                                             </span>
-                                                            @*<input type="time" class="w-full" placeholder="HH:MM" name="lastOrderTime" required>*@
+                                                            //<input type="time" class="w-full" placeholder="HH:MM" name="lastOrderTime" required>
                                                             <!-- <span class="error">Validation msg</span> -->
                                                         </div>
                                                     }
@@ -1447,7 +1447,7 @@
                                                                 </span>
                                                             </label>
                                                         </div>
-                                                        
+
                                                     }
                                                 }
 
@@ -1477,19 +1477,9 @@
                                     <div class="bg-[#F4F4F4] h-[1px] w-full">
                                     </div>
                                 </div>
-                                @*<div class="grid grid-cols-6 gap-x-4 gap-y-5">
-                                    <button type="button" onclick="repeatContent()" id="addrow"
-                                            class="flex gap-2 text-[#D75A8B]  border-dashed border-[#D75A8B] border-[1px] rounded-[4px] px-4 py-[6px] "
-                                            style="box-shadow:0px 1px 2px 0px rgba(16, 24, 40, 0.05);">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="19" viewBox="0 0 18 19" fill="none">
-                                            <path d="M9 1.74951C4.96802 1.74951 1.6875 5.03003 1.6875 9.06201C1.6875 13.094 4.96802 16.3745 9 16.3745C13.032 16.3745 16.3125 13.094 16.3125 9.06201C16.3125 5.03003 13.032 1.74951 9 1.74951ZM9 2.87451C12.4233 2.87451 15.1875 5.63867 15.1875 9.06201C15.1875 12.4854 12.4233 15.2495 9 15.2495C5.57666 15.2495 2.8125 12.4854 2.8125 9.06201C2.8125 5.63867 5.57666 2.87451 9 2.87451ZM8.4375 5.68701V8.49951H5.625V9.62451H8.4375V12.437H9.5625V9.62451H12.375V8.49951H9.5625V5.68701H8.4375Z"
-                                                  fill="#D75A8B" />
-                                        </svg>
-                                        <span class="text-[14px] font-medium leading-[20px]">@CRS.ADMIN.APPLICATION.Resources.Resource.Add_New</span>
-                                    </button>
-                                </div>*@
 
-                            </div>
+
+                            </div>*@
                         </div>
                     </div>
                     <div class="flex justify-between ">

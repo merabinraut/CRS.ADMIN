@@ -125,8 +125,8 @@ namespace CRS.ADMIN.APPLICATION.Models.ClubManagement
         [DisplayName("Contact Number")]
         [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
         [RegularExpression("^[0-9]{11}$", ErrorMessage = "The field must be a 11-digit number.")]
-        public string MobileNumber { get; set; }    
-        [DisplayName("Landline Number")]      
+        public string MobileNumber { get; set; }
+        [DisplayName("Landline Number")]
         [RegularExpression("^[0-9]{10}$", ErrorMessage = "The field must be a 10-digit number.")]
         public string LandlineNumber { get; set; }
         [DisplayName("Club Name (English)")]
@@ -141,11 +141,11 @@ namespace CRS.ADMIN.APPLICATION.Models.ClubManagement
         [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
         public string BusinessType { get; set; }
         [DisplayName("Group Name (English)")]
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
+        //[Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
         [MaxLength(50, ErrorMessage = "Maximum 50 characters allowed")]
         public string GroupName { get; set; }
         [DisplayName("Group Name (Katakana)")]
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
+        //[Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
         [MaxLength(50, ErrorMessage = "Maximum 50 characters allowed")]
         public string GroupName2 { get; set; }
         //[Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
@@ -180,7 +180,7 @@ namespace CRS.ADMIN.APPLICATION.Models.ClubManagement
         [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
         public string CompanyName { get; set; }
         [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
-        public string ceoFullName { get; set; }      
+        public string ceoFullName { get; set; }
         public string Line { get; set; }
         [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
         public string GoogleMap { get; set; }
@@ -259,7 +259,7 @@ namespace CRS.ADMIN.APPLICATION.Models.ClubManagement
         public string StaticDataValue { get; set; }
         public string japanese { get; set; }
         public string inputtype { get; set; }
-        public string name { get; set; } 
+        public string name { get; set; }
         public string IdentityLabel { get; set; }
         [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
         public string IdentityDescription { get; set; }

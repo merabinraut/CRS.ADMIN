@@ -63,13 +63,17 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             ViewBag.PlansList = ApplicationUtilities.LoadDropdownList("CLUBPLANS") as Dictionary<string, string>;
             List<ClubplanListCommon> ClubplanListCommon = _BUSS.GetClubPlanList(culture, aId);
             response.planList = ClubplanListCommon.MapObjects<ClubplanListModel>();
-            response.planList.ForEach(planIdentity =>
+            if (response.planList.Count>0)
             {
-                //planIdentity.PlanListId = !string.IsNullOrEmpty(planIdentity.PlanListId) ? planIdentity.PlanListId.EncryptParameter() : planIdentity.PlanListId;
-                planIdentity.PlanId = !string.IsNullOrEmpty(planIdentity.PlanId) ? planIdentity.PlanId.EncryptParameter() : planIdentity.PlanId; // Call your encryption method here
-                planIdentity.Id = !string.IsNullOrEmpty(planIdentity.Id) ? planIdentity.Id.EncryptParameter() : planIdentity.Id; ; // Call your encryption method here
+                response.planList.ForEach(planIdentity =>
+                {
+                    //planIdentity.PlanListId = !string.IsNullOrEmpty(planIdentity.PlanListId) ? planIdentity.PlanListId.EncryptParameter() : planIdentity.PlanListId;
+                    planIdentity.PlanId = !string.IsNullOrEmpty(planIdentity.PlanId) ? planIdentity.PlanId.EncryptParameter() : planIdentity.PlanId; // Call your encryption method here
+                    planIdentity.Id = !string.IsNullOrEmpty(planIdentity.Id) ? planIdentity.Id.EncryptParameter() : planIdentity.Id; ; // Call your encryption method here
 
-            });
+                });
+            }
+            
             bool isexception = false;
             if (string.IsNullOrEmpty(ViewBag.PopUpRenderValue))
             {

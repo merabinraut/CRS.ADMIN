@@ -37,36 +37,40 @@ namespace CRS.ADMIN.REPOSITORY.ClubPlanManagement
             List<PlanListCommon> listcomm = new List<PlanListCommon>();
             //----------------------Start Get plan details of club ---------------------------------//
             int i = 0;
-            if (dbResponse3.Rows.Count > 0)
+            if (!string.IsNullOrEmpty(Convert.ToString( dbResponse3)))
             {
-                foreach (DataRow item in dbResponse3.Rows.Cast<DataRow>()
-                                                      .Where(row => _DAO.ParseColumnValue(row, "PlanListId").ToString() == Convert.ToString(i)))
+
+                if (dbResponse3.Rows.Count > 0)
                 {
-                    List<planIdentityDataCommon> filteredPlan = new List<planIdentityDataCommon>();
-                    foreach (DataRow row in dbResponse3.Rows.Cast<DataRow>()
-                        .Where(row => _DAO.ParseColumnValue(row, "PlanListId").ToString() == Convert.ToString(i)))
+                    foreach (DataRow item in dbResponse3.Rows.Cast<DataRow>()
+                                                          .Where(row => _DAO.ParseColumnValue(row, "PlanListId").ToString() == Convert.ToString(i)))
                     {
-                        filteredPlan.Add(new planIdentityDataCommon()
+                        List<planIdentityDataCommon> filteredPlan = new List<planIdentityDataCommon>();
+                        foreach (DataRow row in dbResponse3.Rows.Cast<DataRow>()
+                            .Where(row => _DAO.ParseColumnValue(row, "PlanListId").ToString() == Convert.ToString(i)))
                         {
-                            StaticDataValue = _DAO.ParseColumnValue(row, "StaticDataValue").ToString(),
-                            English = _DAO.ParseColumnValue(row, "English").ToString(),
-                            PlanListId = _DAO.ParseColumnValue(row, "PlanListId").ToString(),
-                            japanese = _DAO.ParseColumnValue(row, "japanese").ToString(),
-                            inputtype = _DAO.ParseColumnValue(row, "inputtype").ToString(),
-                            name = _DAO.ParseColumnValue(row, "name").ToString(),
-                            IdentityDescription = _DAO.ParseColumnValue(row, "Description").ToString(),
-                            PlanId = _DAO.ParseColumnValue(row, "Description").ToString(),
-                            PlanStatus = _DAO.ParseColumnValue(row, "PlanStatus").ToString(),
-                            Id = _DAO.ParseColumnValue(row, "Id").ToString(),
-                            IdentityLabel = culture.ToLower() == "en" ? _DAO.ParseColumnValue(row, "English").ToString() : _DAO.ParseColumnValue(row, "japanese").ToString(),
-                        });
+                            filteredPlan.Add(new planIdentityDataCommon()
+                            {
+                                StaticDataValue = _DAO.ParseColumnValue(row, "StaticDataValue").ToString(),
+                                English = _DAO.ParseColumnValue(row, "English").ToString(),
+                                PlanListId = _DAO.ParseColumnValue(row, "PlanListId").ToString(),
+                                japanese = _DAO.ParseColumnValue(row, "japanese").ToString(),
+                                inputtype = _DAO.ParseColumnValue(row, "inputtype").ToString(),
+                                name = _DAO.ParseColumnValue(row, "name").ToString(),
+                                IdentityDescription = _DAO.ParseColumnValue(row, "Description").ToString(),
+                                PlanId = _DAO.ParseColumnValue(row, "Description").ToString(),
+                                PlanStatus = _DAO.ParseColumnValue(row, "PlanStatus").ToString(),
+                                Id = _DAO.ParseColumnValue(row, "Id").ToString(),
+                                IdentityLabel = culture.ToLower() == "en" ? _DAO.ParseColumnValue(row, "English").ToString() : _DAO.ParseColumnValue(row, "japanese").ToString(),
+                            });
 
 
 
+                        }
+                        response.AddRange(filteredPlan);
+                        listcomm.Add(new PlanListCommon { PlanIdentityList = filteredPlan });
+                        i++;
                     }
-                    response.AddRange(filteredPlan);
-                    listcomm.Add(new PlanListCommon { PlanIdentityList = filteredPlan });
-                    i++;
                 }
             }
             //----------------------END Get plan details of club ---------------------------------//
@@ -226,9 +230,9 @@ namespace CRS.ADMIN.REPOSITORY.ClubPlanManagement
 
         public CommonDbResponse BlockUnblockPlan(ClubplanListCommon objClubplanListCommon = null,string ActionUser=null,string ActionIp=null)
         {
-            string SQL = "EXEC sproc_point_category_blockunblock @Flag='u_status' ";
+            string SQL = "EXEC sproc_admin_club_plan_management @Flag='u_status' ";
             SQL += ",@AgentId=" + _DAO.FilterString(objClubplanListCommon.ClubId);
-            SQL += ",@PlanListId=" + _DAO.FilterString(objClubplanListCommon.Id);
+            SQL += ",@PlanListId=" + _DAO.FilterString(objClubplanListCommon.PlanId);
             SQL += ",@Status=" + _DAO.FilterString(objClubplanListCommon.Status);
             SQL += ",@ActionIP=" + _DAO.FilterString(ActionIp);
             SQL += ",@ActionUser=" + _DAO.FilterString(ActionUser);
