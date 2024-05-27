@@ -73,6 +73,14 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 ResponseModel.ManageHostModel.HostIdentityDataModel.ForEach(x => x.IdentityType = x.IdentityType.EncryptParameter());
                 ResponseModel.ManageHostModel.HostIdentityDataModel.ForEach(x => x.IdentityValue = x.IdentityValue.EncryptParameter());
             }
+            else
+            {
+                var respDb = _buss.GetHostIdentityDetail(ResponseModel.ManageHostModel.AgentId.DecryptParameter(), ResponseModel.ManageHostModel.HostId.DecryptParameter());
+                ResponseModel.ManageHostModel.HostIdentityDataModel = respDb.MapObjects<HostIdentityDataModel>();// model = dbResponse.MapObject<ManageHostModel>();
+                ResponseModel.ManageHostModel.HostIdentityDataModel.ForEach(x => x.IdentityLabel = (!string.IsNullOrEmpty(culture) && culture == "en") ? x.IdentityLabelEnglish : x.IdentityLabelJapanese);
+                ResponseModel.ManageHostModel.HostIdentityDataModel.ForEach(x => x.IdentityType = x.IdentityType.EncryptParameter());
+                ResponseModel.ManageHostModel.HostIdentityDataModel.ForEach(x => x.IdentityValue = x.IdentityValue.EncryptParameter());
+            }
             ViewBag.ZodiacSignsDDL = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("ZODIACSIGNSDDL") as Dictionary<string, string>, null, "--- Select ---");
             ViewBag.ZodiacSignsDDLKey = ResponseModel.ManageHostModel.ConstellationGroup;
             ViewBag.BloodGroupDDL = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("BLOODGROUPDDL") as Dictionary<string, string>, null, "--- Select ---");
@@ -152,7 +160,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                     }
                 }
                 //    model.DOB = DateTime.Parse(model.DOB).ToString("yyyy-MM-dd");
-                
+
                 model.AgentId = AgentId;
                 model.HostId = HostId;
                 if (!string.IsNullOrEmpty(model.DOB))
@@ -304,7 +312,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                     TempData["ManageHostModel"] = Model;
                     return RedirectToAction("HostList", "HostManagement", new { AgentId = Model.AgentId });
                 }
-            }          
+            }
             if (ModelState.IsValid)
             {
                 var requestCommon = Model.MapObject<ManageHostCommon>();
