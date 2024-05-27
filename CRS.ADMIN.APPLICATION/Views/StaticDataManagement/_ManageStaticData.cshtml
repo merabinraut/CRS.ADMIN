@@ -23,6 +23,10 @@
             {
                 @Html.HiddenFor(model => model.Id)
             }
+            if (!string.IsNullOrEmpty(Model.StaticDataValue))
+            {
+                @Html.HiddenFor(model => model.StaticDataValue)
+            }
             <div class="p-[24px]">
                 <div class=" py-4 grid gap-5">
                     <div class="input-field-common">
@@ -33,7 +37,7 @@
                         {
                             @class = "w-full rounded-[4px]",
                             @style = "border-radius:4px !important",
-                            @maxlength = "30"
+                            @type = "number"
                         })
                         <span class="error">
                             @Html.ValidationMessageFor(m => m.StaticDataType)
@@ -47,7 +51,6 @@
                         {
                             @class = "w-full rounded-[4px]",
                             @style = "border-radius:4px !important",
-                            @maxlength = "30"
                         })
                         <span class="error">
                             @Html.ValidationMessageFor(m => m.StaticDataLabel)
@@ -61,7 +64,6 @@
                         {
                             @class = "w-full rounded-[4px]",
                             @style = "border-radius:4px !important",
-                            @maxlength = "100"
                         })
                         <span class="error">
                             @Html.ValidationMessageFor(m => m.StaticDataDescription)
@@ -71,12 +73,26 @@
                         <label class="block mb-[12px] text-sm font-medium text-secondary-100 ">
                             Static Data Value
                         </label>
-                        @Html.TextBoxFor(model => model.StaticDataValue, new
+                        @if (Model.StaticDataValue != null)
                         {
-                            @class = "w-full rounded-[4px]",
-                            @style = "border-radius:4px !important",
-                            @maxlength = "100"
-                        })
+                            @Html.TextBoxFor(model => model.StaticDataValue, new
+                       {
+                           @class = "w-full rounded-[4px]",
+                           @style = "border-radius:4px !important",
+                           @maxlength = "3",
+                           @disabled = "disabled"
+                       })
+                        }
+                        else
+                        {
+                            @Html.TextBoxFor(model => model.StaticDataValue, new
+                            {
+                                @class = "w-full rounded-[4px]",
+                                @style = "border-radius:4px !important",
+                                @maxlength = "3"
+                            })
+
+                        }
                         <span class="error">
                             @Html.ValidationMessageFor(m => m.StaticDataValue)
                         </span>
@@ -84,7 +100,7 @@
                 </div>
                 <div class="flex justify-end mt-6 ">
                     <div class="flex gap-6">
-                        <button class="resetForm btn btn-gray-white h-[40px] rounded-[4px] px-8 text-sm" onclick="CancelFunction()">
+                        <button class="resetForm btn btn-gray-white h-[40px] rounded-[4px] px-8 text-sm" id="CancelId">
                             @CRS.ADMIN.APPLICATION.Resources.Resource.Cancel
                         </button>
                         <button class="resetForm btn btn-primary-default h-[40px] px-8 rounded-[4px]  text-sm leading-[10px]" id="saveData" type="submit">
@@ -95,5 +111,4 @@
             </div>
         }
     </div>
-
 </div>

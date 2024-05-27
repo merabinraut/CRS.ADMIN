@@ -18,8 +18,8 @@ namespace CRS.ADMIN.REPOSITORY.StaticDataManagement
         public CommonDbResponse DeleteStaticDataType(ManageStaticDataTypeCommon request)
         {
             string sp_name = "sproc_tbl_static_data_Type_Delete ";
-            sp_name += "@Id" + _dao.FilterString(request.Id);
-            sp_name += ",@ActionUser" + _dao.FilterString(request.ActionUser);
+            sp_name += "@Id=" + _dao.FilterString(request.Id);
+            sp_name += ",@ActionUser=" + _dao.FilterString(request.ActionUser);
             return _dao.ParseCommonDbResponse(sp_name);
         }
 

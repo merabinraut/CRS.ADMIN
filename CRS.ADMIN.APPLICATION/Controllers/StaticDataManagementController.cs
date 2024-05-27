@@ -82,12 +82,20 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 var dbResponse = _business.ManageStaticDataType(commonModel);
                 if (dbResponse != null)
                 {
-                    AddNotificationMessage(new NotificationModel()
-                    {
-                        NotificationType = NotificationMessage.SUCCESS,
-                        Message = dbResponse.Message ?? "Static Data Type Added Successfully",
-                        Title = NotificationMessage.SUCCESS.ToString()
-                    });
+                    if (dbResponse.Code == ResponseCode.Success)
+                        AddNotificationMessage(new NotificationModel()
+                        {
+                            NotificationType = NotificationMessage.SUCCESS,
+                            Message = dbResponse.Message ?? "Static Data Type Added Successfully",
+                            Title = NotificationMessage.SUCCESS.ToString()
+                        });
+                    else
+                        AddNotificationMessage(new NotificationModel()
+                        {
+                            NotificationType = NotificationMessage.INFORMATION,
+                            Message = dbResponse.Message ?? "Duplicate data found !",
+                            Title = NotificationMessage.INFORMATION.ToString()
+                        });
                     return RedirectToAction("Index");
                 }
                 else
@@ -161,7 +169,11 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             if (TempData.ContainsKey("RenderId")) RenderId = TempData["RenderId"].ToString();
             var dbResponseInfo = _business.GetStaticDataList(staticDataTypeId);
             responseInfo.GetStaticDataList = dbResponseInfo.MapObjects<StaticDataModel>();
-            ViewBag.PopUpRenderValue = !string.IsNullOrEmpty(RenderId) ? RenderId : null;
+            foreach (var item in responseInfo.GetStaticDataList)
+            {
+                item.Id = item.Id.EncryptParameter();
+            }
+            ViewBag.PopUpRenderValue1 = !string.IsNullOrEmpty(RenderId) ? RenderId : null;
             return View(responseInfo);
         }
         [HttpGet]
@@ -170,8 +182,10 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             ManageStaticData model = new ManageStaticData();
             if (!string.IsNullOrEmpty(id) || !string.IsNullOrEmpty(staticDataTypeId))
             {
-                var dbResponse = _business.GetStaticDataDetail(id);
+                string Id = id.DecryptParameter();
+                var dbResponse = _business.GetStaticDataDetail(Id);
                 model = dbResponse.MapObject<ManageStaticData>();
+                model.Id = Id.EncryptParameter();
                 TempData["ManageStaticData"] = model;
                 TempData["RenderId"] = "Manage";
                 return RedirectToAction("StaticDataIndex", new { staticDataTypeId = staticDataTypeId });
@@ -200,12 +214,20 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 var dbResponse = _business.ManageStaticData(commonModel);
                 if (dbResponse != null)
                 {
-                    AddNotificationMessage(new NotificationModel()
-                    {
-                        NotificationType = NotificationMessage.INFORMATION,
-                        Message = dbResponse.Message ?? "Something went wrong try again later",
-                        Title = NotificationMessage.INFORMATION.ToString(),
-                    });
+                    if (dbResponse.Code == ResponseCode.Success)
+                        AddNotificationMessage(new NotificationModel()
+                        {
+                            NotificationType = NotificationMessage.SUCCESS,
+                            Message = dbResponse.Message ?? "",
+                            Title = NotificationMessage.SUCCESS.ToString(),
+                        });
+                    else
+                        AddNotificationMessage(new NotificationModel()
+                        {
+                            NotificationType = NotificationMessage.INFORMATION,
+                            Message = dbResponse.Message ?? "Duplicate data found !",
+                            Title = NotificationMessage.INFORMATION.ToString(),
+                        });
                     TempData["ManageStaticData"] = Model;
                     TempData["RenderId"] = "Manage";
                     return RedirectToAction("StaticDataIndex", new { staticDataTypeId = commonModel.StaticDataType });
@@ -214,9 +236,9 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 {
                     AddNotificationMessage(new NotificationModel()
                     {
-                        NotificationType = NotificationMessage.SUCCESS,
-                        Message = dbResponse.Message ?? "Static Data Added Successfully",
-                        Title = NotificationMessage.SUCCESS.ToString(),
+                        NotificationType = NotificationMessage.INFORMATION,
+                        Message = dbResponse.Message ?? "Something went wrong try again later",
+                        Title = NotificationMessage.INFORMATION.ToString(),
                     });
                     return RedirectToAction("StaticDataIndex");
                 }

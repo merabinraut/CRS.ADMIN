@@ -124,7 +124,7 @@
                                             <i class="fa-regular fa-pen-to-square text-[#989898] cursor-pointer" onclick="edit('@item.Id','@item.StaticDataType')"></i>
                                         </div>
                                         <div>
-                                            <i class="fa-solid fa-trash-can text-primary-100 cursor-pointer" onclick="deleteStaticData('@item.Id','@item.StaticDataType')"></i>
+                                            <i class="fa-solid fa-trash-can text-primary-100 cursor-pointer" onclick="deleteStaticData('@item.Id')"></i>
                                         </div>
                                     </div>
                                 </td>
@@ -158,7 +158,7 @@
              $('select').select2({
                  minimumResultsForSearch: Infinity
              })
-             var popUpRenderValue = '@ViewBag.PopUpRenderValue';
+             var popUpRenderValue = '@ViewBag.PopUpRenderValue1';
              if (popUpRenderValue != null && popUpRenderValue != "" && popUpRenderValue == "Manage") {
                  var element = document.getElementById('add-new_static_data');
                  element.classList.remove('translate-x-full');
@@ -167,14 +167,16 @@
         function edit(id, staticDataTypeId) {
             window.location.href = '/StaticDataManagement/ManageStaticData?id=' + id + '&staticDataTypeId=' + staticDataTypeId;
         }
-        function CancelFunction() {
-            window.location.reload();
-        }
-        function deleteStaticData(id,staticDataTypeId) {
+        document.getElementById('CancelId').addEventListener('click',
+            function (event) {
+                event.preventDefault();
+                window.location.reload();
+            });
+        function deleteStaticData(id) {
             $.ajax({
                 type: 'POST',
                 async: true,
-                url: "/StaticDataManagement/DeleteStaticData?id=" + id + "&staticDataTypeId=" + staticDataTypeId,
+                url: "/StaticDataManagement/DeleteStaticData?id=" + id,
                 dataType: 'json',
                 data: {
                     __RequestVerificationToken: $('input[name="__RequestVerificationToken"]').val(),
