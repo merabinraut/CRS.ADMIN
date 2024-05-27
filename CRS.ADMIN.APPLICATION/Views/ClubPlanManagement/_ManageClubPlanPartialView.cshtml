@@ -217,7 +217,7 @@
                                                     }
                                                     else if (@Model.ClubPlanDetailList[i].PlanIdentityList[j].inputtype.ToLower() == "toggle")
                                                     {
-                                                        <div class="toogle-common">
+                                                        <div class="toogle-common" style="display:flex; align-items:center">
                                                             <label class="relative inline-flex items-center cursor-pointer">
                                                                 @Html.HiddenFor(model => model.ClubPlanDetailList[i].PlanIdentityList[j].name, new { @class = "name" })
                                                                 @Html.HiddenFor(model => model.ClubPlanDetailList[i].PlanIdentityList[j].StaticDataValue, new { @class = "StaticDataValue" })
@@ -229,7 +229,7 @@
                                                                 @Html.HiddenFor(model => model.ClubPlanDetailList[i].PlanIdentityList[j].IdentityLabel, new { @class = "IdentityLabel" })
                                                                 @if (Model.ClubPlanDetailList[i].PlanIdentityList[j].IdentityDescription.ToLower() == "a")
                                                                 {
-                                                                    <input type="checkbox" value="@Model.ClubPlanDetailList[i].PlanIdentityList[j].IdentityDescription" name="ClubPlanDetailList[@i].PlanIdentityList[@j].IdentityDescription" class="sr-only peer toogle1" checked>
+                                                                    <input type="checkbox" value="@Model.ClubPlanDetailList[i].PlanIdentityList[j].IdentityDescription" name="ClubPlanDetailList[@i].PlanIdentityList[@j].IdentityDescription" class="sr-only peer toogle1" checked >
                                                                     <input type="hidden" value="A" name="ClubPlanDetailList[@i].PlanIdentityList[@j].IdentityDescription">
                                                                 }
                                                                 else
