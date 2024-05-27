@@ -23,10 +23,6 @@
             {
                 @Html.HiddenFor(model => model.Id)
             }
-            if (!string.IsNullOrEmpty(Model.StaticDataValue))
-            {
-                @Html.HiddenFor(model => model.StaticDataValue)
-            }
             <div class="p-[24px]">
                 <div class=" py-4 grid gap-5">
                     <div class="input-field-common">
@@ -73,7 +69,7 @@
                         <label class="block mb-[12px] text-sm font-medium text-secondary-100 ">
                             Static Data Value
                         </label>
-                        @if (Model.StaticDataValue != null)
+                        @if (Model.StaticDataValue != null && !string.IsNullOrEmpty(Model.StaticDataValue))
                         {
                             @Html.TextBoxFor(model => model.StaticDataValue, new
                        {

@@ -90,6 +90,7 @@ namespace CRS.ADMIN.REPOSITORY.StaticDataManagement
                     StaticDataLabel = _dao.ParseColumnValue(dbResponse, "StaticDataLabel").ToString(),
                     StaticDataDescription = _dao.ParseColumnValue(dbResponse, "StaticDataDescription").ToString(),
                     Status = _dao.ParseColumnValue(dbResponse, "Status").ToString(),
+                    StaticDataValue = _dao.ParseColumnValue(dbResponse, "StaticDataValue").ToString(),
                 };
             }
             return new ManageStaticDataCommon();
