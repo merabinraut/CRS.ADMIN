@@ -1,10 +1,10 @@
-﻿using CRS.ADMIN.APPLICATION.Library;
+﻿using CRS.ADMIN.APPLICATION.Helper;
+using CRS.ADMIN.APPLICATION.Library;
 using CRS.ADMIN.APPLICATION.Models.AffiliateManagement;
 using CRS.ADMIN.BUSINESS.AffiliateManagement;
 using CRS.ADMIN.SHARED;
 using CRS.ADMIN.SHARED.AffiliateManagement;
 using CRS.ADMIN.SHARED.PaginationManagement;
-using DocumentFormat.OpenXml.Wordprocessing;
 using System.Linq;
 using System.Web.Mvc;
 
@@ -38,8 +38,17 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             var analyticDBResponse = _affiliateBuss.GetAffiliateAnalytic();
             if (dbResponse.Count > 0) ResponseModel.GetAffiliateList = dbResponse.MapObjects<AffiliateManagementModel>();
             ResponseModel.GetAffiliateList.ForEach(x => x.AffiliateId = x.AffiliateId.EncryptParameter());
-            ResponseModel.GetAffiliateList.ForEach(x => x.HoldAffiliateId = x.HoldAffiliateId.EncryptParameter());
+            ResponseModel.GetAffiliateList.ForEach(x =>
+            {
+                x.HoldAffiliateId = x.HoldAffiliateId.EncryptParameter();
+                x.AffiliateImage = ImageHelper.ProcessedImage(x.AffiliateImage);
+            });
             ResponseModel.GetReferalConvertedCustomerList = dbReferalRes.MapObjects<ReferralConvertedCustomerListModel>();
+            ResponseModel.GetReferalConvertedCustomerList.ForEach(x =>
+            {
+                x.CustomerImage = ImageHelper.ProcessedImage(x.CustomerImage);
+                x.AffiliateImaeg = ImageHelper.ProcessedImage(x.AffiliateImaeg);
+            });
             ResponseModel.AffiliatePageAnalyticModel = analyticDBResponse.MapObject<AffiliatePageAnalyticModel>();
             ViewBag.SearchFilter1 = SearchFilter1;
             ViewBag.SearchFilter2 = SearchFilter2;

@@ -1,4 +1,5 @@
-﻿using CRS.ADMIN.APPLICATION.Library;
+﻿using CRS.ADMIN.APPLICATION.Helper;
+using CRS.ADMIN.APPLICATION.Library;
 using CRS.ADMIN.APPLICATION.Models.Home;
 using CRS.ADMIN.APPLICATION.Models.NotificationManagement;
 using CRS.ADMIN.BUSINESS.Home;
@@ -94,7 +95,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                     Session["RoleId"] = response.RoleId.EncryptParameter();
                     Session["Username"] = response.Username;
                     Session["FullName"] = response.FullName;
-                    Session["ProfileImage"] = response.ProfileImage;
+                    Session["ProfileImage"] = ImageHelper.ProcessedImage(response.ProfileImage);
                     Session["IsPasswordForceful"] = response.IsPasswordForceful;
                     Session["RoleName"] = response.RoleName;
                     Session["Menus"] = response.Menus;
@@ -145,13 +146,12 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             #endregion
             #region "Dashboard Host List Info"
             List<HostListModel> hostListInfo = new List<HostListModel>();
-            string FileLocationPath = "";
-            if (ConfigurationManager.AppSettings["Phase"] != null
-               && ConfigurationManager.AppSettings["Phase"].ToString().ToUpper() != "DEVELOPMENT")
-                FileLocationPath = ConfigurationManager.AppSettings["ImageVirtualPath"].ToString() + FileLocationPath;
             var dbHostListInfo = _BUSS.GetHostList();
             hostListInfo = dbHostListInfo.MapObjects<HostListModel>();
-            hostListInfo.ForEach(x => x.HostImage = FileLocationPath + x.HostImage);
+            hostListInfo.ForEach(x =>
+            {
+                x.HostImage = ImageHelper.ProcessedImage(x.HostImage);
+            });
             ViewBag.HostList = hostListInfo;
             #endregion
             #region "Chart Info"
@@ -164,8 +164,8 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             List<TopBookedHostRankingModel> topHostInfo = new List<TopBookedHostRankingModel>();
             var dbTopHostResponse = _BUSS.GetTopBookedHostList();
             topHostInfo = dbTopHostResponse.MapObjects<TopBookedHostRankingModel>();
-            topHostInfo.ForEach(x => x.HostImage = FileLocationPath + x.HostImage);
-            topHostInfo.ForEach(y => y.ClubImage = FileLocationPath + y.ClubImage);
+            topHostInfo.ForEach(x => x.HostImage = ImageHelper.ProcessedImage(x.HostImage));
+            topHostInfo.ForEach(y => y.ClubImage = ImageHelper.ProcessedImage(y.ClubImage));
             ViewBag.TopBookedHost = topHostInfo;
             #endregion
             #region "Sales Through"

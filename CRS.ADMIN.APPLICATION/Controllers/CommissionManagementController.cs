@@ -1,6 +1,6 @@
-﻿using CRS.ADMIN.APPLICATION.Library;
+﻿using CRS.ADMIN.APPLICATION.Helper;
+using CRS.ADMIN.APPLICATION.Library;
 using CRS.ADMIN.APPLICATION.Models.CommissionManagement;
-using CRS.ADMIN.APPLICATION.Models.LocationManagement;
 using CRS.ADMIN.BUSINESS.CommissionManagement;
 using CRS.ADMIN.SHARED;
 using CRS.ADMIN.SHARED.CommissionManagement;
@@ -11,6 +11,7 @@ using System.Web.Mvc;
 
 namespace CRS.ADMIN.APPLICATION.Controllers
 {
+    [OverrideActionFilters]
     public class CommissionManagementController : BaseController
     {
         private readonly ICommissionManagementBusiness _CategoryBuss;
@@ -28,6 +29,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             dbResponse.ForEach(x => x.CategoryId = x.CategoryId.EncryptParameter());
 
             viewModel.CommissionCategoryModelGrid = dbResponse.MapObjects<CommissionCategoryModel>();
+            viewModel.CommissionCategoryModelGrid.ForEach(x => x.CreatedByImage = ImageHelper.ProcessedImage(x.CreatedByImage));
 
             if (TempData.ContainsKey("ManageCategoryModel"))
                 viewModel.AddEditCommissionCategory = TempData["ManageCategoryModel"] as ManageCommissionCategoryModel;
@@ -208,12 +210,13 @@ namespace CRS.ADMIN.APPLICATION.Controllers
         #region Commission Setup
 
         [HttpGet]
-        public ActionResult CommissionDetailList(string CategoryId, string CategoryName = "")
+        public ActionResult CommissionDetailList(string CategoryId, string CategoryName = "", string AdminCommissionTypeId = "")
         {
             var viewModel = new CommissionDetailRazorViewModel();
 
             var cId = !string.IsNullOrEmpty(CategoryId) ? CategoryId.DecryptParameter() : null;
-            if (string.IsNullOrEmpty(cId))
+            var adminCmsTypeId = !string.IsNullOrEmpty(AdminCommissionTypeId) ? AdminCommissionTypeId.DecryptParameter() : null;
+            if (string.IsNullOrEmpty(cId) && string.IsNullOrEmpty(adminCmsTypeId))
             {
                 this.AddNotificationMessage(new NotificationModel()
                 {
@@ -225,12 +228,13 @@ namespace CRS.ADMIN.APPLICATION.Controllers
 
                 return RedirectToAction("CategoryList", "CommissionManagement");
             }
-            var dbResponse = _CategoryBuss.GetCommissionDetailList(cId);
+            var dbResponse = _CategoryBuss.GetCommissionDetailList(cId, adminCmsTypeId);
             viewModel.ManageCommissionDetailGrid = dbResponse.MapObjects<ManageCommissionDetailModel>();
             viewModel.ManageCommissionDetailGrid.ForEach(x =>
             {
                 x.CategoryDetailId = x.CategoryDetailId.EncryptParameter();
                 x.CategoryId = x.CategoryId.EncryptParameter();
+                x.AdminCommissionTypeId = x.AdminCommissionTypeId.EncryptParameter();
             });
 
             if (TempData.ContainsKey("ManageCommissionDetailModel"))
@@ -246,15 +250,16 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             ViewBag.CommissionPercentTypeIdKey = viewModel.ManageCommissionDetailAddEdit.CommissionPercentageType;
             ViewBag.CategoryId = CategoryId;
             ViewBag.CategoryName = CategoryName;
+            ViewBag.AdminCommissionTypeId = AdminCommissionTypeId;
             viewModel.ManageCommissionDetailAddEdit.CategoryId = CategoryId;
             viewModel.ManageCommissionDetailAddEdit.CategoryName = CategoryName;
             ViewBag.IsBackAllowed = true;
-            ViewBag.BackButtonURL = "/CommissionManagement/CategoryList";
+            ViewBag.BackButtonURL = "/CommissionManagement/AdminCommissionList?CategoryId=" + ViewBag.CategoryId + "&CategoryName=" + ViewBag.CategoryName;
             return View(viewModel);
         }
 
         [HttpGet]
-        public ActionResult ManageCommissionDetail(string id, string CategoryId, string CategoryName)
+        public ActionResult ManageCommissionDetail(string id, string CategoryId, string CategoryName, string AdminCommissionTypeId = "")
         {
             var i = !string.IsNullOrEmpty(id) ? id.DecryptParameter() : null;
             if (string.IsNullOrEmpty(i))
@@ -277,7 +282,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                     Message = "Something went wrong",
                     Title = NotificationMessage.INFORMATION.ToString(),
                 });
-                return RedirectToAction("CommissionDetailList", new { CategoryId = id, CategoryName });
+                return RedirectToAction("CommissionDetailList", new { CategoryId = id, CategoryName, AdminCommissionTypeId = AdminCommissionTypeId });
             }
 
             var viewModel = commissionDetailCommon.MapObject<ManageCommissionDetailModel>();
@@ -286,7 +291,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             viewModel.CommissionPercentageType = viewModel?.CommissionPercentageType?.EncryptParameter();
             TempData["ManageCommissionDetailModel"] = viewModel;
             TempData["RenderId"] = "Manage";
-            return RedirectToAction("CommissionDetailList", new { CategoryId = CategoryId, CategoryName });
+            return RedirectToAction("CommissionDetailList", new { CategoryId = CategoryId, CategoryName, AdminCommissionTypeId = AdminCommissionTypeId });
         }
 
         [HttpPost, ValidateAntiForgeryToken]
@@ -296,6 +301,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             requestCommmon.CategoryId = !string.IsNullOrEmpty(requestCommmon.CategoryId) ? requestCommmon.CategoryId.DecryptParameter() : null;
             requestCommmon.CategoryDetailId = !string.IsNullOrEmpty(requestCommmon.CategoryDetailId) ? requestCommmon.CategoryDetailId.DecryptParameter() : null;
             requestCommmon.CommissionPercentageType = requestCommmon?.CommissionPercentageType?.DecryptParameter();
+            requestCommmon.AdminCommissionTypeId = requestCommmon?.AdminCommissionTypeId?.DecryptParameter();
             if (string.IsNullOrEmpty(requestCommmon.CategoryId))
             {
                 AddNotificationMessage(new NotificationModel()
@@ -317,7 +323,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                     Title = NotificationMessage.SUCCESS.ToString(),
                     NotificationType = NotificationMessage.SUCCESS
                 });
-                return RedirectToAction("CommissionDetailList", new { CategoryId = Request.CategoryId, CategoryName = Request.CategoryName });
+                return RedirectToAction("CommissionDetailList", new { CategoryId = Request.CategoryId, CategoryName = Request.CategoryName, AdminCommissionTypeId = Request.AdminCommissionTypeId });
             }
             else
             {
@@ -329,7 +335,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 });
                 TempData["ManageCommissionDetailModel"] = Request.MapObject<ManageCommissionDetailModel>();
                 TempData["RenderId"] = "Manage";
-                return RedirectToAction("CommissionDetailList", new { CategoryId = Request.CategoryId, CategoryName = Request.CategoryName });
+                return RedirectToAction("CommissionDetailList", new { CategoryId = Request.CategoryId, CategoryName = Request.CategoryName, AdminCommissionTypeId = Request.AdminCommissionTypeId });
             }
         }
 
@@ -455,6 +461,25 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             return Json(new { commissionLists }, JsonRequestBehavior.AllowGet);
         }
 
+        #endregion
+
+        #region AdminCommission Section
+        public ActionResult AdminCommissionList(string CategoryId, string CategoryName = "")
+        {
+            Session["CurrentURL"] = "/CommissionManagement/CategoryList";
+            List<AdminCommissionModel> responseInfo = new List<AdminCommissionModel>();
+            var dbAdminResponseInfo = _CategoryBuss.GetAdminCommissionList();
+            responseInfo = dbAdminResponseInfo.MapObjects<AdminCommissionModel>();
+            foreach (var item in responseInfo)
+            {
+                item.AdminCommissionTypeId = item.AdminCommissionTypeId.EncryptParameter();
+            }
+            ViewBag.CategoryId = CategoryId;
+            ViewBag.CategoryName = CategoryName;
+            ViewBag.IsBackAllowed = true;
+            ViewBag.BackButtonURL = "/CommissionManagement/CategoryList";
+            return View(responseInfo);
+        }
         #endregion
     }
 }

@@ -1,4 +1,5 @@
-﻿using CRS.ADMIN.APPLICATION.Library;
+﻿using CRS.ADMIN.APPLICATION.Helper;
+using CRS.ADMIN.APPLICATION.Library;
 using CRS.ADMIN.APPLICATION.Models.NotificationManagement;
 using CRS.ADMIN.BUSINESS.NotificationManagement;
 using CRS.ADMIN.SHARED.NotificationManagement;
@@ -7,7 +8,7 @@ using System.Web.Mvc;
 
 namespace CRS.ADMIN.APPLICATION.Controllers
 {
-    public class NotificationManagementController : Controller
+    public class NotificationManagementController : BaseController
     {
         private readonly INotificationManagementBusiness _buss;
         public NotificationManagementController(INotificationManagementBusiness buss)
@@ -25,7 +26,11 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             };
             var dbResponse = _buss.GetAllNotification(requestCommon);
             List<NotificationDetailModel> response = dbResponse.MapObjects<NotificationDetailModel>();
-            response.ForEach(x => x.NotificationId = x.NotificationId.EncryptParameter());
+            response.ForEach(x =>
+            {
+                x.NotificationId = x.NotificationId.EncryptParameter();
+                x.NotificationImageURL = ImageHelper.ProcessedImage(x.NotificationImageURL);
+            });
             return View(response);
         }
     }

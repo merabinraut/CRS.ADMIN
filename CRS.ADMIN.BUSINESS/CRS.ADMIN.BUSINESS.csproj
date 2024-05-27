@@ -108,6 +108,10 @@
     <Compile Include="PaymentManagement\PaymentManagementBusiness.cs" />
     <Compile Include="PlanManagement\IPlanManagementBusiness.cs" />
     <Compile Include="PlanManagement\PlanManagementBusiness.cs" />
+    <Compile Include="PointSetup\IPointSetupBusiness.cs" />
+    <Compile Include="PointSetup\PointSetupBusiness.cs" />
+    <Compile Include="PointsManagement\IPointsManagementBusiness.cs" />
+    <Compile Include="PointsManagement\PointsManagementBusiness.cs" />
     <Compile Include="ProfileManagement\IProfileManagementBusiness.cs" />
     <Compile Include="ProfileManagement\ProfileManagementBusiness.cs" />
     <Compile Include="PromotionManagement\IPromotionManagementBusiness.cs" />

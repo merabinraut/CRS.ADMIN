@@ -300,9 +300,10 @@
                             </td>
                             <td class="p-[12px]">
                                 <div class="flex gap-[7px] justify-center text-[16px] ">
-                                    @*<div>
-                                            <i class="fa-regular fa-pen-to-square text-[#989898] cursor-pointer"></i>
-                                        </div>*@
+                                    <div >
+                                       
+                                        <i class="las la-key text-[24px] text-[#C8B477] cursor-pointer" onclick="openResetPasswordModal('@customer.NickName','@customer.AgentId')"  data-modal-target="reset-passwordconfirmation" data-modal-toggle="reset-passwordconfirmation" ></i>
+                                    </div>
 
                                     @if (!string.IsNullOrEmpty(customer.Status) && customer.Status.ToUpper().Trim() == "A")
                                     {

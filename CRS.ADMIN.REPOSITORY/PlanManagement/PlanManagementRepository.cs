@@ -116,7 +116,10 @@ namespace CRS.ADMIN.REPOSITORY.PlanManagement
                     ExtraField2 = dataTable.Rows[0]["AdditionalValue2"].ToString(),
                     ExtraField3 = dataTable.Rows[0]["AdditionalValue3"].ToString(),
                     PlanCategory = dataTable.Rows[0]["PlanCategory"].ToString(),
-                    NoOfPeople = !string.IsNullOrEmpty(dataTable.Rows[0]["NoOfPeople"].ToString()) ? Convert.ToInt32(dataTable.Rows[0]["NoOfPeople"].ToString()) : 0
+                    NoOfPeople = !string.IsNullOrEmpty(dataTable.Rows[0]["NoOfPeople"].ToString()) ? Convert.ToInt32(dataTable.Rows[0]["NoOfPeople"].ToString()) : 0,
+                    StrikePrice = dataTable.Rows[0]["StrikePrice"].ToString(),
+                    IsStrikeOut = dataTable.Rows[0]["IsStrikeOut"].ToString()
+
                 };
             }
             return new PlanManagementCommon();
@@ -145,6 +148,8 @@ namespace CRS.ADMIN.REPOSITORY.PlanManagement
             sql += ", @ExtraField3=N" + _dao.FilterString(planManagementCommon.ExtraField3);
             sql += ", @PlanCategory=" + _dao.FilterString(planManagementCommon.PlanCategory);
             sql += ", @NoOfPeople=" + planManagementCommon.NoOfPeople;
+            sql += ", @StrikePrice=" + _dao.FilterString(planManagementCommon.StrikePrice);
+            sql += ", @IsStrikeOut=" + _dao.FilterString(planManagementCommon.IsStrikeOut);
             return _dao.ParseCommonDbResponse(sql);
         }
 

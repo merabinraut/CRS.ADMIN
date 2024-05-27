@@ -1,4 +1,5 @@
-﻿using CRS.ADMIN.APPLICATION.Models.TagManagement;
+﻿using CRS.ADMIN.APPLICATION.Models.ClubManagerModel;
+using CRS.ADMIN.APPLICATION.Models.TagManagement;
 using DocumentFormat.OpenXml.Drawing.Charts;
 using DocumentFormat.OpenXml.Wordprocessing;
 using System.Collections.Generic;
@@ -10,9 +11,17 @@ namespace CRS.ADMIN.APPLICATION.Models.ClubManagement
     public class ClubManagementCommonModel
     {
         public string SearchFilter { get; set; }
+        public string SearchFilterPending { get; set; }
+        public string SearchFilterReject { get; set; }
+        public string value { get; set; }
+        public string ListType { get; set; }
         public List<ClubListModel> ClubListModel { get; set; }
+        public List<ClubListModel> ClubPendingListModel { get; set; }
+        public List<ClubListModel> ClubRejectedListModel { get; set; }
         public ManageClubModel ManageClubModel { get; set; }
+        public ManageClubModel ClubHoldModel { get; set; }
         public ManageTag ManageTag { get; set; }
+        public ManageManagerModel ManageManager { get; set; }
         public List<AvailabilityTagModel> GetAvailabilityList { get; set; }
     }
     public class ClubListModel
@@ -33,6 +42,9 @@ namespace CRS.ADMIN.APPLICATION.Models.ClubManagement
         public string ClubLogo { get; set; }
         public string Sno { get; set; }
         public string ClubCategory { get; set; }
+        public string holdStatus { get; set; }
+        public string ActionPlatform { get; set; }
+        public string LandLineCode { get; set; }
     }
 
     public class ClubDetailModel
@@ -95,17 +107,6 @@ namespace CRS.ADMIN.APPLICATION.Models.ClubManagement
         [MinLength(3, ErrorMessage = "Minimum 3 characters required")]
         [MaxLength(16, ErrorMessage = "Maximum 16 characters allowed")]
         public string LoginId { get; set; }
-        //[DisplayName("First Name")]
-        //[Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
-        //[MaxLength(50, ErrorMessage = "Maximum 50 characters allowed")]
-        //public string FirstName { get; set; }
-        //[DisplayName("Middle Name")]
-        //[MaxLength(50, ErrorMessage = "Maximum 50 characters allowed")]
-        //public string MiddleName { get; set; }
-        //[DisplayName("Last Name")]
-        //[Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
-        //[MaxLength(50, ErrorMessage = "Maximum 50 characters allowed")]
-        //public string LastName { get; set; }
         [DisplayName("Email Address")]
         [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
         [MaxLength(75, ErrorMessage = "Maximum 75 characters allowed")]
@@ -114,8 +115,9 @@ namespace CRS.ADMIN.APPLICATION.Models.ClubManagement
         [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
         [RegularExpression("^[0-9]{11}$", ErrorMessage = "The field must be a 11-digit number.")]
         public string MobileNumber { get; set; }    
+
         [DisplayName("Landline Number")]      
-        [RegularExpression("^[0-9]{10}$", ErrorMessage = "The field must be a 10-digit number.")]
+        [RegularExpression("^[0-9]{8}$", ErrorMessage = "The field must be a 8-digit number.")]
         public string LandlineNumber { get; set; }
         [DisplayName("Club Name (English)")]
         [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
@@ -128,10 +130,14 @@ namespace CRS.ADMIN.APPLICATION.Models.ClubManagement
         [DisplayName("Business Type")]
         [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
         public string BusinessType { get; set; }
-        [DisplayName("Group Name")]
+        [DisplayName("Group Name (English)")]
         [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
         [MaxLength(50, ErrorMessage = "Maximum 50 characters allowed")]
         public string GroupName { get; set; }
+        [DisplayName("Group Name (Katakana)")]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
+        [MaxLength(50, ErrorMessage = "Maximum 50 characters allowed")]
+        public string GroupName2 { get; set; }
         [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
         [MaxLength(200, ErrorMessage = "Maximum 200 characters allowed")]
         public string Description { get; set; }
@@ -215,6 +221,24 @@ namespace CRS.ADMIN.APPLICATION.Models.ClubManagement
         public string BusinessTypeDDL { get; set; }
 
         public List<PlanList> PlanDetailList { get; set; } = new List<PlanList>();
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
+        public string CompanyAddress { get; set; }
+        public string KYCDocument { get; set; }
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
+        public string BusinessLicenseNumber { get; set; }
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
+        public string LicenseIssuedDate { get; set; }
+        public string Representative1_ContactName { get; set; }
+        public string Representative1_MobileNo { get; set; }
+        public string Representative1_Email { get; set; }
+        public string Representative2_ContactName { get; set; }
+        public string Representative2_MobileNo { get; set; }
+        public string Representative2_Email { get; set; }
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
+        public string ClosingDate { get; set; }
+        public string holdId { get; set; }
+        public string LandLineCode { get; set; }
+
         // public List<planIdentityDataModel> PlanList { get; set; }
     }
 

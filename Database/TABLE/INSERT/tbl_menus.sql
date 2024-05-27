@@ -326,3 +326,8 @@ INSERT INTO tbl_menus
 )
 VALUES
 ('38', 'Review Management', '/ReviewManagement/ReviewList', '', '', '', 'A', 'Customer', 'rabin.raut', '::1', GETDATE());
+
+
+INSERT INTO dbo.tbl_menus ( MenuId,MenuName, MenuUrl, MenuGroup, ParentGroup, MenuOrderPosition, GroupOrderPosition, CssClass, Status, MenuAccessCategory, ActionUser, ActionIP, ActionDate)
+VALUES ( 39,'Points Setup', '/PointSetup/PointSetupUserTypeList', NULL, NULL, NULL, NULL, NULL, 'A', 'Admin', 'kiran.acharya', NULL, GETDATE())
+GO

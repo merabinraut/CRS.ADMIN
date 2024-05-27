@@ -14,6 +14,8 @@ using CRS.ADMIN.BUSINESS.LogManagement.ErrorLogManagement;
 using CRS.ADMIN.BUSINESS.NotificationManagement;
 using CRS.ADMIN.BUSINESS.PaymentManagement;
 using CRS.ADMIN.BUSINESS.PlanManagement;
+using CRS.ADMIN.BUSINESS.PointSetup;
+using CRS.ADMIN.BUSINESS.PointsManagement;
 using CRS.ADMIN.BUSINESS.ProfileManagement;
 using CRS.ADMIN.BUSINESS.PromotionManagement;
 using CRS.ADMIN.BUSINESS.RecommendationManagement;
@@ -67,6 +69,8 @@ namespace CRS.ADMIN.APPLICATION
             container.RegisterType<ISMSLogBusiness, SMSLogBusiness>();
             container.RegisterType<IErrorLogBusiness, ErrorLogBusiness>();
             container.RegisterType<IEmailLogBusiness, EmailLogBusiness>();
+            container.RegisterType<IPointSetupBusiness, PointSetupBusiness>();
+            container.RegisterType<IPointsManagementBusiness, PointsManagementBusiness>();
             return container;
         }
     }

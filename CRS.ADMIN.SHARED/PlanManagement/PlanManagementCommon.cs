@@ -21,5 +21,7 @@ namespace CRS.ADMIN.SHARED.PlanManagement
         public string ExtraField3 { get; set; }
         public string PlanCategory { get; set; }
         public int NoOfPeople { get; set; }
+        public string StrikePrice { get; set; }
+        public string IsStrikeOut { get; set; }
     }
 }

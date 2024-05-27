@@ -30,6 +30,10 @@
             {
                 @Html.HiddenFor(model => model.PlanImage2)
             }
+            @*if (!string.IsNullOrEmpty(Model.IsStrikeOut))
+            {
+                @Html.HiddenFor(model => model.IsStrikeOut)
+            }*@
             <div class="p-[24px]">
                 <div class=" py-4 grid gap-5">
                     <div class="input-field-common">
@@ -180,14 +184,80 @@
                         </span>
                     </div>
                     <div class="input-field-common">
-                        <label class="block mb-[12px] text-sm font-medium text-secondary-100 ">
-                            @CRS.ADMIN.APPLICATION.Resources.Resource.Price
-                        </label>
+                        @{
+                            <label class="block mb-[12px] text-sm font-medium text-secondary-100 flex justify-between">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Price
+                                @if (!string.IsNullOrEmpty(Model.IsStrikeOut))
+                                {
+                                    if (Model.IsStrikeOut.Trim().ToUpper() == "A")
+                                    {
+                                        <div class="flex items-center gap-1">
+                                            <input style="padding:0" class="rounded-0" type="checkbox" id="chkShowInput" onclick="toggleInputField()" name="IsStrikeOut" checked />
+                                            Strike Out
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="flex items-center gap-1">
+                                            <input style="padding:0" class="rounded-0" type="checkbox" id="chkShowInput" onclick="toggleInputField()" name="IsStrikeOut" />
+                                            Strike Out
+                                        </div>
+                                    }
+                                }
+                                else
+                                {
+                                    <div class="flex items-center gap-1">
+                                        <input style="padding:0" class="rounded-0" type="checkbox" id="chkShowInput" onclick="toggleInputField()" name="IsStrikeOut" />
+                                        Strike Out
+                                    </div>
+                                }
+                            </label>
+                        }
+
                         @Html.TextBoxFor(model => model.Price, new { @class = "w-full rounded-[4px]", @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.Price, @style = "border-radius:4px !important", @onkeypress = "return isNumber(event)", autocomplete = "off", @maxLength = "7" })
                         <span class="error">
                             @Html.ValidationMessageFor(m => m.Price)
                         </span>
                     </div>
+                    @{
+                        if (!string.IsNullOrEmpty(Model.IsStrikeOut))
+                        {
+                            if (Model.IsStrikeOut.Trim().ToUpper() == "A")
+                            {
+                                <div class="input-field-common" id="txtInputField" style="display: block;">
+                                    <label class="block mb-[12px] text-sm font-medium text-secondary-100">
+                                        Strike Price
+                                    </label>
+                                    @Html.TextBoxFor(model => model.StrikePrice, new { @class = "w-full rounded-[4px]", @placeholder = "0", @style = "border-radius:4px !important", @onkeypress = "return isNumber(event)", autocomplete = "off", @maxLength = "7" })
+
+                                    @*<input type="text" placeholder="0" class="w-full" />*@
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="input-field-common" id="txtInputField" style="display: none;">
+                                    <label class="block mb-[12px] text-sm font-medium text-secondary-100">
+                                        Strike Price
+                                    </label>
+                                    @Html.TextBoxFor(model => model.StrikePrice, new { @class = "w-full rounded-[4px]", @placeholder = "0", @style = "border-radius:4px !important", @onkeypress = "return isNumber(event)", autocomplete = "off", @maxLength = "7" })
+
+                                    @*<input type="text" placeholder="0" class="w-full" />*@
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            <div class="input-field-common" id="txtInputField" style="display: none;">
+                                <label class="block mb-[12px] text-sm font-medium text-secondary-100">
+                                    Strike Price
+                                </label>
+                                @Html.TextBoxFor(model => model.StrikePrice, new { @class = "w-full rounded-[4px]", @placeholder = "0", @style = "border-radius:4px !important", @onkeypress = "return isNumber(event)", autocomplete = "off", @maxLength = "7" })
+
+                                @*<input type="text" placeholder="0" class="w-full" />*@
+                            </div>
+                        }
+                    }
+
                     <div class="input-field-common">
                         <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
                             @CRS.ADMIN.APPLICATION.Resources.Resource.Liquor
@@ -313,3 +383,40 @@
         }
     </div>
 </div>
+
+<style>
+    input[type="checkbox"] {
+        color: #fff;
+        appearance: none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        width: 16px;
+        height: 16px;
+        border: 2px solid red;
+        border-radius: 0px;
+        outline: none;
+        cursor: pointer;
+    }
+
+        /* Custom tick mark */
+        input[type="checkbox"]::before {
+            content: "";
+            display: inline-block;
+            width: 10px;
+            height: 5px;
+            border-left: 2px solid transparent; /* Color of the tick mark */
+            border-bottom: 2px solid transparent; /* Color of the tick mark */
+            transform: rotate(-45deg);
+            position: relative;
+            top: -8px;
+            left: 2px;
+        }
+
+        input[type="checkbox"]:checked {
+            border: 2px solid #D75A8B;
+        }
+            /* Change tick mark color when checkbox is checked */
+            input[type="checkbox"]:checked::before {
+                border-color: #D75A8B; /* Change this color to whatever you want */
+            }
+</style>
