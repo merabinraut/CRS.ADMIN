@@ -1,6 +1,7 @@
 ﻿using CRS.ADMIN.SHARED;
 using CRS.ADMIN.SHARED.PaginationManagement;
 using CRS.ADMIN.SHARED.PointsManagement;
+using DocumentFormat.OpenXml.Office2016.Excel;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -105,6 +106,78 @@ namespace CRS.ADMIN.REPOSITORY.PointsManagement
             SQL += ",@ActionIP=" + _DAO.FilterString(request.ActionIP);
             SQL += ",@ActionPlatform=" + _DAO.FilterString(request.ActionPlatform);
             return _DAO.ParseCommonDbResponse(SQL);
+        }
+
+        public List<PointBalanceStatementResponseCommon> GetPointBalanceStatementDetailsAsync(PointBalanceStatementRequestCommon request)
+        {
+            var response = new List<PointBalanceStatementResponseCommon>();
+            string SQL = "EXEC sproc_club_GetPoint_Balance_StatementDetails ";
+            SQL += !string.IsNullOrEmpty(request.SearchFilter) ? " @search=N" + _DAO.FilterString(request.SearchFilter) : " @search=null ";
+            //SQL += !string.IsNullOrEmpty(request.UserTypeList) ? " ,@UserTypeId=" + _DAO.FilterString(request.UserTypeList) : " ,@UserTypeId=null ";
+            SQL += !string.IsNullOrEmpty(request.UserNameList) ? ",@ClubId=" + _DAO.FilterString(request.UserNameList) : ",@ClubId=null";
+            SQL += !string.IsNullOrEmpty(request.TransferTypeList) ? " ,@TranscationType=" + _DAO.FilterString(request.TransferTypeList) : " ,@TranscationType =null";
+            SQL += !string.IsNullOrEmpty(request.From_Date) ? ",@FromDate=" + _DAO.FilterString(request.From_Date) : ",@FromDate=null";
+            SQL += !string.IsNullOrEmpty(request.To_Date) ? " ,@ToDate=" + _DAO.FilterString(request.To_Date) : " ,@ToDate =null";
+            SQL += " ,@Row=" + request.Skip;
+            SQL += ",@Fetch=" + request.Take;
+            var dbResponse = _DAO.ExecuteDataTable(SQL);
+            if (dbResponse != null)
+            {
+
+                foreach (DataRow item in dbResponse.Rows)
+                {
+                    response.Add(new PointBalanceStatementResponseCommon()
+                    {
+                        SNO = Convert.ToInt32(_DAO.ParseColumnValue(item, "SN").ToString()),
+                        RowTotal = Convert.ToString(_DAO.ParseColumnValue(item, "RowTotal").ToString()),                        
+                        TransactionId = Convert.ToString(_DAO.ParseColumnValue(item, "TranscationID")),
+                        TransactionDate = Convert.ToString(_DAO.ParseColumnValue(item, "TransactionDate")),
+                        TransactionType = Convert.ToString(_DAO.ParseColumnValue(item, "TransactionType")),
+                        User = Convert.ToString(_DAO.ParseColumnValue(item, "Users")),
+                        TotalPrice = Convert.ToString(_DAO.ParseColumnValue(item, "TotalAmount")),
+                        TotalCommission = Convert.ToString(_DAO.ParseColumnValue(item, "TotalCommissionAmount")),
+                        Remarks = Convert.ToString(_DAO.ParseColumnValue(item, "Remark")),
+                        Credit = Convert.ToString(_DAO.ParseColumnValue(item, "Credit")),
+                        Debit = Convert.ToString(_DAO.ParseColumnValue(item, "Debit"))                   
+                    });
+                }
+            }
+            return response;
+        }
+
+        public List<SystemTransferReponseCommon> GetSystemTransferDetailsAsync(SystemTransferRequestCommon request)
+        {
+
+            var response = new List<SystemTransferReponseCommon>();
+            string SQL = "EXEC sproc_get_system_transferReport ";
+            SQL += !string.IsNullOrEmpty(request.SearchFilter) ? " @search=N" + _DAO.FilterString(request.SearchFilter) : " @search=null ";
+            //SQL += !string.IsNullOrEmpty(request.UserTypeList) ? " ,@UserTypeId=" + _DAO.FilterString(request.UserTypeList) : " ,@UserTypeId=null ";
+            SQL += !string.IsNullOrEmpty(request.UserName) ? ",@ClubId=" + _DAO.FilterString(request.UserName) : ",@ClubId=null";
+            SQL += !string.IsNullOrEmpty(request.TransferType) ? " ,@TranscationType=" + _DAO.FilterString(request.TransferType) : " ,@TranscationType =null";
+            SQL += !string.IsNullOrEmpty(request.From_Date1) ? ",@FromDate=" + _DAO.FilterString(request.From_Date1) : ",@FromDate=null";
+            SQL += !string.IsNullOrEmpty(request.To_Date1) ? " ,@ToDate=" + _DAO.FilterString(request.To_Date1) : " ,@ToDate =null";
+            SQL += " ,@Row=" + request.Skip;
+            SQL += ",@Fetch=" + request.Take;
+            var dbResponse = _DAO.ExecuteDataTable(SQL);
+            if (dbResponse != null)
+            {
+                foreach (DataRow item in dbResponse.Rows)
+                {
+                    response.Add(new SystemTransferReponseCommon()
+                    {
+                        SNO = Convert.ToInt32(_DAO.ParseColumnValue(item, "SN").ToString()),
+                        RowTotal = Convert.ToString(_DAO.ParseColumnValue(item, "RowTotal").ToString()),
+                        TransactionId = Convert.ToString(_DAO.ParseColumnValue(item, "TranscationID")),
+                        TransactionDate = Convert.ToString(_DAO.ParseColumnValue(item, "TransactionDate")),
+                        TransactionType = Convert.ToString(_DAO.ParseColumnValue(item, "TransactionType")),
+                        UserName = Convert.ToString(_DAO.ParseColumnValue(item, "Users")),
+                        UserType = Convert.ToString(_DAO.ParseColumnValue(item, "UserType")),
+                        Points = Convert.ToString(_DAO.ParseColumnValue(item, "Point")),
+                        Remarks = Convert.ToString(_DAO.ParseColumnValue(item, "Remark"))                 
+                    });
+                }
+            }
+            return response;
         }
         #endregion
     }

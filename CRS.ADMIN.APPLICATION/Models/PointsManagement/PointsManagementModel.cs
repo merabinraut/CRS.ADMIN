@@ -1,3 +1,6 @@
+using CRS.ADMIN.APPLICATION.Models.PaginationManagement;
+using CRS.ADMIN.SHARED;
+using CRS.ADMIN.SHARED.PaginationManagement;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
@@ -16,6 +19,8 @@ namespace CRS.ADMIN.APPLICATION.Models.PointsManagement
         public string FromDate { get; set; }
         public string ToDate { get; set; }
         public PointRequestCommonModel PointRequestCommonModel { get; set; } = new PointRequestCommonModel();
+        public PointBalanceStatementRequestModel PointBalanceStatementRequest { get; set; } = new PointBalanceStatementRequestModel();
+        public SystemTransferRequestModel SystemTransferModel { get; set; } = new SystemTransferRequestModel();
     }
 
     public class PointsTansferModel
@@ -88,4 +93,60 @@ namespace CRS.ADMIN.APPLICATION.Models.PointsManagement
         public string UpdatedDate { get; set; }
         public string RowsTotal { get; set; }
     }
+
+    public class PointBalanceStatementRequestModel
+    {
+        public string SearchFilter { get; set; }
+        public string UserTypeList { get; set; }
+        public string UserNameList { get; set; }
+        public string TransferTypeList { get; set; }
+        public string From_Date { get; set; }
+        public string To_Date { get; set; }
+        public string userid { get; set; }
+        public int StartIndex2 { get; set; } = 0;
+        public int PageSize2 { get; set; } = 10;
+
+
+    }
+    public class PointBalanceStatementResponseModel : PaginationResponseCommon
+    {
+        public string TransactionId { get; set; }
+        public string TransactionDate { get; set; }
+        public string TransactionType { get; set; }
+        public string User { get; set; }
+        public string TotalPrice { get; set; }
+        public string TotalCommission { get; set; }
+        public string Remarks { get; set; }
+        public string Debit { get; set; }
+        public string Credit { get; set; }
+        public string RowTotal { get; set; }
+
+    }
+
+    public class SystemTransferRequestModel
+    {
+
+        public string SearchFilter { get; set; }
+        public string UserType { get; set; }
+        public string UserName { get; set; }
+        public string TransferType { get; set; }
+        public string From_Date1 { get; set; }
+        public string To_Date1 { get; set; }
+        public int StartIndex3 { get; set; } = 0;
+        public int PageSize3 { get; set; } = 10;
+
+    }
+    public class SystemTransferReponseModel
+    {
+
+        public string TransactionId { get; set; }
+        public int SNO { get; set; }
+        public string TransactionDate { get; set; }
+        public string TransactionType { get; set; }
+        public string UserType { get; set; }
+        public string UserName { get; set; }
+        public string Points { get; set; }
+        public string Remarks { get; set; }
+    }
+
 }

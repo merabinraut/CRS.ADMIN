@@ -1,0 +1,426 @@
+﻿
+@model CRS.ADMIN.APPLICATION.Models.PointsManagement.PointBalanceStatementRequestModel
+@{
+    var tempData = TempData["ListModel"] as List<CRS.ADMIN.APPLICATION.Models.PointsManagement.PointBalanceStatementResponseModel>;
+}
+
+<style>
+    .modalstyle {
+        height: 60px;
+        padding: 13px 16px 0px 16px;
+        align-items: flex-start;
+        gap: 10px;
+        align-self: stretch;
+        width: 100%;
+        border-radius: 4px;
+        border: 1px solid var(--2_Warmguy_-Warm-Gray, #A09E91);
+    }
+
+    .inpcont {
+        .file-upload-common
+
+    {
+        border-radius: 4px !important;
+        border: 1px solid #E6E6E6 !important;
+        background: #F5F5F5 !important;
+        height: 40px !important;
+        padding: 0px 16px 0px 8px !important;
+    }
+
+    .outercontainer {
+        border-radius: 4px;
+        border: 1px solid #E6E6E6;
+        background: #F5F5F5;
+        padding: 0px 16px 0px 8px;
+        height: 40px;
+        padding: 0px 16px 0px 8px;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .downlabel {
+        color: #959595;
+        font-family: "Noto Sans";
+        font-size: 12px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 100%;
+    }
+</style>
+<link href="~/Content/css/jquery-ui.min.css" rel="stylesheet" />
+
+<form action="GetPointBalanceStatementDetails" controller="PointsManagement" method="get">
+    @Html.AntiForgeryToken()
+    <input name="value" value="pr" hidden />
+    <div class="flex justify-between pb-[24px]">
+        <div class="relative input-search-wrapper">
+            <div class="absolute inset-y-0 left-0 flex items-center pl-[16px] pointer-events-none">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21" fill="none">
+                    <path d="M17.5 18L13.875 14.375M15.8333 9.66667C15.8333 13.3486 12.8486 16.3333 9.16667 16.3333C5.48477 16.3333 2.5 13.3486 2.5 9.66667C2.5 5.98477 5.48477 3 9.16667 3C12.8486 3 15.8333 5.98477 15.8333 9.66667Z"
+                          stroke="#667085" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+            </div>
+            <input type="search"
+                   id="SearchFilter4"
+                   class="input-search block w-full "
+                   placeholder="@CRS.ADMIN.APPLICATION.Resources.Resource.Search"
+                   value="@Model.SearchFilter"
+                   name="SearchFilter4">
+        </div>
+
+
+    </div>
+
+    <div class="grid grid-cols-3 gap-x-12 table-tab filteroutlinepadding">
+        <div class="input-field-common filteroutlinepadding">
+            <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
+                @CRS.ADMIN.APPLICATION.Resources.Resource.User_Type
+            </label>
+            <select id="UserTypeList" name="UserTypeList" onchange="return GetUserNameByUserType();" class=" default_select select-common block w-full "
+                    style="width: 100%;">
+                @foreach (var item in ViewBag.UserTypeList as IEnumerable<SelectListItem>)
+                {
+                    var selectedId = ViewBag.UserTypeIdKey as string;
+                    if (item.Value == selectedId)
+                    {
+                        <option value="@item.Value" selected>
+                            @item.Text
+                        </option>
+                    }
+                    else
+                    {
+                        <option value="@item.Value">
+                            @item.Text
+                        </option>
+                    }
+                }
+            </select>
+            <span class="error">
+                @Html.ValidationMessageFor(m => m.UserTypeList)
+            </span>
+
+        </div>
+
+        <div class="input-field-common mb-[20px]">
+            <div class="input-field-common filteroutlinepadding">
+                <label for="date" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                    @CRS.ADMIN.APPLICATION.Resources.Resource.User
+                </label>
+
+                <select id="UserNameList" name="UserNameList" class=" default_select select-common block w-full "
+                        style="width: 100%;">
+                    @foreach (var item in ViewBag.FilterUserList as IEnumerable<SelectListItem>)
+                    {
+                        var selectedId = ViewBag.UsernameIdKey as string;
+                        if (item.Value == selectedId)
+                        {
+                            <option value="@item.Value" selected>
+                                @item.Text
+                            </option>
+                        }
+                        else
+                        {
+                            <option value="@item.Value">
+                                @item.Text
+                            </option>
+                        }
+                    }
+                </select>
+                <span class="error">
+                    @Html.ValidationMessageFor(m => m.UserNameList)
+                </span>
+
+
+
+            </div>
+        </div>
+
+        <div class="input-field-common filteroutlinepadding">
+            <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
+                @CRS.ADMIN.APPLICATION.Resources.Resource.Transfer_Type
+            </label>
+            <select id="TransferTypeList" name="TransferTypeList" class=" default_select select-common block w-full "
+                    style="width: 100%;">
+                @foreach (var item in ViewBag.TransferTypeIdList as IEnumerable<SelectListItem>)
+                {
+                    var selectedId = ViewBag.TransferTypeIdKey as string;
+                    if (item.Value == selectedId)
+                    {
+                        <option value="@item.Value" selected>
+                            @item.Text
+                        </option>
+                    }
+                    else
+                    {
+                        <option value="@item.Value">
+                            @item.Text
+                        </option>
+                    }
+                }
+            </select>
+            <span class="error">
+                @Html.ValidationMessageFor(m => m.TransferTypeList)
+            </span>
+        </div>
+
+        <div class="input-field-common mb-[20px]" id="tagInput1">
+            <div class="input-field-common filteroutlinepadding">
+                <label for="date" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                    @CRS.ADMIN.APPLICATION.Resources.Resource.From_Date
+                </label>
+                @Html.TextBox("From_Date", Model.From_Date, new
+           {
+               @class = "w-full",
+               @placeholder = "YYYY/MM/DD",
+               @autocomplete = "off",
+               @type = "text",
+               @readonly = "readonly",
+               @id = "From_Date"
+           })
+                <span class="error">
+                    @Html.ValidationMessageFor(m => m.From_Date)
+                </span>
+            </div>
+        </div>
+        <div class="input-field-common mb-[20px]" id="tagInput2">
+            <div class="input-field-common filteroutlinepadding">
+                <label for="date" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                    @CRS.ADMIN.APPLICATION.Resources.Resource.To_Date
+                </label>
+                @Html.TextBox("To_Date", Model.To_Date, new
+           {
+               @class = "w-full",
+               @placeholder = "YYYY/MM/DD",
+               @autocomplete = "off",
+               @type = "text",
+               @readonly = "readonly",
+               @id = "To_Date"
+           })
+
+                <span class="error">
+                    @Html.ValidationMessageFor(m => m.To_Date)
+                </span>
+            </div>
+        </div>
+        <br />
+        <div>
+            <div class="py-4 flex justify-start mx-[18px]">
+                <div class="flex gap-6">
+                    <button class="btn btn-secondary rounded-[4px]" type="button" data-drawer-hide="add-new-points-request"
+                            aria-controls="add-new-points-request" onclick="CancelFunction();">
+                        @CRS.ADMIN.APPLICATION.Resources.Resource.Cancel
+                    </button>
+                    <button class="btn btn-primary-default rounded-[4px]" type="submit"> @CRS.ADMIN.APPLICATION.Resources.Resource.Apply</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</form>
+
+<div class="px-[12px] py-[16px] flex justify-between entry-export-container">
+    <div class="flex items-center select-entries" id="ShowEntries-Id-4">
+    </div>
+</div>
+<div class="relative overflow-x-auto">
+    <table class="w-full text-left club-table" id="table-id">
+        <thead class="club-table-thead">
+            <tr>
+                <th scope="col" class="p-[12px]">
+                    <div class="flex w-max">
+                        S.N
+                        <div class="relative pl-[5px]">
+                            <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                            <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                        </div>
+                    </div>
+                </th>
+                <th scope="col" class="p-[12px]">
+                    <div class="flex w-max">
+                        @CRS.ADMIN.APPLICATION.Resources.Resource.Transaction_ID
+                        <div class="relative pl-[5px]">
+                            <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                            <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                        </div>
+                    </div>
+                </th>
+
+
+                <th scope="col" class="p-[12px]">
+                    <div class="flex w-max">
+                        @CRS.ADMIN.APPLICATION.Resources.Resource.Transaction_Date
+                        <div class="relative pl-[5px]">
+                            <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                            <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                        </div>
+                    </div>
+                </th>
+
+                <th scope="col" class="p-[12px]">
+                    <div class="flex w-max">
+                        @CRS.ADMIN.APPLICATION.Resources.Resource.Transaction_Type
+                        <div class="relative pl-[5px]">
+                            <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                            <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                        </div>
+                    </div>
+                </th>
+
+                <th scope="col" class="p-[12px]">
+                    <div class="flex w-max">
+                        @CRS.ADMIN.APPLICATION.Resources.Resource.User
+                        <div class="relative pl-[5px]">
+                            <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                            <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                        </div>
+                    </div>
+                </th>
+
+                <th scope="col" class="p-[12px]">
+                    <div class="flex w-max">
+                        @CRS.ADMIN.APPLICATION.Resources.Resource.Total_Amount
+                        <div class="relative pl-[5px]">
+                            <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                            <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                        </div>
+                    </div>
+                </th>
+                <th scope="col" class="p-[12px]">
+                    <div class="flex w-max">
+                        @CRS.ADMIN.APPLICATION.Resources.Resource.Total_Commission
+                        <div class="relative pl-[5px]">
+                            <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                            <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                        </div>
+                    </div>
+                </th>
+                <th scope="col" class="p-[12px]">
+                    <div class="flex w-max">
+                        @CRS.ADMIN.APPLICATION.Resources.Resource.Remarks
+                        <div class="relative pl-[5px]">
+                            <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                            <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                        </div>
+                    </div>
+                </th>
+                <th scope="col" class="p-[12px]">
+                    <div class="flex w-max">
+                        @CRS.ADMIN.APPLICATION.Resources.Resource.Debit
+                        <div class="relative pl-[5px]">
+                            <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                            <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                        </div>
+                    </div>
+                </th>
+                <th scope="col" class="p-[12px]">
+                    <div class="flex w-max">
+                        @CRS.ADMIN.APPLICATION.Resources.Resource.Credit
+                        <div class="relative pl-[5px]">
+                            <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                            <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                        </div>
+                    </div>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @{
+                if (tempData != null)
+                {
+                    if (tempData.Count > 0)
+                    {
+                        int SNO = 1;
+                        foreach (var item in tempData)
+                        {
+                            <tr class="bg-white border-b ">
+                                <td class="p-[12px]">
+                                    @SNO
+                                </td>
+                                <td class="p-[12px]">
+                                    @item.TransactionId
+                                </td>
+                                <td class="p-[12px]">
+                                    @item.TransactionDate
+                                </td>
+                                <td class="p-[12px]">
+                                    @item.TransactionType
+                                </td>
+                                <td class="p-[12px]">
+                                    @item.User
+                                </td>
+                                <td class="p-[12px]">
+                                    @item.TotalPrice
+                                </td>
+                                <td class="p-[12px]">
+                                    @item.TotalCommission
+                                </td>
+                                <td class="p-[12px]">
+                                    @item.Remarks
+                                </td>
+                                <td class="p-[12px]">
+                                    @item.Debit
+                                </td>
+                                <td class="p-[12px]">
+                                    @item.Credit
+                                </td>
+                            </tr>
+                            SNO++;
+                        }
+                    }
+                }
+
+            }
+
+
+        </tbody>
+    </table>
+
+</div>
+<div class="pagination-club">
+    <div class="show-entry" id="Entries-Id-4">
+    </div>
+    <div class="flex gap-[12px]">
+        <div class="btn btn-secondary-box-shadow" id="prev-btn-4">
+            @CRS.ADMIN.APPLICATION.Resources.Resource.Previous
+        </div>
+        <div class="flex gap-[12px]" id="pagination-id-4">
+        </div>
+        <div class="btn btn-secondary-box-shadow" id="next-btn-4">
+            @CRS.ADMIN.APPLICATION.Resources.Resource.Next
+        </div>
+    </div>
+</div>
+<script>
+
+    function GetUserNameByUserType() {
+    //$('#large[name="UserTypeList"]').change(function () {
+        var UserTypeId = $('#large[name="UserTypeList"]').find("option:selected").val().trim();
+        //$('#large[name="UserNameList"]').prop("disabled", true);
+        $.ajax({
+            type: 'GET',
+            async: true,
+            url: '@Url.Action("GetUserListByRoleTypeId", "PointSetup")',
+            dataType: 'json',
+            data: { RoleTypeId: UserTypeId },
+            success: function (response) {
+                $('#large[name="UserNameList"]').empty();
+                if (response.userNameList.length > 0) {
+                    $('#large[name="UserNameList"]').append($("<option>").val("").text("--- Select ---"));
+                    $.each(response.userNameList, function (i, value) {
+                        $('#large[name="UserNameList"]').append($("<option>").val(value.Value).text(value.Text));
+                    });
+                    $('#large[name="UserNameList"]').prop("disabled", false);
+                }
+                else {
+                    $('#large[name="UserNameList"]').empty();
+                }
+            },
+            error: function (ex) {
+                alert('Failed to retrive details.' + ex);
+            }
+        });
+        return false;
+    };
+
+</script>

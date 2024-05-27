@@ -1199,6 +1199,46 @@
         updateStep();
     </script>
     <script>
+
+
+        function LangChangeAlert(message, buttonText, agentId) {
+            toastr.options = {
+                "closeButton": true,
+                "debug": false,
+                "newestOnTop": false,
+                "progressBar": false,
+                "positionClass": "toast-top-right",
+                "preventDuplicates": true,
+                "showDuration": "300",
+                "hideDuration": "0",
+                "timeOut": 0,
+                "extendedTimeOut": 0,
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut",
+                "tapToDismiss": false
+            };
+
+            let buttonHtml;
+            buttonHtml = `
+            <button style="display: block; margin-top: 10px; background-color: #007bff; color: #fff; border: none; padding: 5px 10px; cursor: pointer;"
+                    onclick="handleLanguageSelection('${agentId}')">
+                ${buttonText}
+            </button>`;
+
+            const fullMessage = `${message} ${buttonHtml}`;
+
+            toastr.info(fullMessage);
+        }
+
+
+
+
+        function handleLanguageSelection(agentId) {
+            BlockUnblockFunction(agentId);
+        }
+
         function BlockUnblockFunction(i) {
             var RequestVerificationToken = $('input[name="__RequestVerificationToken"]').val();
             $.ajax({

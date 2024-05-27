@@ -5,6 +5,9 @@
     var _ManagePointsModel = Model.ManagePointsTansfer as CRS.ADMIN.APPLICATION.Models.PointsManagement.PointsTansferModel;
     var _ManagePointsRequestModel = Model.ManagePointsRequest as CRS.ADMIN.APPLICATION.Models.PointsManagement.PointsRequestModel;
     var _PointRequestCommonModel = Model.PointRequestCommonModel as CRS.ADMIN.APPLICATION.Models.PointsManagement.PointRequestCommonModel;
+    var _PointStatementModel = Model.PointBalanceStatementRequest as CRS.ADMIN.APPLICATION.Models.PointsManagement.PointBalanceStatementRequestModel;
+    var _systemTransferModel = Model.SystemTransferModel as CRS.ADMIN.APPLICATION.Models.PointsManagement.SystemTransferRequestModel;
+
 }
 <style>
     .filterborder {
@@ -57,10 +60,9 @@
                         <form action="/PointsManagement/PointsTransferList" method="get">
                             <div class="flex justify-between pb-[24px]">
 
-
-
                                 @*<input type="hidden" name="ClubId" value="@Model.UserTypeList.R">*@
                                 @Html.HiddenFor(model => model.ListType)
+
                                 <div class="relative input-search-wrapper">
                                     <div class="absolute inset-y-0 left-0 flex items-center pl-[16px] pointer-events-none">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21" fill="none">
@@ -68,6 +70,7 @@
                                                   stroke="#667085" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round" />
                                         </svg>
                                     </div>
+
                                     <input type="search"
                                            id="default-search"
                                            class="input-search block w-full "
@@ -376,10 +379,10 @@
 
 
                     <div id="pointsbalance" class="pane" style="display: none;">
-
+                        @Html.Partial("_PointBalanceStatement", _PointStatementModel)
                     </div>
                     <div id="pointsSystemTransfer" class="pane" style="display: none;">
-
+                        @Html.Partial("_GetSystemTransferReportAsync", _systemTransferModel)
                     </div>
                     <div id="pointsrequest" class="pane" style="display: none;">
                         @Html.Partial("_PointRequestListPartialView", _PointRequestCommonModel)
@@ -395,7 +398,7 @@
 
 @section scripts
 {
-    <script src="~/Content/assets_new/js/calendar-management.js"></script>
+    @*<script src="~/Content/assets_new/js/calendar-management.js"></script>*@
     @* <script src="~/Content/assets_new/js/jquery.min.js"></script>*@
     <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
     <script>
@@ -555,12 +558,12 @@
                 const page_size2 = @ViewBag.PageSize2;
                 const total_data2 = @ViewBag.TotalData2;
                 const start_index_val2 = @ViewBag.StartIndex2;
-                var usertypeid = "";
-                var username = "";
-                var transfertype = "";
-                var FromDate = "";
-                var ToDate = "";
-                let URL2 = "/PointSetup/PointSetupUserTypeList?UserTypeId=" + usertypeid + "&UserName=" + username + "&TransferTypeId=" + transfertype + "&FromDate=" + FromDate + "&ToDate=" + ToDate ;
+                var usertypeid = $("#UserTypeList").val();
+                var username = $("#UserNameList").val();
+                var transfertype = $("#TransferTypeList").val();
+                var FromDate = $("#From_Date").val();
+                var ToDate = $("#To_Date").val();
+                let URL2 = "/PointsManagement/GetPointBalanceStatementDetails?UserTypeList=" + usertypeid + "&UserNameList=" + username + "&TransferTypeList=" + transfertype + "&From_Date=" + FromDate + "&To_Date=" + ToDate ;
                 let search_filter2 = $('#default-search').val();
                 URL2 = addQueryParam2(URL2, 'SearchFilter', search_filter2, 'value', 'pbs');
                 dynamicStartIndexLabel = "StartIndex2";
@@ -573,7 +576,12 @@
                 const page_size3 = @ViewBag.PageSize3;
                 const total_data3 = @ViewBag.TotalData3;
                 const start_index_val3 = @ViewBag.StartIndex3;
-                let URL3 = "/ClubManagement/ClubList";
+                var usertypeid = $("#Usertype1").val();
+                var username = $("#Username1").val();
+                var transfertype = $("#TransferType1").val();
+                var FromDate = $("#From_Date1").val();
+                var ToDate = $("#To_Date1").val();
+                let URL3 = "/PointsManagement/GetSystemTransferReportAsync?UserType=" + usertypeid + "&UserName=" + username + "&TransferType=" + transfertype + "&From_Date1=" + FromDate + "&To_Date1=" + ToDate ;
                 let search_filter3 = $('#default-search').val();
                 URL3 = addQueryParam2(URL3, 'SearchFilter', search_filter3, 'value', 'st');
                 dynamicStartIndexLabel = "StartIndex3";
@@ -735,8 +743,121 @@
               defaultDate: '@_PointRequestCommonModel.ToDate'
               });
               });
-         });
+        });
 
+
+  $("#From_Date").val("@_PointStatementModel.From_Date");
+    jQuery(function ($) {
+    $.datepicker.regional['ja'] = {
+    closeText: '閉じる',
+    prevText: '&#x3c;前',
+    nextText: '次&#x3e;',
+    currentText: '今日',
+    monthNames: ['1月', '2月', '3月', '4月', '5月', '6月',
+    '7月', '8月', '9月', '10月', '11月', '12月'],
+    monthNamesShort: ['1月', '2月', '3月', '4月', '5月', '6月',
+    '7月', '8月', '9月', '10月', '11月', '12月'],
+    dayNames: ['日曜日', '月曜日', '火曜日', '水曜日', '木曜日', '金曜日', '土曜日'],
+    dayNamesShort: ['日', '月', '火', '水', '木', '金', '土'],
+    dayNamesMin: ['日', '月', '火', '水', '木', '金', '土'],
+    weekHeader: '週',
+    dateFormat: 'yy/mm/dd',
+    firstDay: 0,
+    isRTL: false,
+    showMonthAfterYear: true,
+    yearSuffix: '年'
+    };
+    $.datepicker.setDefaults($.datepicker.regional['ja']);
+    $("#From_Date").datepicker({
+    defaultDate: '@_PointStatementModel.From_Date'
+    });
+    });
+
+
+ $("#To_Date").val("@_PointStatementModel.To_Date");
+   jQuery(function ($) {
+   $.datepicker.regional['ja'] = {
+   closeText: '閉じる',
+   prevText: '&#x3c;前',
+   nextText: '次&#x3e;',
+   currentText: '今日',
+   monthNames: ['1月', '2月', '3月', '4月', '5月', '6月',
+   '7月', '8月', '9月', '10月', '11月', '12月'],
+   monthNamesShort: ['1月', '2月', '3月', '4月', '5月', '6月',
+   '7月', '8月', '9月', '10月', '11月', '12月'],
+   dayNames: ['日曜日', '月曜日', '火曜日', '水曜日', '木曜日', '金曜日', '土曜日'],
+   dayNamesShort: ['日', '月', '火', '水', '木', '金', '土'],
+   dayNamesShort: ['日', '月', '火', '水', '木', '金', '土'],
+   dayNamesMin: ['日', '月', '火', '水', '木', '金', '土'],
+   weekHeader: '週',
+   dateFormat: 'yy/mm/dd',
+   firstDay: 0,
+   isRTL: false,
+   showMonthAfterYear: true,
+   yearSuffix: '年'
+   };
+   $.datepicker.setDefaults($.datepicker.regional['ja']);
+   $("#To_Date").datepicker({
+   defaultDate: '@_PointStatementModel.To_Date'
+   });
+   });
+
+
+     $("#From_Date1").val("@_systemTransferModel.From_Date1");
+   jQuery(function ($) {
+   $.datepicker.regional['ja'] = {
+   closeText: '閉じる',
+   prevText: '&#x3c;前',
+   nextText: '次&#x3e;',
+   currentText: '今日',
+   monthNames: ['1月', '2月', '3月', '4月', '5月', '6月',
+   '7月', '8月', '9月', '10月', '11月', '12月'],
+   monthNamesShort: ['1月', '2月', '3月', '4月', '5月', '6月',
+   '7月', '8月', '9月', '10月', '11月', '12月'],
+   dayNames: ['日曜日', '月曜日', '火曜日', '水曜日', '木曜日', '金曜日', '土曜日'],
+   dayNamesShort: ['日', '月', '火', '水', '木', '金', '土'],
+   dayNamesMin: ['日', '月', '火', '水', '木', '金', '土'],
+   weekHeader: '週',
+   dateFormat: 'yy/mm/dd',
+   firstDay: 0,
+   isRTL: false,
+   showMonthAfterYear: true,
+   yearSuffix: '年'
+   };
+   $.datepicker.setDefaults($.datepicker.regional['ja']);
+   $("#From_Date1").datepicker({
+   defaultDate: '@_systemTransferModel.From_Date1'
+   });
+   });
+
+
+$("#To_Date1").val("@_systemTransferModel.To_Date1");
+  jQuery(function ($) {
+  $.datepicker.regional['ja'] = {
+  closeText: '閉じる',
+  prevText: '&#x3c;前',
+  nextText: '次&#x3e;',
+  currentText: '今日',
+  monthNames: ['1月', '2月', '3月', '4月', '5月', '6月',
+  '7月', '8月', '9月', '10月', '11月', '12月'],
+  monthNamesShort: ['1月', '2月', '3月', '4月', '5月', '6月',
+  '7月', '8月', '9月', '10月', '11月', '12月'],
+  dayNames: ['日曜日', '月曜日', '火曜日', '水曜日', '木曜日', '金曜日', '土曜日'],
+  dayNamesShort: ['日', '月', '火', '水', '木', '金', '土'],
+  dayNamesShort: ['日', '月', '火', '水', '木', '金', '土'],
+  dayNamesMin: ['日', '月', '火', '水', '木', '金', '土'],
+  weekHeader: '週',
+  dateFormat: 'yy/mm/dd',
+  firstDay: 0,
+  isRTL: false,
+  showMonthAfterYear: true,
+  yearSuffix: '年'
+  };
+  $.datepicker.setDefaults($.datepicker.regional['ja']);
+  $("#To_Date1").datepicker({
+  defaultDate: '@_systemTransferModel.To_Date1'
+  });
+  });
     </script>
 
     <script>

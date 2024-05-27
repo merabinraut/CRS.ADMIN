@@ -2,6 +2,7 @@
 using CRS.ADMIN.SHARED;
 using CRS.ADMIN.SHARED.PaginationManagement;
 using CRS.ADMIN.SHARED.PointsManagement;
+using DocumentFormat.OpenXml.Office2016.Excel;
 using System.Collections.Generic;
 
 namespace CRS.ADMIN.BUSINESS.PointsManagement
@@ -33,6 +34,16 @@ namespace CRS.ADMIN.BUSINESS.PointsManagement
         public CommonDbResponse ManageClubPointRequest(ManageClubPointRequestCommon request)
         {
             return _REPO.ManageClubPointRequest(request);
+        }
+
+        public List<PointBalanceStatementResponseCommon> GetPointBalanceStatementDetailsAsync(PointBalanceStatementRequestCommon requestModel)
+        {
+            return _REPO.GetPointBalanceStatementDetailsAsync(requestModel);
+        }
+
+        public List<SystemTransferReponseCommon> GetSystemTransferDetailsAsync(SystemTransferRequestCommon mappedObject)
+        {
+            return _REPO.GetSystemTransferDetailsAsync(mappedObject);
         }
         #endregion
     }

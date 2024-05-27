@@ -499,6 +499,10 @@
     <value>作成日</value>
     <comment>Roles &amp; Privileges</comment>
   </data>
+  <data name="Credit" xml:space="preserve">
+    <value>残高</value>
+    <comment>PointManagement</comment>
+  </data>
   <data name="Current Category" xml:space="preserve">
     <value>現在のカテゴリー</value>
     <comment>Point Setup</comment>
@@ -541,6 +545,10 @@
   <data name="Days" xml:space="preserve">
     <value>日々</value>
     <comment>Dashboard</comment>
+  </data>
+  <data name="Debit" xml:space="preserve">
+    <value>入金額</value>
+    <comment>Point Management</comment>
   </data>
   <data name="December" xml:space="preserve">
     <value>十二月</value>

@@ -39,7 +39,6 @@ namespace CRS.ADMIN.APPLICATION
                 //    HttpContext.Current.Response.Redirect("/Error/Index?Id=" + id);
                 //    HttpContext.Current.Response.End();
                 //}
-                id = "1";
                 HttpContext.Current.Response.Redirect("/ErrorManagement/Index?Id=" + id);
                 HttpContext.Current.Response.End();
             }
