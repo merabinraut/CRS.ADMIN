@@ -1,5 +1,6 @@
 ﻿using CRS.ADMIN.REPOSITORY.StaticDataManagement;
 using CRS.ADMIN.SHARED;
+using CRS.ADMIN.SHARED.PaginationManagement;
 using CRS.ADMIN.SHARED.StaticDataManagement;
 using System.Collections.Generic;
 
@@ -23,9 +24,9 @@ namespace CRS.ADMIN.BUSINESS.StaticDataManagement
             return _repo.GetStaticDataTypeDetail(id);
         }
 
-        public List<StaticDataTypeCommon> GetStatiDataTypeList(string SearchText = "")
+        public List<StaticDataTypeCommon> GetStatiDataTypeList(PaginationFilterCommon dbRequest)
         {
-            return _repo.GetStatiDataTypeList(SearchText);
+            return _repo.GetStatiDataTypeList(dbRequest);
         }
 
         public CommonDbResponse ManageStaticDataType(ManageStaticDataTypeCommon commonModel)

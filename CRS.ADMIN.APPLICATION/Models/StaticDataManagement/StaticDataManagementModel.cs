@@ -5,6 +5,7 @@ namespace CRS.ADMIN.APPLICATION.Models.StaticDataManagement
 {
     public class StaticDataManagement
     {
+        public string SearchFilter { get; set; }
         public List<StaticDataTypeModel> GetStaticDataTypeList { get; set; }
         public List<StaticDataModel> GetStaticDataList { get; set; }
         public ManageStaticDataType ManageStaticDataType { get; set; }
@@ -12,6 +13,7 @@ namespace CRS.ADMIN.APPLICATION.Models.StaticDataManagement
     }
     public class StaticDataTypeModel
     {
+        public string SNO { get; set; }
         public string Id { get; set; }
         public string StaticDataType { get; set; }
         public string StaticDataName { get; set; }

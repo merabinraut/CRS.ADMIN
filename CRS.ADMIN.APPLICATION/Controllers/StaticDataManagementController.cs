@@ -2,7 +2,9 @@
 using CRS.ADMIN.APPLICATION.Models.StaticDataManagement;
 using CRS.ADMIN.BUSINESS.StaticDataManagement;
 using CRS.ADMIN.SHARED;
+using CRS.ADMIN.SHARED.PaginationManagement;
 using CRS.ADMIN.SHARED.StaticDataManagement;
+using System.Linq;
 using System.Web.Mvc;
 
 namespace CRS.ADMIN.APPLICATION.Controllers
@@ -16,7 +18,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             _business = business;
         }
         #region MANAGE STATIC DATA TYPE
-        public ActionResult Index(string SearchText = "")
+        public ActionResult Index(string SearchFilter = "", int StartIndex = 0, int PageSize = 10)
         {
             Session["CurrentURL"] = "/StaticDataManagement/Index";
             string RenderId = "";
@@ -24,13 +26,23 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             if (TempData.ContainsKey("ManageStaticDataType")) responseInfo.ManageStaticDataType = TempData["ManageStaticDataType"] as ManageStaticDataType;
             else responseInfo.ManageStaticDataType = new ManageStaticDataType();
             if (TempData.ContainsKey("RenderId")) RenderId = TempData["RenderId"].ToString();
-            var dbResponseInfo = _business.GetStatiDataTypeList(SearchText);
+            PaginationFilterCommon dbRequest = new PaginationFilterCommon()
+            {
+                Skip = StartIndex,
+                Take = PageSize,
+                SearchFilter = !string.IsNullOrEmpty(SearchFilter) ? SearchFilter : null
+            };
+            var dbResponseInfo = _business.GetStatiDataTypeList(dbRequest);
             responseInfo.GetStaticDataTypeList = dbResponseInfo.MapObjects<StaticDataTypeModel>();
             foreach (var item in responseInfo.GetStaticDataTypeList)
             {
                 item.Id = item.Id.EncryptParameter();
             }
             ViewBag.PopUpRenderValue = !string.IsNullOrEmpty(RenderId) ? RenderId : null;
+            ViewBag.StartIndex = StartIndex;
+            ViewBag.PageSize = PageSize;
+            ViewBag.TotalData = dbResponseInfo != null && dbResponseInfo.Any() ? dbResponseInfo[0].TotalRecords : 0;
+            responseInfo.SearchFilter = !string.IsNullOrEmpty(SearchFilter) ? SearchFilter : null;
             return View(responseInfo);
         }
         [HttpGet]
@@ -75,7 +87,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                         NotificationType = NotificationMessage.SUCCESS,
                         Message = dbResponse.Message ?? "Static Data Type Added Successfully",
                         Title = NotificationMessage.SUCCESS.ToString()
-                    });                   
+                    });
                     return RedirectToAction("Index");
                 }
                 else
@@ -91,7 +103,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             }
             TempData["ManageStaticDataType"] = model;
             TempData["RenderId"] = "Manage";
-            return RedirectToAction("Index");           
+            return RedirectToAction("Index");
         }
         [HttpPost, ValidateAntiForgeryToken]
         public ActionResult DeleteStaticDataType(string id = "")
@@ -149,26 +161,20 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             if (TempData.ContainsKey("RenderId")) RenderId = TempData["RenderId"].ToString();
             var dbResponseInfo = _business.GetStaticDataList(staticDataTypeId);
             responseInfo.GetStaticDataList = dbResponseInfo.MapObjects<StaticDataModel>();
-            foreach (var item in responseInfo.GetStaticDataList)
-            {
-                item.Id = item.Id.EncryptParameter();
-            }
-            ViewBag.StaticDataTypeId = staticDataTypeId;
+            ViewBag.PopUpRenderValue = !string.IsNullOrEmpty(RenderId) ? RenderId : null;
             return View(responseInfo);
         }
         [HttpGet]
-        public ActionResult ManageStaticData(string id = "")
+        public ActionResult ManageStaticData(string id = "", string staticDataTypeId = "")
         {
             ManageStaticData model = new ManageStaticData();
-            if (!string.IsNullOrEmpty(id))
+            if (!string.IsNullOrEmpty(id) || !string.IsNullOrEmpty(staticDataTypeId))
             {
-                string Id = id.DecryptParameter();
-                var dbResponse = _business.GetStaticDataDetail(Id);
+                var dbResponse = _business.GetStaticDataDetail(id);
                 model = dbResponse.MapObject<ManageStaticData>();
-                model.Id = Id.EncryptParameter();
                 TempData["ManageStaticData"] = model;
                 TempData["RenderId"] = "Manage";
-                return RedirectToAction("StaticDataIndex");
+                return RedirectToAction("StaticDataIndex", new { staticDataTypeId = staticDataTypeId });
             }
             else
             {
@@ -202,7 +208,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                     });
                     TempData["ManageStaticData"] = Model;
                     TempData["RenderId"] = "Manage";
-                    return RedirectToAction("StaticDataIndex");
+                    return RedirectToAction("StaticDataIndex", new { staticDataTypeId = commonModel.StaticDataType });
                 }
                 else
                 {

@@ -1,7 +1,10 @@
-﻿namespace CRS.ADMIN.SHARED.StaticDataManagement
+﻿using CRS.ADMIN.SHARED.PaginationManagement;
+
+namespace CRS.ADMIN.SHARED.StaticDataManagement
 {
-    public class StaticDataTypeCommon
+    public class StaticDataTypeCommon: PaginationResponseCommon
     {
+        public string SNO { get; set; }
         public string Id { get; set; }
         public string StaticDataType { get; set; }
         public string StaticDataName { get; set; }

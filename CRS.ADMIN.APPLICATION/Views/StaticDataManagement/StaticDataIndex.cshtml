@@ -121,10 +121,10 @@
                                 <td class="p-[12px]">
                                     <div class="flex gap-[7px] justify-center text-[16px] ">
                                         <div>
-                                            <i class="fa-regular fa-pen-to-square text-[#989898] cursor-pointer" onclick="edit('@item.Id')"></i>
+                                            <i class="fa-regular fa-pen-to-square text-[#989898] cursor-pointer" onclick="edit('@item.Id','@item.StaticDataType')"></i>
                                         </div>
                                         <div>
-                                            <i class="fa-solid fa-trash-can text-primary-100 cursor-pointer" onclick="deleteStaticData('@item.Id')"></i>
+                                            <i class="fa-solid fa-trash-can text-primary-100 cursor-pointer" onclick="deleteStaticData('@item.Id','@item.StaticDataType')"></i>
                                         </div>
                                     </div>
                                 </td>
@@ -164,17 +164,17 @@
                  element.classList.remove('translate-x-full');
              }
          });
-        function edit(id) {
-            window.location.href = '/StaticDataManagement/ManageStaticData?id=' + id;
+        function edit(id, staticDataTypeId) {
+            window.location.href = '/StaticDataManagement/ManageStaticData?id=' + id + '&staticDataTypeId=' + staticDataTypeId;
         }
         function CancelFunction() {
-            location.reload();
+            window.location.reload();
         }
-        function deleteStaticData(id) {
+        function deleteStaticData(id,staticDataTypeId) {
             $.ajax({
                 type: 'POST',
                 async: true,
-                url: "/StaticDataManagement/DeleteStaticData?id=" + id+"&staticDataTypeId="+'@ViewBag.StaticDataTypeId',
+                url: "/StaticDataManagement/DeleteStaticData?id=" + id + "&staticDataTypeId=" + staticDataTypeId,
                 dataType: 'json',
                 data: {
                     __RequestVerificationToken: $('input[name="__RequestVerificationToken"]').val(),

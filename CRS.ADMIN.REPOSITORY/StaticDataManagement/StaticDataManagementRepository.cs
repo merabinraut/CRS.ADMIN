@@ -1,4 +1,5 @@
 ﻿using CRS.ADMIN.SHARED;
+using CRS.ADMIN.SHARED.PaginationManagement;
 using CRS.ADMIN.SHARED.StaticDataManagement;
 using System.Collections.Generic;
 using System.Linq;
@@ -41,10 +42,12 @@ namespace CRS.ADMIN.REPOSITORY.StaticDataManagement
             return new ManageStaticDataTypeCommon();
         }
 
-        public List<StaticDataTypeCommon> GetStatiDataTypeList(string SearchText = "")
+        public List<StaticDataTypeCommon> GetStatiDataTypeList(PaginationFilterCommon dbRequest)
         {
             string sp_name = "EXEC sproc_tbl_static_data_type_list ";
-            sp_name += "@Search=" + _dao.FilterString(SearchText);
+            sp_name += "@SearchFilter=" + _dao.FilterString(dbRequest.SearchFilter);
+            sp_name += ",@Skip=" + dbRequest.Skip;
+            sp_name += ",@Take=" + dbRequest.Take;
             var dbResponseInfo = _dao.ExecuteDataTable(sp_name);
             if (dbResponseInfo != null && dbResponseInfo.Rows.Count > 0) return _dao.DataTableToListObject<StaticDataTypeCommon>(dbResponseInfo).ToList();
             return new List<StaticDataTypeCommon>();
