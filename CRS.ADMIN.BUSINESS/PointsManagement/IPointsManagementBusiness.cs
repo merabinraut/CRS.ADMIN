@@ -13,6 +13,8 @@ namespace CRS.ADMIN.BUSINESS.PointsManagement
         #region Point transfer List
         List<PointRequestListCommon> GetPointRequestList(PointRequestListFilterCommon request);
         CommonDbResponse ManageClubPointRequest(ManageClubPointRequestCommon request);
+        List<PointBalanceStatementResponseCommon> GetPointBalanceStatementDetailsAsync(PointBalanceStatementRequestCommon requestModel=null);
+        List<SystemTransferReponseCommon> GetSystemTransferDetailsAsync(SystemTransferRequestCommon mappedObject);
         #endregion
     }
 }

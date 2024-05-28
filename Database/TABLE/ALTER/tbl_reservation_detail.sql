@@ -1,0 +1,2 @@
+ALTER TABLE tbl_reservation_detail
+DROP COLUMN CommissionAmount;

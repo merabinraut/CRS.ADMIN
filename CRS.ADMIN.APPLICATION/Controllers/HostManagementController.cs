@@ -73,6 +73,14 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 ResponseModel.ManageHostModel.HostIdentityDataModel.ForEach(x => x.IdentityType = x.IdentityType.EncryptParameter());
                 ResponseModel.ManageHostModel.HostIdentityDataModel.ForEach(x => x.IdentityValue = x.IdentityValue.EncryptParameter());
             }
+            else
+            {
+                var respDb = _buss.GetHostIdentityDetail(ResponseModel.ManageHostModel.AgentId.DecryptParameter(), ResponseModel.ManageHostModel.HostId.DecryptParameter());
+                ResponseModel.ManageHostModel.HostIdentityDataModel = respDb.MapObjects<HostIdentityDataModel>();// model = dbResponse.MapObject<ManageHostModel>();
+                ResponseModel.ManageHostModel.HostIdentityDataModel.ForEach(x => x.IdentityLabel = (!string.IsNullOrEmpty(culture) && culture == "en") ? x.IdentityLabelEnglish : x.IdentityLabelJapanese);
+                ResponseModel.ManageHostModel.HostIdentityDataModel.ForEach(x => x.IdentityType = x.IdentityType.EncryptParameter());
+                ResponseModel.ManageHostModel.HostIdentityDataModel.ForEach(x => x.IdentityValue = x.IdentityValue.EncryptParameter());
+            }
             ViewBag.ZodiacSignsDDL = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("ZODIACSIGNSDDL") as Dictionary<string, string>, null, "--- Select ---");
             ViewBag.ZodiacSignsDDLKey = ResponseModel.ManageHostModel.ConstellationGroup;
             ViewBag.BloodGroupDDL = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("BLOODGROUPDDL") as Dictionary<string, string>, null, "--- Select ---");
@@ -144,7 +152,15 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 var dbResponse = _buss.GetHostDetail(aId, hId);
                 model = dbResponse.MapObject<ManageHostModel>();
                 if (!string.IsNullOrEmpty(model.DOB))
-                    model.DOB = DateTime.Parse(model.DOB).ToString("yyyy-MM-dd");
+                {
+                    DateTime parsedDate;
+                    if (DateTime.TryParse(model.DOB, out parsedDate))
+                    {
+                        model.DOB = parsedDate.ToString("yyyy-MM-dd");
+                    }
+                }
+                //    model.DOB = DateTime.Parse(model.DOB).ToString("yyyy-MM-dd");
+
                 model.AgentId = AgentId;
                 model.HostId = HostId;
                 if (!string.IsNullOrEmpty(model.DOB))
@@ -198,31 +214,32 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             {
                 ModelState.Remove("DOB");
             }
-            if (HostLogoFile == null)
-            {
-                if (string.IsNullOrEmpty(Model.HostLogo))
-                {
-                    bool allowRedirect = false;
-                    var ErrorMessage = string.Empty;
-                    if (HostLogoFile == null && string.IsNullOrEmpty(Model.HostLogo))
-                    {
-                        ErrorMessage = "Image required";
-                        allowRedirect = true;
-                    }
-                    if (allowRedirect)
-                    {
-                        this.AddNotificationMessage(new NotificationModel()
-                        {
-                            NotificationType = NotificationMessage.INFORMATION,
-                            Message = ErrorMessage ?? "Something went wrong. Please try again later.",
-                            Title = NotificationMessage.INFORMATION.ToString(),
-                        });
-                        TempData["RenderId"] = "ManageHost";
-                        TempData["ManageHostModel"] = Model;
-                        return RedirectToAction("HostList", "HostManagement", new { AgentId = Model.AgentId });
-                    }
-                }
-            }
+
+            //if (HostLogoFile == null)
+            //{
+            //    if (string.IsNullOrEmpty(Model.HostLogo))
+            //    {
+            //        bool allowRedirect = false;
+            //        var ErrorMessage = string.Empty;
+            //        if (HostLogoFile == null && string.IsNullOrEmpty(Model.HostLogo))
+            //        {
+            //            ErrorMessage = "Image required";
+            //            allowRedirect = true;
+            //        }
+            //        if (allowRedirect)
+            //        {
+            //            this.AddNotificationMessage(new NotificationModel()
+            //            {
+            //                NotificationType = NotificationMessage.INFORMATION,
+            //                Message = ErrorMessage ?? "Something went wrong. Please try again later.",
+            //                Title = NotificationMessage.INFORMATION.ToString(),
+            //            });
+            //            TempData["RenderId"] = "ManageHost";
+            //            TempData["ManageHostModel"] = Model;
+            //            return RedirectToAction("HostList", "HostManagement", new { AgentId = Model.AgentId });
+            //        }
+            //    }
+            //}
 
             //if (HostIconImageFile == null)
             //{
@@ -296,7 +313,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                     TempData["ManageHostModel"] = Model;
                     return RedirectToAction("HostList", "HostManagement", new { AgentId = Model.AgentId });
                 }
-            }          
+            }
             if (ModelState.IsValid)
             {
                 var requestCommon = Model.MapObject<ManageHostCommon>();
@@ -312,15 +329,23 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                     return RedirectToAction("ClubList", "ClubManagement");
                 }
                 if (!string.IsNullOrEmpty(requestCommon.HostId)) requestCommon.HostId = !string.IsNullOrEmpty(Model.HostId) ? Model.HostId.DecryptParameter() : null;
-                requestCommon.Rank = requestCommon.Rank.DecryptParameter();
-                requestCommon.ConstellationGroup = ZodiacSignsDDLKey?.DecryptParameter();
-                requestCommon.BloodType = BloodGroupDDLKey?.DecryptParameter();
-                requestCommon.PreviousOccupation = OccupationDDLKey?.DecryptParameter();
-                requestCommon.LiquorStrength = LiquorStrengthDDLKey?.DecryptParameter();
-                requestCommon.Address = Model.Address?.DecryptParameter();
-                requestCommon.Height = Model.Height?.DecryptParameter();
-                requestCommon.Position = Model.Position?.DecryptParameter();
-                requestCommon.DOB = Model.DOB;
+                if (!string.IsNullOrEmpty(requestCommon.Rank))
+                    requestCommon.Rank = requestCommon.Rank.DecryptParameter();
+                if (!string.IsNullOrEmpty(requestCommon.ConstellationGroup))
+                    requestCommon.ConstellationGroup = ZodiacSignsDDLKey?.DecryptParameter();
+                if (!string.IsNullOrEmpty(requestCommon.BloodType))
+                    requestCommon.BloodType = BloodGroupDDLKey?.DecryptParameter();
+                if (!string.IsNullOrEmpty(requestCommon.PreviousOccupation))
+                    requestCommon.PreviousOccupation = OccupationDDLKey?.DecryptParameter();
+                if (!string.IsNullOrEmpty(requestCommon.LiquorStrength))
+                    requestCommon.LiquorStrength = LiquorStrengthDDLKey?.DecryptParameter();
+                if (!string.IsNullOrEmpty(requestCommon.Address))
+                    requestCommon.Address = Model.Address?.DecryptParameter();
+                if (!string.IsNullOrEmpty(requestCommon.Height))
+                    requestCommon.Height = Model.Height?.DecryptParameter();
+                if (!string.IsNullOrEmpty(requestCommon.Position))
+                    requestCommon.Position = Model.Position?.DecryptParameter();
+                requestCommon.DOB = Model.DOB.Contains("--")|| Model.DOB.Contains("-") ? "" : Model.DOB;
                 requestCommon.ActionUser = ApplicationUtilities.GetSessionValue("Username").ToString();
                 requestCommon.ActionIP = ApplicationUtilities.GetIP();
                 requestCommon.ImagePath = Model.HostLogo;
@@ -457,6 +482,41 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             });
             return Json(response.Message, JsonRequestBehavior.AllowGet);
         }
+
+        [HttpPost, ValidateAntiForgeryToken, OverrideActionFilters]
+        public JsonResult DeleteHostAsync(string AgentId, string HostId)
+        {
+            var response = new CommonDbResponse();
+            var aId = AgentId.DecryptParameter();
+            var hId = !string.IsNullOrEmpty(HostId) ? HostId.DecryptParameter() : null;
+            if (string.IsNullOrEmpty(aId) || string.IsNullOrEmpty(hId))
+            {
+                this.AddNotificationMessage(new NotificationModel()
+                {
+                    NotificationType = NotificationMessage.INFORMATION,
+                    Message = "Invalid details",
+                    Title = NotificationMessage.INFORMATION.ToString()
+                });
+                return Json(response.Message, JsonRequestBehavior.AllowGet);
+            }
+            var commonRequest = new Common()
+            {
+                ActionIP = ApplicationUtilities.GetIP(),
+                ActionUser = ApplicationUtilities.GetSessionValue("Username").ToString()
+            };
+            string status = "D";
+            var dbResponse = _buss.ManageHostStatus(aId, hId, status, commonRequest);
+            response = dbResponse;
+            this.AddNotificationMessage(new NotificationModel()
+            {
+                NotificationType = response.Code == ResponseCode.Success ? NotificationMessage.SUCCESS : NotificationMessage.INFORMATION,
+                Message = response.Message ?? "Failed",
+                Title = response.Code == ResponseCode.Success ? NotificationMessage.SUCCESS.ToString() : NotificationMessage.INFORMATION.ToString()
+            });
+            return Json(response.Message, JsonRequestBehavior.AllowGet);
+        }
+
+
 
         #region Gallery Management
         [HttpGet]

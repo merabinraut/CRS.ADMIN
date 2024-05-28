@@ -499,6 +499,10 @@
     <value>Created On</value>
     <comment>Roles &amp; Privileges</comment>
   </data>
+  <data name="Credit" xml:space="preserve">
+    <value>Credit</value>
+    <comment>Point Management</comment>
+  </data>
   <data name="Current Category" xml:space="preserve">
     <value>Current Category</value>
     <comment>Point Setup</comment>
@@ -541,6 +545,10 @@
   <data name="Days" xml:space="preserve">
     <value>Days</value>
     <comment>Dashboard</comment>
+  </data>
+  <data name="Debit" xml:space="preserve">
+    <value>Debit</value>
+    <comment>Point Management</comment>
   </data>
   <data name="December" xml:space="preserve">
     <value>Dec</value>
