@@ -139,6 +139,7 @@
     <Compile Include="ScheduleManagement\ScheduleManagementCommon.cs" />
     <Compile Include="SMSLog\SMSLogCommon.cs" />
     <Compile Include="StaffManagement\StaffManagementModelCommon.cs" />
+    <Compile Include="StaticDataManagement\StaticDataManagementCommon.cs" />
     <Compile Include="UserCommon.cs" />
     <Compile Include="UserManagement\PasswordCommon.cs" />
     <Compile Include="UserManagement\UserProfileCommon.cs" />

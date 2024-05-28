@@ -162,3 +162,10 @@ VALUES
 (
  '149', '14', 'Manage Pending Club', '/ClubManagement/ManagePendingClub', 'A', 'kiran.acharya', '::1', GETDATE()
 )
+
+INSERT INTO tbl_application_functions 
+(FunctionId, MenuId, FunctionName, FunctionURL, Status, ActionUser, ActionIP, ActionDate)
+VALUES
+(
+ '150', '14', 'Manage Club Plan', '/ClubPlanManagement/ClubPlanList', 'A', 'kiran.acharya', '::1', GETDATE()
+)

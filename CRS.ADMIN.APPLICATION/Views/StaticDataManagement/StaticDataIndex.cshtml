@@ -1,0 +1,194 @@
+﻿@model CRS.ADMIN.APPLICATION.Models.StaticDataManagement.StaticDataManagement
+@{
+    ViewBag.Title = "StaticDataIndex";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var _manageStaticDataModel = Model.ManageStaticData as CRS.ADMIN.APPLICATION.Models.StaticDataManagement.ManageStaticData;
+}
+
+<div class="px-8 py-4">
+    @Html.AntiForgeryToken()
+    <div>
+        <div class="heading-title">
+            Static Data
+        </div>
+        <div class="span-title-light-gray">
+            Manage Static Data
+        </div>
+    </div>
+    <!-- container  -->
+    <div class="flex justify-between pt-[24px] pb-[24px]">
+        <form action="/StaticDataManagement/Index" method="get">
+            <div class="relative input-search-wrapper">
+                <div class="absolute inset-y-0 left-0 flex items-center pl-[16px] pointer-events-none">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21" fill="none">
+                        <path d="M17.5 18L13.875 14.375M15.8333 9.66667C15.8333 13.3486 12.8486 16.3333 9.16667 16.3333C5.48477 16.3333 2.5 13.3486 2.5 9.66667C2.5 5.98477 5.48477 3 9.16667 3C12.8486 3 15.8333 5.98477 15.8333 9.66667Z"
+                              stroke="#667085" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round">
+                        </path>
+                    </svg>
+                </div>
+                <input type="search"
+                       id="default-search"
+                       class="input-search block w-full "
+                       placeholder="@CRS.ADMIN.APPLICATION.Resources.Resource.Search"
+                       value=""
+                       name="SearchText">
+            </div>
+        </form>
+        <div class="btn btn-primary gap-[8px] h-[40px]" data-drawer-target="add-new_static_data"
+             data-drawer-show="add-new_static_data" data-drawer-placement="right" data-drawer-backdrop="false"
+             aria-controls="drawer-disabled-backdrop">
+            <img src="~/Content/assets_new/images/plus-circle-solid.svg">
+            @CRS.ADMIN.APPLICATION.Resources.Resource.Add_New
+        </div>
+    </div>
+    <div class="table-tab">
+        <div class="px-[16px] py-[12px] flex justify-between entry-export-container">
+            <div class="flex items-center select-entries" id="ShowEntries-Id">
+            </div>
+            <div class="export-button h-[40px]">
+                <img src="~/Content/assets_new/images/club/download-solid.svg"> @CRS.ADMIN.APPLICATION.Resources.Resource.Export
+            </div>
+        </div>
+        <div class="relative overflow-x-auto">
+            <table class="w-full  text-left club-table" id="table-id">
+                <thead class="club-table-thead">
+                    <tr>
+                        <th scope="col" class="p-[12px]">
+                            <div class="flex w-max">
+                                S.N
+                                <div class="relative pl-[5px]">
+                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                </div>
+                            </div>
+                        </th>
+                        <th scope="col" class="p-[12px]">
+                            <div class="flex w-max">
+                                Static Data Type Id
+                                <div class="relative pl-[5px]">
+                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                </div>
+                            </div>
+                        </th>
+                        <th scope="col" class="p-[12px]">
+                            <div class="flex w-max">
+                                Static Data Label
+                                <div class="relative pl-[5px]">
+                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                </div>
+                            </div>
+                        </th>
+                        <th scope="col" class="p-[12px]">
+                            <div class="flex w-max">
+                                Static Data Description
+                                <div class="relative pl-[5px]">
+                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                </div>
+                            </div>
+                        </th>
+                        <th scope="col" class="p-[12px]">
+                            <div class="flex justify-center">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Action
+                                <div class="relative pl-[5px]">
+                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                </div>
+                            </div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        int sno = 1;
+                        foreach (var item in Model.GetStaticDataList)
+                        {
+                            <tr class="bg-white border-b ">
+                                <td class="p-[12px]">
+                                    @sno
+                                </td>
+                                <td class="p-[12px]">
+                                    @item.StaticDataType
+                                </td>
+                                <td class="p-[12px]">
+                                    @item.StaticDataLabel
+                                </td>
+                                <td class="p-[12px]">
+                                    @item.StaticDataDescription
+                                </td>
+                                <td class="p-[12px]">
+                                    <div class="flex gap-[7px] justify-center text-[16px] ">
+                                        <div>
+                                            <i class="fa-regular fa-pen-to-square text-[#989898] cursor-pointer" onclick="edit('@item.Id','@item.StaticDataType')"></i>
+                                        </div>
+                                        <div>
+                                            <i class="fa-solid fa-trash-can text-primary-100 cursor-pointer" onclick="deleteStaticData('@item.Id')"></i>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            sno++;
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div class="pagination-club">
+            <div class="show-entry" id="Entries-Id">
+            </div>
+            <div class="flex gap-[12px]">
+                <div class="btn btn-secondary-box-shadow" id="prev-btn">
+                    @CRS.ADMIN.APPLICATION.Resources.Resource.Previous
+                </div>
+                <div class="flex gap-[12px]" id="pagination-id">
+                </div>
+                <div class="btn btn-secondary-box-shadow" id="next-btn">
+                    @CRS.ADMIN.APPLICATION.Resources.Resource.Next
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@Html.Partial("_ManageStaticData", _manageStaticDataModel)
+@section scripts{
+    <script>
+         $(document).ready(function () {
+             $('select').select2({
+                 minimumResultsForSearch: Infinity
+             })
+             var popUpRenderValue = '@ViewBag.PopUpRenderValue1';
+             if (popUpRenderValue != null && popUpRenderValue != "" && popUpRenderValue == "Manage") {
+                 var element = document.getElementById('add-new_static_data');
+                 element.classList.remove('translate-x-full');
+             }
+         });
+        function edit(id, staticDataTypeId) {
+            window.location.href = '/StaticDataManagement/ManageStaticData?id=' + id + '&staticDataTypeId=' + staticDataTypeId;
+        }
+        document.getElementById('CancelId').addEventListener('click',
+            function (event) {
+                event.preventDefault();
+                window.location.reload();
+            });
+        function deleteStaticData(id) {
+            $.ajax({
+                type: 'POST',
+                async: true,
+                url: "/StaticDataManagement/DeleteStaticData?id=" + id,
+                dataType: 'json',
+                data: {
+                    __RequestVerificationToken: $('input[name="__RequestVerificationToken"]').val(),
+                },
+                success: function () {
+                    window.location.reload();
+                },
+                error: function (ex) {
+
+                }
+            });
+        }
+    </script>
+}
+
