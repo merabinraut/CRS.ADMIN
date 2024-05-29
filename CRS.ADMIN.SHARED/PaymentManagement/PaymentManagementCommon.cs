@@ -19,8 +19,9 @@ namespace CRS.ADMIN.SHARED.PaymentManagement
         public string Location { get; set; }
         public string Date { get; set; }
         public string PaymentStatus { get; set; }
-        public string TotalAmount { get; set; }
-        public string TotalCommission { get; set; }
+        public string TotalPlanAmount { get; set; }
+        public string TotalAdminPlanCommissionAmount { get; set; }
+        public string TotalAdminCommissionAmount { get; set; }
         public string GrandTotal { get; set; }
         public string TransactionFormattedDate { get; set; }
     }
@@ -34,12 +35,15 @@ namespace CRS.ADMIN.SHARED.PaymentManagement
         public string NoOfPeople { get; set; }
         public string VisitDate { get; set; }
         public string VisitTime { get; set; }
-        public string PaymentType { get; set; }
-        public string PlanAmount { get; set; }
-        public string TotalAmount { get; set; }
-        public string CommissionAmount { get; set; }
-        public string TotalCommissionAmount { get; set; }
-        public string AdminPaymentAmount { get; set; }
+        public string PaymentType { get; set; }     
         public string ReservationType { get; set; }
+        public string PlanAmount { get; set; }
+        public string TotalPlanAmount { get; set; }
+        public string TotalClubPlanAmount { get; set; }
+        public string AdminPlanCommissionAmount { get; set; }
+        public string TotalAdminPlanCommissionAmount { get; set; }
+        public string AdminCommissionAmount { get; set; }
+        public string TotalAdminCommissionAmount { get; set; }
+        public string TotalAdminPayableAmount { get; set; }
     }
 }

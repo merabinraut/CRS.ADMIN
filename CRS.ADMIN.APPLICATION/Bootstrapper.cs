@@ -1,5 +1,6 @@
 using CRS.ADMIN.BUSINESS.AffiliateManagement;
 using CRS.ADMIN.BUSINESS.ClubManagement;
+using CRS.ADMIN.BUSINESS.ClubPlanManagement;
 using CRS.ADMIN.BUSINESS.CommissionManagement;
 using CRS.ADMIN.BUSINESS.CommonManagement;
 using CRS.ADMIN.BUSINESS.CustomerManagement;
@@ -26,6 +27,7 @@ using CRS.ADMIN.BUSINESS.RoleManagement;
 using CRS.ADMIN.BUSINESS.ScheduleManagement;
 using CRS.ADMIN.BUSINESS.SMSLog;
 using CRS.ADMIN.BUSINESS.StaffManagement;
+using CRS.ADMIN.BUSINESS.StaticDataManagement;
 using System.Web.Mvc;
 using Unity;
 using Unity.AspNet.Mvc;
@@ -71,6 +73,8 @@ namespace CRS.ADMIN.APPLICATION
             container.RegisterType<IEmailLogBusiness, EmailLogBusiness>();
             container.RegisterType<IPointSetupBusiness, PointSetupBusiness>();
             container.RegisterType<IPointsManagementBusiness, PointsManagementBusiness>();
+            container.RegisterType<IClubPlanManagementBusiness, ClubPlanManagementBusiness>();
+            container.RegisterType<IStaticDataManagementBusiness, StaticDataManagementBusiness>();
             return container;
         }
     }

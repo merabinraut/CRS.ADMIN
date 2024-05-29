@@ -29,7 +29,6 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 SearchFilter = SearchText
             };
             var paymentLogsCommon = _business.GetPaymentLogs(cId, Date, dbRequest, lId, FromDate, ToDate);
-            paymentLogsCommon.ForEach(x => x.ClubId = x.ClubId.EncryptParameter());
             var paymentManagementModel = new PaymentManagementModel()
             {
                 PaymentOverview = overViewCommon.MapObject<PaymentOverviewModel>(),
@@ -89,25 +88,5 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             ViewBag.TotalData = paymentLedgerCommon != null && paymentLedgerCommon.Any() ? paymentLedgerCommon[0].TotalRecords : 0;
             return View(paymentLedgerModel);
         }
-
-        //public ActionResult GetPaymentLogs(string clubId, string searchText = "", string Date = "")
-        //{
-        //    if (clubId != null)
-        //        clubId = clubId.DecryptParameter();
-
-        //    var paymentLogs = _business.GetPaymentLogs(searchText, clubId, Date);
-        //    var paymentLogsModel = paymentLogs.MapObjects<PaymentLogsModel>();
-        //    paymentLogsModel.ForEach(x => x.ClubId = x.ClubId.EncryptParameter());
-
-        //    var paymentModel = new PaymentManagementModel()
-        //    {
-        //        PaymentLogs = paymentLogsModel,
-        //        PaymentOverview = _business.GetPaymentOverview().MapObject<PaymentOverviewModel>()
-        //    };
-        //    ViewBag.ClubDDL = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("CLUBLIST") as Dictionary<string, string>, null, "Select Club");
-
-        //    return View("Index", paymentModel);
-
-        //}
     }
 }

@@ -80,6 +80,8 @@
     <Compile Include="AffiliateManagement\IAffiliateManagementBusiness.cs" />
     <Compile Include="ClubManagement\ClubManagementBusiness.cs" />
     <Compile Include="ClubManagement\IClubManagementBusiness.cs" />
+    <Compile Include="ClubPlanManagement\ClubPlanManagementBusiness.cs" />
+    <Compile Include="ClubPlanManagement\IClubPlanManagementBusiness.cs" />
     <Compile Include="CommissionManagement\CommissionManagementBusiness.cs" />
     <Compile Include="CommissionManagement\ICommissionManagementBusiness.cs" />
     <Compile Include="CommonManagement\CommonManagementBusiness.cs" />
@@ -132,6 +134,8 @@
     <Compile Include="SMSLog\SMSLogBusiness.cs" />
     <Compile Include="StaffManagement\IStaffManagementBusiness.cs" />
     <Compile Include="StaffManagement\StaffManagementBusiness.cs" />
+    <Compile Include="StaticDataManagement\IStaticDataManagementBusiness.cs" />
+    <Compile Include="StaticDataManagement\StaticDataManagementBusiness.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CRS.ADMIN.REPOSITORY\CRS.ADMIN.REPOSITORY.csproj">

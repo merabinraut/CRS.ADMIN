@@ -3859,6 +3859,33 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Total Admin Commission Amount.
+        /// </summary>
+        public static string TotalAdminCommissionAmount {
+            get {
+                return ResourceManager.GetString("TotalAdminCommissionAmount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Total Admin Plan Commission Amount.
+        /// </summary>
+        public static string TotalAdminPlanCommissionAmount {
+            get {
+                return ResourceManager.GetString("TotalAdminPlanCommissionAmount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Total Plan Amount.
+        /// </summary>
+        public static string TotalPlanAmount {
+            get {
+                return ResourceManager.GetString("TotalPlanAmount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Transaction Date.
         /// </summary>
         public static string Transaction_Date {

@@ -346,3 +346,4 @@ ASALocalRun/
 
 # Ignore AmazonConfigruation.json
 AmazonConfigruation.json
+/CRS.ADMIN.APPLICATION/App_Data/AmazonConfigruation.json
