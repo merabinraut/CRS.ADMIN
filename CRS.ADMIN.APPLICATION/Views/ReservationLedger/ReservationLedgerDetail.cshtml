@@ -224,7 +224,7 @@
                                             </th>
                                             <th scope="col" class="p-[12px]">
                                                 <div class="flex w-max">
-                                                    Total Amount
+                                                    Total Plan Amount
                                                     <div class="relative pl-[5px]">
                                                         <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
                                                         <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
@@ -233,7 +233,7 @@
                                             </th>
                                             <th scope="col" class="p-[12px]">
                                                 <div class="flex w-max">
-                                                    Commission Amount
+                                                    Total Club Plan Amount
                                                     <div class="relative pl-[5px]">
                                                         <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
                                                         <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
@@ -242,7 +242,7 @@
                                             </th>
                                             <th scope="col" class="p-[12px]">
                                                 <div class="flex w-max">
-                                                    Total Commission Amount
+                                                    Admin Plan Commission Amount
                                                     <div class="relative pl-[5px]">
                                                         <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
                                                         <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
@@ -251,7 +251,34 @@
                                             </th>
                                             <th scope="col" class="p-[12px]">
                                                 <div class="flex w-max">
-                                                    Admin Payment Amount
+                                                    Total Admin Plan Commission Amount
+                                                    <div class="relative pl-[5px]">
+                                                        <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                                        <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                                    </div>
+                                                </div>
+                                            </th>
+                                            <th scope="col" class="p-[12px]">
+                                                <div class="flex w-max">
+                                                    Admin Commission Amount
+                                                    <div class="relative pl-[5px]">
+                                                        <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                                        <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                                    </div>
+                                                </div>
+                                            </th>
+                                            <th scope="col" class="p-[12px]">
+                                                <div class="flex w-max">
+                                                    Total Admin Commission Amount
+                                                    <div class="relative pl-[5px]">
+                                                        <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                                        <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                                    </div>
+                                                </div>
+                                            </th>
+                                            <th scope="col" class="p-[12px]">
+                                                <div class="flex w-max">
+                                                    Total Admin Payable Amount
                                                     <div class="relative pl-[5px]">
                                                         <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
                                                         <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
@@ -328,20 +355,29 @@
                                                         <div class="w-max ">@paymentLedger.ReservationType</div>
                                                     </td>
                                                     <td class="p-[12px] w-max">
-                                                        <div class="w-max ">¥@paymentLedger.PlanAmount</div>
+                                                        <div class="w-max text-[#1976D2]">¥@paymentLedger.PlanAmount</div>
 
                                                     </td>
                                                     <td class="p-[12px] w-max">
-                                                        <div class="w-max text-[#1976D2] ">¥@paymentLedger.TotalAmount</div>
+                                                        <div class="w-max text-[#1976D2] ">¥@paymentLedger.TotalPlanAmount</div>
                                                     </td>
                                                     <td class="p-[12px] w-max">
-                                                        <div class="w-max text-[#1976D2] ">¥@paymentLedger.CommissionAmount</div>
+                                                        <div class="w-max text-[#1976D2] ">¥@paymentLedger.TotalClubPlanAmount</div>
                                                     </td>
                                                     <td class="p-[12px] w-max">
-                                                        <div class="w-max text-[#1976D2] ">¥@paymentLedger.TotalCommissionAmount</div>
+                                                        <div class="w-max text-[#1976D2] ">¥@paymentLedger.AdminPlanCommissionAmount</div>
                                                     </td>
                                                     <td class="p-[12px] w-max">
-                                                        <div class="w-max text-[#1976D2] ">¥@paymentLedger.AdminPaymentAmount</div>
+                                                        <div class="w-max text-[#1976D2] ">¥@paymentLedger.TotalAdminPlanCommissionAmount</div>
+                                                    </td>
+                                                    <td class="p-[12px] w-max">
+                                                        <div class="w-max text-[#1976D2] ">¥@paymentLedger.AdminCommissionAmount</div>
+                                                    </td>
+                                                    <td class="p-[12px] w-max">
+                                                        <div class="w-max text-[#1976D2] ">¥@paymentLedger.TotalAdminCommissionAmount</div>
+                                                    </td>
+                                                    <td class="p-[12px] w-max">
+                                                        <div class="w-max text-[#1976D2] ">¥@paymentLedger.TotalAdminPayableAmount</div>
                                                     </td>
                                                     <td class="p-[12px] w-max">
                                                         <div class="w-max  ">@paymentLedger.AdminRemarks</div>
