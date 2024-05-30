@@ -226,181 +226,190 @@
     <div class="flex items-center select-entries" id="ShowEntries-Id-4">
     </div>
 </div>
-<div class="relative overflow-x-auto">
-    <table class="w-full text-left club-table" id="table-id">
-        <thead class="club-table-thead">
-            <tr>
-                <th scope="col" class="p-[12px]">
-                    <div class="flex w-max">
-                        S.N
-                        <div class="relative pl-[5px]">
-                            <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
-                            <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+<div class="table-tab">
+    <div class="px-[16px] py-[12px] flex justify-between entry-export-container">
+        <div class="flex items-center select-entries" id="ShowEntries-Id">
+        </div>
+        <div class="export-button h-[40px]" onclick="exportExcel('table-id_PReq', 'PointRequest')">
+            <img src="~/Content/assets_new/images/club/download-solid.svg"> @CRS.ADMIN.APPLICATION.Resources.Resource.Export
+        </div>
+    </div>
+    <div class="relative overflow-x-auto">
+        <table class="w-full text-left club-table" id="table-id_PReq">
+            <thead class="club-table-thead">
+                <tr>
+                    <th scope="col" class="p-[12px]">
+                        <div class="flex w-max">
+                            S.N
+                            <div class="relative pl-[5px]">
+                                <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                            </div>
                         </div>
-                    </div>
-                </th>
-                <th scope="col" class="p-[12px]">
-                    <div class="flex w-max">
-                        @CRS.ADMIN.APPLICATION.Resources.Resource.RequestId
-                        <div class="relative pl-[5px]">
-                            <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
-                            <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                    </th>
+                    <th scope="col" class="p-[12px]">
+                        <div class="flex w-max">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.RequestId
+                            <div class="relative pl-[5px]">
+                                <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                            </div>
                         </div>
-                    </div>
-                </th>
+                    </th>
 
 
-                <th scope="col" class="p-[12px]">
-                    <div class="flex w-max">
-                        @CRS.ADMIN.APPLICATION.Resources.Resource.Requested_Date
-                        <div class="relative pl-[5px]">
-                            <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
-                            <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                    <th scope="col" class="p-[12px]">
+                        <div class="flex w-max">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Requested_Date
+                            <div class="relative pl-[5px]">
+                                <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                            </div>
                         </div>
-                    </div>
-                </th>
+                    </th>
 
-                <th scope="col" class="p-[12px]">
-                    <div class="flex w-max">
-                        @CRS.ADMIN.APPLICATION.Resources.Resource.ClubName
-                        <div class="relative pl-[5px]">
-                            <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
-                            <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                    <th scope="col" class="p-[12px]">
+                        <div class="flex w-max">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.ClubName
+                            <div class="relative pl-[5px]">
+                                <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                            </div>
                         </div>
-                    </div>
-                </th>
+                    </th>
 
-                <th scope="col" class="p-[12px]">
-                    <div class="flex w-max">
-                        @CRS.ADMIN.APPLICATION.Resources.Resource.PaymentMethod
-                        <div class="relative pl-[5px]">
-                            <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
-                            <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                    <th scope="col" class="p-[12px]">
+                        <div class="flex w-max">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.PaymentMethod
+                            <div class="relative pl-[5px]">
+                                <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                            </div>
                         </div>
-                    </div>
-                </th>
+                    </th>
 
-                <th scope="col" class="p-[12px]">
-                    <div class="flex w-max">
-                        @CRS.ADMIN.APPLICATION.Resources.Resource.AmountTransferred
-                        <div class="relative pl-[5px]">
-                            <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
-                            <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                    <th scope="col" class="p-[12px]">
+                        <div class="flex w-max">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.AmountTransferred
+                            <div class="relative pl-[5px]">
+                                <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                            </div>
                         </div>
-                    </div>
-                </th>
-                <th scope="col" class="p-[12px]">
-                    <div class="flex w-max">
-                        @CRS.ADMIN.APPLICATION.Resources.Resource.Status
-                        <div class="relative pl-[5px]">
-                            <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
-                            <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                    </th>
+                    <th scope="col" class="p-[12px]">
+                        <div class="flex w-max">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Status
+                            <div class="relative pl-[5px]">
+                                <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                            </div>
                         </div>
-                    </div>
-                </th>
-                <th scope="col" class="p-[12px]">
-                    <div class="flex w-max">
-                        @CRS.ADMIN.APPLICATION.Resources.Resource.Remarks
-                        <div class="relative pl-[5px]">
-                            <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
-                            <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                    </th>
+                    <th scope="col" class="p-[12px]">
+                        <div class="flex w-max">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Remarks
+                            <div class="relative pl-[5px]">
+                                <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                            </div>
                         </div>
-                    </div>
-                </th>
-                <th scope="col" class="p-[12px]">
-                    <div class="flex w-max">
-                        @CRS.ADMIN.APPLICATION.Resources.Resource.UpdatedBy
-                        <div class="relative pl-[5px]">
-                            <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
-                            <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                    </th>
+                    <th scope="col" class="p-[12px]">
+                        <div class="flex w-max">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.UpdatedBy
+                            <div class="relative pl-[5px]">
+                                <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                            </div>
                         </div>
-                    </div>
-                </th>
-                <th scope="col" class="p-[12px]">
-                    <div class="flex w-max">
-                        @CRS.ADMIN.APPLICATION.Resources.Resource.UpdatedDate
-                        <div class="relative pl-[5px]">
-                            <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
-                            <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                    </th>
+                    <th scope="col" class="p-[12px]">
+                        <div class="flex w-max">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.UpdatedDate
+                            <div class="relative pl-[5px]">
+                                <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                            </div>
                         </div>
-                    </div>
-                </th>
-                <th scope="col" class="p-[12px]">
-                    <div class="flex w-max">
-                        @CRS.ADMIN.APPLICATION.Resources.Resource.Action
-                        <div class="relative pl-[5px]">
-                            <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
-                            <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                    </th>
+                    <th scope="col" class="p-[12px]">
+                        <div class="flex w-max">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Action
+                            <div class="relative pl-[5px]">
+                                <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                            </div>
                         </div>
-                    </div>
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-            @{
-                if (Model.PointRequestsListModel.Count > 0 && !string.IsNullOrEmpty(Model.PointRequestsListModel.FirstOrDefault().RowsTotal))
-                {
-                    int SN = 1;
-                    foreach (var item in Model.PointRequestsListModel)
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    if (Model.PointRequestsListModel.Count > 0 && !string.IsNullOrEmpty(Model.PointRequestsListModel.FirstOrDefault().RowsTotal))
                     {
-                        <tr class="bg-white border-b ">
-                            <td class="p-[12px]">
-                                @SN
-                            </td>
-                            <td class="p-[12px]">
-                                @item.RequestId
-                            </td>
-                            <td class="p-[12px]">
-                                @item.RequestedDate
-                            </td>
-                            <td class="p-[12px]">
-                                @item.ClubName
-                            </td>
-                            <td class="p-[12px]">
-                                @item.PaymentMethod
-                            </td>
-                            <td class="p-[12px]">
-                                @item.AmountTransferred
-                            </td>
-                            <td class="p-[12px]">
-                                @item.Status
-                            </td>
-                            <td class="p-[12px]">
-                                @item.Remarks
-                            </td>
-                            <td class="p-[12px]">
-                                @item.UpdatedBy
-                            </td>
-                            <td class="p-[12px]">
-                                @item.UpdatedDate
-                            </td>
-                            <td class="grid grid-cols-2 p-[12px]">
-                                @* <div class="grid grid-cols-2">*@
-                                @if (!string.IsNullOrEmpty(item.Status) && item.Status.Trim().ToUpper() == "PENDING")
-                                {
-                                    <i class="las la-window-close text-[24px] text-[#CB3F3F] cursor-pointer " data-modal-target="popup-modal-reject" data-modal-toggle="popup-modal-reject" alt=""
-                                       onclick="InitateRejectRequest('@item.AgentId', '@item.UserId', '@item.RequestId')"> </i>
+                        int SN = 1;
+                        foreach (var item in Model.PointRequestsListModel)
+                        {
+                            <tr class="bg-white border-b ">
+                                <td class="p-[12px]">
+                                    @SN
+                                </td>
+                                <td class="p-[12px]">
+                                    @item.RequestId
+                                </td>
+                                <td class="p-[12px]">
+                                    @item.RequestedDate
+                                </td>
+                                <td class="p-[12px]">
+                                    @item.ClubName
+                                </td>
+                                <td class="p-[12px]">
+                                    @item.PaymentMethod
+                                </td>
+                                <td class="p-[12px]">
+                                    @item.AmountTransferred
+                                </td>
+                                <td class="p-[12px]">
+                                    @item.Status
+                                </td>
+                                <td class="p-[12px]">
+                                    @item.Remarks
+                                </td>
+                                <td class="p-[12px]">
+                                    @item.UpdatedBy
+                                </td>
+                                <td class="p-[12px]">
+                                    @item.UpdatedDate
+                                </td>
+                                <td class="grid grid-cols-2 p-[12px]">
+                                    @* <div class="grid grid-cols-2">*@
+                                    @if (!string.IsNullOrEmpty(item.Status) && item.Status.Trim().ToUpper() == "PENDING")
+                                    {
+                                        <i class="las la-window-close text-[24px] text-[#CB3F3F] cursor-pointer " data-modal-target="popup-modal-reject" data-modal-toggle="popup-modal-reject" alt=""
+                                           onclick="InitateRejectRequest('@item.AgentId', '@item.UserId', '@item.RequestId')"> </i>
 
 
 
-                                    <img src="/Content/assets_new/images/check-square.svg"
-                                         data-modal-target="popup-modal-accept"
-                                         data-modal-toggle="popup-modal-accept" alt="" class="cursor-pointer" onclick="InitateApproveRequest('@item.AgentId', '@item.UserId', '@item.RequestId')" />
+                                        <img src="/Content/assets_new/images/check-square.svg"
+                                             data-modal-target="popup-modal-accept"
+                                             data-modal-toggle="popup-modal-accept" alt="" class="cursor-pointer" onclick="InitateApproveRequest('@item.AgentId', '@item.UserId', '@item.RequestId')" />
 
 
-                                }
-                                @*</div>*@
+                                    }
+                                    @*</div>*@
 
-                            </td>
-                        </tr>
-                        SN++;
+                                </td>
+                            </tr>
+                            SN++;
+                        }
                     }
+
                 }
+            </tbody>
+        </table>
 
-            }
-        </tbody>
-    </table>
-
+    </div>
 </div>
 <div class="pagination-club">
     <div class="show-entry" id="Entries-Id-4">

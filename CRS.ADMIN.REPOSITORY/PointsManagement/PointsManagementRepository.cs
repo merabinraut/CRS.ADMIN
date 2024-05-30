@@ -152,7 +152,7 @@ namespace CRS.ADMIN.REPOSITORY.PointsManagement
             string SQL = "EXEC sproc_get_system_transferReport ";
             SQL += !string.IsNullOrEmpty(request.SearchFilter) ? " @search=N" + _DAO.FilterString(request.SearchFilter) : " @search=null ";
             //SQL += !string.IsNullOrEmpty(request.UserTypeList) ? " ,@UserTypeId=" + _DAO.FilterString(request.UserTypeList) : " ,@UserTypeId=null ";
-            SQL += !string.IsNullOrEmpty(request.UserName) ? ",@ClubId=" + _DAO.FilterString(request.UserName) : ",@ClubId=null";
+            SQL += !string.IsNullOrEmpty(request.User_name) ? ",@ClubId=" + _DAO.FilterString(request.User_name) : ",@ClubId=null";
             SQL += !string.IsNullOrEmpty(request.TransferType) ? " ,@TranscationType=" + _DAO.FilterString(request.TransferType) : " ,@TranscationType =null";
             SQL += !string.IsNullOrEmpty(request.From_Date1) ? ",@FromDate=" + _DAO.FilterString(request.From_Date1) : ",@FromDate=null";
             SQL += !string.IsNullOrEmpty(request.To_Date1) ? " ,@ToDate=" + _DAO.FilterString(request.To_Date1) : " ,@ToDate =null";

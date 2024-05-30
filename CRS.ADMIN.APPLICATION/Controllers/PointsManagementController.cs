@@ -116,8 +116,8 @@ namespace CRS.ADMIN.APPLICATION.Controllers
 
             objPointsManagementModel.SystemTransferModel = new SystemTransferRequestModel()
             {
-                UserType = UserType.DecryptParameter(),
-                UserName = UserName.DecryptParameter(),
+                User_type = UserType.DecryptParameter(),
+                User_name = UserName.DecryptParameter(),
                 TransferType = TransferTypeId.DecryptParameter(),
                 From_Date1 = FromDate,
                 To_Date1 = ToDate
@@ -373,17 +373,17 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             mappedObject.Skip = requestModel.StartIndex2;
             mappedObject.Take = requestModel.PageSize2;
 
-      
+
             var response = _BUSS.GetPointBalanceStatementDetailsAsync(mappedObject);
 
             var mappedResponseObjects = response.MapObjects<PointBalanceStatementResponseModel>();
 
             ViewBag.PageSize2 = requestModel.PageSize2;
-            ViewBag.TotalData2 = response.FirstOrDefault().RowTotal;
+            ViewBag.TotalData2 = response.Count > 0 ? response?.FirstOrDefault().RowTotal : "0";
             ViewBag.StartIndex2 = requestModel.StartIndex2;
 
             TempData["ListModel"] = mappedResponseObjects;
-            return RedirectToAction("PointsTransferList", "PointsManagement", new { value = "pbs", FromDate = requestModel.From_Date, ToDate = requestModel.To_Date, UserType = requestModel.UserTypeList.EncryptParameter(), UserName = requestModel.UserNameList.EncryptParameter(), TransferTypeId = requestModel.TransferTypeList.EncryptParameter(), SearchFilter = requestModel.SearchFilter, TotalData2 = response.FirstOrDefault().RowTotal});
+            return RedirectToAction("PointsTransferList", "PointsManagement", new { value = "pbs", FromDate = requestModel.From_Date, ToDate = requestModel.To_Date, UserType = requestModel.UserTypeList.EncryptParameter(), UserName = requestModel.UserNameList.EncryptParameter(), TransferTypeId = requestModel.TransferTypeList.EncryptParameter(), SearchFilter = requestModel.SearchFilter, TotalData2 = ViewBag.TotalData2 });
             //return PartialView("PointsTransferList", mappedResponseObjects);
         }
         [HttpGet, OverrideActionFilters]
@@ -396,12 +396,12 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             culture = string.IsNullOrEmpty(culture) ? "ja" : culture;
 
             ViewBag.UserTypeList = ApplicationUtilities.SetDDLValue(DDLHelper.LoadDropdownList("USERTYPELIST") as Dictionary<string, string>, null, "--- All ---");
-            if (!string.IsNullOrEmpty(requestModel.UserType))
-                ViewBag.FilterUserList = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("USERTYPENAME", requestModel.UserType.DecryptParameter()) as Dictionary<string, string>, null, "--- All ---");
+            if (!string.IsNullOrEmpty(requestModel.User_type))
+                ViewBag.FilterUserList = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("USERTYPENAME", requestModel.User_type.DecryptParameter()) as Dictionary<string, string>, null, "--- All ---");
             ViewBag.TransferTypeIdList = ApplicationUtilities.SetDDLValue(DDLHelper.LoadDropdownList("TRANSACTIONTYPE") as Dictionary<string, string>, null, "--- All ---");
 
-            requestModel.UserType = !string.IsNullOrEmpty(requestModel.UserType) ? requestModel.UserType.DecryptParameter() : null;
-            requestModel.UserName = !string.IsNullOrEmpty(requestModel.UserName) ? requestModel.UserName.DecryptParameter() : null;
+            requestModel.User_type = !string.IsNullOrEmpty(requestModel.User_type) ? requestModel.User_type.DecryptParameter() : null;
+            requestModel.User_name = !string.IsNullOrEmpty(requestModel.User_name) ? requestModel.User_name.DecryptParameter() : null;
             requestModel.TransferType = !string.IsNullOrEmpty(requestModel.TransferType) ? requestModel.TransferType.DecryptParameter() : null;
 
             var mappedObject = requestModel.MapObject<SystemTransferRequestCommon>();
@@ -417,7 +417,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             ViewBag.TotalData3 = response.FirstOrDefault().RowTotal;
             ViewBag.StartIndex3 = requestModel.StartIndex3;
             TempData["ListModel"] = mappedResponseObjects;
-            return RedirectToAction("PointsTransferList", "PointsManagement", new { value = "st", FromDate = requestModel.From_Date1, ToDate = requestModel.To_Date1, UserType = requestModel.UserType.EncryptParameter(), UserName = requestModel.UserName.EncryptParameter(), TransferTypeId = requestModel.TransferType.EncryptParameter(), SearchFilter = requestModel.SearchFilter , TotalData3 = response.FirstOrDefault().RowTotal });
+            return RedirectToAction("PointsTransferList", "PointsManagement", new { value = "st", FromDate = requestModel.From_Date1, ToDate = requestModel.To_Date1, UserType = requestModel.User_type.EncryptParameter(), UserName = requestModel.User_name.EncryptParameter(), TransferTypeId = requestModel.TransferType.EncryptParameter(), SearchFilter = requestModel.SearchFilter, TotalData3 = response.FirstOrDefault().RowTotal });
         }
     }
 }

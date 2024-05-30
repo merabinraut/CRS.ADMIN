@@ -1,5 +1,5 @@
 ﻿@model CRS.ADMIN.APPLICATION.Models.PointsManagement.SystemTransferRequestModel
-@{ 
+@{
     var tempData = TempData["ListModel"] as List<CRS.ADMIN.APPLICATION.Models.PointsManagement.SystemTransferReponseModel>;
 }
 <style>
@@ -74,7 +74,7 @@
             <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
                 @CRS.ADMIN.APPLICATION.Resources.Resource.User_Type
             </label>
-            <select id="Usertype1" name="UserType" onchange="return GetUserNameByUserType();" class=" default_select select-common block w-full "
+            <select id="User_type" name="User_type" onchange="return GetUserNameByUserType();" class=" default_select select-common block w-full "
                     style="width: 100%;">
                 @foreach (var item in ViewBag.UserTypeList as IEnumerable<SelectListItem>)
                 {
@@ -94,7 +94,7 @@
                 }
             </select>
             <span class="error">
-                @Html.ValidationMessageFor(m => m.UserType)
+                @Html.ValidationMessageFor(m => m.User_type)
             </span>
 
         </div>
@@ -105,7 +105,7 @@
                     @CRS.ADMIN.APPLICATION.Resources.Resource.User
                 </label>
 
-                <select id="Username1" name="UserName" class=" default_select select-common block w-full "
+                <select id="User_name" name="User_name" class=" default_select select-common block w-full "
                         style="width: 100%;">
                     @foreach (var item in ViewBag.FilterUserList as IEnumerable<SelectListItem>)
                     {
@@ -125,7 +125,7 @@
                     }
                 </select>
                 <span class="error">
-                    @Html.ValidationMessageFor(m => m.UserName)
+                    @Html.ValidationMessageFor(m => m.User_name)
                 </span>
 
 
@@ -220,135 +220,144 @@
     <div class="flex items-center select-entries" id="ShowEntries-Id-3">
     </div>
 </div>
-<div class="relative overflow-x-auto">
-    <table class="w-full text-left club-table" id="table-id">
-        <thead class="club-table-thead">
-            <tr>
-                <th scope="col" class="p-[12px]">
-                    <div class="flex w-max">
-                        S.N
-                        <div class="relative pl-[5px]">
-                            <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
-                            <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+<div class="table-tab">
+    <div class="px-[16px] py-[12px] flex justify-between entry-export-container">
+        <div class="flex items-center select-entries" id="ShowEntries-Id">
+        </div>
+        <div class="export-button h-[40px]" onclick="exportExcel('table-id-GetSystemTransfer', 'GetSystemTransfer')">
+            <img src="~/Content/assets_new/images/club/download-solid.svg"> @CRS.ADMIN.APPLICATION.Resources.Resource.Export
+        </div>
+    </div>
+    <div class="relative overflow-x-auto">
+        <table class="w-full text-left club-table" id="table-id-GetSystemTransfer">
+            <thead class="club-table-thead">
+                <tr>
+                    <th scope="col" class="p-[12px]">
+                        <div class="flex w-max">
+                            S.N
+                            <div class="relative pl-[5px]">
+                                <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                            </div>
                         </div>
-                    </div>
-                </th>
-                <th scope="col" class="p-[12px]">
-                    <div class="flex w-max">
-                        @CRS.ADMIN.APPLICATION.Resources.Resource.Transaction_ID
-                        <div class="relative pl-[5px]">
-                            <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
-                            <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                    </th>
+                    <th scope="col" class="p-[12px]">
+                        <div class="flex w-max">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Transaction_ID
+                            <div class="relative pl-[5px]">
+                                <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                            </div>
                         </div>
-                    </div>
-                </th>
+                    </th>
 
 
-                <th scope="col" class="p-[12px]">
-                    <div class="flex w-max">
-                        @CRS.ADMIN.APPLICATION.Resources.Resource.Transaction_Date
-                        <div class="relative pl-[5px]">
-                            <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
-                            <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                    <th scope="col" class="p-[12px]">
+                        <div class="flex w-max">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Transaction_Date
+                            <div class="relative pl-[5px]">
+                                <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                            </div>
                         </div>
-                    </div>
-                </th>
+                    </th>
 
-                <th scope="col" class="p-[12px]">
-                    <div class="flex w-max">
-                        @CRS.ADMIN.APPLICATION.Resources.Resource.Transaction_Type
-                        <div class="relative pl-[5px]">
-                            <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
-                            <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                    <th scope="col" class="p-[12px]">
+                        <div class="flex w-max">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Transaction_Type
+                            <div class="relative pl-[5px]">
+                                <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                            </div>
                         </div>
-                    </div>
-                </th>
-                <th scope="col" class="p-[12px]">
-                    <div class="flex w-max">
-                        @CRS.ADMIN.APPLICATION.Resources.Resource.User_Type
-                        <div class="relative pl-[5px]">
-                            <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
-                            <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                    </th>
+                    <th scope="col" class="p-[12px]">
+                        <div class="flex w-max">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.User_Type
+                            <div class="relative pl-[5px]">
+                                <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                            </div>
                         </div>
-                    </div>
-                </th>
-                <th scope="col" class="p-[12px]">
-                    <div class="flex w-max">
-                        @CRS.ADMIN.APPLICATION.Resources.Resource.User
-                        <div class="relative pl-[5px]">
-                            <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
-                            <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                    </th>
+                    <th scope="col" class="p-[12px]">
+                        <div class="flex w-max">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.User
+                            <div class="relative pl-[5px]">
+                                <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                            </div>
                         </div>
-                    </div>
-                </th>
+                    </th>
 
-                <th scope="col" class="p-[12px]">
-                    <div class="flex w-max">
-                        @CRS.ADMIN.APPLICATION.Resources.Resource.Points
-                        <div class="relative pl-[5px]">
-                            <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
-                            <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                    <th scope="col" class="p-[12px]">
+                        <div class="flex w-max">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Points
+                            <div class="relative pl-[5px]">
+                                <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                            </div>
                         </div>
-                    </div>
-                </th>
-                <th scope="col" class="p-[12px]">
-                    <div class="flex w-max">
-                        @CRS.ADMIN.APPLICATION.Resources.Resource.Remarks
-                        <div class="relative pl-[5px]">
-                            <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
-                            <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                    </th>
+                    <th scope="col" class="p-[12px]">
+                        <div class="flex w-max">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Remarks
+                            <div class="relative pl-[5px]">
+                                <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                            </div>
                         </div>
-                    </div>
-                </th>
-            </tr>
-        </thead>
-        <tbody>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
 
-            @{
-                if (tempData != null)
-                {
-                    if (tempData.Count > 0)
+                @{
+                    if (tempData != null)
                     {
-                        int SNO = 1;
-                        foreach (var item in tempData)
+                        if (tempData.Count > 0)
                         {
-                            <tr class="bg-white border-b ">
-                                <td class="p-[12px]">
-                                    @SNO
-                                </td>
-                                <td class="p-[12px]">
-                                    @item.TransactionId
-                                </td>
-                                <td class="p-[12px]">
-                                    @item.TransactionDate
-                                </td>
-                                <td class="p-[12px]">
-                                    @item.TransactionType
-                                </td>
-                                <td class="p-[12px]">
-                                    @item.UserType
-                                </td>
-                                <td class="p-[12px]">
-                                    @item.UserName
-                                </td>
-                                <td class="p-[12px]">
-                                    @item.Points
-                                </td>
-                                <td class="p-[12px]">
-                                    @item.Remarks
-                                </td>                            
-                            </tr>
-                            SNO++;
+                            int SNO = 1;
+                            foreach (var item in tempData)
+                            {
+                                <tr class="bg-white border-b ">
+                                    <td class="p-[12px]">
+                                        @SNO
+                                    </td>
+                                    <td class="p-[12px]">
+                                        @item.TransactionId
+                                    </td>
+                                    <td class="p-[12px]">
+                                        @item.TransactionDate
+                                    </td>
+                                    <td class="p-[12px]">
+                                        @item.TransactionType
+                                    </td>
+                                    <td class="p-[12px]">
+                                        @item.UserType
+                                    </td>
+                                    <td class="p-[12px]">
+                                        @item.UserName
+                                    </td>
+                                    <td class="p-[12px]">
+                                        @item.Points
+                                    </td>
+                                    <td class="p-[12px]">
+                                        @item.Remarks
+                                    </td>
+                                </tr>
+                                SNO++;
+                            }
                         }
                     }
+
                 }
 
-            }
 
+            </tbody>
+        </table>
 
-        </tbody>
-    </table>
-
+    </div>
 </div>
 <div class="pagination-club">
     <div class="show-entry" id="Entries-Id-3">
@@ -368,7 +377,7 @@
 
     function GetUserNameByUserType() {
     //$('#large[name="UserTypeList"]').change(function () {
-        var UserTypeId = $('#large[name="UserTypeList"]').find("option:selected").val().trim();
+        var UserTypeId = $('#User_type[name="User_type"]').find("option:selected").val().trim();
         //$('#large[name="UserNameList"]').prop("disabled", true);
         $.ajax({
             type: 'GET',
@@ -377,16 +386,16 @@
             dataType: 'json',
             data: { RoleTypeId: UserTypeId },
             success: function (response) {
-                $('#large[name="UserNameList"]').empty();
+                $('#User_name[name="User_name"]').empty();
                 if (response.userNameList.length > 0) {
-                    $('#large[name="UserNameList"]').append($("<option>").val("").text("--- All ---"));
+                    $('#User_name[name="User_name"]').append($("<option>").val("").text("--- All ---"));
                     $.each(response.userNameList, function (i, value) {
-                        $('#large[name="UserNameList"]').append($("<option>").val(value.Value).text(value.Text));
+                        $('#User_name[name="User_name"]').append($("<option>").val(value.Value).text(value.Text));
                     });
-                    $('#large[name="UserNameList"]').prop("disabled", false);
+                    $('#User_name[name="User_name"]').prop("disabled", false);
                 }
                 else {
-                    $('#large[name="UserNameList"]').empty();
+                    $('#User_name[name="User_name"]').empty();
                 }
             },
             error: function (ex) {

@@ -127,8 +127,8 @@ namespace CRS.ADMIN.APPLICATION.Models.PointsManagement
     {
 
         public string SearchFilter { get; set; }
-        public string UserType { get; set; }
-        public string UserName { get; set; }
+        public string User_type { get; set; }
+        public string User_name { get; set; }
         public string TransferType { get; set; }
         public string From_Date1 { get; set; }
         public string To_Date1 { get; set; }
