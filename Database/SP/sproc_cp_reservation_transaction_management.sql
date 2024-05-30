@@ -1,12 +1,13 @@
-USE [CRS]
+USE [CRS_V2]
 GO
 
-/****** Object:  StoredProcedure [dbo].[sproc_cp_reservation_transaction_management]    Script Date: 2/16/2024 5:53:26 PM ******/
+/****** Object:  StoredProcedure [dbo].[sproc_cp_reservation_transaction_management]    Script Date: 5/29/2024 2:47:38 PM ******/
 SET ANSI_NULLS ON
 GO
 
 SET QUOTED_IDENTIFIER ON
 GO
+
 
 
 
@@ -32,22 +33,26 @@ DECLARE @Sno BIGINT,
         @PlanDetailId BIGINT,
         @TransactionName VARCHAR(200),
         @ErrorDesc VARCHAR(MAX);
-DECLARE @CommissionAmount DECIMAL(18, 2),
-        @SQLString VARCHAR(MAX),
+DECLARE @SQLString VARCHAR(MAX),
         @NickName NVARCHAR(200),
         @EmailAddress VARCHAR(200),
         @SmsEmailResponseCode INT = 1,
         @MobileNumber VARCHAR(15),
         @UserId VARCHAR(10);
-DECLARE @CommissionId BIGINT,
-        @Price DECIMAL(18, 2),
-        @AdminCommissionAmount DECIMAL(18, 2),
-        @AdminTotalCommission DECIMAL(18, 2),
-        @TotalAmount DECIMAL(18, 2),
-        @AdminPaymentAmount DECIMAL(18, 2),
-        @ReservationType VARCHAR(10),
+DECLARE @ReservationType VARCHAR(10),
         @ReservationTxnId VARCHAR(10),
-        @CustomerCostAmount DECIMAL(18, 2);
+        @CustomerCostAmount DECIMAL(18, 2),
+        @OTPCode VARCHAR(10),
+        @AgentId VARCHAR(10) = NULL;
+DECLARE @PlanAmount DECIMAL(18, 2),
+        @TotalPlanAmount DECIMAL(18, 2),
+        @TotalClubPlanAmount DECIMAL(18, 2),
+        @CommissionId VARCHAR(10),
+        @AdminPlanCommissionAmount DECIMAL(18, 2),
+        @TotalAdminPlanCommissionAmount DECIMAL(18, 2),
+        @AdminCommissionAmount DECIMAL(18, 2),
+        @TotalAdminCommissionAmount DECIMAL(18, 2),
+        @TotalAdminPayableAmount DECIMAL(18, 2);
 BEGIN
     BEGIN TRY
         IF ISNULL(@Flag, '') = 'rc' --Reservation Confirmation
@@ -95,8 +100,24 @@ BEGIN
                 RETURN;
             END;
 
+            IF
+            (
+                SELECT COALESCE(COUNT(a.ReservationId), 0)
+                FROM dbo.tbl_reservation_detail a WITH (NOLOCK)
+                WHERE a.ClubId = @ClubId
+                      AND a.VisitDate = @VisitDate
+                      AND DATEPART(HOUR, a.VisitTime) = DATEPART(HOUR, @VisitTime)
+                      AND ISNULL(a.TransactionStatus, '') IN ( 'P', 'A', 'S' )
+            ) > 5
+            BEGIN
+                SELECT 1 Code,
+                       'Reservations are full for the given date and time. Please select another date or time.' Message;
+                RETURN;
+            END;
+
             SELECT @TransactionName = 'Flag_ird',
-                   @InvoiceId = dbo.[func_generate_invoice_no]('CRS');
+                   @InvoiceId = dbo.[func_generate_invoice_no]('CRS'),
+                   @VisitDate = FORMAT(CONVERT(DATE, @VisitDate, 111), 'yyyy-MM-dd');
 
             BEGIN TRANSACTION @TransactionName;
 
@@ -117,7 +138,7 @@ BEGIN
                 ActionPlatform
             )
             VALUES
-            (@InvoiceId, @ClubId, @CustomerId, @VisitDate, @VisitTime, @NoOfPeople, @PaymentType, 'P', 'P', 'P',
+            (@InvoiceId, @ClubId, @CustomerId, @VisitDate, @VisitTime, @NoOfPeople, @PaymentType, 'A', 'P', 'P',
              @ActionUser, @ActionIP, @ActionPlatform);
 
             SET @Sno = SCOPE_IDENTITY();
@@ -156,26 +177,54 @@ BEGIN
             SET PlanDetailId = @PlanDetailId
             WHERE Sno = @PlanDetailId;
 
-            SET @SQLString
-                = 'INSERT INTO dbo.tbl_reservation_host_detail
-		(
-		    ReservationId,
-			HostDetailId,
-		    HostId,
-		    CreatedUser,
-		    CreatedIP,
-		    CreatedPlatform
-		)'  ;
-            SET @SQLString += ' SELECT ' + CAST(@Sno AS VARCHAR) + ',' + CAST(@Sno AS VARCHAR) + ', a.HostId,'''
-                              + CAST(ISNULL(@ActionUser, '') AS VARCHAR(200)) + ''','''
-                              + CAST(ISNULL(@ActionIP, '') AS VARCHAR(50)) + ''','''
-                              + CAST(ISNULL(@ActionPlatform, '') AS VARCHAR(20))
-                              + ''' FROM dbo.tbl_host_details a WITH (NOLOCK) WHERE a.AgentId = '
-                              + CAST(@ClubId AS VARCHAR(10)) + ' AND a.HostId IN (' + CAST(@HostIdList AS VARCHAR(MAX))
-                              + '); UPDATE dbo.tbl_reservation_host_detail SET HostDetailId = SCOPE_IDENTITY()  WHERE Sno = SCOPE_IDENTITY();';
+            IF @HostIdList = '0'
+            BEGIN
+                INSERT INTO dbo.tbl_reservation_host_detail
+                (
+                    ReservationId,
+                    HostId,
+                    CreatedUser,
+                    CreatedIP,
+                    CreatedPlatform
+                )
+                VALUES
+                (@Sno, 0, @ActionUser, @ActionIP, @ActionPlatform);
 
-            PRINT (@SQLString);
-            EXEC (@SQLString);
+                SET @Sno2 = SCOPE_IDENTITY();
+
+                UPDATE dbo.tbl_reservation_host_detail
+                SET HostDetailId = @Sno2
+                WHERE Sno = @Sno2;
+
+            END;
+            ELSE
+            BEGIN
+                SET @SQLString
+                    = 'INSERT INTO dbo.tbl_reservation_host_detail
+        (
+            ReservationId,
+            HostId,
+            CreatedUser,
+            CreatedIP,
+            CreatedPlatform
+        )'      ;
+                SET @SQLString += ' SELECT ' + CAST(@Sno AS VARCHAR) + ', a.HostId,'''
+                                  + CAST(ISNULL(@ActionUser, '') AS VARCHAR(200)) + ''','''
+                                  + CAST(ISNULL(@ActionIP, '') AS VARCHAR(50)) + ''','''
+                                  + CAST(ISNULL(@ActionPlatform, '') AS VARCHAR(20))
+                                  + ''' FROM dbo.tbl_host_details a WITH (NOLOCK) WHERE a.AgentId = '
+                                  + CAST(@ClubId AS VARCHAR(10)) + ' AND a.HostId IN ('
+                                  + CAST(@HostIdList AS VARCHAR(MAX))
+                                  + '); UPDATE dbo.tbl_reservation_host_detail SET HostDetailId = SCOPE_IDENTITY()  WHERE Sno = SCOPE_IDENTITY();';
+
+                PRINT (@SQLString);
+                EXEC (@SQLString);
+                SET @Sno2 = SCOPE_IDENTITY();
+
+                UPDATE dbo.tbl_reservation_host_detail
+                SET HostDetailId = @Sno2
+                WHERE Sno = @Sno2;
+            END;
 
             UPDATE dbo.tbl_reservation_detail
             SET PlanDetailId = @PlanDetailId,
@@ -183,7 +232,7 @@ BEGIN
             WHERE ReservationId = @Sno;
 
             SELECT @CommissionId = b.CommissionId,
-                   @Price = ISNULL(c.Price, 0),
+                   @PlanAmount = ISNULL(c.Price, 0),
                    @ClubId = a.ClubId,
                    @NoOfPeople = a.NoOfPeople
             FROM dbo.tbl_reservation_detail a WITH (NOLOCK)
@@ -193,24 +242,39 @@ BEGIN
                     ON c.ReservationId = a.ReservationId
             WHERE a.ReservationId = @Sno
                   AND a.CustomerId = @CustomerId
-                  AND ISNULL(a.[TransactionStatus], '') = 'P';
+                  AND ISNULL(a.[TransactionStatus], '') = 'A';
 
+            IF ISNULL(@CommissionId, '') = ''
+            BEGIN
+                SELECT @CommissionId = a.CategoryId
+                FROM dbo.tbl_commission_category a WITH (NOLOCK)
+                WHERE ISNULL(a.IsDefault, 0) = 1
+                    AND ISNULL(a.Status, '') = 'A'
+            END
 
-            SELECT TOP 1
-                   @AdminCommissionAmount = ISNULL(b.CommissionValue, 0)
-            FROM dbo.tbl_commission_category a WITH (NOLOCK)
-                INNER JOIN dbo.tbl_commission_category_detail b WITH (NOLOCK)
-                    ON b.CategoryId = a.CategoryId
-            WHERE a.CategoryId = @CommissionId
-                  AND @Price
-                  BETWEEN ISNULL(b.FromAmount, 0) AND ISNULL(b.ToAmount, 0)
-                  AND ISNULL(a.Status, '') = 'A'
-                  AND ISNULL(b.Status, '') = 'A';
+            IF ISNULL(@CommissionId, '') <> ''
+            BEGIN
+                SELECT @AdminCommissionAmount = MAX(CASE WHEN b.AdminCommissionTypeId = 1 THEN ISNULL(b.CommissionValue, 0) END),
+                       @AdminPlanCommissionAmount = MAX(CASE WHEN b.AdminCommissionTypeId = 2 THEN ISNULL(b.CommissionValue, 0) END)
+                FROM dbo.tbl_commission_category a WITH (NOLOCK)
+                    INNER JOIN dbo.tbl_commission_category_detail b WITH (NOLOCK)
+                        ON b.CategoryId = a.CategoryId
+                WHERE a.CategoryId = @CommissionId
+                      AND @PlanAmount
+                      BETWEEN ISNULL(b.FromAmount, 0) AND ISNULL(b.ToAmount, 0)
+                      AND ISNULL(a.Status, '') = 'A'
+                      AND ISNULL(b.Status, '') = 'A';
+            END
+            ELSE
+            BEGIN
+                SELECT @AdminCommissionAmount = 0,
+                       @AdminPlanCommissionAmount = 0;
+            END
 
-
-            SELECT @Price = @Price,
-                   @TotalAmount = @Price * @NoOfPeople,
-                   @AdminTotalCommission = @AdminCommissionAmount * @NoOfPeople;
+            SELECT @TotalPlanAmount = ISNULL(@PlanAmount, 0) * @NoOfPeople,
+                   @TotalAdminCommissionAmount = ISNULL(@AdminCommissionAmount, 0) * @NoOfPeople,
+                   @TotalAdminPlanCommissionAmount = ISNULL(@AdminPlanCommissionAmount, 0) * @NoOfPeople;
+			SELECT @TotalClubPlanAmount = ISNULL(@TotalPlanAmount, 0) - ISNULL(@TotalAdminPlanCommissionAmount, 0);
 
             IF NOT EXISTS
             (
@@ -221,55 +285,78 @@ BEGIN
             )
             BEGIN
                 SELECT @ReservationType = 1,
-                       @AdminPaymentAmount = @AdminCommissionAmount * @NoOfPeople,
-                       @CustomerCostAmount = 0;
+					   @TotalAdminPlanCommissionAmount = 0,
+                       @TotalAdminPayableAmount = ISNULL(@AdminCommissionAmount, 0) * @NoOfPeople,
+                       @CustomerCostAmount = 0,
+					   @TotalClubPlanAmount = 0;
 
             END;
-            ELSE IF EXISTS
-            (
-                SELECT 'X'
-                FROM dbo.tbl_reservation_detail a WITH (NOLOCK)
-                WHERE a.CustomerId = @CustomerId
-                      AND ISNULL(a.TransactionStatus, '') IN ( 'S' )
-                      AND ISNULL(a.OTPVerificationStatus, '') IN ( 'A' )
-                      AND FORMAT(a.ActionDate, 'yyyy-MM-dd')
-                      BETWEEN FORMAT(DATEADD(MONTH, -3, GETDATE()), 'yyyy-MM-dd') AND FORMAT(GETDATE(), 'yyyy-MM-dd')
-                      AND a.ClubId = @ClubId
-                      AND a.ReservationId <> @Sno
-            )
-            BEGIN
-                SELECT @ReservationType = 2,
-                       @AdminPaymentAmount = 0,
-                       @CustomerCostAmount = @TotalAmount;
+            --ELSE IF EXISTS
+            --(
+            --    SELECT 'X'
+            --    FROM dbo.tbl_reservation_detail a WITH (NOLOCK)
+            --    WHERE a.CustomerId = @CustomerId
+            --          AND ISNULL(a.TransactionStatus, '') IN ( 'S', 'A' )
+            --          --AND ISNULL(a.OTPVerificationStatus, '') IN ( 'A' )
+            --          AND FORMAT(a.ActionDate, 'yyyy-MM-dd')
+            --          BETWEEN FORMAT(DATEADD(MONTH, -3, GETDATE()), 'yyyy-MM-dd') AND FORMAT(GETDATE(), 'yyyy-MM-dd')
+            --          AND a.ClubId = @ClubId
+            --          AND a.ReservationId <> @Sno
+            --)
+            --BEGIN
+            --    SELECT @ReservationType = 2,
+            --           @TotalAdminPayableAmount = 0,
+            --           @CustomerCostAmount = ISNULL(@TotalPlanAmount, 0);
 
-            END;
+            --END;
             ELSE
             BEGIN
                 SELECT @ReservationType = 3,
-                       @AdminPaymentAmount = @TotalAmount + @AdminTotalCommission,
-                       @CustomerCostAmount = @TotalAmount;
-            END;
-
+                       @TotalAdminPayableAmount = ISNULL(@TotalAdminPlanCommissionAmount, 0) + ISNULL(@TotalAdminCommissionAmount, 0),
+                       @CustomerCostAmount = ISNULL(@TotalPlanAmount, 0);
+            END;            
+            
             INSERT INTO dbo.tbl_reservation_transaction_detail
             (
-                ReservationId,
-                PlanAmount,
-                TotalAmount,
-                CommissionId,
-                CommissionAmount,
-                TotalCommissionAmount,
-                AdminPaymentAmount,
-                Status,
-                ActionUser,
-                ActionDate,
-                ActionIP,
-                ActionPlatform,
-                ReservationType
+                ReservationId
+               ,ReservationType
+               ,PlanAmount
+               ,TotalPlanAmount
+               ,TotalClubPlanAmount
+               ,CommissionId
+               ,AdminPlanCommissionAmount
+               ,TotalAdminPlanCommissionAmount
+               ,AdminCommissionAmount
+               ,TotalAdminCommissionAmount
+               ,TotalAdminPayableAmount
+               ,Remarks
+               ,AdminPaymentStatus
+               ,ActionUser
+               ,ActionDate
+               ,ActionIP
+               ,ActionPlatform
             )
-            VALUES
-            (@Sno, @Price, @TotalAmount, @CommissionId, @AdminCommissionAmount, @AdminTotalCommission,
-             @AdminPaymentAmount, 'I', @ActionUser, GETDATE(), @ActionIP, @ActionPlatform, @ReservationType);
 
+            VALUES
+            (
+                @Sno,
+                @ReservationType,
+                @PlanAmount,
+                @TotalPlanAmount,
+                @TotalClubPlanAmount,
+                @CommissionId,
+                @AdminPlanCommissionAmount,
+                @TotalAdminPlanCommissionAmount,
+                @AdminCommissionAmount,
+                @TotalAdminCommissionAmount,
+                @TotalAdminPayableAmount,
+                NULL,
+                'I',
+                @ActionUser, 
+                GETDATE(),
+                @ActionIP, 
+                @ActionPlatform
+            )
             SET @ReservationTxnId = SCOPE_IDENTITY();
 
             UPDATE dbo.tbl_reservation_transaction_detail
@@ -279,16 +366,19 @@ BEGIN
             SELECT @MobileNumber = b.MobileNumber,
                    @NickName = (b.NickName),
                    @UserId = c.UserId,
-                   @EmailAddress = b.EmailAddress
+                   @EmailAddress = b.EmailAddress,
+                   @OTPCode = dbo.func_generate_otp_code(6),
+                   @AgentId = b.AgentId
             FROM dbo.tbl_reservation_detail a WITH (NOLOCK)
                 INNER JOIN dbo.tbl_customer b WITH (NOLOCK)
                     ON b.AgentId = a.CustomerId
                 INNER JOIN dbo.tbl_users c WITH (NOLOCK)
                     ON c.AgentId = b.AgentId
+                       AND c.RoleType = 3
                        AND ISNULL(c.[Status], '') = 'A'
             WHERE a.ReservationId = @Sno
                   AND a.CustomerId = @CustomerId
-                  AND ISNULL(a.TransactionStatus, '') = 'P';
+                  AND ISNULL(a.TransactionStatus, '') = 'A';
 
             COMMIT TRANSACTION @TransactionName;
 
@@ -301,19 +391,23 @@ BEGIN
             (
                 Code
             )
-            EXEC dbo.sproc_email_sms_management @Flag = '4',
+            EXEC dbo.sproc_email_sms_management @Flag = '6',
+                                                @MobileNumber = @MobileNumber,
                                                 @EmailSendTo = @EmailAddress,
+                                                @VerificationCode = @OTPCode,
                                                 @Username = @NickName,
-                                                @AgentId = @CustomerId,
-                                                @UserId = @CustomerId,
+                                                @AgentId = @AgentId,
+                                                @UserId = @UserId,
                                                 @ActionUser = @ActionUser,
                                                 @ActionIP = @ActionIP,
                                                 @ActionPlatform = @ActionPlatform,
+                                                @ExtraDatailId1 = @Sno,
                                                 @ResponseCode = @SmsEmailResponseCode OUTPUT;
             DROP TABLE #temp_ird;
 
             SELECT 0 Code,
                    'Reservation successfull' Message;
+            RETURN;
         END;
     END TRY
     BEGIN CATCH

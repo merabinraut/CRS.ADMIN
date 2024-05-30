@@ -185,7 +185,7 @@
                                                     </path>
                                                 </svg>
                                             </div>
-                                            <div onclick="handleCommissionDelete('@item.CategoryId','@item.CategoryDetailId','@ViewBag.CategoryName')">
+                                            <div onclick="handleCommissionDelete('@item.CategoryId','@item.CategoryDetailId','@ViewBag.CategoryName', '@item.AdminCommissionTypeId')">
                                                 <svg class="svg-inline--fa fa-trash-can text-primary-100 cursor-pointer"
                                                      aria-hidden="true" focusable="false" data-prefix="fas" data-icon="trash-can"
                                                      role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"
@@ -228,8 +228,8 @@
         window.location.href = '/CommissionManagement/ManageCommissionDetail?id=' + i + "&&CategoryId=" + j + "&&CategoryName=" + k + "&&AdminCommissionTypeId=" + l;
     }
 
-    const handleCommissionDelete = (categoryId, categoryDetailId, categoryName) => {
-        const url = `/CommissionManagement/DeleteCommissionDetail?CategoryId=${encodeURIComponent(categoryId)}&CategoryDetailId=${encodeURIComponent(categoryDetailId)}&CategoryName=${encodeURIComponent(categoryName)}`;
+    const handleCommissionDelete = (categoryId, categoryDetailId, categoryName, AdminCommissionTypeId) => {
+        const url = `/CommissionManagement/DeleteCommissionDetail?CategoryId=${encodeURIComponent(categoryId)}&CategoryDetailId=${encodeURIComponent(categoryDetailId)}&CategoryName=${encodeURIComponent(categoryName)}&AdminCommissionTypeId=${encodeURIComponent(AdminCommissionTypeId)}`;
         window.location.href = url;
     }
 

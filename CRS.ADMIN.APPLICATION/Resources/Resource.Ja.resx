@@ -1775,6 +1775,18 @@
     <value>総顧客数</value>
     <comment>Reservation Ledger</comment>
   </data>
+  <data name="TotalAdminCommissionAmount" xml:space="preserve">
+    <value>管理手数料合計額</value>
+    <comment>Payment Management</comment>
+  </data>
+  <data name="TotalAdminPlanCommissionAmount" xml:space="preserve">
+    <value>管理プラン手数料合計額</value>
+    <comment>Payment Management</comment>
+  </data>
+  <data name="TotalPlanAmount" xml:space="preserve">
+    <value>合計プラン金額</value>
+    <comment>Payment Management</comment>
+  </data>
   <data name="Transaction Date" xml:space="preserve">
     <value>取引日時</value>
     <comment>Points Management</comment>

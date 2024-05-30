@@ -41,14 +41,17 @@ namespace CRS.ADMIN.REPOSITORY.PaymentManagement
                             VisitDate = dataRow["VisitDate"].ToString(),
                             VisitTime = dataRow["VisitTime"].ToString(),
                             PaymentType = dataRow["PaymentType"].ToString(),
-                            PlanAmount = dataRow["PlanAmount"].ToString(),
-                            TotalAmount = dataRow["TotalAmount"].ToString(),
-                            CommissionAmount = dataRow["CommissionAmount"].ToString(),
-                            TotalCommissionAmount = dataRow["TotalCommissionAmount"].ToString(),
-                            AdminPaymentAmount = dataRow["AdminPaymentAmount"].ToString(),
                             ReservationType = dataRow["ReservationType"].ToString(),
                             TotalRecords = Convert.ToInt32(_dao.ParseColumnValue(dataRow, "TotalRecords").ToString()),
-                            SNO = Convert.ToInt32(_dao.ParseColumnValue(dataRow, "SNO").ToString())
+                            SNO = Convert.ToInt32(_dao.ParseColumnValue(dataRow, "SNO").ToString()),
+                            PlanAmount = dataRow["PlanAmount"].ToString(),
+                            TotalPlanAmount = dataRow["TotalPlanAmount"].ToString(),
+                            TotalClubPlanAmount = dataRow["TotalClubPlanAmount"].ToString(),
+                            AdminPlanCommissionAmount = dataRow["AdminPlanCommissionAmount"].ToString(),
+                            TotalAdminPlanCommissionAmount = dataRow["TotalAdminPlanCommissionAmount"].ToString(),
+                            AdminCommissionAmount = dataRow["AdminCommissionAmount"].ToString(),
+                            TotalAdminCommissionAmount = dataRow["TotalAdminCommissionAmount"].ToString(),
+                            TotalAdminPayableAmount = dataRow["TotalAdminPayableAmount"].ToString()
                         });
                     }
                 }
@@ -82,13 +85,12 @@ namespace CRS.ADMIN.REPOSITORY.PaymentManagement
                         ClubName = dataRow["ClubName"].ToString(),
                         ClubLogo = dataRow["ClubLogo"].ToString(),
                         ClubCategory = dataRow["ClubCategory"].ToString(),
-                        //ClubMobileNumber = dataRow["ClubMobileNumber"].ToString(),
                         Location = dataRow["ClubLocation"].ToString(),
                         Date = dataRow["TransactionDate"].ToString(),
                         TransactionFormattedDate = dataRow["TransactionFormattedDate"].ToString(),
-                        //PaymentStatus = dataRow["PaymentStatus"].ToString(),
-                        TotalAmount = dataRow["TotalAmount"].ToString(),
-                        TotalCommission = dataRow["TotalCommissionAmount"].ToString(),
+                        TotalPlanAmount = dataRow["TotalPlanAmount"].ToString(),
+                        TotalAdminPlanCommissionAmount = dataRow["TotalAdminPlanCommissionAmount"].ToString(),
+                        TotalAdminCommissionAmount = dataRow["TotalAdminCommissionAmount"].ToString(),
                         GrandTotal = dataRow["GrandTotal"].ToString(),
                         TotalRecords = Convert.ToInt32(_dao.ParseColumnValue(dataRow, "TotalRecords").ToString()),
                         SNO = Convert.ToInt32(_dao.ParseColumnValue(dataRow, "SNO").ToString())

@@ -233,6 +233,7 @@
     <Compile Include="Controllers\AffiliateManagementController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\ClubManagementController.cs" />
+    <Compile Include="Controllers\ClubPlanManagementController.cs" />
     <Compile Include="Controllers\CommissionManagementController.cs" />
     <Compile Include="Controllers\CustomerManagementController.cs" />
     <Compile Include="Controllers\EmailLogController.cs" />
@@ -259,6 +260,7 @@
     <Compile Include="Controllers\ScheduleManagementController.cs" />
     <Compile Include="Controllers\SMSLogController.cs" />
     <Compile Include="Controllers\StaffManagementController.cs" />
+    <Compile Include="Controllers\StaticDataManagementController.cs" />
     <Compile Include="CustomHelpers\CustomHtmlHelpers.cs" />
     <Compile Include="Filters\ActivityLogFilter.cs" />
     <Compile Include="Filters\SessionExpiryFilterAttribute.cs" />
@@ -312,6 +314,7 @@
     <Compile Include="Models\ScheduleManagement\ScheduleManagementModel.cs" />
     <Compile Include="Models\SMSLog\SMSLogModel.cs" />
     <Compile Include="Models\StaffManagement\StaffManagementModel.cs" />
+    <Compile Include="Models\StaticDataManagement\StaticDataManagementModel.cs" />
     <Compile Include="Models\TagManagement\TagManagementModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\Resource.Designer.cs">
@@ -324,8 +327,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resource.Ja.resx</DependentUpon>
     </Compile>
+    <None Include="Views\ClubPlanManagement\_ManageClubPlanPartialView.cshtml" />
     <Content Include="Views\PointsManagement\_ManagePointsRequestPartialView.cshtml" />
     <Content Include="App_Data\AmazonConfigruation.json" />
+    <Content Include="Views\ClubPlanManagement\ClubPlanList.cshtml" />
     <Content Include="Views\PointsManagement\_PointBalanceStatement.cshtml" />
     <None Include="Views\PointsManagement\_ManagePointsTransferPartialView.cshtml" />
     <None Include="Views\PointsManagement\PointsTransferList.cshtml" />
@@ -2691,6 +2696,10 @@
     <Content Include="Views\Inquiries\index.cshtml" />
     <Content Include="Views\CommissionManagement\AdminCommissionList.cshtml" />
     <Content Include="Views\PointsManagement\_PointRequestListPartialView.cshtml" />
+    <Content Include="Views\StaticDataManagement\Index.cshtml" />
+    <Content Include="Views\StaticDataManagement\_ManageStaticDataType.cshtml" />
+    <Content Include="Views\StaticDataManagement\StaticDataIndex.cshtml" />
+    <Content Include="Views\StaticDataManagement\_ManageStaticData.cshtml" />
     <Content Include="Views\PointsManagement\_GetSystemTransferReportAsync.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
