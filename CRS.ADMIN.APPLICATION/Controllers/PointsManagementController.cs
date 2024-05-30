@@ -373,17 +373,17 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             mappedObject.Skip = requestModel.StartIndex2;
             mappedObject.Take = requestModel.PageSize2;
 
-      
+
             var response = _BUSS.GetPointBalanceStatementDetailsAsync(mappedObject);
 
             var mappedResponseObjects = response.MapObjects<PointBalanceStatementResponseModel>();
 
             ViewBag.PageSize2 = requestModel.PageSize2;
-            ViewBag.TotalData2 = response.FirstOrDefault().RowTotal;
+            ViewBag.TotalData2 = response.Count > 0 ? response?.FirstOrDefault().RowTotal : "0";
             ViewBag.StartIndex2 = requestModel.StartIndex2;
 
             TempData["ListModel"] = mappedResponseObjects;
-            return RedirectToAction("PointsTransferList", "PointsManagement", new { value = "pbs", FromDate = requestModel.From_Date, ToDate = requestModel.To_Date, UserType = requestModel.UserTypeList.EncryptParameter(), UserName = requestModel.UserNameList.EncryptParameter(), TransferTypeId = requestModel.TransferTypeList.EncryptParameter(), SearchFilter = requestModel.SearchFilter, TotalData2 = response.FirstOrDefault().RowTotal});
+            return RedirectToAction("PointsTransferList", "PointsManagement", new { value = "pbs", FromDate = requestModel.From_Date, ToDate = requestModel.To_Date, UserType = requestModel.UserTypeList.EncryptParameter(), UserName = requestModel.UserNameList.EncryptParameter(), TransferTypeId = requestModel.TransferTypeList.EncryptParameter(), SearchFilter = requestModel.SearchFilter, TotalData2 = ViewBag.TotalData2 });
             //return PartialView("PointsTransferList", mappedResponseObjects);
         }
         [HttpGet, OverrideActionFilters]
@@ -417,7 +417,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             ViewBag.TotalData3 = response.FirstOrDefault().RowTotal;
             ViewBag.StartIndex3 = requestModel.StartIndex3;
             TempData["ListModel"] = mappedResponseObjects;
-            return RedirectToAction("PointsTransferList", "PointsManagement", new { value = "st", FromDate = requestModel.From_Date1, ToDate = requestModel.To_Date1, UserType = requestModel.User_type.EncryptParameter(), UserName = requestModel.User_name.EncryptParameter(), TransferTypeId = requestModel.TransferType.EncryptParameter(), SearchFilter = requestModel.SearchFilter , TotalData3 = response.FirstOrDefault().RowTotal });
+            return RedirectToAction("PointsTransferList", "PointsManagement", new { value = "st", FromDate = requestModel.From_Date1, ToDate = requestModel.To_Date1, UserType = requestModel.User_type.EncryptParameter(), UserName = requestModel.User_name.EncryptParameter(), TransferTypeId = requestModel.TransferType.EncryptParameter(), SearchFilter = requestModel.SearchFilter, TotalData3 = response.FirstOrDefault().RowTotal });
         }
     }
 }

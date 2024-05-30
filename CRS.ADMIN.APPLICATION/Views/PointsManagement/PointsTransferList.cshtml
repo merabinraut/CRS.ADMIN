@@ -232,134 +232,141 @@
                             <div class="flex items-center select-entries" id="ShowEntries-Id">
                             </div>
                         </div>
-                        <div class="relative overflow-x-auto">
-                            <table class="w-full text-left club-table" id="table-id">
-                                <thead class="club-table-thead">
-                                    <tr>
-                                        <th scope="col" class="p-[12px]">
-                                            <div class="flex w-max">
-                                                S.N
-                                                <div class="relative pl-[5px]">
-                                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
-                                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                        <div class="table-tab">
+                            <div class="px-[16px] py-[12px] flex justify-between entry-export-container">
+                                <div class="flex items-center select-entries" id="ShowEntries-Id">
+                                </div>
+                                <div class="export-button h-[40px]" onclick="exportExcel('table-id_PointTransfer', 'PointTransfer')">
+                                    <img src="~/Content/assets_new/images/club/download-solid.svg"> @CRS.ADMIN.APPLICATION.Resources.Resource.Export
+                                </div>
+                            </div>
+                            <div class="relative overflow-x-auto">
+                                <table class="w-full text-left club-table" id="id_PointTransfer">
+                                    <thead class="club-table-thead">
+                                        <tr>
+                                            <th scope="col" class="p-[12px]">
+                                                <div class="flex w-max">
+                                                    S.N
+                                                    <div class="relative pl-[5px]">
+                                                        <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                                        <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </th>
-                                        <th scope="col" class="p-[12px]">
-                                            <div class="flex w-max">
-                                                @CRS.ADMIN.APPLICATION.Resources.Resource.Transaction_ID
-                                                <div class="relative pl-[5px]">
-                                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
-                                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                            </th>
+                                            <th scope="col" class="p-[12px]">
+                                                <div class="flex w-max">
+                                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Transaction_ID
+                                                    <div class="relative pl-[5px]">
+                                                        <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                                        <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </th>
+                                            </th>
 
 
-                                        <th scope="col" class="p-[12px]">
-                                            <div class="flex w-max">
-                                                @CRS.ADMIN.APPLICATION.Resources.Resource.Transaction_Date
-                                                <div class="relative pl-[5px]">
-                                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
-                                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                            <th scope="col" class="p-[12px]">
+                                                <div class="flex w-max">
+                                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Transaction_Date
+                                                    <div class="relative pl-[5px]">
+                                                        <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                                        <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </th>
+                                            </th>
 
-                                        <th scope="col" class="p-[12px]">
-                                            <div class="flex w-max">
-                                                @CRS.ADMIN.APPLICATION.Resources.Resource.Transaction_Type
-                                                <div class="relative pl-[5px]">
-                                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
-                                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                            <th scope="col" class="p-[12px]">
+                                                <div class="flex w-max">
+                                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Transaction_Type
+                                                    <div class="relative pl-[5px]">
+                                                        <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                                        <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </th>
+                                            </th>
 
-                                        <th scope="col" class="p-[12px]">
-                                            <div class="flex w-max">
-                                                @CRS.ADMIN.APPLICATION.Resources.Resource.User_Type
-                                                <div class="relative pl-[5px]">
-                                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
-                                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                            <th scope="col" class="p-[12px]">
+                                                <div class="flex w-max">
+                                                    @CRS.ADMIN.APPLICATION.Resources.Resource.User_Type
+                                                    <div class="relative pl-[5px]">
+                                                        <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                                        <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </th>
+                                            </th>
 
-                                        <th scope="col" class="p-[12px]">
-                                            <div class="flex w-max">
-                                                @CRS.ADMIN.APPLICATION.Resources.Resource.From_User
-                                                <div class="relative pl-[5px]">
-                                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
-                                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                            <th scope="col" class="p-[12px]">
+                                                <div class="flex w-max">
+                                                    @CRS.ADMIN.APPLICATION.Resources.Resource.From_User
+                                                    <div class="relative pl-[5px]">
+                                                        <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                                        <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </th>
-                                        <th scope="col" class="p-[12px]">
-                                            <div class="flex w-max">
-                                                @CRS.ADMIN.APPLICATION.Resources.Resource.To_User
-                                                <div class="relative pl-[5px]">
-                                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
-                                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                            </th>
+                                            <th scope="col" class="p-[12px]">
+                                                <div class="flex w-max">
+                                                    @CRS.ADMIN.APPLICATION.Resources.Resource.To_User
+                                                    <div class="relative pl-[5px]">
+                                                        <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                                        <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </th>
-                                        <th scope="col" class="p-[12px]">
-                                            <div class="flex w-max">
-                                                @CRS.ADMIN.APPLICATION.Resources.Resource.Points
-                                                <div class="relative pl-[5px]">
-                                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
-                                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                            </th>
+                                            <th scope="col" class="p-[12px]">
+                                                <div class="flex w-max">
+                                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Points
+                                                    <div class="relative pl-[5px]">
+                                                        <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                                        <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </th>
+                                            </th>
 
 
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @{
-                                        if (Model.PointsTansferReportList.Count > 0)
-                                        {
-                                            int SN = 1;
-                                            foreach (var item in Model.PointsTansferReportList)
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @{
+                                            if (Model.PointsTansferReportList.Count > 0)
                                             {
-                                                <tr class="bg-white border-b ">
-                                                    <td class="p-[12px]">
-                                                        @SN
-                                                    </td>
-                                                    <td class="p-[12px]">
-                                                        @item.TransactionId
-                                                    </td>
-                                                    <td class="p-[12px]">
-                                                        @item.TransactionDate
-                                                    </td>
-                                                    <td class="p-[12px]">
-                                                        @item.TransactionType
-                                                    </td>
-                                                    <td class="p-[12px]">
-                                                        @item.UserType
-                                                    </td>
-                                                    <td class="p-[12px]">
-                                                        @item.FromUser
-                                                    </td>
-                                                    <td class="p-[12px]">
-                                                        @item.ToUser
-                                                    </td>
-                                                    <td class="p-[12px]">
-                                                        @item.Points
-                                                    </td>
+                                                int SN = 1;
+                                                foreach (var item in Model.PointsTansferReportList)
+                                                {
+                                                    <tr class="bg-white border-b ">
+                                                        <td class="p-[12px]">
+                                                            @SN
+                                                        </td>
+                                                        <td class="p-[12px]">
+                                                            @item.TransactionId
+                                                        </td>
+                                                        <td class="p-[12px]">
+                                                            @item.TransactionDate
+                                                        </td>
+                                                        <td class="p-[12px]">
+                                                            @item.TransactionType
+                                                        </td>
+                                                        <td class="p-[12px]">
+                                                            @item.UserType
+                                                        </td>
+                                                        <td class="p-[12px]">
+                                                            @item.FromUser
+                                                        </td>
+                                                        <td class="p-[12px]">
+                                                            @item.ToUser
+                                                        </td>
+                                                        <td class="p-[12px]">
+                                                            @item.Points
+                                                        </td>
 
 
-                                                </tr>
-                                                SN++;
+                                                    </tr>
+                                                    SN++;
+                                                }
                                             }
                                         }
-
-                                    }
-                                </tbody>
-                            </table>
-
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                         <div class="pagination-club">
                             <div class="show-entry" id="Entries-Id">
