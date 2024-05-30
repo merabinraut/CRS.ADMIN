@@ -1305,7 +1305,6 @@
             return url;
         }
         function PlanRedirectFunction(i) {
-            debugger;
             window.location.href = '/ClubPlanManagement/ClubPlanList?AgentId=' + i;
         }
 
@@ -1731,7 +1730,6 @@
         //}
 
         checkboxclub.addEventListener('change', function () {
-            debugger;
             var nameAttributeValue = $('#toogle1').attr('name');
             if (this.checked) {
                 $('input[name="' + nameAttributeValue + '"]').val('A');
