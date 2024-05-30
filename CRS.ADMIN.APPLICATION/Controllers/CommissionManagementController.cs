@@ -340,7 +340,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
         }
 
         [HttpGet]
-        public ActionResult DeleteCommissionDetail(string CategoryId, string CategoryDetailId, string CategoryName)
+        public ActionResult DeleteCommissionDetail(string CategoryId, string CategoryDetailId, string CategoryName, string AdminCommissionTypeId)
         {
             var response = new CommonDbResponse();
             var cId = !string.IsNullOrEmpty(CategoryId) ? CategoryId.DecryptParameter() : null;
@@ -368,7 +368,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                     Title = NotificationMessage.ERROR.ToString(),
                 });
 
-            return RedirectToAction("CommissionDetailList", new { CategoryId, CategoryName });
+            return RedirectToAction("CommissionDetailList", new { CategoryId, CategoryName , AdminCommissionTypeId });
         }
         #endregion
 
