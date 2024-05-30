@@ -76,7 +76,7 @@
             <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
                 @CRS.ADMIN.APPLICATION.Resources.Resource.User_Type
             </label>
-            <select id="UserTypeList" name="UserTypeList" onchange="return GetUserNameByUserType();" class=" default_select select-common block w-full "
+            <select id="UserTypeList" name="UserTypeList" onchange="return GetUserNameByUser_Type();" class=" default_select select-common block w-full "
                     style="width: 100%;">
                 @foreach (var item in ViewBag.UserTypeList as IEnumerable<SelectListItem>)
                 {
@@ -393,9 +393,9 @@
 </div>
 <script>
 
-    function GetUserNameByUserType() {
+    function GetUserNameByUser_Type() {
     //$('#large[name="UserTypeList"]').change(function () {
-        var UserTypeId = $('#large[name="UserTypeList"]').find("option:selected").val().trim();
+        var UserTypeId = $('#UserTypeList[name="UserTypeList"]').find("option:selected").val();
         //$('#large[name="UserNameList"]').prop("disabled", true);
         $.ajax({
             type: 'GET',
@@ -404,16 +404,16 @@
             dataType: 'json',
             data: { RoleTypeId: UserTypeId },
             success: function (response) {
-                $('#large[name="UserNameList"]').empty();
+                $('#UserNameList[name="UserNameList"]').empty();
                 if (response.userNameList.length > 0) {
-                    $('#large[name="UserNameList"]').append($("<option>").val("").text("--- Select ---"));
+                    $('#UserNameList[name="UserNameList"]').append($("<option>").val("").text("--- Select ---"));
                     $.each(response.userNameList, function (i, value) {
-                        $('#large[name="UserNameList"]').append($("<option>").val(value.Value).text(value.Text));
+                        $('#UserNameList[name="UserNameList"]').append($("<option>").val(value.Value).text(value.Text));
                     });
-                    $('#large[name="UserNameList"]').prop("disabled", false);
+                    $('#UserNameList[name="UserNameList"]').prop("disabled", false);
                 }
                 else {
-                    $('#large[name="UserNameList"]').empty();
+                    $('#UserNameList[name="UserNameList"]').empty();
                 }
             },
             error: function (ex) {

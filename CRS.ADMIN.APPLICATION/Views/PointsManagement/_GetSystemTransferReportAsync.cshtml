@@ -74,7 +74,7 @@
             <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
                 @CRS.ADMIN.APPLICATION.Resources.Resource.User_Type
             </label>
-            <select id="Usertype1" name="UserType" onchange="return GetUserNameByUserType();" class=" default_select select-common block w-full "
+            <select id="User_type" name="User_type" onchange="return GetUserNameByUserType();" class=" default_select select-common block w-full "
                     style="width: 100%;">
                 @foreach (var item in ViewBag.UserTypeList as IEnumerable<SelectListItem>)
                 {
@@ -94,7 +94,7 @@
                 }
             </select>
             <span class="error">
-                @Html.ValidationMessageFor(m => m.UserType)
+                @Html.ValidationMessageFor(m => m.User_type)
             </span>
 
         </div>
@@ -105,7 +105,7 @@
                     @CRS.ADMIN.APPLICATION.Resources.Resource.User
                 </label>
 
-                <select id="Username1" name="UserName" class=" default_select select-common block w-full "
+                <select id="User_name" name="User_name" class=" default_select select-common block w-full "
                         style="width: 100%;">
                     @foreach (var item in ViewBag.FilterUserList as IEnumerable<SelectListItem>)
                     {
@@ -125,7 +125,7 @@
                     }
                 </select>
                 <span class="error">
-                    @Html.ValidationMessageFor(m => m.UserName)
+                    @Html.ValidationMessageFor(m => m.User_name)
                 </span>
 
 
@@ -368,7 +368,7 @@
 
     function GetUserNameByUserType() {
     //$('#large[name="UserTypeList"]').change(function () {
-        var UserTypeId = $('#large[name="UserTypeList"]').find("option:selected").val().trim();
+        var UserTypeId = $('#User_type[name="User_type"]').find("option:selected").val().trim();
         //$('#large[name="UserNameList"]').prop("disabled", true);
         $.ajax({
             type: 'GET',
@@ -377,16 +377,16 @@
             dataType: 'json',
             data: { RoleTypeId: UserTypeId },
             success: function (response) {
-                $('#large[name="UserNameList"]').empty();
+                $('#User_name[name="User_name"]').empty();
                 if (response.userNameList.length > 0) {
-                    $('#large[name="UserNameList"]').append($("<option>").val("").text("--- All ---"));
+                    $('#User_name[name="User_name"]').append($("<option>").val("").text("--- All ---"));
                     $.each(response.userNameList, function (i, value) {
-                        $('#large[name="UserNameList"]').append($("<option>").val(value.Value).text(value.Text));
+                        $('#User_name[name="User_name"]').append($("<option>").val(value.Value).text(value.Text));
                     });
-                    $('#large[name="UserNameList"]').prop("disabled", false);
+                    $('#User_name[name="User_name"]').prop("disabled", false);
                 }
                 else {
-                    $('#large[name="UserNameList"]').empty();
+                    $('#User_name[name="User_name"]').empty();
                 }
             },
             error: function (ex) {
