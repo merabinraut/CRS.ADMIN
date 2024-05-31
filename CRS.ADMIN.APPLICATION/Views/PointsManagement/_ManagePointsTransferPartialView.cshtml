@@ -1,9 +1,9 @@
 @model CRS.ADMIN.APPLICATION.Models.PointsManagement.PointsTansferModel
 <style>
-    .transferType{
-        display:inline-flex;
-       gap:24px
-    } 
+    .transferType {
+        display: inline-flex;
+        gap: 24px
+    }
 
         .transferType > div > input {
             background: #fff;
@@ -12,16 +12,17 @@
             margin-right: 10px
         }
 
-        .transferType > div > input:checked {
-            background: #D75A8B;
-            border: none;
-            outline: 2px solid #D75A8B;
-        }
+            .transferType > div > input:checked {
+                background: #D75A8B;
+                border: none;
+                outline: 2px solid #D75A8B;
+            }
+
             .transferType > div > input:not(:focus) {
                 /*background: #D75A8B;
                 border: none;
                 outline: 2px solid #D75A8B;*/
-              /*  border-width: 1px;*/
+                /*  border-width: 1px;*/
                 border: 2px solid #fff;
             }
 </style>
@@ -49,24 +50,14 @@
                 <div class="grid gap-4">
                     <div class=" mb-[20px]" id="">
                         <div class="transferType">
-
-                            @*<label>
-                                    @Html.RadioButtonFor(model => model.TransferType, "Transfer", new { @id = "transfer" })   @CRS.ADMIN.APPLICATION.Resources.Resource.Transfer
-                                </label>
-                                <label>
-                                    @Html.RadioButtonFor(model => model.TransferType, "Retrieve", new { @id = "retrieve" })   @CRS.ADMIN.APPLICATION.Resources.Resource.Retrieve
-                                </label>*@
                             <div>
-
-                                <input type="radio" name="TransferType" class="cls_trftype" value="Transfer"/>
+                                <input type="radio" name="TransferType" class="cls_trftype" value="Transfer" />
                                 <label for="transfertype">Transfer</label>
                             </div>
                             <div>
-
-                                <input type="radio" name="TransferType"  class="cls_trftype" value="Retrieve"/>
+                                <input type="radio" name="TransferType" class="cls_trftype" value="Retrieve" />
                                 <label for="retrieve">Retrieve</label>
                             </div>
-
                             <span class="error">
                                 @Html.ValidationMessageFor(m => m.TransferType)
                             </span>
@@ -173,7 +164,6 @@
                             <label for="file_input_Image" class="custom-file-upload w-[123px] bg-[#CC527A] flex-none ">
                                 <span>@CRS.ADMIN.APPLICATION.Resources.Resource.Choose_Images</span>
                             </label>
-                            @*<input type="hidden" name="Business_Certificate" value="@Model.Business_Certificate"/>*@
                             <input id="file_input_Image" class="file-input" type="file" name="Image_Certificate" value="@Model.Image"
                                    style="display:none;">
                             <p id="file_name_Image"
@@ -206,12 +196,8 @@
                             @CRS.ADMIN.APPLICATION.Resources.Resource.Cancel
                         </button>
                         <button class="btn btn-primary-default rounded-[4px]" type="submit"> @CRS.ADMIN.APPLICATION.Resources.Resource.Submit</button>
-
-
                     </div>
-
                 </div>
-
             }
         </div>
     </div>

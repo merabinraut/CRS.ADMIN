@@ -59,8 +59,6 @@
                     <div id="pointstransfer" class="pane active">
                         <form action="/PointsManagement/PointsTransferList" method="get">
                             <div class="flex justify-between pb-[24px]">
-
-                                @*<input type="hidden" name="ClubId" value="@Model.UserTypeList.R">*@
                                 @Html.HiddenFor(model => model.ListType)
 
                                 <div class="relative input-search-wrapper">
@@ -80,10 +78,6 @@
                                 </div>
 
                                 <div class="flex gap-6">
-                                    @*<div class="export-button h-[40px]" onclick="exportExcel('table-id', 'Club')">
-                                            <img src="~/Content/assets_new/images/club/download-solid.svg">@CRS.ADMIN.APPLICATION.Resources.Resource.Export
-                                        </div>*@
-
                                     <div class="btn btn-primary gap-[8px] h-[40px]" data-drawer-target="add-new-points"
                                          data-drawer-show="add-new-points" data-drawer-placement="right" data-drawer-backdrop="false"
                                          aria-controls="drawer-disabled-backdrop" id="add-new-id">
