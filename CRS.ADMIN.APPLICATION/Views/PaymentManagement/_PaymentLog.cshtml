@@ -25,50 +25,7 @@
                            name="searchText">
                 </div>
             }
-            <!--<div class="flex gap-4">
-                <div class="input-field-common payment-select-club w-[140px]">
-                    <select id="large" name="clubId" class="default_select select-common block w-full ddlPaymentClubList"
-                            style="width: 100%; border-radius:8px;">
-                        @foreach (var item in ViewBag.ClubDDL as IEnumerable<SelectListItem>)
-                        {
-                            var selectedId = ViewBag.ClubDDL as string;
-                            if (item.Value == selectedId)
-                            {
-                                <option value="@item.Value" selected>
-                                    @item.Text
-                                </option>
-                            }
-                            else
-                            {
-                                <option value="@item.Value">
-                                    @item.Text
-                                </option>
-                            }
-                        }
-                    </select>
-                </div>-->
-            @*<div class="bg-white ">
-                    <div class="flex tab-container">
-                        <button id="tab1Button" class="tab-button tab-link active">
-                            @CRS.ADMIN.APPLICATION.Resources.Resource.Today
-                        </button>
-                        <button id="tab2Button" class="tab-button tab-link">
-                            Tomorrow
-                        </button>
-                        <button id="tab3Button" class="tab-button tab-link">
-                            Day After Tomorrow
-                        </button>
-                    </div>
-                </div>*@
-            @*<div class="custom-date " data-drawer-target="custom-date-drawer" data-drawer-show="custom-date-drawer"
-                     data-drawer-placement="right" aria-controls="custom-date-drawer">
-                    <img src="~/Content/assets_new/images/club/calendar-week-solid.svg" alt="date">
-                    @CRS.ADMIN.APPLICATION.Resources.Resource.Custom_Date
-                </div>*@
-            <!--</div>-->
-
         </div>
-
         <!-- filter  -->
         <div class="mb-4">
             <div id="filter" class="export-button h-[40px] text-[#3E3E3E] w-max" onclick="showFilterContainer()">
@@ -222,19 +179,9 @@
                                             </div>
                                         </div>
                                     </th>
-
-                                    @*<th scope="col" class="p-[12px]">
-                                            <div class="flex w-max">
-                                                @CRS.ADMIN.APPLICATION.Resources.Resource.Payment_Status
-                                                <div class="relative pl-[5px]">
-                                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
-                                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
-                                                </div>
-                                            </div>
-                                        </th>*@
                                     <th scope="col" class="p-[12px]">
                                         <div class="flex w-max">
-                                            @CRS.ADMIN.APPLICATION.Resources.Resource.Total_Amount
+                                            @CRS.ADMIN.APPLICATION.Resources.Resource.TotalPlanAmount
                                             <div class="relative pl-[5px]">
                                                 <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
                                                 <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
@@ -243,7 +190,16 @@
                                     </th>
                                     <th scope="col" class="p-[12px]">
                                         <div class="flex w-max">
-                                            @CRS.ADMIN.APPLICATION.Resources.Resource.Total_Commission
+                                            @CRS.ADMIN.APPLICATION.Resources.Resource.TotalAdminPlanCommissionAmount
+                                            <div class="relative pl-[5px]">
+                                                <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                                <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                            </div>
+                                        </div>
+                                    </th>
+                                    <th scope="col" class="p-[12px]">
+                                        <div class="flex w-max">
+                                            @CRS.ADMIN.APPLICATION.Resources.Resource.TotalAdminCommissionAmount
                                             <div class="relative pl-[5px]">
                                                 <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
                                                 <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
@@ -303,18 +259,15 @@
                                                 </div>
                                             </td>
 
-                                            @*<td class="p-[12px] w-max">
-                                                    <div class="approved w-max">
-                                                        @paymentLogModel.PaymentStatus
-                                                    </div>
-                                                </td>*@
                                             <td class="p-[12px] w-max">
-                                                <div class="w-max ">¥@paymentLogModel.TotalAmount</div>
+                                                <div class="w-max ">¥@paymentLogModel.TotalPlanAmount</div>
 
                                             </td>
                                             <td class="p-[12px] w-max">
-                                                <div class="w-max ">¥@paymentLogModel.TotalCommission</div>
-
+                                                <div class="w-max ">¥@paymentLogModel.TotalAdminPlanCommissionAmount</div>
+                                            </td>
+                                            <td class="p-[12px] w-max">
+                                                <div class="w-max ">¥@paymentLogModel.TotalAdminCommissionAmount</div>
                                             </td>
                                             <td class="p-[12px] w-max">
                                                 <div class="w-max ">¥@paymentLogModel.GrandTotal</div>
@@ -352,8 +305,6 @@
 
     </div>
 </div>
-
-@*@Html.Partial("_CustomDate")*@
 
 @functions {
     string GetClubCategoryClassName(string clubCategory)
