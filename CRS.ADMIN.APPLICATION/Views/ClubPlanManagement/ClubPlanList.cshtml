@@ -53,8 +53,8 @@
                 <div class="flex items-center select-entries" id="ShowEntries-Id">
                 </div>
                 @*<div class="export-button h-[40px]" onclick="exportExcel('table-id', 'Host')">
-                    <img src="~/Content/assets_new/images/club/download-solid.svg"> @CRS.ADMIN.APPLICATION.Resources.Resource.Export
-                </div>*@
+                        <img src="~/Content/assets_new/images/club/download-solid.svg"> @CRS.ADMIN.APPLICATION.Resources.Resource.Export
+                    </div>*@
             </div>
 
             <div class="relative overflow-x-auto">
@@ -79,19 +79,20 @@
                                     </div>
                                 </div>
                             </th>
+
+
                             <th scope="col" class="p-[12px]">
                                 <div class="flex  w-max">
-                                    @CRS.ADMIN.APPLICATION.Resources.Resource.LastEntryTime
+                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Last_Order_Time
                                     <div class="relative pl-[5px]">
                                         <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
                                         <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
                                     </div>
                                 </div>
                             </th>
-
                             <th scope="col" class="p-[12px]">
                                 <div class="flex  w-max">
-                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Last_Order_Time
+                                    @CRS.ADMIN.APPLICATION.Resources.Resource.LastEntryTime
                                     <div class="relative pl-[5px]">
                                         <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
                                         <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
@@ -159,11 +160,12 @@
                                     <td class="p-[12px]">
                                         @item.PlanName
                                     </td>
-                                    <td class="p-[12px]">
-                                        @item.LastEntryTime
-                                    </td>
+
                                     <td class="p-[12px]">
                                         @item.LastOrderTime
+                                    </td>
+                                    <td class="p-[12px]">
+                                        @item.LastEntryTime
                                     </td>
                                     <td class="p-[12px]">
                                         @item.NoofPeople
@@ -228,15 +230,19 @@
         @Html.Partial("_ManageClubPlanPartialView", _ManageClubPlanModel)
     </div>
 </div>
+<link href="https://cdn.syncfusion.com/ej2/material.css" rel="stylesheet">
+<script src="https://cdn.syncfusion.com/ej2/dist/ej2.min.js"></script>
+
 @section scripts
 {
     <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
     <script>
+
         var PopUpRenderValue = '@ViewBag.PopUpRenderValue';
-         if (PopUpRenderValue != null && PopUpRenderValue != "" && PopUpRenderValue == "Manage") {
-             var element = document.getElementById('add-club-plan');
-              element.classList.remove('translate-x-full');
-        }
+    if (PopUpRenderValue != null && PopUpRenderValue != "" && PopUpRenderValue == "Manage") {
+        var element = document.getElementById('add-club-plan');
+         element.classList.remove('translate-x-full');
+     }
 
   document.addEventListener('DOMContentLoaded', function () {
           const page_size = @ViewBag.PageSize;
@@ -262,6 +268,7 @@
                 }
             });
 
+
         });
 
         function ManageClubPlanFunction(i, j) {
@@ -273,5 +280,9 @@
         function UnBlockFunction(i, j) {
             window.location.href = '/ClubPlanManagement/BlockUnblockPlan?AgentId=' + i + '&Id=' + j + '&Status=A'
         }
+
+
     </script>
+
+
 }
