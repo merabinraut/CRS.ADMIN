@@ -21,7 +21,11 @@
             if (!string.IsNullOrEmpty(Model.Id))
             {
                 @Html.HiddenFor(model => model.Id)
-            }            
+            }
+            if (!string.IsNullOrEmpty(Model.Status))
+            {
+                @Html.HiddenFor(model => model.Status)
+            }
             <div class="p-[24px]">
                 <div class=" py-4 grid gap-5">
                     <div class="input-field-common">

@@ -58,8 +58,8 @@ namespace CRS.ADMIN.REPOSITORY.StaticDataManagement
             string sp_name = "EXEC sproc_tbl_static_data_Type_InserUpdate ";
             sp_name += "@Id=" + _dao.FilterString(commonModel.Id);
             sp_name += ",@StaticDataType=" + _dao.FilterString(commonModel.StaticDataType);
-            sp_name += ",@StaticDataName=" + _dao.FilterString(commonModel.StaticDataName);
-            sp_name += ",@StaticDataDescription=" + _dao.FilterString(commonModel.StaticDataDescription);
+            sp_name += ",@StaticDataName=N" + _dao.FilterString(commonModel.StaticDataName);
+            sp_name += ",@StaticDataDescription=N" + _dao.FilterString(commonModel.StaticDataDescription);
             sp_name += ",@Status=" + _dao.FilterString("A");
             sp_name += ",@ActionUser=" + _dao.FilterString(commonModel.ActionUser);
             return _dao.ParseCommonDbResponse(sp_name);
@@ -100,8 +100,9 @@ namespace CRS.ADMIN.REPOSITORY.StaticDataManagement
         {
             string sp_name = "EXEC sproc_admin__manage_static_data ";
             sp_name += string.IsNullOrEmpty(commonModel.Id) ? "@Flag='msd'" : "@Flag='umsd'";
-            sp_name += ",@StaticDataLabel=" + _dao.FilterString(commonModel.StaticDataLabel);
-            sp_name += ",@StaticDataDescription=" + _dao.FilterString(commonModel.StaticDataDescription);
+            sp_name += ",@Id=" + _dao.FilterString(commonModel.Id);
+            sp_name += ",@StaticDataLabel=N" + _dao.FilterString(commonModel.StaticDataLabel);
+            sp_name += ",@StaticDataDescription=N" + _dao.FilterString(commonModel.StaticDataDescription);
             sp_name += ",@StaticDataType=" + _dao.FilterString(commonModel.StaticDataType);
             sp_name += ",@StaticDataValue=" + _dao.FilterString(commonModel.StaticDataValue);
             sp_name += ",@Status=" + _dao.FilterString("A");
