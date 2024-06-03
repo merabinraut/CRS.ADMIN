@@ -48,7 +48,7 @@ namespace CRS.ADMIN.APPLICATION.Models.HostManagement
         [MaxLength(100, ErrorMessage = "Maximum 100 characters allowed")]
         public string HostNameJapanese { get; set; }
         [Display(Name = "Host Introduction")]
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
+        //[Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
         [MaxLength(500, ErrorMessage = "Maximum 500 characters allowed")]
         public string HostIntroduction { get; set; }
         [Display(Name = "Position")]
@@ -60,38 +60,38 @@ namespace CRS.ADMIN.APPLICATION.Models.HostManagement
         //[MaxLength(50, ErrorMessage = "Maximum 50 characters allowed")]
         public string Rank { get; set; }
         [Display(Name = "Date of Birth")]
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
+        //[Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
         public string DOB { get; set; }
         [Display(Name = "Constellation Group")]
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
+        //[Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
         public string ConstellationGroup { get; set; }
         [Display(Name = "Height")]
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
+        //[Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
         //[MaxLength(5, ErrorMessage = "Maximum 5 digit number allowed")]
         public string Height { get; set; }
         [Display(Name = "Blood Type")]
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
+        //[Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
         public string BloodType { get; set; }
         [Display(Name = "Previous Occupation")]
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
+        //[Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
         public string PreviousOccupation { get; set; }
         [Display(Name = "Liquor Strength")]
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
+        //[Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
         public string LiquorStrength { get; set; }
         [DisplayName("Website")]
         //[Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
         public string WebsiteLink { get; set; }
         [DisplayName("Tiktok")]
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
+        //[Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
         public string TiktokLink { get; set; }
         [DisplayName("Twitter")]
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
+        //[Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
         public string TwitterLink { get; set; }
         [DisplayName("Instagram")]
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
+        //[Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
         public string InstagramLink { get; set; }
         [DisplayName("Line")]
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
+        //[Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
         public string Line { get; set; }
         public string BirthYear { get; set; }
         public string BirthMonth { get; set; }

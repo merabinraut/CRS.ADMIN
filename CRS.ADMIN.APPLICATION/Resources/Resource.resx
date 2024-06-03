@@ -1774,6 +1774,18 @@
     <value>Total Visitors</value>
     <comment>Reservation Ledger</comment>
   </data>
+  <data name="TotalAdminCommissionAmount" xml:space="preserve">
+    <value>Total Admin Commission Amount</value>
+    <comment>Payment Management</comment>
+  </data>
+  <data name="TotalAdminPlanCommissionAmount" xml:space="preserve">
+    <value>Total Admin Plan Commission Amount</value>
+    <comment>Payment Management</comment>
+  </data>
+  <data name="TotalPlanAmount" xml:space="preserve">
+    <value>Total Plan Amount</value>
+    <comment>Payment Management</comment>
+  </data>
   <data name="Transaction Date" xml:space="preserve">
     <value>Transaction Date</value>
     <comment>Points Management</comment>

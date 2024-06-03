@@ -214,31 +214,32 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             {
                 ModelState.Remove("DOB");
             }
-            if (HostLogoFile == null)
-            {
-                if (string.IsNullOrEmpty(Model.HostLogo))
-                {
-                    bool allowRedirect = false;
-                    var ErrorMessage = string.Empty;
-                    if (HostLogoFile == null && string.IsNullOrEmpty(Model.HostLogo))
-                    {
-                        ErrorMessage = "Image required";
-                        allowRedirect = true;
-                    }
-                    if (allowRedirect)
-                    {
-                        this.AddNotificationMessage(new NotificationModel()
-                        {
-                            NotificationType = NotificationMessage.INFORMATION,
-                            Message = ErrorMessage ?? "Something went wrong. Please try again later.",
-                            Title = NotificationMessage.INFORMATION.ToString(),
-                        });
-                        TempData["RenderId"] = "ManageHost";
-                        TempData["ManageHostModel"] = Model;
-                        return RedirectToAction("HostList", "HostManagement", new { AgentId = Model.AgentId });
-                    }
-                }
-            }
+
+            //if (HostLogoFile == null)
+            //{
+            //    if (string.IsNullOrEmpty(Model.HostLogo))
+            //    {
+            //        bool allowRedirect = false;
+            //        var ErrorMessage = string.Empty;
+            //        if (HostLogoFile == null && string.IsNullOrEmpty(Model.HostLogo))
+            //        {
+            //            ErrorMessage = "Image required";
+            //            allowRedirect = true;
+            //        }
+            //        if (allowRedirect)
+            //        {
+            //            this.AddNotificationMessage(new NotificationModel()
+            //            {
+            //                NotificationType = NotificationMessage.INFORMATION,
+            //                Message = ErrorMessage ?? "Something went wrong. Please try again later.",
+            //                Title = NotificationMessage.INFORMATION.ToString(),
+            //            });
+            //            TempData["RenderId"] = "ManageHost";
+            //            TempData["ManageHostModel"] = Model;
+            //            return RedirectToAction("HostList", "HostManagement", new { AgentId = Model.AgentId });
+            //        }
+            //    }
+            //}
 
             //if (HostIconImageFile == null)
             //{
@@ -328,15 +329,23 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                     return RedirectToAction("ClubList", "ClubManagement");
                 }
                 if (!string.IsNullOrEmpty(requestCommon.HostId)) requestCommon.HostId = !string.IsNullOrEmpty(Model.HostId) ? Model.HostId.DecryptParameter() : null;
-                requestCommon.Rank = requestCommon.Rank.DecryptParameter();
-                requestCommon.ConstellationGroup = ZodiacSignsDDLKey?.DecryptParameter();
-                requestCommon.BloodType = BloodGroupDDLKey?.DecryptParameter();
-                requestCommon.PreviousOccupation = OccupationDDLKey?.DecryptParameter();
-                requestCommon.LiquorStrength = LiquorStrengthDDLKey?.DecryptParameter();
-                requestCommon.Address = Model.Address?.DecryptParameter();
-                requestCommon.Height = Model.Height?.DecryptParameter();
-                requestCommon.Position = Model.Position?.DecryptParameter();
-                requestCommon.DOB = Model.DOB;
+                if (!string.IsNullOrEmpty(requestCommon.Rank))
+                    requestCommon.Rank = requestCommon.Rank.DecryptParameter();
+                if (!string.IsNullOrEmpty(requestCommon.ConstellationGroup))
+                    requestCommon.ConstellationGroup = ZodiacSignsDDLKey?.DecryptParameter();
+                if (!string.IsNullOrEmpty(requestCommon.BloodType))
+                    requestCommon.BloodType = BloodGroupDDLKey?.DecryptParameter();
+                if (!string.IsNullOrEmpty(requestCommon.PreviousOccupation))
+                    requestCommon.PreviousOccupation = OccupationDDLKey?.DecryptParameter();
+                if (!string.IsNullOrEmpty(requestCommon.LiquorStrength))
+                    requestCommon.LiquorStrength = LiquorStrengthDDLKey?.DecryptParameter();
+                if (!string.IsNullOrEmpty(requestCommon.Address))
+                    requestCommon.Address = Model.Address?.DecryptParameter();
+                if (!string.IsNullOrEmpty(requestCommon.Height))
+                    requestCommon.Height = Model.Height?.DecryptParameter();
+                if (!string.IsNullOrEmpty(requestCommon.Position))
+                    requestCommon.Position = Model.Position?.DecryptParameter();
+                requestCommon.DOB = Model.DOB.Contains("--")|| Model.DOB.Contains("-") ? "" : Model.DOB;
                 requestCommon.ActionUser = ApplicationUtilities.GetSessionValue("Username").ToString();
                 requestCommon.ActionIP = ApplicationUtilities.GetIP();
                 requestCommon.ImagePath = Model.HostLogo;
