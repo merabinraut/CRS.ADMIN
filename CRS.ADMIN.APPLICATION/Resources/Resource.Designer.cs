@@ -565,6 +565,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to CEO Furigana.
+        /// </summary>
+        public static string CEOFurigana {
+            get {
+                return ResourceManager.GetString("CEOFurigana", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Choose Icon.
         /// </summary>
         public static string Choose_Icons {
@@ -718,6 +727,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Furigana.
+        /// </summary>
+        public static string ClubFurigana {
+            get {
+                return ResourceManager.GetString("ClubFurigana", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Manage club’s recommendation informations..
         /// </summary>
         public static string ClubListSuppportMsg {
@@ -826,6 +844,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Company Name (Furigana).
+        /// </summary>
+        public static string CompanyNameFurigana {
+            get {
+                return ResourceManager.GetString("CompanyNameFurigana", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Configure.
         /// </summary>
         public static string Configure {
@@ -894,6 +921,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         public static string Converted_Date {
             get {
                 return ResourceManager.GetString("Converted Date", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Corporate Registry.
+        /// </summary>
+        public static string CorporateRegistry {
+            get {
+                return ResourceManager.GetString("CorporateRegistry", resourceCulture);
             }
         }
         
@@ -1636,6 +1672,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Identification Type.
+        /// </summary>
+        public static string IdentificationType {
+            get {
+                return ResourceManager.GetString("IdentificationType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Image.
         /// </summary>
         public static string Image {
@@ -1708,6 +1753,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Upload Insurance Card.
+        /// </summary>
+        public static string Insurance {
+            get {
+                return ResourceManager.GetString("Insurance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Jan.
         /// </summary>
         public static string January {
@@ -1744,11 +1798,29 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Upload KYC Back.
+        /// </summary>
+        public static string KYCBack {
+            get {
+                return ResourceManager.GetString("KYCBack", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to KYC Document.
         /// </summary>
         public static string KYCDocument {
             get {
                 return ResourceManager.GetString("KYCDocument", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Upload KYC Front.
+        /// </summary>
+        public static string KYCFront {
+            get {
+                return ResourceManager.GetString("KYCFront", resourceCulture);
             }
         }
         
@@ -2473,6 +2545,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Upload Passport.
+        /// </summary>
+        public static string Passport {
+            get {
+                return ResourceManager.GetString("Passport", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to PASSWORD.
         /// </summary>
         public static string Password {
@@ -3108,6 +3189,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         public static string Representative2 {
             get {
                 return ResourceManager.GetString("Representative2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Furigana.
+        /// </summary>
+        public static string RepresentiveFurigana {
+            get {
+                return ResourceManager.GetString("RepresentiveFurigana", resourceCulture);
             }
         }
         

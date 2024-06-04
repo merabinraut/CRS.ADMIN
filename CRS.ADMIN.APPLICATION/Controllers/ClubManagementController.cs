@@ -95,6 +95,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             });
             ViewBag.Pref = DDLHelper.LoadDropdownList("PREF") as Dictionary<string, string>;
             ViewBag.Holiday = ApplicationUtilities.SetDDLValue(DDLHelper.LoadDropdownList("Holiday") as Dictionary<string, string>, null, "--- Select ---");
+            ViewBag.IdentificationType = ApplicationUtilities.SetDDLValue(DDLHelper.LoadDropdownList("DOCUMENTTYPE") as Dictionary<string, string>, null, "--- Select ---");
             ViewBag.PopUpRenderValue = !string.IsNullOrEmpty(RenderId) ? RenderId : null;
             ViewBag.LocationDDLList = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("LOCATIONDDL") as Dictionary<string, string>, null, "--- Select ---");
             ViewBag.BusinessTypeDDL = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("BUSINESSTYPEDDL") as Dictionary<string, string>, null, "");
@@ -330,7 +331,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
         }
 
         [HttpPost, ValidateAntiForgeryToken]
-        public async Task<ActionResult> ManageClub(ManageClubModel Model, HttpPostedFileBase Business_Certificate, HttpPostedFileBase Logo_Certificate, HttpPostedFileBase CoverPhoto_Certificate, HttpPostedFileBase KYCDocument_Certificate, string LocationDDL, string BusinessTypeDDL)
+        public async Task<ActionResult> ManageClub(ManageClubModel Model, HttpPostedFileBase Business_Certificate, HttpPostedFileBase Logo_Certificate, HttpPostedFileBase CoverPhoto_Certificate, HttpPostedFileBase KYCDocument_Certificate, HttpPostedFileBase KYCDocumentBack_Certificate, HttpPostedFileBase PassportPhotot_Certificate, HttpPostedFileBase InsurancePhoto_Certificate,  string LocationDDL, string BusinessTypeDDL)
        {
             string ErrorMessage = string.Empty;
             if (!string.IsNullOrEmpty(BusinessTypeDDL?.DecryptParameter())) ModelState.Remove("BusinessType");
@@ -360,23 +361,16 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 {
                     ModelState.AddModelError("Representative1_Email", "Required");
                 }
-                if (string.IsNullOrEmpty(Model.Representative2_ContactName))
+                if (string.IsNullOrEmpty(Model.Representative1_Furigana))
                 {
-                    ModelState.AddModelError("Representative2_ContactName", "Required");
-                }
-                if (string.IsNullOrEmpty(Model.Representative2_MobileNo))
-                {
-                    ModelState.AddModelError("Representative2_MobileNo", "Required");
-                }
-                if (string.IsNullOrEmpty(Model.Representative2_Email))
-                {
-                    ModelState.AddModelError("Representative2_Email", "Required");
-                }
+                    ModelState.AddModelError("Representative1_Furigana", "Required");
+                }               
                                 
             }
             else
             {                
                 ModelState.Remove("CompanyName");
+                ModelState.Remove("CompanyNameFurigana");
             }
             //ModelState.Remove("LoginId");
             if (ModelState.IsValid)
@@ -387,7 +381,10 @@ namespace CRS.ADMIN.APPLICATION.Controllers
               string.IsNullOrEmpty(Model.KYCDocument) ||
               string.IsNullOrEmpty(Model.Logo) ||
               string.IsNullOrEmpty(Model.CoverPhoto) ||
-              string.IsNullOrEmpty(Model.Gallery)
+              string.IsNullOrEmpty(Model.Gallery) ||
+              string.IsNullOrEmpty(Model.KYCDocumentBack) ||
+              string.IsNullOrEmpty(Model.PassportPhoto) ||
+              string.IsNullOrEmpty(Model.InsurancePhoto) 
            )
                 {
 
@@ -411,10 +408,33 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                             ErrorMessage = "Cover photo required";
                             allowRedirect = true;
                         }
-                        else if (KYCDocument_Certificate == null && string.IsNullOrEmpty(Model.KYCDocument))
+                        
+                        if (Model.IdentificationType.DecryptParameter()=="2")
                         {
-                            ErrorMessage = "KYC document required";
-                            allowRedirect = true;
+                            if (PassportPhotot_Certificate == null && string.IsNullOrEmpty(Model.PassportPhoto))
+                            {
+                                ErrorMessage = "Passport photo required";
+                                allowRedirect = true;
+                            }
+                           else if (InsurancePhoto_Certificate == null && string.IsNullOrEmpty(Model.InsurancePhoto))
+                            {
+                                ErrorMessage = "Insurance card required";
+                                allowRedirect = true;
+                            }
+                        }
+                        else
+                        {
+                            if (KYCDocument_Certificate == null && string.IsNullOrEmpty(Model.KYCDocument))
+                            {
+                                ErrorMessage = "KYC front document required";
+                                allowRedirect = true;
+                            }
+                            else if (KYCDocumentBack_Certificate == null && string.IsNullOrEmpty(Model.KYCDocumentBack))
+                            {
+                                ErrorMessage = "KYC back document required";
+                                allowRedirect = true;
+                            }
+
                         }
                         if (allowRedirect)
                         {
@@ -454,28 +474,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
 
                     }
                 }
-                string KYCDocumentFileName = string.Empty;
-                if (KYCDocument_Certificate != null)
-                {
-                    var contentType = KYCDocument_Certificate.ContentType;
-                    var ext = Path.GetExtension(KYCDocument_Certificate.FileName);
-                    if (allowedContentType.Contains(contentType.ToLower()))
-                    {
-                        KYCDocumentFileName = $"{AWSBucketFolderNameModel.CLUB}/KYCDocument_{DateTime.Now.ToString("yyyyMMddHHmmssffff")}{ext.ToLower()}";
-                        Model.KYCDocument = $"/{KYCDocumentFileName}";
-                    }
-                    else
-                    {
-                        this.AddNotificationMessage(new NotificationModel()
-                        {
-                            NotificationType = NotificationMessage.INFORMATION,
-                            Message = "Invalid image format.",
-                            Title = NotificationMessage.INFORMATION.ToString(),
-                        });
-                        allowRedirectfile = true;
-
-                    }
-                }
+                
                 string LogoFileName = string.Empty;
                 if (Logo_Certificate != null)
                 {
@@ -520,7 +519,106 @@ namespace CRS.ADMIN.APPLICATION.Controllers
 
                     }
                 }
-                if (allowRedirectfile == true)
+                string KYCDocumentFileName = string.Empty;
+                string KYCDocumentBackFileName = string.Empty;
+                string PassportFileName = string.Empty;
+                string InsuranceFileName = string.Empty;
+                if (Model.IdentificationType.DecryptParameter() == "2")
+                {
+                    if (PassportPhotot_Certificate != null)
+                    {
+                        var contentType = PassportPhotot_Certificate.ContentType;
+                        var ext = Path.GetExtension(PassportPhotot_Certificate.FileName);
+                        if (allowedContentType.Contains(contentType.ToLower()))
+                        {
+                            PassportFileName = $"{AWSBucketFolderNameModel.CLUB}/PassportPhotot_{DateTime.Now.ToString("yyyyMMddHHmmssffff")}{ext.ToLower()}";
+                            Model.PassportPhoto = $"/{PassportFileName}";
+                        }
+                        else
+                        {
+                            this.AddNotificationMessage(new NotificationModel()
+                            {
+                                NotificationType = NotificationMessage.INFORMATION,
+                                Message = "Invalid image format.",
+                                Title = NotificationMessage.INFORMATION.ToString(),
+                            });
+                            allowRedirectfile = true;
+
+                        }
+                    }
+
+                    if (InsurancePhoto_Certificate != null)
+                    {
+                        var contentType = InsurancePhoto_Certificate.ContentType;
+                        var ext = Path.GetExtension(InsurancePhoto_Certificate.FileName);
+                        if (allowedContentType.Contains(contentType.ToLower()))
+                        {
+                            InsuranceFileName = $"{AWSBucketFolderNameModel.CLUB}/InsurancePhoto_{DateTime.Now.ToString("yyyyMMddHHmmssffff")}{ext.ToLower()}";
+                            Model.InsurancePhoto = $"/{InsuranceFileName}";
+                        }
+                        else
+                        {
+                            this.AddNotificationMessage(new NotificationModel()
+                            {
+                                NotificationType = NotificationMessage.INFORMATION,
+                                Message = "Invalid image format.",
+                                Title = NotificationMessage.INFORMATION.ToString(),
+                            });
+                            allowRedirectfile = true;
+
+                        }
+                    }
+
+                }
+                else
+                {
+
+                  
+                    if (KYCDocument_Certificate != null)
+                    {
+                        var contentType = KYCDocument_Certificate.ContentType;
+                        var ext = Path.GetExtension(KYCDocument_Certificate.FileName);
+                        if (allowedContentType.Contains(contentType.ToLower()))
+                        {
+                            KYCDocumentFileName = $"{AWSBucketFolderNameModel.CLUB}/KYCDocument_{DateTime.Now.ToString("yyyyMMddHHmmssffff")}{ext.ToLower()}";
+                            Model.KYCDocument = $"/{KYCDocumentFileName}";
+                        }
+                        else
+                        {
+                            this.AddNotificationMessage(new NotificationModel()
+                            {
+                                NotificationType = NotificationMessage.INFORMATION,
+                                Message = "Invalid image format.",
+                                Title = NotificationMessage.INFORMATION.ToString(),
+                            });
+                            allowRedirectfile = true;
+
+                        }
+                    }
+                   
+                    if (KYCDocumentBack_Certificate != null)
+                    {
+                        var contentType = KYCDocumentBack_Certificate.ContentType;
+                        var ext = Path.GetExtension(KYCDocumentBack_Certificate.FileName);
+                        if (allowedContentType.Contains(contentType.ToLower()))
+                        {
+                            KYCDocumentBackFileName = $"{AWSBucketFolderNameModel.CLUB}/KYCDocumentBack_{DateTime.Now.ToString("yyyyMMddHHmmssffff")}{ext.ToLower()}";
+                            Model.KYCDocumentBack = $"/{KYCDocumentBackFileName}";
+                        }
+                        else
+                        {
+                            this.AddNotificationMessage(new NotificationModel()
+                            {
+                                NotificationType = NotificationMessage.INFORMATION,
+                                Message = "Invalid image format.",
+                                Title = NotificationMessage.INFORMATION.ToString(),
+                            });
+                            allowRedirectfile = true;
+
+                        }
+                    }
+                }
+                    if (allowRedirectfile == true)
                 {
                     //Model.BusinessCertificate =  Business_Certificate.FileName;
                     //Model.CoverPhoto =  CoverPhoto_Certificate.FileName;
@@ -580,6 +678,9 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                     if (Logo_Certificate != null) await ImageHelper.ImageUpload(LogoFileName, Logo_Certificate);
                     if (CoverPhoto_Certificate != null) await ImageHelper.ImageUpload(CoverPhotoFileName, CoverPhoto_Certificate);
                     if (KYCDocument_Certificate != null) await ImageHelper.ImageUpload(KYCDocumentFileName, KYCDocument_Certificate);
+                    if (KYCDocumentBack_Certificate != null) await ImageHelper.ImageUpload(KYCDocumentBackFileName, KYCDocumentBack_Certificate);
+                    if (PassportPhotot_Certificate != null) await ImageHelper.ImageUpload(PassportFileName, PassportPhotot_Certificate);
+                    if (InsurancePhoto_Certificate != null) await ImageHelper.ImageUpload(InsuranceFileName, InsurancePhoto_Certificate);
                     this.AddNotificationMessage(new NotificationModel()
                     {
                         NotificationType = dbResponse.Code == ResponseCode.Success ? NotificationMessage.SUCCESS : NotificationMessage.INFORMATION,

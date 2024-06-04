@@ -335,6 +335,10 @@
     <value>CEOフルネーム</value>
     <comment>ClubManagement</comment>
   </data>
+  <data name="CEOFurigana" xml:space="preserve">
+    <value>フリガナ</value>
+    <comment>ClubManagement</comment>
+  </data>
   <data name="Choose Icons" xml:space="preserve">
     <value>アイコン</value>
     <comment>Host Management</comment>
@@ -403,6 +407,10 @@
     <value>クラブステータス</value>
     <comment>Reservation Ledger</comment>
   </data>
+  <data name="ClubFurigana" xml:space="preserve">
+    <value>フリガナ</value>
+    <comment>ClubManagement</comment>
+  </data>
   <data name="ClubListSuppportMsg" xml:space="preserve">
     <value>クラブのおすすめ情報を管理する</value>
     <comment>Recommendation Management</comment>
@@ -451,6 +459,10 @@
     <value>営業所の所在地</value>
     <comment>ClubManagement</comment>
   </data>
+  <data name="CompanyNameFurigana" xml:space="preserve">
+    <value>フリガナ</value>
+    <comment>ClubManagement</comment>
+  </data>
   <data name="Configure" xml:space="preserve">
     <value>自己設定</value>
     <comment>Recommendation Management</comment>
@@ -482,6 +494,10 @@
   <data name="Converted Date" xml:space="preserve">
     <value>予約日</value>
     <comment>Affiliate Management</comment>
+  </data>
+  <data name="CorporateRegistry" xml:space="preserve">
+    <value>法人登記簿</value>
+    <comment>ClubManagement</comment>
   </data>
   <data name="Cover Photo" xml:space="preserve">
     <value>カバー写真</value>
@@ -806,6 +822,10 @@
     <value>アイコン画像</value>
     <comment>Host Management</comment>
   </data>
+  <data name="IdentificationType" xml:space="preserve">
+    <value>アップロードする書類の種類</value>
+    <comment>ClubManagement</comment>
+  </data>
   <data name="Image" xml:space="preserve">
     <value>画像</value>
     <comment>Location Management</comment>
@@ -838,6 +858,10 @@
     <value>インスタグラム</value>
     <comment>Club Management</comment>
   </data>
+  <data name="Insurance" xml:space="preserve">
+    <value>保険証「住所欄」アップロード</value>
+    <comment>ClubManagement</comment>
+  </data>
   <data name="January" xml:space="preserve">
     <value>一月</value>
     <comment>Dashboard</comment>
@@ -853,8 +877,16 @@
     <value>六月</value>
     <comment>Dashboard</comment>
   </data>
+  <data name="KYCBack" xml:space="preserve">
+    <value>「裏面」をアップロードする</value>
+    <comment>ClubManagement</comment>
+  </data>
   <data name="KYCDocument" xml:space="preserve">
     <value>アップロード (本人確認種類)</value>
+    <comment>ClubManagement</comment>
+  </data>
+  <data name="KYCFront" xml:space="preserve">
+    <value>「表面」をアップロードする</value>
     <comment>ClubManagement</comment>
   </data>
   <data name="LandlineNumber" xml:space="preserve">
@@ -1176,6 +1208,10 @@
     <value>ページに基づいておすすめを管理する</value>
     <comment>Recommendation Management</comment>
   </data>
+  <data name="Passport" xml:space="preserve">
+    <value>パスポート「署名欄」アップロード</value>
+    <comment>Club Management</comment>
+  </data>
   <data name="Password" xml:space="preserve">
     <value>パスワード</value>
     <comment>Login Page</comment>
@@ -1457,6 +1493,9 @@
   <data name="Representative2" xml:space="preserve">
     <value>担当者　2</value>
     <comment>ClubManagement</comment>
+  </data>
+  <data name="RepresentiveFurigana" xml:space="preserve">
+    <value>フリガナ</value>
   </data>
   <data name="Request Amount" xml:space="preserve">
     <value>リクエスト金額</value>

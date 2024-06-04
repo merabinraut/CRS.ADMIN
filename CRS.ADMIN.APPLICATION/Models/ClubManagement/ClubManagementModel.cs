@@ -179,7 +179,7 @@ namespace CRS.ADMIN.APPLICATION.Models.ClubManagement
         public string Holiday { get; set; }
         public string LastOrderTime { get; set; }
         public string LastEntryTime { get; set; }
-        [RegularExpression(@"^(?:100|\d{1,2})$", ErrorMessage = "Tax must be a number between 0 and 100.")]
+        [RegularExpression(@"^(?:100|\d{1,2})$", ErrorMessage = "l")]
         public string Tax { get; set; }
         [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
         [RegularExpression(@"^\d{3} \d{4}$", ErrorMessage = "Invalid Postal Code")]
@@ -219,12 +219,27 @@ namespace CRS.ADMIN.APPLICATION.Models.ClubManagement
         public string Representative1_ContactName { get; set; }
         public string Representative1_MobileNo { get; set; }
         public string Representative1_Email { get; set; }
+        public string Representative1_Furigana { get; set; }
         public string Representative2_ContactName { get; set; }
         public string Representative2_MobileNo { get; set; }
         public string Representative2_Email { get; set; }
+        public string Representative2_Furigana { get; set; }
         public string ClosingDate { get; set; }
         public string holdId { get; set; }
         public string LandLineCode { get; set; }
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
+        public string ClubFurigana { get; set; }
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
+        public string CeoFurigana { get; set; }
+
+        public string CompanyNameFurigana { get; set; }
+        public string CorporateRegistryDocument { get; set; }
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
+        public string IdentificationType { get; set; }       
+        public string DocumentType { get; set; }
+        public string KYCDocumentBack { get; set; }
+        public string PassportPhoto { get; set; }
+        public string InsurancePhoto { get; set; }
 
         // public List<planIdentityDataModel> PlanList { get; set; }
     }

@@ -1016,6 +1016,8 @@
                 var val = $('#large[name="BusinessTypeDDL"]').find("option:selected").text().trim();
                 if (val.toLowerCase() == "corporation") {
                     $("#Corp_id").show();
+                    $("#Corp_idFurigana").show();
+                    $("#Corp_idCorporate").show();
                     $("#corp_representive1").show();
                     $("#corpdetail_representive1").show();
                     $("#corp_representive2").show();
@@ -1023,6 +1025,8 @@
                 }
                 else {
                     $("#Corp_id").hide();
+                    $("#Corp_idFurigana").hide();
+                    $("#Corp_idCorporate").hide();
                     $("#corp_representive1").hide();
                     $("#corpdetail_representive1").hide();
                     $("#corp_representive2").hide();
@@ -1034,6 +1038,8 @@
                 var selectedValue = $(this).find("option:selected").text().trim();
                 if (selectedValue.toLowerCase() == "corporation") {
                     $("#Corp_id").show();
+                    $("#Corp_idFurigana").show();
+                    $("#Corp_idCorporate").show();
                     $("#corp_representive1").show();
                     $("#corpdetail_representive1").show();
                     $("#corp_representive2").show();
@@ -1041,6 +1047,8 @@
                 }
                 else {
                     $("#Corp_id").hide();
+                    $("#Corp_idFurigana").hide();
+                    $("#Corp_idCorporate").hide();
                     $("#corp_representive1").hide();
                     $("#corpdetail_representive1").hide();
                     $("#corp_representive2").hide();
@@ -1048,7 +1056,22 @@
                 }
             });
 
-
+            $('#large[name="IdentificationType"]').change(function () {
+                var selectedValue = $(this).find("option:selected").text().trim();
+                if (selectedValue.toLowerCase() == "passport and health insurace") {
+                    $("#kycfront").hide();
+                    $("#kycback").hide();
+                    $("#Passport").show();
+                    $("#Insurance").show();
+                   
+                }
+                else {
+                    $("#kycfront").show();
+                    $("#kycback").show();
+                    $("#Passport").hide();
+                    $("#Insurance").hide();            
+                }
+            });
 
             $('select').select2({
                 minimumResultsForSearch: Infinity
