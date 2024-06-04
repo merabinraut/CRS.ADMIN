@@ -1,8 +1,13 @@
-use [CRS_V2]
-go
+USE [CRS_V2]
+GO
+/****** Object:  Trigger [dbo].[TRG_tbl_reservation_detail]    Script Date: 6/4/2024 11:20:38 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
 
-ALTER trigger [dbo].[TRG_tbl_commission_category_detail]
-ON [dbo].[tbl_commission_category_detail]
+ALTER trigger [dbo].[TRG_tbl_reservation_detail]
+ON [dbo].[tbl_reservation_detail]
 AFTER INSERT, UPDATE, DELETE
 AS
 BEGIN
@@ -10,43 +15,55 @@ BEGIN
 
 	IF EXISTS (SELECT 1 FROM INSERTED)
 	BEGIN
-		INSERT INTO dbo.tbl_commission_category_detail_audit
+		INSERT INTO dbo.tbl_reservation_detail_audit
 		(
 			Sno
-			,CategoryDetailId
-			,CategoryId
-			,AdminCommissionTypeId
-			,FromAmount
-			,ToAmount
-			,CommissionType
-			,CommissionValue
-			,CommissionPercentageType
-			,MinCommissionValue
-			,MaxCommissionValue
-			,Status
-			,ActionUser
-			,ActionIP
-			,ActionDate
-			,TriggerLogUser
-			,TriggerAction
-			,TriggerActionLocalDate
-			,TriggerActionUTCDate
+		   ,ReservationId
+		   ,InvoiceId
+		   ,ClubId
+		   ,CustomerId
+		   ,ReservedDate
+		   ,VisitDate
+		   ,VisitTime
+		   ,NoOfPeople
+		   ,PlanDetailId
+		   ,HostDetailId
+		   ,PaymentType
+		   ,TransactionStatus
+		   ,LocationVerificationStatus
+		   ,OTPVerificationStatus
+		   ,IsManual
+		   ,ManualRemarkId
+		   ,ActionDate
+		   ,ActionUser
+		   ,ActionIP
+		   ,ActionPlatform
+		   ,TriggerLogUser
+		   ,TriggerAction
+		   ,TriggerActionLocalDate
+		   ,TriggerActionUTCDate
 		)
 		SELECT Sno
-				,CategoryDetailId
-				,CategoryId
-				,AdminCommissionTypeId
-				,FromAmount
-				,ToAmount
-				,CommissionType
-				,CommissionValue
-				,CommissionPercentageType
-				,MinCommissionValue
-				,MaxCommissionValue
-				,Status
-				,ActionUser
-				,ActionIP
-				,ActionDate
+		   ,ReservationId
+		   ,InvoiceId
+		   ,ClubId
+		   ,CustomerId
+		   ,ReservedDate
+		   ,VisitDate
+		   ,VisitTime
+		   ,NoOfPeople
+		   ,PlanDetailId
+		   ,HostDetailId
+		   ,PaymentType
+		   ,TransactionStatus
+		   ,LocationVerificationStatus
+		   ,OTPVerificationStatus
+		   ,IsManual
+		   ,ManualRemarkId
+		   ,ActionDate
+		   ,ActionUser
+		   ,ActionIP
+		   ,ActionPlatform
 			  ,SYSTEM_USER
 			  ,CASE WHEN EXISTS (SELECT 1 FROM DELETED) THEN 'UPDATE' ELSE 'INSERT' END
 			  ,GETDATE()
@@ -56,43 +73,55 @@ BEGIN
 	END;
 	ELSE IF EXISTS (SELECT 1 FROM DELETED)
 	BEGIN
-		INSERT INTO dbo.tbl_commission_category_detail_audit
+		INSERT INTO dbo.tbl_reservation_detail_audit
 		(
 			Sno
-			,CategoryDetailId
-			,CategoryId
-			,AdminCommissionTypeId
-			,FromAmount
-			,ToAmount
-			,CommissionType
-			,CommissionValue
-			,CommissionPercentageType
-			,MinCommissionValue
-			,MaxCommissionValue
-			,Status
-			,ActionUser
-			,ActionIP
-			,ActionDate
-			,TriggerLogUser
-			,TriggerAction
-			,TriggerActionLocalDate
-			,TriggerActionUTCDate
+		   ,ReservationId
+		   ,InvoiceId
+		   ,ClubId
+		   ,CustomerId
+		   ,ReservedDate
+		   ,VisitDate
+		   ,VisitTime
+		   ,NoOfPeople
+		   ,PlanDetailId
+		   ,HostDetailId
+		   ,PaymentType
+		   ,TransactionStatus
+		   ,LocationVerificationStatus
+		   ,OTPVerificationStatus
+		   ,IsManual
+		   ,ManualRemarkId
+		   ,ActionDate
+		   ,ActionUser
+		   ,ActionIP
+		   ,ActionPlatform
+		   ,TriggerLogUser
+		   ,TriggerAction
+		   ,TriggerActionLocalDate
+		   ,TriggerActionUTCDate
 		)
 		SELECT Sno
-				,CategoryDetailId
-				,CategoryId
-				,AdminCommissionTypeId
-				,FromAmount
-				,ToAmount
-				,CommissionType
-				,CommissionValue
-				,CommissionPercentageType
-				,MinCommissionValue
-				,MaxCommissionValue
-				,Status
-				,ActionUser
-				,ActionIP
-				,ActionDate
+		   ,ReservationId
+		   ,InvoiceId
+		   ,ClubId
+		   ,CustomerId
+		   ,ReservedDate
+		   ,VisitDate
+		   ,VisitTime
+		   ,NoOfPeople
+		   ,PlanDetailId
+		   ,HostDetailId
+		   ,PaymentType
+		   ,TransactionStatus
+		   ,LocationVerificationStatus
+		   ,OTPVerificationStatus
+		   ,IsManual
+		   ,ManualRemarkId
+		   ,ActionDate
+		   ,ActionUser
+		   ,ActionIP
+		   ,ActionPlatform
 			  ,SYSTEM_USER
 			  ,'DELETE'
 			  ,GETDATE()
@@ -101,4 +130,3 @@ BEGIN
 		RETURN;
 	END
 END;
-GO
