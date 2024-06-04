@@ -328,6 +328,7 @@
       <DependentUpon>Resource.Ja.resx</DependentUpon>
     </Compile>
     <None Include="Views\ClubPlanManagement\_ManageClubPlanPartialView.cshtml" />
+    <Content Include="Content\assets\images\schedule.svg" />
     <Content Include="Views\PointsManagement\_ManagePointsRequestPartialView.cshtml" />
     <Content Include="App_Data\AmazonConfigruation.json" />
     <Content Include="Views\ClubPlanManagement\ClubPlanList.cshtml" />
