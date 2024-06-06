@@ -264,6 +264,9 @@
                                 </div>
                             </div>
                         </div>
+                    }
+                    @if (recievedAountList != null && recievedAountList.Count > 1)
+                    {
                         <!-- Received Payment  -->
                         <div class="round-image-text flex gap-[12px] border border-[#aeaeae1f] p-[10px] rounded-[4px]">
                             <img class="border w-[33px] rounded-[4px]  h-[36px] border-[#aeaeae1f]"
@@ -272,7 +275,7 @@
                                 <div class="text-image grid leading-[15px] ">
                                     <div class="text-[15px] font-semibold text-primary-300 ">
                                         @{
-                                            var PaymentMethod2 = (!string.IsNullOrEmpty(recievedAountList[1].PaymentMethod)) ? recievedAountList[1].PaymentMethod : "";
+                                            var PaymentMethod2 = (!string.IsNullOrEmpty(recievedAountList[1]) && !string.IsNullOrEmpty(recievedAountList[1].PaymentMethod)) ? recievedAountList[1].PaymentMethod : "";
                                             @PaymentMethod2
                                         }
                                     </div>
