@@ -275,7 +275,7 @@
                                 <div class="text-image grid leading-[15px] ">
                                     <div class="text-[15px] font-semibold text-primary-300 ">
                                         @{
-                                            var PaymentMethod2 = (!string.IsNullOrEmpty(recievedAountList[1]) && !string.IsNullOrEmpty(recievedAountList[1].PaymentMethod)) ? recievedAountList[1].PaymentMethod : "";
+                                            var PaymentMethod2 = (!string.IsNullOrEmpty(recievedAountList[1].PaymentMethod)) ? recievedAountList[1].PaymentMethod : "";
                                             @PaymentMethod2
                                         }
                                     </div>

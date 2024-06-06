@@ -1015,7 +1015,7 @@
             if ($("#holdId").val() != "" || $("#AgentId").val() != "") {
                 debugger;
                 var Value = $('#large[name="IdentificationType"]').find("option:selected").text().trim();
-                if (Value.toLowerCase() == "passport and health insurace") {
+                if (Value.toLowerCase() == "passport + insurance card") {
                     $("#kycfront").hide();
                     $("#kycback").hide();
                     $("#Passport").show();
@@ -1074,7 +1074,7 @@
 
             $('#large[name="IdentificationType"]').change(function () {
                 var selectedValue = $(this).find("option:selected").text().trim();
-                if (selectedValue.toLowerCase() == "passport and health insurace") {
+                if (selectedValue.toLowerCase() == "passport + insurance card") {
                     $("#kycfront").hide();
                     $("#kycback").hide();
                     $("#Passport").show();
@@ -1423,8 +1423,8 @@
                 };
                 $.datepicker.setDefaults($.datepicker.regional['ja']);
                 $("#LicenseIssuedDate").datepicker({
-                    minDate: new Date(),
-                    /* maxDate: 15,*/
+                    /*minDate: new Date(),*/
+                    maxDate: new Date(),
                     defaultDate: '@_ManageClubModel.LicenseIssuedDate'
                 });
             })

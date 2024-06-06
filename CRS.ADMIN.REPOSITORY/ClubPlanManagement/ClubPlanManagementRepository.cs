@@ -26,12 +26,12 @@ namespace CRS.ADMIN.REPOSITORY.ClubPlanManagement
             var PlanListCommon = new List<PlanListCommon>();
             string SQL1 = "EXEC sproc_admin_club_plan_management @Flag='plan_nf'";
             SQL1 += ",@AgentId=" + _DAO.FilterString(!string.IsNullOrEmpty(clubid) ? clubid : null);
+            var dbResponse1 = _DAO.ExecuteDataTable(SQL1);
             string SQL2 = "EXEC sproc_admin_club_plan_management @Flag='cpi'";
             SQL2 += ",@AgentId=" + _DAO.FilterString(!string.IsNullOrEmpty(clubid) ? clubid : null);
+            var dbResponse2 = _DAO.ExecuteDataTable(SQL2);
             string SQL3 = "EXEC sproc_admin_club_plan_management @Flag='getplanlist'";
             SQL3 += ",@AgentId=" + _DAO.FilterString(!string.IsNullOrEmpty(clubid) ? clubid : null);
-            var dbResponse1 = _DAO.ExecuteDataTable(SQL1);
-            var dbResponse2 = _DAO.ExecuteDataTable(SQL2);
             var dbResponse3 = _DAO.ExecuteDataTable(SQL3);
             var response = new List<planIdentityDataCommon>();
             List<PlanListCommon> listcomm = new List<PlanListCommon>();
