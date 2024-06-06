@@ -184,7 +184,7 @@ namespace CRS.ADMIN.APPLICATION.Models.ClubManagement
         [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
         [RegularExpression(@"^\d{3} \d{4}$", ErrorMessage = "Invalid Postal Code")]
         public string PostalCode { get; set; }
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
+        //[Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
         public string Prefecture { get; set; }
         [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
         public string City { get; set; }
@@ -228,14 +228,15 @@ namespace CRS.ADMIN.APPLICATION.Models.ClubManagement
         public string holdId { get; set; }
         public string LandLineCode { get; set; }
         [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
-        public string ClubFurigana { get; set; }
+        public string ClubName { get; set; }
         [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
         public string CeoFurigana { get; set; }
 
         public string CompanyNameFurigana { get; set; }
         public string CorporateRegistryDocument { get; set; }
         [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
-        public string IdentificationType { get; set; }       
+        public string IdentificationType { get; set; }
+        public string IdentificationTypeName { get; set; }
         public string DocumentType { get; set; }
         public string KYCDocumentBack { get; set; }
         public string PassportPhoto { get; set; }

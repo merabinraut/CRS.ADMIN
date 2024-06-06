@@ -95,7 +95,8 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             });
             ViewBag.Pref = DDLHelper.LoadDropdownList("PREF") as Dictionary<string, string>;
             ViewBag.Holiday = ApplicationUtilities.SetDDLValue(DDLHelper.LoadDropdownList("Holiday") as Dictionary<string, string>, null, "--- Select ---");
-            ViewBag.IdentificationType = ApplicationUtilities.SetDDLValue(DDLHelper.LoadDropdownList("DOCUMENTTYPE") as Dictionary<string, string>, null, "--- Select ---");
+            ViewBag.IdentificationType = DDLHelper.LoadDropdownList("DOCUMENTTYPE") as Dictionary<string, string>;
+            ViewBag.IdentificationTypeIdKey = response.ManageClubModel.IdentificationType;
             ViewBag.PopUpRenderValue = !string.IsNullOrEmpty(RenderId) ? RenderId : null;
             ViewBag.LocationDDLList = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("LOCATIONDDL") as Dictionary<string, string>, null, "--- Select ---");
             ViewBag.BusinessTypeDDL = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("BUSINESSTYPEDDL") as Dictionary<string, string>, null, "");
@@ -156,31 +157,14 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 }
                 var dbResponse = _BUSS.GetClubDetails(id, culture);
                 model = dbResponse.MapObject<ManageClubModel>();
-
                 ViewBag.CountryCodeDDLKey = model.LandLineCode;
-
-
-
-                ViewBag.PlansList = ApplicationUtilities.LoadDropdownList("CLUBPLANS") as Dictionary<string, string>;
-
-                model.PlanDetailList.ForEach(planList =>
-                {
-                    planList.PlanIdentityList.ForEach(planIdentity =>
-                    {
-                        // Encrypt specific properties                        
-                        planIdentity.StaticDataValue = planIdentity.StaticDataValue.EncryptParameter(); // Call your encryption method here                                      
-                        planIdentity.IdentityDescription = planIdentity.name.ToLower() == "plan" ? planIdentity.IdentityDescription.EncryptParameter() : planIdentity.IdentityDescription; // Call your encryption method here
-                        planIdentity.PlanId = planIdentity.name.ToLower() == "plan" ? ViewBag.PlansList[planIdentity.IdentityDescription] : planIdentity.IdentityDescription;  // Call your encryption method here
-
-                    });
-                });
-
                 model.AgentId = model.AgentId.EncryptParameter();
                 //model.LocationId = !string.IsNullOrEmpty(model.LocationId) ? model.LocationId.EncryptParameter() : null;
                 //model.BusinessType = !string.IsNullOrEmpty(model.BusinessType) ? model.BusinessType.EncryptParameter() : null;
                 model.LocationDDL = !string.IsNullOrEmpty(model.LocationId) ? model.LocationId.EncryptParameter() : null;
                 model.BusinessTypeDDL = !string.IsNullOrEmpty(model.BusinessType) ? model.BusinessType.EncryptParameter() : null;
                 model.Prefecture = !string.IsNullOrEmpty(model.Prefecture) ? model.Prefecture.EncryptParameter() : null;
+                model.IdentificationType = !string.IsNullOrEmpty(model.IdentificationType) ? model.IdentificationType.EncryptParameter() : null;
                 model.Holiday = !string.IsNullOrEmpty(model.Holiday) ? model.Holiday.EncryptParameter() : null;
                 model.ClosingDate = !string.IsNullOrEmpty(model.ClosingDate) ? model.ClosingDate.EncryptParameter() : null;
             }
@@ -318,10 +302,11 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             model.AgentId = model.AgentId.EncryptParameter();
             model.LocationDDL = !string.IsNullOrEmpty(model.LocationId) ? model.LocationId.EncryptParameter() : null;
             model.BusinessTypeDDL = !string.IsNullOrEmpty(model.BusinessType) ? model.BusinessType.EncryptParameter() : null;
-            model.Prefecture = !string.IsNullOrEmpty(model.Prefecture) ? model.Prefecture.EncryptParameter() : null;
+            //model.Prefecture = !string.IsNullOrEmpty(model.Prefecture) ? model.Prefecture.EncryptParameter() : null;
             model.Holiday = !string.IsNullOrEmpty(model.Holiday) ? model.Holiday.EncryptParameter() : null;
             model.ClosingDate = !string.IsNullOrEmpty(model.ClosingDate) ? model.ClosingDate.EncryptParameter() : null;
             model.holdId = !string.IsNullOrEmpty(model.holdId) ? model.holdId.EncryptParameter() : null;
+            model.IdentificationType= !string.IsNullOrEmpty(model.IdentificationType) ? model.IdentificationType.EncryptParameter() : null;
             //}
             TempData["ManageClubModel"] = model;
             TempData["RenderId"] = "Manage";
@@ -331,10 +316,11 @@ namespace CRS.ADMIN.APPLICATION.Controllers
         }
 
         [HttpPost, ValidateAntiForgeryToken]
-        public async Task<ActionResult> ManageClub(ManageClubModel Model, HttpPostedFileBase Business_Certificate, HttpPostedFileBase Logo_Certificate, HttpPostedFileBase CoverPhoto_Certificate, HttpPostedFileBase KYCDocument_Certificate, HttpPostedFileBase KYCDocumentBack_Certificate, HttpPostedFileBase PassportPhotot_Certificate, HttpPostedFileBase InsurancePhoto_Certificate,  string LocationDDL, string BusinessTypeDDL)
+        public async Task<ActionResult> ManageClub(ManageClubModel Model, HttpPostedFileBase Business_Certificate, HttpPostedFileBase Logo_Certificate, HttpPostedFileBase CoverPhoto_Certificate, HttpPostedFileBase KYCDocument_Certificate, HttpPostedFileBase KYCDocumentBack_Certificate, HttpPostedFileBase PassportPhotot_Certificate, HttpPostedFileBase InsurancePhoto_Certificate, HttpPostedFileBase CorporateRegistry_Certificate, string LocationDDL, string BusinessTypeDDL)
        {
             string ErrorMessage = string.Empty;
             if (!string.IsNullOrEmpty(BusinessTypeDDL?.DecryptParameter())) ModelState.Remove("BusinessType");
+
             //if (!string.IsNullOrEmpty(LocationDDL?.DecryptParameter())) ModelState.Remove("LocationId");
             ViewBag.PlansList = ApplicationUtilities.LoadDropdownList("CLUBPLANS") as Dictionary<string, string>;
             ViewBag.CountryCodeDDL = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("COUNTRYCODE") as Dictionary<string, string>, null);
@@ -372,7 +358,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 ModelState.Remove("CompanyName");
                 ModelState.Remove("CompanyNameFurigana");
             }
-            //ModelState.Remove("LoginId");
+            ModelState.Remove("LoginId");
             if (ModelState.IsValid)
             {                
                 if
@@ -436,7 +422,15 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                             }
 
                         }
-                        if (allowRedirect)
+                        if (Model.BusinessTypeDDL.DecryptParameter() == "1")
+                        {
+                            if (CorporateRegistry_Certificate == null && string.IsNullOrEmpty(Model.CorporateRegistryDocument))
+                            {
+                                ErrorMessage = "Corporate registry required";
+                                allowRedirect = true;
+                            }
+                        }
+                            if (allowRedirect)
                         {
                             this.AddNotificationMessage(new NotificationModel()
                             {
@@ -519,10 +513,34 @@ namespace CRS.ADMIN.APPLICATION.Controllers
 
                     }
                 }
+                string CorporateRegistryFileName = string.Empty;
+                if (CorporateRegistry_Certificate != null)
+                {
+                    var contentType = CorporateRegistry_Certificate.ContentType;
+                    var ext = Path.GetExtension(CorporateRegistry_Certificate.FileName);
+                    if (allowedContentType.Contains(contentType.ToLower()))
+                    {
+                        CorporateRegistryFileName = $"{AWSBucketFolderNameModel.CLUB}/CompanyRegistry_{DateTime.Now.ToString("yyyyMMddHHmmssffff")}{ext.ToLower()}";
+                        Model.CorporateRegistryDocument = $"/{CorporateRegistryFileName}";
+                    }
+                    else
+                    {
+                        this.AddNotificationMessage(new NotificationModel()
+                        {
+                            NotificationType = NotificationMessage.INFORMATION,
+                            Message = "Invalid image format.",
+                            Title = NotificationMessage.INFORMATION.ToString(),
+                        });
+                        allowRedirectfile = true;
+
+                    }
+                }
+
                 string KYCDocumentFileName = string.Empty;
                 string KYCDocumentBackFileName = string.Empty;
                 string PassportFileName = string.Empty;
                 string InsuranceFileName = string.Empty;
+                
                 if (Model.IdentificationType.DecryptParameter() == "2")
                 {
                     if (PassportPhotot_Certificate != null)
@@ -553,7 +571,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                         var ext = Path.GetExtension(InsurancePhoto_Certificate.FileName);
                         if (allowedContentType.Contains(contentType.ToLower()))
                         {
-                            InsuranceFileName = $"{AWSBucketFolderNameModel.CLUB}/InsurancePhoto_{DateTime.Now.ToString("yyyyMMddHHmmssffff")}{ext.ToLower()}";
+                            InsuranceFileName = $"{AWSBucketFolderNameModel.CLUB}/InsuranceCard_{DateTime.Now.ToString("yyyyMMddHHmmssffff")}{ext.ToLower()}";
                             Model.InsurancePhoto = $"/{InsuranceFileName}";
                         }
                         else
@@ -618,7 +636,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                         }
                     }
                 }
-                    if (allowRedirectfile == true)
+                if (allowRedirectfile == true)
                 {
                     //Model.BusinessCertificate =  Business_Certificate.FileName;
                     //Model.CoverPhoto =  CoverPhoto_Certificate.FileName;
@@ -670,6 +688,8 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 commonModel.Holiday = commonModel.Holiday?.DecryptParameter();
                 commonModel.Prefecture = commonModel.Prefecture?.DecryptParameter();
                 commonModel.ClosingDate = commonModel.ClosingDate?.DecryptParameter();
+                commonModel.IdentificationType = commonModel.IdentificationType?.DecryptParameter();
+                Model.BusinessType = BusinessTypeDDL;
                 var returntype = string.Empty;
                 var dbResponse = _BUSS.ManageClub(commonModel);
                 if (dbResponse != null && dbResponse.Code == 0)
@@ -677,10 +697,21 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                     if (Business_Certificate != null) await ImageHelper.ImageUpload(businessCertificateFileName, Business_Certificate);
                     if (Logo_Certificate != null) await ImageHelper.ImageUpload(LogoFileName, Logo_Certificate);
                     if (CoverPhoto_Certificate != null) await ImageHelper.ImageUpload(CoverPhotoFileName, CoverPhoto_Certificate);
-                    if (KYCDocument_Certificate != null) await ImageHelper.ImageUpload(KYCDocumentFileName, KYCDocument_Certificate);
-                    if (KYCDocumentBack_Certificate != null) await ImageHelper.ImageUpload(KYCDocumentBackFileName, KYCDocumentBack_Certificate);
-                    if (PassportPhotot_Certificate != null) await ImageHelper.ImageUpload(PassportFileName, PassportPhotot_Certificate);
-                    if (InsurancePhoto_Certificate != null) await ImageHelper.ImageUpload(InsuranceFileName, InsurancePhoto_Certificate);
+                    if (commonModel.IdentificationType=="2")
+                    {
+                        if (PassportPhotot_Certificate != null) await ImageHelper.ImageUpload(PassportFileName, PassportPhotot_Certificate);
+                        if (InsurancePhoto_Certificate != null) await ImageHelper.ImageUpload(InsuranceFileName, InsurancePhoto_Certificate);
+                    }
+                    else
+                    {
+                        if (KYCDocument_Certificate != null) await ImageHelper.ImageUpload(KYCDocumentFileName, KYCDocument_Certificate);
+                        if (KYCDocumentBack_Certificate != null) await ImageHelper.ImageUpload(KYCDocumentBackFileName, KYCDocumentBack_Certificate);
+                    }
+
+                    if (commonModel.BusinessType=="1")
+                    {
+                        if (CorporateRegistry_Certificate != null) await ImageHelper.ImageUpload(CorporateRegistryFileName, CorporateRegistry_Certificate);
+                    }                    
                     this.AddNotificationMessage(new NotificationModel()
                     {
                         NotificationType = dbResponse.Code == ResponseCode.Success ? NotificationMessage.SUCCESS : NotificationMessage.INFORMATION,
@@ -811,6 +842,9 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 ViewBag.BusinessTypeDDL = ApplicationUtilities.LoadDropdownList("BUSINESSTYPEDDL") as Dictionary<string, string>;
                 ResponseModel.BusinessTypeDDL = (ResponseModel.BusinessTypeDDL != null && ViewBag.BusinessTypeDDL?.ContainsKey(ResponseModel.BusinessTypeDDL) == true)? ViewBag.BusinessTypeDDL[ResponseModel.BusinessTypeDDL]:"";
                 //ResponseModel.BusinessTypeDDL = ViewBag.BusinessTypeDDL.ContainsKey(ResponseModel.BusinessTypeDDL) ? ViewBag.BusinessTypeDDL[ResponseModel.BusinessTypeDDL] : "";
+                ViewBag.IdentificationType = DDLHelper.LoadDropdownList("DOCUMENTTYPE") as Dictionary<string, string>;
+                ResponseModel.IdentificationType = ResponseModel.IdentificationType.EncryptParameter();
+                ResponseModel.IdentificationTypeName = (ResponseModel.IdentificationType != null && ViewBag.IdentificationType?.TryGetValue(ResponseModel.IdentificationType, out value)) ? value : "";
                 TempData["ClubHoldDetails"] = ResponseModel;
                 TempData["RenderId"] = "ClubHoldDetails";
                 return RedirectToAction("ClubList", "ClubManagement", new { value = 'p' });

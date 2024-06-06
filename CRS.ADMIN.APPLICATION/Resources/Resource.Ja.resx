@@ -710,6 +710,10 @@
     <value>金額から（¥）</value>
     <comment>Point Setup</comment>
   </data>
+  <data name="Furigana" xml:space="preserve">
+    <value>フリガナ</value>
+    <comment>ClubManagement</comment>
+  </data>
   <data name="Gallery" xml:space="preserve">
     <value>ギャラリー</value>
     <comment>Location Management</comment>
@@ -1698,6 +1702,10 @@
   <data name="Status" xml:space="preserve">
     <value>状態</value>
     <comment>Customer Management</comment>
+  </data>
+  <data name="StoreName" xml:space="preserve">
+    <value>店舗名</value>
+    <comment>ClubManagement</comment>
   </data>
   <data name="Street" xml:space="preserve">
     <value>町</value>

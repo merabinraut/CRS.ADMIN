@@ -1013,6 +1013,22 @@
     <script>
         $(document).ready(function () {
             if ($("#holdId").val() != "" || $("#AgentId").val() != "") {
+                debugger;
+                var Value = $('#large[name="IdentificationType"]').find("option:selected").text().trim();
+                if (Value.toLowerCase() == "passport and health insurace") {
+                    $("#kycfront").hide();
+                    $("#kycback").hide();
+                    $("#Passport").show();
+                    $("#Insurance").show();
+
+                }
+                else {
+                    $("#kycfront").show();
+                    $("#kycback").show();
+                    $("#Passport").hide();
+                    $("#Insurance").hide();
+                }
+
                 var val = $('#large[name="BusinessTypeDDL"]').find("option:selected").text().trim();
                 if (val.toLowerCase() == "corporation") {
                     $("#Corp_id").show();

@@ -1420,6 +1420,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Furigana.
+        /// </summary>
+        public static string Furigana {
+            get {
+                return ResourceManager.GetString("Furigana", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Gallery.
         /// </summary>
         public static string Gallery {
@@ -3666,6 +3675,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         public static string Status {
             get {
                 return ResourceManager.GetString("Status", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Store Name.
+        /// </summary>
+        public static string StoreName {
+            get {
+                return ResourceManager.GetString("StoreName", resourceCulture);
             }
         }
         
