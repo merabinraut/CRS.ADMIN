@@ -462,7 +462,7 @@
 
 
                                     <div class="w-full flex">
-                                        <select id="large" name="LandLineCode" class="default_select select-common block"
+                                        @*<select id="large" name="LandLineCode" class="default_select select-common block"
                                                 style=" width:40%">
                                             @foreach (var item in ViewBag.CountryCodeDDL as IEnumerable<SelectListItem>)
                                             {
@@ -480,7 +480,7 @@
                                                     </option>
                                                 }
                                             }
-                                        </select>
+                                        </select>*@
                                         @*@Html.TextBoxFor(model => model.LandlineNumber, new
                                 {
 
@@ -498,8 +498,8 @@
                                        @placeholder = "090-6490-3254",
                                        @onkeypress = "return isNumber(event)",
                                        autocomplete = "off",
-                                       @maxLength = "8",
-                                       @style = "width:70% ; padding:10px 5px;margin-left:0px;"
+                                       @maxLength = "11"
+                                      
                                    })
                                     </div>
                                     <span class="error">

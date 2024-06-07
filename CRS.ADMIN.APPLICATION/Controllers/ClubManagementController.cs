@@ -103,7 +103,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             ViewBag.RankDDL = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("RANKDDL") as Dictionary<string, string>, null, "--- Select ---");
             ViewBag.ClubStoreDDL = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("CLUBSTOREDDL") as Dictionary<string, string>, null, "--- Select ---");
             ViewBag.ClubCategoryDDL = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("CLUBCATEGORYDDL") as Dictionary<string, string>, null, "--- Select ---");
-            ViewBag.CountryCodeDDL = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("COUNTRYCODE") as Dictionary<string, string>, null);
+            //ViewBag.CountryCodeDDL = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("COUNTRYCODE") as Dictionary<string, string>, null);
 
             ViewBag.RankDDLKey = response.ManageTag.Tag2RankName;
             ViewBag.ClubStoreDDLKey = response.ManageTag.Tag5StoreName;
@@ -113,7 +113,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             ViewBag.PrefIdKey = !string.IsNullOrEmpty(response.ManageClubModel.Prefecture) ? ViewBag.Pref[response.ManageClubModel.Prefecture] : null;
             ViewBag.HolidayIdKey = !string.IsNullOrEmpty(response.ManageClubModel.Holiday) ? response.ManageClubModel.Holiday : null;
             ViewBag.BusinessTypeKey = response.ManageClubModel.BusinessTypeDDL;
-            ViewBag.CountryCodeDDLKey = response.ManageClubModel.LandLineCode;
+            //ViewBag.CountryCodeDDLKey = response.ManageClubModel.LandLineCode;
 
             ViewBag.ClosingDate = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("CLOSINGDATE") as Dictionary<string, string>, null, "--- Select ---");
             ViewBag.ClosingDateIdKey = response.ManageClubModel.ClosingDate;
@@ -140,7 +140,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             var culture = Request.Cookies["culture"]?.Value;
             culture = string.IsNullOrEmpty(culture) ? "ja" : culture;
             ManageClubModel model = new ManageClubModel();
-            ViewBag.CountryCodeDDL = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("COUNTRYCODE") as Dictionary<string, string>, null);
+            //ViewBag.CountryCodeDDL = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("COUNTRYCODE") as Dictionary<string, string>, null);
 
             if (!string.IsNullOrEmpty(AgentId))
             {
@@ -157,7 +157,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 }
                 var dbResponse = _BUSS.GetClubDetails(id, culture);
                 model = dbResponse.MapObject<ManageClubModel>();
-                ViewBag.CountryCodeDDLKey = model.LandLineCode;
+                //ViewBag.CountryCodeDDLKey = model.LandLineCode;
                 model.AgentId = model.AgentId.EncryptParameter();
                 //model.LocationId = !string.IsNullOrEmpty(model.LocationId) ? model.LocationId.EncryptParameter() : null;
                 //model.BusinessType = !string.IsNullOrEmpty(model.BusinessType) ? model.BusinessType.EncryptParameter() : null;
@@ -323,7 +323,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
 
             //if (!string.IsNullOrEmpty(LocationDDL?.DecryptParameter())) ModelState.Remove("LocationId");
             ViewBag.PlansList = ApplicationUtilities.LoadDropdownList("CLUBPLANS") as Dictionary<string, string>;
-            ViewBag.CountryCodeDDL = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("COUNTRYCODE") as Dictionary<string, string>, null);
+            //ViewBag.CountryCodeDDL = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("COUNTRYCODE") as Dictionary<string, string>, null);
 
             ModelState.Remove("LocationURL");
             string concatenateplanvalue = string.Empty;

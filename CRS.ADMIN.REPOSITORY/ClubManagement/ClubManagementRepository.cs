@@ -47,7 +47,7 @@ namespace CRS.ADMIN.REPOSITORY.ClubManagement
                         ClubCategory = _DAO.ParseColumnValue(item, "ClubCategory").ToString(),
                         TotalRecords = Convert.ToInt32(_DAO.ParseColumnValue(item, "TotalRecords").ToString()),
                         holdStatus = _DAO.ParseColumnValue(item, "holdStatus").ToString(),
-                        LandLineCode = _DAO.ParseColumnValue(item, "LandLineCode").ToString(),
+                        //LandLineCode = _DAO.ParseColumnValue(item, "LandLineCode").ToString(),
                         SNO = Convert.ToInt32(_DAO.ParseColumnValue(item, "SNO").ToString())
                     });
                 }
@@ -78,7 +78,7 @@ namespace CRS.ADMIN.REPOSITORY.ClubManagement
                         UpdatedDate = _DAO.ParseColumnValue(item, "UpdatedDate").ToString(),
                         ClubLogo = _DAO.ParseColumnValue(item, "ClubLogo").ToString(),
                         ActionPlatform = _DAO.ParseColumnValue(item, "ActionPlatform").ToString(),
-                        LandLineCode = _DAO.ParseColumnValue(item, "LandLineCode").ToString(),
+                        //LandLineCode = _DAO.ParseColumnValue(item, "LandLineCode").ToString(),
                         TotalRecords = Convert.ToInt32(_DAO.ParseColumnValue(item, "TotalRecords").ToString()),
                         SNO = Convert.ToInt32(_DAO.ParseColumnValue(item, "holdId").ToString()),
                         AgentId = _DAO.ParseColumnValue(item, "AgentId").ToString()
@@ -108,7 +108,7 @@ namespace CRS.ADMIN.REPOSITORY.ClubManagement
                         CreatedDate = _DAO.ParseColumnValue(item, "CreatedDate").ToString(),
                         UpdatedDate = _DAO.ParseColumnValue(item, "UpdatedDate").ToString(),
                         ClubLogo = _DAO.ParseColumnValue(item, "ClubLogo").ToString(),
-                        LandLineCode = _DAO.ParseColumnValue(item, "LandLineCode").ToString(),
+                        //LandLineCode = _DAO.ParseColumnValue(item, "LandLineCode").ToString(),
                         TotalRecords = Convert.ToInt32(_DAO.ParseColumnValue(item, "TotalRecords").ToString()),
                         SNO = Convert.ToInt32(_DAO.ParseColumnValue(item, "holdId").ToString())
                     });
@@ -159,7 +159,7 @@ namespace CRS.ADMIN.REPOSITORY.ClubManagement
                     LocationId = _DAO.ParseColumnValue(dbResponse, "LocationId").ToString(),
                     CompanyName = _DAO.ParseColumnValue(dbResponse, "CompanyName").ToString(),
                     LandLineNumber = _DAO.ParseColumnValue(dbResponse, "LandLineNumber").ToString(),
-                    LandLineCode = _DAO.ParseColumnValue(dbResponse, "LandLineCode").ToString(),
+                    //LandLineCode = _DAO.ParseColumnValue(dbResponse, "LandLineCode").ToString(),
                     Line = _DAO.ParseColumnValue(dbResponse, "Line").ToString(),
                     ceoFullName = _DAO.ParseColumnValue(dbResponse, "ceoFullName").ToString(),
                     WorkingHrTo = _DAO.ParseColumnValue(dbResponse, "ClubClosingTime").ToString(),
@@ -342,7 +342,7 @@ namespace CRS.ADMIN.REPOSITORY.ClubManagement
             SQL += ",@AgentId=" + _DAO.FilterString(Request.AgentId);
             //SQL += ",@FirstName=N" +   _DAO.FilterString(Request.FirstName);
             SQL += ",@LandLineNumber=" + _DAO.FilterString(Request.LandLineNumber);
-            SQL += ",@LandLineCode=" + _DAO.FilterString(Request.LandLineCode);
+            //SQL += ",@LandLineCode=" + _DAO.FilterString(Request.LandLineCode);
             //SQL += ",@MiddleName=N" + _DAO.FilterString(Request.MiddleName);
             //SQL += ",@LastName=N" + _DAO.FilterString(Request.LastName);
             SQL += ",@ClubName=" + _DAO.FilterString(Request.ClubName);  
@@ -550,7 +550,7 @@ namespace CRS.ADMIN.REPOSITORY.ClubManagement
                     LocationId = _DAO.ParseColumnValue(dbResponse, "LocationId").ToString(),
                     CompanyName = _DAO.ParseColumnValue(dbResponse, "CompanyName").ToString(),
                     LandLineNumber = _DAO.ParseColumnValue(dbResponse, "LandLineNumber").ToString(),
-                    LandLineCode = _DAO.ParseColumnValue(dbResponse, "LandLineCode").ToString(),
+                    //LandLineCode = _DAO.ParseColumnValue(dbResponse, "LandLineCode").ToString(),
                     Line = _DAO.ParseColumnValue(dbResponse, "Line").ToString(),
                     ceoFullName = _DAO.ParseColumnValue(dbResponse, "ceoFullName").ToString(),
                     WorkingHrTo = _DAO.ParseColumnValue(dbResponse, "ClubClosingTime").ToString(),
