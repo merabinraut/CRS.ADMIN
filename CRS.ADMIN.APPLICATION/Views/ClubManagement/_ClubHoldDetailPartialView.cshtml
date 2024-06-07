@@ -313,7 +313,8 @@
                                 <p>
                                     @if (kycfrontimageExtension == ".jpg" || kycfrontimageExtension == ".jpeg" || kycfrontimageExtension == ".png" || kycfrontimageExtension == ".gif")
                                     {
-                                        <a class="imagetextfield" href="@Model.KYCDocument" target="_blank">
+                                        @*<a class="imagetextfield" href="@Model.KYCDocument" target="_blank">*@
+                                        <a class="imagetextfield" onclick="window.open('@Model.KYCDocument', '_blank')" href="#">
                                             View
                                         </a>
                                     }

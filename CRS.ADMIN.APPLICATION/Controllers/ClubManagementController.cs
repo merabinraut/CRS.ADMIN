@@ -306,7 +306,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             model.Holiday = !string.IsNullOrEmpty(model.Holiday) ? model.Holiday.EncryptParameter() : null;
             model.ClosingDate = !string.IsNullOrEmpty(model.ClosingDate) ? model.ClosingDate.EncryptParameter() : null;
             model.holdId = !string.IsNullOrEmpty(model.holdId) ? model.holdId.EncryptParameter() : null;
-            model.IdentificationType= !string.IsNullOrEmpty(model.IdentificationType) ? model.IdentificationType.EncryptParameter() : null;
+            model.IdentificationType = !string.IsNullOrEmpty(model.IdentificationType) ? model.IdentificationType.EncryptParameter() : null;
             //}
             TempData["ManageClubModel"] = model;
             TempData["RenderId"] = "Manage";
@@ -317,7 +317,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
 
         [HttpPost, ValidateAntiForgeryToken]
         public async Task<ActionResult> ManageClub(ManageClubModel Model, HttpPostedFileBase Business_Certificate, HttpPostedFileBase Logo_Certificate, HttpPostedFileBase CoverPhoto_Certificate, HttpPostedFileBase KYCDocument_Certificate, HttpPostedFileBase KYCDocumentBack_Certificate, HttpPostedFileBase PassportPhotot_Certificate, HttpPostedFileBase InsurancePhoto_Certificate, HttpPostedFileBase CorporateRegistry_Certificate, string LocationDDL, string BusinessTypeDDL)
-       {
+        {
             string ErrorMessage = string.Empty;
             if (!string.IsNullOrEmpty(BusinessTypeDDL?.DecryptParameter())) ModelState.Remove("BusinessType");
 
@@ -350,17 +350,17 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 if (string.IsNullOrEmpty(Model.Representative1_Furigana))
                 {
                     ModelState.AddModelError("Representative1_Furigana", "Required");
-                }               
-                                
+                }
+
             }
             else
-            {                
+            {
                 ModelState.Remove("CompanyName");
                 ModelState.Remove("CompanyNameFurigana");
             }
             ModelState.Remove("LoginId");
             if (ModelState.IsValid)
-            {                
+            {
                 if
            (
               string.IsNullOrEmpty(Model.BusinessCertificate) ||
@@ -370,7 +370,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
               string.IsNullOrEmpty(Model.Gallery) ||
               string.IsNullOrEmpty(Model.KYCDocumentBack) ||
               string.IsNullOrEmpty(Model.PassportPhoto) ||
-              string.IsNullOrEmpty(Model.InsurancePhoto) 
+              string.IsNullOrEmpty(Model.InsurancePhoto)
            )
                 {
 
@@ -394,15 +394,15 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                             ErrorMessage = "Cover photo required";
                             allowRedirect = true;
                         }
-                        
-                        if (Model.IdentificationType.DecryptParameter()=="2")
+
+                        if (Model.IdentificationType.DecryptParameter() == "2")
                         {
                             if (PassportPhotot_Certificate == null && string.IsNullOrEmpty(Model.PassportPhoto))
                             {
                                 ErrorMessage = "Passport photo required";
                                 allowRedirect = true;
                             }
-                           else if (InsurancePhoto_Certificate == null && string.IsNullOrEmpty(Model.InsurancePhoto))
+                            else if (InsurancePhoto_Certificate == null && string.IsNullOrEmpty(Model.InsurancePhoto))
                             {
                                 ErrorMessage = "Insurance card required";
                                 allowRedirect = true;
@@ -430,7 +430,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                                 allowRedirect = true;
                             }
                         }
-                            if (allowRedirect)
+                        if (allowRedirect)
                         {
                             this.AddNotificationMessage(new NotificationModel()
                             {
@@ -468,7 +468,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
 
                     }
                 }
-                
+
                 string LogoFileName = string.Empty;
                 if (Logo_Certificate != null)
                 {
@@ -540,7 +540,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 string KYCDocumentBackFileName = string.Empty;
                 string PassportFileName = string.Empty;
                 string InsuranceFileName = string.Empty;
-                
+
                 if (Model.IdentificationType.DecryptParameter() == "2")
                 {
                     if (PassportPhotot_Certificate != null)
@@ -591,7 +591,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 else
                 {
 
-                  
+
                     if (KYCDocument_Certificate != null)
                     {
                         var contentType = KYCDocument_Certificate.ContentType;
@@ -613,7 +613,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
 
                         }
                     }
-                   
+
                     if (KYCDocumentBack_Certificate != null)
                     {
                         var contentType = KYCDocumentBack_Certificate.ContentType;
@@ -697,7 +697,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                     if (Business_Certificate != null) await ImageHelper.ImageUpload(businessCertificateFileName, Business_Certificate);
                     if (Logo_Certificate != null) await ImageHelper.ImageUpload(LogoFileName, Logo_Certificate);
                     if (CoverPhoto_Certificate != null) await ImageHelper.ImageUpload(CoverPhotoFileName, CoverPhoto_Certificate);
-                    if (commonModel.IdentificationType=="2")
+                    if (commonModel.IdentificationType == "2")
                     {
                         if (PassportPhotot_Certificate != null) await ImageHelper.ImageUpload(PassportFileName, PassportPhotot_Certificate);
                         if (InsurancePhoto_Certificate != null) await ImageHelper.ImageUpload(InsuranceFileName, InsurancePhoto_Certificate);
@@ -708,10 +708,10 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                         if (KYCDocumentBack_Certificate != null) await ImageHelper.ImageUpload(KYCDocumentBackFileName, KYCDocumentBack_Certificate);
                     }
 
-                    if (commonModel.BusinessType=="1")
+                    if (commonModel.BusinessType == "1")
                     {
                         if (CorporateRegistry_Certificate != null) await ImageHelper.ImageUpload(CorporateRegistryFileName, CorporateRegistry_Certificate);
-                    }                    
+                    }
                     this.AddNotificationMessage(new NotificationModel()
                     {
                         NotificationType = dbResponse.Code == ResponseCode.Success ? NotificationMessage.SUCCESS : NotificationMessage.INFORMATION,
@@ -829,6 +829,37 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                     ? ResponseModel.LandLineCode + '-' + ResponseModel.LandlineNumber
                     : ResponseModel.LandlineNumber; ResponseModel.LocationDDL = !string.IsNullOrEmpty(ResponseModel.LocationId) ? ResponseModel.LocationId.EncryptParameter() : null;
 
+                ResponseModel.Logo = !string.IsNullOrEmpty(ResponseModel.Logo) ? 
+                                      ImageHelper.ProcessedImage(ResponseModel.Logo):
+                                      ResponseModel.Logo; ;
+                ResponseModel.BusinessCertificate =!string.IsNullOrEmpty( ResponseModel.BusinessCertificate) ?
+                                                    ImageHelper.ProcessedImage(ResponseModel.BusinessCertificate) :
+                                                    ResponseModel.BusinessCertificate;
+
+                if (ResponseModel.IdentificationType=="2")
+                {
+                    ResponseModel.PassportPhoto = !string.IsNullOrEmpty(ResponseModel.KYCDocument) ?
+                                                   ImageHelper.ProcessedImage(ResponseModel.KYCDocument) :
+                                                   ResponseModel.KYCDocument; 
+                    ResponseModel.InsurancePhoto = !string.IsNullOrEmpty(ResponseModel.KYCDocumentBack) ?
+                                                   ImageHelper.ProcessedImage(ResponseModel.KYCDocumentBack) :
+                                                   ResponseModel.KYCDocumentBack;
+                }
+                else
+                {
+                    ResponseModel.KYCDocument = !string.IsNullOrEmpty(ResponseModel.KYCDocument) ?
+                                                 ImageHelper.ProcessedImage(ResponseModel.KYCDocument) :
+                                                 ResponseModel.KYCDocument;
+                    ResponseModel.KYCDocumentBack = !string.IsNullOrEmpty(ResponseModel.KYCDocumentBack) ?
+                                                    ImageHelper.ProcessedImage(ResponseModel.KYCDocumentBack) :
+                                                    ResponseModel.KYCDocumentBack;
+                }
+                if (ResponseModel.BusinessType == "1")
+                {
+                    ResponseModel.CorporateRegistryDocument = !string.IsNullOrEmpty(ResponseModel.CorporateRegistryDocument) ?
+                                                               ImageHelper.ProcessedImage(ResponseModel.CorporateRegistryDocument) :
+                                                               ResponseModel.CorporateRegistryDocument;
+                }               
                 ResponseModel.BusinessTypeDDL = !string.IsNullOrEmpty(ResponseModel.BusinessType) ? ResponseModel.BusinessType.EncryptParameter() : null;
                 ResponseModel.Prefecture = !string.IsNullOrEmpty(ResponseModel.Prefecture) ? ResponseModel.Prefecture.EncryptParameter() : null;
                 //ViewBag.Pref = DDLHelper.LoadDropdownList("PREF") as Dictionary<string, string>;
@@ -840,7 +871,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 //ResponseModel.Prefecture = ViewBag.Pref.ContainsKey(ResponseModel.Prefecture) ? ViewBag.Pref[ResponseModel.Prefecture] : "";
                 ResponseModel.LocationDDL = ViewBag.LocationDDLList.ContainsKey(ResponseModel.LocationDDL) ? ViewBag.LocationDDLList[ResponseModel.LocationDDL] : "";
                 ViewBag.BusinessTypeDDL = ApplicationUtilities.LoadDropdownList("BUSINESSTYPEDDL") as Dictionary<string, string>;
-                ResponseModel.BusinessTypeDDL = (ResponseModel.BusinessTypeDDL != null && ViewBag.BusinessTypeDDL?.ContainsKey(ResponseModel.BusinessTypeDDL) == true)? ViewBag.BusinessTypeDDL[ResponseModel.BusinessTypeDDL]:"";
+                ResponseModel.BusinessTypeDDL = (ResponseModel.BusinessTypeDDL != null && ViewBag.BusinessTypeDDL?.ContainsKey(ResponseModel.BusinessTypeDDL) == true) ? ViewBag.BusinessTypeDDL[ResponseModel.BusinessTypeDDL] : "";
                 //ResponseModel.BusinessTypeDDL = ViewBag.BusinessTypeDDL.ContainsKey(ResponseModel.BusinessTypeDDL) ? ViewBag.BusinessTypeDDL[ResponseModel.BusinessTypeDDL] : "";
                 ViewBag.IdentificationType = DDLHelper.LoadDropdownList("DOCUMENTTYPE") as Dictionary<string, string>;
                 ResponseModel.IdentificationType = ResponseModel.IdentificationType.EncryptParameter();
@@ -852,7 +883,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
         }
         #region Manage Manager
         [HttpGet]
-        public ActionResult ManageManager(string AgentId = "")
+        public ActionResult ManageManager(string AgentId = "", string SearchFilter = "", int StartIndex = 0, int PageSize = 10)
         {
             ManageManagerModel model = new ManageManagerModel();
             var agentid = AgentId;
@@ -871,7 +902,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                         Message = "Invalid event details",
                         Title = NotificationMessage.INFORMATION.ToString(),
                     });
-                    return RedirectToAction("ClubList", "ClubManagement");
+                    return RedirectToAction("ClubList", "ClubManagement",new{SearchFilter = SearchFilter,StartIndex = StartIndex,PageSize = PageSize});
                 }
 
                 var dbResponse = _BUSS.GetManagerDetails(id);
@@ -882,7 +913,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             TempData["ManageManagerModel"] = model;
             TempData["RenderId"] = "ManageManager";
 
-            return RedirectToAction("ClubList", "ClubManagement");
+            return RedirectToAction("ClubList", "ClubManagement", new { SearchFilter = SearchFilter, StartIndex = StartIndex, PageSize = PageSize });
         }
         [HttpPost, ValidateAntiForgeryToken]
         public ActionResult ManageManager(ManageManagerModel Model)

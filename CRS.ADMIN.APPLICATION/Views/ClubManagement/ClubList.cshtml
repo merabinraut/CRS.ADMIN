@@ -1304,7 +1304,10 @@
         }
 
         function ManageClubManagerFunction(i) {
-            window.location.href = '/ClubManagement/ManageManager?AgentId=' + i;
+            let search_filter = $('#default-search').val();
+            const start_index_val = @ViewBag.StartIndex;
+            const page_size = @ViewBag.PageSize;
+            window.location.href = '/ClubManagement/ManageManager?AgentId=' + i + '&SearchFilter=' + search_filter + '&StartIndex=' + start_index_val + '&PageSize=' + page_size;
         }
 
         function CancelFunction() {
