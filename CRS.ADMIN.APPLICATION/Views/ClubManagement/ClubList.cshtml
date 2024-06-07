@@ -1010,12 +1010,19 @@
         });
 
     </script>
+
+    <script>
+        function openImage(url) {
+            var newTab = window.open();
+            newTab.document.write('<html><head><title>Image</title></head><body><img src="' + url + '"></body></html>');
+            newTab.document.close();
+        }
+    </script>
     <script>
         $(document).ready(function () {
             if ($("#holdId").val() != "" || $("#AgentId").val() != "") {
-                debugger;
                 var Value = $('#large[name="IdentificationType"]').find("option:selected").text().trim();
-                if (Value.toLowerCase() == "passport + insurance card") {
+                if (Value.toLowerCase() == "passport + insurance card" || Value.toLowerCase() == "パスポート + 保険証") {
                     $("#kycfront").hide();
                     $("#kycback").hide();
                     $("#Passport").show();
@@ -1074,7 +1081,7 @@
 
             $('#large[name="IdentificationType"]').change(function () {
                 var selectedValue = $(this).find("option:selected").text().trim();
-                if (selectedValue.toLowerCase() == "passport + insurance card") {
+                if (selectedValue.toLowerCase() == "passport + insurance card" || selectedValue.toLowerCase() == "パスポート + 保険証") {
                     $("#kycfront").hide();
                     $("#kycback").hide();
                     $("#Passport").show();

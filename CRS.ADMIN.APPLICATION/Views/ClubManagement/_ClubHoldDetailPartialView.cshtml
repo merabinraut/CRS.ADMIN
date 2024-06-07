@@ -262,7 +262,7 @@
                                 <p>
                                     @if (passportimageExtension == ".jpg" || passportimageExtension == ".jpeg" || passportimageExtension == ".png" || passportimageExtension == ".gif")
                                     {
-                                        <a class="imagetextfield" href="@Model.PassportPhoto" target="_blank">
+                                        <a class="imagetextfield" href="#" onclick="openImage('@Model.PassportPhoto'); return false;">
                                             View
                                         </a>
                                     }
@@ -286,7 +286,7 @@
                                 <p>
                                     @if (insuranceimageExtension == ".jpg" || insuranceimageExtension == ".jpeg" || insuranceimageExtension == ".png" || insuranceimageExtension == ".gif")
                                     {
-                                        <a class="imagetextfield" href="@Model.InsurancePhoto" target="_blank">
+                                        <a class="imagetextfield" href="#" onclick="openImage('@Model.InsurancePhoto'); return false;">
                                             View
                                         </a>
                                     }
@@ -313,8 +313,8 @@
                                 <p>
                                     @if (kycfrontimageExtension == ".jpg" || kycfrontimageExtension == ".jpeg" || kycfrontimageExtension == ".png" || kycfrontimageExtension == ".gif")
                                     {
-                                        @*<a class="imagetextfield" href="@Model.KYCDocument" target="_blank">*@
-                                        <a class="imagetextfield" onclick="window.open('@Model.KYCDocument', '_blank')" href="#">
+                                       
+                                        <a class="imagetextfield" href="#" onclick="openImage('@Model.KYCDocument'); return false;">                            
                                             View
                                         </a>
                                     }
@@ -339,7 +339,7 @@
                                 <p>
                                     @if (kycbackimageExtension == ".jpg" || kycbackimageExtension == ".jpeg" || kycbackimageExtension == ".png" || kycbackimageExtension == ".gif")
                                     {
-                                        <a class="imagetextfield" href="@Model.KYCDocumentBack" target="_blank">
+                                        <a class="imagetextfield" href="#" onclick="openImage('@Model.KYCDocumentBack'); return false;">
                                             View
                                         </a>
                                     }
@@ -401,4 +401,5 @@
 
     </div>
 </div>
+
 
