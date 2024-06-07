@@ -256,7 +256,7 @@
                                                                 <i class="las la-tag text-[20px] cursor-pointer text-[#C8B477]" onclick="ManageClubTagFunction('@item.AgentId');"></i>
                                                                 <i class=" las la-trash-alt text-[20px] cursor-pointer text-[#CB3F3F]" onclick="BlockUnblockFunction('@item.AgentId');"></i>
                                                                 <i class="las la-key text-[24px] text-[#C8B477] cursor-pointer" onclick="openResetCustomerPasswordModal('@item.ClubNameEng','@item.AgentId')" data-name="@item.ClubNameEng" data-id="@item.AgentId" data-modal-target="reset-customer-passwordconfirmation" data-modal-toggle="reset-customer-passwordconfirmation"></i>
-                                                                <img src="/Content/assets/images/notice.svg" alt="plan" class="cursor-pointer h-[20px] aspect-square" onclick="PlanRedirectFunction('@item.AgentId');"  data-drawer-target="add-new-plan-tag" data-drawer-show="add-new-plan-tag" data-drawer-placement="right" data-drawer-backdrop="false" aria-controls="drawer-disabled-backdrop">
+                                                                <img src="/Content/assets/images/notice.svg" alt="plan" class="cursor-pointer h-[20px] aspect-square" onclick="PlanRedirectFunction('@item.AgentId');" data-drawer-target="add-new-plan-tag" data-drawer-show="add-new-plan-tag" data-drawer-placement="right" data-drawer-backdrop="false" aria-controls="drawer-disabled-backdrop">
 
                                                                 @*<i class="las la-user text-[20px] cursor-pointer text-[#A6A6A6]" onclick="PlanRedirectFunction('@item.AgentId');"></i>*@
                                                                 <i class="las la-user text-[20px] cursor-pointer text-[#A6A6A6]" onclick="HostRedirectFunction('@item.AgentId');"></i>
@@ -1079,13 +1079,13 @@
                     $("#kycback").hide();
                     $("#Passport").show();
                     $("#Insurance").show();
-                   
+
                 }
                 else {
                     $("#kycfront").show();
                     $("#kycback").show();
                     $("#Passport").hide();
-                    $("#Insurance").hide();            
+                    $("#Insurance").hide();
                 }
             });
 
@@ -1300,7 +1300,10 @@
         }
 
         function ManageClubGetDetailsFunction(i) {
-            window.location.href = '/ClubManagement/ManageClub?AgentId=' + i;
+            let search_filter = $('#default-search').val();
+            const start_index_val = @ViewBag.StartIndex;
+            const page_size = @ViewBag.PageSize;
+            window.location.href = '/ClubManagement/ManageClub?AgentId=' + i + '&SearchFilter=' + search_filter + '&StartIndex=' + start_index_val + '&PageSize=' + page_size;;
         }
 
         function ManageClubManagerFunction(i) {
@@ -1323,12 +1326,16 @@
         }
 
         function ManageClubTagFunction(i) {
-            window.location.href = '/ClubManagement/ManageTag?ClubId=' + i;
+             let search_filter = $('#default-search').val();
+             const start_index_val = @ViewBag.StartIndex;
+             const page_size = @ViewBag.PageSize;
+            window.location.href = '/ClubManagement/ManageTag?ClubId=' + i + '&SearchFilter=' + search_filter + '&StartIndex=' + start_index_val + '&PageSize=' + page_size;;
         }
         function ApproveRejectClubManagerFunction(i, j, k) {
             window.location.href = '/ClubManagement/ApproveRejectClub?holdid=' + i + '&type=' + j+ '&AgentId=' + k;
         }
-        function EditPendingClub(i,j) {
+        function EditPendingClub(i, j) {
+
             window.location.href = '/ClubManagement/ManagePendingClub?AgentId=' + j + '&holdId=' + i;
         }
         function EditClubHoldDetail(i) {
@@ -1767,7 +1774,7 @@
 
     <script>
         const checkboxclub = document.getElementById('toogle1');
-       // const tagInput = document.getElementById('tagInput');
+        // const tagInput = document.getElementById('tagInput');
 
         //if (checkbox.checked) {
         //    tagInput.style.display = 'block';

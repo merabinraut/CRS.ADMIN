@@ -135,7 +135,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
         }
 
         [HttpGet]
-        public ActionResult ManageClub(string AgentId = "")
+        public ActionResult ManageClub(string AgentId = "", string SearchFilter = "", int StartIndex = 0, int PageSize = 10)
         {
             var culture = Request.Cookies["culture"]?.Value;
             culture = string.IsNullOrEmpty(culture) ? "ja" : culture;
@@ -153,7 +153,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                         Message = "Invalid club details",
                         Title = NotificationMessage.INFORMATION.ToString(),
                     });
-                    return RedirectToAction("ClubList", "ClubManagement");
+                    return RedirectToAction("ClubList", "ClubManagement", new { SearchFilter = SearchFilter, StartIndex = StartIndex, PageSize = PageSize });
                 }
                 var dbResponse = _BUSS.GetClubDetails(id, culture);
                 model = dbResponse.MapObject<ManageClubModel>();
@@ -172,7 +172,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             TempData["RenderId"] = "Manage";
             TempData["EditPlan"] = model;
 
-            return RedirectToAction("ClubList", "ClubManagement");
+            return RedirectToAction("ClubList", "ClubManagement", new { SearchFilter = SearchFilter, StartIndex = StartIndex, PageSize = PageSize });
         }
 
         [HttpGet]
@@ -987,7 +987,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
         #endregion
         #region "Tag Management"
         [HttpGet]
-        public ActionResult ManageTag(string ClubId = "")
+        public ActionResult ManageTag(string ClubId = "", string SearchFilter = "", int StartIndex = 0, int PageSize = 10)
         {
             var ResponseModel = new ManageTag();
             //var availabilityInfo = new List<AvailabilityTagModel>();
@@ -1000,7 +1000,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                     Message = "Invalid details",
                     Title = NotificationMessage.INFORMATION.ToString(),
                 });
-                return RedirectToAction("ClubList", "ClubManagement");
+                return RedirectToAction("ClubList", "ClubManagement", new { SearchFilter = SearchFilter, StartIndex = StartIndex, PageSize = PageSize });
             }
             else
             {
@@ -1028,7 +1028,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 TempData["ManageTagModel"] = ResponseModel;
                 TempData["AvailabilityModel"] = ResponseModel.GetAvailabilityTagModel;
                 TempData["RenderId"] = "ManageTag";
-                return RedirectToAction("ClubList", "ClubManagement");
+                return RedirectToAction("ClubList", "ClubManagement", new { SearchFilter = SearchFilter, StartIndex = StartIndex, PageSize = PageSize });
             }
         }
 
