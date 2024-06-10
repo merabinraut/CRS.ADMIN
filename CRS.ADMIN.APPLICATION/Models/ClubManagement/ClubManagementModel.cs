@@ -117,7 +117,7 @@ namespace CRS.ADMIN.APPLICATION.Models.ClubManagement
         [RegularExpression("^[0-9]{11}$", ErrorMessage = "The field must be a 11-digit number.")]
         public string MobileNumber { get; set; }
         [DisplayName("Landline Number")]
-        [RegularExpression("^[0-9]{11}$", ErrorMessage = "The field must be a 11-digit number.")]
+        [RegularExpression("^[0-9]{10,11}$", ErrorMessage = "The field must be a either 10-digit or 11-digit number.")]
         public string LandlineNumber { get; set; }
         [DisplayName("Club Name (English)")]
         [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
