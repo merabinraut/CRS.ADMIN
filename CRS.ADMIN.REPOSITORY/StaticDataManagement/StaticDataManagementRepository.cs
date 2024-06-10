@@ -91,6 +91,11 @@ namespace CRS.ADMIN.REPOSITORY.StaticDataManagement
                     StaticDataDescription = _dao.ParseColumnValue(dbResponse, "StaticDataDescription").ToString(),
                     Status = _dao.ParseColumnValue(dbResponse, "Status").ToString(),
                     StaticDataValue = _dao.ParseColumnValue(dbResponse, "StaticDataValue").ToString(),
+                    AdditionalValue1 = _dao.ParseColumnValue(dbResponse, "AdditionalValue1").ToString(),
+                    AdditionalValue2 = _dao.ParseColumnValue(dbResponse, "AdditionalValue2").ToString(),
+                    AdditionalValue3 = _dao.ParseColumnValue(dbResponse, "AdditionalValue3").ToString(),
+                    AdditionalValue4 = _dao.ParseColumnValue(dbResponse, "AdditionalValue4").ToString(),
+                    InputType = _dao.ParseColumnValue(dbResponse, "InputType").ToString(),
                 };
             }
             return new ManageStaticDataCommon();
@@ -105,6 +110,11 @@ namespace CRS.ADMIN.REPOSITORY.StaticDataManagement
             sp_name += ",@StaticDataDescription=N" + _dao.FilterString(commonModel.StaticDataDescription);
             sp_name += ",@StaticDataType=" + _dao.FilterString(commonModel.StaticDataType);
             sp_name += ",@StaticDataValue=" + _dao.FilterString(commonModel.StaticDataValue);
+            sp_name += ",@AdditionalValue1=N" + _dao.FilterString(commonModel.AdditionalValue1);
+            sp_name += ",@AdditionalValue2=N" + _dao.FilterString(commonModel.AdditionalValue2);
+            sp_name += ",@AdditionalValue3=N" + _dao.FilterString(commonModel.AdditionalValue3);
+            sp_name += ",@AdditionalValue4=N" + _dao.FilterString(commonModel.AdditionalValue4);
+            sp_name += ",@InputType=N" + _dao.FilterString(commonModel.InputType);
             sp_name += ",@Status=" + _dao.FilterString("A");
             sp_name += ",@ActionUser=" + _dao.FilterString(commonModel.ActionUser);
             return _dao.ParseCommonDbResponse(sp_name);

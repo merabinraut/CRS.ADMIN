@@ -335,6 +335,10 @@
     <value>CEO Full Name</value>
     <comment>Club Management</comment>
   </data>
+  <data name="CEOFurigana" xml:space="preserve">
+    <value>CEO Furigana</value>
+    <comment>Club Management</comment>
+  </data>
   <data name="Choose Icons" xml:space="preserve">
     <value>Choose Icon</value>
     <comment>Host Management</comment>
@@ -403,6 +407,10 @@
     <value>Club Status</value>
     <comment>Reservation Ledger</comment>
   </data>
+  <data name="ClubFurigana" xml:space="preserve">
+    <value>Furigana</value>
+    <comment>ClubManagement</comment>
+  </data>
   <data name="ClubListSuppportMsg" xml:space="preserve">
     <value>Manage club’s recommendation informations.</value>
     <comment>Recommendation Management</comment>
@@ -451,6 +459,10 @@
     <value>Company Address</value>
     <comment>ClubManagement</comment>
   </data>
+  <data name="CompanyNameFurigana" xml:space="preserve">
+    <value>Company Name (Furigana)</value>
+    <comment>Club Management</comment>
+  </data>
   <data name="Configure" xml:space="preserve">
     <value>Configure</value>
     <comment>Recommendation Management</comment>
@@ -482,6 +494,10 @@
   <data name="Converted Date" xml:space="preserve">
     <value>Converted Date</value>
     <comment>Affiliate Management</comment>
+  </data>
+  <data name="CorporateRegistry" xml:space="preserve">
+    <value>Corporate Registry</value>
+    <comment>ClubManagement</comment>
   </data>
   <data name="Cover Photo" xml:space="preserve">
     <value>Cover Photo</value>
@@ -694,6 +710,10 @@
     <value>From Amount (¥)</value>
     <comment>Point Setup</comment>
   </data>
+  <data name="Furigana" xml:space="preserve">
+    <value>Furigana</value>
+    <comment>Club Management</comment>
+  </data>
   <data name="Gallery" xml:space="preserve">
     <value>Gallery</value>
     <comment>Location Management</comment>
@@ -806,6 +826,10 @@
     <value>Icon Image</value>
     <comment>Host Management</comment>
   </data>
+  <data name="IdentificationType" xml:space="preserve">
+    <value>Identification Type</value>
+    <comment>ClubManagement</comment>
+  </data>
   <data name="Image" xml:space="preserve">
     <value>Image</value>
     <comment>Location Management</comment>
@@ -838,6 +862,10 @@
     <value>Instagram</value>
     <comment>Club Management</comment>
   </data>
+  <data name="Insurance" xml:space="preserve">
+    <value>Upload Insurance Card</value>
+    <comment>ClubManagement</comment>
+  </data>
   <data name="January" xml:space="preserve">
     <value>Jan</value>
     <comment>Dashboard</comment>
@@ -853,8 +881,16 @@
     <value>Jun</value>
     <comment>Dashboard</comment>
   </data>
+  <data name="KYCBack" xml:space="preserve">
+    <value>Upload KYC Back</value>
+    <comment>ClubManagement</comment>
+  </data>
   <data name="KYCDocument" xml:space="preserve">
     <value>KYC Document</value>
+    <comment>ClubManagement</comment>
+  </data>
+  <data name="KYCFront" xml:space="preserve">
+    <value>Upload KYC Front</value>
     <comment>ClubManagement</comment>
   </data>
   <data name="LandlineNumber" xml:space="preserve">
@@ -1173,6 +1209,10 @@
     <value>Manage recommendation according to pages.</value>
     <comment>Recommendation Management</comment>
   </data>
+  <data name="Passport" xml:space="preserve">
+    <value>Upload Passport</value>
+    <comment>ClubManagement</comment>
+  </data>
   <data name="Password" xml:space="preserve">
     <value>PASSWORD</value>
     <comment>Login Page</comment>
@@ -1451,6 +1491,10 @@
     <value>Representative 2</value>
     <comment>ClubManagement</comment>
   </data>
+  <data name="RepresentiveFurigana" xml:space="preserve">
+    <value>Furigana</value>
+    <comment>ClubManagement</comment>
+  </data>
   <data name="Request Amount" xml:space="preserve">
     <value>Request Amount</value>
     <comment>Points Management</comment>
@@ -1652,6 +1696,10 @@
   <data name="Status" xml:space="preserve">
     <value>Status</value>
     <comment>Customer Management</comment>
+  </data>
+  <data name="StoreName" xml:space="preserve">
+    <value>Store Name</value>
+    <comment>Club Management</comment>
   </data>
   <data name="Street" xml:space="preserve">
     <value>Street</value>

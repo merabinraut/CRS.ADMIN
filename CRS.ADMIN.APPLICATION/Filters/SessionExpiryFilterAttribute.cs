@@ -1,5 +1,9 @@
-﻿using System;
+﻿using CRS.ADMIN.APPLICATION.Library;
+using CRS.ADMIN.BUSINESS.NotificationManagement;
+using CRS.ADMIN.SHARED.NotificationManagement;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
@@ -22,6 +26,10 @@ namespace CRS.ADMIN.APPLICATION.Filters
             }
             else
             {
+                var notificationBussiness = new NotificationManagementBusiness();
+                var notificationList = new List<NotificationDetailCommon>();
+                notificationList = notificationBussiness.GetNotification(ctx.Session["UserId"].ToString().DecryptParameter()).ToList();
+                ctx.Session["Notifications"] = notificationList;
                 var controllerName = string.Empty;
                 var actionName = string.Empty;
                 var routeValues = HttpContext.Current.Request.RequestContext.RouteData.Values;
