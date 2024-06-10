@@ -373,10 +373,10 @@ namespace CRS.ADMIN.APPLICATION.Controllers
               string.IsNullOrEmpty(Model.InsurancePhoto)
            )
                 {
-
+                    bool allowRedirect = false;
                     if (Business_Certificate == null || Logo_Certificate == null || CoverPhoto_Certificate == null)
                     {
-                        bool allowRedirect = false;
+
 
                         if (Business_Certificate == null && string.IsNullOrEmpty(Model.BusinessCertificate))
                         {
@@ -395,33 +395,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                             allowRedirect = true;
                         }
 
-                        if (Model.IdentificationType.DecryptParameter() == "2")
-                        {
-                            if (PassportPhotot_Certificate == null && string.IsNullOrEmpty(Model.PassportPhoto))
-                            {
-                                ErrorMessage = "Passport photo required";
-                                allowRedirect = true;
-                            }
-                            else if (InsurancePhoto_Certificate == null && string.IsNullOrEmpty(Model.InsurancePhoto))
-                            {
-                                ErrorMessage = "Insurance card required";
-                                allowRedirect = true;
-                            }
-                        }
-                        else
-                        {
-                            if (KYCDocument_Certificate == null && string.IsNullOrEmpty(Model.KYCDocument))
-                            {
-                                ErrorMessage = "KYC front document required";
-                                allowRedirect = true;
-                            }
-                            else if (KYCDocumentBack_Certificate == null && string.IsNullOrEmpty(Model.KYCDocumentBack))
-                            {
-                                ErrorMessage = "KYC back document required";
-                                allowRedirect = true;
-                            }
 
-                        }
                         if (Model.BusinessTypeDDL.DecryptParameter() == "1")
                         {
                             if (CorporateRegistry_Certificate == null && string.IsNullOrEmpty(Model.CorporateRegistryDocument))
@@ -430,18 +404,46 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                                 allowRedirect = true;
                             }
                         }
-                        if (allowRedirect)
+
+                    }
+                    if (Model.IdentificationType.DecryptParameter() == "2")
+                    {
+                        if (PassportPhotot_Certificate == null && string.IsNullOrEmpty(Model.PassportPhoto))
                         {
-                            this.AddNotificationMessage(new NotificationModel()
-                            {
-                                NotificationType = NotificationMessage.INFORMATION,
-                                Message = ErrorMessage ?? "Something went wrong. Please try again later.",
-                                Title = NotificationMessage.INFORMATION.ToString(),
-                            });
-                            TempData["ManageClubModel"] = Model;
-                            TempData["RenderId"] = "Manage";
-                            return RedirectToAction("ClubList", "ClubManagement");
+                            ErrorMessage = "Passport photo required";
+                            allowRedirect = true;
                         }
+                        else if (InsurancePhoto_Certificate == null && string.IsNullOrEmpty(Model.InsurancePhoto))
+                        {
+                            ErrorMessage = "Insurance card required";
+                            allowRedirect = true;
+                        }
+                    }
+                    else
+                    {
+                        if (KYCDocument_Certificate == null && string.IsNullOrEmpty(Model.KYCDocument))
+                        {
+                            ErrorMessage = "KYC front document required";
+                            allowRedirect = true;
+                        }
+                        else if (KYCDocumentBack_Certificate == null && string.IsNullOrEmpty(Model.KYCDocumentBack))
+                        {
+                            ErrorMessage = "KYC back document required";
+                            allowRedirect = true;
+                        }
+
+                    }
+                    if (allowRedirect)
+                    {
+                        this.AddNotificationMessage(new NotificationModel()
+                        {
+                            NotificationType = NotificationMessage.INFORMATION,
+                            Message = ErrorMessage ?? "Something went wrong. Please try again later.",
+                            Title = NotificationMessage.INFORMATION.ToString(),
+                        });
+                        TempData["ManageClubModel"] = Model;
+                        TempData["RenderId"] = "Manage";
+                        return RedirectToAction("ClubList", "ClubManagement");
                     }
                 }
 
@@ -829,18 +831,18 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                     ? ResponseModel.LandLineCode + '-' + ResponseModel.LandlineNumber
                     : ResponseModel.LandlineNumber; ResponseModel.LocationDDL = !string.IsNullOrEmpty(ResponseModel.LocationId) ? ResponseModel.LocationId.EncryptParameter() : null;
 
-                ResponseModel.Logo = !string.IsNullOrEmpty(ResponseModel.Logo) ? 
-                                      ImageHelper.ProcessedImage(ResponseModel.Logo):
+                ResponseModel.Logo = !string.IsNullOrEmpty(ResponseModel.Logo) ?
+                                      ImageHelper.ProcessedImage(ResponseModel.Logo) :
                                       ResponseModel.Logo; ;
-                ResponseModel.BusinessCertificate =!string.IsNullOrEmpty( ResponseModel.BusinessCertificate) ?
+                ResponseModel.BusinessCertificate = !string.IsNullOrEmpty(ResponseModel.BusinessCertificate) ?
                                                     ImageHelper.ProcessedImage(ResponseModel.BusinessCertificate) :
                                                     ResponseModel.BusinessCertificate;
 
-                if (ResponseModel.IdentificationType=="2")
+                if (ResponseModel.IdentificationType == "2")
                 {
                     ResponseModel.PassportPhoto = !string.IsNullOrEmpty(ResponseModel.KYCDocument) ?
                                                    ImageHelper.ProcessedImage(ResponseModel.KYCDocument) :
-                                                   ResponseModel.KYCDocument; 
+                                                   ResponseModel.KYCDocument;
                     ResponseModel.InsurancePhoto = !string.IsNullOrEmpty(ResponseModel.KYCDocumentBack) ?
                                                    ImageHelper.ProcessedImage(ResponseModel.KYCDocumentBack) :
                                                    ResponseModel.KYCDocumentBack;
@@ -859,7 +861,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                     ResponseModel.CorporateRegistryDocument = !string.IsNullOrEmpty(ResponseModel.CorporateRegistryDocument) ?
                                                                ImageHelper.ProcessedImage(ResponseModel.CorporateRegistryDocument) :
                                                                ResponseModel.CorporateRegistryDocument;
-                }               
+                }
                 ResponseModel.BusinessTypeDDL = !string.IsNullOrEmpty(ResponseModel.BusinessType) ? ResponseModel.BusinessType.EncryptParameter() : null;
                 ResponseModel.Prefecture = !string.IsNullOrEmpty(ResponseModel.Prefecture) ? ResponseModel.Prefecture.EncryptParameter() : null;
                 //ViewBag.Pref = DDLHelper.LoadDropdownList("PREF") as Dictionary<string, string>;
@@ -902,7 +904,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                         Message = "Invalid event details",
                         Title = NotificationMessage.INFORMATION.ToString(),
                     });
-                    return RedirectToAction("ClubList", "ClubManagement",new{SearchFilter = SearchFilter,StartIndex = StartIndex,PageSize = PageSize});
+                    return RedirectToAction("ClubList", "ClubManagement", new { SearchFilter = SearchFilter, StartIndex = StartIndex, PageSize = PageSize });
                 }
 
                 var dbResponse = _BUSS.GetManagerDetails(id);
