@@ -190,12 +190,19 @@
                                             <i class="las la-edit text-[20px] cursor-pointer text-[#A6A6A6]" onclick="ManageClubPlanFunction('@Model.ClubId','@item.Id');"></i>
                                             @if (item.Status.Trim().ToUpper() == "A")
                                             {
-                                                <i class="las la-trash-alt text-[20px] cursor-pointer text-[#CB3F3F]" title="Block Club Plan" onclick="BlockFunction('@Model.ClubId','@item.Id')"></i>
+                                                <div onclick="BlockFunction('@Model.ClubId','@item.Id')">
+                                                    <i class="fa-solid fa-lock text-primary-100 cursor-pointer"></i>
+                                                </div>
+
+                                                @*<i class="las la-trash-alt text-[20px] cursor-pointer text-[#CB3F3F]" title="Block Club Plan" onclick="BlockFunction('@Model.ClubId','@item.Id')"></i>*@
 
                                             }
                                             else
                                             {
-                                                <i class="las la-unlock cursor-pointer text-[#697DBF] text-[18px]" title="Unblock Club Plan" onclick="UnBlockFunction('@Model.ClubId','@item.Id')"></i>
+                                                <div onclick="UnBlockFunction('@Model.ClubId','@item.Id')">
+                                                    <i class="fa-solid fa-unlock text-primary-100 cursor-pointer"></i>
+                                                </div>
+                                                @*<i class="las la-unlock cursor-pointer text-[#697DBF] text-[18px]" title="Unblock Club Plan" onclick="UnBlockFunction('@Model.ClubId','@item.Id')"></i>*@
 
                                             }
 
