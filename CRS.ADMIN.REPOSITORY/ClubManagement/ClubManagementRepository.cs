@@ -380,8 +380,8 @@ namespace CRS.ADMIN.REPOSITORY.ClubManagement
             SQL += ",@ClubName1=N" + _DAO.FilterString(Request.ClubName1);
             SQL += ",@ClubName2=N" + _DAO.FilterString(Request.ClubName2);
             SQL += ",@BusinessType=" + _DAO.FilterString(Request.BusinessType);
-            SQL += ",@GroupName=N" + _DAO.FilterString(Request.GroupName);
-            SQL += ",@Description=N" + _DAO.FilterString(Request.Description);
+            SQL += ",@GroupName=" + (!string.IsNullOrEmpty(Request.GroupName) ? "N" + _DAO.FilterString(Request.GroupName) : _DAO.FilterString(Request.GroupName));
+            SQL += ",@Description="  +(!string.IsNullOrEmpty(Request.Description) ? "N" + _DAO.FilterString(Request.Description) : _DAO.FilterString(Request.Description));
             SQL += ",@LocationURL=" + _DAO.FilterString(Request.GoogleMap);
             SQL += ",@Longitude=" + _DAO.FilterString(Request.Longitude);
             SQL += ",@Latitude=" + _DAO.FilterString(Request.Latitude);
@@ -414,9 +414,9 @@ namespace CRS.ADMIN.REPOSITORY.ClubManagement
             SQL += ",@DesignationFee=" + _DAO.FilterString(Request.DesignationFee);
             SQL += ",@CompanionFee=" + _DAO.FilterString(Request.CompanionFee);
             SQL += ",@ExtensionFee=" + _DAO.FilterString(Request.ExtensionFee);
-            SQL += ",@VariousDrinks=N" + _DAO.FilterString(Request.Drink);
-            SQL += ",@GroupNamekatakana=" + (!string.IsNullOrEmpty(Request.GroupName2) ? "N" + _DAO.FilterString(Request.GroupName2) : null);
-            SQL += ",@CompanyAddress=" + (!string.IsNullOrEmpty(Request.CompanyAddress) ? "N" + _DAO.FilterString(Request.CompanyAddress) : null);
+            SQL += ",@VariousDrinks=" +(!string.IsNullOrEmpty(Request.Drink) ? "N" + _DAO.FilterString(Request.Drink) : _DAO.FilterString(Request.Drink));
+            SQL += ",@GroupNamekatakana=" + (!string.IsNullOrEmpty(Request.GroupName2) ? "N" + _DAO.FilterString(Request.GroupName2) : _DAO.FilterString(Request.GroupName2));
+            SQL += ",@CompanyAddress=" + (!string.IsNullOrEmpty(Request.CompanyAddress) ? "N" + _DAO.FilterString(Request.CompanyAddress) : _DAO.FilterString(Request.CompanyAddress));
             SQL += ",@BusinessLicenseNumber=" + _DAO.FilterString(Request.BusinessLicenseNumber);
             SQL += ",@LicenseIssuedDate=" + _DAO.FilterString(Request.LicenseIssuedDate);
             SQL += ",@KYCDocument=" + _DAO.FilterString(Request.KYCDocument);
@@ -424,10 +424,10 @@ namespace CRS.ADMIN.REPOSITORY.ClubManagement
             if (Request.BusinessType == "1")
             {
                 SQL += ",@CompanyName=N" + _DAO.FilterString(Request.CompanyName);
-                SQL += ",@Representative1_ContactName=" + (!string.IsNullOrEmpty(Request.Representative1_ContactName) ? "N" + _DAO.FilterString(Request.Representative1_ContactName) : "");
+                SQL += ",@Representative1_ContactName=" + (!string.IsNullOrEmpty(Request.Representative1_ContactName) ? "N" + _DAO.FilterString(Request.Representative1_ContactName) : _DAO.FilterString(Request.Representative1_ContactName));
                 SQL += ",@Representative1_MobileNo=" + _DAO.FilterString(Request.Representative1_MobileNo);
                 SQL += ",@Representative1_Email=" + _DAO.FilterString(Request.Representative1_Email);
-                SQL += ",@Representative2_ContactName=" + (!string.IsNullOrEmpty(Request.Representative2_ContactName) ? "N" + _DAO.FilterString(Request.Representative2_ContactName) : "");
+                SQL += ",@Representative2_ContactName=" + (!string.IsNullOrEmpty(Request.Representative2_ContactName) ? "N" + _DAO.FilterString(Request.Representative2_ContactName) : _DAO.FilterString(Request.Representative2_ContactName));
                 SQL += ",@Representative2_MobileNo=" + _DAO.FilterString(Request.Representative2_MobileNo);
                 SQL += ",@Representative2_Email=" + _DAO.FilterString(Request.Representative2_Email);
             }

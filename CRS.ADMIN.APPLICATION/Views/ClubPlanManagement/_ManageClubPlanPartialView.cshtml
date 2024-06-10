@@ -2,6 +2,7 @@
 @{
     var rowcouunt = 0;
     var id = "";
+    var ids = "";
 }
 
 <style>
@@ -74,7 +75,7 @@
     }
 </style>
 <div id="add-club-plan" class="drawer-close-disable  flex justify-end fixed top-0 right-0 z-40 h-screen overflow-y-auto transition-transform translate-x-full "
-      tabindex="-1" aria-labelledby="drawer-right-label">
+     tabindex="-1" aria-labelledby="drawer-right-label">
     <div class="bg-white w-[863px] drawer-container relative">
         <div class="drawer-form-container sticky top-0 z-[5] ">
             <div class="drawer-form flex justify-between bg-secondary-color-pink py-[16px] px-[24px] h-[56px]">
@@ -115,6 +116,7 @@
                                     {
                                         var planList = Model.ClubPlanDetailList[i];
                                         id = i + "_large";
+                                        ids = i + "_largetime";
                                         <div class="plans">
                                             <div class="grid grid-cols-3 gap-x-4 gap-y-5">
 
@@ -193,21 +195,44 @@
                                                             </label>
                                                             @Html.HiddenFor(model => model.ClubPlanDetailList[i].PlanIdentityList[j].name, new { @class = "name" })
                                                             @Html.HiddenFor(model => model.ClubPlanDetailList[i].PlanIdentityList[j].StaticDataValue, new { @class = "StaticDataValue" })
-                                                            @*@Html.HiddenFor(model => model.ClubPlanDetailList[i].PlanIdentityList[j].PlanId, new { @class = "PlanId" })*@
+                                                            @Html.HiddenFor(model => model.ClubPlanDetailList[i].PlanIdentityList[j].PlanId, new { @class = "PlanId" })
                                                             @Html.HiddenFor(model => model.ClubPlanDetailList[i].PlanIdentityList[j].PlanListId, new { @class = "PlanListId" })
                                                             @Html.HiddenFor(model => model.ClubPlanDetailList[i].PlanIdentityList[j].Id, new { @class = "Id" })
                                                             @Html.HiddenFor(model => model.ClubPlanDetailList[i].PlanIdentityList[j].inputtype, new { @class = "inputtype" })
                                                             @Html.HiddenFor(model => model.ClubPlanDetailList[i].PlanIdentityList[j].IdentityLabel, new { @class = "IdentityLabel" })
-                                                            @Html.TextBoxFor(model => model.ClubPlanDetailList[i].PlanIdentityList[j].IdentityDescription, new
-                                                       {
-                                                           @class = "w-full",
-                                                           @placeholder = "HH:MM",
-                                                           //@onkeypress = "return isNumber(event)",
-                                                           autocomplete = "off",
-                                                           @maxLength = "30",
+                                                            <select id=@ids class="default_select select-common block w-full"
+                                                                style="width: 100%;" name="ClubPlanDetailList[@i].PlanIdentityList[@j].IdentityDescription">
+                                                               
+                                                                    @foreach (var item in ViewBag.TimeIntervalList as IEnumerable<SelectListItem>)
+                                                                    {
+                                                                        var selectedId = Model.ClubPlanDetailList[i].PlanIdentityList[j].PlanId as string;
+                                                                        if (item.Value == selectedId)
+                                                                        {
+                                                                            <option value="@item.Value" selected>
+                                                                                @item.Text
+                                                                            </option>
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <option value="@item.Value">
+                                                                                @item.Text
+                                                                            </option>
+                                                                        }
+                                                                    }
 
-                                                           @type = "time"
-                                                       })
+                                                                    
+                                                                </select>
+                                                            @*@Html.TextBoxFor(model => model.ClubPlanDetailList[i].PlanIdentityList[j].IdentityDescription, new
+                                                                {
+                                                                    @class = "w-full",
+                                                                    @placeholder = "HH:MM",
+                                                                    //@onkeypress = "return isNumber(event)",
+                                                                    autocomplete = "off",
+                                                                    @maxLength = "30",
+                                                                    @min = "06:00", @max = "08:00",
+                                                                    @type = "time"
+                                                                })*@
+                                                            
                                                             <span class="error">
                                                                 @Html.ValidationMessageFor(model => Model.ClubPlanDetailList[i].PlanIdentityList[j].IdentityDescription)
                                                             </span>
@@ -229,7 +254,7 @@
                                                                 @Html.HiddenFor(model => model.ClubPlanDetailList[i].PlanIdentityList[j].IdentityLabel, new { @class = "IdentityLabel" })
                                                                 @if (Model.ClubPlanDetailList[i].PlanIdentityList[j].IdentityDescription.ToLower() == "a")
                                                                 {
-                                                                    <input type="checkbox" value="@Model.ClubPlanDetailList[i].PlanIdentityList[j].IdentityDescription" name="ClubPlanDetailList[@i].PlanIdentityList[@j].IdentityDescription" class="sr-only peer toogle1" checked >
+                                                                    <input type="checkbox" value="@Model.ClubPlanDetailList[i].PlanIdentityList[j].IdentityDescription" name="ClubPlanDetailList[@i].PlanIdentityList[@j].IdentityDescription" class="sr-only peer toogle1" checked>
                                                                     <input type="hidden" value="A" name="ClubPlanDetailList[@i].PlanIdentityList[@j].IdentityDescription">
                                                                 }
                                                                 else

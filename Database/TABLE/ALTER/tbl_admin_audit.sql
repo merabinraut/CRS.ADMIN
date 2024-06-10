@@ -1,0 +1,2 @@
+ALTER TABLE tbl_admin_audit
+ADD TriggerActionUTCDate DATETIME
