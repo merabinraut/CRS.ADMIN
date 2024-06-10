@@ -153,6 +153,19 @@
                             @Html.ValidationMessageFor(m => m.AdditionalValue4)
                         </span>
                     </div>
+                    <div class="input-field-common">
+                        <label class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                            Input Type
+                        </label>
+                        @Html.TextBoxFor(model => model.InputType, new
+                        {
+                            @class = "w-full rounded-[4px]",
+                            @style = "border-radius:4px !important",
+                        })
+                        <span class="error">
+                            @Html.ValidationMessageFor(m => m.InputType)
+                        </span>
+                    </div>
                 </div>
                 <div class="flex justify-end mt-6 ">
                     <div class="flex gap-6">
