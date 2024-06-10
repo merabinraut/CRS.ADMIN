@@ -53,5 +53,7 @@ namespace CRS.ADMIN.APPLICATION.Models.StaticDataManagement
         public string Status { get; set; }
         [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Required")]
         public string StaticDataValue { get; set; }
+        public string AdditionalValue3 { get; set; }
+        public string AdditionalValue4 { get; set; }
     }
 }
