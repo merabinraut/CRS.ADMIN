@@ -594,7 +594,7 @@
                                 if (Session["Notifications"] != null)
                                 {
                                     var notifications = Session["Notifications"] as List<CRS.ADMIN.APPLICATION.Models.NotificationManagement.NotificationDetailModel>;
-                                    if (notifications.Count > 0)
+                                    if (notifications != null && notifications.Count > 0)
                                     {
                                         foreach (var item in notifications)
                                         {
