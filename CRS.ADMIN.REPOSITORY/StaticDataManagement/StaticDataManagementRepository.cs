@@ -1,6 +1,7 @@
 ﻿using CRS.ADMIN.SHARED;
 using CRS.ADMIN.SHARED.PaginationManagement;
 using CRS.ADMIN.SHARED.StaticDataManagement;
+using DocumentFormat.OpenXml.Office2016.Excel;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -106,15 +107,15 @@ namespace CRS.ADMIN.REPOSITORY.StaticDataManagement
             string sp_name = "EXEC sproc_admin__manage_static_data ";
             sp_name += string.IsNullOrEmpty(commonModel.Id) ? "@Flag='msd'" : "@Flag='umsd'";
             sp_name += ",@Id=" + _dao.FilterString(commonModel.Id);
-            sp_name += ",@StaticDataLabel=N" + _dao.FilterString(commonModel.StaticDataLabel);
-            sp_name += ",@StaticDataDescription=N" + _dao.FilterString(commonModel.StaticDataDescription);
+            sp_name += ",@StaticDataLabel=" + (!string.IsNullOrEmpty(commonModel.StaticDataLabel) ? "N" + _dao.FilterString(commonModel.StaticDataLabel) : _dao.FilterString(commonModel.StaticDataLabel));
+            sp_name += ",@StaticDataDescription=" + (!string.IsNullOrEmpty(commonModel.StaticDataDescription) ? "N" + _dao.FilterString(commonModel.StaticDataDescription) : _dao.FilterString(commonModel.StaticDataDescription));
             sp_name += ",@StaticDataType=" + _dao.FilterString(commonModel.StaticDataType);
             sp_name += ",@StaticDataValue=" + _dao.FilterString(commonModel.StaticDataValue);
-            sp_name += ",@AdditionalValue1=N" + _dao.FilterString(commonModel.AdditionalValue1);
-            sp_name += ",@AdditionalValue2=N" + _dao.FilterString(commonModel.AdditionalValue2);
-            sp_name += ",@AdditionalValue3=N" + _dao.FilterString(commonModel.AdditionalValue3);
-            sp_name += ",@AdditionalValue4=N" + _dao.FilterString(commonModel.AdditionalValue4);
-            sp_name += ",@InputType=N" + _dao.FilterString(commonModel.InputType);
+            sp_name += ",@AdditionalValue1=" + (!string.IsNullOrEmpty(commonModel.AdditionalValue1) ? "N" + _dao.FilterString(commonModel.AdditionalValue1) : _dao.FilterString(commonModel.AdditionalValue1));
+            sp_name += ",@AdditionalValue2=" + (!string.IsNullOrEmpty(commonModel.AdditionalValue2) ? "N" + _dao.FilterString(commonModel.AdditionalValue2) : _dao.FilterString(commonModel.AdditionalValue2));
+            sp_name += ",@AdditionalValue3=" + (!string.IsNullOrEmpty(commonModel.AdditionalValue3) ? "N" + _dao.FilterString(commonModel.AdditionalValue3) : _dao.FilterString(commonModel.AdditionalValue3));
+            sp_name += ",@AdditionalValue4=" + (!string.IsNullOrEmpty(commonModel.AdditionalValue4) ? "N" + _dao.FilterString(commonModel.AdditionalValue4) : _dao.FilterString(commonModel.AdditionalValue4));
+            sp_name += ",@InputType=" + (!string.IsNullOrEmpty(commonModel.InputType) ? "N" + _dao.FilterString(commonModel.InputType) : _dao.FilterString(commonModel.InputType));
             sp_name += ",@Status=" + _dao.FilterString("A");
             sp_name += ",@ActionUser=" + _dao.FilterString(commonModel.ActionUser);
             return _dao.ParseCommonDbResponse(sp_name);
