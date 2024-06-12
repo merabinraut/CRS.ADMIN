@@ -2,6 +2,7 @@
 using CRS.ADMIN.SHARED;
 using CRS.ADMIN.SHARED.AffiliateManagement;
 using CRS.ADMIN.SHARED.PaginationManagement;
+using System;
 using System.Collections.Generic;
 
 namespace CRS.ADMIN.BUSINESS.AffiliateManagement
@@ -33,10 +34,22 @@ namespace CRS.ADMIN.BUSINESS.AffiliateManagement
         {
             return _repo.ManageAffiliateStatus(Request);
         }
-
+        public CommonDbResponse ResetPassword(ManageAffiliateStatusCommon Request)
+        {
+            return _repo.ResetPassword(Request);
+        }
+        public ManageAffiliateCommon GetAffiliateDetails(string AffiliateId, String culture = "")
+        {
+            return _repo.GetAffiliateDetails(AffiliateId, culture);
+        }
+        public CommonDbResponse ManageAffiliate(ManageAffiliateCommon Request)
+        {
+            return _repo.ManageAffiliate(Request);
+        }
         public AffiliatePageAnalyticCommon GetAffiliateAnalytic()
         {
             return _repo.GetAffiliateAnalytic();
         }
+        
     }
 }

@@ -175,13 +175,77 @@
     <value>Affiliate Payments</value>
     <comment>Payment Management</comment>
   </data>
+  <data name="AffiliateAutoFilledAddress" xml:space="preserve">
+    <value>Auto Filled Address</value>
+    <comment>AffiliateManagement</comment>
+  </data>
+  <data name="AffiliateBirthDate" xml:space="preserve">
+    <value>Birth Date</value>
+    <comment>AffiliateManagement</comment>
+  </data>
+  <data name="AffiliateBuildingRoomNo" xml:space="preserve">
+    <value>Building &amp; Room No</value>
+    <comment>AffiliateManagement</comment>
+  </data>
+  <data name="AffiliateBusiness" xml:space="preserve">
+    <value>Business</value>
+    <comment>AffiliateManagement</comment>
+  </data>
+  <data name="AffiliateCeoFurigana" xml:space="preserve">
+    <value>Furigana</value>
+    <comment>AffiliateManagement</comment>
+  </data>
+  <data name="AffiliateCeoname" xml:space="preserve">
+    <value>CEO Name</value>
+    <comment>AffiliateManagement</comment>
+  </data>
+  <data name="AffiliateCityTown" xml:space="preserve">
+    <value>City/Town</value>
+    <comment>AffiliateManagement</comment>
+  </data>
+  <data name="AffiliateCompanyAddress" xml:space="preserve">
+    <value>Company Address</value>
+    <comment>AffiliateManagement</comment>
+  </data>
+  <data name="AffiliateCompanyName" xml:space="preserve">
+    <value>Company Name</value>
+    <comment>AffiliateManagement</comment>
+  </data>
+  <data name="AffiliateEmailAddress" xml:space="preserve">
+    <value>Email Address</value>
+    <comment>AffiliateManagement</comment>
+  </data>
+  <data name="AffiliateFullName" xml:space="preserve">
+    <value>Full Name</value>
+    <comment>AffiliateManagement</comment>
+  </data>
+  <data name="AffiliateGender" xml:space="preserve">
+    <value>Gender</value>
+    <comment>AffiliateManagement</comment>
+  </data>
   <data name="AffiliateManagementSupportMsg" xml:space="preserve">
     <value>Manage affiliate’s information, converted customers and their payments.</value>
     <comment>Affiliate Management</comment>
   </data>
+  <data name="AffiliatePhoneNumber" xml:space="preserve">
+    <value>Phone Number</value>
+    <comment>AffiliateManagement</comment>
+  </data>
+  <data name="AffiliatePostalcode" xml:space="preserve">
+    <value>Postal Code</value>
+    <comment>AffiliateManagement</comment>
+  </data>
+  <data name="AffiliatePrefecture" xml:space="preserve">
+    <value>Prefecture</value>
+    <comment>AffiliateManagement</comment>
+  </data>
   <data name="Affiliates" xml:space="preserve">
     <value>Affiliates</value>
     <comment>Affiliate Management</comment>
+  </data>
+  <data name="AffiliateStreet" xml:space="preserve">
+    <value>Street</value>
+    <comment>AffiliateManagement</comment>
   </data>
   <data name="Age" xml:space="preserve">
     <value>Age</value>

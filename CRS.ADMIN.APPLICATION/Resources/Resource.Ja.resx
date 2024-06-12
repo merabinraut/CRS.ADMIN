@@ -175,13 +175,77 @@
     <value>アフィリエイト支払い済</value>
     <comment>Payment Management</comment>
   </data>
+  <data name="AffiliateAutoFilledAddress" xml:space="preserve">
+    <value>住所自動入力</value>
+    <comment>AffiliateManagement</comment>
+  </data>
+  <data name="AffiliateBirthDate" xml:space="preserve">
+    <value>生年月日</value>
+    <comment>AffiliateManagement</comment>
+  </data>
+  <data name="AffiliateBuildingRoomNo" xml:space="preserve">
+    <value>建物・部屋番号</value>
+    <comment>AffiliateManagement</comment>
+  </data>
+  <data name="AffiliateBusiness" xml:space="preserve">
+    <value>事業タイプ</value>
+    <comment>AffiliateManagement</comment>
+  </data>
+  <data name="AffiliateCeoFurigana" xml:space="preserve">
+    <value>フリガナ</value>
+    <comment>AffiliateManagement</comment>
+  </data>
+  <data name="AffiliateCeoname" xml:space="preserve">
+    <value>代表者名</value>
+    <comment>AffiliateManagement</comment>
+  </data>
+  <data name="AffiliateCityTown" xml:space="preserve">
+    <value>市区町村</value>
+    <comment>AffiliateManagement</comment>
+  </data>
+  <data name="AffiliateCompanyAddress" xml:space="preserve">
+    <value>会社名</value>
+    <comment>AffiliateManagement</comment>
+  </data>
+  <data name="AffiliateCompanyName" xml:space="preserve">
+    <value>所在地</value>
+    <comment>AffiliateManagement</comment>
+  </data>
+  <data name="AffiliateEmailAddress" xml:space="preserve">
+    <value>メールアドレス</value>
+    <comment>AffiliateManagement</comment>
+  </data>
+  <data name="AffiliateFullName" xml:space="preserve">
+    <value>氏名</value>
+    <comment>AffiliateManagement</comment>
+  </data>
+  <data name="AffiliateGender" xml:space="preserve">
+    <value>性別</value>
+    <comment>AffiliateManagement</comment>
+  </data>
   <data name="AffiliateManagementSupportMsg" xml:space="preserve">
     <value>アフィリエイトの情報、転換された顧客、およびそれらの支払いを管理する</value>
     <comment>Affiliate Management</comment>
   </data>
+  <data name="AffiliatePhoneNumber" xml:space="preserve">
+    <value>携帯電話番号</value>
+    <comment>AffiliateManagement</comment>
+  </data>
+  <data name="AffiliatePostalcode" xml:space="preserve">
+    <value>郵便番号</value>
+    <comment>AffiliateManagement</comment>
+  </data>
+  <data name="AffiliatePrefecture" xml:space="preserve">
+    <value>都道府県</value>
+    <comment>AffiliateManagement</comment>
+  </data>
   <data name="Affiliates" xml:space="preserve">
     <value>アフィリエイト</value>
     <comment>Affiliate Management</comment>
+  </data>
+  <data name="AffiliateStreet" xml:space="preserve">
+    <value>番地</value>
+    <comment>AffiliateManagement</comment>
   </data>
   <data name="Age" xml:space="preserve">
     <value>年</value>

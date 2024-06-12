@@ -1,12 +1,16 @@
 ﻿using CRS.ADMIN.APPLICATION.Helper;
 using CRS.ADMIN.APPLICATION.Library;
 using CRS.ADMIN.APPLICATION.Models.AffiliateManagement;
+using CRS.ADMIN.APPLICATION.Models.ClubManagement;
 using CRS.ADMIN.BUSINESS.AffiliateManagement;
 using CRS.ADMIN.SHARED;
 using CRS.ADMIN.SHARED.AffiliateManagement;
+using CRS.ADMIN.SHARED.ClubManagement;
 using CRS.ADMIN.SHARED.PaginationManagement;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+using static Google.Apis.Requests.BatchRequest;
 
 namespace CRS.ADMIN.APPLICATION.Controllers
 {
@@ -17,7 +21,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
         {
             _affiliateBuss = affiliateBuss;
         }
-        public ActionResult Index(string SearchFilter1 = "", string SearchFilter2 = "", int StartIndex = 0, int PageSize = 10, int StartIndex2 = 0, int PageSize2 = 10)
+        public ActionResult Index(string SearchFilter1 = "", string SearchFilter2 = "", string value="" ,int StartIndex = 0, int PageSize = 10, int StartIndex2 = 0, int PageSize2 = 10)
         {
             Session["CurrentURL"] = "/AffiliateManagement/Index";
             var ResponseModel = new ReferalCommonModel();
@@ -27,6 +31,15 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 Take = PageSize,
                 SearchFilter = SearchFilter1
             };
+            string RenderId = "";
+            if (TempData.ContainsKey("ManageAffiliateModel")) ResponseModel.ManageAffiliate = TempData["ManageAffiliateModel"] as ManageAffiliateModel;
+            else ResponseModel.ManageAffiliate = new ManageAffiliateModel();
+            if (TempData.ContainsKey("RenderId")) RenderId = TempData["RenderId"].ToString();
+            ViewBag.PopUpRenderValue = !string.IsNullOrEmpty(RenderId) ? RenderId : null;
+            ViewBag.BusinessTypeDDL = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("BUSINESSTYPEDDL") as Dictionary<string, string>, null, "");
+            ViewBag.Pref = DDLHelper.LoadDropdownList("PREF") as Dictionary<string, string>;
+            ViewBag.PrefIdKey = !string.IsNullOrEmpty(ResponseModel.ManageAffiliate.Prefecture) ? ViewBag.Pref[ResponseModel.ManageAffiliate.Prefecture] : null;
+            ViewBag.BusinessTypeKey = ResponseModel.ManageAffiliate.BusinessType;
             var dbResponse = _affiliateBuss.GetAffiliateList(dbAffiliateListRequest);
             var dbCustomerListRequest = new PaginationFilterCommon()
             {
@@ -55,6 +68,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             var ActiveTab = "";
             if (!string.IsNullOrEmpty(SearchFilter1)) ActiveTab = "Affiliates";
             else if (!string.IsNullOrEmpty(SearchFilter2)) ActiveTab = "Converted Customers";
+            ResponseModel.ListType = value;
             ViewBag.ActiveTab = ActiveTab ?? "";
             ViewBag.StartIndex = StartIndex;
             ViewBag.PageSize = PageSize;
@@ -64,6 +78,109 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             ViewBag.PageSize2 = PageSize2;
             ViewBag.TotalData2 = dbReferalRes != null && dbReferalRes.Any() ? dbReferalRes[0].TotalRecords : 0;
             return View(ResponseModel);
+        }
+
+        [HttpGet]
+        public ActionResult ManageAffiliate(string AffiliateId = "", string SearchFilter = "", int StartIndex = 0, int PageSize = 10)
+        {
+            var culture = Request.Cookies["culture"]?.Value;
+            culture = string.IsNullOrEmpty(culture) ? "ja" : culture;
+            ManageAffiliateModel model = new ManageAffiliateModel();            
+            if (!string.IsNullOrEmpty(AffiliateId))
+            {
+                var id = AffiliateId.DecryptParameter();
+                if (string.IsNullOrEmpty(id))
+                {
+                    this.AddNotificationMessage(new NotificationModel()
+                    {
+                        NotificationType = NotificationMessage.INFORMATION,
+                        Message = "Invalid club details",
+                        Title = NotificationMessage.INFORMATION.ToString(),
+                    });
+                    return RedirectToAction("ClubList", "ClubManagement", new { SearchFilter = SearchFilter, StartIndex = StartIndex, PageSize = PageSize });
+                }
+                var dbResponse = _affiliateBuss.GetAffiliateDetails(id, culture);
+                model = dbResponse.MapObject<ManageAffiliateModel>();
+                model.AffiliateId =!string.IsNullOrEmpty(model.AffiliateId) ? model.AffiliateId.EncryptParameter():null;
+                model.Prefecture = !string.IsNullOrEmpty(model.Prefecture) ? model.Prefecture.EncryptParameter() : null;
+                model.BusinessType = !string.IsNullOrEmpty(model.BusinessType) ? model.BusinessType.EncryptParameter() : null;                
+            }
+            TempData["ManageAffiliateModel"] = model;
+            TempData["RenderId"] = "Manage";         
+            return RedirectToAction("Index", "AffiliateManagement", new { SearchFilter = SearchFilter, StartIndex = StartIndex, PageSize = PageSize });
+        }
+
+        [HttpPost, ValidateAntiForgeryToken]
+        public ActionResult ManageAffiliate(ManageAffiliateModel model)
+        {
+            var culture = Request.Cookies["culture"]?.Value;
+            culture = string.IsNullOrEmpty(culture) ? "ja" : culture;
+            if (model.BusinessType.DecryptParameter() == "1")
+            {
+                if (string.IsNullOrEmpty(model.CEOName))
+                {
+                    ModelState.AddModelError("CEOName", "Required");
+                }
+                if (string.IsNullOrEmpty(model.CEONameFurigana))
+                {
+                    ModelState.AddModelError("CEONameFurigana", "Required");
+                }
+                if (string.IsNullOrEmpty(model.CompanyAddress))
+                {
+                    ModelState.AddModelError("CompanyAddress", "Required");
+                }
+                if (string.IsNullOrEmpty(model.CompanyName))
+                {
+                    ModelState.AddModelError("CompanyName", "Required");
+                }
+            }            
+            if (ModelState.IsValid)
+            {
+                ManageAffiliateCommon commonModel = model.MapObject<ManageAffiliateCommon>();
+                commonModel.ActionUser = ApplicationUtilities.GetSessionValue("Username").ToString();
+                commonModel.ActionIP = ApplicationUtilities.GetIP();
+                commonModel.BusinessType = model.BusinessType?.DecryptParameter();
+                commonModel.Prefecture = commonModel.Prefecture?.DecryptParameter();
+                var dbResponse = _affiliateBuss.ManageAffiliate(commonModel);
+                if (dbResponse != null && dbResponse.Code == 0)
+                {
+                    this.AddNotificationMessage(new NotificationModel()
+                    {
+                        NotificationType = dbResponse.Code == ResponseCode.Success ? NotificationMessage.SUCCESS : NotificationMessage.INFORMATION,
+                        Message = dbResponse.Message ?? "Failed",
+                        Title = dbResponse.Code == ResponseCode.Success ? NotificationMessage.SUCCESS.ToString() : NotificationMessage.INFORMATION.ToString()
+                    });
+                    return RedirectToAction("Index", "AffiliateManagement");
+                }
+                else
+                {
+                    this.AddNotificationMessage(new NotificationModel()
+                    {
+                        NotificationType = NotificationMessage.INFORMATION,
+                        Message = dbResponse.Message ?? "Failed",
+                        Title = NotificationMessage.INFORMATION.ToString()
+                    });
+
+                    TempData["ManageClubModel"] = model;
+                    TempData["RenderId"] = "Manage";
+                    return RedirectToAction("Index", "AffiliateManagement");
+                }
+            }
+            var errorMessages = ModelState.Where(x => x.Value.Errors.Count > 0)
+                      .SelectMany(x => x.Value.Errors.Select(e => $"{x.Key}: {e.ErrorMessage}"))
+                      .ToList();
+
+            var notificationModels = errorMessages.Select(errorMessage => new NotificationModel
+            {
+                NotificationType = NotificationMessage.INFORMATION,
+                Message = errorMessage,
+                Title = NotificationMessage.INFORMATION.ToString(),
+            }).ToArray();
+            AddNotificationMessage(notificationModels);
+            var errors = ModelState.Where(x => x.Value.Errors.Count > 0).Select(x => new { x.Key }).ToList();           
+            TempData["ManageAffiliateModel"] = model;
+            TempData["RenderId"] = "Manage";
+            return RedirectToAction("Index", "AffiliateManagement");
         }
 
         [HttpPost, ValidateAntiForgeryToken, OverrideActionFilters]
@@ -101,8 +218,8 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             return Json(response.Message, JsonRequestBehavior.AllowGet);
         }
 
-        [HttpPost, ValidateAntiForgeryToken, OverrideActionFilters]
-        public JsonResult ManageAffiliateStatus(string AgentId, string Status)
+        [HttpGet]
+        public ActionResult ManageAffiliateStatus(string AgentId, string Status)
         {
             var response = new CommonDbResponse();
             var aId = !string.IsNullOrEmpty(AgentId) ? AgentId.DecryptParameter() : null;
@@ -116,7 +233,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                     Message = "Invalid request",
                     Title = NotificationMessage.INFORMATION.ToString(),
                 });
-                return Json(response.Message, JsonRequestBehavior.AllowGet);
+                return RedirectToAction("Index", "AffiliateManagement");
             }
             var dbRequest = new ManageAffiliateStatusCommon()
             {
@@ -133,7 +250,30 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 Message = response.Message ?? "Something went wrong. Please try again later",
                 Title = response.Code == ResponseCode.Success ? NotificationMessage.SUCCESS.ToString() : NotificationMessage.INFORMATION.ToString()
             });
-            return Json(response.Message, JsonRequestBehavior.AllowGet);
+            return RedirectToAction("Index", "AffiliateManagement");
+        }
+
+        [HttpPost, ValidateAntiForgeryToken]
+        public ActionResult ResetAffiliatePassword(string AgentId)
+        {
+            var response = new CommonDbResponse();
+            var aId = !string.IsNullOrEmpty(AgentId) ? AgentId.DecryptParameter() : null;
+            if (string.IsNullOrEmpty(aId)) response = new CommonDbResponse { ErrorCode = 1, Message = "Invalid details" };
+            var commonRequest = new ManageAffiliateStatusCommon()
+            {
+                AgentId=aId,
+                ActionIP = ApplicationUtilities.GetIP(),
+                ActionUser = ApplicationUtilities.GetSessionValue("Username").ToString()
+            };
+            var dbResponse = _affiliateBuss.ResetPassword(commonRequest);
+            response = dbResponse;
+            this.AddNotificationMessage(new NotificationModel()
+            {
+                NotificationType = response.Code == ResponseCode.Success ? NotificationMessage.SUCCESS : NotificationMessage.INFORMATION,
+                Message = response.Message ?? "Something went wrong. Please try again later",
+                Title = response.Code == ResponseCode.Success ? NotificationMessage.SUCCESS.ToString() : NotificationMessage.INFORMATION.ToString()
+            });
+            return RedirectToAction("Index", "AffiliateManagement");
         }
     }
 }

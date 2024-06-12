@@ -1,5 +1,6 @@
 ﻿using CRS.ADMIN.SHARED;
 using CRS.ADMIN.SHARED.AffiliateManagement;
+using CRS.ADMIN.SHARED.ClubManagement;
 using CRS.ADMIN.SHARED.PaginationManagement;
 using System;
 using System.Collections.Generic;
@@ -19,7 +20,7 @@ namespace CRS.ADMIN.REPOSITORY.AffiliateManagement
         public List<AffiliateManagementCommon> GetAffiliateList(PaginationFilterCommon Request)
         {
             var Response = new List<AffiliateManagementCommon>();
-            var SQL = "EXEC sproc_admin_affiliate_management @Flag = 'gal'";
+            var SQL = "EXEC sproc_admin_affiliate_management @Flag = 'g_al'";
             SQL += !string.IsNullOrEmpty(Request.SearchFilter) ? ",@SearchFilter=N" + _dao.FilterString(Request.SearchFilter) : null;
             SQL += ",@Skip=" + Request.Skip;
             SQL += ",@Take=" + Request.Take;
@@ -91,6 +92,78 @@ namespace CRS.ADMIN.REPOSITORY.AffiliateManagement
             var dbResponse = _dao.ExecuteDataTable(SQL);
             if (dbResponse != null && dbResponse.Rows.Count > 0) return _dao.DataTableToListObject<AffiliatePageAnalyticCommon>(dbResponse).First();
             return new AffiliatePageAnalyticCommon();
+        }
+        public CommonDbResponse ResetPassword(ManageAffiliateStatusCommon Request)
+        {
+            string SQL = "EXEC sproc_admin_affiliate_management @Flag = 'res_ap'";
+            SQL += ",@AgentId=" + _dao.FilterString(Request.AgentId);
+            SQL += ",@ActionUser=" + _dao.FilterString(Request.ActionUser);
+            SQL += ",@ActionIP=" + _dao.FilterString(Request.ActionIP);
+            SQL += ",@ActionPlatform=" + _dao.FilterString(Request.ActionPlatform);
+            return _dao.ParseCommonDbResponse(SQL);
+        }
+        public ManageAffiliateCommon GetAffiliateDetails(string AffiliateId, String culture = "")
+        {
+
+            ManageAffiliateCommon ClubDetail = new ManageAffiliateCommon();
+            string SQL = "EXEC sproc_admin_affiliate_management @Flag='g_ad'";
+            SQL += ",@AffiliateId=" + _dao.FilterString(AffiliateId);
+            var dbResponse = _dao.ExecuteDataRow(SQL);
+            if (dbResponse != null)
+            {
+                return new ManageAffiliateCommon()
+                {
+                    AffiliateId = _dao.ParseColumnValue(dbResponse, "AgentId").ToString(),
+                    UserName = _dao.ParseColumnValue(dbResponse, "LoginId").ToString(),
+                    FullName = _dao.ParseColumnValue(dbResponse, "FullName").ToString(),
+                    MobileNumber = _dao.ParseColumnValue(dbResponse, "MobileNumber").ToString(),
+                    EmailAddress = _dao.ParseColumnValue(dbResponse, "EmailAddress").ToString(),
+                    BirthDateYear = _dao.ParseColumnValue(dbResponse, "BirthDateYear").ToString(),
+                    BirthDateMonth = _dao.ParseColumnValue(dbResponse, "BirthDateMonth").ToString(),
+                    BirthDateDay = _dao.ParseColumnValue(dbResponse, "BirthDateDay").ToString(),
+                    Gender = _dao.ParseColumnValue(dbResponse, "Gender").ToString(),
+                    PostalCode = _dao.ParseColumnValue(dbResponse, "PostalCode").ToString(),
+                    Address = _dao.ParseColumnValue(dbResponse, "Address").ToString(),
+                    Prefecture = _dao.ParseColumnValue(dbResponse, "Prefecture").ToString(),
+                    City = _dao.ParseColumnValue(dbResponse, "City").ToString(),
+                    Street = _dao.ParseColumnValue(dbResponse, "Street").ToString(),
+                    BuildingRoomNo = _dao.ParseColumnValue(dbResponse, "BuildingNo").ToString(),
+                    BusinessType = _dao.ParseColumnValue(dbResponse, "BusinessType").ToString(),
+                    CEOName = _dao.ParseColumnValue(dbResponse, "CEOName").ToString(),
+                    CEONameFurigana = _dao.ParseColumnValue(dbResponse, "CEONameFurigana").ToString(),
+                    CompanyName = _dao.ParseColumnValue(dbResponse, "CompanyName").ToString(),
+                    CompanyAddress = _dao.ParseColumnValue(dbResponse, "CompanyAddress").ToString(),
+                };
+            }
+            return new ManageAffiliateCommon();
+        }
+
+        public CommonDbResponse ManageAffiliate(ManageAffiliateCommon Request)
+        {
+            var Response = new CommonDbResponse();
+            string SQL = "EXEC sproc_admin_affiliate_management @Flag='u_am'";
+            SQL += ",@LoginId=" + (!string.IsNullOrEmpty(Request.LoginId) ? "N" + _dao.FilterString(Request.LoginId) : _dao.FilterString(Request.LoginId));
+            SQL += ",@Email=" + _dao.FilterString(Request.EmailAddress);
+            SQL += ",@MobileNumber=" + _dao.FilterString(Request.MobileNumber);
+            SQL += ",@Email=" + (!string.IsNullOrEmpty(Request.FullName) ? "N" + _dao.FilterString(Request.FullName) : _dao.FilterString(Request.FullName));   
+            SQL += ",@MobileNumber=" + _dao.FilterString(Request.BirthDateYear);
+            SQL += ",@Email=" + _dao.FilterString(Request.BirthDateMonth);
+            SQL += ",@MobileNumber=" + _dao.FilterString(Request.BirthDateDay);
+            SQL += ",@Email=" + _dao.FilterString(Request.PostalCode);
+            SQL += ",@MobileNumber=" + (!string.IsNullOrEmpty(Request.Address) ? "N" + _dao.FilterString(Request.Address) : _dao.FilterString(Request.Address)); 
+            SQL += ",@Email=" + (!string.IsNullOrEmpty(Request.Prefecture) ? "N" + _dao.FilterString(Request.Prefecture) : _dao.FilterString(Request.Prefecture));  
+            SQL += ",@MobileNumber=" + (!string.IsNullOrEmpty(Request.City) ? "N" + _dao.FilterString(Request.City) : _dao.FilterString(Request.City)); 
+            SQL += ",@Email=" + (!string.IsNullOrEmpty(Request.Street) ? "N" + _dao.FilterString(Request.Street) : _dao.FilterString(Request.Street));   
+            SQL += ",@MobileNumber=" + (!string.IsNullOrEmpty(Request.BuildingRoomNo) ? "N" + _dao.FilterString(Request.BuildingRoomNo) : _dao.FilterString(Request.BuildingRoomNo));   
+            SQL += ",@MobileNumber=" + (!string.IsNullOrEmpty(Request.BusinessType) ? "N" + _dao.FilterString(Request.BusinessType) : _dao.FilterString(Request.BusinessType)); 
+            SQL += ",@MobileNumber=" +  _dao.FilterString(Request.CEOName);
+            SQL += ",@MobileNumber=" + (!string.IsNullOrEmpty(Request.CEONameFurigana) ? "N" + _dao.FilterString(Request.CEONameFurigana) : _dao.FilterString(Request.CEONameFurigana));   
+            SQL += ",@MobileNumber=" + (!string.IsNullOrEmpty(Request.CompanyName) ? "N" + _dao.FilterString(Request.CompanyName) : _dao.FilterString(Request.CompanyName));  
+            SQL += ",@MobileNumber=" + (!string.IsNullOrEmpty(Request.CompanyAddress) ? "N" + _dao.FilterString(Request.CompanyAddress) : _dao.FilterString(Request.CompanyAddress));  
+            SQL += ",@MobileNumber=" + _dao.FilterString(Request.AffiliateId);
+            Response = _dao.ParseCommonDbResponse(SQL);
+            return Response;
+
         }
     }
 }
