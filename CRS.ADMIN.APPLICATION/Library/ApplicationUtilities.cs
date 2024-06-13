@@ -1142,7 +1142,10 @@ namespace CRS.ADMIN.APPLICATION.Library
                         (item.Key.EncryptParameter(), item.Value);
                     });
                     return response;
-
+                case "LOCATIONDDLPREFECTURE":
+                    dbResponse = _CommonBuss.GetDropDown("050", search1, search2);
+                    dbResponse.ForEach(item => { response.Add(item.Key.EncryptParameter(), item.Value); });
+                    return response;
                 default: return response;
             }
         }

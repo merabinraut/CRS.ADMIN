@@ -387,11 +387,9 @@ namespace CRS.ADMIN.REPOSITORY.ClubManagement
             SQL += ",@GroupNamekatakana=" + (!string.IsNullOrEmpty(Request.GroupName2) ? "N" + _DAO.FilterString(Request.GroupName2) : _DAO.FilterString(Request.GroupName2));
             SQL += ",@CompanyAddress=" + (!string.IsNullOrEmpty(Request.CompanyAddress) ? "N" + _DAO.FilterString(Request.CompanyAddress) : _DAO.FilterString(Request.CompanyAddress));
             SQL += ",@BusinessLicenseNumber=" + _DAO.FilterString(Request.BusinessLicenseNumber);
-            SQL += ",@LicenseIssuedDate=" + _DAO.FilterString(Request.LicenseIssuedDate);
-         
+            SQL += ",@LicenseIssuedDate=" + _DAO.FilterString(Request.LicenseIssuedDate);        
             SQL += ",@ClosingDate=" + _DAO.FilterString(Request.ClosingDate);
-            SQL += ",@CeoNameKatakana=" + (!string.IsNullOrEmpty(Request.CeoFurigana) ? "N" + _DAO.FilterString(Request.CeoFurigana) : _DAO.FilterString(Request.CeoFurigana));
-            
+            SQL += ",@CeoNameKatakana=" + (!string.IsNullOrEmpty(Request.CeoFurigana) ? "N" + _DAO.FilterString(Request.CeoFurigana) : _DAO.FilterString(Request.CeoFurigana));           
             SQL += ",@CompanyRegistry=" + _DAO.FilterString(Request.CorporateRegistryDocument);
             SQL += ",@DocumentType=" + _DAO.FilterString(Request.IdentificationType);
            

@@ -2,7 +2,7 @@
 @{
     ViewBag.Title = "Affiliate Management";
     Layout = "~/Views/Shared/_Layout.cshtml";
-
+    var _ManageAffiliateModel = Model.ManageAffiliate as CRS.ADMIN.APPLICATION.Models.AffiliateManagement.ManageAffiliateModel;
 }
 
 <div class="px-8 py-4 flex flex-col gap-8">
@@ -179,6 +179,7 @@
             <div id="tab2" class="tab-content-plane hidden ">
                 <div class="flex justify-between mb-4">
                     <form action="/AffiliateManagement/Index" method="get">
+                        @Html.HiddenFor(model => model.ListType)
                         <div class="relative input-search-wrapper">
                             <div class="absolute inset-y-0 left-0 flex items-center pl-[16px] pointer-events-none">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21" fill="none">
@@ -233,14 +234,13 @@
                                     </th>
                                     <th scope="col" class="p-[12px]">
                                         <div class="flex">
-                                            @CRS.ADMIN.APPLICATION.Resources.Resource.Requested_Date
+                                            @CRS.ADMIN.APPLICATION.Resources.Resource.MobileNumber
                                             <div class="relative pl-[5px]">
                                                 <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
                                                 <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
                                             </div>
                                         </div>
                                     </th>
-
                                     <th scope="col" class="p-[12px]">
                                         <div class="flex">
                                             @CRS.ADMIN.APPLICATION.Resources.Resource.Status
@@ -252,22 +252,16 @@
                                     </th>
                                     <th scope="col" class="p-[12px]">
                                         <div class="flex">
-                                            @CRS.ADMIN.APPLICATION.Resources.Resource.Approved_Status
+                                            @CRS.ADMIN.APPLICATION.Resources.Resource.Requested_Date
                                             <div class="relative pl-[5px]">
                                                 <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
                                                 <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
                                             </div>
                                         </div>
                                     </th>
-                                    <th scope="col" class="p-[12px]">
-                                        <div class="flex">
-                                            @CRS.ADMIN.APPLICATION.Resources.Resource.Social_Links
-                                            <div class="relative pl-[5px]">
-                                                <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
-                                                <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
-                                            </div>
-                                        </div>
-                                    </th>
+
+
+
                                     <th scope="col" class="p-[12px]">
                                         <div class="flex">
                                             @CRS.ADMIN.APPLICATION.Resources.Resource.Action
@@ -283,11 +277,12 @@
                             </thead>
                             <tbody>
                                 @{
+                                    int SNR = 1;
                                     foreach (var item in Model.GetAffiliateList)
                                     {
                                         <tr class="bg-white border-b ">
                                             <td class="p-[12px]">
-                                                @item.SNO
+                                                @SNR
                                             </td>
                                             <td class="p-[12px]">
                                                 <div class="round-image-text gap-[12px] items-center">
@@ -310,10 +305,12 @@
                                                 </div>
                                             </td>
                                             <td class="p-[12px]">
-                                                @item.RequestedDate
+                                                <div class="w-max ">
+                                                    @item.MobileNumber
+                                                </div>
                                             </td>
                                             <td class="p-[12px]">
-                                                @if (!string.IsNullOrEmpty(item.Status) && item.Status.Trim().ToUpper() == "ACTIVE")
+                                                @if (!string.IsNullOrEmpty(item.Status) && item.Status.Trim().ToUpper() == "A")
                                                 {
                                                     <div class="approved">
                                                         Active
@@ -327,53 +324,35 @@
                                                 }
                                             </td>
                                             <td class="p-[12px]">
-                                                @if (!string.IsNullOrEmpty(item.ApprovedStatus) && item.ApprovedStatus.Trim().ToUpper() == "APPROVED")
-                                                {
-                                                    <div class="approved">
-                                                        Approved
-                                                    </div>
-                                                }
-                                                else if (!string.IsNullOrEmpty(item.ApprovedStatus) && item.ApprovedStatus.Trim().ToUpper() == "PENDING")
-                                                {
-                                                    <div class="pending">
-                                                        Pending
-                                                    </div>
-                                                }
-                                                else if (!string.IsNullOrEmpty(item.ApprovedStatus) && item.ApprovedStatus.Trim().ToUpper() == "REJECTED")
-                                                {
-                                                    <div class="blocked">
-                                                        Rejected
-                                                    </div>
-                                                }
+                                                @item.RequestedDate
                                             </td>
-                                            <td class="p-[12px] cursor-pointer" onclick="redirectToURL('@item.SnsURLLink')">
-                                                @item.SnsURLLink
-                                            </td>
+
                                             <td class="p-[12px]">
                                                 <div class="flex gap-2 items-center">
-                                                    @if (!string.IsNullOrEmpty(item.AffiliateType) && item.AffiliateType.Trim().ToUpper() == "HOLD"
-                                                        && !string.IsNullOrEmpty(item.ApprovedStatus) && item.ApprovedStatus.Trim().ToUpper() == "PENDING")
+                                                    @if (!string.IsNullOrEmpty(item.Status) && item.Status.Trim().ToUpper() == "A")
                                                     {
-                                                        <i class="las la-window-close text-[24px] text-[#CB3F3F] cursor-pointer" onclick="ApproveRejectFunction('@item.HoldAffiliateId', 'R');"></i>
-                                                        <img src="~/Content/assets_new/images/check-square.svg" alt="" class="cursor-pointer" onclick="ApproveRejectFunction('@item.HoldAffiliateId', 'A');">
+                                                        <i class="las la-edit cursor-pointer text-[#697DBF] text-[18px]" onclick="ManageAffiliate('@item.AffiliateId', 'A');"></i>
+                                                    }
+                                                    <i class="las la-key text-[24px] text-[#C8B477] cursor-pointer" onclick="ApproveRejectFunction('@item.AffiliateId');"></i>
+                                                    @if (!string.IsNullOrEmpty(item.Status) && item.Status.Trim().ToUpper() == "B")
+                                                    {
+                                                        <div onclick="ManageStatusFunction('@item.AffiliateId', 'A');">
+                                                            <i class="fa-solid fa-unlock text-primary-100 cursor-pointer"></i>
+                                                        </div>
+                                                        @*<i class="las la-unlock cursor-pointer text-[#697DBF] text-[18px]" onclick="ManageStatusFunction('@item.AffiliateId', 'A');"></i>*@
                                                     }
                                                     else
                                                     {
-                                                        if (string.IsNullOrEmpty(item.AffiliateType) && item.AffiliateType.Trim().ToUpper() != "HOLD")
-                                                        {
-                                                            if (!string.IsNullOrEmpty(item.Status) && item.Status.Trim().ToUpper() == "BLOCKED")
-                                                            {
-                                                                <i class="las la-unlock cursor-pointer text-[#697DBF] text-[18px]" onclick="ManageStatusFunction('@item.AffiliateId', 'A');"></i>
-                                                            }
-                                                            else
-                                                            {
-                                                                <i class="las la-lock cursor-pointer text-[#697DBF] text-[18px]" onclick="ManageStatusFunction('@item.AffiliateId', 'B');"></i>
-                                                            }
-                                                        }
+                                                        <div onclick="ManageStatusFunction('@item.AffiliateId', 'B');">
+                                                            <i class="fa-solid fa-lock text-primary-100 cursor-pointer"></i>
+                                                        </div>
+                                                        @*<i class="las la-lock cursor-pointer text-[#697DBF] text-[18px]" onclick="ManageStatusFunction('@item.AffiliateId', 'B');"></i>*@
                                                     }
+
                                                 </div>
                                             </td>
                                         </tr>
+                                        SNR++;
                                     }
                                 }
                             </tbody>
@@ -560,6 +539,7 @@
         </div>
     </div>
 </div>
+@Html.Partial("_ManageAffiliatePartialView", _ManageAffiliateModel)
 @section scripts
 {
     <script>
@@ -624,38 +604,25 @@
         }
     </script>
     <script>
-         function ManageStatusFunction(i,j) {
-             var RequestVerificationToken = $('input[name="__RequestVerificationToken"]').val();
-             $.ajax({
-                 type: "POST",
-                 url: '@Url.Action("ManageAffiliateStatus", "AffiliateManagement")',
-                 data: {
-                     '__RequestVerificationToken': RequestVerificationToken, 'AgentId': i, 'Status': j
-                 },
-                 success: function (response) {
-                     window.location.reload();
-                 },
-                 error: function (error) {
-                     window.location.reload();
-                 }
-             });
+        var PopUpRenderValue = '@ViewBag.PopUpRenderValue';
+        if (PopUpRenderValue != null && PopUpRenderValue != "" && PopUpRenderValue == "Manage") {
+            var element = document.getElementById('add-new-affiliate');
+             element.classList.remove('translate-x-full');
+        }
+        function ManageStatusFunction(i, j) {
+            window.location.href = '/AffiliateManagement/ManageAffiliateStatus?AgentId=' + i + '&Status=' + j;
+
+        }
+        function ManageAffiliate(i, j) {
+            let search_filter =  '@ViewBag.SearchFilter1';
+            const start_index_val = @ViewBag.StartIndex;
+            const page_size = @ViewBag.PageSize;
+            window.location.href = '/AffiliateManagement/ManageAffiliate?AffiliateId=' + i + '&SearchFilter=' + search_filter + '&StartIndex=' + start_index_val + '&PageSize=' + page_size;;
+
         }
 
-        function ApproveRejectFunction(i, j) {
-             var RequestVerificationToken = $('input[name="__RequestVerificationToken"]').val();
-             $.ajax({
-                 type: "POST",
-                 url: '@Url.Action("ApproveRejectAffiliateRequest", "AffiliateManagement")',
-                 data: {
-                     '__RequestVerificationToken': RequestVerificationToken, 'HoldAgentId': i, 'Status': j
-                 },
-                 success: function (response) {
-                     window.location.reload();
-                 },
-                 error: function (error) {
-                     window.location.reload();
-                 }
-             });
+        function ApproveRejectFunction(i) {
+            window.location.href = '/AffiliateManagement/ResetAffiliatePassword?AgentId=' + i ;
         }
         $(document).ready(function () {
             document.querySelectorAll('.tab-link').forEach(function (button) {
@@ -668,27 +635,18 @@
             var activeTab = '@ViewBag.ActiveTab';
             if (activeTab != null && activeTab != '' && activeTab === 'Affiliates') {
                 tabNumber = 2
+                $("#ListType").val('a');
+                 const page_size = @ViewBag.PageSize;
+                 const total_data = @ViewBag.TotalData;
+                 const start_index_val = @ViewBag.StartIndex;
+                 let URL = "/AffiliateManagement/Index";
+                 let search_filter = '@ViewBag.SearchFilter1';
+                 URL = addQueryParam2(URL, 'SearchFilter', search_filter, 'value', 'a');
+                 LoadPagination(page_size, total_data, start_index_val, URL);
             }
             else if (activeTab != null && activeTab != '' && activeTab === 'Converted Customers') {
                 tabNumber = 3
-            }
-            document.getElementById('tab' + tabNumber + 'Button').classList.add('active');
-            $('.bg-white #tab' + tabNumber).removeClass("hidden");
-            //document.getElementById('tab' + tabNumber).classList.remove("hidden");
-        });
-
-    </script>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-                const page_size = @ViewBag.PageSize;
-                const total_data = @ViewBag.TotalData;
-                const start_index_val = @ViewBag.StartIndex;
-                let URL = "/AffiliateManagement/Index";
-                let search_filter = '@ViewBag.SearchFilter1';
-                URL = addQueryParam(URL, 'SearchFilter', search_filter);
-                LoadPagination(page_size, total_data, start_index_val, URL);
-
+                $("#ListType").val('c');
                 const page_size_2 = @ViewBag.PageSize2;
                 const total_data_2 = @ViewBag.TotalData2;
                 const start_index_val_2 = @ViewBag.StartIndex2;
@@ -698,6 +656,66 @@
                 dynamicStartIndexLabel = "StartIndex2";
                 dynamicPageSizeLabel = "PageSize2";
                 LoadPagination(page_size_2, total_data_2, start_index_val_2, URL_2, 'pagination-id-2', 'prev-btn-2', 'next-btn-2', 'ShowEntries-Id-2', 'Entries-Id-2');
+            }
+            document.getElementById('tab' + tabNumber + 'Button').classList.add('active');
+            $('.bg-white #tab' + tabNumber).removeClass("hidden");
+            //document.getElementById('tab' + tabNumber).classList.remove("hidden");
+        });
+
+    </script>
+
+    <script>
+        function addQueryParam2(url, paramName, paramValue, paramName2, paramValue2) {
+            if (paramValue != null && paramValue != "") {
+                url += url.includes('?') ? `&${paramName}=${paramValue}` : `?${paramName}=${paramValue}`;
+            }
+            if (paramValue2 != null && paramValue2 != "") {
+                url += url.includes('?') ? `&${paramName2}=${paramValue2}` : `?${paramName2}=${paramValue2}`;
+            }
+
+            return url;
+        }
+        document.addEventListener('DOMContentLoaded', function () {
+            if ($("#ListType").val().toLowerCase() == "a")
+            {
+                 const page_size = @ViewBag.PageSize;
+                 const total_data = @ViewBag.TotalData;
+                 const start_index_val = @ViewBag.StartIndex;
+                 let URL = "/AffiliateManagement/Index";
+                 let search_filter = '@ViewBag.SearchFilter1';
+                 URL = addQueryParam2(URL, 'SearchFilter', search_filter, 'value', 'a');
+                 LoadPagination(page_size, total_data, start_index_val, URL);
+
+            }
+            else if ($("#ListType").val().toLowerCase() == "c")
+            {
+                 const page_size_2 = @ViewBag.PageSize2;
+                 const total_data_2 = @ViewBag.TotalData2;
+                 const start_index_val_2 = @ViewBag.StartIndex2;
+                 let URL_2 = "/AffiliateManagement/Index";
+                 let search_filter_2 = '@ViewBag.SearchFilter2';
+                 URL_2 = addQueryParam(URL_2, 'SearchFilter', search_filter_2);
+                 dynamicStartIndexLabel = "StartIndex2";
+                 dynamicPageSizeLabel = "PageSize2";
+                 LoadPagination(page_size_2, total_data_2, start_index_val_2, URL_2, 'pagination-id-2', 'prev-btn-2', 'next-btn-2', 'ShowEntries-Id-2', 'Entries-Id-2');
+            }
+
+
+        });
+
+        document.addEventListener("DOMContentLoaded", function () {
+            var boxes = document.querySelectorAll('.box');
+            boxes.forEach(function (box) {
+                box.addEventListener('click', function () {
+                    // Remove "active" class from all boxes
+                    boxes.forEach(function (box) {
+                        box.classList.remove('active');
+                    });
+                    // Add "active" class to clicked box
+                    this.classList.add('active');
+                });
             });
+        });
+
     </script>
 }
