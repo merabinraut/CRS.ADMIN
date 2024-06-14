@@ -1,4 +1,4 @@
-@model CRS.ADMIN.APPLICATION.Models.AffiliateManagement.ManageAffiliateModel
+﻿@model CRS.ADMIN.APPLICATION.Models.AffiliateManagement.ManageAffiliateModel
 <style>
     .clsgender {
         display: flex; /* Display children in a row */
@@ -25,21 +25,14 @@
             border: 1px solid rgb(204 82 122 / var(--tw-bg-opacity));
             color: rgb(204 82 122 / var(--tw-bg-opacity));
         }
-
-        /*.box.active:nth-child(2) {
-            background-color: blue;*/ /* Second box active color */
-        /*}
-
-        .box.active:nth-child(3) {
-            background-color: green;*/ /* Third box active color */
-        /*}*/
 </style>
+
 <div id="add-new-affiliate" class="drawer-close-disable  flex justify-end fixed top-0 right-0 z-40 h-screen overflow-y-auto transition-transform translate-x-full "
      tabindex="-1" aria-labelledby="drawer-right-label">
     <div class="bg-white w-[863px] drawer-container relative">
         <div class="drawer-form-container sticky top-0 z-[5] ">
             <div class="drawer-form flex justify-between bg-secondary-color-pink py-[16px] px-[24px] h-[56px]">
-                <div>  @CRS.ADMIN.APPLICATION.Resources.Resource.Manage_Club_Profile</div>
+                <div>  @CRS.ADMIN.APPLICATION.Resources.Resource.ManageAffiliate</div>
                 <button type="button" data-drawer-hide="add-new-affiliate" aria-controls="add-new-affiliate" onclick="CancelFunction()"
                         class="text-[20px]">
                     <i class="las la-window-close text-white"></i>
@@ -47,11 +40,25 @@
             </div>
         </div>
         <div class="p-[24px]">
-            @using (Html.BeginForm("ManageAffiliate", "AffiliateManagement", FormMethod.Post, new { @id = "ManageAffiliateForm"}))
+            @*<form class="h-adr">
+                    <span class="p-country-name" style="display:none;">Japan</span>
+                    PostalCode<input type="text" class="p-postal-code" size="8" maxlength="8"><br>
+                    Address：<input type="text" class="p-region p-locality p-street-address p-extended-address" /><br>
+                    都道府県：<input type="text" class="p-region" /><br>
+                    地区町村：<input type="text" class="p-locality" /><br>
+                    町名番地：<input type="text" class="p-street-address p-extended-address" />
+                </form>*@
+            @using (Html.BeginForm("ManageAffiliate", "AffiliateManagement", FormMethod.Post, new { @id = "ManageAffiliateForm", @class = "h-adr" }))
             {
+                <span class="p-country-name" style="display:none;">Japan</span>
                 @Html.AntiForgeryToken()
                 @Html.HiddenFor(model => model.AffiliateId);
+
                 <div class=" py-4 grid gap-6">
+                    @*<div style="display:none">*@
+
+                    @*</div>*@
+
                     <div class="grid gap-4 py-[10px]">
                         <div class="flex gap-2 text-primary-300 text-sm font-semibold items-center mt-[10px]">
                             <div class="flex-none uppercase">@CRS.ADMIN.APPLICATION.Resources.Resource.Basic_Info</div>
@@ -78,6 +85,7 @@
                                //@onkeypress = "return isNumber(event)",
                                autocomplete = "off",
                                @maxLength = "100"
+
                            })
                                 <span class="error">
                                     @Html.ValidationMessageFor(m => m.FullName)
@@ -90,11 +98,12 @@
                                 </label>
 
                                 @Html.TextBoxFor(model => model.MobileNumber, new
-                             {
+                           {
                                @class = "w-full",
                                @placeholder = CRS.ADMIN.APPLICATION.Resources.Resource.AffiliatePhoneNumber,
                                autocomplete = "off",
-                               @maxLength = "11"
+                               @maxLength = "11",
+                               @disabled= "disabled"
                            })
                                 <span class="error">
                                     @Html.ValidationMessageFor(m => m.MobileNumber)
@@ -107,11 +116,12 @@
                                 </label>
 
                                 @Html.TextBoxFor(model => model.EmailAddress, new
-                             {
+                           {
                                @class = "w-full",
                                @placeholder = CRS.ADMIN.APPLICATION.Resources.Resource.AffiliateEmailAddress,
                                autocomplete = "off",
-                               @maxLength = "75"
+                               @maxLength = "75",
+                               @disabled = "disabled"
                            })
                                 <span class="error">
                                     @Html.ValidationMessageFor(m => m.EmailAddress)
@@ -160,14 +170,14 @@
                                 @CRS.ADMIN.APPLICATION.Resources.Resource.AffiliateGender
                             </label>
                             <div class="clsgender">
-
-                                <div class="box">
+                                @Html.HiddenFor(model => model.Gender, new { @class = "clsgender", id = "gender" })
+                                <div class="box" value="M">
                                     Male
                                 </div>
-                                <div class="box">
+                                <div class="box" value="F">
                                     Female
                                 </div>
-                                <div class="box">
+                                <div class="box" value="O">
                                     Others
                                 </div>
                             </div>
@@ -193,9 +203,12 @@
                                 </label>
                                 @Html.TextBoxFor(model => model.PostalCode, new
                            {
-                               @class = "w-full",
+                               @class = "w-full p-postal-code",
                                @placeholder = CRS.ADMIN.APPLICATION.Resources.Resource.AffiliatePostalcode,
-                               autocomplete = "off"
+                               @autocomplete = "off",
+                               @size = "8",
+                               @maxlength = "8",
+                               @onchange = "FillDetails()"
                                //@maxLength = "30"
                            })
                                 <span class="error">
@@ -203,50 +216,58 @@
                                 </span>
                             </div>
 
-                            <div class="input-field-common">
-                                <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
-                                    @CRS.ADMIN.APPLICATION.Resources.Resource.AffiliateAutoFilledAddress
-                                </label>
+                            @*<div class="input-field-common">
+                                     <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
+                                         @CRS.ADMIN.APPLICATION.Resources.Resource.AffiliateAutoFilledAddress
+                                     </label>
 
-                                @Html.TextBoxFor(model => model.Address, new
-                             {
-                               @class = "w-full",
-                               @placeholder = CRS.ADMIN.APPLICATION.Resources.Resource.AffiliateAutoFilledAddress,
-                               autocomplete = "off",
-                               @maxLength = "200"
-                           })
-                                <span class="error">
-                                    @Html.ValidationMessageFor(m => m.Address)
-                                </span>
+                                     @Html.TextBoxFor(model => model.Address, new
+                                  {
+                                    @class = "w-full p-region p-locality p-street-address p-extended-address",
+                                    @placeholder = CRS.ADMIN.APPLICATION.Resources.Resource.AffiliateAutoFilledAddress,
+                                    autocomplete = "off",
+                                    @maxLength = "200"
+                                })
+                                     <span class="error">
+                                         @Html.ValidationMessageFor(m => m.Address)
+                                     </span>
 
-                            </div>
-
+                                 </div>*@
+                        </div>
+                        <div class="grid grid-cols-2 gap-x-5 gap-y-4">
 
                             <div class="input-field-common">
                                 <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
                                     @CRS.ADMIN.APPLICATION.Resources.Resource.Prefecture
                                 </label>
+                                @Html.TextBoxFor(model => model.Prefecture, new
+                                {
+                                @class = "w-full p-region",
+                                @placeholder = CRS.ADMIN.APPLICATION.Resources.Resource.Prefecture,
+                                autocomplete = "off",
+                                @maxLength = "200"
+                                })
                                 @*@Html.NDropDownListFor(model => model.Pref, new SelectList(ViewBag.PrefPref, "", "Text"), new { @class = "form-control select2", autocomplete = "off", id = "large" }, 2)*@
 
-                                <select id="large" class=" default_select select-common block w-full "
-                                        style="width: 100%;" name="Prefecture">
-                                    @foreach (KeyValuePair<string, string> item in ViewBag.Pref as Dictionary<string, string>)
-                                    {
-                                        var selectedId = ViewBag.PrefIdKey as string;
-                                        if (item.Value == selectedId)
+                                @*<select id="large" class=" default_select select-common block w-full "
+                                            style="width: 100%;" name="Prefecture">
+                                        @foreach (KeyValuePair<string, string> item in ViewBag.Pref as Dictionary<string, string>)
                                         {
-                                            <option value="@item.Key" selected>
-                                                @item.Value
-                                            </option>
+                                            var selectedId = ViewBag.PrefIdKey as string;
+                                            if (item.Value == selectedId)
+                                            {
+                                                <option value="@item.Key" selected>
+                                                    @item.Value
+                                                </option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@item.Key">
+                                                    @item.Value
+                                                </option>
+                                            }
                                         }
-                                        else
-                                        {
-                                            <option value="@item.Key">
-                                                @item.Value
-                                            </option>
-                                        }
-                                    }
-                                </select>
+                                    </select>*@
                                 <span class="error">
                                     @Html.ValidationMessageFor(m => m.Prefecture)
                                 </span>
@@ -260,7 +281,7 @@
 
                                 @Html.TextBoxFor(model => model.City, new
                              {
-                               @class = "w-full",
+                               @class = "w-full p-locality",
                                @placeholder = CRS.ADMIN.APPLICATION.Resources.Resource.AffiliateCityTown,
                                autocomplete = "off",
                                @maxLength = "200"
@@ -278,7 +299,7 @@
 
                                 @Html.TextBoxFor(model => model.Street, new
                              {
-                               @class = "w-full",
+                               @class = "w-full p-street-address p-extended-address",
                                @placeholder = CRS.ADMIN.APPLICATION.Resources.Resource.AffiliateStreet,
                                autocomplete = "off",
                                @maxLength = "200"
@@ -349,7 +370,7 @@
                             </div>
 
                         </div>
-                        <div class="grid grid-cols-2 gap-x-5 gap-y-4">
+                        <div class="grid grid-cols-2 gap-x-5 gap-y-4 clscorporation" style="display:none;">
                             <div class="input-field-common">
                                 <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
                                     @CRS.ADMIN.APPLICATION.Resources.Resource.AffiliateCeoname
@@ -442,3 +463,4 @@
             }
         </div>
     </div>
+</div>

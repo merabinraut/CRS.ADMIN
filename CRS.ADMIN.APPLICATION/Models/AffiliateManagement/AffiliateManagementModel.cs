@@ -6,6 +6,7 @@ namespace CRS.ADMIN.APPLICATION.Models.AffiliateManagement
     public class ReferalCommonModel
     {
         public string ListType { get; set; }
+        public string value { get; set; }
         public AffiliatePageAnalyticModel AffiliatePageAnalyticModel { get; set; } = new AffiliatePageAnalyticModel();
         public ManageAffiliateModel ManageAffiliate { get; set; } = new ManageAffiliateModel();
         public List<ReferralConvertedCustomerListModel> GetReferalConvertedCustomerList { get; set; } = new List<ReferralConvertedCustomerListModel>();
@@ -60,10 +61,14 @@ namespace CRS.ADMIN.APPLICATION.Models.AffiliateManagement
     public class ManageAffiliateModel
     {
         public string AffiliateId { get; set; }
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
-        [MinLength(3, ErrorMessage = "Minimum 3 characters required")]
-        [MaxLength(16, ErrorMessage = "Maximum 16 characters allowed")]
+        public string ListType { get; set; }
+        public string SearchFilter { get; set; }
+        public string StartIndex { get; set; }
+        public string PageSize { get; set; }
+        //[MinLength(3, ErrorMessage = "Minimum 3 characters required")]
+        //[MaxLength(16, ErrorMessage = "Maximum 16 characters allowed")]
         public string UserName { get; set; }
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
         public string LoginId { get; set; }
         [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
         public string FullName { get; set; }
@@ -87,7 +92,7 @@ namespace CRS.ADMIN.APPLICATION.Models.AffiliateManagement
         [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
         [RegularExpression(@"^\d{3} \d{4}$", ErrorMessage = "Invalid Postal Code")]
         public string PostalCode { get; set; }
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
+        //[Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
         public string Address { get; set; }
         [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
         public string Prefecture { get; set; }

@@ -328,6 +328,7 @@
       <DependentUpon>Resource.Ja.resx</DependentUpon>
     </Compile>
     <Content Include="Views\AffiliateManagement\_ManageAffiliatePartialView.cshtml" />
+    <Content Include="Views\AffiliateManagement\_ManageAffiliatePartialView1.cshtml" />
     <None Include="Views\ClubPlanManagement\_ManageClubPlanPartialView.cshtml" />
     <Content Include="Content\assets\images\schedule.svg" />
     <Content Include="Views\PointsManagement\_ManagePointsRequestPartialView.cshtml" />

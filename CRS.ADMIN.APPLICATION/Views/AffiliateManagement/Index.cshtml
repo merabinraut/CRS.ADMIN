@@ -180,6 +180,7 @@
                 <div class="flex justify-between mb-4">
                     <form action="/AffiliateManagement/Index" method="get">
                         @Html.HiddenFor(model => model.ListType)
+                        <input name="value" id="valueTypeid" type="hidden" value="a" />
                         <div class="relative input-search-wrapper">
                             <div class="absolute inset-y-0 left-0 flex items-center pl-[16px] pointer-events-none">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21" fill="none">
@@ -332,8 +333,9 @@
                                                     @if (!string.IsNullOrEmpty(item.Status) && item.Status.Trim().ToUpper() == "A")
                                                     {
                                                         <i class="las la-edit cursor-pointer text-[#697DBF] text-[18px]" onclick="ManageAffiliate('@item.AffiliateId', 'A');"></i>
+                                                        <i class="las la-key text-[24px] text-[#C8B477] cursor-pointer" onclick="ResetAffiliatePassword('@item.AffiliateId');"></i>
                                                     }
-                                                    <i class="las la-key text-[24px] text-[#C8B477] cursor-pointer" onclick="ApproveRejectFunction('@item.AffiliateId');"></i>
+
                                                     @if (!string.IsNullOrEmpty(item.Status) && item.Status.Trim().ToUpper() == "B")
                                                     {
                                                         <div onclick="ManageStatusFunction('@item.AffiliateId', 'A');">
@@ -540,8 +542,10 @@
     </div>
 </div>
 @Html.Partial("_ManageAffiliatePartialView", _ManageAffiliateModel)
+
 @section scripts
 {
+   
     <script>
         // Your data object
         const labelsMonth12 = ["Oct", "Nov", "Dec", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul ", "Aug", "Sep",];
@@ -606,11 +610,21 @@
     <script>
         var PopUpRenderValue = '@ViewBag.PopUpRenderValue';
         if (PopUpRenderValue != null && PopUpRenderValue != "" && PopUpRenderValue == "Manage") {
-            var element = document.getElementById('add-new-affiliate');
+             let search_filter =  '@ViewBag.SearchFilter1';
+             const start_index_val = @ViewBag.StartIndex;
+             const page_size = @ViewBag.PageSize;
+             $("#SearchFilter").val(search_filter);
+             $("#StartIndex").val(start_index_val);
+             $("#PageSize").val(page_size);
+             var element = document.getElementById('add-new-affiliate');
              element.classList.remove('translate-x-full');
         }
         function ManageStatusFunction(i, j) {
             window.location.href = '/AffiliateManagement/ManageAffiliateStatus?AgentId=' + i + '&Status=' + j;
+
+        }
+        function ResetAffiliatePassword(i) {
+            window.location.href = '/AffiliateManagement/ResetAffiliatePassword?AgentId=' + i
 
         }
         function ManageAffiliate(i, j) {
@@ -624,29 +638,45 @@
         function ApproveRejectFunction(i) {
             window.location.href = '/AffiliateManagement/ResetAffiliatePassword?AgentId=' + i ;
         }
-        $(document).ready(function () {
-            document.querySelectorAll('.tab-link').forEach(function (button) {
-                button.classList.remove('active');
-            });
-            document.querySelectorAll('.tab-content-plane').forEach(function (button) {
-                button.classList.add('hidden');
-            });
-            var tabNumber = 1;
-            var activeTab = '@ViewBag.ActiveTab';
-            if (activeTab != null && activeTab != '' && activeTab === 'Affiliates') {
-                tabNumber = 2
-                $("#ListType").val('a');
-                 const page_size = @ViewBag.PageSize;
-                 const total_data = @ViewBag.TotalData;
-                 const start_index_val = @ViewBag.StartIndex;
-                 let URL = "/AffiliateManagement/Index";
-                 let search_filter = '@ViewBag.SearchFilter1';
-                 URL = addQueryParam2(URL, 'SearchFilter', search_filter, 'value', 'a');
-                 LoadPagination(page_size, total_data, start_index_val, URL);
+        $('#large[name="BusinessType"]').change(function () {
+            debugger;
+            var selectedValue = $(this).find("option:selected").text().trim();
+            if (selectedValue.toLowerCase() == "corporation") {
+                $(".clscorporation").show();
+
             }
-            else if (activeTab != null && activeTab != '' && activeTab === 'Converted Customers') {
-                tabNumber = 3
-                $("#ListType").val('c');
+            else {
+                $(".clscorporation").hide();
+
+            }
+        });
+        function addQueryParam2(url, paramName, paramValue, paramName2, paramValue2, paramName3, paramValue3) {
+            if (paramValue != null && paramValue != "") {
+                url += url.includes('?') ? `&${paramName}=${paramValue}` : `?${paramName}=${paramValue}`;
+            }
+            if (paramValue2 != null && paramValue2 != "") {
+                url += url.includes('?') ? `&${paramName2}=${paramValue2}` : `?${paramName2}=${paramValue2}`;
+            }
+            if (paramValue3 != null && paramValue3 != "") {
+                url += url.includes('?') ? `&${paramName3}=${paramValue3}` : `?${paramName3}=${paramValue3}`;
+            }
+            return url;
+        }
+        function DatatableForTab(button)
+        {
+            if (button == "tab2Button")
+            {
+             $("#valueTypeid").val("a");
+             const page_size = @ViewBag.PageSize;
+             const total_data = @ViewBag.TotalData;
+             const start_index_val = @ViewBag.StartIndex;
+             let URL = "/AffiliateManagement/Index";
+             let search_filter = '@ViewBag.SearchFilter1';
+             URL = addQueryParam2(URL, 'SearchFilter1', search_filter, 'SearchFilter2', search_filter, 'value', 'a');
+             LoadPagination(page_size, total_data, start_index_val, URL, 'pagination-id', 'prev-btn', 'next-btn', 'ShowEntries-Id', 'Entries-Id');
+            }
+            else if (button == "tab3Button") {
+                $("#valueTypeid").val("c");
                 const page_size_2 = @ViewBag.PageSize2;
                 const total_data_2 = @ViewBag.TotalData2;
                 const start_index_val_2 = @ViewBag.StartIndex2;
@@ -657,52 +687,80 @@
                 dynamicPageSizeLabel = "PageSize2";
                 LoadPagination(page_size_2, total_data_2, start_index_val_2, URL_2, 'pagination-id-2', 'prev-btn-2', 'next-btn-2', 'ShowEntries-Id-2', 'Entries-Id-2');
             }
-            document.getElementById('tab' + tabNumber + 'Button').classList.add('active');
-            $('.bg-white #tab' + tabNumber).removeClass("hidden");
+        }
+        $(document).ready(function () {
+
+            var val = $('#large[name="BusinessType"]').find("option:selected").text().trim();
+            if (val.toLowerCase() == "corporation") {
+                $(".clscorporation").show();
+            }
+            else {
+                $(".clscorporation").hide();
+
+            }
+            var genderval = $("#gender").val();
+            if (genderval == null || genderval == '') {
+                $("div[value='M']").addClass("active");
+            }
+            else{
+                $("div[value='" + genderval + "']").addClass("active");
+            }
+
+            document.querySelectorAll('.tab-link').forEach(function (button) {
+                button.classList.remove('active');
+            });
+            document.querySelectorAll('.tab-content-plane').forEach(function (button) {
+                button.classList.add('hidden');
+            });
+            var tabNumber = 1;
+            $('.tab-link').click(function () {
+                var $this = $(this).attr("id");
+                $("#" + $this).val("a");
+                DatatableForTab($this)
+            })
+
+              var activeTab = '@ViewBag.ActiveTab';
+              if (activeTab != null && activeTab != '' && activeTab === 'a') {
+                  tabNumber = 2
+                  DatatableForTab("tab2Button")
+
+              }
+              else if (activeTab != null && activeTab != '' && activeTab === 'c') {
+                  tabNumber = 3
+                  DatatableForTab("tab3Button")
+              }
+              document.getElementById('tab' + tabNumber + 'Button').classList.add('active');
+              $('.bg-white #tab' + tabNumber).removeClass("hidden");
             //document.getElementById('tab' + tabNumber).classList.remove("hidden");
         });
 
     </script>
 
     <script>
-        function addQueryParam2(url, paramName, paramValue, paramName2, paramValue2) {
-            if (paramValue != null && paramValue != "") {
-                url += url.includes('?') ? `&${paramName}=${paramValue}` : `?${paramName}=${paramValue}`;
-            }
-            if (paramValue2 != null && paramValue2 != "") {
-                url += url.includes('?') ? `&${paramName2}=${paramValue2}` : `?${paramName2}=${paramValue2}`;
-            }
+       
+       // document.addEventListener('DOMContentLoaded', function () {
+                //debugger;
+                //const page_size = @ViewBag.PageSize;
+                //const total_data = @ViewBag.TotalData;
+                //const start_index_val = @ViewBag.StartIndex;
+                //let URL = "/AffiliateManagement/Index";
+                //let search_filter = '@ViewBag.SearchFilter1';
+                //URL = addQueryParam2(URL, 'SearchFilter1', search_filter, 'SearchFilter2', search_filter, 'value', 'a');
+                //LoadPagination(page_size, total_data, start_index_val, URL);
+                //
+                //
+                //const page_size_2 = @ViewBag.PageSize2;
+                //const total_data_2 = @ViewBag.TotalData2;
+                //const start_index_val_2 = @ViewBag.StartIndex2;
+                //let URL_2 = "/AffiliateManagement/Index";
+                //let search_filter_2 = '@ViewBag.SearchFilter2';
+                //URL_2 = addQueryParam(URL_2, 'SearchFilter', search_filter_2);
+                //dynamicStartIndexLabel = "StartIndex2";
+                //dynamicPageSizeLabel = "PageSize2";
+                //LoadPagination(page_size_2, total_data_2, start_index_val_2, URL_2, 'pagination-id-2', 'prev-btn-2', 'next-btn-2', 'ShowEntries-Id-2', 'Entries-Id-2');
 
-            return url;
-        }
-        document.addEventListener('DOMContentLoaded', function () {
-            if ($("#ListType").val().toLowerCase() == "a")
-            {
-                 const page_size = @ViewBag.PageSize;
-                 const total_data = @ViewBag.TotalData;
-                 const start_index_val = @ViewBag.StartIndex;
-                 let URL = "/AffiliateManagement/Index";
-                 let search_filter = '@ViewBag.SearchFilter1';
-                 URL = addQueryParam2(URL, 'SearchFilter', search_filter, 'value', 'a');
-                 LoadPagination(page_size, total_data, start_index_val, URL);
-
-            }
-            else if ($("#ListType").val().toLowerCase() == "c")
-            {
-                 const page_size_2 = @ViewBag.PageSize2;
-                 const total_data_2 = @ViewBag.TotalData2;
-                 const start_index_val_2 = @ViewBag.StartIndex2;
-                 let URL_2 = "/AffiliateManagement/Index";
-                 let search_filter_2 = '@ViewBag.SearchFilter2';
-                 URL_2 = addQueryParam(URL_2, 'SearchFilter', search_filter_2);
-                 dynamicStartIndexLabel = "StartIndex2";
-                 dynamicPageSizeLabel = "PageSize2";
-                 LoadPagination(page_size_2, total_data_2, start_index_val_2, URL_2, 'pagination-id-2', 'prev-btn-2', 'next-btn-2', 'ShowEntries-Id-2', 'Entries-Id-2');
-            }
-
-
-        });
-
+       // });
+      
         document.addEventListener("DOMContentLoaded", function () {
             var boxes = document.querySelectorAll('.box');
             boxes.forEach(function (box) {
@@ -713,6 +771,7 @@
                     });
                     // Add "active" class to clicked box
                     this.classList.add('active');
+                    $("#gender").val(this.getAttribute('value'))
                 });
             });
         });

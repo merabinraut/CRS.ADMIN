@@ -114,16 +114,16 @@ namespace CRS.ADMIN.REPOSITORY.AffiliateManagement
                 return new ManageAffiliateCommon()
                 {
                     AffiliateId = _dao.ParseColumnValue(dbResponse, "AgentId").ToString(),
-                    UserName = _dao.ParseColumnValue(dbResponse, "LoginId").ToString(),
+                    LoginId = _dao.ParseColumnValue(dbResponse, "LoginId").ToString(),
                     FullName = _dao.ParseColumnValue(dbResponse, "FullName").ToString(),
                     MobileNumber = _dao.ParseColumnValue(dbResponse, "MobileNumber").ToString(),
-                    EmailAddress = _dao.ParseColumnValue(dbResponse, "EmailAddress").ToString(),
+                   EmailAddress = _dao.ParseColumnValue(dbResponse, "EmailAddress").ToString(),
                     BirthDateYear = _dao.ParseColumnValue(dbResponse, "BirthDateYear").ToString(),
                     BirthDateMonth = _dao.ParseColumnValue(dbResponse, "BirthDateMonth").ToString(),
                     BirthDateDay = _dao.ParseColumnValue(dbResponse, "BirthDateDay").ToString(),
                     Gender = _dao.ParseColumnValue(dbResponse, "Gender").ToString(),
                     PostalCode = _dao.ParseColumnValue(dbResponse, "PostalCode").ToString(),
-                    Address = _dao.ParseColumnValue(dbResponse, "Address").ToString(),
+                    //Address = _dao.ParseColumnValue(dbResponse, "Address").ToString(),
                     Prefecture = _dao.ParseColumnValue(dbResponse, "Prefecture").ToString(),
                     City = _dao.ParseColumnValue(dbResponse, "City").ToString(),
                     Street = _dao.ParseColumnValue(dbResponse, "Street").ToString(),
@@ -145,22 +145,26 @@ namespace CRS.ADMIN.REPOSITORY.AffiliateManagement
             SQL += ",@LoginId=" + (!string.IsNullOrEmpty(Request.LoginId) ? "N" + _dao.FilterString(Request.LoginId) : _dao.FilterString(Request.LoginId));
             SQL += ",@Email=" + _dao.FilterString(Request.EmailAddress);
             SQL += ",@MobileNumber=" + _dao.FilterString(Request.MobileNumber);
-            SQL += ",@Email=" + (!string.IsNullOrEmpty(Request.FullName) ? "N" + _dao.FilterString(Request.FullName) : _dao.FilterString(Request.FullName));   
-            SQL += ",@MobileNumber=" + _dao.FilterString(Request.BirthDateYear);
-            SQL += ",@Email=" + _dao.FilterString(Request.BirthDateMonth);
-            SQL += ",@MobileNumber=" + _dao.FilterString(Request.BirthDateDay);
-            SQL += ",@Email=" + _dao.FilterString(Request.PostalCode);
-            SQL += ",@MobileNumber=" + (!string.IsNullOrEmpty(Request.Address) ? "N" + _dao.FilterString(Request.Address) : _dao.FilterString(Request.Address)); 
-            SQL += ",@Email=" + (!string.IsNullOrEmpty(Request.Prefecture) ? "N" + _dao.FilterString(Request.Prefecture) : _dao.FilterString(Request.Prefecture));  
-            SQL += ",@MobileNumber=" + (!string.IsNullOrEmpty(Request.City) ? "N" + _dao.FilterString(Request.City) : _dao.FilterString(Request.City)); 
-            SQL += ",@Email=" + (!string.IsNullOrEmpty(Request.Street) ? "N" + _dao.FilterString(Request.Street) : _dao.FilterString(Request.Street));   
-            SQL += ",@MobileNumber=" + (!string.IsNullOrEmpty(Request.BuildingRoomNo) ? "N" + _dao.FilterString(Request.BuildingRoomNo) : _dao.FilterString(Request.BuildingRoomNo));   
-            SQL += ",@MobileNumber=" + (!string.IsNullOrEmpty(Request.BusinessType) ? "N" + _dao.FilterString(Request.BusinessType) : _dao.FilterString(Request.BusinessType)); 
-            SQL += ",@MobileNumber=" +  _dao.FilterString(Request.CEOName);
-            SQL += ",@MobileNumber=" + (!string.IsNullOrEmpty(Request.CEONameFurigana) ? "N" + _dao.FilterString(Request.CEONameFurigana) : _dao.FilterString(Request.CEONameFurigana));   
-            SQL += ",@MobileNumber=" + (!string.IsNullOrEmpty(Request.CompanyName) ? "N" + _dao.FilterString(Request.CompanyName) : _dao.FilterString(Request.CompanyName));  
-            SQL += ",@MobileNumber=" + (!string.IsNullOrEmpty(Request.CompanyAddress) ? "N" + _dao.FilterString(Request.CompanyAddress) : _dao.FilterString(Request.CompanyAddress));  
-            SQL += ",@MobileNumber=" + _dao.FilterString(Request.AffiliateId);
+            SQL += ",@Fullname=" + (!string.IsNullOrEmpty(Request.FullName) ? "N" + _dao.FilterString(Request.FullName) : _dao.FilterString(Request.FullName));   
+            SQL += ",@BirthDateYear=" + _dao.FilterString(Request.BirthDateYear);
+            SQL += ",@BirthDateMonth=" + _dao.FilterString(Request.BirthDateMonth);
+            SQL += ",@BirthDateDay=" + _dao.FilterString(Request.BirthDateDay);
+            SQL += ",@Gender=" + _dao.FilterString(Request.Gender);
+            SQL += ",@PostalCode=" + _dao.FilterString(Request.PostalCode);
+            //SQL += ",@Address=" + (!string.IsNullOrEmpty(Request.Address) ? "N" + _dao.FilterString(Request.Address) : _dao.FilterString(Request.Address)); 
+            SQL += ",@Prefecture=" + (!string.IsNullOrEmpty(Request.Prefecture) ? "N" + _dao.FilterString(Request.Prefecture) : _dao.FilterString(Request.Prefecture));  
+            SQL += ",@City=" + (!string.IsNullOrEmpty(Request.City) ? "N" + _dao.FilterString(Request.City) : _dao.FilterString(Request.City)); 
+            SQL += ",@Street=" + (!string.IsNullOrEmpty(Request.Street) ? "N" + _dao.FilterString(Request.Street) : _dao.FilterString(Request.Street));   
+            SQL += ",@BuildingNo=" + (!string.IsNullOrEmpty(Request.BuildingRoomNo) ? "N" + _dao.FilterString(Request.BuildingRoomNo) : _dao.FilterString(Request.BuildingRoomNo));   
+            SQL += ",@BusinessType=" + (!string.IsNullOrEmpty(Request.BusinessType) ? "N" + _dao.FilterString(Request.BusinessType) : _dao.FilterString(Request.BusinessType));
+            if (Request.BusinessType=="1")
+            {
+                SQL += ",@CEOName=" + _dao.FilterString(Request.CEOName);
+                SQL += ",@CEONameFurigana=" + (!string.IsNullOrEmpty(Request.CEONameFurigana) ? "N" + _dao.FilterString(Request.CEONameFurigana) : _dao.FilterString(Request.CEONameFurigana));
+                SQL += ",@CompanyName=" + (!string.IsNullOrEmpty(Request.CompanyName) ? "N" + _dao.FilterString(Request.CompanyName) : _dao.FilterString(Request.CompanyName));
+                SQL += ",@CompanyAddress=" + (!string.IsNullOrEmpty(Request.CompanyAddress) ? "N" + _dao.FilterString(Request.CompanyAddress) : _dao.FilterString(Request.CompanyAddress));
+            }
+            SQL += ",@AffiliateId=" + _dao.FilterString(Request.AffiliateId);
             Response = _dao.ParseCommonDbResponse(SQL);
             return Response;
 

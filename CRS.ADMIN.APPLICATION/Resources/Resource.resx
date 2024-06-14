@@ -1136,6 +1136,10 @@
     <value>Manage your profile security</value>
     <comment>Security</comment>
   </data>
+  <data name="ManageAffiliate" xml:space="preserve">
+    <value>Manage Affiliate</value>
+    <comment>AffiliateManagement</comment>
+  </data>
   <data name="ManageClubManager" xml:space="preserve">
     <value>Manage Manager Info</value>
     <comment>ClubManagement</comment>

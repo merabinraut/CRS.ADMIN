@@ -2383,6 +2383,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Manage Affiliate.
+        /// </summary>
+        public static string ManageAffiliate {
+            get {
+                return ResourceManager.GetString("ManageAffiliate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Manage Manager Info.
         /// </summary>
         public static string ManageClubManager {

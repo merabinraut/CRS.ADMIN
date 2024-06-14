@@ -1136,6 +1136,10 @@
     <value>プロファイルのセキュリティを管理する</value>
     <comment>Security</comment>
   </data>
+  <data name="ManageAffiliate" xml:space="preserve">
+    <value>アフィリエイト管理</value>
+    <comment>AffiliateManagement</comment>
+  </data>
   <data name="ManageClubManager" xml:space="preserve">
     <value>マネージャー情報の管理</value>
     <comment>ClubManagement</comment>
