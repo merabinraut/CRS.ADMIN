@@ -123,7 +123,7 @@ namespace CRS.ADMIN.REPOSITORY.AffiliateManagement
                     BirthDateDay = _dao.ParseColumnValue(dbResponse, "BirthDateDay").ToString(),
                     Gender = _dao.ParseColumnValue(dbResponse, "Gender").ToString(),
                     PostalCode = _dao.ParseColumnValue(dbResponse, "PostalCode").ToString(),
-                    //Address = _dao.ParseColumnValue(dbResponse, "Address").ToString(),
+                    FullNameFurigana = _dao.ParseColumnValue(dbResponse, "FullNameFurigana").ToString(),
                     Prefecture = _dao.ParseColumnValue(dbResponse, "Prefecture").ToString(),
                     City = _dao.ParseColumnValue(dbResponse, "City").ToString(),
                     Street = _dao.ParseColumnValue(dbResponse, "Street").ToString(),
@@ -151,7 +151,7 @@ namespace CRS.ADMIN.REPOSITORY.AffiliateManagement
             SQL += ",@BirthDateDay=" + _dao.FilterString(Request.BirthDateDay);
             SQL += ",@Gender=" + _dao.FilterString(Request.Gender);
             SQL += ",@PostalCode=" + _dao.FilterString(Request.PostalCode);
-            //SQL += ",@Address=" + (!string.IsNullOrEmpty(Request.Address) ? "N" + _dao.FilterString(Request.Address) : _dao.FilterString(Request.Address)); 
+            SQL += ",@FullNameFurigana=" + (!string.IsNullOrEmpty(Request.FullNameFurigana) ? "N" + _dao.FilterString(Request.FullNameFurigana) : _dao.FilterString(Request.FullNameFurigana)); 
             SQL += ",@Prefecture=" + (!string.IsNullOrEmpty(Request.Prefecture) ? "N" + _dao.FilterString(Request.Prefecture) : _dao.FilterString(Request.Prefecture));  
             SQL += ",@City=" + (!string.IsNullOrEmpty(Request.City) ? "N" + _dao.FilterString(Request.City) : _dao.FilterString(Request.City)); 
             SQL += ",@Street=" + (!string.IsNullOrEmpty(Request.Street) ? "N" + _dao.FilterString(Request.Street) : _dao.FilterString(Request.Street));   

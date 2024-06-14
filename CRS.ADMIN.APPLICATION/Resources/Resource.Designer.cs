@@ -1566,6 +1566,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Furigana.
         /// </summary>
+        public static string FullNameFurigana {
+            get {
+                return ResourceManager.GetString("FullNameFurigana", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Furigana.
+        /// </summary>
         public static string Furigana {
             get {
                 return ResourceManager.GetString("Furigana", resourceCulture);

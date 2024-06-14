@@ -774,6 +774,10 @@
     <value>金額から（¥）</value>
     <comment>Point Setup</comment>
   </data>
+  <data name="FullNameFurigana" xml:space="preserve">
+    <value>フリガナ</value>
+    <comment>AffiliateManagement</comment>
+  </data>
   <data name="Furigana" xml:space="preserve">
     <value>フリガナ</value>
     <comment>ClubManagement</comment>

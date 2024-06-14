@@ -82,5 +82,6 @@ namespace CRS.ADMIN.SHARED.AffiliateManagement
         public string CompanyName { get; set; }
         public string CompanyAddress { get; set; }
         public string LoginId { get; set; }
+        public string FullNameFurigana { get; set; }
     }
 }

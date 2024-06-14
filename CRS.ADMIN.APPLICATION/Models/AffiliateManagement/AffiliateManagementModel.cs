@@ -92,8 +92,8 @@ namespace CRS.ADMIN.APPLICATION.Models.AffiliateManagement
         [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
         [RegularExpression(@"^\d{3} \d{4}$", ErrorMessage = "Invalid Postal Code")]
         public string PostalCode { get; set; }
-        //[Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
-        public string Address { get; set; }
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
+        public string FullNameFurigana { get; set; }
         [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
         public string Prefecture { get; set; }
         [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]

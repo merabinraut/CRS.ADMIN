@@ -774,6 +774,10 @@
     <value>From Amount (¥)</value>
     <comment>Point Setup</comment>
   </data>
+  <data name="FullNameFurigana" xml:space="preserve">
+    <value>Furigana</value>
+    <comment>AffiliateManagement</comment>
+  </data>
   <data name="Furigana" xml:space="preserve">
     <value>Furigana</value>
     <comment>Club Management</comment>

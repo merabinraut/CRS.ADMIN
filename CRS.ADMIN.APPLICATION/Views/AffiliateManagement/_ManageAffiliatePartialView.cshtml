@@ -41,19 +41,20 @@
         </div>
         <div class="p-[24px]">
             @*<form class="h-adr">
-                    <span class="p-country-name" style="display:none;">Japan</span>
-                    PostalCode<input type="text" class="p-postal-code" size="8" maxlength="8"><br>
-                    Address：<input type="text" class="p-region p-locality p-street-address p-extended-address" /><br>
-                    都道府県：<input type="text" class="p-region" /><br>
-                    地区町村：<input type="text" class="p-locality" /><br>
-                    町名番地：<input type="text" class="p-street-address p-extended-address" />
-                </form>*@
+            <span class="p-country-name" style="display:none;">Japan</span>
+            PostalCode<input type="text" class="p-postal-code" size="8" maxlength="8"><br>
+            Address：<input type="text" class="p-region p-locality p-street-address p-extended-address" /><br>
+            都道府県：<input type="text" class="p-region" /><br>
+            地区町村：<input type="text" class="p-locality" /><br>
+            町名番地：<input type="text" class="p-street-address p-extended-address" />
+        </form>*@
             @using (Html.BeginForm("ManageAffiliate", "AffiliateManagement", FormMethod.Post, new { @id = "ManageAffiliateForm", @class = "h-adr" }))
             {
                 <span class="p-country-name" style="display:none;">Japan</span>
                 @Html.AntiForgeryToken()
                 @Html.HiddenFor(model => model.AffiliateId);
-
+                @Html.HiddenFor(model => model.EmailAddress)
+                @Html.HiddenFor(model => model.MobileNumber)
                 <div class=" py-4 grid gap-6">
                     @*<div style="display:none">*@
 
@@ -74,6 +75,8 @@
                                 <input type="text" class="w-full" placeholder="@CRS.ADMIN.APPLICATION.Resources.Resource.Username" name="LoginId" value="@Model.LoginId" disabled>
 
                             </div>
+                        </div>
+                        <div class="grid grid-cols-2 gap-x-5 gap-y-4">
                             <div class="input-field-common">
                                 <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
                                     @CRS.ADMIN.APPLICATION.Resources.Resource.AffiliateFullName
@@ -91,7 +94,23 @@
                                     @Html.ValidationMessageFor(m => m.FullName)
                                 </span>
                             </div>
+                            <div class="input-field-common">
+                                <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
+                                    @CRS.ADMIN.APPLICATION.Resources.Resource.FullNameFurigana
+                                </label>
+                                @Html.TextBoxFor(model => model.FullNameFurigana, new
+                           {
+                               @class = "w-full",
+                               @placeholder = CRS.ADMIN.APPLICATION.Resources.Resource.FullNameFurigana,
+                               //@onkeypress = "return isNumber(event)",
+                               autocomplete = "off",
+                               @maxLength = "100"
 
+                           })
+                                <span class="error">
+                                    @Html.ValidationMessageFor(m => m.FullName)
+                                </span>
+                            </div>
                             <div class="input-field-common">
                                 <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
                                     @CRS.ADMIN.APPLICATION.Resources.Resource.AffiliatePhoneNumber
@@ -103,7 +122,7 @@
                                @placeholder = CRS.ADMIN.APPLICATION.Resources.Resource.AffiliatePhoneNumber,
                                autocomplete = "off",
                                @maxLength = "11",
-                               @disabled= "disabled"
+                               @disabled = "disabled"
                            })
                                 <span class="error">
                                     @Html.ValidationMessageFor(m => m.MobileNumber)
@@ -217,22 +236,22 @@
                             </div>
 
                             @*<div class="input-field-common">
-                                     <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
-                                         @CRS.ADMIN.APPLICATION.Resources.Resource.AffiliateAutoFilledAddress
-                                     </label>
+                             <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
+                                 @CRS.ADMIN.APPLICATION.Resources.Resource.AffiliateAutoFilledAddress
+                             </label>
 
-                                     @Html.TextBoxFor(model => model.Address, new
-                                  {
-                                    @class = "w-full p-region p-locality p-street-address p-extended-address",
-                                    @placeholder = CRS.ADMIN.APPLICATION.Resources.Resource.AffiliateAutoFilledAddress,
-                                    autocomplete = "off",
-                                    @maxLength = "200"
-                                })
-                                     <span class="error">
-                                         @Html.ValidationMessageFor(m => m.Address)
-                                     </span>
+                             @Html.TextBoxFor(model => model.Address, new
+                          {
+                            @class = "w-full p-region p-locality p-street-address p-extended-address",
+                            @placeholder = CRS.ADMIN.APPLICATION.Resources.Resource.AffiliateAutoFilledAddress,
+                            autocomplete = "off",
+                            @maxLength = "200"
+                        })
+                             <span class="error">
+                                 @Html.ValidationMessageFor(m => m.Address)
+                             </span>
 
-                                 </div>*@
+                         </div>*@
                         </div>
                         <div class="grid grid-cols-2 gap-x-5 gap-y-4">
 
@@ -250,24 +269,24 @@
                                 @*@Html.NDropDownListFor(model => model.Pref, new SelectList(ViewBag.PrefPref, "", "Text"), new { @class = "form-control select2", autocomplete = "off", id = "large" }, 2)*@
 
                                 @*<select id="large" class=" default_select select-common block w-full "
-                                            style="width: 100%;" name="Prefecture">
-                                        @foreach (KeyValuePair<string, string> item in ViewBag.Pref as Dictionary<string, string>)
-                                        {
-                                            var selectedId = ViewBag.PrefIdKey as string;
-                                            if (item.Value == selectedId)
-                                            {
-                                                <option value="@item.Key" selected>
-                                                    @item.Value
-                                                </option>
-                                            }
-                                            else
-                                            {
-                                                <option value="@item.Key">
-                                                    @item.Value
-                                                </option>
-                                            }
-                                        }
-                                    </select>*@
+                                    style="width: 100%;" name="Prefecture">
+                                @foreach (KeyValuePair<string, string> item in ViewBag.Pref as Dictionary<string, string>)
+                                {
+                                    var selectedId = ViewBag.PrefIdKey as string;
+                                    if (item.Value == selectedId)
+                                    {
+                                        <option value="@item.Key" selected>
+                                            @item.Value
+                                        </option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@item.Key">
+                                            @item.Value
+                                        </option>
+                                    }
+                                }
+                            </select>*@
                                 <span class="error">
                                     @Html.ValidationMessageFor(m => m.Prefecture)
                                 </span>
