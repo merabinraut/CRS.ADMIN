@@ -608,6 +608,9 @@
         }
     </script>
     <script>
+        function CancelFunction() {
+            location.reload();
+        }
         var PopUpRenderValue = '@ViewBag.PopUpRenderValue';
         if (PopUpRenderValue != null && PopUpRenderValue != "" && PopUpRenderValue == "Manage") {
              let search_filter =  '@ViewBag.SearchFilter1';

@@ -9,10 +9,10 @@
     @Html.AntiForgeryToken()
     <div>
         <div class="heading-title">
-            Static Data
+            @CRS.ADMIN.APPLICATION.Resources.Resource.StaticDataType
         </div>
         <div class="span-title-light-gray">
-            Manage Static Data
+            @CRS.ADMIN.APPLICATION.Resources.Resource.ManageStaticDataType
         </div>
     </div>
     <!-- container  -->
@@ -62,7 +62,7 @@
                                 </div>
                             </div>
                         </th>
-                        <th scope="col" class="p-[12px]">
+                        @*<th scope="col" class="p-[12px]">
                             <div class="flex w-max">
                                 Static Data Type Id
                                 <div class="relative pl-[5px]">
@@ -70,10 +70,10 @@
                                     <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
                                 </div>
                             </div>
-                        </th>
+                        </th>*@
                         <th scope="col" class="p-[12px]">
                             <div class="flex w-max">
-                                Static Data Label
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.StaticDataLabel
                                 <div class="relative pl-[5px]">
                                     <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
                                     <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
@@ -82,7 +82,7 @@
                         </th>
                         <th scope="col" class="p-[12px]">
                             <div class="flex w-max">
-                                Static Data Description
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.StaticDataDescription
                                 <div class="relative pl-[5px]">
                                     <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
                                     <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
@@ -109,9 +109,9 @@
                                 <td class="p-[12px]">
                                     @sno
                                 </td>
-                                <td class="p-[12px]">
+                                @*<td class="p-[12px]">
                                     @item.StaticDataType
-                                </td>
+                                </td>*@
                                 <td class="p-[12px]">
                                     @item.StaticDataLabel
                                 </td>

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using CRS.ADMIN.APPLICATION.Resources;
 
 namespace CRS.ADMIN.APPLICATION.Models.PromotionManagement
 {
@@ -12,9 +13,9 @@ namespace CRS.ADMIN.APPLICATION.Models.PromotionManagement
     public class PromotionManagementModel
     {
         public string Id { get; set; }
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Title is required")]
+        [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Title_is_required")]
         public string Title { get; set; }
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Description is required")]
+        [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Description_is_required")]
         public string Description { get; set; }
         public string ImagePath { get; set; }
     }

@@ -306,7 +306,7 @@
                                     </label>
                                     <select id="large" name="ClubDDL" class=" default_select select-common block w-full ClubDDL"
                                             style="width: 100%;">
-                                        <option>Select Club</option>
+                                        <option>@CRS.ADMIN.APPLICATION.Resources.Resource.Select_Club</option>
                                     </select>
                                 </div>
                                 <div class=" input-field-common">
@@ -315,7 +315,7 @@
                                     </label>
                                     <select id="large" name="CurrentCommissionCategoryDDL" class=" default_select select-common block w-full CurrentCommissionCategoryDDL"
                                             style="width: 100%;">
-                                        <option>Select Current Commission Category</option>
+                                        <option>@CRS.ADMIN.APPLICATION.Resources.Resource.Select_Current_Commission_Category</option>
                                     </select>
                                 </div>
                                 <div class=" input-field-common">
@@ -396,8 +396,8 @@
     var RequestVerificationToken = $('input[name="__RequestVerificationToken"]').val();
 
         $('.LocationDDL').change(function () {
-        $(".ClubDDL").empty().prepend("<option value='' disabled selected>--- Select ---</option>");
-        $(".CurrentCommissionCategoryDDL").empty().prepend("<option value='' disabled selected>--- Select ---</option>");
+        $(".ClubDDL").empty().prepend("<option value='' disabled selected>@CRS.ADMIN.APPLICATION.Resources.Resource.Select_Club</option>");
+        $(".CurrentCommissionCategoryDDL").empty().prepend("<option value='' disabled selected>@CRS.ADMIN.APPLICATION.Resources.Resource.Select_Current_Commission_Category</option>");
         var locationId = document.getElementsByName("LocationDDL")[0].value;
         if (!Boolean(locationId)) {
             toastr.info('Location is required');
@@ -422,7 +422,7 @@
     });
 
         $('.ClubDDL').change(function () {
-         $(".CurrentCommissionCategoryDDL").empty().prepend("<option value='' disabled selected>--- Select ---</option>");
+         $(".CurrentCommissionCategoryDDL").empty().prepend("<option value='' disabled selected>@CRS.ADMIN.APPLICATION.Resources.Resource.Select_Current_Commission_Category</option>");
          var agentId = document.getElementsByName("ClubDDL")[0].value;
          $.ajax({
              type: 'POST',
@@ -432,7 +432,7 @@
              data: { '__RequestVerificationToken': RequestVerificationToken, agentId },
              success: function (data) {
                  var currentCommissionDDL = $(".CurrentCommissionCategoryDDL");
-                 currentCommissionDDL.empty().append('<option value="" disabled selected>--- Select ---</option>');
+                 currentCommissionDDL.empty().append('<option value="" disabled selected>@CRS.ADMIN.APPLICATION.Resources.Resource.Select_Current_Commission_Category</option>');
 
                  $.each(data.commissionLists, function (i, commissionDDl) {
                      currentCommissionDDL.append('<option value="' + commissionDDl.Value + '">' + commissionDDl.Text + '</option>');

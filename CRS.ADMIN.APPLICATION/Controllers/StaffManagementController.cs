@@ -10,21 +10,28 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+using static Google.Apis.Requests.BatchRequest;
+
+
 
 namespace CRS.ADMIN.APPLICATION.Controllers
 {
-    public class StaffManagementController : BaseController
+    public class StaffManagementController :BaseController
     {
         private readonly IStaffManagementBusiness _business;
+       
         public StaffManagementController(IStaffManagementBusiness business)
         {
             _business = business;
+            
         }
         [HttpGet]
-        public ActionResult StaffList(CustomerListCommonModel Request, int StartIndex = 0, int PageSize = 10)
+        public ActionResult StaffList(CustomerListCommonModel Requests, int StartIndex = 0, int PageSize = 10)
         {
             Session["CurrentUrl"] = "/StaffManagement/StaffList";
             string RenderId = "";
+            var culture = Request.Cookies["culture"]?.Value;
+            culture = string.IsNullOrEmpty(culture) ? "ja" : culture;
             StaffManagementCommonModel responseInfo = new StaffManagementCommonModel();
             if (TempData.ContainsKey("ManageStaffModel")) responseInfo.ManageStaffModel = TempData["ManageStaffModel"] as ManageStaff;
             else responseInfo.ManageStaffModel = new ManageStaff();
@@ -33,7 +40,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             {
                 Skip = StartIndex,
                 Take = PageSize,
-                SearchFilter = !string.IsNullOrEmpty(Request.SearchFilter) ? Request.SearchFilter : null
+                SearchFilter = !string.IsNullOrEmpty(Requests.SearchFilter) ? Requests.SearchFilter : null
             };
             var dbResponseInfo = _business.GetStaffList(dbRequest);
             responseInfo.StaffListModel = dbResponseInfo.MapObjects<StaffManagementModel>();
@@ -43,12 +50,12 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 item.ProfileImage = ImageHelper.ProcessedImage(item.ProfileImage);
             }
             ViewBag.PopUpRenderValue = !string.IsNullOrEmpty(RenderId) ? RenderId : null;
-            ViewBag.RoleDDL = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("ROLEDDL", "2", "") as Dictionary<string, string>, null, "--- Select ---");
+            ViewBag.RoleDDL = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("ROLEDDL", "2", culture) as Dictionary<string, string>, null,culture.ToLower()=="en"?  "--- Select ---": "--- 選択 ---");
             ViewBag.RoleIdKey = responseInfo.ManageStaffModel.RoleId.EncryptParameter();
             ViewBag.StartIndex = StartIndex;
             ViewBag.PageSize = PageSize;
             ViewBag.TotalData = dbResponseInfo != null && dbResponseInfo.Any() ? dbResponseInfo[0].TotalRecords : 0;
-            responseInfo.SearchFilter = !string.IsNullOrEmpty(Request.SearchFilter) ? Request.SearchFilter : null;
+            responseInfo.SearchFilter = !string.IsNullOrEmpty(Requests.SearchFilter) ? Requests.SearchFilter : null;
             return View(responseInfo);
         }
         [HttpGet]

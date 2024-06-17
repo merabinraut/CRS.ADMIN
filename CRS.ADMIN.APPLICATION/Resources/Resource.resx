@@ -131,6 +131,22 @@
     <value>Additional Field</value>
     <comment>Plan Management</comment>
   </data>
+  <data name="AdditionalValue1" xml:space="preserve">
+    <value>Additional Value1</value>
+    <comment>StaticDataManagement</comment>
+  </data>
+  <data name="AdditionalValue2" xml:space="preserve">
+    <value>Additional Value2</value>
+    <comment>StaticDataManagement</comment>
+  </data>
+  <data name="AdditionalValue3" xml:space="preserve">
+    <value>Additional Value3</value>
+    <comment>StaticDataManagement</comment>
+  </data>
+  <data name="AdditionalValue4" xml:space="preserve">
+    <value>Additional Value4</value>
+    <comment>StaticDataManagement</comment>
+  </data>
   <data name="Address" xml:space="preserve">
     <value>Address</value>
     <comment>Club Management</comment>
@@ -491,6 +507,18 @@
     <value>Clubs</value>
     <comment>Dashboard</comment>
   </data>
+  <data name="ClubTabApproved" xml:space="preserve">
+    <value>Approved</value>
+    <comment>ClubManagement</comment>
+  </data>
+  <data name="ClubTabPending" xml:space="preserve">
+    <value>Pending</value>
+    <comment>ClubManagement</comment>
+  </data>
+  <data name="ClubTabRejected" xml:space="preserve">
+    <value>Rejected</value>
+    <comment>ClubManagement</comment>
+  </data>
   <data name="Commission" xml:space="preserve">
     <value>Commission</value>
     <comment>Commission Management</comment>
@@ -579,6 +607,10 @@
     <value>Created On</value>
     <comment>Roles &amp; Privileges</comment>
   </data>
+  <data name="CreatedDate" xml:space="preserve">
+    <value>Created Date</value>
+    <comment>Email</comment>
+  </data>
   <data name="Credit" xml:space="preserve">
     <value>Credit</value>
     <comment>Point Management</comment>
@@ -642,6 +674,10 @@
     <value>Description About Club</value>
     <comment>Club Management</comment>
   </data>
+  <data name="Description is required" xml:space="preserve">
+    <value>Description is required</value>
+    <comment>Promotional Images</comment>
+  </data>
   <data name="Description Placeholder" xml:space="preserve">
     <value>eg. Description about club</value>
     <comment>Club Management</comment>
@@ -678,9 +714,41 @@
     <value>Email Address</value>
     <comment>Affiliate Management</comment>
   </data>
+  <data name="EmailAddress" xml:space="preserve">
+    <value>Email Address</value>
+    <comment>Email</comment>
+  </data>
   <data name="EmailLog" xml:space="preserve">
     <value>Email Log</value>
     <comment>Email Log</comment>
+  </data>
+  <data name="EmailLogReports" xml:space="preserve">
+    <value>Email Log Reports</value>
+    <comment>Email</comment>
+  </data>
+  <data name="EmailRequestedID" xml:space="preserve">
+    <value>Email Requested ID</value>
+    <comment>Email</comment>
+  </data>
+  <data name="EmailSentBy" xml:space="preserve">
+    <value>Email Sent By</value>
+    <comment>Email</comment>
+  </data>
+  <data name="EmailSentCC" xml:space="preserve">
+    <value>Email Sent CC</value>
+    <comment>Email</comment>
+  </data>
+  <data name="EmailSentStatus" xml:space="preserve">
+    <value>Email Sent Status</value>
+    <comment>Email</comment>
+  </data>
+  <data name="EmailSentTo" xml:space="preserve">
+    <value>Email Sent To</value>
+    <comment>Email</comment>
+  </data>
+  <data name="EmailText" xml:space="preserve">
+    <value>Email Text</value>
+    <comment>Email</comment>
   </data>
   <data name="English" xml:space="preserve">
     <value>English</value>
@@ -738,6 +806,10 @@
   <data name="February" xml:space="preserve">
     <value>Feb</value>
     <comment>Dashboard</comment>
+  </data>
+  <data name="Female" xml:space="preserve">
+    <value>Female</value>
+    <comment>AffiliateManagement</comment>
   </data>
   <data name="Filter By" xml:space="preserve">
     <value>Filter By</value>
@@ -926,6 +998,10 @@
     <value>Informations regarding points category type</value>
     <comment>Points Setup</comment>
   </data>
+  <data name="InputType" xml:space="preserve">
+    <value>Input Type</value>
+    <comment>StaticDataManagement</comment>
+  </data>
   <data name="Instagram" xml:space="preserve">
     <value>Instagram</value>
     <comment>Club Management</comment>
@@ -1068,6 +1144,10 @@
     <value>Main Menu</value>
     <comment>Side Bar Menu</comment>
   </data>
+  <data name="Male" xml:space="preserve">
+    <value>Male</value>
+    <comment>AffiliateManagement</comment>
+  </data>
   <data name="Manage Club Events" xml:space="preserve">
     <value>Manage Club Events</value>
     <comment>Club Management</comment>
@@ -1148,9 +1228,21 @@
     <value>Manage Manager Info</value>
     <comment>ClubManagement</comment>
   </data>
+  <data name="ManageEmailLogs" xml:space="preserve">
+    <value>Manage Email Logs</value>
+    <comment>Email</comment>
+  </data>
   <data name="ManagerName" xml:space="preserve">
     <value>Manager Name</value>
     <comment>ClubManagement</comment>
+  </data>
+  <data name="ManageSMSLogs" xml:space="preserve">
+    <value>Manage SMS Logs</value>
+    <comment>SMS</comment>
+  </data>
+  <data name="ManageStaticDataType" xml:space="preserve">
+    <value>Manage Static Data Type</value>
+    <comment>StaticDataManagement</comment>
   </data>
   <data name="Map Link" xml:space="preserve">
     <value>Map Link</value>
@@ -1163,6 +1255,14 @@
   <data name="Max Value" xml:space="preserve">
     <value>Max Value</value>
     <comment>Commission Management</comment>
+  </data>
+  <data name="Maximum 300 characters allowed" xml:space="preserve">
+    <value>Maximum 300 characters allowed</value>
+    <comment>CommissionManagement</comment>
+  </data>
+  <data name="Maximum 50 characters allowed" xml:space="preserve">
+    <value>Maximum 50 characters allowed</value>
+    <comment>CommissionManagement</comment>
   </data>
   <data name="Maximum length is 16 characters" xml:space="preserve">
     <value>Maximum length is 16 characters</value>
@@ -1177,6 +1277,10 @@
   <data name="Menu Management" xml:space="preserve">
     <value>Menu Management</value>
     <comment>Roles Management</comment>
+  </data>
+  <data name="Message" xml:space="preserve">
+    <value>Message</value>
+    <comment>SMS</comment>
   </data>
   <data name="Min Value" xml:space="preserve">
     <value>Min Value</value>
@@ -1260,6 +1364,10 @@
   <data name="Order" xml:space="preserve">
     <value>Order</value>
     <comment>Recommendation Management-&gt;Host List</comment>
+  </data>
+  <data name="Others" xml:space="preserve">
+    <value>Others</value>
+    <comment>AffiliateManagement</comment>
   </data>
   <data name="Our top booked clubs" xml:space="preserve">
     <value>Our top booked clubs.</value>
@@ -1703,6 +1811,14 @@
     <value>Select Business Type</value>
     <comment>Club Management</comment>
   </data>
+  <data name="Select Club" xml:space="preserve">
+    <value>Select Club</value>
+    <comment>CommissionManagement</comment>
+  </data>
+  <data name="Select Current Commission Category" xml:space="preserve">
+    <value>Select Current Commission Category</value>
+    <comment>CommissionManagement</comment>
+  </data>
   <data name="Select Language" xml:space="preserve">
     <value>Select Language</value>
     <comment>Language Preference</comment>
@@ -1710,6 +1826,10 @@
   <data name="Select Location" xml:space="preserve">
     <value>Select Location</value>
     <comment>Club Management</comment>
+  </data>
+  <data name="SelectHost" xml:space="preserve">
+    <value>Select Host</value>
+    <comment>Email</comment>
   </data>
   <data name="Self Request" xml:space="preserve">
     <value>Self-Request</value>
@@ -1745,6 +1865,10 @@
     <value>SMS Log</value>
     <comment>SMS Log</comment>
   </data>
+  <data name="SMSLogReport" xml:space="preserve">
+    <value>SMS Log Report</value>
+    <comment>SMS</comment>
+  </data>
   <data name="SNS" xml:space="preserve">
     <value>SNS</value>
     <comment>Host Management</comment>
@@ -1764,6 +1888,34 @@
   <data name="Staff Management Supporting Text" xml:space="preserve">
     <value>Manage club booking request</value>
     <comment>Staff Management</comment>
+  </data>
+  <data name="StaticDataDescription" xml:space="preserve">
+    <value>Static Data Description</value>
+    <comment>StaticDataManagement</comment>
+  </data>
+  <data name="StaticDataLabel" xml:space="preserve">
+    <value>Static Data Label</value>
+    <comment>StaticDataManagement</comment>
+  </data>
+  <data name="StaticDataManagement" xml:space="preserve">
+    <value>Static Data Management</value>
+    <comment>StaticDataManagement</comment>
+  </data>
+  <data name="StaticDataType" xml:space="preserve">
+    <value>Static Data Type</value>
+    <comment>StaticDataManagement</comment>
+  </data>
+  <data name="StaticDataTypeId" xml:space="preserve">
+    <value>Static Data Type Id</value>
+    <comment>StaticDataManagement</comment>
+  </data>
+  <data name="StaticDataTypeName" xml:space="preserve">
+    <value>Static Data Type Name</value>
+    <comment>StaticDataManagement</comment>
+  </data>
+  <data name="StaticDataValue" xml:space="preserve">
+    <value>Static Data Value</value>
+    <comment>StaticDataManagement</comment>
   </data>
   <data name="Status" xml:space="preserve">
     <value>Status</value>
@@ -1821,6 +1973,10 @@
   <data name="Title" xml:space="preserve">
     <value>Title</value>
     <comment>Gallery Management</comment>
+  </data>
+  <data name="Title is required" xml:space="preserve">
+    <value>Title is required</value>
+    <comment>Promotional Images</comment>
   </data>
   <data name="To Amount" xml:space="preserve">
     <value>To Amount</value>

@@ -997,6 +997,7 @@ namespace CRS.ADMIN.APPLICATION.Library
             {
                 case "COMMISSIONTYPELIST":
                     return new List<SelectListItem> {
+                         
                         new SelectListItem { Text = "--- Select ---", Value = "" },
                         new SelectListItem { Text = "Percentage", Value = "P" },
                         new SelectListItem { Text = "Flat", Value = "F" }

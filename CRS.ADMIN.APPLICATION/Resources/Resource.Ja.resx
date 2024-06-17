@@ -131,6 +131,22 @@
     <value>追加フィールド</value>
     <comment>Plan Management</comment>
   </data>
+  <data name="AdditionalValue1" xml:space="preserve">
+    <value>追加バリュー1</value>
+    <comment>StaticDataManagement</comment>
+  </data>
+  <data name="AdditionalValue2" xml:space="preserve">
+    <value>追加バリュー2</value>
+    <comment>StaticDataManagement</comment>
+  </data>
+  <data name="AdditionalValue3" xml:space="preserve">
+    <value>追加バリュー3</value>
+    <comment>StaticDataManagement</comment>
+  </data>
+  <data name="AdditionalValue4" xml:space="preserve">
+    <value>追加バリュー4</value>
+    <comment>StaticDataManagement</comment>
+  </data>
   <data name="Address" xml:space="preserve">
     <value>住所</value>
     <comment>Club Management</comment>
@@ -491,6 +507,18 @@
     <value>クラブ</value>
     <comment>Dashboard</comment>
   </data>
+  <data name="ClubTabApproved" xml:space="preserve">
+    <value>承認済み</value>
+    <comment>ClubManagement</comment>
+  </data>
+  <data name="ClubTabPending" xml:space="preserve">
+    <value>保留中</value>
+    <comment>ClubManagement</comment>
+  </data>
+  <data name="ClubTabRejected" xml:space="preserve">
+    <value>拒否済み</value>
+    <comment>ClubManagement</comment>
+  </data>
   <data name="Commission" xml:space="preserve">
     <value>手数料</value>
     <comment>Commission Management</comment>
@@ -579,6 +607,10 @@
     <value>作成日</value>
     <comment>Roles &amp; Privileges</comment>
   </data>
+  <data name="CreatedDate" xml:space="preserve">
+    <value>作成日</value>
+    <comment>Email</comment>
+  </data>
   <data name="Credit" xml:space="preserve">
     <value>残高</value>
     <comment>PointManagement</comment>
@@ -642,6 +674,10 @@
     <value>説明</value>
     <comment>Club Management</comment>
   </data>
+  <data name="Description is required" xml:space="preserve">
+    <value>説明は必須です</value>
+    <comment>Promotional Images</comment>
+  </data>
   <data name="Description Placeholder" xml:space="preserve">
     <value>クラブ説明</value>
     <comment>Club Management</comment>
@@ -678,9 +714,41 @@
     <value>メールアドレス</value>
     <comment>Affiliate Management</comment>
   </data>
+  <data name="EmailAddress" xml:space="preserve">
+    <value>メールアドレス</value>
+    <comment>Email</comment>
+  </data>
   <data name="EmailLog" xml:space="preserve">
     <value>メールログ</value>
     <comment>Email Log</comment>
+  </data>
+  <data name="EmailLogReports" xml:space="preserve">
+    <value>メール履歴レポート</value>
+    <comment>Email</comment>
+  </data>
+  <data name="EmailRequestedID" xml:space="preserve">
+    <value>メールレクエストID</value>
+    <comment>Email</comment>
+  </data>
+  <data name="EmailSentBy" xml:space="preserve">
+    <value>送信者</value>
+    <comment>Email</comment>
+  </data>
+  <data name="EmailSentCC" xml:space="preserve">
+    <value>CC送信先</value>
+    <comment>Email</comment>
+  </data>
+  <data name="EmailSentStatus" xml:space="preserve">
+    <value>送信ステータス</value>
+    <comment>Email</comment>
+  </data>
+  <data name="EmailSentTo" xml:space="preserve">
+    <value>送信先</value>
+    <comment>Email</comment>
+  </data>
+  <data name="EmailText" xml:space="preserve">
+    <value>メール本文</value>
+    <comment>Email</comment>
   </data>
   <data name="English" xml:space="preserve">
     <value>英語</value>
@@ -738,6 +806,10 @@
   <data name="February" xml:space="preserve">
     <value>二月</value>
     <comment>Dashboard</comment>
+  </data>
+  <data name="Female" xml:space="preserve">
+    <value>男性</value>
+    <comment>AffiliateManagement</comment>
   </data>
   <data name="Filter By" xml:space="preserve">
     <value>フィルター条件</value>
@@ -926,6 +998,10 @@
     <value>ポイントカテゴリータイプに関する情報</value>
     <comment>Points Setup</comment>
   </data>
+  <data name="InputType" xml:space="preserve">
+    <value>入力タイプ</value>
+    <comment>StaticDataManagement</comment>
+  </data>
   <data name="Instagram" xml:space="preserve">
     <value>インスタグラム</value>
     <comment>Club Management</comment>
@@ -1068,6 +1144,10 @@
     <value>メインメニュー</value>
     <comment>Side Bar Menu</comment>
   </data>
+  <data name="Male" xml:space="preserve">
+    <value>女性</value>
+    <comment>AffiliateManagement</comment>
+  </data>
   <data name="Manage Club Events" xml:space="preserve">
     <value>クラブイベント管理</value>
     <comment>Club Management</comment>
@@ -1148,12 +1228,24 @@
     <value>マネージャー情報の管理</value>
     <comment>ClubManagement</comment>
   </data>
+  <data name="ManageEmailLogs" xml:space="preserve">
+    <value>メール履歴を管理</value>
+    <comment>Email</comment>
+  </data>
   <data name="Manager" xml:space="preserve">
     <value />
   </data>
   <data name="ManagerName" xml:space="preserve">
     <value>店舗責任者名</value>
     <comment>ClubManagement</comment>
+  </data>
+  <data name="ManageSMSLogs" xml:space="preserve">
+    <value>SMS履歴を管理</value>
+    <comment>SMS</comment>
+  </data>
+  <data name="ManageStaticDataType" xml:space="preserve">
+    <value>静的データタイプを管理</value>
+    <comment>StaticDataManagement</comment>
   </data>
   <data name="Map Link" xml:space="preserve">
     <value>マップリンク</value>
@@ -1166,6 +1258,14 @@
   <data name="Max Value" xml:space="preserve">
     <value>最大値</value>
     <comment>Commission Management</comment>
+  </data>
+  <data name="Maximum 300 characters allowed" xml:space="preserve">
+    <value>最大300文字まで許可されています</value>
+    <comment>CommissionManagement</comment>
+  </data>
+  <data name="Maximum 50 characters allowed" xml:space="preserve">
+    <value>最大50文字まで許可されています</value>
+    <comment>CommissionManagement</comment>
   </data>
   <data name="Maximum length is 16 characters" xml:space="preserve">
     <value>最大長は 16 文字です</value>
@@ -1180,6 +1280,10 @@
   <data name="Menu Management" xml:space="preserve">
     <value>メニュー管理</value>
     <comment>Roles Management</comment>
+  </data>
+  <data name="Message" xml:space="preserve">
+    <value>メッセージ</value>
+    <comment>SMS</comment>
   </data>
   <data name="Min Value" xml:space="preserve">
     <value>最小値</value>
@@ -1263,6 +1367,10 @@
   <data name="Order" xml:space="preserve">
     <value>予約数</value>
     <comment>Recommendation Management-&gt;Host List</comment>
+  </data>
+  <data name="Others" xml:space="preserve">
+    <value>その他</value>
+    <comment>AffiliateManagement</comment>
   </data>
   <data name="Our top booked clubs" xml:space="preserve">
     <value>予約数が多い順から表示します</value>
@@ -1709,6 +1817,14 @@
     <value>業種を選択してください</value>
     <comment>Club Management</comment>
   </data>
+  <data name="Select Club" xml:space="preserve">
+    <value>クラブを選択</value>
+    <comment>CommissionManagement</comment>
+  </data>
+  <data name="Select Current Commission Category" xml:space="preserve">
+    <value>現在のカテゴリを選択</value>
+    <comment>CommissionManagement</comment>
+  </data>
   <data name="Select Language" xml:space="preserve">
     <value>言語を選択する</value>
     <comment>Language Preference</comment>
@@ -1716,6 +1832,10 @@
   <data name="Select Location" xml:space="preserve">
     <value>住所選択してください</value>
     <comment>Club Management</comment>
+  </data>
+  <data name="SelectHost" xml:space="preserve">
+    <value>ホストを選択</value>
+    <comment>Email</comment>
   </data>
   <data name="Self Request" xml:space="preserve">
     <value>自己依頼</value>
@@ -1751,6 +1871,10 @@
     <value>SMSログ</value>
     <comment>SMS Log</comment>
   </data>
+  <data name="SMSLogReport" xml:space="preserve">
+    <value>SMS履歴レポート</value>
+    <comment>SMS</comment>
+  </data>
   <data name="SNS" xml:space="preserve">
     <value>SNS</value>
     <comment>Host Management</comment>
@@ -1770,6 +1894,34 @@
   <data name="Staff Management Supporting Text" xml:space="preserve">
     <value>クラブ予約リクエストの管理</value>
     <comment>Staff Management</comment>
+  </data>
+  <data name="StaticDataDescription" xml:space="preserve">
+    <value>スタティックデータの説明</value>
+    <comment>StaticDataManagement</comment>
+  </data>
+  <data name="StaticDataLabel" xml:space="preserve">
+    <value>スタティックデータラベル</value>
+    <comment>StaticDataManagement</comment>
+  </data>
+  <data name="StaticDataManagement" xml:space="preserve">
+    <value />
+    <comment>StaticDataManagement</comment>
+  </data>
+  <data name="StaticDataType" xml:space="preserve">
+    <value>スタティックデータ分類</value>
+    <comment>StaticDataManagement</comment>
+  </data>
+  <data name="StaticDataTypeId" xml:space="preserve">
+    <value>スタティックデータ分類ID</value>
+    <comment>StaticDataManagement</comment>
+  </data>
+  <data name="StaticDataTypeName" xml:space="preserve">
+    <value>スタティックデータ名</value>
+    <comment>StaticDataManagement</comment>
+  </data>
+  <data name="StaticDataValue" xml:space="preserve">
+    <value>スタティックデバリュー</value>
+    <comment>StaticDataManagement</comment>
   </data>
   <data name="Status" xml:space="preserve">
     <value>状態</value>
@@ -1821,6 +1973,10 @@
   <data name="Title" xml:space="preserve">
     <value>タイトル</value>
     <comment>Gallery Management</comment>
+  </data>
+  <data name="Title is required" xml:space="preserve">
+    <value>タイトルは必須です</value>
+    <comment>Promotional Images</comment>
   </data>
   <data name="To Amount" xml:space="preserve">
     <value>金額まで</value>

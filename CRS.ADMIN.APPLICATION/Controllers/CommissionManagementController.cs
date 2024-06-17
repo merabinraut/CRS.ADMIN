@@ -23,7 +23,8 @@ namespace CRS.ADMIN.APPLICATION.Controllers
         public ActionResult CategoryList()
         {
             var viewModel = new CommissionCategoryRazorViewModel();
-
+            var culture = Request.Cookies["culture"]?.Value;
+            culture = string.IsNullOrEmpty(culture) ? "ja" : culture;
             Session["CurrentURL"] = "/CommissionManagement/CategoryList";
             var dbResponse = _CategoryBuss.GetCategoryList();
             dbResponse.ForEach(x => x.CategoryId = x.CategoryId.EncryptParameter());
@@ -38,9 +39,9 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 ViewBag.PopUpRenderValue = TempData["RenderId"].ToString();
 
             ViewBag.LocationList = ApplicationUtilities.SetDDLValue(ApplicationUtilities
-                .LoadDropdownList("LocationDdl") as Dictionary<string, string>, "", "Select Location");
+                .LoadDropdownList("LocationDdl") as Dictionary<string, string>, "", culture.ToLower()=="ja"?"場所を選択":"Select Location" );
             ViewBag.CommissionCategoryList = ApplicationUtilities.SetDDLValue(ApplicationUtilities
-                .LoadDropdownList("COMMISSIONCATEGORYLIST") as Dictionary<string, string>, "", "Select Commission Category");
+                .LoadDropdownList("COMMISSIONCATEGORYLIST") as Dictionary<string, string>, "", culture.ToLower() == "ja" ? "コミッションカテゴリを選択" : "Select Commission Category");
             return View(viewModel);
         }
 

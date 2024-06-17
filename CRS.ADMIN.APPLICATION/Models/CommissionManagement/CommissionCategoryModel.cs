@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using CRS.ADMIN.APPLICATION.Resources;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
@@ -7,12 +8,12 @@ namespace CRS.ADMIN.APPLICATION.Models.CommissionManagement
     public class ManageCommissionCategoryModel
     {
         [DisplayName("Category Name")]
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
-        [MaxLength(50, ErrorMessage = "Maximum 50 characters allowed")]
+        [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Required")]
+        [MaxLength(30, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Maximum_50_characters_allowed")]
         public string CategoryName { get; set; }
         [DisplayName("Description")]
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
-        [MaxLength(300, ErrorMessage = "Maximum 300 characters allowed")]
+        [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Required")]
+        [MaxLength(30, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Maximum_300_characters_allowed")]
         public string Description { get; set; }
         public string CategoryId { get; set; }
     }

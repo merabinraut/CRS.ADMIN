@@ -97,6 +97,42 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Additional Value1.
+        /// </summary>
+        public static string AdditionalValue1 {
+            get {
+                return ResourceManager.GetString("AdditionalValue1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Additional Value2.
+        /// </summary>
+        public static string AdditionalValue2 {
+            get {
+                return ResourceManager.GetString("AdditionalValue2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Additional Value3.
+        /// </summary>
+        public static string AdditionalValue3 {
+            get {
+                return ResourceManager.GetString("AdditionalValue3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Additional Value4.
+        /// </summary>
+        public static string AdditionalValue4 {
+            get {
+                return ResourceManager.GetString("AdditionalValue4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Address.
         /// </summary>
         public static string Address {
@@ -916,6 +952,33 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Approved.
+        /// </summary>
+        public static string ClubTabApproved {
+            get {
+                return ResourceManager.GetString("ClubTabApproved", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pending.
+        /// </summary>
+        public static string ClubTabPending {
+            get {
+                return ResourceManager.GetString("ClubTabPending", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rejected.
+        /// </summary>
+        public static string ClubTabRejected {
+            get {
+                return ResourceManager.GetString("ClubTabRejected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Commission.
         /// </summary>
         public static string Commission {
@@ -1114,6 +1177,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Created Date.
+        /// </summary>
+        public static string CreatedDate {
+            get {
+                return ResourceManager.GetString("CreatedDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Credit.
         /// </summary>
         public static string Credit {
@@ -1258,6 +1330,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Description is required.
+        /// </summary>
+        public static string Description_is_required {
+            get {
+                return ResourceManager.GetString("Description is required", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to eg. Description about club.
         /// </summary>
         public static string Description_Placeholder {
@@ -1339,11 +1420,83 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Email Address.
+        /// </summary>
+        public static string EmailAddress {
+            get {
+                return ResourceManager.GetString("EmailAddress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Email Log.
         /// </summary>
         public static string EmailLog {
             get {
                 return ResourceManager.GetString("EmailLog", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Email Log Reports.
+        /// </summary>
+        public static string EmailLogReports {
+            get {
+                return ResourceManager.GetString("EmailLogReports", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Email Requested ID.
+        /// </summary>
+        public static string EmailRequestedID {
+            get {
+                return ResourceManager.GetString("EmailRequestedID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Email Sent By.
+        /// </summary>
+        public static string EmailSentBy {
+            get {
+                return ResourceManager.GetString("EmailSentBy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Email Sent CC.
+        /// </summary>
+        public static string EmailSentCC {
+            get {
+                return ResourceManager.GetString("EmailSentCC", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Email Sent Status.
+        /// </summary>
+        public static string EmailSentStatus {
+            get {
+                return ResourceManager.GetString("EmailSentStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Email Sent To.
+        /// </summary>
+        public static string EmailSentTo {
+            get {
+                return ResourceManager.GetString("EmailSentTo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Email Text.
+        /// </summary>
+        public static string EmailText {
+            get {
+                return ResourceManager.GetString("EmailText", resourceCulture);
             }
         }
         
@@ -1479,6 +1632,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         public static string February {
             get {
                 return ResourceManager.GetString("February", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Female.
+        /// </summary>
+        public static string Female {
+            get {
+                return ResourceManager.GetString("Female", resourceCulture);
             }
         }
         
@@ -1906,6 +2068,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Input Type.
+        /// </summary>
+        public static string InputType {
+            get {
+                return ResourceManager.GetString("InputType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Instagram.
         /// </summary>
         public static string Instagram {
@@ -2230,6 +2401,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Male.
+        /// </summary>
+        public static string Male {
+            get {
+                return ResourceManager.GetString("Male", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Manage Club Events.
         /// </summary>
         public static string Manage_Club_Events {
@@ -2410,11 +2590,38 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Manage Email Logs.
+        /// </summary>
+        public static string ManageEmailLogs {
+            get {
+                return ResourceManager.GetString("ManageEmailLogs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Manager Name.
         /// </summary>
         public static string ManagerName {
             get {
                 return ResourceManager.GetString("ManagerName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Manage SMS Logs.
+        /// </summary>
+        public static string ManageSMSLogs {
+            get {
+                return ResourceManager.GetString("ManageSMSLogs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Manage Static Data Type.
+        /// </summary>
+        public static string ManageStaticDataType {
+            get {
+                return ResourceManager.GetString("ManageStaticDataType", resourceCulture);
             }
         }
         
@@ -2442,6 +2649,24 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         public static string Max_Value {
             get {
                 return ResourceManager.GetString("Max Value", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Maximum 300 characters allowed.
+        /// </summary>
+        public static string Maximum_300_characters_allowed {
+            get {
+                return ResourceManager.GetString("Maximum 300 characters allowed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Maximum 50 characters allowed.
+        /// </summary>
+        public static string Maximum_50_characters_allowed {
+            get {
+                return ResourceManager.GetString("Maximum 50 characters allowed", resourceCulture);
             }
         }
         
@@ -2478,6 +2703,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         public static string Menu_Management {
             get {
                 return ResourceManager.GetString("Menu Management", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Message.
+        /// </summary>
+        public static string Message {
+            get {
+                return ResourceManager.GetString("Message", resourceCulture);
             }
         }
         
@@ -2667,6 +2901,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         public static string Order {
             get {
                 return ResourceManager.GetString("Order", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Others.
+        /// </summary>
+        public static string Others {
+            get {
+                return ResourceManager.GetString("Others", resourceCulture);
             }
         }
         
@@ -3688,6 +3931,24 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Select Club.
+        /// </summary>
+        public static string Select_Club {
+            get {
+                return ResourceManager.GetString("Select Club", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select Current Commission Category.
+        /// </summary>
+        public static string Select_Current_Commission_Category {
+            get {
+                return ResourceManager.GetString("Select Current Commission Category", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Select Language.
         /// </summary>
         public static string Select_Language {
@@ -3702,6 +3963,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         public static string Select_Location {
             get {
                 return ResourceManager.GetString("Select Location", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select Host.
+        /// </summary>
+        public static string SelectHost {
+            get {
+                return ResourceManager.GetString("SelectHost", resourceCulture);
             }
         }
         
@@ -3787,6 +4057,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to SMS Log Report.
+        /// </summary>
+        public static string SMSLogReport {
+            get {
+                return ResourceManager.GetString("SMSLogReport", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to SNS.
         /// </summary>
         public static string SNS {
@@ -3828,6 +4107,69 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         public static string Staff_Management_Supporting_Text {
             get {
                 return ResourceManager.GetString("Staff Management Supporting Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Static Data Description.
+        /// </summary>
+        public static string StaticDataDescription {
+            get {
+                return ResourceManager.GetString("StaticDataDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Static Data Label.
+        /// </summary>
+        public static string StaticDataLabel {
+            get {
+                return ResourceManager.GetString("StaticDataLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Static Data Management.
+        /// </summary>
+        public static string StaticDataManagement {
+            get {
+                return ResourceManager.GetString("StaticDataManagement", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Static Data Type.
+        /// </summary>
+        public static string StaticDataType {
+            get {
+                return ResourceManager.GetString("StaticDataType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Static Data Type Id.
+        /// </summary>
+        public static string StaticDataTypeId {
+            get {
+                return ResourceManager.GetString("StaticDataTypeId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Static Data Type Name.
+        /// </summary>
+        public static string StaticDataTypeName {
+            get {
+                return ResourceManager.GetString("StaticDataTypeName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Static Data Value.
+        /// </summary>
+        public static string StaticDataValue {
+            get {
+                return ResourceManager.GetString("StaticDataValue", resourceCulture);
             }
         }
         
@@ -3963,6 +4305,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         public static string Title {
             get {
                 return ResourceManager.GetString("Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Title is required.
+        /// </summary>
+        public static string Title_is_required {
+            get {
+                return ResourceManager.GetString("Title is required", resourceCulture);
             }
         }
         
