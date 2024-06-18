@@ -60,12 +60,12 @@
                         <div class="px-[16px] py-[12px] flex justify-between entry-export-container">
                             <div class="flex items-center select-entries">
                                 @*@CRS.ADMIN.APPLICATION.Resources.Resource.Show&nbsp;
-                                    <select id="countries" class="w-full select-entires " style="width: 100%; ">
-                                        <option value="5" selected>5</option>
-                                        <option value="10">10</option>
-                                        <option value="15">15</option>
-                                        <option value="20">100</option>
-                                    </select>&nbsp;@CRS.ADMIN.APPLICATION.Resources.Resource.Entries*@
+                            <select id="countries" class="w-full select-entires " style="width: 100%; ">
+                                <option value="5" selected>5</option>
+                                <option value="10">10</option>
+                                <option value="15">15</option>
+                                <option value="20">100</option>
+                            </select>&nbsp;@CRS.ADMIN.APPLICATION.Resources.Resource.Entries*@
                             </div>
                             <div class="export-button h-[40px]">
                                 <img src="~/Content/assets_new/images/club/download-solid.svg"> @CRS.ADMIN.APPLICATION.Resources.Resource.Export
@@ -249,39 +249,40 @@
                         @*<div class="show-entry">@CRS.ADMIN.APPLICATION.Resources.Resource.Showing 1 to 5 of 301 @CRS.ADMIN.APPLICATION.Resources.Resource.Entries</div>*@
                         <!--<div class="flex gap-[12px]">-->
                         @*<div class="btn btn-secondary-box-shadow ">@CRS.ADMIN.APPLICATION.Resources.Resource.Previous</div>
-                            <div class="flex gap-[12px]">
-                                <div class="pagination-number active">
+                    <div class="flex gap-[12px]">
+                        <div class="pagination-number active">
 
-                                    1
-                                </div>
-                                <div class="pagination-number">
-                                    2
-                                </div>
-                                <div class="pagination-number">
-                                    3
-                                </div>
-                                <div class="pagination-number">
-                                    ..
-                                </div>
-                                <div class="pagination-number">
-                                    10
-                                </div>
+                            1
+                        </div>
+                        <div class="pagination-number">
+                            2
+                        </div>
+                        <div class="pagination-number">
+                            3
+                        </div>
+                        <div class="pagination-number">
+                            ..
+                        </div>
+                        <div class="pagination-number">
+                            10
+                        </div>
 
-                            </div>
-                            <div class="btn btn-secondary-box-shadow ">
-                                @CRS.ADMIN.APPLICATION.Resources.Resource.Next
-                            </div>*@
+                    </div>
+                    <div class="btn btn-secondary-box-shadow ">
+                        @CRS.ADMIN.APPLICATION.Resources.Resource.Next
+                    </div>*@
                         <!--</div>
-                        </div>-->
+                </div>-->
                     </div>
 
                     @Html.Partial("_ManageCommission", addEditModel)
 
                 </div>
-
-                @using (Html.BeginForm("AssignCommission", "CommissionManagement", new { }, FormMethod.Post, new { @id = "AssignCommission" }))
-                {
-                    @Html.AntiForgeryToken()
+            </div>
+            @using (Html.BeginForm("AssignCommission", "CommissionManagement", new { }, FormMethod.Post, new { @id = "AssignCommission" }))
+            {
+                @Html.AntiForgeryToken()
+                <div class="bg-white">
                     <div id="tab2" class="tab-content-plane  hidden">
                         <div class="border border-[#D0D5DD] rounded-[5px] px-[22px] py-5 flex flex-col gap-4">
                             <div class="py-[10px] text-[#3E3E3E] text-sm font-semibold">
@@ -338,8 +339,9 @@
                             </button>
                         </div>
                     </div>
-                }
-            </div>
+                </div>
+            }
+
         </div>
         <!-- tab end  -->
     </div>

@@ -70,6 +70,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Active.
+        /// </summary>
+        public static string Active {
+            get {
+                return ResourceManager.GetString("Active", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add Group.
         /// </summary>
         public static string Add_Group {
@@ -466,6 +475,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Approved.
+        /// </summary>
+        public static string Approved {
+            get {
+                return ResourceManager.GetString("Approved", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Approved Requests.
         /// </summary>
         public static string Approved_Requests {
@@ -628,6 +646,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Blocked.
+        /// </summary>
+        public static string Blocked {
+            get {
+                return ResourceManager.GetString("Blocked", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Blood Type.
         /// </summary>
         public static string Blood_Type {
@@ -732,6 +759,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         public static string Category_Name {
             get {
                 return ResourceManager.GetString("Category Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to CategoryType.
+        /// </summary>
+        public static string CategoryType {
+            get {
+                return ResourceManager.GetString("CategoryType", resourceCulture);
             }
         }
         
@@ -1087,6 +1123,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Confirm password is required.
+        /// </summary>
+        public static string Confirm_password_is_required {
+            get {
+                return ResourceManager.GetString("Confirm password is required", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Confirmation.
         /// </summary>
         public static string Confirmation {
@@ -1267,6 +1312,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Customer Status.
+        /// </summary>
+        public static string Customer_Status {
+            get {
+                return ResourceManager.GetString("Customer Status", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Dashboard.
         /// </summary>
         public static string Dashboard {
@@ -1344,6 +1398,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         public static string Description_Placeholder {
             get {
                 return ResourceManager.GetString("Description Placeholder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Descriptions.
+        /// </summary>
+        public static string Descriptions {
+            get {
+                return ResourceManager.GetString("Descriptions", resourceCulture);
             }
         }
         
@@ -1726,6 +1789,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Full name is required.
+        /// </summary>
+        public static string Full_name_is_required {
+            get {
+                return ResourceManager.GetString("Full name is required", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Furigana.
         /// </summary>
         public static string FullNameFurigana {
@@ -2055,6 +2127,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         public static string Info {
             get {
                 return ResourceManager.GetString("Info", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Informations regarding commissions type.
+        /// </summary>
+        public static string Informations_regarding_commissions_type {
+            get {
+                return ResourceManager.GetString("Informations regarding commissions type", resourceCulture);
             }
         }
         
@@ -2455,6 +2536,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Manage Commissions Type.
+        /// </summary>
+        public static string Manage_Commissions_Type {
+            get {
+                return ResourceManager.GetString("Manage Commissions Type", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Manage Gallery.
         /// </summary>
         public static string Manage_Gallery {
@@ -2815,6 +2905,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to New password is required.
+        /// </summary>
+        public static string New_password_is_required {
+            get {
+                return ResourceManager.GetString("New password is required", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to New Role.
         /// </summary>
         public static string New_Role {
@@ -2995,6 +3094,42 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Password  Mismatch.
+        /// </summary>
+        public static string Password__Mismatch {
+            get {
+                return ResourceManager.GetString("Password  Mismatch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Password is required.
+        /// </summary>
+        public static string Password_is_required {
+            get {
+                return ResourceManager.GetString("Password is required", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Password length should not exceed 16 digit.
+        /// </summary>
+        public static string Password_length_should_not_exceed_16_digit {
+            get {
+                return ResourceManager.GetString("Password length should not exceed 16 digit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Password minimum length must be 8.
+        /// </summary>
+        public static string Password_minimum_length_must_be_8 {
+            get {
+                return ResourceManager.GetString("Password minimum length must be 8", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to password reset confirmation.
         /// </summary>
         public static string password_reset_confirmation {
@@ -3081,6 +3216,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         public static string PaymentMethod {
             get {
                 return ResourceManager.GetString("PaymentMethod", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pending.
+        /// </summary>
+        public static string Pending {
+            get {
+                return ResourceManager.GetString("Pending", resourceCulture);
             }
         }
         
@@ -3553,6 +3697,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Referrer.
+        /// </summary>
+        public static string Referrer {
+            get {
+                return ResourceManager.GetString("Referrer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Regular Fee.
         /// </summary>
         public static string Regular_Fee {
@@ -3567,6 +3720,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         public static string Reject {
             get {
                 return ResourceManager.GetString("Reject", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rejected.
+        /// </summary>
+        public static string Rejected {
+            get {
+                return ResourceManager.GetString("Rejected", resourceCulture);
             }
         }
         
@@ -4008,6 +4170,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         public static string Self_Request {
             get {
                 return ResourceManager.GetString("Self Request", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sent.
+        /// </summary>
+        public static string Sent {
+            get {
+                return ResourceManager.GetString("Sent", resourceCulture);
             }
         }
         

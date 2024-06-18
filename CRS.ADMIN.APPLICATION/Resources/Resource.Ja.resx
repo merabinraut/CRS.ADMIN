@@ -120,6 +120,10 @@
   <data name="Action" xml:space="preserve">
     <value>アクション</value>
   </data>
+  <data name="Active" xml:space="preserve">
+    <value>アクティブ</value>
+    <comment>CustomerManagement</comment>
+  </data>
   <data name="Add Group" xml:space="preserve">
     <value>追加</value>
     <comment>Recommendation Management</comment>
@@ -294,6 +298,9 @@
     <value>救う</value>
     <comment>Recommendation Management</comment>
   </data>
+  <data name="Approved" xml:space="preserve">
+    <value>承認</value>
+  </data>
   <data name="Approved Requests" xml:space="preserve">
     <value>承認リクエスト</value>
     <comment>Recommendation Management</comment>
@@ -365,6 +372,10 @@
   <data name="BirthPlace" xml:space="preserve">
     <value>出生地</value>
   </data>
+  <data name="Blocked" xml:space="preserve">
+    <value>ブロック</value>
+    <comment>CustomerManagement</comment>
+  </data>
   <data name="Blood Type" xml:space="preserve">
     <value>血液型</value>
     <comment>Host Management</comment>
@@ -410,6 +421,10 @@
   <data name="Category Name" xml:space="preserve">
     <value>種別名</value>
     <comment>Commission Management</comment>
+  </data>
+  <data name="CategoryType" xml:space="preserve">
+    <value>カテゴリータイプ</value>
+    <comment>CommissionManagement</comment>
   </data>
   <data name="CEO Full Name" xml:space="preserve">
     <value>CEOフルネーム</value>
@@ -567,6 +582,10 @@
     <value>新しいパスワードを確認</value>
     <comment>Security</comment>
   </data>
+  <data name="Confirm password is required" xml:space="preserve">
+    <value>パスワード確認は必須です</value>
+    <comment>ProfileManagement</comment>
+  </data>
   <data name="Confirmation" xml:space="preserve">
     <value>確認</value>
     <comment>Recommendation Management</comment>
@@ -646,6 +665,10 @@
     <value>顧客の管理</value>
     <comment>Customer Management</comment>
   </data>
+  <data name="Customer Status" xml:space="preserve">
+    <value>顧客ステータス</value>
+    <comment>CustomerManagement</comment>
+  </data>
   <data name="Dashboard" xml:space="preserve">
     <value>ダッシュボード</value>
     <comment>Side Bar Menu</comment>
@@ -681,6 +704,10 @@
   <data name="Description Placeholder" xml:space="preserve">
     <value>クラブ説明</value>
     <comment>Club Management</comment>
+  </data>
+  <data name="Descriptions" xml:space="preserve">
+    <value>説明</value>
+    <comment>CommissionManagement</comment>
   </data>
   <data name="Designation Fee" xml:space="preserve">
     <value>指名料金</value>
@@ -846,6 +873,10 @@
     <value>金額から（¥）</value>
     <comment>Point Setup</comment>
   </data>
+  <data name="Full name is required" xml:space="preserve">
+    <value>氏名は必須です</value>
+    <comment>ProfileManagement</comment>
+  </data>
   <data name="FullNameFurigana" xml:space="preserve">
     <value>フリガナ</value>
     <comment>AffiliateManagement</comment>
@@ -993,6 +1024,10 @@
   <data name="Info" xml:space="preserve">
     <value>情報</value>
     <comment>Dashboard</comment>
+  </data>
+  <data name="Informations regarding commissions type" xml:space="preserve">
+    <value>クラブの手数料タイプ情報を管理する。</value>
+    <comment>CommissionManagement</comment>
   </data>
   <data name="Informations regarding points category type" xml:space="preserve">
     <value>ポイントカテゴリータイプに関する情報</value>
@@ -1167,6 +1202,10 @@
     <value>コミッションスラブの管理</value>
     <comment>Commission Management</comment>
   </data>
+  <data name="Manage Commissions Type" xml:space="preserve">
+    <value>手数料タイプを管理する</value>
+    <comment>CommissionManagement</comment>
+  </data>
   <data name="Manage Gallery" xml:space="preserve">
     <value>管理ギャラリー</value>
     <comment>Gallery Management</comment>
@@ -1327,6 +1366,10 @@
     <value>新しいパスワード</value>
     <comment>Security</comment>
   </data>
+  <data name="New password is required" xml:space="preserve">
+    <value>新しいパスワードは必須です</value>
+    <comment>ProfileManagement</comment>
+  </data>
   <data name="New Role" xml:space="preserve">
     <value>新たな役割</value>
     <comment>Roles &amp; Privileges</comment>
@@ -1406,6 +1449,22 @@
     <value>パスワード</value>
     <comment>Login Page</comment>
   </data>
+  <data name="Password  Mismatch" xml:space="preserve">
+    <value>パスワードが一致しません</value>
+    <comment>ProfileManagement</comment>
+  </data>
+  <data name="Password is required" xml:space="preserve">
+    <value>パスワードは必須です</value>
+    <comment>ProfileManagement</comment>
+  </data>
+  <data name="Password length should not exceed 16 digit" xml:space="preserve">
+    <value>パスワードは16文字以内にしてください</value>
+    <comment>ProfileManagement</comment>
+  </data>
+  <data name="Password minimum length must be 8" xml:space="preserve">
+    <value>パスワードはて8文字以上にしてください</value>
+    <comment>ProfileManagement</comment>
+  </data>
   <data name="password reset confirmation" xml:space="preserve">
     <value>のパスワードをリセットしてもよろしいですか</value>
     <comment>Customer Management</comment>
@@ -1444,6 +1503,9 @@
   </data>
   <data name="PaymentMethod" xml:space="preserve">
     <value>支払方法</value>
+  </data>
+  <data name="Pending" xml:space="preserve">
+    <value>保留中</value>
   </data>
   <data name="Pending Requests" xml:space="preserve">
     <value>保留中リクエスト</value>
@@ -1652,6 +1714,10 @@
     <value>クラブおよびホストのオススメ情報を管理する</value>
     <comment>Recommendation Management</comment>
   </data>
+  <data name="Referrer" xml:space="preserve">
+    <value>リファーラル名</value>
+    <comment>CustomerManagement</comment>
+  </data>
   <data name="Regular Fee" xml:space="preserve">
     <value>通常料金</value>
     <comment>ClubManagement</comment>
@@ -1659,6 +1725,9 @@
   <data name="Reject" xml:space="preserve">
     <value>キャンセル</value>
     <comment>Recommendation Management</comment>
+  </data>
+  <data name="Rejected" xml:space="preserve">
+    <value>拒否</value>
   </data>
   <data name="Rejected Requests" xml:space="preserve">
     <value>拒否リクエスト</value>
@@ -1849,6 +1918,9 @@
   <data name="Self Request" xml:space="preserve">
     <value>自己依頼</value>
     <comment>Points Management</comment>
+  </data>
+  <data name="Sent" xml:space="preserve">
+    <value>送信済み</value>
   </data>
   <data name="September" xml:space="preserve">
     <value>九月</value>

@@ -6,6 +6,7 @@ using CRS.ADMIN.SHARED;
 using CRS.ADMIN.SHARED.CustomerManagement;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Web.Mvc;
 
 namespace CRS.ADMIN.APPLICATION.Controllers
@@ -18,13 +19,15 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             _BUSS = BUSS;
         }
         [HttpGet]
-        public ActionResult CustomerList(CustomerListCommonModel Request, int StartIndex = 0, int PageSize = 10)
+        public ActionResult CustomerList(CustomerListCommonModel Requests, int StartIndex = 0, int PageSize = 10)
         {
             Session["CurrentURL"] = "/CustomerManagement/CustomerList";
-            ViewBag.UserStatusKey = Request.Status;
-            ViewBag.UserStatusDDL = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("USERSTATUSDDL") as Dictionary<string, string>, null, "--- Select ---");
-            var Response = Request.MapObject<CustomerListCommonModel>();
-            var dbRequest = Request.MapObject<CustomerSearchFilterCommon>();
+            ViewBag.UserStatusKey = Requests.Status;
+            var culture = Request.Cookies["culture"]?.Value;
+            culture = string.IsNullOrEmpty(culture) ? "ja" : culture;
+            ViewBag.UserStatusDDL = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("USERSTATUSDDL","",culture) as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---");
+            var Response = Requests.MapObject<CustomerListCommonModel>();
+            var dbRequest = Requests.MapObject<CustomerSearchFilterCommon>();
             dbRequest.Status = !string.IsNullOrEmpty(dbRequest.Status) ? dbRequest.Status.DecryptParameter() : null;
             dbRequest.Skip = StartIndex;
             dbRequest.Take = PageSize;

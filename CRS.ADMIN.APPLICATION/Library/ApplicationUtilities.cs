@@ -1100,8 +1100,17 @@ namespace CRS.ADMIN.APPLICATION.Library
                     return response;
                 case "USERSTATUSDDL":
                     response = new Dictionary<string, string>();
-                    response.Add("A".EncryptParameter(), "Active");
-                    response.Add("B".EncryptParameter(), "Blocked");
+                    if (search2.ToLower()=="ja")
+                    {
+                        response.Add("A".EncryptParameter(), "アクティブ");
+                        response.Add("B".EncryptParameter(), "ブロック");
+                    }
+                    else
+                    {
+                        response.Add("A".EncryptParameter(), "Active");
+                        response.Add("B".EncryptParameter(), "Blocked");
+                    }
+                  
                     return response;
                 case "CLUBPLANS":
                     dbResponse = _CommonBuss.GetDropDown("040", search1, search2);

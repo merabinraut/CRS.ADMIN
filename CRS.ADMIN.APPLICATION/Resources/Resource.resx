@@ -120,6 +120,10 @@
   <data name="Action" xml:space="preserve">
     <value>Action</value>
   </data>
+  <data name="Active" xml:space="preserve">
+    <value>Active</value>
+    <comment>CustomerManagement</comment>
+  </data>
   <data name="Add Group" xml:space="preserve">
     <value>Add Group</value>
     <comment>Recommendation Management</comment>
@@ -294,6 +298,9 @@
     <value>Approve</value>
     <comment>Recommendation Management</comment>
   </data>
+  <data name="Approved" xml:space="preserve">
+    <value>Approved</value>
+  </data>
   <data name="Approved Requests" xml:space="preserve">
     <value>Approved Requests</value>
     <comment>Recommendation Management</comment>
@@ -365,6 +372,10 @@
   <data name="BirthPlace" xml:space="preserve">
     <value>Birth Place</value>
   </data>
+  <data name="Blocked" xml:space="preserve">
+    <value>Blocked</value>
+    <comment>CustomerManagement</comment>
+  </data>
   <data name="Blood Type" xml:space="preserve">
     <value>Blood Type</value>
     <comment>Host Management</comment>
@@ -410,6 +421,10 @@
   <data name="Category Name" xml:space="preserve">
     <value>Category Name</value>
     <comment>Commission Management</comment>
+  </data>
+  <data name="CategoryType" xml:space="preserve">
+    <value>CategoryType</value>
+    <comment>CommissionManagement</comment>
   </data>
   <data name="CEO Full Name" xml:space="preserve">
     <value>CEO Full Name</value>
@@ -567,6 +582,10 @@
     <value>Confirm New Password</value>
     <comment>Security</comment>
   </data>
+  <data name="Confirm password is required" xml:space="preserve">
+    <value>Confirm password is required</value>
+    <comment>ProfileManagement</comment>
+  </data>
   <data name="Confirmation" xml:space="preserve">
     <value>Confirmation</value>
     <comment>Recommendation Management</comment>
@@ -646,6 +665,10 @@
     <value>Manage Customers</value>
     <comment>Customer Management</comment>
   </data>
+  <data name="Customer Status" xml:space="preserve">
+    <value>Customer Status</value>
+    <comment>CustomerManagement</comment>
+  </data>
   <data name="Dashboard" xml:space="preserve">
     <value>Dashboard</value>
     <comment>Side Bar Menu</comment>
@@ -681,6 +704,10 @@
   <data name="Description Placeholder" xml:space="preserve">
     <value>eg. Description about club</value>
     <comment>Club Management</comment>
+  </data>
+  <data name="Descriptions" xml:space="preserve">
+    <value>Descriptions</value>
+    <comment>CommissionManagement</comment>
   </data>
   <data name="Designation Fee" xml:space="preserve">
     <value>Designation Fee</value>
@@ -846,6 +873,10 @@
     <value>From Amount (¥)</value>
     <comment>Point Setup</comment>
   </data>
+  <data name="Full name is required" xml:space="preserve">
+    <value>Full name is required</value>
+    <comment>ProfileManagement</comment>
+  </data>
   <data name="FullNameFurigana" xml:space="preserve">
     <value>Furigana</value>
     <comment>AffiliateManagement</comment>
@@ -993,6 +1024,10 @@
   <data name="Info" xml:space="preserve">
     <value>Info</value>
     <comment>Dashboard</comment>
+  </data>
+  <data name="Informations regarding commissions type" xml:space="preserve">
+    <value>Informations regarding commissions type</value>
+    <comment>CommissionManagement</comment>
   </data>
   <data name="Informations regarding points category type" xml:space="preserve">
     <value>Informations regarding points category type</value>
@@ -1167,6 +1202,10 @@
     <value>Manage Commission Slabs</value>
     <comment>Commission Management</comment>
   </data>
+  <data name="Manage Commissions Type" xml:space="preserve">
+    <value>Manage Commissions Type</value>
+    <comment>CommissionManagement</comment>
+  </data>
   <data name="Manage Gallery" xml:space="preserve">
     <value>Manage Gallery</value>
     <comment>Gallery Management</comment>
@@ -1324,6 +1363,10 @@
     <value>New Password</value>
     <comment>Security</comment>
   </data>
+  <data name="New password is required" xml:space="preserve">
+    <value>New password is required</value>
+    <comment>ProfileManagement</comment>
+  </data>
   <data name="New Role" xml:space="preserve">
     <value>New Role</value>
     <comment>Roles &amp; Privileges</comment>
@@ -1403,6 +1446,22 @@
     <value>PASSWORD</value>
     <comment>Login Page</comment>
   </data>
+  <data name="Password  Mismatch" xml:space="preserve">
+    <value>Password  Mismatch</value>
+    <comment>ProfileManagement</comment>
+  </data>
+  <data name="Password is required" xml:space="preserve">
+    <value>Password is required</value>
+    <comment>ProfileManagement</comment>
+  </data>
+  <data name="Password length should not exceed 16 digit" xml:space="preserve">
+    <value>Password length should not exceed 16 digit</value>
+    <comment>ProfileManagement</comment>
+  </data>
+  <data name="Password minimum length must be 8" xml:space="preserve">
+    <value>Password minimum length must be 8</value>
+    <comment>ProfileManagement</comment>
+  </data>
   <data name="password reset confirmation" xml:space="preserve">
     <value>password reset confirmation</value>
     <comment>Customer Management</comment>
@@ -1441,6 +1500,9 @@
   </data>
   <data name="PaymentMethod" xml:space="preserve">
     <value>Payment Method</value>
+  </data>
+  <data name="Pending" xml:space="preserve">
+    <value>Pending</value>
   </data>
   <data name="Pending Requests" xml:space="preserve">
     <value>Pending Requests</value>
@@ -1645,6 +1707,10 @@
     <value>Manage club and their host’s recommendation informations.</value>
     <comment>Recommendation Management</comment>
   </data>
+  <data name="Referrer" xml:space="preserve">
+    <value>Referrer</value>
+    <comment>CustomerManagement</comment>
+  </data>
   <data name="Regular Fee" xml:space="preserve">
     <value>Regular Fee</value>
     <comment>ClubManagement</comment>
@@ -1652,6 +1718,9 @@
   <data name="Reject" xml:space="preserve">
     <value>Reject</value>
     <comment>Recommendation Management</comment>
+  </data>
+  <data name="Rejected" xml:space="preserve">
+    <value>Rejected</value>
   </data>
   <data name="Rejected Requests" xml:space="preserve">
     <value>Rejected Requests</value>
@@ -1843,6 +1912,9 @@
   <data name="Self Request" xml:space="preserve">
     <value>Self-Request</value>
     <comment>Points Management</comment>
+  </data>
+  <data name="Sent" xml:space="preserve">
+    <value>Sent</value>
   </data>
   <data name="September" xml:space="preserve">
     <value>Sep</value>

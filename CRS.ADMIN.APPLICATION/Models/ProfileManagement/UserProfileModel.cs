@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using CRS.ADMIN.APPLICATION.Resources;
+using System.ComponentModel.DataAnnotations;
 
 namespace CRS.ADMIN.APPLICATION.Models.UserProfileManagement
 {
@@ -9,7 +10,7 @@ namespace CRS.ADMIN.APPLICATION.Models.UserProfileManagement
         public string MobileNumber { get; set; }
         public string RoleType { get; set; }
         public string RoleName { get; set; }
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Full name is required")]
+        [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Full_name_is_required")]
         public string FullName { get; set; }
         public string UserName { get; set; }
         public string ProfileImage { get; set; }
@@ -17,21 +18,21 @@ namespace CRS.ADMIN.APPLICATION.Models.UserProfileManagement
 
     public class ChangePasswordModel
     {
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Password is required")]
+        [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Password_is_required")]
         [Display(Name = "Current Password")]
-        [MaxLength(16, ErrorMessage = "Password length should not exceed 16 digit"), MinLength(8, ErrorMessage = "Password minimum length must be 8")]
+        [MaxLength(16, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Password_length_should_not_exceed_16_digit"), MinLength(8, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Password_minimum_length_must_be_8")]
         public string OldPassword { get; set; }
 
-        [Required(AllowEmptyStrings = false, ErrorMessage = "New password is required")]
+        [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "New_password_is_required")]
         [Display(Name = "New Password")]
-        [MaxLength(16, ErrorMessage = "Password length should not exceed 16 digit"), MinLength(8, ErrorMessage = "Password minimum length must be 8")]
+        [MaxLength(16, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Password_length_should_not_exceed_16_digit"), MinLength(8, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Password_minimum_length_must_be_8")]
         //[RegularExpression(@"^.*(?=.{8,16})(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=]).*$", ErrorMessage = "Must be 8 to 16 Length and must contain a-z,A-Z,0-9,@#$%^&+=")]
         public string NewPassword { get; set; }
 
         [Display(Name = "Confirm Password")]
-        [MaxLength(16, ErrorMessage = "Password length should not exceed 16 digit"), MinLength(8, ErrorMessage = "Password minimum length must be 8")]
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Confirm password is required")]
-        [Compare("NewPassword", ErrorMessage = "Password  Mismatch")]
+        [MaxLength(16, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Password_length_should_not_exceed_16_digit"), MinLength(8, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Password_minimum_length_must_be_8")]
+        [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Confirm_password_is_required")]
+        [Compare("NewPassword", ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Password_Mismatch")]
         public string ConfirmPassword { get; set; }
     }
 

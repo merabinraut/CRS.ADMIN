@@ -2,8 +2,8 @@
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
-    string pending = "Pending";
-    string approved = "Approved";
+    string pending = @CRS.ADMIN.APPLICATION.Resources.Resource.Pending;
+    string approved = @CRS.ADMIN.APPLICATION.Resources.Resource.Approved;
     string Culture = Request.Cookies["culture"]?.Value;
 
 }

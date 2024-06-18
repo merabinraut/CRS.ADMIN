@@ -71,7 +71,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
         public ActionResult PointsCategoryList(string RoleTypeId, string SearchFilter = "", string value = "", int StartIndex = 0, int PageSize = 10)
         {
             ViewBag.SearchFilter = null;
-            Session["CurrentURL"] = "/PointSetup/ManagePointsCategory";
+            Session["CurrentURL"] = "/PointSetup/PointSetupUserTypeList";
             string RenderId = "";
             var objPointSetupModel = new PointSetupModel();
             if (TempData.ContainsKey("ManageCategoryModel")) objPointSetupModel.ManageCategory = TempData["ManageCategoryModel"] as CategoryModel;
@@ -316,7 +316,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
         public ActionResult PointsCategorySlabList(string roleTypeId, string categoryId, string SearchFilter = "", int StartIndex = 0, int PageSize = 10)
         {
             ViewBag.SearchFilter = null;
-            Session["CurrentURL"] = "/PointSetup/ManagePointsCategory";
+            Session["CurrentURL"] = "/PointSetup/PointSetupUserTypeList";
             string RenderId = "";
             var culture = Request.Cookies["culture"]?.Value;
             culture = string.IsNullOrEmpty(culture) ? "ja" : culture;

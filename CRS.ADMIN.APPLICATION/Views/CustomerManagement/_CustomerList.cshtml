@@ -56,7 +56,7 @@
                     <div class="grid grid-cols-3 gap-[27px]">
                         <div class="input-field-common">
                             <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
-                                Customer Status
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Customer_Status
                             </label>
                             <select id="large" name="Status" class=" default_select select-common block w-full "
                                     style="width: 100%;">
@@ -181,7 +181,7 @@
                         </th>
                         <th scope="col" class="p-[12px]">
                             <div class="flex  w-max">
-                                Referrer
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Referrer
                                 <div class="relative pl-[5px]">
                                     <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
                                     <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
@@ -266,14 +266,14 @@
                                 @if (!string.IsNullOrEmpty(customer.Status) && customer.Status.ToUpper() == "A")
                                 {
                                     <div class="approved">
-                                        Active
+                                        @CRS.ADMIN.APPLICATION.Resources.Resource.Active
                                     </div>
                                 }
                                 else if (!string.IsNullOrEmpty(customer.Status) && customer.Status.ToUpper() == "B")
                                 {
-                                    <div class="blocked">
-                                        Blocked
-                                    </div>
+                            <div class="blocked">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Blocked
+                            </div>
                                 }
                                 else
                                 {

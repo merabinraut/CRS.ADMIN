@@ -327,7 +327,7 @@
                 <!-- -----  -->
                 @if (ApplicationUtilities.HasMenuRight("/PointsManagement/PointsTransferList"))
                 {
-                    if (!string.IsNullOrEmpty(CurrentURL) && CurrentURL.Trim().ToUpper() == "/POINTSMANAGEMENT/POINTTRANSFERLIST") { MenuActiveClass = "menuActive"; }
+                    if (!string.IsNullOrEmpty(CurrentURL) && CurrentURL.Trim().ToUpper() == "/POINTSMANAGEMENT/POINTSTRANSFERLIST") { MenuActiveClass = "menuActive"; }
                     else { MenuActiveClass = string.Empty; }
                     <a href="@Url.Action("PointsTransferList", "PointsManagement")">
                         <div class="menuContainer @MenuActiveClass">
