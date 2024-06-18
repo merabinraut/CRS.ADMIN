@@ -42,7 +42,7 @@ namespace CRS.ADMIN.REPOSITORY.CustomerManagement
                         Age = _DAO.ParseColumnValue(item, "Age").ToString(),
                         Status = _DAO.ParseColumnValue(item, "Status").ToString(),
                         Location = _DAO.ParseColumnValue(item, "Location").ToString(),
-                        CreatedDate = _DAO.ParseColumnValue(item, "CreatedDate").ToString(),
+                        CreatedDate = !string.IsNullOrEmpty(_DAO.ParseColumnValue(item, "CreatedDate").ToString()) ? DateTime.Parse(_DAO.ParseColumnValue(item, "CreatedDate").ToString()).ToString("yyyy'年'MM'月'dd'日' HH:mm:ss") : _DAO.ParseColumnValue(item, "CreatedDate").ToString(),
                         UpdatedDate = _DAO.ParseColumnValue(item, "UpdatedDate").ToString(),
                         TotalRecords = Convert.ToInt32(_DAO.ParseColumnValue(item, "TotalRecords").ToString()),
                         SNO = Convert.ToInt32(_DAO.ParseColumnValue(item, "SNO").ToString())

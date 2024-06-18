@@ -1010,6 +1010,9 @@
     <value>保険証「住所欄」アップロード</value>
     <comment>ClubManagement</comment>
   </data>
+  <data name="Invalid Postal Code" xml:space="preserve">
+    <value>郵便番号に誤りがあります</value>
+  </data>
   <data name="January" xml:space="preserve">
     <value>一月</value>
     <comment>Dashboard</comment>
@@ -1266,6 +1269,9 @@
   <data name="Maximum 50 characters allowed" xml:space="preserve">
     <value>最大50文字まで許可されています</value>
     <comment>CommissionManagement</comment>
+  </data>
+  <data name="Maximum 75 characters allowed" xml:space="preserve">
+    <value>最大50文字まで許可されています</value>
   </data>
   <data name="Maximum length is 16 characters" xml:space="preserve">
     <value>最大長は 16 文字です</value>
@@ -1809,6 +1815,9 @@
     <value>すべてのクラブを表示</value>
     <comment>Dashboard</comment>
   </data>
+  <data name="Select" xml:space="preserve">
+    <value>選択</value>
+  </data>
   <data name="Select All" xml:space="preserve">
     <value>全て選択</value>
     <comment>Roles Management</comment>
@@ -1957,6 +1966,22 @@
   <data name="Tax" xml:space="preserve">
     <value>税金</value>
     <comment>ClubManagement</comment>
+  </data>
+  <data name="The field must be a 11-digit number" xml:space="preserve">
+    <value>こちらには11桁の数字を入力してくださ</value>
+  </data>
+  <data name="The field must be a 2-digit number" xml:space="preserve">
+    <value>こちらには2桁の数字を入力してください</value>
+  </data>
+  <data name="The field must be a 4-digit number" xml:space="preserve">
+    <value>こちらには4桁の数字を入力してください</value>
+  </data>
+  <data name="The field must be a number" xml:space="preserve">
+    <value>このフィールドには数値を入力してください</value>
+    <comment>PointsManagement</comment>
+  </data>
+  <data name="The field must be a number between 0 and 150" xml:space="preserve">
+    <value>こちらには0から150の間の数字を入力してください</value>
   </data>
   <data name="Thursday" xml:space="preserve">
     <value>木</value>

@@ -46,11 +46,12 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             responseInfo.StaffListModel = dbResponseInfo.MapObjects<StaffManagementModel>();
             foreach (var item in responseInfo.StaffListModel)
             {
-                item.ActionDate = DateTime.Parse(item.ActionDate).ToString("MMM d, yyyy HH:mm:ss");
+                //item.ActionDate = DateTime.Parse(item.ActionDate).ToString("MMM d, yyyy HH:mm:ss");
+                item.ActionDate = !string.IsNullOrEmpty(item.ActionDate) ? DateTime.Parse(item.ActionDate).ToString("yyyy'年'MM'月'dd'日' HH:mm:ss") : item.ActionDate;
                 item.ProfileImage = ImageHelper.ProcessedImage(item.ProfileImage);
             }
             ViewBag.PopUpRenderValue = !string.IsNullOrEmpty(RenderId) ? RenderId : null;
-            ViewBag.RoleDDL = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("ROLEDDL", "2", culture) as Dictionary<string, string>, null,culture.ToLower()=="en"?  "--- Select ---": "--- 選択 ---");
+            ViewBag.RoleDDL = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("ROLEDDL", "2", culture) as Dictionary<string, string>, null,culture.ToLower()=="ja"? "--- 選択 ---": "--- Select ---" );
             ViewBag.RoleIdKey = responseInfo.ManageStaffModel.RoleId.EncryptParameter();
             ViewBag.StartIndex = StartIndex;
             ViewBag.PageSize = PageSize;

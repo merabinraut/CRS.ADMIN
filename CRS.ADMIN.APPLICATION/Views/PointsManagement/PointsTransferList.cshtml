@@ -508,7 +508,7 @@
                 success: function (response) {
                     $('#large[name="UserId"]').empty();
                     if (response.userNameList.length > 0) {
-                        $('#large[name="UserId"]').append($("<option>").val("").text("--- Select ---"));
+                        $('#large[name="UserId"]').append($("<option>").val("").text("--- @CRS.ADMIN.APPLICATION.Resources.Resource.Select ---"));
                         $.each(response.userNameList, function (i, value) {
                             $('#large[name="UserId"]').append($("<option>").val(value.Value).text(value.Text));
                         });
@@ -536,7 +536,7 @@
                   success: function (response) {
                       $('#large[name="UserName"]').empty();
                       if (response.userNameList.length > 0) {
-                          $('#large[name="UserName"]').append($("<option>").val("").text("--- Select ---"));
+                          $('#large[name="UserName"]').append($("<option>").val("").text("--- @CRS.ADMIN.APPLICATION.Resources.Resource.Select ---"));
                           $.each(response.userNameList, function (i, value) {
                               $('#large[name="UserName"]').append($("<option>").val(value.Value).text(value.Text));
                           });

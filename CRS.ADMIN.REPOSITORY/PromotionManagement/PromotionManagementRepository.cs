@@ -87,7 +87,7 @@ namespace CRS.ADMIN.REPOSITORY.PromotionManagement
                         ImagePath = item["ImgPath"].ToString(),
                         IsDeleted = item["IsDeleted"].ToString(),
                         ActionUser = item["ActionUser"].ToString(),
-                        ActionDate = item["ActionDate"].ToString(),
+                        ActionDate = !string.IsNullOrEmpty(item["ActionDate"].ToString()) ? DateTime.Parse(item["ActionDate"].ToString()).ToString("yyyy'年'MM'月'dd'日' HH:mm:ss") : item["ActionDate"].ToString(),
                         TotalRecords = Convert.ToInt32(_dao.ParseColumnValue(item, "TotalRecords").ToString()),
                         SNO = Convert.ToInt32(_dao.ParseColumnValue(item, "SN").ToString())
                     };

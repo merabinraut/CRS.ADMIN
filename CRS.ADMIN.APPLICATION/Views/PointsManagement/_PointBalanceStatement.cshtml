@@ -415,7 +415,7 @@
             success: function (response) {
                 $('#UserNameList[name="UserNameList"]').empty();
                 if (response.userNameList.length > 0) {
-                    $('#UserNameList[name="UserNameList"]').append($("<option>").val("").text("--- Select ---"));
+                    $('#UserNameList[name="UserNameList"]').append($("<option>").val("").text("--- @CRS.ADMIN.APPLICATION.Resources.Resource.Select ---"));
                     $.each(response.userNameList, function (i, value) {
                         $('#UserNameList[name="UserNameList"]').append($("<option>").val(value.Value).text(value.Text));
                     });

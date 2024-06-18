@@ -103,8 +103,8 @@
     var RequestVerificationToken = $('input[name="__RequestVerificationToken"]').val();
         $('#default_select3').prop('disabled', true);
         $('.clubDDL').change(function () {
-            $(".hostDDL").empty().prepend("<option value='' disabled selected>--- Select ---</option>");
-            $(".displayOrderDDL").empty().prepend("<option value='' disabled selected>--- Select ---</option>");
+            $(".hostDDL").empty().prepend("<option value='' disabled selected>--- @CRS.ADMIN.APPLICATION.Resources.Resource.Select ---</option>");
+            $(".displayOrderDDL").empty().prepend("<option value='' disabled selected>--- @CRS.ADMIN.APPLICATION.Resources.Resource.Select ---</option>");
             var clubid = document.getElementsByName("ClubId")[0].value;
             if (clubid === "" || clubid == null) {
                 toastr.info('Please select club');

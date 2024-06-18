@@ -388,7 +388,7 @@
             success: function (response) {
                 $('#User_name[name="User_name"]').empty();
                 if (response.userNameList.length > 0) {
-                    $('#User_name[name="User_name"]').append($("<option>").val("").text("--- All ---"));
+                    $('#User_name[name="User_name"]').append($("<option>").val("").text("--- @CRS.ADMIN.APPLICATION.Resources.Resource.All ---"));
                     $.each(response.userNameList, function (i, value) {
                         $('#User_name[name="User_name"]').append($("<option>").val(value.Value).text(value.Text));
                     });

@@ -1,4 +1,4 @@
-using CRS.ADMIN.APPLICATION.Helper;
+﻿using CRS.ADMIN.APPLICATION.Helper;
 using CRS.ADMIN.APPLICATION.Library;
 using CRS.ADMIN.APPLICATION.Models;
 using CRS.ADMIN.APPLICATION.Models.PointsManagement;
@@ -42,22 +42,23 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 Take = PageSize,
                 SearchFilter = !string.IsNullOrEmpty(SearchFilter) ? SearchFilter : null
             };
-            ViewBag.UserTypeList = ApplicationUtilities.SetDDLValue(DDLHelper.LoadDropdownList("USERTYPELIST") as Dictionary<string, string>, null, "--- Select ---");
-            ViewBag.TransferTypeIdList = ApplicationUtilities.SetDDLValue(DDLHelper.LoadDropdownList("TRANSACTIONTYPE") as Dictionary<string, string>, null, "--- Select ---");
-            ViewBag.LocationIdList = ApplicationUtilities.SetDDLValue(DDLHelper.LoadDropdownList("LOCATIONLIST") as Dictionary<string, string>, null, "--- Select ---");
-            ViewBag.CLUBTOADMINPaymentMethodListIdList = ApplicationUtilities.SetDDLValue(DDLHelper.LoadDropdownList("CLUBTOADMINPAYMENTMETHODLIST") as Dictionary<string, string>, null, "--- Select ---");
+            ViewBag.UserTypeList = ApplicationUtilities.SetDDLValue(DDLHelper.LoadDropdownList("USERTYPELIST","", culture) as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---");
+            
+            ViewBag.TransferTypeIdList = ApplicationUtilities.SetDDLValue(DDLHelper.LoadDropdownList("TRANSACTIONTYPE", "", culture) as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---");
+            ViewBag.LocationIdList = ApplicationUtilities.SetDDLValue(DDLHelper.LoadDropdownList("LOCATIONLIST", "", culture) as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---");
+            ViewBag.CLUBTOADMINPaymentMethodListIdList = ApplicationUtilities.SetDDLValue(DDLHelper.LoadDropdownList("CLUBTOADMINPAYMENTMETHODLIST", "", culture) as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---");
             var dictionaryempty = new Dictionary<string, string>();
 
             if (string.IsNullOrEmpty(UserType))
             {
-                ViewBag.FilterUserList = ApplicationUtilities.SetDDLValue(dictionaryempty, null, "--- Select ---");
+                ViewBag.FilterUserList = ApplicationUtilities.SetDDLValue(dictionaryempty, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---");
             }
             else
             {
-                ViewBag.FilterUserList = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("USERTYPENAME", UserType.DecryptParameter()) as Dictionary<string, string>, null, "--- Select ---");
+                ViewBag.FilterUserList = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("USERTYPENAME", UserType.DecryptParameter()) as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---");
             }
 
-            ViewBag.UserList = ApplicationUtilities.SetDDLValue(dictionaryempty, null, "--- Select ---");
+            ViewBag.UserList = ApplicationUtilities.SetDDLValue(dictionaryempty, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---");
             PointsManagementCommon Commonmodel = new PointsManagementCommon();
             Commonmodel.UserType = !string.IsNullOrEmpty(UserType) ? UserType.DecryptParameter() : null;
             Commonmodel.UserName = !string.IsNullOrEmpty(UserName) ? UserName.DecryptParameter() : null;
@@ -229,6 +230,24 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                     return RedirectToAction("PointsTransferList", "PointsManagement");
                 }
             }
+            else
+            {
+                var errorMessages = ModelState.Where(x => x.Value.Errors.Count > 0)
+                                  .SelectMany(x => x.Value.Errors.Select(e => $"{x.Key}: {e.ErrorMessage}"))
+                                  .ToList();
+
+                var notificationModels = errorMessages.Select(errorMessage => new NotificationModel
+                {
+                    NotificationType = NotificationMessage.INFORMATION,
+                    Message = errorMessage,
+                    Title = NotificationMessage.INFORMATION.ToString(),
+                }).ToArray();
+                AddNotificationMessage(notificationModels);
+                var errors = ModelState.Where(x => x.Value.Errors.Count > 0).Select(x => new { x.Key }).ToList();
+                
+
+                
+            }
             TempData["ManagePointsModel"] = objPointsTansferModel;
             TempData["RenderId"] = "Manage";
             return RedirectToAction("PointsTransferList", "PointsManagement");
@@ -349,10 +368,10 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             var culture = Request.Cookies["culture"]?.Value;
             culture = string.IsNullOrEmpty(culture) ? "ja" : culture;
 
-            ViewBag.UserTypeList = ApplicationUtilities.SetDDLValue(DDLHelper.LoadDropdownList("USERTYPELIST") as Dictionary<string, string>, null, "--- All ---");
+            ViewBag.UserTypeList = ApplicationUtilities.SetDDLValue(DDLHelper.LoadDropdownList("USERTYPELIST") as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 全て ---" : "--- All ---");
             if (!string.IsNullOrEmpty(requestModel.UserTypeList))
-                ViewBag.FilterUserList = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("USERTYPENAME", requestModel.UserTypeList.DecryptParameter()) as Dictionary<string, string>, null, "--- All ---");
-            ViewBag.TransferTypeIdList = ApplicationUtilities.SetDDLValue(DDLHelper.LoadDropdownList("TRANSACTIONTYPE") as Dictionary<string, string>, null, "--- All ---");
+                ViewBag.FilterUserList = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("USERTYPENAME", requestModel.UserTypeList.DecryptParameter()) as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 全て ---" : "--- All ---");
+            ViewBag.TransferTypeIdList = ApplicationUtilities.SetDDLValue(DDLHelper.LoadDropdownList("TRANSACTIONTYPE") as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 全て ---" : "--- All ---");
 
             requestModel.UserTypeList = !string.IsNullOrEmpty(requestModel.UserTypeList) ? requestModel.UserTypeList.DecryptParameter() : null;
             requestModel.UserNameList = !string.IsNullOrEmpty(requestModel.UserNameList) ? requestModel.UserNameList.DecryptParameter() : null;
@@ -384,10 +403,10 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             var culture = Request.Cookies["culture"]?.Value;
             culture = string.IsNullOrEmpty(culture) ? "ja" : culture;
 
-            ViewBag.UserTypeList = ApplicationUtilities.SetDDLValue(DDLHelper.LoadDropdownList("USERTYPELIST") as Dictionary<string, string>, null, "--- All ---");
+            ViewBag.UserTypeList = ApplicationUtilities.SetDDLValue(DDLHelper.LoadDropdownList("USERTYPELIST") as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 全て ---" : "--- All ---");
             if (!string.IsNullOrEmpty(requestModel.User_type))
-                ViewBag.FilterUserList = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("USERTYPENAME", requestModel.User_type.DecryptParameter()) as Dictionary<string, string>, null, "--- All ---");
-            ViewBag.TransferTypeIdList = ApplicationUtilities.SetDDLValue(DDLHelper.LoadDropdownList("TRANSACTIONTYPE") as Dictionary<string, string>, null, "--- All ---");
+                ViewBag.FilterUserList = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("USERTYPENAME", requestModel.User_type.DecryptParameter()) as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 全て ---" : "--- All ---");
+            ViewBag.TransferTypeIdList = ApplicationUtilities.SetDDLValue(DDLHelper.LoadDropdownList("TRANSACTIONTYPE") as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 全て ---" : "--- All ---");
 
             requestModel.User_type = !string.IsNullOrEmpty(requestModel.User_type) ? requestModel.User_type.DecryptParameter() : null;
             requestModel.User_name = !string.IsNullOrEmpty(requestModel.User_name) ? requestModel.User_name.DecryptParameter() : null;

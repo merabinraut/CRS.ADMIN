@@ -6,6 +6,7 @@ using CRS.ADMIN.SHARED;
 using CRS.ADMIN.SHARED.PaginationManagement;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Web.Mvc;
 
 namespace CRS.ADMIN.APPLICATION.Controllers
@@ -21,6 +22,8 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             Session["CurrentURL"] = "/PaymentManagement/Index";
             var cId = !string.IsNullOrEmpty(ClubId) ? ClubId.DecryptParameter() : null;
             var lId = !string.IsNullOrEmpty(LocationId) ? LocationId.DecryptParameter() : null;
+            var culture = Request.Cookies["culture"]?.Value;
+            culture = string.IsNullOrEmpty(culture) ? "ja" : culture;
             var overViewCommon = _business.GetPaymentOverview();
             var dbRequest = new PaginationFilterCommon()
             {
@@ -43,9 +46,9 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             ViewBag.StartIndex = StartIndex;
             ViewBag.PageSize = PageSize;
             ViewBag.TotalData = paymentLogsCommon != null && paymentLogsCommon.Any() ? paymentLogsCommon[0].TotalRecords : 0;
-            ViewBag.ClubDDL = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("CLUBLIST") as Dictionary<string, string>, null, "--- Select ---");
+            ViewBag.ClubDDL = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("CLUBLIST") as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---");
             ViewBag.ClubIdKey = ClubId;
-            ViewBag.LocationDDL = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("LOCATIONDDL") as Dictionary<string, string>, null, "--- Select ---");
+            ViewBag.LocationDDL = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("LOCATIONDDL") as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---");
             ViewBag.LocationIdKey = LocationId;
             ViewBag.FromDate = FromDate;
             ViewBag.ToDate = ToDate;

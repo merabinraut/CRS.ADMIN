@@ -1,4 +1,5 @@
-﻿using CRS.ADMIN.SHARED;
+﻿using CRS.ADMIN.APPLICATION.Resources;
+using CRS.ADMIN.SHARED;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
@@ -100,9 +101,9 @@ namespace CRS.ADMIN.APPLICATION.Models.RecommendationManagementV2
 
     public class ManageGroup
     {
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
+        [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Required")]
         public string GroupName { get; set; }
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
+        [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Required")]
         public string Description { get; set; }
         //[Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
         public string DisplayOrderId { get; set; }

@@ -49,7 +49,7 @@ namespace CRS.ADMIN.REPOSITORY.ReviewAndRatingsManagement
                         JapaneseRemark = item["JapaneseRemark"].ToString(),
                         RemarkType = item["RemarkType"].ToString(),
                         Rating = item["Rating"].ToString(),
-                        ReviewedOn = item["ReviewedOn"].ToString(),
+                        ReviewedOn = !string.IsNullOrEmpty(item["ReviewedOn"].ToString()) ? DateTime.Parse(item["ReviewedOn"].ToString()).ToString("yyyy'年'MM'月'dd'日' HH:mm:ss") : item["ReviewedOn"].ToString(),
                         TotalRecords = Convert.ToInt32(_repositoryDao.ParseColumnValue(item, "TotalRecords").ToString()),
                         SNO = Convert.ToInt32(_repositoryDao.ParseColumnValue(item, "SNO").ToString())
                     };

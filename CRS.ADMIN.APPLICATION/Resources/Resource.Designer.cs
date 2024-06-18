@@ -2095,6 +2095,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Invalid Postal Code.
+        /// </summary>
+        public static string Invalid_Postal_Code {
+            get {
+                return ResourceManager.GetString("Invalid Postal Code", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Jan.
         /// </summary>
         public static string January {
@@ -2667,6 +2676,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         public static string Maximum_50_characters_allowed {
             get {
                 return ResourceManager.GetString("Maximum 50 characters allowed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Maximum 75 characters allowed.
+        /// </summary>
+        public static string Maximum_75_characters_allowed {
+            get {
+                return ResourceManager.GetString("Maximum 75 characters allowed", resourceCulture);
             }
         }
         
@@ -3913,6 +3931,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Select.
+        /// </summary>
+        public static string Select {
+            get {
+                return ResourceManager.GetString("Select", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Select All.
         /// </summary>
         public static string Select_All {
@@ -4269,6 +4296,51 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         public static string Tax {
             get {
                 return ResourceManager.GetString("Tax", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The field must be a 11-digit number.
+        /// </summary>
+        public static string The_field_must_be_a_11_digit_number {
+            get {
+                return ResourceManager.GetString("The field must be a 11-digit number", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The field must be a 2-digit number.
+        /// </summary>
+        public static string The_field_must_be_a_2_digit_number {
+            get {
+                return ResourceManager.GetString("The field must be a 2-digit number", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The field must be a 4-digit number.
+        /// </summary>
+        public static string The_field_must_be_a_4_digit_number {
+            get {
+                return ResourceManager.GetString("The field must be a 4-digit number", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The field must be a number.
+        /// </summary>
+        public static string The_field_must_be_a_number {
+            get {
+                return ResourceManager.GetString("The field must be a number", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The field must be a number between 0 and 150.
+        /// </summary>
+        public static string The_field_must_be_a_number_between_0_and_150 {
+            get {
+                return ResourceManager.GetString("The field must be a number between 0 and 150", resourceCulture);
             }
         }
         

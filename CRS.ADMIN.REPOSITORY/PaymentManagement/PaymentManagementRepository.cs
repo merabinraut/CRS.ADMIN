@@ -87,7 +87,7 @@ namespace CRS.ADMIN.REPOSITORY.PaymentManagement
                         ClubCategory = dataRow["ClubCategory"].ToString(),
                         Location = dataRow["ClubLocation"].ToString(),
                         Date = dataRow["TransactionDate"].ToString(),
-                        TransactionFormattedDate = dataRow["TransactionFormattedDate"].ToString(),
+                        TransactionFormattedDate = !string.IsNullOrEmpty(dataRow["TransactionFormattedDate"].ToString()) ? DateTime.Parse(dataRow["TransactionFormattedDate"].ToString()).ToString("yyyy'年'MM'月'dd'日' HH:mm:ss") : dataRow["TransactionFormattedDate"].ToString() ,
                         TotalPlanAmount = dataRow["TotalPlanAmount"].ToString(),
                         TotalAdminPlanCommissionAmount = dataRow["TotalAdminPlanCommissionAmount"].ToString(),
                         TotalAdminCommissionAmount = dataRow["TotalAdminCommissionAmount"].ToString(),

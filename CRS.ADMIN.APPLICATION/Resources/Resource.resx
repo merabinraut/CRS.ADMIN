@@ -1010,6 +1010,9 @@
     <value>Upload Insurance Card</value>
     <comment>ClubManagement</comment>
   </data>
+  <data name="Invalid Postal Code" xml:space="preserve">
+    <value>Invalid Postal Code</value>
+  </data>
   <data name="January" xml:space="preserve">
     <value>Jan</value>
     <comment>Dashboard</comment>
@@ -1263,6 +1266,9 @@
   <data name="Maximum 50 characters allowed" xml:space="preserve">
     <value>Maximum 50 characters allowed</value>
     <comment>CommissionManagement</comment>
+  </data>
+  <data name="Maximum 75 characters allowed" xml:space="preserve">
+    <value>Maximum 75 characters allowed</value>
   </data>
   <data name="Maximum length is 16 characters" xml:space="preserve">
     <value>Maximum length is 16 characters</value>
@@ -1803,6 +1809,9 @@
     <value>See All Hosts</value>
     <comment>Dashboard</comment>
   </data>
+  <data name="Select" xml:space="preserve">
+    <value>Select</value>
+  </data>
   <data name="Select All" xml:space="preserve">
     <value>Select All</value>
     <comment>Roles Management</comment>
@@ -1957,6 +1966,22 @@
   <data name="Tax" xml:space="preserve">
     <value>Tax</value>
     <comment>ClubManagement</comment>
+  </data>
+  <data name="The field must be a 11-digit number" xml:space="preserve">
+    <value>The field must be a 11-digit number</value>
+  </data>
+  <data name="The field must be a 2-digit number" xml:space="preserve">
+    <value>The field must be a 2-digit number</value>
+  </data>
+  <data name="The field must be a 4-digit number" xml:space="preserve">
+    <value>The field must be a 4-digit number</value>
+  </data>
+  <data name="The field must be a number" xml:space="preserve">
+    <value>The field must be a number</value>
+    <comment>PointsManagement</comment>
+  </data>
+  <data name="The field must be a number between 0 and 150" xml:space="preserve">
+    <value>The field must be a number between 0 and 150</value>
   </data>
   <data name="Thursday" xml:space="preserve">
     <value>Thu</value>
