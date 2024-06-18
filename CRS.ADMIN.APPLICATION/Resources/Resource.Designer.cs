@@ -4304,7 +4304,7 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         /// </summary>
         public static string The_field_must_be_a_11_digit_number {
             get {
-                return ResourceManager.GetString("The field must be a 11-digit number", resourceCulture);
+                return ResourceManager.GetString("The field must be a 11 digit number", resourceCulture);
             }
         }
         
@@ -4313,7 +4313,7 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         /// </summary>
         public static string The_field_must_be_a_2_digit_number {
             get {
-                return ResourceManager.GetString("The field must be a 2-digit number", resourceCulture);
+                return ResourceManager.GetString("The field must be a 2 digit number", resourceCulture);
             }
         }
         
@@ -4322,7 +4322,7 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         /// </summary>
         public static string The_field_must_be_a_4_digit_number {
             get {
-                return ResourceManager.GetString("The field must be a 4-digit number", resourceCulture);
+                return ResourceManager.GetString("The field must be a 4 digit number", resourceCulture);
             }
         }
         

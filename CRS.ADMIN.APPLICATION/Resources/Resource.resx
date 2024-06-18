@@ -1967,13 +1967,13 @@
     <value>Tax</value>
     <comment>ClubManagement</comment>
   </data>
-  <data name="The field must be a 11-digit number" xml:space="preserve">
+  <data name="The field must be a 11 digit number" xml:space="preserve">
     <value>The field must be a 11-digit number</value>
   </data>
-  <data name="The field must be a 2-digit number" xml:space="preserve">
+  <data name="The field must be a 2 digit number" xml:space="preserve">
     <value>The field must be a 2-digit number</value>
   </data>
-  <data name="The field must be a 4-digit number" xml:space="preserve">
+  <data name="The field must be a 4 digit number" xml:space="preserve">
     <value>The field must be a 4-digit number</value>
   </data>
   <data name="The field must be a number" xml:space="preserve">

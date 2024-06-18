@@ -74,19 +74,19 @@ namespace CRS.ADMIN.APPLICATION.Models.AffiliateManagement
         [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Required")]
         public string FullName { get; set; }
         [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Required")]
-        [RegularExpression("^[0-9]{11}$", ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "The_field_must_be_a_11-digit_number")]
+        [RegularExpression("^[0-9]{11}$", ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "The_field_must_be_a_11_digit_number")]
         public string MobileNumber { get; set; }
         [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Required")]
-        [MaxLength(75, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Maximum 75 characters allowed")]
+        [MaxLength(75, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Maximum_75_characters_allowed")]
         public string EmailAddress { get; set; }
         [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Required")]
-        [RegularExpression("^\\d{3}[0-9]$", ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "The_field_must_be_a_4-digit_number")]
+        [RegularExpression("^\\d{3}[0-9]$", ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "The_field_must_be_a_4_digit_number")]
         public string BirthDateYear { get; set; }
         [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Required")]
-        [RegularExpression("^(0?[1-9]|1[0-2])$", ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "The_field_must_be_a_2-digit_number")]
+        [RegularExpression("^(0?[1-9]|1[0-2])$", ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "The_field_must_be_a_2_digit_number")]
         public string BirthDateMonth { get; set; }
         [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Required")]
-        [RegularExpression("^(0?[1-9]|[12]\\d|3[01]|32)$", ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "The_field_must_be_a_2-digit_number")]
+        [RegularExpression("^(0?[1-9]|[12]\\d|3[01]|32)$", ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "The_field_must_be_a_2_digit_number")]
         public string BirthDateDay { get; set; }
         [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Required")]
         public string Gender { get; set; }
