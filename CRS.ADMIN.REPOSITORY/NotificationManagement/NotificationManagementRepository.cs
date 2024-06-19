@@ -27,7 +27,8 @@ namespace CRS.ADMIN.REPOSITORY.NotificationManagement
             SQL += ",@AdminId=" + _dao.FilterString(Request.AdminId);
             SQL += !string.IsNullOrEmpty(Request.NotificationId) ? ",@AdminId=" + _dao.FilterString(Request.AdminId) : "";
             var dbResponse = _dao.ExecuteDataTable(SQL);
-            if (dbResponse != null && dbResponse.Rows.Count > 0) return _dao.DataTableToListObject<NotificationDetailCommon>(dbResponse).ToList();
+            if (dbResponse != null && dbResponse.Rows.Count > 0) 
+                return _dao.DataTableToListObject<NotificationDetailCommon>(dbResponse).ToList();
             return new List<NotificationDetailCommon>();
         }
     }

@@ -69,10 +69,10 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             if (TempData.ContainsKey("RenderId")) RenderId = TempData["RenderId"].ToString();
             ViewBag.PopUpRenderValue = !string.IsNullOrEmpty(RenderId) ? RenderId : null;
 
-            ViewBag.PlanList = ApplicationUtilities.SetDDLValue(planTypeDictionary as Dictionary<string, string>, null, "--- Select ---");
-            ViewBag.TimeList = ApplicationUtilities.SetDDLValue(timeDictionary as Dictionary<string, string>, null, "--- Select ---");
-            ViewBag.LiquorList = ApplicationUtilities.SetDDLValue(liquorDictionary as Dictionary<string, string>, null, "--- Select ---");
-            ViewBag.PlanCategoryDDL = ApplicationUtilities.SetDDLValue(planCategoryDictionary as Dictionary<string, string>, null, "--- Select ---");
+            ViewBag.PlanList = ApplicationUtilities.SetDDLValue(planTypeDictionary as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---");
+            ViewBag.TimeList = ApplicationUtilities.SetDDLValue(timeDictionary as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---");
+            ViewBag.LiquorList = ApplicationUtilities.SetDDLValue(liquorDictionary as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---");
+            ViewBag.PlanCategoryDDL = ApplicationUtilities.SetDDLValue(planCategoryDictionary as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---");
             ViewBag.SearchFilter = SearchFilter;
             ViewBag.StartIndex = StartIndex;
             ViewBag.PageSize = PageSize;
@@ -140,12 +140,14 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 var errorMessages = ModelState.Where(x => x.Value.Errors.Count > 0)
                                  .SelectMany(x => x.Value.Errors.Select(e => $"{x.Key}: {e.ErrorMessage}"))
                                  .ToList();
-                this.AddNotificationMessage(new NotificationModel()
+                var notificationModels = errorMessages.Select(errorMessage => new NotificationModel
                 {
                     NotificationType = NotificationMessage.INFORMATION,
-                    Message = "Please input all required fields",
+                    Message = errorMessage,
                     Title = NotificationMessage.INFORMATION.ToString(),
-                });
+                }).ToArray();
+                AddNotificationMessage(notificationModels);
+                var errors = ModelState.Where(x => x.Value.Errors.Count > 0).Select(x => new { x.Key }).ToList();
                 TempData["PlanManagementModel"] = model;
                 TempData["RenderId"] = "Manage";
                 return RedirectToAction("PlanList", "PlanManagement");

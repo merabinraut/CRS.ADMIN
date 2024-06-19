@@ -49,7 +49,7 @@
                         <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
                             @CRS.ADMIN.APPLICATION.Resources.Resource.Plan_Type
                         </label>
-                        <select id="large" name="PlanType" class="default_select select-common block w-full" style="width: 100%;" required>
+                        <select id="large" name="PlanType" class="default_select select-common block w-full" style="width: 100%;">
                             @foreach (var item in ViewBag.PlanList as IEnumerable<SelectListItem>)
                             {
                                 var selectedId = Model.PlanType as string;
@@ -73,7 +73,7 @@
                         <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
                             @CRS.ADMIN.APPLICATION.Resources.Resource.Plan_Type
                         </label>
-                        <select name="PlanCategory" class="default_select select-common block w-full" style="width: 100%;" required>
+                        <select name="PlanCategory" class="default_select select-common block w-full" style="width: 100%;">
                             @foreach (var item in ViewBag.PlanCategoryDDL as IEnumerable<SelectListItem>)
                             {
                                 var selectedId = Model.PlanCategory as string;
@@ -104,7 +104,7 @@
                                     @CRS.ADMIN.APPLICATION.Resources.Resource.Choose_Images
                                 </span>
                             </label>
-                            <input id="file_input_logo" class="file-input" name="ImageFile" type="file" style="display:none;" required>
+                            <input id="file_input_logo" class="file-input" name="ImageFile" type="file" style="display:none;">
                             <p id="file_name_logo"
                                class="file-name w-max h-[23px] overflow-hidden pl-2 text-xs text-[#686868] leading-[25px]">
                                 @if (string.IsNullOrEmpty(Model.PlanImage))
@@ -136,7 +136,7 @@
                                     @CRS.ADMIN.APPLICATION.Resources.Resource.Choose_Images
                                 </span>
                             </label>
-                            <input id="file_input_logo2" class="file-input" name="ImageFile2" type="file" style="display:none;" required>
+                            <input id="file_input_logo2" class="file-input" name="ImageFile2" type="file" style="display:none;">
                             <p id="file_name_logo2"
                                class="file-name w-max h-[23px] overflow-hidden pl-2 text-xs text-[#686868] leading-[25px]">
                                 @if (string.IsNullOrEmpty(Model.PlanImage2))
@@ -163,7 +163,7 @@
                             @CRS.ADMIN.APPLICATION.Resources.Resource.Time
                         </label>
                         <select id="large" name="PlanTime" class=" default_select select-common block w-full "
-                                style="width: 100%;" required>
+                                style="width: 100%;">
                             @foreach (var item in ViewBag.TimeList as IEnumerable<SelectListItem>)
                             {
                                 var selectedId = Model.PlanTime as string;
@@ -263,7 +263,7 @@
                             @CRS.ADMIN.APPLICATION.Resources.Resource.Liquor
                         </label>
                         <select id="large" name="Liquor" class=" default_select select-common block w-full "
-                                style="width: 100%;" required>
+                                style="width: 100%;" >
                             @foreach (var item in ViewBag.LiquorList as IEnumerable<SelectListItem>)
                             {
                                 var selectedId = Model.Liquor as string;
@@ -288,7 +288,7 @@
                             @CRS.ADMIN.APPLICATION.Resources.Resource.Nomination
                         </label>
                         <select id="large" name="Nomination" class=" default_select select-common block w-full "
-                                style="width: 100%;" required>
+                                style="width: 100%;" >
                             @for (int i = 1; i <= 10; i++)
                             {
                                 var selectedId = Model.Nomination as string;
@@ -314,7 +314,7 @@
                             @CRS.ADMIN.APPLICATION.Resources.Resource.NoOfPeople
                         </label>
                         <select name="NoOfPeople" class=" default_select select-common block w-full "
-                                style="width: 100%;" required>
+                                style="width: 100%;" >
                             @for (int i = 1; i <= 10; i++)
                             {
                                 var selectedId = Model.NoOfPeople;

@@ -155,8 +155,20 @@
     <value>Address</value>
     <comment>Club Management</comment>
   </data>
+  <data name="Admin Commission Amount" xml:space="preserve">
+    <value>Admin Commission Amount</value>
+    <comment>Reservation Ledger</comment>
+  </data>
   <data name="Admin Payment" xml:space="preserve">
     <value>Admin Payment</value>
+    <comment>Reservation Ledger</comment>
+  </data>
+  <data name="Admin Plan Commission Amount" xml:space="preserve">
+    <value>Admin Plan Commission Amount</value>
+    <comment>Reservation Ledger</comment>
+  </data>
+  <data name="Admin Remarks" xml:space="preserve">
+    <value>Admin Remarks</value>
     <comment>Reservation Ledger</comment>
   </data>
   <data name="Affiliate" xml:space="preserve">
@@ -498,8 +510,16 @@
     <value>Club Profile</value>
     <comment>Reservation Ledger</comment>
   </data>
+  <data name="Club Reservations Details" xml:space="preserve">
+    <value>Club Reservations Details</value>
+    <comment>Reservation Ledger</comment>
+  </data>
   <data name="Club Status" xml:space="preserve">
     <value>Club Status</value>
+    <comment>Reservation Ledger</comment>
+  </data>
+  <data name="Club Verification" xml:space="preserve">
+    <value>Club Verification</value>
     <comment>Reservation Ledger</comment>
   </data>
   <data name="ClubFurigana" xml:space="preserve">
@@ -840,6 +860,10 @@
   </data>
   <data name="Filter By" xml:space="preserve">
     <value>Filter By</value>
+  </data>
+  <data name="First Booking" xml:space="preserve">
+    <value>First Booking</value>
+    <comment>Reservation Ledger</comment>
   </data>
   <data name="First Name" xml:space="preserve">
     <value>First Name</value>
@@ -1194,6 +1218,14 @@
     <value>Manage Club Profile</value>
     <comment>Club Management</comment>
   </data>
+  <data name="Manage club's reservation informations" xml:space="preserve">
+    <value>Manage club's reservation informations</value>
+    <comment>ReservationLedger</comment>
+  </data>
+  <data name="Manage clubs reservation informations" xml:space="preserve">
+    <value>Manage club's' reservation informations</value>
+    <comment>Reservation Ledger</comment>
+  </data>
   <data name="Manage Commission" xml:space="preserve">
     <value>Manage Commission</value>
     <comment>Commission Management</comment>
@@ -1221,6 +1253,10 @@
   <data name="Manage Location" xml:space="preserve">
     <value>Manage Location</value>
     <comment>Location Management</comment>
+  </data>
+  <data name="Manage Notification" xml:space="preserve">
+    <value>Manage Notification</value>
+    <comment>Notification</comment>
   </data>
   <data name="Manage Points" xml:space="preserve">
     <value>Manage Points</value>
@@ -1298,6 +1334,10 @@
     <value>Max Value</value>
     <comment>Commission Management</comment>
   </data>
+  <data name="Maximum 100 characters allowed" xml:space="preserve">
+    <value>Maximum 100 characters allowed</value>
+    <comment>Host Management</comment>
+  </data>
   <data name="Maximum 300 characters allowed" xml:space="preserve">
     <value>Maximum 300 characters allowed</value>
     <comment>CommissionManagement</comment>
@@ -1305,6 +1345,10 @@
   <data name="Maximum 50 characters allowed" xml:space="preserve">
     <value>Maximum 50 characters allowed</value>
     <comment>CommissionManagement</comment>
+  </data>
+  <data name="Maximum 500 characters allowed" xml:space="preserve">
+    <value>Maximum 500 characters allowed</value>
+    <comment>Host Management</comment>
   </data>
   <data name="Maximum 75 characters allowed" xml:space="preserve">
     <value>Maximum 75 characters allowed</value>
@@ -1330,6 +1374,10 @@
   <data name="Min Value" xml:space="preserve">
     <value>Min Value</value>
     <comment>Commission Management</comment>
+  </data>
+  <data name="Minimum 1 characters required" xml:space="preserve">
+    <value>Minimum 1 characters required</value>
+    <comment>Host Management</comment>
   </data>
   <data name="MobileNumber" xml:space="preserve">
     <value>Mobile Number</value>
@@ -1390,9 +1438,25 @@
     <value>Number of People</value>
     <comment>Plan Management</comment>
   </data>
+  <data name="Not Verified" xml:space="preserve">
+    <value>Not Verified</value>
+    <comment>Reservation Ledger</comment>
+  </data>
   <data name="Note" xml:space="preserve">
     <value>Note</value>
     <comment>Location Management</comment>
+  </data>
+  <data name="Notification Body" xml:space="preserve">
+    <value>Notification Body</value>
+    <comment>Notification</comment>
+  </data>
+  <data name="Notification Management" xml:space="preserve">
+    <value>Notification Management</value>
+    <comment>Notification</comment>
+  </data>
+  <data name="Notification Subject" xml:space="preserve">
+    <value>Notification Subject</value>
+    <comment>Notification</comment>
   </data>
   <data name="Notifications" xml:space="preserve">
     <value>Notifications</value>
@@ -1409,6 +1473,10 @@
   <data name="On Arrival" xml:space="preserve">
     <value>On Arrival</value>
     <comment>Dashboard</comment>
+  </data>
+  <data name="On Site Payment" xml:space="preserve">
+    <value>On Site Payment</value>
+    <comment>Reservation Ledger</comment>
   </data>
   <data name="Order" xml:space="preserve">
     <value>Order</value>
@@ -1438,6 +1506,10 @@
     <value>Manage recommendation according to pages.</value>
     <comment>Recommendation Management</comment>
   </data>
+  <data name="Paid" xml:space="preserve">
+    <value>Paid</value>
+    <comment>Reservation Ledger</comment>
+  </data>
   <data name="Passport" xml:space="preserve">
     <value>Upload Passport</value>
     <comment>ClubManagement</comment>
@@ -1465,6 +1537,10 @@
   <data name="password reset confirmation" xml:space="preserve">
     <value>password reset confirmation</value>
     <comment>Customer Management</comment>
+  </data>
+  <data name="Pay At Arrival" xml:space="preserve">
+    <value>Pay At Arrival</value>
+    <comment>Reservation Ledger</comment>
   </data>
   <data name="Payment" xml:space="preserve">
     <value>Payment</value>
@@ -1526,6 +1602,10 @@
   <data name="Plan" xml:space="preserve">
     <value>Plan</value>
     <comment>Payment Management</comment>
+  </data>
+  <data name="Plan Amount" xml:space="preserve">
+    <value>Plan Amount</value>
+    <comment>Reservation Ledger</comment>
   </data>
   <data name="Plan Fee" xml:space="preserve">
     <value>Plan Fee</value>
@@ -1711,6 +1791,10 @@
     <value>Referrer</value>
     <comment>CustomerManagement</comment>
   </data>
+  <data name="Regular Booking" xml:space="preserve">
+    <value>Regular Booking</value>
+    <comment>Reservation Ledger</comment>
+  </data>
   <data name="Regular Fee" xml:space="preserve">
     <value>Regular Fee</value>
     <comment>ClubManagement</comment>
@@ -1770,6 +1854,10 @@
   </data>
   <data name="Reservation Ledger" xml:space="preserve">
     <value>Reservation Ledger</value>
+    <comment>Reservation Ledger</comment>
+  </data>
+  <data name="Reservation Type" xml:space="preserve">
+    <value>Reservation Type</value>
     <comment>Reservation Ledger</comment>
   </data>
   <data name="Reservations" xml:space="preserve">
@@ -1934,6 +2022,10 @@
   <data name="Showing" xml:space="preserve">
     <value>Showing</value>
   </data>
+  <data name="Showing 1 to 5 of 5 Entries" xml:space="preserve">
+    <value>Showing 1 to 5 of 5 Entries</value>
+    <comment>Notification</comment>
+  </data>
   <data name="Silver" xml:space="preserve">
     <value>Silver</value>
     <comment>Dashboard</comment>
@@ -2022,6 +2114,10 @@
   </data>
   <data name="Submit" xml:space="preserve">
     <value>Submit</value>
+  </data>
+  <data name="Success" xml:space="preserve">
+    <value>Success</value>
+    <comment>Reservation Ledger</comment>
   </data>
   <data name="Sunday" xml:space="preserve">
     <value>Sun</value>
@@ -2115,6 +2211,18 @@
     <value>Total</value>
     <comment>Dashboard</comment>
   </data>
+  <data name="Total Admin Commission Amount" xml:space="preserve">
+    <value>Total Admin Commission Amount</value>
+    <comment>Reservation Ledger</comment>
+  </data>
+  <data name="Total Admin Payable Amount" xml:space="preserve">
+    <value>Total Admin Payable Amount</value>
+    <comment>Reservation Ledger</comment>
+  </data>
+  <data name="Total Admin Plan Commission Amount" xml:space="preserve">
+    <value>Total Admin Plan Commission Amount</value>
+    <comment>Reservation Ledger</comment>
+  </data>
   <data name="Total Affiliates" xml:space="preserve">
     <value>Total Affiliates</value>
     <comment>Affiliate Management</comment>
@@ -2127,6 +2235,10 @@
     <value>Total Clicks</value>
     <comment>Affiliate Management</comment>
   </data>
+  <data name="Total Club Plan Amount" xml:space="preserve">
+    <value>Total Club Plan Amount</value>
+    <comment>Reservation Ledger</comment>
+  </data>
   <data name="Total Clubs" xml:space="preserve">
     <value>Total Clubs</value>
     <comment>Location Management</comment>
@@ -2134,6 +2246,10 @@
   <data name="Total Commission" xml:space="preserve">
     <value>Total Commission</value>
     <comment>Payment Management</comment>
+  </data>
+  <data name="Total Plan Amount" xml:space="preserve">
+    <value>Total Plan Amount</value>
+    <comment>Reservation Ledger</comment>
   </data>
   <data name="Total Requests" xml:space="preserve">
     <value>Total Requests</value>
@@ -2166,6 +2282,10 @@
   <data name="Transaction ID" xml:space="preserve">
     <value>Transaction ID</value>
     <comment>Points Management</comment>
+  </data>
+  <data name="Transaction Status" xml:space="preserve">
+    <value>Transaction Status</value>
+    <comment>Reservation Ledger</comment>
   </data>
   <data name="Transaction Type" xml:space="preserve">
     <value>Transaction Type</value>
@@ -2235,6 +2355,10 @@
   <data name="Value" xml:space="preserve">
     <value>Value</value>
     <comment>Commission Management</comment>
+  </data>
+  <data name="Verified" xml:space="preserve">
+    <value>Verified</value>
+    <comment>Reservation Ledger</comment>
   </data>
   <data name="View All" xml:space="preserve">
     <value>View All</value>

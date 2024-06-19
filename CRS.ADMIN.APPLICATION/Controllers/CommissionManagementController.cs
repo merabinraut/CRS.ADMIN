@@ -214,7 +214,8 @@ namespace CRS.ADMIN.APPLICATION.Controllers
         public ActionResult CommissionDetailList(string CategoryId, string CategoryName = "", string AdminCommissionTypeId = "")
         {
             var viewModel = new CommissionDetailRazorViewModel();
-
+            var culture = Request.Cookies["culture"]?.Value;
+            culture = string.IsNullOrEmpty(culture) ? "ja" : culture;
             var cId = !string.IsNullOrEmpty(CategoryId) ? CategoryId.DecryptParameter() : null;
             var adminCmsTypeId = !string.IsNullOrEmpty(AdminCommissionTypeId) ? AdminCommissionTypeId.DecryptParameter() : null;
             if (string.IsNullOrEmpty(cId) && string.IsNullOrEmpty(adminCmsTypeId))
@@ -245,8 +246,8 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 ViewBag.PopUpRenderValue = TempData["RenderId"].ToString();
 
             viewModel.ManageCommissionDetailAddEdit.CommissionPercentageTypeList =
-                ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("COMMISSIONPERCENTAGETYPELIST")
-                    as Dictionary<string, string>, "", "--- Select ---");
+                ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("COMMISSIONPERCENTAGETYPELIST","",culture)
+                    as Dictionary<string, string>, "", culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---");
 
             ViewBag.CommissionPercentTypeIdKey = viewModel.ManageCommissionDetailAddEdit.CommissionPercentageType;
             ViewBag.CategoryId = CategoryId;

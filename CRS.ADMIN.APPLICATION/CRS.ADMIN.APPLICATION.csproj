@@ -327,6 +327,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resource.Ja.resx</DependentUpon>
     </Compile>
+    <Content Include="Content\assets_new\images\coins-solid-active.svg" />
+    <Content Include="Content\assets_new\images\coins-solid.svg" />
+    <Content Include="Content\assets_new\images\image-solid-active.svg" />
+    <Content Include="Content\assets_new\images\image-solid.svg" />
     <Content Include="Views\AffiliateManagement\_ManageAffiliatePartialView.cshtml" />
     <Content Include="Views\AffiliateManagement\_ManageAffiliatePartialView1.cshtml" />
     <None Include="Views\ClubPlanManagement\_ManageClubPlanPartialView.cshtml" />

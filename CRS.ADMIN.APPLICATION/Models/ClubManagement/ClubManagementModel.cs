@@ -1,5 +1,6 @@
 ﻿using CRS.ADMIN.APPLICATION.Models.ClubManagerModel;
 using CRS.ADMIN.APPLICATION.Models.TagManagement;
+using CRS.ADMIN.APPLICATION.Resources;
 using DocumentFormat.OpenXml.Drawing.Charts;
 using DocumentFormat.OpenXml.Office2013.Word;
 using DocumentFormat.OpenXml.Wordprocessing;
@@ -262,13 +263,13 @@ namespace CRS.ADMIN.APPLICATION.Models.ClubManagement
     public class planIdentityDataModel
     {
         public string English { get; set; }
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
+        [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Required")]
         public string StaticDataValue { get; set; }
         public string japanese { get; set; }
         public string inputtype { get; set; }
         public string name { get; set; }
         public string IdentityLabel { get; set; }
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
+        [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName  = "Required")]
         public string IdentityDescription { get; set; }
         public string PlanListId { get; set; }
         public string Id { get; set; }
