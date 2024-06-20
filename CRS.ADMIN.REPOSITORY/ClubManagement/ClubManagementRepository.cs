@@ -948,7 +948,7 @@ namespace CRS.ADMIN.REPOSITORY.ClubManagement
         public CommonDbResponse ManageClubAvailability(AvailabilityTagModelCommon request, ManageTagCommon dbRequest, string[] updatedValues)
         {
             string originalSpName = "EXEC sproc_ap_club_tag_management @Flag='mt'";
-            var response = _DAO.ParseCommonDbResponse(originalSpName);
+            var response = new CommonDbResponse();
 
             foreach (var item in updatedValues)
             {
@@ -964,7 +964,7 @@ namespace CRS.ADMIN.REPOSITORY.ClubManagement
                 sp_name += ", @ActionUser=" + _DAO.FilterString(dbRequest.ActionUser);
                 sp_name += ", @ActionIP=" + _DAO.FilterString(dbRequest.ActionIP);
                 sp_name += ", @ActionPlatform=" + _DAO.FilterString(dbRequest.ActionPlatform);
-                _DAO.ParseCommonDbResponse(sp_name);
+                response= _DAO.ParseCommonDbResponse(sp_name);
             }
             return response;
         }
