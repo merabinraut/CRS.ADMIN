@@ -361,9 +361,21 @@
     <value>八月</value>
     <comment>Dashboard</comment>
   </data>
+  <data name="Availability" xml:space="preserve">
+    <value>空き状況</value>
+    <comment>Tag Management</comment>
+  </data>
+  <data name="Available for private booking" xml:space="preserve">
+    <value>貸し切りOK</value>
+    <comment>Tag Management</comment>
+  </data>
   <data name="Back" xml:space="preserve">
     <value>戻る</value>
     <comment>Dashboard</comment>
+  </data>
+  <data name="Banner" xml:space="preserve">
+    <value>バナー1</value>
+    <comment>HostGallaryManagement</comment>
   </data>
   <data name="Basic" xml:space="preserve">
     <value>基本</value>
@@ -672,6 +684,10 @@
   </data>
   <data name="Custom Date" xml:space="preserve">
     <value>カスタム日付</value>
+  </data>
+  <data name="Custom Upload" xml:space="preserve">
+    <value>選ぶ</value>
+    <comment>HostGallaryManagement</comment>
   </data>
   <data name="Customer" xml:space="preserve">
     <value>お客様</value>
@@ -1069,6 +1085,10 @@
     <value>保険証「住所欄」アップロード</value>
     <comment>ClubManagement</comment>
   </data>
+  <data name="Invalid amount" xml:space="preserve">
+    <value>無効な金額</value>
+    <comment>Club Management</comment>
+  </data>
   <data name="Invalid Postal Code" xml:space="preserve">
     <value>郵便番号に誤りがあります</value>
   </data>
@@ -1110,6 +1130,10 @@
   <data name="Language Preference" xml:space="preserve">
     <value>言語の設定</value>
     <comment>Language Preference</comment>
+  </data>
+  <data name="Large staff presence" xml:space="preserve">
+    <value>在籍人数が多い</value>
+    <comment>Tag Management</comment>
   </data>
   <data name="Last 7 Days" xml:space="preserve">
     <value>7日</value>
@@ -1341,6 +1365,18 @@
     <value>最大100文字まで許可されています</value>
     <comment>Host Management</comment>
   </data>
+  <data name="Maximum 16 characters allowed" xml:space="preserve">
+    <value>最大16文字まで許可されています</value>
+    <comment>Club Management</comment>
+  </data>
+  <data name="Maximum 200 characters allowed" xml:space="preserve">
+    <value>最大200文字まで許可されています</value>
+    <comment>Club Management</comment>
+  </data>
+  <data name="Maximum 30 characters allowed" xml:space="preserve">
+    <value>最大30文字まで許可されています</value>
+    <comment>Club Management</comment>
+  </data>
   <data name="Maximum 300 characters allowed" xml:space="preserve">
     <value>最大300文字まで許可されています</value>
     <comment>CommissionManagement</comment>
@@ -1381,6 +1417,10 @@
   <data name="Minimum 1 characters required" xml:space="preserve">
     <value>最低1文字必要です</value>
     <comment>Host Management</comment>
+  </data>
+  <data name="Minimum 3 characters required" xml:space="preserve">
+    <value>最低3文字必要です</value>
+    <comment>Club Management</comment>
   </data>
   <data name="MobileNumber" xml:space="preserve">
     <value>電話番号</value>
@@ -2119,6 +2159,10 @@
     <value>完了</value>
     <comment>Reservation Ledger</comment>
   </data>
+  <data name="Suitable for girls night out" xml:space="preserve">
+    <value>女子会向き</value>
+    <comment>Tag Management</comment>
+  </data>
   <data name="Sunday" xml:space="preserve">
     <value>日</value>
     <comment>Dashboard</comment>
@@ -2130,6 +2174,10 @@
   <data name="Tag" xml:space="preserve">
     <value>鬼ごっこ</value>
     <comment>Club Management</comment>
+  </data>
+  <data name="Tags" xml:space="preserve">
+    <value>タグ</value>
+    <comment>Tag Management</comment>
   </data>
   <data name="Tax" xml:space="preserve">
     <value>税金</value>
@@ -2143,6 +2191,10 @@
   </data>
   <data name="The field must be a 4 digit number" xml:space="preserve">
     <value>こちらには4桁の数字を入力してください</value>
+  </data>
+  <data name="The field must be a either 10 digit or 11 digit number" xml:space="preserve">
+    <value>このフィールドには10桁または11桁の数字を入力してください</value>
+    <comment>Club Management</comment>
   </data>
   <data name="The field must be a number" xml:space="preserve">
     <value>このフィールドには数値を入力してください</value>
@@ -2371,6 +2423,10 @@
   <data name="View your personal informations" xml:space="preserve">
     <value>自分の個人情報を表示する</value>
     <comment>Profile</comment>
+  </data>
+  <data name="VIP Rooms Available" xml:space="preserve">
+    <value>VIPルームあり</value>
+    <comment>Tag Management</comment>
   </data>
   <data name="Visit Date" xml:space="preserve">
     <value>訪問日</value>

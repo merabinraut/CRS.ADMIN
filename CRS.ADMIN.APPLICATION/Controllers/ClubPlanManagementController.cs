@@ -42,6 +42,8 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             culture = string.IsNullOrEmpty(culture) ? "ja" : culture;
             ViewBag.AgentId = AgentId;
             ViewBag.SearchFilter = SearchFilter;
+            ViewBag.IsBackAllowed = true;
+            ViewBag.BackButtonURL = "/ClubManagement/ClubList";
             string RenderId = "";
             var aId = !string.IsNullOrEmpty(AgentId) ? AgentId.DecryptParameter() : null;
             if (string.IsNullOrEmpty(aId))
@@ -146,7 +148,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             {
                 return RedirectToAction("ClubList", "ClubManagement");
             }
-            ViewBag.BackButtonURL = "/ClubPlanManagement/ClubPlanList";
+          
             ViewBag.StartIndex = StartIndex;
             ViewBag.PageSize = PageSize;
             ViewBag.TotalData = 0;

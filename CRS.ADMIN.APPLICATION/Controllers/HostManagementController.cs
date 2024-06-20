@@ -551,6 +551,9 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 item.HostId = HostId;
                 item.GalleryId = item.GalleryId?.EncryptParameter();
                 item.ImagePath = ImageHelper.ProcessedImage(item.ImagePath);
+                item.CreatedDate = !string.IsNullOrEmpty(item.CreatedDate) ? DateTime.Parse(item.CreatedDate).ToString("yyyy'年'MM'月'dd'日' HH:mm:ss") : item.CreatedDate;
+                item.UpdatedDate = !string.IsNullOrEmpty(item.UpdatedDate) ? DateTime.Parse(item.UpdatedDate).ToString("yyyy'年'MM'月'dd'日' HH:mm:ss") : item.UpdatedDate;
+
             }
             ReturnModel.HostManageGalleryImageModel.AgentId = AgentId;
             ReturnModel.HostManageGalleryImageModel.HostId = HostId;

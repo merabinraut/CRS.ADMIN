@@ -81,9 +81,9 @@ namespace CRS.ADMIN.BUSINESS.ClubManagement
         {
             return _REPO.GetTagDetails(clubid);
         }
-        public List<AvailabilityTagModelCommon> GetAvailabilityList(string cId)
+        public List<AvailabilityTagModelCommon> GetAvailabilityList(string cId, string culture)
         {
-            return _REPO.GetAvailabilityList(cId);
+            return _REPO.GetAvailabilityList(cId,culture);
         }
         public CommonDbResponse ManageClubAvailability(AvailabilityTagModelCommon request, ManageTagCommon dbRequest,string[] updatedValues)
         {

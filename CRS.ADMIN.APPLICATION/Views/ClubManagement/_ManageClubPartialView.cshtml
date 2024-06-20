@@ -344,7 +344,7 @@
                                     @Html.TextBoxFor(model => model.ceoFullName, new
                                {
                                    @class = "w-full",
-                                   @placeholder = "CEO",
+                                   @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.CEO_Full_Name,
                                    //@onkeypress = "return isNumber(event)",
                                    autocomplete = "off"
                                    //@maxLength = "30"
@@ -360,7 +360,7 @@
                                     @Html.TextBoxFor(model => model.CeoFurigana, new
                                {
                                    @class = "w-full",
-                                   @placeholder = CRS.ADMIN.APPLICATION.Resources.Resource.CompanyAddress,
+                                   @placeholder = CRS.ADMIN.APPLICATION.Resources.Resource.CEOFurigana,
                                    //@onkeypress = "return isNumber(event)",
                                    autocomplete = "off"
                                    //@maxLength = "30"
@@ -1499,7 +1499,7 @@
                                         @Html.TextBoxFor(model => model.BuildingRoomNo, new
                                    {
                                        @class = "w-full",
-                                       @placeholder = "Enter Building & Room No",
+                                       @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.Building___Room_No,
                                        //@onkeypress = "return isNumber(event)",
                                        autocomplete = "off",
                                        @maxLength = "30"

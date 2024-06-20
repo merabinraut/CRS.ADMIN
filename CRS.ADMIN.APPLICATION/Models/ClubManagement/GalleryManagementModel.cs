@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using CRS.ADMIN.APPLICATION.Resources;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace CRS.ADMIN.APPLICATION.Models.ClubManagement
@@ -25,8 +26,8 @@ namespace CRS.ADMIN.APPLICATION.Models.ClubManagement
     {
         public string GalleryId { get; set; }
         public string AgentId { get; set; }
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
-        [MinLength(1, ErrorMessage = "Minimum 1 characters required")]
+        [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Required")]
+        [MinLength(1, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Minimum_1_characters_required")]
         public string ImageTitle { get; set; }
         public string ImagePath { get; set; }
     }

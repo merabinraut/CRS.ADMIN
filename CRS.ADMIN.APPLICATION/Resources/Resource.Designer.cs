@@ -619,11 +619,38 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Availability.
+        /// </summary>
+        public static string Availability {
+            get {
+                return ResourceManager.GetString("Availability", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Available for private booking.
+        /// </summary>
+        public static string Available_for_private_booking {
+            get {
+                return ResourceManager.GetString("Available for private booking", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Back.
         /// </summary>
         public static string Back {
             get {
                 return ResourceManager.GetString("Back", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Banner.
+        /// </summary>
+        public static string Banner {
+            get {
+                return ResourceManager.GetString("Banner", resourceCulture);
             }
         }
         
@@ -1326,6 +1353,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         public static string Custom_Date {
             get {
                 return ResourceManager.GetString("Custom Date", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Custom Upload.
+        /// </summary>
+        public static string Custom_Upload {
+            get {
+                return ResourceManager.GetString("Custom Upload", resourceCulture);
             }
         }
         
@@ -2230,6 +2266,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Invalid amount.
+        /// </summary>
+        public static string Invalid_amount {
+            get {
+                return ResourceManager.GetString("Invalid amount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Invalid Postal Code.
         /// </summary>
         public static string Invalid_Postal_Code {
@@ -2325,6 +2370,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         public static string Language_Preference {
             get {
                 return ResourceManager.GetString("Language Preference", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Large staff presence.
+        /// </summary>
+        public static string Large_staff_presence {
+            get {
+                return ResourceManager.GetString("Large staff presence", resourceCulture);
             }
         }
         
@@ -2842,6 +2896,33 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Maximum 16 characters allowed.
+        /// </summary>
+        public static string Maximum_16_characters_allowed {
+            get {
+                return ResourceManager.GetString("Maximum 16 characters allowed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Maximum 200 characters allowed.
+        /// </summary>
+        public static string Maximum_200_characters_allowed {
+            get {
+                return ResourceManager.GetString("Maximum 200 characters allowed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Maximum 30 characters allowed.
+        /// </summary>
+        public static string Maximum_30_characters_allowed {
+            get {
+                return ResourceManager.GetString("Maximum 30 characters allowed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Maximum 300 characters allowed.
         /// </summary>
         public static string Maximum_300_characters_allowed {
@@ -2937,6 +3018,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         public static string Minimum_1_characters_required {
             get {
                 return ResourceManager.GetString("Minimum 1 characters required", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Minimum 3 characters required.
+        /// </summary>
+        public static string Minimum_3_characters_required {
+            get {
+                return ResourceManager.GetString("Minimum 3 characters required", resourceCulture);
             }
         }
         
@@ -4651,6 +4741,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Suitable for girls night out.
+        /// </summary>
+        public static string Suitable_for_girls_night_out {
+            get {
+                return ResourceManager.GetString("Suitable for girls night out", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sun.
         /// </summary>
         public static string Sunday {
@@ -4674,6 +4773,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         public static string Tag {
             get {
                 return ResourceManager.GetString("Tag", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tags.
+        /// </summary>
+        public static string Tags {
+            get {
+                return ResourceManager.GetString("Tags", resourceCulture);
             }
         }
         
@@ -4710,6 +4818,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         public static string The_field_must_be_a_4_digit_number {
             get {
                 return ResourceManager.GetString("The field must be a 4 digit number", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The field must be a either 10-digit or 11-digit number.
+        /// </summary>
+        public static string The_field_must_be_a_either_10_digit_or_11_digit_number {
+            get {
+                return ResourceManager.GetString("The field must be a either 10 digit or 11 digit number", resourceCulture);
             }
         }
         
@@ -5232,6 +5349,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         public static string View_your_personal_informations {
             get {
                 return ResourceManager.GetString("View your personal informations", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to VIP Rooms Available.
+        /// </summary>
+        public static string VIP_Rooms_Available {
+            get {
+                return ResourceManager.GetString("VIP Rooms Available", resourceCulture);
             }
         }
         

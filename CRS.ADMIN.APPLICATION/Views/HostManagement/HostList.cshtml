@@ -175,11 +175,11 @@
                                     <td class="p-[12px]">
                                         @if (item.Status.Trim().ToUpper() == "B")
                                         {
-                                            <div class="rejected">Block</div>
+                                            <div class="rejected"> @CRS.ADMIN.APPLICATION.Resources.Resource.Blocked</div>
                                         }
                                         else if (item.Status.Trim().ToUpper() == "A")
                                         {
-                                            <div class="approved">Active</div>
+                                    <div class="approved"> @CRS.ADMIN.APPLICATION.Resources.Resource.Active</div>
                                         }
                                     </td>
                                     <td class="p-[12px]">

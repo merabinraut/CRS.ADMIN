@@ -361,9 +361,21 @@
     <value>Aug</value>
     <comment>Dashboard</comment>
   </data>
+  <data name="Availability" xml:space="preserve">
+    <value>Availability</value>
+    <comment>Tag Management</comment>
+  </data>
+  <data name="Available for private booking" xml:space="preserve">
+    <value>Available for private booking</value>
+    <comment>Tag Management</comment>
+  </data>
   <data name="Back" xml:space="preserve">
     <value>Back</value>
     <comment>Dashboard</comment>
+  </data>
+  <data name="Banner" xml:space="preserve">
+    <value>Banner</value>
+    <comment>HostGallaryManagement</comment>
   </data>
   <data name="Basic" xml:space="preserve">
     <value>Basic</value>
@@ -672,6 +684,10 @@
   </data>
   <data name="Custom Date" xml:space="preserve">
     <value>Custom Date</value>
+  </data>
+  <data name="Custom Upload" xml:space="preserve">
+    <value>Custom Upload</value>
+    <comment>HostGallaryManagement</comment>
   </data>
   <data name="Customer" xml:space="preserve">
     <value>Customer</value>
@@ -1069,6 +1085,10 @@
     <value>Upload Insurance Card</value>
     <comment>ClubManagement</comment>
   </data>
+  <data name="Invalid amount" xml:space="preserve">
+    <value>Invalid amount</value>
+    <comment>Club Management</comment>
+  </data>
   <data name="Invalid Postal Code" xml:space="preserve">
     <value>Invalid Postal Code</value>
   </data>
@@ -1110,6 +1130,10 @@
   <data name="Language Preference" xml:space="preserve">
     <value>Language Preference</value>
     <comment>Language Preference</comment>
+  </data>
+  <data name="Large staff presence" xml:space="preserve">
+    <value>Large staff presence</value>
+    <comment>Tag Management</comment>
   </data>
   <data name="Last 7 Days" xml:space="preserve">
     <value>Last 7 Days</value>
@@ -1338,6 +1362,18 @@
     <value>Maximum 100 characters allowed</value>
     <comment>Host Management</comment>
   </data>
+  <data name="Maximum 16 characters allowed" xml:space="preserve">
+    <value>Maximum 16 characters allowed</value>
+    <comment>Club Management</comment>
+  </data>
+  <data name="Maximum 200 characters allowed" xml:space="preserve">
+    <value>Maximum 200 characters allowed</value>
+    <comment>Club Management</comment>
+  </data>
+  <data name="Maximum 30 characters allowed" xml:space="preserve">
+    <value>Maximum 30 characters allowed</value>
+    <comment>Club Management</comment>
+  </data>
   <data name="Maximum 300 characters allowed" xml:space="preserve">
     <value>Maximum 300 characters allowed</value>
     <comment>CommissionManagement</comment>
@@ -1378,6 +1414,10 @@
   <data name="Minimum 1 characters required" xml:space="preserve">
     <value>Minimum 1 characters required</value>
     <comment>Host Management</comment>
+  </data>
+  <data name="Minimum 3 characters required" xml:space="preserve">
+    <value>Minimum 3 characters required</value>
+    <comment>Club Management</comment>
   </data>
   <data name="MobileNumber" xml:space="preserve">
     <value>Mobile Number</value>
@@ -2119,6 +2159,10 @@
     <value>Success</value>
     <comment>Reservation Ledger</comment>
   </data>
+  <data name="Suitable for girls night out" xml:space="preserve">
+    <value>Suitable for girls night out</value>
+    <comment>Tag Management</comment>
+  </data>
   <data name="Sunday" xml:space="preserve">
     <value>Sun</value>
     <comment>Dashboard</comment>
@@ -2130,6 +2174,10 @@
   <data name="Tag" xml:space="preserve">
     <value>Tag</value>
     <comment>Club Management</comment>
+  </data>
+  <data name="Tags" xml:space="preserve">
+    <value>Tags</value>
+    <comment>Tag Management</comment>
   </data>
   <data name="Tax" xml:space="preserve">
     <value>Tax</value>
@@ -2143,6 +2191,10 @@
   </data>
   <data name="The field must be a 4 digit number" xml:space="preserve">
     <value>The field must be a 4-digit number</value>
+  </data>
+  <data name="The field must be a either 10 digit or 11 digit number" xml:space="preserve">
+    <value>The field must be a either 10-digit or 11-digit number</value>
+    <comment>Club Management</comment>
   </data>
   <data name="The field must be a number" xml:space="preserve">
     <value>The field must be a number</value>
@@ -2371,6 +2423,10 @@
   <data name="View your personal informations" xml:space="preserve">
     <value>View your personal informations</value>
     <comment>Profile</comment>
+  </data>
+  <data name="VIP Rooms Available" xml:space="preserve">
+    <value>VIP Rooms Available</value>
+    <comment>Tag Management</comment>
   </data>
   <data name="Visit Date" xml:space="preserve">
     <value>Visit Date</value>

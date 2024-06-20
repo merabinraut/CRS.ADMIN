@@ -922,7 +922,7 @@ namespace CRS.ADMIN.REPOSITORY.ClubManagement
             }
             return new ManageTagCommon();
         }
-        public List<AvailabilityTagModelCommon> GetAvailabilityList(string cId)
+        public List<AvailabilityTagModelCommon> GetAvailabilityList(string cId,string culture)
         {
             List<AvailabilityTagModelCommon> responseInfo = new List<AvailabilityTagModelCommon>();
             string sp_name = "exec sproc_ap_club_tag_management @Flag='gtl'";
@@ -935,7 +935,7 @@ namespace CRS.ADMIN.REPOSITORY.ClubManagement
                     responseInfo.Add(new AvailabilityTagModelCommon
                     {
                         StaticType = data["StaticType"].ToString(),
-                        StaticLabel = data["StaticLabel"].ToString(),
+                        StaticLabel = culture?.ToLower()=="ja"? data["StaticLabelJapanese"].ToString() : data["StaticLabel"].ToString(),
                         StaticVaue = data["StaticValue"].ToString(),
                         StaticDescription = data["StaticDescription"].ToString(),
                         StaticStatus = data["StaticStatus"].ToString(),

@@ -993,6 +993,8 @@ namespace CRS.ADMIN.APPLICATION.Controllers
         {
             var ResponseModel = new ManageTag();
             //var availabilityInfo = new List<AvailabilityTagModel>();
+            var culture = Request.Cookies["culture"]?.Value;
+            culture = string.IsNullOrEmpty(culture) ? "ja" : culture;
             var cId = ClubId?.DecryptParameter();
             if (string.IsNullOrEmpty(cId))
             {
@@ -1007,7 +1009,8 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             else
             {
                 var dbResponseInfo = _BUSS.GetTagDetails(cId);
-                var dbAvailabilityInfo = _BUSS.GetAvailabilityList(cId);
+                var dbAvailabilityInfo = _BUSS.GetAvailabilityList(cId, culture);
+
                 if (dbResponseInfo == null || dbResponseInfo.Code != "0")
                 {
                     this.AddNotificationMessage(new NotificationModel()
@@ -1350,6 +1353,8 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             ViewBag.SearchFilter = null;
             Session["CurrentURL"] = "/ClubManagement/EventList";
             string RenderId = "";
+            ViewBag.IsBackAllowed = true;
+            ViewBag.BackButtonURL = "/ClubManagement/ClubList";
             var response = new EventManagementCommonModel();
             if (TempData.ContainsKey("ManageEventModel")) response.ManageEventModel = TempData["ManageEventModel"] as EventModel;
             else response.ManageEventModel = new EventModel();

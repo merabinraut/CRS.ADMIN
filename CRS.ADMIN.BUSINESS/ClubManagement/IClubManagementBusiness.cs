@@ -25,7 +25,7 @@ namespace CRS.ADMIN.BUSINESS.ClubManagement
         CommonDbResponse ManageTag(ManageTagCommon request);
         List<LocationListCommon> GetLocationDDL(string clubID);
         ManageTagCommon GetTagDetails(string clubid);
-        List<AvailabilityTagModelCommon> GetAvailabilityList(string cId);
+        List<AvailabilityTagModelCommon> GetAvailabilityList(string cId, string culture);
         #endregion
 
         #region Manage gallery

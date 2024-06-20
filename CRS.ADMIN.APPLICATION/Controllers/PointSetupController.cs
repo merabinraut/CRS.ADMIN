@@ -73,6 +73,8 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             ViewBag.SearchFilter = null;
             Session["CurrentURL"] = "/PointSetup/PointSetupUserTypeList";
             string RenderId = "";
+            ViewBag.IsBackAllowed = true;
+            ViewBag.BackButtonURL = "/PointSetup/PointSetupUserTypeList";
             var objPointSetupModel = new PointSetupModel();
             if (TempData.ContainsKey("ManageCategoryModel")) objPointSetupModel.ManageCategory = TempData["ManageCategoryModel"] as CategoryModel;
             else objPointSetupModel.ManageCategory = new CategoryModel();
@@ -318,6 +320,8 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             ViewBag.SearchFilter = null;
             Session["CurrentURL"] = "/PointSetup/PointSetupUserTypeList";
             string RenderId = "";
+            ViewBag.IsBackAllowed = true;
+            ViewBag.BackButtonURL = "/PointSetup/PointsCategoryList?RoleTypeId=" + roleTypeId;
             var culture = Request.Cookies["culture"]?.Value;
             culture = string.IsNullOrEmpty(culture) ? "ja" : culture;
             var objPointSetupModel = new PointSetupModel();

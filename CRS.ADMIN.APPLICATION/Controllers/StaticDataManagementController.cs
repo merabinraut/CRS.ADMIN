@@ -162,6 +162,8 @@ namespace CRS.ADMIN.APPLICATION.Controllers
         public ActionResult StaticDataIndex(string staticDataTypeId = "")
         {
             Session["CurrentUrl"] = "/StaticDataManagement/StaticDataIndex";
+            ViewBag.IsBackAllowed = true;
+            ViewBag.BackButtonURL = "/StaticDataManagement/Index";
             string RenderId = "";
             StaticDataManagement responseInfo = new StaticDataManagement();
             if (TempData.ContainsKey("ManageStaticData")) responseInfo.ManageStaticData = TempData["ManageStaticData"] as ManageStaticData;
