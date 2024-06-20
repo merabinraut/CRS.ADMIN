@@ -71,6 +71,13 @@ namespace CRS.ADMIN.APPLICATION.Controllers
         [HttpPost, ValidateAntiForgeryToken]
         public async Task<ActionResult> ManagePromotionalImage(PromotionManagementModel promotionManagementModel, HttpPostedFileBase ImagePathFile)
         {
+            System.IO.Stream stream = ImagePathFile.InputStream;
+
+            System.Drawing.Image img = System.Drawing.Image.FromStream(stream);
+            int width = img.Width;
+            int height = img.Height;
+            int size=img.Size.Width;
+            int sizeh=img.Size.Height;
             if (!ModelState.IsValid)
             {
                 this.AddNotificationMessage(new NotificationModel()
