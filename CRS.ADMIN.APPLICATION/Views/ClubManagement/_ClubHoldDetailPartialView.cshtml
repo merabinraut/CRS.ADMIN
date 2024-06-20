@@ -1,4 +1,22 @@
 ﻿@model CRS.ADMIN.APPLICATION.Models.ClubManagement.ManageClubModel
+@{
+    string BussimageExtension = System.IO.Path.GetExtension(Model.BusinessCertificate);
+    string kycfrontimageExtension = System.IO.Path.GetExtension(Model.KYCDocument);
+    string kycbackimageExtension = System.IO.Path.GetExtension(Model.KYCDocumentBack);
+    string passportimageExtension = System.IO.Path.GetExtension(Model.PassportPhoto);
+    string insuranceimageExtension = System.IO.Path.GetExtension(Model.InsurancePhoto);
+}
+<style>
+    .imagetextfield {
+        color: var(--link, #839AD6);
+        font-family: "Noto Sans";
+        font-size: 10px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: normal;
+        text-decoration-line: underline;
+    }
+</style>
 <div id="add-new-club-hold-details"
      class="drawer-close-disable  flex justify-end fixed top-0 right-0 z-40 h-screen overflow-y-auto transition-transform translate-x-full"
      tabindex="-1" aria-labelledby="add-new-club-hold-details" aria-modal="true" role="dialog">
@@ -18,8 +36,8 @@
 
             <div class="my-5">
                 @*<div class="font-bold text-[20px] pb-5 px-8 pt-8">
-                    Club Profile
-                </div>*@
+                        Club Profile
+                    </div>*@
 
 
                 <div class="pt-4 px-8">
@@ -36,10 +54,10 @@
                     <div class="grid  gap-2 mt-2">
                         <div class=" grid grid-cols-2">
                             <p class="text-[#7A7A7A] text-[14px]">
-                                Club Name (Eng):
+                                Club Name :
                             </p>
                             <p class="text-[#3E3E3E] text-[14px] leading-[12px] font-bold" style="margin-top:4px;">
-                             @Model.ClubName1
+                                @Model.ClubName1
                             </p>
                         </div>
                         <div class=" grid grid-cols-2">
@@ -51,6 +69,15 @@
                                 @Model.ClubName2
                             </p>
                         </div>
+                        <div class=" grid grid-cols-2">
+                            <p class="text-[#7A7A7A] text-[14px]">
+                                Club Name (English):
+                            </p>
+                            <p class="text-[#3E3E3E] text-[14px] leading-[12px] font-bold" style="margin-top:4px;">
+                                @Model.ClubName
+                            </p>
+                        </div>
+
                         <div class=" grid grid-cols-2">
                             <p class="text-[#7A7A7A] text-[14px]">
                                 Location:
@@ -69,14 +96,14 @@
                                 〒  @Model.PostalCode
                             </p>
                         </div>
-                        <div class=" grid grid-cols-2">
-                            <p class="text-[#7A7A7A] text-[14px]">
-                                Prefecture:
-                            </p>
-                            <p class="text-[#3E3E3E] text-[14px] leading-[12px] font-bold" style="margin-top:4px;">
-                                @Model.Prefecture
-                            </p>
-                        </div>
+                        @*<div class=" grid grid-cols-2">
+                                <p class="text-[#7A7A7A] text-[14px]">
+                                    Prefecture:
+                                </p>
+                                <p class="text-[#3E3E3E] text-[14px] leading-[12px] font-bold" style="margin-top:4px;">
+                                    @Model.Prefecture
+                                </p>
+                            </div>*@
                         <div class=" grid grid-cols-2">
                             <p class="text-[#7A7A7A] text-[14px]">
                                 City:
@@ -122,15 +149,15 @@
                                 @Model.GroupName
                             </p>
                         </div>
-                        <div class=" grid grid-cols-2">
-                            <p class="text-[#7A7A7A] text-[14px]">
-                                Group Name (Katakana):
-                            </p>
-                            <p class="text-[#3E3E3E] text-[14px] leading-[12px] font-bold" style="margin-top:4px;">
+                        @*<div class=" grid grid-cols-2">
+                                <p class="text-[#7A7A7A] text-[14px]">
+                                    Group Name (Katakana):
+                                </p>
+                                <p class="text-[#3E3E3E] text-[14px] leading-[12px] font-bold" style="margin-top:4px;">
 
-                                @Model.GroupName2
-                            </p>
-                        </div>
+                                    @Model.GroupName2
+                                </p>
+                            </div>*@
 
                     </div>
 
@@ -163,8 +190,17 @@
                             </p>
                         </div>
                         <div class=" grid grid-cols-2">
-                            @*if corporate then only this field shown*@
                             <p class="text-[#7A7A7A] text-[14px]">
+                                Furigana:
+                            </p>
+                            <p class="text-[#3E3E3E] text-[14px] leading-[12px] font-bold" style="margin-top:4px;">
+
+                                @Model.CeoFurigana
+                            </p>
+                        </div>
+                        <!--<div class=" grid grid-cols-2">-->
+                        @*if corporate then only this field shown*@
+                        <!--<p class="text-[#7A7A7A] text-[14px]">
                                 Company Name:
                             </p>
                             <p class="text-[#3E3E3E] text-[14px] leading-[12px] font-bold" style="margin-top:4px;">
@@ -172,71 +208,198 @@
 
                                 @Model.CompanyName
                             </p>
-                        </div>
-                        <div class=" grid grid-cols-2">
-                            <p class="text-[#7A7A7A] text-[14px]">
-                                KYC Document
-                            </p>
-                            <img class="text-[#3E3E3E] h-[116px] w-[230px] text-[14px] leading-[12px] font-bold"
-                                 src="@Model.KYCDocument" />
+                        </div>-->
 
-
-                        </div>
                         <div class=" grid grid-cols-2">
                             <p class="text-[#7A7A7A] text-[14px]">
                                 Business Certificate
                             </p>
                             <img class="text-[#3E3E3E] h-[116px] w-[230px] text-[14px] leading-[12px] font-bold"
-                                src="@Model.BusinessCertificate" />
+                                 src="@Model.BusinessCertificate" />
 
-
-                        </div>
-                    </div>
-
-
-                    <!-- third section -->
-                    <div class="flex gap-1 mt-[20px]">
-                        <div class="border border-[#D75A8B] w-[1px] ">
-                        </div>
-
-                        <div class="text-[#D75A8B] font-[600] text-[16px]">
-                            User Info
-                        </div>
-                    </div>
-                    <div class="grid  gap-2 mt-2">
-                        <div class=" grid grid-cols-2">
-                            <p class="text-[#7A7A7A] text-[14px] max-w-[183px] w-full">
-                                Mobile Number (Easily reachable):
-                            </p>
-                            <p class="text-[#3E3E3E] text-[14px] leading-[12px] font-bold" style="margin-top:4px;">
-
-                                +81
-                                @Model.MobileNumber
-                            </p>
                         </div>
                         <div class=" grid grid-cols-2">
                             <p class="text-[#7A7A7A] text-[14px]">
-                                Email Address:
-                            </p>
-                            <p class="text-[#3E3E3E] text-[14px] leading-[12px] font-bold" style="margin-top:4px;">
 
-                                @Model.Email
+                            </p>
+                            <p>
+                                @if (BussimageExtension == ".jpg" || BussimageExtension == ".jpeg" || BussimageExtension == ".png" || BussimageExtension == ".gif")
+                                {
+                                    <a class="imagetextfield" href="@Model.BusinessCertificate" target="_blank">
+                                        View
+                                    </a>
+                                }
+                                <a class="imagetextfield" style="padding-left: 7px;"
+                                   href="@Model.BusinessCertificate" download="">
+                                    Download
+                                </a>
                             </p>
                         </div>
+
                         <div class=" grid grid-cols-2">
                             <p class="text-[#7A7A7A] text-[14px]">
-                                Club Username:
+                                Identification Type
                             </p>
                             <p class="text-[#3E3E3E] text-[14px] leading-[12px] font-bold" style="margin-top:4px;">
-
-                                @Model.LoginId
+                                @Model.IdentificationTypeName
                             </p>
+
                         </div>
+
+                        @if (@Model.IdentificationType.DecryptParameter() == "2")
+                        {
+                            <div class=" grid grid-cols-2">
+                                <p class="text-[#7A7A7A] text-[14px]">
+                                    KYC Document
+                                </p>
+                                <img class="text-[#3E3E3E] h-[116px] w-[230px] text-[14px] leading-[12px] font-bold"
+                                     src="@Model.PassportPhoto" />
+                            </div>
+                            <div class=" grid grid-cols-2">
+                                <p class="text-[#7A7A7A] text-[14px]">
+
+                                </p>
+                                <p>
+                                    @if (passportimageExtension == ".jpg" || passportimageExtension == ".jpeg" || passportimageExtension == ".png" || passportimageExtension == ".gif")
+                                    {
+                                        <a class="imagetextfield" href="#" onclick="openImage('@Model.PassportPhoto'); return false;">
+                                            View
+                                        </a>
+                                    }
+                                    <a class="imagetextfield" style="padding-left: 7px;"
+                                       href="@Model.PassportPhoto" download="">
+                                        Download
+                                    </a>
+                                </p>
+                            </div>
+
+
+                            <div class=" grid grid-cols-2">
+                                <p class="text-[#7A7A7A] text-[14px]"></p>
+                                <img class="text-[#3E3E3E] h-[116px] w-[230px] text-[14px] leading-[12px] font-bold"
+                                     src="@Model.InsurancePhoto" />
+                            </div>
+                            <div class=" grid grid-cols-2">
+                                <p class="text-[#7A7A7A] text-[14px]">
+
+                                </p>
+                                <p>
+                                    @if (insuranceimageExtension == ".jpg" || insuranceimageExtension == ".jpeg" || insuranceimageExtension == ".png" || insuranceimageExtension == ".gif")
+                                    {
+                                        <a class="imagetextfield" href="#" onclick="openImage('@Model.InsurancePhoto'); return false;">
+                                            View
+                                        </a>
+                                    }
+                                    <a class="imagetextfield" style="padding-left: 7px;"
+                                       href="@Model.InsurancePhoto" download="">
+                                        Download
+                                    </a>
+                                </p>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class=" grid grid-cols-2">
+                                <p class="text-[#7A7A7A] text-[14px]">
+                                    KYC Document
+                                </p>
+                                <img class="text-[#3E3E3E] h-[116px] w-[230px] text-[14px] leading-[12px] font-bold"
+                                     src="@Model.KYCDocument" />
+                            </div>
+                            <div class=" grid grid-cols-2">
+                                <p class="text-[#7A7A7A] text-[14px]">
+
+                                </p>
+                                <p>
+                                    @if (kycfrontimageExtension == ".jpg" || kycfrontimageExtension == ".jpeg" || kycfrontimageExtension == ".png" || kycfrontimageExtension == ".gif")
+                                    {
+                                       
+                                        <a class="imagetextfield" href="#" onclick="openImage('@Model.KYCDocument'); return false;">                            
+                                            View
+                                        </a>
+                                    }
+                                    <a class="imagetextfield" style="padding-left: 7px;"
+                                       href="@Model.KYCDocument" download="">
+                                        Download
+                                    </a>
+                                </p>
+                            </div>
+                            <div class=" grid grid-cols-2">
+                                <p class="text-[#7A7A7A] text-[14px]">
+
+                                </p>
+                                <img class="text-[#3E3E3E] h-[116px] w-[230px] text-[14px] leading-[12px] font-bold"
+                                     src="@Model.KYCDocumentBack" />
+
+                            </div>
+                            <div class=" grid grid-cols-2">
+                                <p class="text-[#7A7A7A] text-[14px]">
+
+                                </p>
+                                <p>
+                                    @if (kycbackimageExtension == ".jpg" || kycbackimageExtension == ".jpeg" || kycbackimageExtension == ".png" || kycbackimageExtension == ".gif")
+                                    {
+                                        <a class="imagetextfield" href="#" onclick="openImage('@Model.KYCDocumentBack'); return false;">
+                                            View
+                                        </a>
+                                    }
+                                    <a class="imagetextfield" style="padding-left: 7px;"
+                                       href="@Model.KYCDocumentBack" download="">
+                                        Download
+                                    </a>
+                                </p>
+                            </div>
+                        }
+
+
                     </div>
                 </div>
-               
+
+
+                <!-- third section -->
+                <div class="flex gap-1 mt-[20px]">
+                    <div class="border border-[#D75A8B] w-[1px] ">
+                    </div>
+
+                    <div class="text-[#D75A8B] font-[600] text-[16px]">
+                        User Info
+                    </div>
+                </div>
+                <div class="grid  gap-2 mt-2">
+                    <div class=" grid grid-cols-2">
+                        <p class="text-[#7A7A7A] text-[14px] max-w-[183px] w-full">
+                            Mobile Number (Easily reachable):
+                        </p>
+                        <p class="text-[#3E3E3E] text-[14px] leading-[12px] font-bold" style="margin-top:4px;">
+
+                            +81
+                            @Model.MobileNumber
+                        </p>
+                    </div>
+                    <div class=" grid grid-cols-2">
+                        <p class="text-[#7A7A7A] text-[14px]">
+                            Email Address:
+                        </p>
+                        <p class="text-[#3E3E3E] text-[14px] leading-[12px] font-bold" style="margin-top:4px;">
+
+                            @Model.Email
+                        </p>
+                    </div>
+                    <div class=" grid grid-cols-2">
+                        <p class="text-[#7A7A7A] text-[14px]">
+                            Club Username:
+                        </p>
+                        <p class="text-[#3E3E3E] text-[14px] leading-[12px] font-bold" style="margin-top:4px;">
+
+                            @Model.LoginId
+                        </p>
+                    </div>
+                </div>
             </div>
 
-            </div>
         </div>
+
     </div>
+</div>
+
+

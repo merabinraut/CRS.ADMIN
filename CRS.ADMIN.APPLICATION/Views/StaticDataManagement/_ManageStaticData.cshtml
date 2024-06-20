@@ -23,6 +23,14 @@
             {
                 @Html.HiddenFor(model => model.Id)
             }
+            if (!string.IsNullOrEmpty(Model.StaticDataValue))
+            {
+                @Html.HiddenFor(model => model.StaticDataValue)
+            }
+            if (!string.IsNullOrEmpty(Model.Status))
+            {
+                @Html.HiddenFor(model => model.Status)
+            }
             <div class="p-[24px]">
                 <div class=" py-4 grid gap-5">
                     <div class="input-field-common">
@@ -91,6 +99,71 @@
                         }
                         <span class="error">
                             @Html.ValidationMessageFor(m => m.StaticDataValue)
+                        </span>
+                    </div>
+                    <div class="input-field-common">
+                        <label class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                            Additional Value1
+                        </label>
+                        @Html.TextBoxFor(model => model.AdditionalValue1, new
+                        {
+                            @class = "w-full rounded-[4px]",
+                            @style = "border-radius:4px !important",
+                        })
+                        <span class="error">
+                            @Html.ValidationMessageFor(m => m.AdditionalValue1)
+                        </span>
+                    </div>
+                    <div class="input-field-common">
+                        <label class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                            Additional Value2
+                        </label>
+                        @Html.TextBoxFor(model => model.AdditionalValue2, new
+                        {
+                            @class = "w-full rounded-[4px]",
+                            @style = "border-radius:4px !important",
+                        })
+                        <span class="error">
+                            @Html.ValidationMessageFor(m => m.AdditionalValue2)
+                        </span>
+                    </div>
+                    <div class="input-field-common">
+                        <label class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                            Additional Value3
+                        </label>
+                        @Html.TextBoxFor(model => model.AdditionalValue3, new
+                        {
+                            @class = "w-full rounded-[4px]",
+                            @style = "border-radius:4px !important",
+                        })
+                        <span class="error">
+                            @Html.ValidationMessageFor(m => m.AdditionalValue3)
+                        </span>
+                    </div>
+                    <div class="input-field-common">
+                        <label class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                            Additional Value4
+                        </label>
+                        @Html.TextBoxFor(model => model.AdditionalValue4, new
+                        {
+                            @class = "w-full rounded-[4px]",
+                            @style = "border-radius:4px !important",
+                        })
+                        <span class="error">
+                            @Html.ValidationMessageFor(m => m.AdditionalValue4)
+                        </span>
+                    </div>
+                    <div class="input-field-common">
+                        <label class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                            Input Type
+                        </label>
+                        @Html.TextBoxFor(model => model.InputType, new
+                        {
+                            @class = "w-full rounded-[4px]",
+                            @style = "border-radius:4px !important",
+                        })
+                        <span class="error">
+                            @Html.ValidationMessageFor(m => m.InputType)
                         </span>
                     </div>
                 </div>

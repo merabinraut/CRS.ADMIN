@@ -90,7 +90,17 @@ namespace CRS.ADMIN.SHARED.ClubManagement
         public string ClosingDate { get; set; }
         public string GroupName2 { get; set; }
         public string LandLineCode { get; set; }
-        
+        public string Representative1_Furigana { get; set; }
+        public string Representative2_Furigana { get; set; }
+        public string ClubName { get; set; }
+        public string CeoFurigana { get; set; }
+        public string CompanyNameFurigana { get; set; }
+        public string CorporateRegistryDocument { get; set; }
+        public string IdentificationType { get; set; }
+        public string DocumentType { get; set; }
+        public string KYCDocumentBack { get; set; }
+        public string PassportPhoto { get; set; }
+        public string InsurancePhoto { get; set; }
     }
 
     public class ManageClubCommon : Common
@@ -159,6 +169,17 @@ namespace CRS.ADMIN.SHARED.ClubManagement
         public string ClosingDate { get; set; }
         public string holdId { get; set; }
         public string LandLineCode { get; set; }
+        public string Representative1_Furigana { get; set; }
+        public string Representative2_Furigana { get; set; }
+        public string ClubName { get; set; }
+        public string CeoFurigana { get; set; }
+        public string CompanyNameFurigana { get; set; }
+        public string CorporateRegistryDocument { get; set; }
+        public string IdentificationType { get; set; }
+        public string DocumentType { get; set; }
+        public string KYCDocumentBack { get; set; }
+        public string PassportPhoto { get; set; }
+        public string InsurancePhoto { get; set; }
     }
 
     

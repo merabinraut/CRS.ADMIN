@@ -256,10 +256,12 @@
                                                                 <i class="las la-tag text-[20px] cursor-pointer text-[#C8B477]" onclick="ManageClubTagFunction('@item.AgentId');"></i>
                                                                 <i class=" las la-trash-alt text-[20px] cursor-pointer text-[#CB3F3F]" onclick="BlockUnblockFunction('@item.AgentId');"></i>
                                                                 <i class="las la-key text-[24px] text-[#C8B477] cursor-pointer" onclick="openResetCustomerPasswordModal('@item.ClubNameEng','@item.AgentId')" data-name="@item.ClubNameEng" data-id="@item.AgentId" data-modal-target="reset-customer-passwordconfirmation" data-modal-toggle="reset-customer-passwordconfirmation"></i>
-                                                                <i class="las la-user text-[20px] cursor-pointer text-[#A6A6A6]" onclick="PlanRedirectFunction('@item.AgentId');"></i>
+                                                                <img src="/Content/assets/images/notice.svg" alt="plan" class="cursor-pointer h-[20px] aspect-square" onclick="PlanRedirectFunction('@item.AgentId');" data-drawer-target="add-new-plan-tag" data-drawer-show="add-new-plan-tag" data-drawer-placement="right" data-drawer-backdrop="false" aria-controls="drawer-disabled-backdrop">
+
+                                                                @*<i class="las la-user text-[20px] cursor-pointer text-[#A6A6A6]" onclick="PlanRedirectFunction('@item.AgentId');"></i>*@
                                                                 <i class="las la-user text-[20px] cursor-pointer text-[#A6A6A6]" onclick="HostRedirectFunction('@item.AgentId');"></i>
                                                                 <i class="las la-calendar-check text-[20px] cursor-pointer text-[#A6A6A6]" onclick="window.location.href='/ScheduleManagement/ClubScheduleManagement?ClubId=' + '@item.AgentId'"></i>
-                                                                <img src="/Content/assets/images/notice.svg" alt="notice" class="cursor-pointer h-[20px] aspect-square" onclick="window.location.href='/ClubManagement/EventList?ClubId=' + '@item.AgentId'     " data-drawer-target="add-new-notice-tag" data-drawer-show="add-new-notice-tag" data-drawer-placement="right" data-drawer-backdrop="false" aria-controls="drawer-disabled-backdrop">
+                                                                <img src="/Content/assets/images/schedule.svg" alt="notice" class="cursor-pointer h-[20px] aspect-square" onclick="window.location.href='/ClubManagement/EventList?ClubId=' + '@item.AgentId'     " data-drawer-target="add-new-notice-tag" data-drawer-show="add-new-notice-tag" data-drawer-placement="right" data-drawer-backdrop="false" aria-controls="drawer-disabled-backdrop">
                                                                 <div>
                                                                     <a onclick="ClubGalleryRedirectFunction('@item.AgentId');">
                                                                         <i class="las la-image text-[#C8B477] text-[20px] mt-[1px] cursor-pointer"></i>
@@ -1008,12 +1010,37 @@
         });
 
     </script>
+
+    <script>
+        function openImage(url) {
+            var newTab = window.open();
+            newTab.document.write('<html><head><title>Image</title></head><body><img src="' + url + '"></body></html>');
+            newTab.document.close();
+        }
+    </script>
     <script>
         $(document).ready(function () {
             if ($("#holdId").val() != "" || $("#AgentId").val() != "") {
+                var Value = $('#large[name="IdentificationType"]').find("option:selected").text().trim();
+                if (Value.toLowerCase() == "passport + insurance card" || Value.toLowerCase() == "パスポート + 保険証") {
+                    $("#kycfront").hide();
+                    $("#kycback").hide();
+                    $("#Passport").show();
+                    $("#Insurance").show();
+
+                }
+                else {
+                    $("#kycfront").show();
+                    $("#kycback").show();
+                    $("#Passport").hide();
+                    $("#Insurance").hide();
+                }
+
                 var val = $('#large[name="BusinessTypeDDL"]').find("option:selected").text().trim();
                 if (val.toLowerCase() == "corporation") {
                     $("#Corp_id").show();
+                    $("#Corp_idFurigana").show();
+                    $("#Corp_idCorporate").show();
                     $("#corp_representive1").show();
                     $("#corpdetail_representive1").show();
                     $("#corp_representive2").show();
@@ -1021,6 +1048,8 @@
                 }
                 else {
                     $("#Corp_id").hide();
+                    $("#Corp_idFurigana").hide();
+                    $("#Corp_idCorporate").hide();
                     $("#corp_representive1").hide();
                     $("#corpdetail_representive1").hide();
                     $("#corp_representive2").hide();
@@ -1032,6 +1061,8 @@
                 var selectedValue = $(this).find("option:selected").text().trim();
                 if (selectedValue.toLowerCase() == "corporation") {
                     $("#Corp_id").show();
+                    $("#Corp_idFurigana").show();
+                    $("#Corp_idCorporate").show();
                     $("#corp_representive1").show();
                     $("#corpdetail_representive1").show();
                     $("#corp_representive2").show();
@@ -1039,6 +1070,8 @@
                 }
                 else {
                     $("#Corp_id").hide();
+                    $("#Corp_idFurigana").hide();
+                    $("#Corp_idCorporate").hide();
                     $("#corp_representive1").hide();
                     $("#corpdetail_representive1").hide();
                     $("#corp_representive2").hide();
@@ -1046,7 +1079,22 @@
                 }
             });
 
+            $('#large[name="IdentificationType"]').change(function () {
+                var selectedValue = $(this).find("option:selected").text().trim();
+                if (selectedValue.toLowerCase() == "passport + insurance card" || selectedValue.toLowerCase() == "パスポート + 保険証") {
+                    $("#kycfront").hide();
+                    $("#kycback").hide();
+                    $("#Passport").show();
+                    $("#Insurance").show();
 
+                }
+                else {
+                    $("#kycfront").show();
+                    $("#kycback").show();
+                    $("#Passport").hide();
+                    $("#Insurance").hide();
+                }
+            });
 
             $('select').select2({
                 minimumResultsForSearch: Infinity
@@ -1259,11 +1307,17 @@
         }
 
         function ManageClubGetDetailsFunction(i) {
-            window.location.href = '/ClubManagement/ManageClub?AgentId=' + i;
+            let search_filter = $('#default-search').val();
+            const start_index_val = @ViewBag.StartIndex;
+            const page_size = @ViewBag.PageSize;
+            window.location.href = '/ClubManagement/ManageClub?AgentId=' + i + '&SearchFilter=' + search_filter + '&StartIndex=' + start_index_val + '&PageSize=' + page_size;;
         }
 
         function ManageClubManagerFunction(i) {
-            window.location.href = '/ClubManagement/ManageManager?AgentId=' + i;
+            let search_filter = $('#default-search').val();
+            const start_index_val = @ViewBag.StartIndex;
+            const page_size = @ViewBag.PageSize;
+            window.location.href = '/ClubManagement/ManageManager?AgentId=' + i + '&SearchFilter=' + search_filter + '&StartIndex=' + start_index_val + '&PageSize=' + page_size;
         }
 
         function CancelFunction() {
@@ -1279,12 +1333,16 @@
         }
 
         function ManageClubTagFunction(i) {
-            window.location.href = '/ClubManagement/ManageTag?ClubId=' + i;
+             let search_filter = $('#default-search').val();
+             const start_index_val = @ViewBag.StartIndex;
+             const page_size = @ViewBag.PageSize;
+            window.location.href = '/ClubManagement/ManageTag?ClubId=' + i + '&SearchFilter=' + search_filter + '&StartIndex=' + start_index_val + '&PageSize=' + page_size;;
         }
         function ApproveRejectClubManagerFunction(i, j, k) {
             window.location.href = '/ClubManagement/ApproveRejectClub?holdid=' + i + '&type=' + j+ '&AgentId=' + k;
         }
-        function EditPendingClub(i,j) {
+        function EditPendingClub(i, j) {
+
             window.location.href = '/ClubManagement/ManagePendingClub?AgentId=' + j + '&holdId=' + i;
         }
         function EditClubHoldDetail(i) {
@@ -1382,8 +1440,8 @@
                 };
                 $.datepicker.setDefaults($.datepicker.regional['ja']);
                 $("#LicenseIssuedDate").datepicker({
-                    minDate: new Date(),
-                    /* maxDate: 15,*/
+                    /*minDate: new Date(),*/
+                    maxDate: new Date(),
                     defaultDate: '@_ManageClubModel.LicenseIssuedDate'
                 });
             })
@@ -1723,7 +1781,7 @@
 
     <script>
         const checkboxclub = document.getElementById('toogle1');
-       // const tagInput = document.getElementById('tagInput');
+        // const tagInput = document.getElementById('tagInput');
 
         //if (checkbox.checked) {
         //    tagInput.style.display = 'block';

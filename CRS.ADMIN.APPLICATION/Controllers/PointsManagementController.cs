@@ -186,17 +186,6 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             return View(objPointsManagementModel);
         }
 
-        //[HttpGet]
-        //public ActionResult ManagePoints( string Id = "")
-        //{
-        //    CategoryModel model = new CategoryModel();
-        //    var culture = System.Threading.Thread.CurrentThread.CurrentCulture.ToString();
-        //    TempData["ManagePointsModel"] = model;
-        //    TempData["RenderId"] = "Manage";
-
-        //    return RedirectToAction("PointsTransferList", "PointsManagement");
-
-        //}
         [HttpPost, ValidateAntiForgeryToken]
         public async Task<ActionResult> ManagePoints(PointsTansferModel objPointsTansferModel, HttpPostedFileBase Image_Certificate)
         {

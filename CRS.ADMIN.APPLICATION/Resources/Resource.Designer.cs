@@ -196,6 +196,114 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Auto Filled Address.
+        /// </summary>
+        public static string AffiliateAutoFilledAddress {
+            get {
+                return ResourceManager.GetString("AffiliateAutoFilledAddress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Birth Date.
+        /// </summary>
+        public static string AffiliateBirthDate {
+            get {
+                return ResourceManager.GetString("AffiliateBirthDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Building &amp; Room No.
+        /// </summary>
+        public static string AffiliateBuildingRoomNo {
+            get {
+                return ResourceManager.GetString("AffiliateBuildingRoomNo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Business.
+        /// </summary>
+        public static string AffiliateBusiness {
+            get {
+                return ResourceManager.GetString("AffiliateBusiness", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Furigana.
+        /// </summary>
+        public static string AffiliateCeoFurigana {
+            get {
+                return ResourceManager.GetString("AffiliateCeoFurigana", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to CEO Name.
+        /// </summary>
+        public static string AffiliateCeoname {
+            get {
+                return ResourceManager.GetString("AffiliateCeoname", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to City/Town.
+        /// </summary>
+        public static string AffiliateCityTown {
+            get {
+                return ResourceManager.GetString("AffiliateCityTown", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Company Address.
+        /// </summary>
+        public static string AffiliateCompanyAddress {
+            get {
+                return ResourceManager.GetString("AffiliateCompanyAddress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Company Name.
+        /// </summary>
+        public static string AffiliateCompanyName {
+            get {
+                return ResourceManager.GetString("AffiliateCompanyName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Email Address.
+        /// </summary>
+        public static string AffiliateEmailAddress {
+            get {
+                return ResourceManager.GetString("AffiliateEmailAddress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Full Name.
+        /// </summary>
+        public static string AffiliateFullName {
+            get {
+                return ResourceManager.GetString("AffiliateFullName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Gender.
+        /// </summary>
+        public static string AffiliateGender {
+            get {
+                return ResourceManager.GetString("AffiliateGender", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Manage affiliate’s information, converted customers and their payments..
         /// </summary>
         public static string AffiliateManagementSupportMsg {
@@ -205,11 +313,47 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Phone Number.
+        /// </summary>
+        public static string AffiliatePhoneNumber {
+            get {
+                return ResourceManager.GetString("AffiliatePhoneNumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Postal Code.
+        /// </summary>
+        public static string AffiliatePostalcode {
+            get {
+                return ResourceManager.GetString("AffiliatePostalcode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Prefecture.
+        /// </summary>
+        public static string AffiliatePrefecture {
+            get {
+                return ResourceManager.GetString("AffiliatePrefecture", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Affiliates.
         /// </summary>
         public static string Affiliates {
             get {
                 return ResourceManager.GetString("Affiliates", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Street.
+        /// </summary>
+        public static string AffiliateStreet {
+            get {
+                return ResourceManager.GetString("AffiliateStreet", resourceCulture);
             }
         }
         
@@ -565,6 +709,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to CEO Furigana.
+        /// </summary>
+        public static string CEOFurigana {
+            get {
+                return ResourceManager.GetString("CEOFurigana", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Choose Icon.
         /// </summary>
         public static string Choose_Icons {
@@ -718,6 +871,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Furigana.
+        /// </summary>
+        public static string ClubFurigana {
+            get {
+                return ResourceManager.GetString("ClubFurigana", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Manage club’s recommendation informations..
         /// </summary>
         public static string ClubListSuppportMsg {
@@ -826,6 +988,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Company Name (Furigana).
+        /// </summary>
+        public static string CompanyNameFurigana {
+            get {
+                return ResourceManager.GetString("CompanyNameFurigana", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Configure.
         /// </summary>
         public static string Configure {
@@ -894,6 +1065,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         public static string Converted_Date {
             get {
                 return ResourceManager.GetString("Converted Date", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Corporate Registry.
+        /// </summary>
+        public static string CorporateRegistry {
+            get {
+                return ResourceManager.GetString("CorporateRegistry", resourceCulture);
             }
         }
         
@@ -1384,6 +1564,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Furigana.
+        /// </summary>
+        public static string Furigana {
+            get {
+                return ResourceManager.GetString("Furigana", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Gallery.
         /// </summary>
         public static string Gallery {
@@ -1636,6 +1825,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Identification Type.
+        /// </summary>
+        public static string IdentificationType {
+            get {
+                return ResourceManager.GetString("IdentificationType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Image.
         /// </summary>
         public static string Image {
@@ -1708,6 +1906,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Upload Insurance Card.
+        /// </summary>
+        public static string Insurance {
+            get {
+                return ResourceManager.GetString("Insurance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Jan.
         /// </summary>
         public static string January {
@@ -1744,11 +1951,29 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Upload KYC Back.
+        /// </summary>
+        public static string KYCBack {
+            get {
+                return ResourceManager.GetString("KYCBack", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to KYC Document.
         /// </summary>
         public static string KYCDocument {
             get {
                 return ResourceManager.GetString("KYCDocument", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Upload KYC Front.
+        /// </summary>
+        public static string KYCFront {
+            get {
+                return ResourceManager.GetString("KYCFront", resourceCulture);
             }
         }
         
@@ -2473,6 +2698,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Upload Passport.
+        /// </summary>
+        public static string Passport {
+            get {
+                return ResourceManager.GetString("Passport", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to PASSWORD.
         /// </summary>
         public static string Password {
@@ -3112,6 +3346,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Furigana.
+        /// </summary>
+        public static string RepresentiveFurigana {
+            get {
+                return ResourceManager.GetString("RepresentiveFurigana", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Request Amount.
         /// </summary>
         public static string Request_Amount {
@@ -3576,6 +3819,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         public static string Status {
             get {
                 return ResourceManager.GetString("Status", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Store Name.
+        /// </summary>
+        public static string StoreName {
+            get {
+                return ResourceManager.GetString("StoreName", resourceCulture);
             }
         }
         

@@ -215,12 +215,15 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 if (dbResponse != null)
                 {
                     if (dbResponse.Code == ResponseCode.Success)
+                    {
                         AddNotificationMessage(new NotificationModel()
                         {
                             NotificationType = NotificationMessage.SUCCESS,
                             Message = dbResponse.Message ?? "",
                             Title = NotificationMessage.SUCCESS.ToString(),
                         });
+                        return RedirectToAction("StaticDataIndex", new { staticDataTypeId = commonModel.StaticDataType });
+                    }
                     else
                         AddNotificationMessage(new NotificationModel()
                         {
@@ -245,7 +248,9 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             }
             else
             {
-                return RedirectToAction("StaticDataIndex");
+                TempData["ManageStaticData"] = Model;
+                TempData["RenderId"] = "Manage";
+                return RedirectToAction("StaticDataIndex", new { staticDataTypeId = Model.StaticDataType });
             }
         }
         [HttpPost, ValidateAntiForgeryToken]

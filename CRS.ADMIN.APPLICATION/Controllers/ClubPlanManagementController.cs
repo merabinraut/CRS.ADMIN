@@ -22,6 +22,7 @@ using System.Web;
 using System;
 using CRS.ADMIN.APPLICATION.Models.PointSetup;
 using CRS.ADMIN.SHARED.PointSetup;
+using System.Numerics;
 
 namespace CRS.ADMIN.APPLICATION.Controllers
 {
@@ -60,10 +61,11 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             ViewBag.PopUpRenderValue = !string.IsNullOrEmpty(RenderId) ? RenderId : null;
             response.ClubId = aId; ;
             response.ManageClubPlanModel.ClubId = aId; ;
+            ViewBag.TimeIntervalList = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("PLANTIMEINTERVAL", aId) as Dictionary<string, string>, null, "--- Select ---"); ;
             ViewBag.PlansList = ApplicationUtilities.LoadDropdownList("CLUBPLANS") as Dictionary<string, string>;
             List<ClubplanListCommon> ClubplanListCommon = _BUSS.GetClubPlanList(culture, aId);
             response.planList = ClubplanListCommon.MapObjects<ClubplanListModel>();
-            if (response.planList.Count>0)
+            if (response.planList.Count > 0)
             {
                 response.planList.ForEach(planIdentity =>
                 {
@@ -73,7 +75,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
 
                 });
             }
-            
+
             bool isexception = false;
             if (string.IsNullOrEmpty(ViewBag.PopUpRenderValue))
             {
@@ -114,8 +116,15 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                     {
                         try
                         {
+
                             planIdentity.StaticDataValue = planIdentity.StaticDataValue.EncryptParameter(); // Call your encryption method here
-                            planIdentity.IdentityDescription = planIdentity.name.ToLower() == "plan" ? planIdentity.IdentityDescription.EncryptParameter() : planIdentity.IdentityDescription; // Call your encryption method here
+                            if (planIdentity.name.ToLower() == "plan" ||
+                                 planIdentity.name.ToLower() == "lastordertime" ||
+                                 planIdentity.name.ToLower() == "lastentrytime")
+                            {
+                                planIdentity.IdentityDescription = planIdentity.IdentityDescription.EncryptParameter();
+                            }
+                            //planIdentity.IdentityDescription = planIdentity.name.ToLower() == "plan" ? planIdentity.IdentityDescription.EncryptParameter() : planIdentity.IdentityDescription; // Call your encryption method here
                             planIdentity.PlanId = planIdentity.name.ToLower() == "plan" ? ViewBag.PlansList[planIdentity.IdentityDescription] : planIdentity.IdentityDescription;  // Call your encryption method here
                             planIdentity.PlanListId = planIdentity.PlanListId.EncryptParameter(); // Call your encryption method here
                         }
@@ -150,6 +159,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
         {
             string ErrorMessage = string.Empty;
             ViewBag.PlansList = ApplicationUtilities.LoadDropdownList("CLUBPLANS") as Dictionary<string, string>;
+            ViewBag.TimeIntervalList = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("PLANTIMEINTERVAL", Model.ClubId.DecryptParameter()) as Dictionary<string, string>, null, "--- Select ---"); ;
             string concatenateplanvalue = string.Empty;
             bool isexception = false;
             bool isduplicate = false;
@@ -244,9 +254,15 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                     {
                         try
                         {
-                            string decryptedDescription = planIdentity.name.ToLower() == "plan" ? planIdentity.IdentityDescription.DecryptParameter() : planIdentity.IdentityDescription;
+                            // string decryptedDescription = planIdentity.name.ToLower() == "plan" ? planIdentity.IdentityDescription.DecryptParameter() : planIdentity.IdentityDescription;
                             planIdentity.StaticDataValue = planIdentity.StaticDataValue.DecryptParameter();
-                            planIdentity.IdentityDescription = planIdentity.name.ToLower() == "plan" ? decryptedDescription : planIdentity.IdentityDescription;
+                            if (planIdentity.name.ToLower() == "plan" ||
+                                 planIdentity.name.ToLower() == "lastordertime" ||
+                                 planIdentity.name.ToLower() == "lastentrytime")
+                            {
+                                planIdentity.IdentityDescription = planIdentity.IdentityDescription.DecryptParameter();
+                            }
+                            //planIdentity.IdentityDescription = planIdentity.name.ToLower() == "plan" ? decryptedDescription : planIdentity.IdentityDescription;
                             planIdentity.PlanListId = planIdentity.PlanListId.DecryptParameter(); // Call your encryption method here
                         }
                         catch (Exception ex)
@@ -355,6 +371,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                         AgentId = AgentId
                     });
                 }
+                ViewBag.TimeIntervalList = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("PLANTIMEINTERVAL", agentids) as Dictionary<string, string>, null, "--- Select ---"); ;
                 bool isexception = false;
                 List<PlanListCommon> planlist = _BUSS.EditClubPlanIdentityList(culture, agentids, planlistid);
                 response.ManageClubPlanModel.ClubPlanDetailList = planlist.MapObjects<PlanList>();
@@ -365,7 +382,13 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                         try
                         {
                             planIdentity.StaticDataValue = planIdentity.StaticDataValue.EncryptParameter(); // Call your encryption method here
-                            planIdentity.IdentityDescription = planIdentity.name.ToLower() == "plan" ? planIdentity.IdentityDescription.EncryptParameter() : planIdentity.IdentityDescription; // Call your encryption method here
+                            if (planIdentity.name.ToLower() == "plan" ||
+                                 planIdentity.name.ToLower() == "lastordertime" ||
+                                 planIdentity.name.ToLower() == "lastentrytime")
+                            {
+                                planIdentity.IdentityDescription = planIdentity.IdentityDescription.EncryptParameter();
+                            }
+                            //planIdentity.IdentityDescription = planIdentity.name.ToLower() == "plan" ? planIdentity.IdentityDescription.EncryptParameter() : planIdentity.IdentityDescription; // Call your encryption method here                            
                             planIdentity.PlanId = planIdentity.name.ToLower() == "plan" ? ViewBag.PlansList[planIdentity.IdentityDescription] : planIdentity.IdentityDescription;  // Call your encryption method here
                             planIdentity.PlanListId = planIdentity.PlanListId.EncryptParameter();
                         }

@@ -175,13 +175,77 @@
     <value>アフィリエイト支払い済</value>
     <comment>Payment Management</comment>
   </data>
+  <data name="AffiliateAutoFilledAddress" xml:space="preserve">
+    <value>住所自動入力</value>
+    <comment>AffiliateManagement</comment>
+  </data>
+  <data name="AffiliateBirthDate" xml:space="preserve">
+    <value>生年月日</value>
+    <comment>AffiliateManagement</comment>
+  </data>
+  <data name="AffiliateBuildingRoomNo" xml:space="preserve">
+    <value>建物・部屋番号</value>
+    <comment>AffiliateManagement</comment>
+  </data>
+  <data name="AffiliateBusiness" xml:space="preserve">
+    <value>事業タイプ</value>
+    <comment>AffiliateManagement</comment>
+  </data>
+  <data name="AffiliateCeoFurigana" xml:space="preserve">
+    <value>フリガナ</value>
+    <comment>AffiliateManagement</comment>
+  </data>
+  <data name="AffiliateCeoname" xml:space="preserve">
+    <value>代表者名</value>
+    <comment>AffiliateManagement</comment>
+  </data>
+  <data name="AffiliateCityTown" xml:space="preserve">
+    <value>市区町村</value>
+    <comment>AffiliateManagement</comment>
+  </data>
+  <data name="AffiliateCompanyAddress" xml:space="preserve">
+    <value>会社名</value>
+    <comment>AffiliateManagement</comment>
+  </data>
+  <data name="AffiliateCompanyName" xml:space="preserve">
+    <value>所在地</value>
+    <comment>AffiliateManagement</comment>
+  </data>
+  <data name="AffiliateEmailAddress" xml:space="preserve">
+    <value>メールアドレス</value>
+    <comment>AffiliateManagement</comment>
+  </data>
+  <data name="AffiliateFullName" xml:space="preserve">
+    <value>氏名</value>
+    <comment>AffiliateManagement</comment>
+  </data>
+  <data name="AffiliateGender" xml:space="preserve">
+    <value>性別</value>
+    <comment>AffiliateManagement</comment>
+  </data>
   <data name="AffiliateManagementSupportMsg" xml:space="preserve">
     <value>アフィリエイトの情報、転換された顧客、およびそれらの支払いを管理する</value>
     <comment>Affiliate Management</comment>
   </data>
+  <data name="AffiliatePhoneNumber" xml:space="preserve">
+    <value>携帯電話番号</value>
+    <comment>AffiliateManagement</comment>
+  </data>
+  <data name="AffiliatePostalcode" xml:space="preserve">
+    <value>郵便番号</value>
+    <comment>AffiliateManagement</comment>
+  </data>
+  <data name="AffiliatePrefecture" xml:space="preserve">
+    <value>都道府県</value>
+    <comment>AffiliateManagement</comment>
+  </data>
   <data name="Affiliates" xml:space="preserve">
     <value>アフィリエイト</value>
     <comment>Affiliate Management</comment>
+  </data>
+  <data name="AffiliateStreet" xml:space="preserve">
+    <value>番地</value>
+    <comment>AffiliateManagement</comment>
   </data>
   <data name="Age" xml:space="preserve">
     <value>年</value>
@@ -335,6 +399,10 @@
     <value>CEOフルネーム</value>
     <comment>ClubManagement</comment>
   </data>
+  <data name="CEOFurigana" xml:space="preserve">
+    <value>フリガナ</value>
+    <comment>ClubManagement</comment>
+  </data>
   <data name="Choose Icons" xml:space="preserve">
     <value>アイコン</value>
     <comment>Host Management</comment>
@@ -403,6 +471,10 @@
     <value>クラブステータス</value>
     <comment>Reservation Ledger</comment>
   </data>
+  <data name="ClubFurigana" xml:space="preserve">
+    <value>フリガナ</value>
+    <comment>ClubManagement</comment>
+  </data>
   <data name="ClubListSuppportMsg" xml:space="preserve">
     <value>クラブのおすすめ情報を管理する</value>
     <comment>Recommendation Management</comment>
@@ -451,6 +523,10 @@
     <value>営業所の所在地</value>
     <comment>ClubManagement</comment>
   </data>
+  <data name="CompanyNameFurigana" xml:space="preserve">
+    <value>フリガナ</value>
+    <comment>ClubManagement</comment>
+  </data>
   <data name="Configure" xml:space="preserve">
     <value>自己設定</value>
     <comment>Recommendation Management</comment>
@@ -482,6 +558,10 @@
   <data name="Converted Date" xml:space="preserve">
     <value>予約日</value>
     <comment>Affiliate Management</comment>
+  </data>
+  <data name="CorporateRegistry" xml:space="preserve">
+    <value>法人登記簿</value>
+    <comment>ClubManagement</comment>
   </data>
   <data name="Cover Photo" xml:space="preserve">
     <value>カバー写真</value>
@@ -694,6 +774,10 @@
     <value>金額から（¥）</value>
     <comment>Point Setup</comment>
   </data>
+  <data name="Furigana" xml:space="preserve">
+    <value>フリガナ</value>
+    <comment>ClubManagement</comment>
+  </data>
   <data name="Gallery" xml:space="preserve">
     <value>ギャラリー</value>
     <comment>Location Management</comment>
@@ -806,6 +890,10 @@
     <value>アイコン画像</value>
     <comment>Host Management</comment>
   </data>
+  <data name="IdentificationType" xml:space="preserve">
+    <value>アップロードする書類の種類</value>
+    <comment>ClubManagement</comment>
+  </data>
   <data name="Image" xml:space="preserve">
     <value>画像</value>
     <comment>Location Management</comment>
@@ -838,6 +926,10 @@
     <value>インスタグラム</value>
     <comment>Club Management</comment>
   </data>
+  <data name="Insurance" xml:space="preserve">
+    <value>保険証「住所欄」アップロード</value>
+    <comment>ClubManagement</comment>
+  </data>
   <data name="January" xml:space="preserve">
     <value>一月</value>
     <comment>Dashboard</comment>
@@ -853,8 +945,16 @@
     <value>六月</value>
     <comment>Dashboard</comment>
   </data>
+  <data name="KYCBack" xml:space="preserve">
+    <value>「裏面」をアップロードする</value>
+    <comment>ClubManagement</comment>
+  </data>
   <data name="KYCDocument" xml:space="preserve">
     <value>アップロード (本人確認種類)</value>
+    <comment>ClubManagement</comment>
+  </data>
+  <data name="KYCFront" xml:space="preserve">
+    <value>「表面」をアップロードする</value>
     <comment>ClubManagement</comment>
   </data>
   <data name="LandlineNumber" xml:space="preserve">
@@ -1176,6 +1276,10 @@
     <value>ページに基づいておすすめを管理する</value>
     <comment>Recommendation Management</comment>
   </data>
+  <data name="Passport" xml:space="preserve">
+    <value>パスポート「署名欄」アップロード</value>
+    <comment>Club Management</comment>
+  </data>
   <data name="Password" xml:space="preserve">
     <value>パスワード</value>
     <comment>Login Page</comment>
@@ -1458,6 +1562,9 @@
     <value>担当者　2</value>
     <comment>ClubManagement</comment>
   </data>
+  <data name="RepresentiveFurigana" xml:space="preserve">
+    <value>フリガナ</value>
+  </data>
   <data name="Request Amount" xml:space="preserve">
     <value>リクエスト金額</value>
     <comment>Points Management</comment>
@@ -1659,6 +1766,10 @@
   <data name="Status" xml:space="preserve">
     <value>状態</value>
     <comment>Customer Management</comment>
+  </data>
+  <data name="StoreName" xml:space="preserve">
+    <value>店舗名</value>
+    <comment>ClubManagement</comment>
   </data>
   <data name="Street" xml:space="preserve">
     <value>町</value>
