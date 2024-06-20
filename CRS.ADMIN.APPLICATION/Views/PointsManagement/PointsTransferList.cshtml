@@ -205,7 +205,7 @@
                                        @placeholder = "YYYY/MM/DD",
                                        @autocomplete = "off",
                                        @type = "text",
-                                         @readonly = "readonly"
+                                        @readonly = "readonly"
                                           })
                                         <span class="error">
                                             @Html.ValidationMessageFor(m => m.ToDate)
@@ -228,10 +228,10 @@
                             </div>
                         </form>
 
-                        <div class="px-[12px] py-[16px] flex justify-between entry-export-container">
+                        @*<div class="px-[12px] py-[16px] flex justify-between entry-export-container">
                             <div class="flex items-center select-entries" id="ShowEntries-Id">
                             </div>
-                        </div>
+                        </div>*@
                         <div class="table-tab">
                             <div class="px-[16px] py-[12px] flex justify-between entry-export-container">
                                 <div class="flex items-center select-entries" id="ShowEntries-Id">
@@ -560,6 +560,7 @@
             });
 
         document.addEventListener('DOMContentLoaded', function () {
+
             if ($("#ListType").val().toLowerCase() == "pbs") {
                 changeTab('pointsbalance', 'tab2Link')
                 const page_size2 = @ViewBag.PageSize2;

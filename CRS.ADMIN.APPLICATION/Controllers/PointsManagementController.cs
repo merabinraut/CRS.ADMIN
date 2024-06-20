@@ -6,8 +6,6 @@ using CRS.ADMIN.BUSINESS.PointsManagement;
 using CRS.ADMIN.SHARED;
 using CRS.ADMIN.SHARED.PaginationManagement;
 using CRS.ADMIN.SHARED.PointsManagement;
-using DocumentFormat.OpenXml.Spreadsheet;
-using DocumentFormat.OpenXml.Wordprocessing;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -29,8 +27,8 @@ namespace CRS.ADMIN.APPLICATION.Controllers
         [HttpGet]
         public ActionResult PointsTransferList(PointBalanceStatementRequestModel modelRequest, string UserType = "", string UserName = "", string TransferTypeId = "", string FromDate = "", string ToDate = "", string SearchFilter = "", string value = "", int StartIndex = 0, int PageSize = 10, int StartIndex2 = 0, int PageSize2 = 10, int StartIndex3 = 0, int PageSize3 = 10, int StartIndex4 = 0, int PageSize4 = 10, string SearchFilter4 = "", string LocationId4 = "", string ClubName4 = "", string PaymentMethodId4 = "", string FromDate4 = "", string ToDate4 = "", int TotalData3 = 0)
         {
-            ViewBag.SearchFilter = SearchFilter;
             Session["CurrentURL"] = "/PointsManagement/PointsTransferList";
+            ViewBag.SearchFilter = SearchFilter;
             string RenderId = "";
             var culture = Request.Cookies["culture"]?.Value;
             culture = string.IsNullOrEmpty(culture) ? "ja" : culture;
@@ -129,12 +127,55 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             if (!string.IsNullOrEmpty(UserType))
                 ViewBag.UserTypeIdKey = UserType;
 
+
+
             PointRequestListFilterCommon getPointRequest = objPointsManagementModel.PointRequestCommonModel.MapObject<PointRequestListFilterCommon>();
             getPointRequest.LocationId = getPointRequest?.LocationId?.DecryptParameter() ?? string.Empty;
             getPointRequest.PaymentMethodId = getPointRequest?.PaymentMethodId?.DecryptParameter() ?? string.Empty;
             getPointRequest.Skip = StartIndex4;
             getPointRequest.Take = PageSize4;
             var getPointRequestListDBResponse = _BUSS.GetPointRequestList(getPointRequest);
+
+            if (value.ToUpper() != "ST")
+            {
+                SystemTransferRequestModel requestSystemTransferModel = new SystemTransferRequestModel();
+                var mappedObject = requestSystemTransferModel.MapObject<SystemTransferRequestCommon>();
+                var getSystemTransferReport = _BUSS.GetSystemTransferDetailsAsync(mappedObject);
+                var getSystemTransferReportResponse = getSystemTransferReport.MapObjects<SystemTransferReponseModel>();
+                TempData["ListModel"] = getSystemTransferReportResponse;
+                ViewBag.PageSize3 = requestSystemTransferModel.PageSize3;
+                ViewBag.TotalData3 = getSystemTransferReport.Count > 0 ? getSystemTransferReport?.FirstOrDefault().RowTotal : "0";
+                ViewBag.StartIndex3 = requestSystemTransferModel.StartIndex3;
+                objPointsManagementModel.SystemTransferModel = new SystemTransferRequestModel()
+                {
+                    User_type = null,
+                    User_name = null,
+                    TransferType = null,
+                    From_Date1 = null,
+                    To_Date1 = null
+                };
+
+            }
+            if (value.ToUpper() != "PBS")
+            {
+                PointBalanceStatementRequestModel pointBalanceStatementRequest = new PointBalanceStatementRequestModel();
+                var mappedpointBalanceStatementObject = pointBalanceStatementRequest.MapObject<PointBalanceStatementRequestCommon>();
+                var response = _BUSS.GetPointBalanceStatementDetailsAsync(mappedpointBalanceStatementObject);
+                var GetStatementReport = response.MapObjects<SystemTransferReponseModel>();
+                TempData["ListSatementModel"] = GetStatementReport;
+                ViewBag.PageSize2 = pointBalanceStatementRequest.PageSize2;
+                ViewBag.TotalData2 = response.Count > 0 ? response?.FirstOrDefault().RowTotal : "0";
+                ViewBag.StartIndex2 = pointBalanceStatementRequest.StartIndex2;
+                objPointsManagementModel.PointBalanceStatementRequest = new PointBalanceStatementRequestModel()
+                {
+                    UserTypeList = null,
+                    UserNameList = null,
+                    TransferTypeList = null,
+                    From_Date = null,
+                    To_Date = null
+                };
+            }
+
             objPointsManagementModel.PointRequestCommonModel.PointRequestsListModel = getPointRequestListDBResponse.MapObjects<PointRequestsListModel>();
             objPointsManagementModel.PointRequestCommonModel.PointRequestsListModel.ForEach(x =>
             {
@@ -355,7 +396,6 @@ namespace CRS.ADMIN.APPLICATION.Controllers
         public async Task<ActionResult> GetPointBalanceStatementDetails(PointBalanceStatementRequestModel requestModel)
         {
             ViewBag.SearchFilter = requestModel.SearchFilter;
-            Session["CurrentURL"] = "/PointsManagement/PointsTransferList";
             string RenderId = "";
             var culture = Request.Cookies["culture"]?.Value;
             culture = string.IsNullOrEmpty(culture) ? "ja" : culture;
@@ -383,14 +423,13 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             ViewBag.StartIndex2 = requestModel.StartIndex2;
 
             TempData["ListModel"] = mappedResponseObjects;
-            return RedirectToAction("PointsTransferList", "PointsManagement", new { value = "pbs", FromDate = requestModel.From_Date, ToDate = requestModel.To_Date, UserType = requestModel.UserTypeList.EncryptParameter(), UserName = requestModel.UserNameList.EncryptParameter(), TransferTypeId = requestModel.TransferTypeList.EncryptParameter(), SearchFilter = requestModel.SearchFilter, TotalData2 = ViewBag.TotalData2 });
+            return RedirectToAction("PointsTransferList", "PointsManagement", new { value = "pbs", FromDate = requestModel.From_Date, ToDate = requestModel.To_Date, UserType = requestModel.UserTypeList.EncryptParameter(), UserName = requestModel.UserNameList.EncryptParameter(), TransferTypeId = requestModel.TransferTypeList.EncryptParameter(), SearchFilter = requestModel.SearchFilter, TotalData2 = ViewBag.TotalData2, PageSize2 = ViewBag.PageSize2, StartIndex2 = ViewBag.StartIndex2 });
             //return PartialView("PointsTransferList", mappedResponseObjects);
         }
         [HttpGet, OverrideActionFilters]
         public async Task<ActionResult> GetSystemTransferReportAsync(SystemTransferRequestModel requestModel)
         {
             ViewBag.SearchFilter = requestModel.SearchFilter;
-            Session["CurrentURL"] = "/PointsManagement/PointsTransferList";
             string RenderId = "";
             var culture = Request.Cookies["culture"]?.Value;
             culture = string.IsNullOrEmpty(culture) ? "ja" : culture;
@@ -414,10 +453,22 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             var mappedResponseObjects = response.MapObjects<SystemTransferReponseModel>();
 
             ViewBag.PageSize3 = requestModel.PageSize3;
-            ViewBag.TotalData3 = response.FirstOrDefault().RowTotal;
+            ViewBag.TotalData3 = response.Count > 0 ? response?.FirstOrDefault().RowTotal : "0";
             ViewBag.StartIndex3 = requestModel.StartIndex3;
             TempData["ListModel"] = mappedResponseObjects;
-            return RedirectToAction("PointsTransferList", "PointsManagement", new { value = "st", FromDate = requestModel.From_Date1, ToDate = requestModel.To_Date1, UserType = requestModel.User_type.EncryptParameter(), UserName = requestModel.User_name.EncryptParameter(), TransferTypeId = requestModel.TransferType.EncryptParameter(), SearchFilter = requestModel.SearchFilter, TotalData3 = response.FirstOrDefault().RowTotal });
+            return RedirectToAction("PointsTransferList", "PointsManagement", new
+            {
+                value = "st",
+                FromDate = requestModel.From_Date1,
+                ToDate = requestModel.To_Date1,
+                UserType = requestModel.User_type.EncryptParameter(),
+                UserName = requestModel.User_name.EncryptParameter(),
+                TransferTypeId = requestModel.TransferType.EncryptParameter(),
+                SearchFilter = requestModel.SearchFilter,
+                TotalData3 = ViewBag.TotalData3,
+                PageSize3 = ViewBag.PageSize3,
+                StartIndex3 = ViewBag.StartIndex3
+            });
         }
     }
 }
