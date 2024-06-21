@@ -1422,9 +1422,9 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             Model.EventType = Model.EventType.DecryptParameter();
             if (Model.EventType.ToUpper() == "1") //check for notice event type
             {
-                Model.Title = "";
+                //Model.Title = "";
                 Model.Image = "";
-                ModelState.Remove("Title");
+                //ModelState.Remove("Title");
                 if (Model.EventDate == null || Model.Description == null)
                 {
                     bool allowRedirect = false;

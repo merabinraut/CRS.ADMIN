@@ -179,7 +179,7 @@
                                                            //@onkeypress = "return isAlphabetWithSpace(event)",
                                                            autocomplete = "off",
                                                            @maxLength = "100"
-                                                    ,
+
 
                                                        })
                                                             <span class="error">
@@ -200,41 +200,32 @@
                                                             @Html.HiddenFor(model => model.ClubPlanDetailList[i].PlanIdentityList[j].Id, new { @class = "Id" })
                                                             @Html.HiddenFor(model => model.ClubPlanDetailList[i].PlanIdentityList[j].inputtype, new { @class = "inputtype" })
                                                             @Html.HiddenFor(model => model.ClubPlanDetailList[i].PlanIdentityList[j].IdentityLabel, new { @class = "IdentityLabel" })
-                                                            <select id=@ids class="default_select select-common block w-full"
-                                                                style="width: 100%;" name="ClubPlanDetailList[@i].PlanIdentityList[@j].IdentityDescription">
-                                                               
-                                                                    @foreach (var item in ViewBag.TimeIntervalList as IEnumerable<SelectListItem>)
-                                                                    {
-                                                                        var selectedId = Model.ClubPlanDetailList[i].PlanIdentityList[j].PlanId as string;
-                                                                        if (item.Value == selectedId)
-                                                                        {
-                                                                            <option value="@item.Value" selected>
-                                                                                @item.Text
-                                                                            </option>
-                                                                        }
-                                                                        else
-                                                                        {
-                                                                            <option value="@item.Value">
-                                                                                @item.Text
-                                                                            </option>
-                                                                        }
-                                                                    }
+                                                            <select id=@ids class="default_select select-common block w-full selectplan"
+                                                                    style="width: 100%;" name="ClubPlanDetailList[@i].PlanIdentityList[@j].IdentityDescription">
 
-                                                                    
-                                                                </select>
-                                                            @*@Html.TextBoxFor(model => model.ClubPlanDetailList[i].PlanIdentityList[j].IdentityDescription, new
+                                                                @foreach (var item in ViewBag.TimeIntervalList as IEnumerable<SelectListItem>)
                                                                 {
-                                                                    @class = "w-full",
-                                                                    @placeholder = "HH:MM",
-                                                                    //@onkeypress = "return isNumber(event)",
-                                                                    autocomplete = "off",
-                                                                    @maxLength = "30",
-                                                                    @min = "06:00", @max = "08:00",
-                                                                    @type = "time"
-                                                                })*@
-                                                            
-                                                            <span class="error">
-                                                                @Html.ValidationMessageFor(model => Model.ClubPlanDetailList[i].PlanIdentityList[j].IdentityDescription)
+                                                                    var selectedId = Model.ClubPlanDetailList[i].PlanIdentityList[j].PlanId as string;
+                                                                    if (item.Value == selectedId)
+                                                                    {
+                                                                        <option value="@item.Value" selected>
+                                                                            @item.Text
+                                                                        </option>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <option value="@item.Value">
+                                                                            @item.Text
+                                                                        </option>
+                                                                    }
+                                                                }
+
+
+                                                            </select>
+                                                           
+
+                                                            <span class="error" >
+                                                                @Html.ValidationMessageFor(model => model.ClubPlanDetailList[i].PlanIdentityList[j].IdentityDescription)
                                                             </span>
                                                             @*<input type="time" class="w-full" placeholder="HH:MM" name="lastOrderTime" required>*@
                                                             <!-- <span class="error">Validation msg</span> -->
@@ -305,7 +296,7 @@
                         </div>
                     </div>
 
-                    <div class="flex justify-end py-4">
+                    @*<div class="flex justify-end py-4">
                         <div class="flex gap-6">
                             <a>
                                 <button class="resetForm btn btn-primary-default h-[40px] px-8 rounded-[4px]  text-sm leading-[10px]" type="submit" id="submit-button-id">
@@ -313,6 +304,19 @@
                                 </button>
                             </a>
                         </div>
+                    </div>*@
+
+                    <div class="py-4 flex justify-end">
+                        <div class="flex gap-6">
+                            <button class="btn btn-secondary rounded-[4px]" type="button" data-drawer-hide="add-new-host-tag"
+                                    aria-controls="add-new-host-tag" onclick="CancelFunction();">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Cancel
+                            </button>
+                            <button class="btn btn-primary-default rounded-[4px]"  id="submit-id-plan"> @CRS.ADMIN.APPLICATION.Resources.Resource.Submit</button>
+
+
+                        </div>
+
                     </div>
                 }
             </div>

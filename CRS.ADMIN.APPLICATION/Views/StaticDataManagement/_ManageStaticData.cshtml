@@ -27,6 +27,10 @@
             {
                 @Html.HiddenFor(model => model.StaticDataValue)
             }
+            if (!string.IsNullOrEmpty(Model.StaticDataType))
+            {
+                @Html.HiddenFor(model => model.StaticDataType)
+            }
             if (!string.IsNullOrEmpty(Model.Status))
             {
                 @Html.HiddenFor(model => model.Status)

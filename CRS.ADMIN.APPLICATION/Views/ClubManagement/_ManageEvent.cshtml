@@ -94,7 +94,7 @@
                             </div>
 
                             <!-- </div> -->
-                            <div class="input-field-common mb-[20px]" id="tagInput3">
+                            <div class="input-field-common mb-[20px]" >
                                 <div class="input-field-common">
                                     <label for="date" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
                                         @CRS.ADMIN.APPLICATION.Resources.Resource.Title
@@ -160,7 +160,7 @@
     const schedule = document.getElementById('Schedule');
     const scheduleMain = document.getElementById('scheduleMain');
     const scheduleimage = document.getElementById('scheduleimage');
-    const tagInput3 = document.getElementById('tagInput3');
+    //const tagInput3 = document.getElementById('tagInput3');
 
     if ($("#EventId").val() !== '') {
         var imagePath = "@Model.Image"
@@ -174,14 +174,14 @@
             noticeMain.style.display = 'block';
             scheduleimage.style.display = 'none';
             scheduleMain.style.display = 'none';
-            tagInput3.style.display = 'none';
+            //tagInput3.style.display = 'none';
             notice.checked = true;
         }
         /**/
         else if ($('[name="EventTypeName"]').val() == "Schedule") {
         /**/
         noticeMain.style.display = 'none';
-        tagInput3.style.display = 'block';
+        //tagInput3.style.display = 'block';
         scheduleimage.style.display = 'block';
             scheduleMain.style.display = 'block';
             schedule.checked = true;
@@ -192,7 +192,7 @@ else {
     noticeMain.style.display = 'block';
     scheduleimage.style.display = 'none';
     scheduleMain.style.display = 'none';
-    tagInput3.style.display = 'none';
+    //tagInput3.style.display = 'none';
     notice.checked = true;
 }
 
@@ -201,7 +201,7 @@ notice.addEventListener('change', function () {
         noticeMain.style.display = 'block';
         scheduleimage.style.display = 'none';
         scheduleMain.style.display = 'none';
-        tagInput3.style.display = 'none';
+        //tagInput3.style.display = 'none';
 
     } else {
         noticeMain.style.display = 'none';
@@ -210,14 +210,14 @@ notice.addEventListener('change', function () {
 schedule.addEventListener('change', function () {
     if (this.checked) {
         noticeMain.style.display = 'none';
-        tagInput3.style.display = 'block';
+       // tagInput3.style.display = 'block';
         scheduleimage.style.display = 'block';
         scheduleMain.style.display = 'block';
 
 
     } else {
         scheduleimage.style.display = 'none';
-        tagInput3.style.display = 'none';
+        //tagInput3.style.display = 'none';
         scheduleMain.style.display = 'none';
     }
 });

@@ -250,6 +250,18 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             }
             else
             {
+                var errorMessages = ModelState.Where(x => x.Value.Errors.Count > 0)
+                                  .SelectMany(x => x.Value.Errors.Select(e => $"{x.Key}: {e.ErrorMessage}"))
+                                  .ToList();
+
+                var notificationModels = errorMessages.Select(errorMessage => new NotificationModel
+                {
+                    NotificationType = NotificationMessage.INFORMATION,
+                    Message = errorMessage,
+                    Title = NotificationMessage.INFORMATION.ToString(),
+                }).ToArray();
+                AddNotificationMessage(notificationModels);
+                var errors = ModelState.Where(x => x.Value.Errors.Count > 0).Select(x => new { x.Key }).ToList();
                 TempData["ManageStaticData"] = Model;
                 TempData["RenderId"] = "Manage";
                 return RedirectToAction("StaticDataIndex", new { staticDataTypeId = Model.StaticDataType });
