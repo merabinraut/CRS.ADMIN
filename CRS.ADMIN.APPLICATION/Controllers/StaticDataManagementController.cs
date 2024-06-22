@@ -64,6 +64,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 var dbResponse = _business.GetStaticDataTypeDetail(Id);
                 model = dbResponse.MapObject<ManageStaticDataType>();
                 model.Id = Id.EncryptParameter();
+                model.StaticDataType = model.StaticDataType.EncryptParameter();
             }
             TempData["ManageStaticDataType"] = model;
             TempData["RenderId"] = "Manage";
@@ -72,13 +73,17 @@ namespace CRS.ADMIN.APPLICATION.Controllers
         [HttpPost, ValidateAntiForgeryToken]
         public ActionResult ManageStaticDataType(ManageStaticDataType model)
         {
+            if ( model.Id?.DecryptParameter()==null)
+            {
+                ModelState.Remove("StaticDataType");
+            }
             if (ModelState.IsValid)
             {
                 ManageStaticDataTypeCommon commonModel = model.MapObject<ManageStaticDataTypeCommon>();
                 commonModel.ActionUser = ApplicationUtilities.GetSessionValue("Username").ToString();
                 if (!string.IsNullOrEmpty(commonModel.Id))
                     commonModel.Id = commonModel.Id.DecryptParameter();
-
+                commonModel.StaticDataType = model.StaticDataType?.DecryptParameter();
                 var dbResponse = _business.ManageStaticDataType(commonModel);
                 if (dbResponse != null)
                 {
