@@ -1316,22 +1316,22 @@
                 var identificationtype = $('#large[name="IdentificationType"]').find("option:selected").text().trim().toLowerCase();
                 var businesstype = $('#large[name="BusinessTypeDDL"]').find("option:selected").text().trim().toLowerCase();
 
-                if (logo == "no file choosen")
+                if (logo == "no file choosen" || logo == "ファイルが選択されていません")
                 {
                     $('span.field-validation-valid[data-valmsg-for="Logo"]').text('@CRS.ADMIN.APPLICATION.Resources.Resource.Required');
                     isimagevalid = false;
                 }
-                if (CoverPhoto == "no file choosen")
+                if (CoverPhoto == "no file choosen" || CoverPhoto == "ファイルが選択されていません")
                 {
                     $('span.field-validation-valid[data-valmsg-for="CoverPhoto"]').text('@CRS.ADMIN.APPLICATION.Resources.Resource.Required');
                     isimagevalid = false;
                 }
-                if (CorporateRegistryDocument == "no file choosen" && businesstype == "corporation")
+                if ((CorporateRegistryDocument == "no file choosen" || CorporateRegistryDocument == "ファイルが選択されていません") && businesstype == "corporation")
                 {
                     $('span.field-validation-valid[data-valmsg-for="CorporateRegistryDocument"]').text('@CRS.ADMIN.APPLICATION.Resources.Resource.Required');
                     isimagevalid = false;
                 }
-                if (KYCDocument == "no file choosen" )
+                if (KYCDocument == "no file choosen" || KYCDocument == "ファイルが選択されていません")
                 {
                       if (identificationtype != "passport + insurance card")
                        {
@@ -1351,12 +1351,12 @@
 
                        }
                 }
-                if (PassportPhoto == "no file choosen" && (identificationtype == "passport + insurance card" || identificationtype == "パスポート + 保険証"))
+                if ((PassportPhoto == "no file choosen" || PassportPhoto == "ファイルが選択されていません") && (identificationtype == "passport + insurance card" || identificationtype == "パスポート + 保険証"))
                 {
                     $('span.field-validation-valid[data-valmsg-for="PassportPhoto"]').text('@CRS.ADMIN.APPLICATION.Resources.Resource.Required');
                     isimagevalid = false;
                 }
-                if (KYCDocumentBack == "no file choosen" )
+                if (KYCDocumentBack == "no file choosen" || KYCDocumentBack == "ファイルが選択されていません")
                 {
                     if (identificationtype != "passport + insurance card")
                     {
@@ -1378,12 +1378,12 @@
 
 
                 }
-                if (Insurance == "no file choosen" && (identificationtype == "passport + insurance card" || identificationtype == "パスポート + 保険証"))
+                if ((Insurance == "no file choosen" || Insurance == "ファイルが選択されていません") && (identificationtype == "passport + insurance card" || identificationtype == "パスポート + 保険証"))
                 {
                     $('span.field-validation-valid[data-valmsg-for="InsurancePhoto"]').text('@CRS.ADMIN.APPLICATION.Resources.Resource.Required');
                     isimagevalid = false;
                 }
-                if (Business == "no file choosen") {
+                if (Business == "no file choosen" || Business == "ファイルが選択されていません") {
                     $('span.field-validation-valid[data-valmsg-for="BusinessCertificate"]').text('@CRS.ADMIN.APPLICATION.Resources.Resource.Required');
                     isimagevalid = false;
                 }
