@@ -354,12 +354,19 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 {
                     ModelState.AddModelError("Representative1_Furigana", "Required");
                 }
+                if (string.IsNullOrEmpty(Model.CompanyName))
+                {
+                    ModelState.AddModelError("CompanyName", "Required");
+                }
 
             }
             else
             {
                 ModelState.Remove("CompanyName");
-                ModelState.Remove("CompanyNameFurigana");
+                ModelState.Remove("Representative1_ContactName");
+                ModelState.Remove("Representative1_MobileNo");
+                ModelState.Remove("Representative1_Email");
+                ModelState.Remove("Representative1_Furigana");
             }
             ModelState.Remove("LoginId");
             if (ModelState.IsValid)

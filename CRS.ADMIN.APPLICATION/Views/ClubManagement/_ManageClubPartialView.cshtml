@@ -264,12 +264,17 @@
                                                 @fileName
                                             }
                                         </p>
+                                       
                                     </div>
                                     <div class="text-xs text-error mt-[8px]">
                                         @CRS.ADMIN.APPLICATION.Resources.Resource.Note:
                                         @CRS.ADMIN.APPLICATION.Resources.Resource.Image_should_be_in_HEIF_format
-                                        @CRS.ADMIN.APPLICATION.Resources.Resource.and_Maximum_file_size_is_5_MB .
+                                        @CRS.ADMIN.APPLICATION.Resources.Resource.and_Maximum_file_size_is_5_MB 
+                                        <span class="error">
+                                            @Html.ValidationMessageFor(m => m.Logo)
+                                        </span>
                                     </div>
+                                   
                                 </div>
 
                                 <div>
@@ -281,7 +286,7 @@
                                             <span>  @CRS.ADMIN.APPLICATION.Resources.Resource.Choose_Images</span>
                                         </label>
                                         <input id="file_input_cover" class="file-input" name="CoverPhoto_Certificate" type="file" value="@Model.CoverPhoto" style="display:none;">
-                                        <p id="file_name_logo"
+                                        <p id="file_name_cover"
                                            class="file-name w-max h-[23px] overflow-hidden pl-2 text-xs text-[#686868] leading-[25px]">
                                             @if (string.IsNullOrEmpty(Model.CoverPhoto))
                                             {
@@ -297,8 +302,12 @@
                                     <div class="text-xs text-error mt-[8px]">
                                         @CRS.ADMIN.APPLICATION.Resources.Resource.Note:
                                         @CRS.ADMIN.APPLICATION.Resources.Resource.Image_should_be_in_HEIF_format
-                                        @CRS.ADMIN.APPLICATION.Resources.Resource.and_Maximum_file_size_is_5_MB .
+                                        @CRS.ADMIN.APPLICATION.Resources.Resource.and_Maximum_file_size_is_5_MB
+                                        <span class="error">
+                                            @Html.ValidationMessageFor(m => m.CoverPhoto)
+                                        </span>
                                     </div>
+                                    
                                 </div>
 
                             </div>
@@ -623,7 +632,7 @@
                                         @*<input type="hidden" name="Business_Certificate" value="@Model.Business_Certificate"/>*@
                                         <input id="file_input_corporateregistrydocument" class="file-input" type="file" name="CorporateRegistry_Certificate" value="@Model.CorporateRegistryDocument"
                                                style="display:none;">
-                                        <p id="file_input_corporateregistrydocument"
+                                        <p id="file_name_corporateregistrydocument"
                                            class="file-name w-max h-[23px] overflow-hidden pl-2 text-xs text-[#686868] leading-[25px]">
                                             @if (string.IsNullOrEmpty(Model.CorporateRegistryDocument))
                                             {
@@ -638,7 +647,10 @@
                                     </div>
                                     <div class="text-xs text-error mt-[8px]">
                                         @CRS.ADMIN.APPLICATION.Resources.Resource.Note:
-                                        @CRS.ADMIN.APPLICATION.Resources.Resource.and_Maximum_file_size_is_5_MB .
+                                        @CRS.ADMIN.APPLICATION.Resources.Resource.and_Maximum_file_size_is_5_MB
+                                        <span class="error">
+                                            @Html.ValidationMessageFor(m => m.CorporateRegistryDocument)
+                                        </span>
                                     </div>
                                 </div>
 
@@ -700,7 +712,10 @@
                                     </div>
                                     <div class="text-xs text-error mt-[8px]">
                                         @CRS.ADMIN.APPLICATION.Resources.Resource.Note:
-                                        @CRS.ADMIN.APPLICATION.Resources.Resource.and_Maximum_file_size_is_5_MB .
+                                        @CRS.ADMIN.APPLICATION.Resources.Resource.and_Maximum_file_size_is_5_MB
+                                        <span class="error">
+                                            @Html.ValidationMessageFor(m => m.KYCDocument)
+                                        </span>
                                     </div>
                                 </div>
                                 <div id="Passport" style="display:none">
@@ -714,7 +729,7 @@
                                         @*<input type="hidden" name="Business_Certificate" value="@Model.Business_Certificate"/>*@
                                         <input id="file_input_passportphoto" class="file-input" type="file" name="PassportPhotot_Certificate" value="@Model.PassportPhoto"
                                                style="display:none;">
-                                        <p id="file_input_passportphoto"
+                                        <p id="file_name_passportphoto"
                                            class="file-name w-max h-[23px] overflow-hidden pl-2 text-xs text-[#686868] leading-[25px]">
                                             @if (string.IsNullOrEmpty(Model.PassportPhoto))
                                             {
@@ -729,7 +744,10 @@
                                     </div>
                                     <div class="text-xs text-error mt-[8px]">
                                         @CRS.ADMIN.APPLICATION.Resources.Resource.Note:
-                                        @CRS.ADMIN.APPLICATION.Resources.Resource.and_Maximum_file_size_is_5_MB .
+                                        @CRS.ADMIN.APPLICATION.Resources.Resource.and_Maximum_file_size_is_5_MB
+                                        <span class="error">
+                                            @Html.ValidationMessageFor(m => m.PassportPhoto)
+                                        </span>
                                     </div>
                                 </div>
 
@@ -749,7 +767,7 @@
                                         @*<input type="hidden" name="Business_Certificate" value="@Model.Business_Certificate"/>*@
                                         <input id="file_input_kycdocumentback" class="file-input" type="file" name="KYCDocumentBack_Certificate" value="@Model.KYCDocumentBack"
                                                style="display:none;">
-                                        <p id="file_input_kycdocumentback"
+                                        <p id="file_name_kycdocumentback"
                                            class="file-name w-max h-[23px] overflow-hidden pl-2 text-xs text-[#686868] leading-[25px]">
                                             @if (string.IsNullOrEmpty(Model.KYCDocumentBack))
                                             {
@@ -765,7 +783,10 @@
                                     <div class="text-xs text-error mt-[8px]">
                                         @CRS.ADMIN.APPLICATION.Resources.Resource.Note:
                                         @CRS.ADMIN.APPLICATION.Resources.Resource.Image_should_be_in_HEIF_format
-                                        @CRS.ADMIN.APPLICATION.Resources.Resource.and_Maximum_file_size_is_5_MB .
+                                        @CRS.ADMIN.APPLICATION.Resources.Resource.and_Maximum_file_size_is_5_MB
+                                        <span class="error">
+                                            @Html.ValidationMessageFor(m => m.KYCDocumentBack)
+                                        </span>
                                     </div>
                                 </div>
                                 <div id="Insurance" style="display:none">
@@ -779,7 +800,7 @@
                                         @*<input type="hidden" name="Business_Certificate" value="@Model.Business_Certificate"/>*@
                                         <input id="file_input_insurancephoto" class="file-input" type="file" name="InsurancePhoto_Certificate" value="@Model.InsurancePhoto"
                                                style="display:none;">
-                                        <p id="file_input_insurancephoto"
+                                        <p id="file_name_insurancephoto"
                                            class="file-name w-max h-[23px] overflow-hidden pl-2 text-xs text-[#686868] leading-[25px]">
                                             @if (string.IsNullOrEmpty(Model.InsurancePhoto))
                                             {
@@ -795,7 +816,10 @@
                                     <div class="text-xs text-error mt-[8px]">
                                         @CRS.ADMIN.APPLICATION.Resources.Resource.Note:
                                         @CRS.ADMIN.APPLICATION.Resources.Resource.Image_should_be_in_HEIF_format
-                                        @CRS.ADMIN.APPLICATION.Resources.Resource.and_Maximum_file_size_is_5_MB .
+                                        @CRS.ADMIN.APPLICATION.Resources.Resource.and_Maximum_file_size_is_5_MB
+                                        <span class="error">
+                                            @Html.ValidationMessageFor(m => m.InsurancePhoto)
+                                        </span>
                                     </div>
                                 </div>
                                 <div>
@@ -825,7 +849,10 @@
                                     <div class="text-xs text-error mt-[8px]">
                                         @CRS.ADMIN.APPLICATION.Resources.Resource.Note:
                                         @CRS.ADMIN.APPLICATION.Resources.Resource.Image_should_be_in_HEIF_format
-                                        @CRS.ADMIN.APPLICATION.Resources.Resource.and_Maximum_file_size_is_5_MB .
+                                        @CRS.ADMIN.APPLICATION.Resources.Resource.and_Maximum_file_size_is_5_MB
+                                        <span class="error">
+                                            @Html.ValidationMessageFor(m => m.BusinessCertificate)
+                                        </span>
                                     </div>
                                 </div>
 
@@ -1205,7 +1232,7 @@
                                        @type = "time"
                                    })
                                         <span class="error">
-                                            @Html.ValidationMessageFor(m => m.GoogleMap)
+                                            @Html.ValidationMessageFor(m => m.WorkingHrTo)
                                         </span>
 
                                     </div>
@@ -1451,7 +1478,7 @@
                                             }
                                         </select>
                                         <span class="error">
-                                            @Html.ValidationMessageFor(m => m.LocationId)
+                                            @Html.ValidationMessageFor(m => m.LocationDDL)
                                         </span>
 
                                     </div>

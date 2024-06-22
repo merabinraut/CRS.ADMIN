@@ -175,10 +175,14 @@ namespace CRS.ADMIN.APPLICATION.Models.ClubManagement
         public string Line { get; set; }
         [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Required")]
         public string GoogleMap { get; set; }
+        [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Required")]
         public string WorkingHrFrom { get; set; }
+        [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Required")]
         public string WorkingHrTo { get; set; }
         public string Holiday { get; set; }
+        [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Required")]
         public string LastOrderTime { get; set; }
+        [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Required")]
         public string LastEntryTime { get; set; }
         [RegularExpression(@"^(?:100|\d{1,2})$", ErrorMessage = "l")]
         public string Tax { get; set; }
@@ -217,11 +221,17 @@ namespace CRS.ADMIN.APPLICATION.Models.ClubManagement
         public string BusinessLicenseNumber { get; set; }
         //[Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
         public string LicenseIssuedDate { get; set; }
+        [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Required")]
         public string Representative1_ContactName { get; set; }
+        [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Required")]
+        [RegularExpression("^[0-9]{11}$", ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "The_field_must_be_a_11_digit_number")]
         public string Representative1_MobileNo { get; set; }
+        [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Required")]
         public string Representative1_Email { get; set; }
+        [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Required")]
         public string Representative1_Furigana { get; set; }
         public string Representative2_ContactName { get; set; }
+        [RegularExpression("^[0-9]{11}$", ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "The_field_must_be_a_11_digit_number")]
         public string Representative2_MobileNo { get; set; }
         public string Representative2_Email { get; set; }
         public string Representative2_Furigana { get; set; }

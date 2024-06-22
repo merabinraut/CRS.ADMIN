@@ -907,7 +907,7 @@
 
     function openDeleteClubModal(agentid)
     {
-       const modalTarget = document.querySelector("[data-modal-target='delete-club-confirmation']");    
+       const modalTarget = document.querySelector("[data-modal-target='delete-club-confirmation']");
        const modal = document.getElementById("delete-club-confirmation");
        modal.classList.remove("hidden");
            $('#delete_club_id').attr('data-val', agentid);
@@ -1107,6 +1107,7 @@
                     $("#corpdetail_representive1").show();
                     $("#corp_representive2").show();
                     $("#corpdetail_representive2").show();
+                    //initializeValidation(val);
                 }
                 else {
                     $("#Corp_id").hide();
@@ -1116,6 +1117,7 @@
                     $("#corpdetail_representive1").hide();
                     $("#corp_representive2").hide();
                     $("#corpdetail_representive2").hide();
+                   // initializeValidation(val);
                 }
             }
 
@@ -1129,6 +1131,7 @@
                     $("#corpdetail_representive1").show();
                     $("#corp_representive2").show();
                     $("#corpdetail_representive2").show();
+                   // initializeValidation(selectedValue);
                 }
                 else {
                     $("#Corp_id").hide();
@@ -1138,6 +1141,8 @@
                     $("#corpdetail_representive1").hide();
                     $("#corp_representive2").hide();
                     $("#corpdetail_representive2").hide();
+                   /* $('#ManageClubForm').validate().destroy(); // Destroy existing validation rules*/
+                   // initializeValidation(selectedValue);
                 }
             });
 
@@ -1290,8 +1295,120 @@
 
             }
         };
+        var isvalid = true;
 
+    //---------------------------------------START required validation according to next button-------------------------------------////
         nextButton.addEventListener('click', () => {
+            debugger;
+            var id = $('.content-section[style*="display: block"]').attr('id');
+
+
+            if (id.toLowerCase() == "content1") {
+                var isimagevalid = true;
+                var logo = $("#file_name_logo").text().trim().toLowerCase(); //$("input[name='Logo_Certificate']").val();
+                var CoverPhoto = $("#file_name_cover").text().trim().toLowerCase();  //$("input[name='CoverPhoto_Certificate']").val();
+                var CorporateRegistryDocument = $("#file_name_corporateregistrydocument").text().trim().toLowerCase();  //$("input[name='CorporateRegistry_Certificate']").val();
+                var KYCDocument = $("#file_name_kycdocument").text().trim().toLowerCase();   //$("input[name='KYCDocument_Certificate']").val();
+                var PassportPhoto = $("#file_name_passportphoto").text().trim().toLowerCase();   //$("input[name='PassportPhotot_Certificate']").val();
+                var KYCDocumentBack = $("#file_name_kycdocumentback").text().trim().toLowerCase();   //$("input[name='KYCDocumentBack_Certificate']").val();
+                var Insurance = $("#file_name_insurancephoto").text().trim().toLowerCase();    //$("input[name='InsurancePhoto_Certificate']").val();
+                var Business = $("#file_name_bussiness_certificate").text().trim().toLowerCase();    //$("input[name='Business_Certificate']").val();
+                var identificationtype = $('#large[name="IdentificationType"]').find("option:selected").text().trim().toLowerCase();
+                var businesstype = $('#large[name="BusinessTypeDDL"]').find("option:selected").text().trim().toLowerCase();
+
+                if (logo == "no file choosen")
+                {
+                    $('span.field-validation-valid[data-valmsg-for="Logo"]').text('@CRS.ADMIN.APPLICATION.Resources.Resource.Required');
+                    isimagevalid = false;
+                }
+                if (CoverPhoto == "no file choosen")
+                {
+                    $('span.field-validation-valid[data-valmsg-for="CoverPhoto"]').text('@CRS.ADMIN.APPLICATION.Resources.Resource.Required');
+                    isimagevalid = false;
+                }
+                if (CorporateRegistryDocument == "no file choosen" && businesstype == "corporation")
+                {
+                    $('span.field-validation-valid[data-valmsg-for="CorporateRegistryDocument"]').text('@CRS.ADMIN.APPLICATION.Resources.Resource.Required');
+                    isimagevalid = false;
+                }
+                if (KYCDocument == "no file choosen" )
+                {
+                      if (identificationtype != "passport + insurance card")
+                       {
+                          if (identificationtype != "パスポート + 保険証")
+                          {
+                              $('span.field-validation-valid[data-valmsg-for="KYCDocument"]').text('@CRS.ADMIN.APPLICATION.Resources.Resource.Required');
+                              isimagevalid = false;
+                          }
+
+                       }
+                       else if (identificationtype != "パスポート + 保険証")
+                       {
+                           if (identificationtype != "passport + insurance card") {
+                               $('span.field-validation-valid[data-valmsg-for="KYCDocument"]').text('@CRS.ADMIN.APPLICATION.Resources.Resource.Required');
+                               isimagevalid = false;
+                           }
+
+                       }
+                }
+                if (PassportPhoto == "no file choosen" && (identificationtype == "passport + insurance card" || identificationtype == "パスポート + 保険証"))
+                {
+                    $('span.field-validation-valid[data-valmsg-for="PassportPhoto"]').text('@CRS.ADMIN.APPLICATION.Resources.Resource.Required');
+                    isimagevalid = false;
+                }
+                if (KYCDocumentBack == "no file choosen" )
+                {
+                    if (identificationtype != "passport + insurance card")
+                    {
+                       if (identificationtype != "パスポート + 保険証")
+                       {
+                           $('span.field-validation-valid[data-valmsg-for="KYCDocumentBack"]').text('@CRS.ADMIN.APPLICATION.Resources.Resource.Required');
+                           isimagevalid = false;
+                       }
+
+                    }
+                    else if (identificationtype != "パスポート + 保険証")
+                    {
+                        if (identificationtype != "passport + insurance card") {
+                            $('span.field-validation-valid[data-valmsg-for="KYCDocumentBack"]').text('@CRS.ADMIN.APPLICATION.Resources.Resource.Required');
+                            isimagevalid = false;
+                        }
+
+                    }
+
+
+                }
+                if (Insurance == "no file choosen" && (identificationtype == "passport + insurance card" || identificationtype == "パスポート + 保険証"))
+                {
+                    $('span.field-validation-valid[data-valmsg-for="InsurancePhoto"]').text('@CRS.ADMIN.APPLICATION.Resources.Resource.Required');
+                    isimagevalid = false;
+                }
+                if (Business == "no file choosen") {
+                    $('span.field-validation-valid[data-valmsg-for="BusinessCertificate"]').text('@CRS.ADMIN.APPLICATION.Resources.Resource.Required');
+                    isimagevalid = false;
+                }
+
+            }
+
+            else if (id.toLowerCase() == "content3")
+            {
+                var locationDDL = $('#large[name="LocationDDL"]').val();
+                if (locationDDL == "")
+                {
+                    $('span.field-validation-valid[data-valmsg-for="LocationDDL"]').text('@CRS.ADMIN.APPLICATION.Resources.Resource.Required');
+                    isimagevalid = false;
+                }
+            }
+
+
+            
+            var isValid = $('#ManageClubForm').valid();
+            if (!isValid) {
+                return false;
+            }
+            if (isimagevalid == false) {
+                return false;
+            }
             if (currentStep < steps.length - 1) {
                 currentStep++;
                 updateStep();
@@ -1307,6 +1424,219 @@
 
         // Initial state setup
         updateStep();
+
+
+        $('#file_input_logo').on('change', function () {
+            var logo = $("#file_name_logo").text().trim().toLowerCase();
+            if (logo != "") {
+                $('span.field-validation-valid[data-valmsg-for="Logo"]').text('');
+            }
+        });
+        $('#file_input_cover').on('change', function () {
+            debugger;
+            var CoverPhoto = $("#file_name_cover").text().trim().toLowerCase();
+            if (CoverPhoto != "") {
+                $('span.field-validation-valid[data-valmsg-for="CoverPhoto"]').text('');
+            }
+        });
+        $('#file_input_corporateregistrydocument').on('change', function () {
+            var CorporateRegistryDocument = $("#file_name_corporateregistrydocument").text().trim().toLowerCase();
+            if (CorporateRegistryDocument != "") {
+                $('span.field-validation-valid[data-valmsg-for="CorporateRegistryDocument"]').text('');
+            }
+        });
+        $('#file_input_kycdocument').on('change', function () {
+            var KYCDocument = $("#file_name_kycdocument").text().trim().toLowerCase();
+            if (KYCDocument != "") {
+                $('span.field-validation-valid[data-valmsg-for="KYCDocument"]').text('');
+            }
+        });
+        $('#file_input_passportphoto').on('change', function () {
+            var PassportPhoto = $("#file_name_passportphoto").text().trim().toLowerCase();
+            if (PassportPhoto != "") {
+                $('span.field-validation-valid[data-valmsg-for="PassportPhoto"]').text('');
+            }
+        });
+        $('#file_input_kycdocumentback').on('change', function () {
+            var KYCDocumentBack = $("#file_name_kycdocumentback").text().trim().toLowerCase();
+            if (KYCDocumentBack != "") {
+                $('span.field-validation-valid[data-valmsg-for="KYCDocumentBack"]').text('');
+            }
+        });
+        $('#file_input_insurancephoto').on('change', function () {
+            var Insurance = $("#file_name_insurancephoto").text().trim().toLowerCase();
+            if (Insurance != "") {
+                $('span.field-validation-valid[data-valmsg-for="InsurancePhoto"]').text('');
+            }
+        });
+        $('#file_input_business_certificate').on('change', function () {
+            var Business = $("#file_name_bussiness_certificate").text().trim().toLowerCase();
+            if (Business != "") {
+                $('span.field-validation-valid[data-valmsg-for="BusinessCertificate"]').text('');
+            }
+        });
+        $('#large[name="LocationDDL"]').on('change', function () {
+            var locationDDL = $('#large[name="LocationDDL"]').val();
+            if (locationDDL != "")
+            {
+                $('span.field-validation-valid[data-valmsg-for="LocationDDL"]').text('');
+                isimagevalid = false;
+            }
+        });
+        $(document).ready(function () {
+
+            var validator = $('#ManageClubForm').validate({
+                errorClass: 'invalid',
+                errorElement: 'div',
+                errorPlacement: function (error, element) {
+                    error.insertAfter(element);
+                },
+                rules: {
+                    ClubName1: {
+                        required: true
+                    },
+                    ClubName2: {
+                        required: true
+                    },
+                    ClubName: {
+                        required: true
+                    },
+                    ceoFullName: {
+                        required: true
+                    },
+                    CeoFurigana: {
+                        required: true
+                    },
+                    CompanyName: {
+                        required: true
+                    },
+                    MobileNumber: {
+                        required: true
+                    },
+                    Email: {
+                        required: true
+                    },
+                    Representative1_ContactName: {
+                        required: $('#large[name="BusinessTypeDDL"]').find("option:selected").text().trim().toLowerCase() == "corporation"
+                    },
+                    Representative1_MobileNo: {
+                        required: $('#large[name="BusinessTypeDDL"]').find("option:selected").text().trim().toLowerCase() == "corporation"
+                    },
+                    Representative1_Email: {
+                        required: $('#large[name="BusinessTypeDDL"]').find("option:selected").text().trim().toLowerCase() == "corporation"
+                    },
+                    Representative1_Furigana: {
+                        required: $('#large[name="BusinessTypeDDL"]').find("option:selected").text().trim().toLowerCase() == "corporation"
+                    },
+                    GoogleMap: {
+                        required: true
+                    },
+                    PostalCode: {
+                        required: true
+                    },
+                    LocationDDL: {
+                        required: true
+                    },
+                    City: {
+                        required: true
+                    },
+                    Street: {
+                        required: true
+                    },
+                    BuildingRoomNo: {
+                        required: true
+                    },
+                    WorkingHrFrom: {
+                        required: true
+                    },
+                    WorkingHrTo: {
+                        required: true
+                    },
+                    LastOrderTime: {
+                        required: true
+                    },
+                    LastEntryTime: {
+                        required: true
+                    },
+                },
+                messages: {
+                    ClubName1: {
+                        required: '@CRS.ADMIN.APPLICATION.Resources.Resource.Required'
+,                    },
+                    ClubName2: {
+                       required: '@CRS.ADMIN.APPLICATION.Resources.Resource.Required'
+                    },
+                    ClubName: {
+                        required: '@CRS.ADMIN.APPLICATION.Resources.Resource.Required'
+                    },
+                    ceoFullName: {
+                        required: '@CRS.ADMIN.APPLICATION.Resources.Resource.Required'
+                    },
+                    CeoFurigana : {
+                        required: '@CRS.ADMIN.APPLICATION.Resources.Resource.Required'
+                    },
+                    CompanyName : {
+                        required: '@CRS.ADMIN.APPLICATION.Resources.Resource.Required'
+                    },
+                    MobileNumber : {
+                        required: '@CRS.ADMIN.APPLICATION.Resources.Resource.Required'
+                    },
+                    Email: {
+                        required: '@CRS.ADMIN.APPLICATION.Resources.Resource.Required'
+                    },
+                    Representative1_ContactName: {
+                        required: '@CRS.ADMIN.APPLICATION.Resources.Resource.Required'
+                    },
+                    Representative1_MobileNo : {
+                        required: '@CRS.ADMIN.APPLICATION.Resources.Resource.Required'
+                    },
+                    Representative1_Email : {
+                        required: '@CRS.ADMIN.APPLICATION.Resources.Resource.Required'
+                    },
+                    Representative1_Furigana: {
+                        required: '@CRS.ADMIN.APPLICATION.Resources.Resource.Required'
+                    },
+                    GoogleMap: {
+                        required: '@CRS.ADMIN.APPLICATION.Resources.Resource.Required'
+                    },
+                    PostalCode: {
+                        required: '@CRS.ADMIN.APPLICATION.Resources.Resource.Required'
+                    },
+                    LocationDDL: {
+                        required: '@CRS.ADMIN.APPLICATION.Resources.Resource.Required'
+                   },
+                    City: {
+                       required: '@CRS.ADMIN.APPLICATION.Resources.Resource.Required'
+                   },
+                   Street: {
+                        required: '@CRS.ADMIN.APPLICATION.Resources.Resource.Required'
+                   },
+                   BuildingRoomNo: {
+                        required: '@CRS.ADMIN.APPLICATION.Resources.Resource.Required'
+                    },
+                    WorkingHrFrom: {
+                       required: '@CRS.ADMIN.APPLICATION.Resources.Resource.Required'
+                    },
+                    WorkingHrTo: {
+                     required: '@CRS.ADMIN.APPLICATION.Resources.Resource.Required'
+                    },
+                    LastOrderTime: {
+                    required: '@CRS.ADMIN.APPLICATION.Resources.Resource.Required'
+                    },
+                    LastEntryTime: {
+                       required: '@CRS.ADMIN.APPLICATION.Resources.Resource.Required'
+                    },
+                }
+            });
+
+
+
+
+
+
+        });
+
+        //---------------------------------------END required validation according to next button-------------------------------------////
     </script>
     <script>
 
