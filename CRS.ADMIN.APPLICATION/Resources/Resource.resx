@@ -1590,6 +1590,10 @@
     <value>Password minimum length must be 8</value>
     <comment>ProfileManagement</comment>
   </data>
+  <data name="Password Mismatch" xml:space="preserve">
+    <value>Password Mismatch</value>
+    <comment>Profile Management</comment>
+  </data>
   <data name="password reset confirmation" xml:space="preserve">
     <value>password reset confirmation</value>
     <comment>Customer Management</comment>

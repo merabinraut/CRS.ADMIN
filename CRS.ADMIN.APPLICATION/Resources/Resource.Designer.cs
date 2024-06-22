@@ -3418,6 +3418,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Password Mismatch.
+        /// </summary>
+        public static string Password_Mismatch {
+            get {
+                return ResourceManager.GetString("Password Mismatch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to password reset confirmation.
         /// </summary>
         public static string password_reset_confirmation {

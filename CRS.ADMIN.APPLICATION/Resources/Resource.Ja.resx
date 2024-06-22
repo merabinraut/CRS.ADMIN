@@ -1593,6 +1593,10 @@
     <value>パスワードはて8文字以上にしてください</value>
     <comment>ProfileManagement</comment>
   </data>
+  <data name="Password Mismatch" xml:space="preserve">
+    <value>パスワードが一致しません</value>
+    <comment>Profile Management</comment>
+  </data>
   <data name="password reset confirmation" xml:space="preserve">
     <value>のパスワードをリセットしてもよろしいですか</value>
     <comment>Customer Management</comment>
