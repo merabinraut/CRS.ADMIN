@@ -824,6 +824,18 @@
     <value>Enter Additional Information</value>
     <comment>Plan Management</comment>
   </data>
+  <data name="Enter City" xml:space="preserve">
+    <value>Enter City</value>
+    <comment>Club Management</comment>
+  </data>
+  <data name="Enter Postal Code" xml:space="preserve">
+    <value>Enter Postal Code</value>
+    <comment>Club Management</comment>
+  </data>
+  <data name="Enter Street" xml:space="preserve">
+    <value>Enter Street</value>
+    <comment>Club Management</comment>
+  </data>
   <data name="Enter your credentials to continue." xml:space="preserve">
     <value>Enter your credentials to continue.</value>
     <comment>Login Page</comment>

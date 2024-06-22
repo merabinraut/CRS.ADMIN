@@ -95,16 +95,16 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 item.ClubLogo = ImageHelper.ProcessedImage(item.ClubLogo);
             });
             ViewBag.Pref = DDLHelper.LoadDropdownList("PREF") as Dictionary<string, string>;
-            ViewBag.Holiday = ApplicationUtilities.SetDDLValue(DDLHelper.LoadDropdownList("Holiday") as Dictionary<string, string>, null, "--- Select ---");
+            ViewBag.Holiday = ApplicationUtilities.SetDDLValue(DDLHelper.LoadDropdownList("Holiday","",culture) as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---");
             ViewBag.IdentificationType = DDLHelper.LoadDropdownList("DOCUMENTTYPE") as Dictionary<string, string>;
             ViewBag.IdentificationTypeIdKey = response.ManageClubModel.IdentificationType;
             ViewBag.PopUpRenderValue = !string.IsNullOrEmpty(RenderId) ? RenderId : null;
-            ViewBag.LocationDDLList = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("LOCATIONDDLPREFECTURE") as Dictionary<string, string>, null, "--- Select ---");
-             ViewBag.LocationDDLListTag = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("LOCATIONTAG") as Dictionary<string, string>, null, "--- Select ---");            
-            ViewBag.BusinessTypeDDL = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("BUSINESSTYPEDDL") as Dictionary<string, string>, null, "");
-            ViewBag.RankDDL = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("RANKDDL") as Dictionary<string, string>, null, "--- Select ---");
-            ViewBag.ClubStoreDDL = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("CLUBSTOREDDL") as Dictionary<string, string>, null, "--- Select ---");
-            ViewBag.ClubCategoryDDL = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("CLUBCATEGORYDDL") as Dictionary<string, string>, null, "--- Select ---");
+            ViewBag.LocationDDLList = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("LOCATIONDDLPREFECTURE", "", culture) as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---");
+             ViewBag.LocationDDLListTag = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("LOCATIONTAG", "", culture) as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---");            
+            ViewBag.BusinessTypeDDL = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("BUSINESSTYPEDDL", "", culture) as Dictionary<string, string>, null, "");
+            ViewBag.RankDDL = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("RANKDDL", "", culture) as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---");
+            ViewBag.ClubStoreDDL = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("CLUBSTOREDDL", "", culture) as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---");
+            ViewBag.ClubCategoryDDL = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("CLUBCATEGORYDDL", "", culture) as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---");
             //ViewBag.CountryCodeDDL = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("COUNTRYCODE") as Dictionary<string, string>, null);
 
             ViewBag.RankDDLKey = response.ManageTag.Tag2RankName;
@@ -118,7 +118,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             ViewBag.BusinessTypeKey = response.ManageClubModel.BusinessTypeDDL;
             //ViewBag.CountryCodeDDLKey = response.ManageClubModel.LandLineCode;
 
-            ViewBag.ClosingDate = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("CLOSINGDATE") as Dictionary<string, string>, null, "--- Select ---");
+            ViewBag.ClosingDate = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("CLOSINGDATE", "", culture) as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---");
             ViewBag.ClosingDateIdKey = response.ManageClubModel.ClosingDate;
 
             ViewBag.StartIndex2 = StartIndex2;

@@ -1672,6 +1672,33 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Enter City.
+        /// </summary>
+        public static string Enter_City {
+            get {
+                return ResourceManager.GetString("Enter City", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter Postal Code.
+        /// </summary>
+        public static string Enter_Postal_Code {
+            get {
+                return ResourceManager.GetString("Enter Postal Code", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter Street.
+        /// </summary>
+        public static string Enter_Street {
+            get {
+                return ResourceManager.GetString("Enter Street", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Enter your credentials to continue..
         /// </summary>
         public static string Enter_your_credentials_to_continue_ {

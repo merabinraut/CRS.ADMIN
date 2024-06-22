@@ -824,6 +824,18 @@
     <value>追加情報を入力してください</value>
     <comment>Plan Management</comment>
   </data>
+  <data name="Enter City" xml:space="preserve">
+    <value>Enter 市</value>
+    <comment>Club Management</comment>
+  </data>
+  <data name="Enter Postal Code" xml:space="preserve">
+    <value>Enter 郵便番号</value>
+    <comment>Club Management</comment>
+  </data>
+  <data name="Enter Street" xml:space="preserve">
+    <value>町</value>
+    <comment>Club Management</comment>
+  </data>
   <data name="Enter your credentials to continue." xml:space="preserve">
     <value>続行するには、情報を入力してください</value>
     <comment>Login Page</comment>
