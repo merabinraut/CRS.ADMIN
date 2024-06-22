@@ -20,6 +20,8 @@ namespace CRS.ADMIN.APPLICATION.Controllers
         public ActionResult ViewAllNotifications(string NotificationId = "")
         {
             Session["CurrentURL"] = "/NotificationManagement/ViewAllNotifications";
+            ViewBag.IsBackAllowed = true;
+            ViewBag.BackButtonURL = "javascript:history.back()";
             var requestCommon = new ManageNotificationCommon()
             {
                 AdminId = ApplicationUtilities.GetSessionValue("UserId").ToString().DecryptParameter(),
