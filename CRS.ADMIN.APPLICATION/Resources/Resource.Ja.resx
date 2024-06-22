@@ -329,6 +329,10 @@
     <value>言語を変更してもよろしいですか</value>
     <comment>Language Preference</comment>
   </data>
+  <data name="Are you sure you want to delete this club" xml:space="preserve">
+    <value>こちらの店舗を削除してもよろしいですか？</value>
+    <comment>Club Management</comment>
+  </data>
   <data name="Assign" xml:space="preserve">
     <value>割当</value>
     <comment>Roles &amp; Privileges</comment>

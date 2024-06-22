@@ -547,6 +547,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to delete this club?.
+        /// </summary>
+        public static string Are_you_sure_you_want_to_delete_this_club {
+            get {
+                return ResourceManager.GetString("Are you sure you want to delete this club", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Assign.
         /// </summary>
         public static string Assign {

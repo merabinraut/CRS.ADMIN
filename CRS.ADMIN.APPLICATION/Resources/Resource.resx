@@ -329,6 +329,10 @@
     <value>Are you sure you want to change the language</value>
     <comment>Language Preference</comment>
   </data>
+  <data name="Are you sure you want to delete this club" xml:space="preserve">
+    <value>Are you sure you want to delete this club?</value>
+    <comment>Club Management</comment>
+  </data>
   <data name="Assign" xml:space="preserve">
     <value>Assign</value>
     <comment>Roles &amp; Privileges</comment>
