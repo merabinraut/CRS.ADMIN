@@ -1108,6 +1108,10 @@
   <data name="Invalid Postal Code" xml:space="preserve">
     <value>Invalid Postal Code</value>
   </data>
+  <data name="Invalid Tax" xml:space="preserve">
+    <value>Invalid Tax</value>
+    <comment>Club Management</comment>
+  </data>
   <data name="January" xml:space="preserve">
     <value>Jan</value>
     <comment>Dashboard</comment>

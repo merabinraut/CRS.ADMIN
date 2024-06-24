@@ -1108,6 +1108,11 @@
   <data name="Invalid Postal Code" xml:space="preserve">
     <value>郵便番号に誤りがあります</value>
   </data>
+  <data name="Invalid Tax" xml:space="preserve">
+    <value>
+税金の情報に誤りがあります</value>
+    <comment>Club Management</comment>
+  </data>
   <data name="January" xml:space="preserve">
     <value>一月</value>
     <comment>Dashboard</comment>

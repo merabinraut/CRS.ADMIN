@@ -2320,6 +2320,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Invalid Tax.
+        /// </summary>
+        public static string Invalid_Tax {
+            get {
+                return ResourceManager.GetString("Invalid Tax", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Jan.
         /// </summary>
         public static string January {
