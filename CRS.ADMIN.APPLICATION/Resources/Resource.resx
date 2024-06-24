@@ -1250,6 +1250,9 @@
     <value>Male</value>
     <comment>AffiliateManagement</comment>
   </data>
+  <data name="Manage" xml:space="preserve">
+    <value>Manage</value>
+  </data>
   <data name="Manage Club Events" xml:space="preserve">
     <value>Manage Club Events</value>
     <comment>Club Management</comment>

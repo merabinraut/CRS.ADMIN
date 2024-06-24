@@ -1250,6 +1250,9 @@
     <value>女性</value>
     <comment>AffiliateManagement</comment>
   </data>
+  <data name="Manage" xml:space="preserve">
+    <value>管理する</value>
+  </data>
   <data name="Manage Club Events" xml:space="preserve">
     <value>クラブイベント管理</value>
     <comment>Club Management</comment>
@@ -1291,7 +1294,7 @@
     <comment>Host Management</comment>
   </data>
   <data name="Manage Location" xml:space="preserve">
-    <value>場所の管理</value>
+    <value>ロケーション管理</value>
     <comment>Location Management</comment>
   </data>
   <data name="Manage Notification" xml:space="preserve">
@@ -1327,7 +1330,7 @@
     <comment>Club Management</comment>
   </data>
   <data name="Manage user roles and their privileges" xml:space="preserve">
-    <value>ユーザーロールとその権限を管理します。</value>
+    <value>ロールタイプの権限と機能を管理します。</value>
     <comment>Roles &amp; Privileges</comment>
   </data>
   <data name="Manage your points detail" xml:space="preserve">

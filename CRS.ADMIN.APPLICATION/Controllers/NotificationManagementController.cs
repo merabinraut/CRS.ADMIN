@@ -29,7 +29,8 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             };
             var dbResponse = _buss.GetAllNotification(requestCommon);
             List<NotificationDetailModel> response = dbResponse.MapObjects<NotificationDetailModel>();
-            response.ForEach(x =>
+            if (response != null && response.Count > 0)
+                response.ForEach(x =>
             {
                 x.NotificationId = x.NotificationId.EncryptParameter();
                 x.NotificationImageURL = ImageHelper.ProcessedImage(x.NotificationImageURL);
