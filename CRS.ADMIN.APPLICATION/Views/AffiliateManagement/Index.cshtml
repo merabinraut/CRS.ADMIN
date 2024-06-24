@@ -642,7 +642,6 @@
             window.location.href = '/AffiliateManagement/ResetAffiliatePassword?AgentId=' + i ;
         }
         $('#large[name="BusinessType"]').change(function () {
-            debugger;
             var selectedValue = $(this).find("option:selected").text().trim();
             if (selectedValue.toLowerCase() == "corporation") {
                 $(".clscorporation").show();

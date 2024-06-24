@@ -1299,7 +1299,6 @@
 
     //---------------------------------------START required validation according to next button-------------------------------------////
         nextButton.addEventListener('click', () => {
-            debugger;
             var id = $('.content-section[style*="display: block"]').attr('id');
 
 
@@ -1433,7 +1432,6 @@
             }
         });
         $('#file_input_cover').on('change', function () {
-            debugger;
             var CoverPhoto = $("#file_name_cover").text().trim().toLowerCase();
             if (CoverPhoto != "") {
                 $('span.field-validation-valid[data-valmsg-for="CoverPhoto"]').text('');
