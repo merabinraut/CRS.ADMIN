@@ -1,7 +1,7 @@
 ﻿@model  CRS.ADMIN.APPLICATION.Models.CustomerManagement.CustomerListCommonModel
+<form action="/CustomerManagement/CustomerList" method="get">
+    <div class="flex justify-between pb-[24px]">
 
-<div class="flex justify-between pb-[24px]">
-    <form action="/CustomerManagement/CustomerList" method="get">
         <div class="relative input-search-wrapper">
             <div class="absolute inset-y-0 left-0 flex items-center pl-[16px] pointer-events-none">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21" fill="none">
@@ -9,10 +9,10 @@
                           stroke="#667085" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round" />
                 </svg>
             </div>
-            <input name="FromDate" value="@Model.FromDate" hidden />
-            <input name="ToDate" value="@Model.ToDate" hidden />
-            <input name="Status" value="@ViewBag.UserStatusKey" hidden />
-            <input name="MobileNumber" value="@Model.MobileNumber" hidden />
+            @*<input name="FromDate" value="@Model.FromDate" type="hidden" />
+            <input name="ToDate" value="@Model.ToDate" type="hidden" />
+            <input name="Status" value="@ViewBag.UserStatusKey" type="hidden" />
+            <input name="MobileNumber" value="@Model.MobileNumber" type="hidden" />*@
             <input type="search"
                    id="default-search"
                    class="input-search block w-full "
@@ -20,29 +20,30 @@
                    value="@Model.SearchFilter"
                    name="SearchFilter">
         </div>
-    </form>
-    @*<div class="flex gap-6">
-            <div class="custom-date " data-drawer-target="customer-date" data-drawer-show="customer-date"
-                 data-drawer-placement="right" aria-controls="customer-date">
-                <img src="~/Content/assets_new/images/club/calendar-week-solid.svg" alt="date">
-                @CRS.ADMIN.APPLICATION.Resources.Resource.Custom_Date
+
+        @*<div class="flex gap-6">
+                <div class="custom-date " data-drawer-target="customer-date" data-drawer-show="customer-date"
+                     data-drawer-placement="right" aria-controls="customer-date">
+                    <img src="~/Content/assets_new/images/club/calendar-week-solid.svg" alt="date">
+                    @CRS.ADMIN.APPLICATION.Resources.Resource.Custom_Date
+                </div>
+            </div>*@
+
+    </div>
+    @*<div>*@
+        <!-- filter  -->
+        <div class="mb-4">
+            <div id="filter" class="export-button h-[40px] text-[#3E3E3E] w-max" onclick="showFilterContainer()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21" fill="none">
+                    <path d="M5 10.5H15M2.5 5.5H17.5M7.5 15.5H12.5" stroke="#3E3E3E" stroke-width="1.67"
+                          stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+                @CRS.ADMIN.APPLICATION.Resources.Resource.Filter_By
             </div>
-        </div>*@
 
-</div>
-<div>
-    <!-- filter  -->
-    <div class="mb-4">
-        <div id="filter" class="export-button h-[40px] text-[#3E3E3E] w-max" onclick="showFilterContainer()">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21" fill="none">
-                <path d="M5 10.5H15M2.5 5.5H17.5M7.5 15.5H12.5" stroke="#3E3E3E" stroke-width="1.67"
-                      stroke-linecap="round" stroke-linejoin="round" />
-            </svg>
-            @CRS.ADMIN.APPLICATION.Resources.Resource.Filter_By
-        </div>
-
-        <div id="filter-container" class="px-6 py-5 rounded-[5px] border border-[#D0D5DD]" style="display: none;">
-            <form action="/CustomerManagement/CustomerList" method="get" id="filter-id">
+            <div id="filter-container" class="px-6 py-5 rounded-[5px] border border-[#D0D5DD]" style="display: none;">
+                @*<form action="/CustomerManagement/CustomerList" method="get" id="filter-id">*@
+                @*<input name="SearchFilter" value="@Model.SearchFilter" type="hidden" />*@
                 <div class="flex flex-col gap-4">
                     <div class="flex text-[#3E3E3E] gap-1 items-center">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20"
@@ -115,230 +116,230 @@
                         </svg>Apply
                     </button>
                 </div>
-            </form>
+                @*</form>*@
+            </div>
+        </div>
+</form>
+<div class="table-tab">
+    <div class="px-[12px] py-[16px] flex justify-between entry-export-container">
+        <div class="flex items-center select-entries" id="ShowEntries-Id">
+        </div>
+
+        <div class="export-button h-[40px]" onclick="exportExcel('table-id', 'Customer');">
+            <img src="~/Content/assets_new/images/club/download-solid.svg"> @CRS.ADMIN.APPLICATION.Resources.Resource.Export
         </div>
     </div>
 
-    <div class="table-tab">
-        <div class="px-[12px] py-[16px] flex justify-between entry-export-container">
-            <div class="flex items-center select-entries" id="ShowEntries-Id">
-            </div>
+    <div class="relative overflow-x-auto">
+        <table class="w-full  text-left club-table" id="table-id">
+            <thead class="club-table-thead">
+                <tr>
+                    <th scope="col" class="p-[12px]">
+                        <div class="flex  w-max">
+                            S.N
+                            <div class="relative pl-[5px]">
+                                <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                            </div>
+                        </div>
+                    </th>
+                    <th scope="col" class="p-[12px]">
+                        <div class="flex  w-max">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.User_Info
+                            <div class="relative pl-[5px]">
+                                <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                            </div>
+                        </div>
+                    </th>
+                    <th scope="col" class="p-[12px]">
+                        <div class="flex  w-max">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Phone_Number
+                            <div class="relative pl-[5px]">
+                                <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                            </div>
+                        </div>
+                    </th>
+                    <th scope="col" class="p-[12px]">
+                        <div class="flex  w-max">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Age
+                            <div class="relative pl-[5px]">
+                                <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                            </div>
+                        </div>
+                    </th>
 
-            <div class="export-button h-[40px]" onclick="exportExcel('table-id', 'Customer');">
-                <img src="~/Content/assets_new/images/club/download-solid.svg"> @CRS.ADMIN.APPLICATION.Resources.Resource.Export
-            </div>
-        </div>
-
-        <div class="relative overflow-x-auto">
-            <table class="w-full  text-left club-table" id="table-id">
-                <thead class="club-table-thead">
-                    <tr>
-                        <th scope="col" class="p-[12px]">
-                            <div class="flex  w-max">
-                                S.N
-                                <div class="relative pl-[5px]">
-                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
-                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
-                                </div>
+                    <th scope="col" class="p-[12px]">
+                        <div class="flex  w-max">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Status
+                            <div class="relative pl-[5px]">
+                                <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
                             </div>
-                        </th>
-                        <th scope="col" class="p-[12px]">
-                            <div class="flex  w-max">
-                                @CRS.ADMIN.APPLICATION.Resources.Resource.User_Info
-                                <div class="relative pl-[5px]">
-                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
-                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
-                                </div>
+                        </div>
+                    </th>
+                    <th scope="col" class="p-[12px]">
+                        <div class="flex  w-max">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Referrer
+                            <div class="relative pl-[5px]">
+                                <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
                             </div>
-                        </th>
-                        <th scope="col" class="p-[12px]">
-                            <div class="flex  w-max">
-                                @CRS.ADMIN.APPLICATION.Resources.Resource.Phone_Number
-                                <div class="relative pl-[5px]">
-                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
-                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
-                                </div>
+                        </div>
+                    </th>
+                    <th scope="col" class="p-[12px]">
+                        <div class="flex  w-max">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Location
+                            <div class="relative pl-[5px]">
+                                <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
                             </div>
-                        </th>
-                        <th scope="col" class="p-[12px]">
-                            <div class="flex  w-max">
-                                @CRS.ADMIN.APPLICATION.Resources.Resource.Age
-                                <div class="relative pl-[5px]">
-                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
-                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
-                                </div>
+                        </div>
+                    </th>
+                    <th scope="col" class="p-[12px]">
+                        <div class="flex  w-max">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Updated_On
+                            <div class="relative pl-[5px]">
+                                <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
                             </div>
-                        </th>
-
-                        <th scope="col" class="p-[12px]">
-                            <div class="flex  w-max">
-                                @CRS.ADMIN.APPLICATION.Resources.Resource.Status
-                                <div class="relative pl-[5px]">
-                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
-                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
-                                </div>
+                        </div>
+                    </th>
+                    <th scope="col" class="p-[12px]">
+                        <div class="flex  w-max">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Created_On
+                            <div class="relative pl-[5px]">
+                                <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
                             </div>
-                        </th>
-                        <th scope="col" class="p-[12px]">
-                            <div class="flex  w-max">
-                                @CRS.ADMIN.APPLICATION.Resources.Resource.Referrer
-                                <div class="relative pl-[5px]">
-                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
-                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
-                                </div>
+                        </div>
+                    </th>
+                    <th scope="col" class="p-[12px]">
+                        <div class="flex  w-max justify-center">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Action
+                            <div class="relative pl-[5px]">
+                                <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
                             </div>
-                        </th>
-                        <th scope="col" class="p-[12px]">
-                            <div class="flex  w-max">
-                                @CRS.ADMIN.APPLICATION.Resources.Resource.Location
-                                <div class="relative pl-[5px]">
-                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
-                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
-                                </div>
-                            </div>
-                        </th>
-                        <th scope="col" class="p-[12px]">
-                            <div class="flex  w-max">
-                                @CRS.ADMIN.APPLICATION.Resources.Resource.Updated_On
-                                <div class="relative pl-[5px]">
-                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
-                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
-                                </div>
-                            </div>
-                        </th>
-                        <th scope="col" class="p-[12px]">
-                            <div class="flex  w-max">
-                                @CRS.ADMIN.APPLICATION.Resources.Resource.Created_On
-                                <div class="relative pl-[5px]">
-                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
-                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
-                                </div>
-                            </div>
-                        </th>
-                        <th scope="col" class="p-[12px]">
-                            <div class="flex  w-max justify-center">
-                                @CRS.ADMIN.APPLICATION.Resources.Resource.Action
-                                <div class="relative pl-[5px]">
-                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
-                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
-                                </div>
-                            </div>
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var customer in Model.CustomerListModel)
-                    {
-                        <tr class="bg-white border-b ">
-                            <td class="p-[12px]">
-                                @customer.SNO
-                            </td>
-                            <td class="p-[12px]">
-                                <div class="round-image-text flex gap-[12px] w-max">
-                                    @if (!string.IsNullOrEmpty(@customer.ProfileImage))
-                                    {
-                                        <img class="w-[32px] h-[32px] rounded-full"
-                                             src="@customer.ProfileImage" />
-                                    }
-                                    else
-                                    {
-                                        <img class="w-[32px] h-[32px] rounded-full"
-                                             src="~/Content/assets_new/images/demo-image.jpeg" />
-                                    }
-
-                                    <div class="flex justify-between w-full">
-                                        <div class="text-image grid flex-none ">
-                                            <div class="text-sm font-semibold text-[#101828] ">@customer.FullName</div>
-                                            <div class='text-xs  text-[#404040] '>@customer.NickName</div>
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </td>
-                            <td class="p-[12px]">
-                                @customer.MobileNumber
-                            </td>
-                            <td class="p-[12px]">
-                                @customer.Age
-                            </td>
-
-                            <td class="p-[12px]">
-                                @if (!string.IsNullOrEmpty(customer.Status) && customer.Status.ToUpper() == "A")
+                        </div>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var customer in Model.CustomerListModel)
+                {
+                    <tr class="bg-white border-b ">
+                        <td class="p-[12px]">
+                            @customer.SNO
+                        </td>
+                        <td class="p-[12px]">
+                            <div class="round-image-text flex gap-[12px] w-max">
+                                @if (!string.IsNullOrEmpty(@customer.ProfileImage))
                                 {
-                                    <div class="approved">
-                                        @CRS.ADMIN.APPLICATION.Resources.Resource.Active
-                                    </div>
-                                }
-                                else if (!string.IsNullOrEmpty(customer.Status) && customer.Status.ToUpper() == "B")
-                                {
-                            <div class="blocked">
-                                @CRS.ADMIN.APPLICATION.Resources.Resource.Blocked
-                            </div>
+                                    <img class="w-[32px] h-[32px] rounded-full"
+                                         src="@customer.ProfileImage" />
                                 }
                                 else
                                 {
-                                    <div>
-                                        -
+                                    <img class="w-[32px] h-[32px] rounded-full"
+                                         src="~/Content/assets_new/images/demo-image.jpeg" />
+                                }
+
+                                <div class="flex justify-between w-full">
+                                    <div class="text-image grid flex-none ">
+                                        <div class="text-sm font-semibold text-[#101828] ">@customer.FullName</div>
+                                        <div class='text-xs  text-[#404040] '>@customer.NickName</div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="p-[12px]">
+                            @customer.MobileNumber
+                        </td>
+                        <td class="p-[12px]">
+                            @customer.Age
+                        </td>
+
+                        <td class="p-[12px]">
+                            @if (!string.IsNullOrEmpty(customer.Status) && customer.Status.ToUpper() == "A")
+                            {
+                                <div class="approved">
+                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Active
+                                </div>
+                            }
+                            else if (!string.IsNullOrEmpty(customer.Status) && customer.Status.ToUpper() == "B")
+                            {
+                                <div class="blocked">
+                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Blocked
+                                </div>
+                            }
+                            else
+                            {
+                                <div>
+                                    -
+                                </div>
+                            }
+                        </td>
+                        <td class="p-[12px]">
+                            @customer.Referer
+                        </td>
+                        <td class="p-[12px]">
+                            @customer.Location
+                        </td>
+                        <td class="p-[12px]">
+                            <div class="w-max">
+                                @customer.UpdatedDate
+                            </div>
+                        </td>
+                        <td class="p-[12px]">
+                            <div class="w-max">
+                                @customer.CreatedDate
+                            </div>
+                        </td>
+                        <td class="p-[12px]">
+                            <div class="flex gap-[7px] justify-center text-[16px] ">
+                                <div>
+
+                                    <i class="las la-key text-[24px] text-[#C8B477] cursor-pointer" onclick="openResetPasswordModal('@customer.NickName','@customer.AgentId')" data-modal-target="reset-passwordconfirmation" data-modal-toggle="reset-passwordconfirmation"></i>
+                                </div>
+
+                                @if (!string.IsNullOrEmpty(customer.Status) && customer.Status.ToUpper().Trim() == "A")
+                                {
+                                    <div onclick="BlockEvent('@customer.AgentId')">
+                                        <i class="fa-solid fa-lock text-primary-100 cursor-pointer"></i>
                                     </div>
                                 }
-                            </td>
-                            <td class="p-[12px]">
-                                @customer.Referer
-                            </td>
-                            <td class="p-[12px]">
-                                @customer.Location
-                            </td>
-                            <td class="p-[12px]">
-                                <div class="w-max">
-                                    @customer.UpdatedDate
-                                </div>
-                            </td>
-                            <td class="p-[12px]">
-                                <div class="w-max">
-                                    @customer.CreatedDate
-                                </div>
-                            </td>
-                            <td class="p-[12px]">
-                                <div class="flex gap-[7px] justify-center text-[16px] ">
-                                    <div >
-                                       
-                                        <i class="las la-key text-[24px] text-[#C8B477] cursor-pointer" onclick="openResetPasswordModal('@customer.NickName','@customer.AgentId')"  data-modal-target="reset-passwordconfirmation" data-modal-toggle="reset-passwordconfirmation" ></i>
+                                else if (!string.IsNullOrEmpty(customer.Status) && customer.Status.ToUpper().Trim() == "B")
+                                {
+                                    <div onclick="UnblockEvent('@customer.AgentId')">
+                                        <i class="fa-solid fa-unlock text-primary-100 cursor-pointer"></i>
                                     </div>
+                                }
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
 
-                                    @if (!string.IsNullOrEmpty(customer.Status) && customer.Status.ToUpper().Trim() == "A")
-                                    {
-                                        <div onclick="BlockEvent('@customer.AgentId')">
-                                            <i class="fa-solid fa-lock text-primary-100 cursor-pointer"></i>
-                                        </div>
-                                    }
-                                    else if (!string.IsNullOrEmpty(customer.Status) && customer.Status.ToUpper().Trim() == "B")
-                                    {
-                                        <div onclick="UnblockEvent('@customer.AgentId')">
-                                            <i class="fa-solid fa-unlock text-primary-100 cursor-pointer"></i>
-                                        </div>
-                                    }
-                                </div>
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
+    </div>
 
+    <div class="pagination-club">
+        <div class="show-entry" id="Entries-Id">
         </div>
-
-        <div class="pagination-club">
-            <div class="show-entry" id="Entries-Id">
+        <div class="flex gap-[12px]">
+            <div class="btn btn-secondary-box-shadow" id="prev-btn">
+                @CRS.ADMIN.APPLICATION.Resources.Resource.Previous
             </div>
-            <div class="flex gap-[12px]">
-                <div class="btn btn-secondary-box-shadow" id="prev-btn">
-                    @CRS.ADMIN.APPLICATION.Resources.Resource.Previous
-                </div>
-                <div class="flex gap-[12px]" id="pagination-id">
-                </div>
-                <div class="btn btn-secondary-box-shadow" id="next-btn">
-                    @CRS.ADMIN.APPLICATION.Resources.Resource.Next
-                </div>
+            <div class="flex gap-[12px]" id="pagination-id">
+            </div>
+            <div class="btn btn-secondary-box-shadow" id="next-btn">
+                @CRS.ADMIN.APPLICATION.Resources.Resource.Next
             </div>
         </div>
     </div>
 </div>
+@*</div>*@

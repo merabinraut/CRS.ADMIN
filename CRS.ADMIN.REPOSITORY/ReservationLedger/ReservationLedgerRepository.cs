@@ -18,7 +18,7 @@ namespace CRS.ADMIN.REPOSITORY.ReservationLedger
         public List<ReservationLedgerCommon> GetReservationLedgerList(PaginationFilterCommon Request, string ClubId = "", string Date = "")
         {
             string sp_name = "EXEC sproc_superadmin_getreservationledgerlist @Flag='grll'";
-            sp_name += !string.IsNullOrEmpty(Request.SearchFilter) ? ",@SearchFilter=" + _dao.FilterString(Request.SearchFilter) : "";
+            sp_name += !string.IsNullOrEmpty(Request.SearchFilter) ? ",@SearchFilter=N" + _dao.FilterString(Request.SearchFilter) : "";
             sp_name += !string.IsNullOrEmpty(ClubId) ? ",@ClubId=" + _dao.FilterString(ClubId) : "";
             sp_name += !string.IsNullOrEmpty(Date) ? ",@Date=" + _dao.FilterString(Date) : "";
             sp_name += !string.IsNullOrEmpty(Request.FromDate) ? ",@FromDate=" + _dao.FilterString(Request.FromDate) : null;
@@ -32,7 +32,7 @@ namespace CRS.ADMIN.REPOSITORY.ReservationLedger
         public List<ReservationLedgerDetailCommon> GetReservationLedgerDetail(PaginationFilterCommon Request, string ClubId, string Date)
         {
             string sp_name = "EXEC sproc_superadmin_getreservationledgerlist @Flag='grld'";
-            sp_name += !string.IsNullOrEmpty(Request.SearchFilter) ? ",@SearchFilter=" + _dao.FilterString(Request.SearchFilter) : "";
+            sp_name += !string.IsNullOrEmpty(Request.SearchFilter) ? ",@SearchFilter=N" + _dao.FilterString(Request.SearchFilter) : "";
             sp_name += !string.IsNullOrEmpty(ClubId) ? ",@ClubId=" + _dao.FilterString(ClubId) : "";
             sp_name += !string.IsNullOrEmpty(Date) ? ",@Date=" + _dao.FilterString(Date) : "";
             sp_name += !string.IsNullOrEmpty(Request.FromDate) ? ",@FromDate=" + _dao.FilterString(Request.FromDate) : null;

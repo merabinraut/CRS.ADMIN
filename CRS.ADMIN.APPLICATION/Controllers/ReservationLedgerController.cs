@@ -93,6 +93,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             ViewBag.ToDate = ToDate;
             ViewBag.StartIndex = StartIndex;
             ViewBag.PageSize = PageSize;
+            ViewBag.Date = Date;
             ViewBag.TotalData = dbResponse != null && dbResponse.Any() ? dbResponse[0].TotalRecords : 0;
             return View(Response);
         }

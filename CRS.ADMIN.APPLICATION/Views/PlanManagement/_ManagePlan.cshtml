@@ -31,9 +31,9 @@
                 @Html.HiddenFor(model => model.PlanImage2)
             }
             @*if (!string.IsNullOrEmpty(Model.IsStrikeOut))
-            {
-                @Html.HiddenFor(model => model.IsStrikeOut)
-            }*@
+                {
+                    @Html.HiddenFor(model => model.IsStrikeOut)
+                }*@
             <div class="p-[24px]">
                 <div class=" py-4 grid gap-5">
                     <div class="input-field-common">
@@ -193,14 +193,14 @@
                                     {
                                         <div class="flex items-center gap-1">
                                             <input style="padding:0" class="rounded-0" type="checkbox" id="chkShowInput" onclick="toggleInputField()" name="IsStrikeOut" checked />
-                                            Strike Out
+                                            @CRS.ADMIN.APPLICATION.Resources.Resource.Strike_Out
                                         </div>
                                     }
                                     else
                                     {
                                         <div class="flex items-center gap-1">
                                             <input style="padding:0" class="rounded-0" type="checkbox" id="chkShowInput" onclick="toggleInputField()" name="IsStrikeOut" />
-                                            Strike Out
+                                            @CRS.ADMIN.APPLICATION.Resources.Resource.Strike_Out
                                         </div>
                                     }
                                 }
@@ -208,7 +208,7 @@
                                 {
                                     <div class="flex items-center gap-1">
                                         <input style="padding:0" class="rounded-0" type="checkbox" id="chkShowInput" onclick="toggleInputField()" name="IsStrikeOut" />
-                                        Strike Out
+                                        @CRS.ADMIN.APPLICATION.Resources.Resource.Strike_Out
                                     </div>
                                 }
                             </label>
@@ -226,7 +226,7 @@
                             {
                                 <div class="input-field-common" id="txtInputField" style="display: block;">
                                     <label class="block mb-[12px] text-sm font-medium text-secondary-100">
-                                        Strike Price
+                                        @CRS.ADMIN.APPLICATION.Resources.Resource.Offer_Price
                                     </label>
                                     @Html.TextBoxFor(model => model.StrikePrice, new { @class = "w-full rounded-[4px]", @placeholder = "0", @style = "border-radius:4px !important", @onkeypress = "return isNumber(event)", autocomplete = "off", @maxLength = "7" })
 
@@ -237,7 +237,7 @@
                             {
                                 <div class="input-field-common" id="txtInputField" style="display: none;">
                                     <label class="block mb-[12px] text-sm font-medium text-secondary-100">
-                                        Strike Price
+                                        @CRS.ADMIN.APPLICATION.Resources.Resource.Offer_Price
                                     </label>
                                     @Html.TextBoxFor(model => model.StrikePrice, new { @class = "w-full rounded-[4px]", @placeholder = "0", @style = "border-radius:4px !important", @onkeypress = "return isNumber(event)", autocomplete = "off", @maxLength = "7" })
 
@@ -249,7 +249,7 @@
                         {
                             <div class="input-field-common" id="txtInputField" style="display: none;">
                                 <label class="block mb-[12px] text-sm font-medium text-secondary-100">
-                                    Strike Price
+                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Offer_Price
                                 </label>
                                 @Html.TextBoxFor(model => model.StrikePrice, new { @class = "w-full rounded-[4px]", @placeholder = "0", @style = "border-radius:4px !important", @onkeypress = "return isNumber(event)", autocomplete = "off", @maxLength = "7" })
 
@@ -263,7 +263,7 @@
                             @CRS.ADMIN.APPLICATION.Resources.Resource.Liquor
                         </label>
                         <select id="large" name="Liquor" class=" default_select select-common block w-full "
-                                style="width: 100%;" >
+                                style="width: 100%;">
                             @foreach (var item in ViewBag.LiquorList as IEnumerable<SelectListItem>)
                             {
                                 var selectedId = Model.Liquor as string;
@@ -288,7 +288,7 @@
                             @CRS.ADMIN.APPLICATION.Resources.Resource.Nomination
                         </label>
                         <select id="large" name="Nomination" class=" default_select select-common block w-full "
-                                style="width: 100%;" >
+                                style="width: 100%;">
                             @for (int i = 1; i <= 10; i++)
                             {
                                 var selectedId = Model.Nomination as string;
@@ -314,7 +314,7 @@
                             @CRS.ADMIN.APPLICATION.Resources.Resource.NoOfPeople
                         </label>
                         <select name="NoOfPeople" class=" default_select select-common block w-full "
-                                style="width: 100%;" >
+                                style="width: 100%;">
                             @for (int i = 1; i <= 10; i++)
                             {
                                 var selectedId = Model.NoOfPeople;

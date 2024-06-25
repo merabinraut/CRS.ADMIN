@@ -1537,6 +1537,10 @@
     <value>十月</value>
     <comment>Dashboard</comment>
   </data>
+  <data name="Offer Price" xml:space="preserve">
+    <value>特割価格</value>
+    <comment>Plan Management</comment>
+  </data>
   <data name="On Arrival" xml:space="preserve">
     <value>到着すると</value>
     <comment>Dashboard</comment>
@@ -2175,6 +2179,10 @@
   <data name="Street" xml:space="preserve">
     <value>町</value>
     <comment>ClubManagement</comment>
+  </data>
+  <data name="Strike Out" xml:space="preserve">
+    <value>キャンペーン値段</value>
+    <comment>Plan Management</comment>
   </data>
   <data name="Stripe" xml:space="preserve">
     <value>ストライプ</value>

@@ -3292,6 +3292,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Offer Price.
+        /// </summary>
+        public static string Offer_Price {
+            get {
+                return ResourceManager.GetString("Offer Price", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to On Arrival.
         /// </summary>
         public static string On_Arrival {
@@ -4755,6 +4764,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         public static string Street {
             get {
                 return ResourceManager.GetString("Street", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Strike Out.
+        /// </summary>
+        public static string Strike_Out {
+            get {
+                return ResourceManager.GetString("Strike Out", resourceCulture);
             }
         }
         

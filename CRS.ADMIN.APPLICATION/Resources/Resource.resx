@@ -1533,6 +1533,10 @@
     <value>Oct</value>
     <comment>Dashboard</comment>
   </data>
+  <data name="Offer Price" xml:space="preserve">
+    <value>Offer Price</value>
+    <comment>Plan Management</comment>
+  </data>
   <data name="On Arrival" xml:space="preserve">
     <value>On Arrival</value>
     <comment>Dashboard</comment>
@@ -2168,6 +2172,10 @@
   <data name="Street" xml:space="preserve">
     <value>Street</value>
     <comment>ClubManagement</comment>
+  </data>
+  <data name="Strike Out" xml:space="preserve">
+    <value>Strike Out</value>
+    <comment>Plan Management</comment>
   </data>
   <data name="String" xml:space="preserve">
     <value />
