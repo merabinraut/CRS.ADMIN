@@ -96,5 +96,37 @@ namespace CRS.ADMIN.REPOSITORY.PromotionManagement
             }
             return promotionManagements;
         }
+
+        public List<AdvertisementManagementCommon> GetAdvertisementImageLists(PaginationFilterCommon Request)
+        {
+            var advertisementManagement = new List<AdvertisementManagementCommon>();
+            var sql = "Exec sproc_advertisement_management @Flag='s'";
+            sql += !string.IsNullOrEmpty(Request.SearchFilter) ? ",@SearchFilter=N" + _dao.FilterString(Request.SearchFilter) : null;
+            sql += ",@Skip=" + Request.Skip;
+            sql += ",@Take=" + Request.Take;
+            var dt = _dao.ExecuteDataTable(sql);
+            if (null != dt)
+            {
+                foreach (DataRow item in dt.Rows)
+                {
+                    var common = new AdvertisementManagementCommon()
+                    {
+                        Id = item["Sno"].ToString(),
+                        Title = item["Title"].ToString(),
+                        Description = item["ImgDescription"].ToString(),
+                        Link = item["Link"].ToString(),
+                        DisplayOrder = item["DisplayOrder"].ToString(),
+                        ImagePath = item["ImgPath"].ToString(),
+                        IsDeleted = item["IsDeleted"].ToString(),
+                        ActionUser = item["ActionUser"].ToString(),
+                        ActionDate = !string.IsNullOrEmpty(item["ActionDate"].ToString()) ? DateTime.Parse(item["ActionDate"].ToString()).ToString("yyyy'年'MM'月'dd'日' HH:mm:ss") : item["ActionDate"].ToString(),
+                        TotalRecords = Convert.ToInt32(_dao.ParseColumnValue(item, "TotalRecords").ToString()),
+                        SNO = Convert.ToInt32(_dao.ParseColumnValue(item, "SN").ToString())
+                    };
+                    advertisementManagement.Add(common);
+                }
+            }
+            return advertisementManagement;
+        }
     }
 }

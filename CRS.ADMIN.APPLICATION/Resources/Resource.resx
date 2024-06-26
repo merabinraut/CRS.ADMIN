@@ -171,6 +171,10 @@
     <value>Admin Remarks</value>
     <comment>Reservation Ledger</comment>
   </data>
+  <data name="Advetisements" xml:space="preserve">
+    <value>Advetisements</value>
+    <comment>Promotional Management</comment>
+  </data>
   <data name="Affiliate" xml:space="preserve">
     <value>Affiliate</value>
     <comment>Dashboard</comment>
@@ -380,6 +384,10 @@
   <data name="Banner" xml:space="preserve">
     <value>Banner</value>
     <comment>HostGallaryManagement</comment>
+  </data>
+  <data name="Banners" xml:space="preserve">
+    <value>Banners</value>
+    <comment>Promotional Management</comment>
   </data>
   <data name="Basic" xml:space="preserve">
     <value>Basic</value>
@@ -953,6 +961,10 @@
     <value>Gallery/Banner</value>
     <comment>Gallery Management</comment>
   </data>
+  <data name="GalleryBanner" xml:space="preserve">
+    <value>Gallery/Banner</value>
+    <comment>Promotional Management</comment>
+  </data>
   <data name="GallerySupoortMsg" xml:space="preserve">
     <value>Manage your gallery.</value>
     <comment>Gallery Management</comment>
@@ -1199,6 +1211,10 @@
     <value>Line</value>
     <comment>Affiliate Management</comment>
   </data>
+  <data name="Link" xml:space="preserve">
+    <value>Link</value>
+    <comment>Promotional Management</comment>
+  </data>
   <data name="Liquor" xml:space="preserve">
     <value>Liquor</value>
     <comment>Plan Management</comment>
@@ -1256,6 +1272,10 @@
   </data>
   <data name="Manage" xml:space="preserve">
     <value>Manage</value>
+  </data>
+  <data name="Manage Advertisement" xml:space="preserve">
+    <value>Manage Advertisement</value>
+    <comment>Promotional Management</comment>
   </data>
   <data name="Manage Club Events" xml:space="preserve">
     <value>Manage Club Events</value>
@@ -1344,6 +1364,10 @@
   <data name="Manage your profile security" xml:space="preserve">
     <value>Manage your profile security</value>
     <comment>Security</comment>
+  </data>
+  <data name="Manage your promotion details." xml:space="preserve">
+    <value>Manage your promotion details.</value>
+    <comment>Promotional Management</comment>
   </data>
   <data name="ManageAffiliate" xml:space="preserve">
     <value>Manage Affiliate</value>

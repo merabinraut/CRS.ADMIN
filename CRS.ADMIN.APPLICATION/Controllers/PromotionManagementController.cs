@@ -19,7 +19,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
     {
         private readonly IPromotionManagementBusiness _business;
         public PromotionManagementController(IPromotionManagementBusiness business) => this._business = business;
-        public ActionResult GetPromotionalImages(PromotionManagementCommonModel Request, int StartIndex = 0, int PageSize = 10)
+        public ActionResult GetPromotionalImages(PromotionManagementCommonModel Request, int StartIndex = 0, int PageSize = 10,int StartIndex2 = 0, int PageSize2 = 10)
         {
             Session["CurrentUrl"] = "/PromotionManagement/GetPromotionalImages";
             PromotionManagementCommonModel ResponseModel = new PromotionManagementCommonModel();
@@ -28,9 +28,24 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 Skip = StartIndex,
                 Take = PageSize,
                 SearchFilter = !string.IsNullOrEmpty(Request.SearchFilter) ? Request.SearchFilter : null
+            };            
+            var promotionalImages = _business.GetPromotionalImageLists(dbRequest);         
+            ResponseModel.PromotionManagementListModel = promotionalImages.MapObjects<PromotionManagementListModel>();            
+            foreach (var item in ResponseModel.PromotionManagementListModel)
+            {
+                item.Id = item.Id?.EncryptParameter();
+                item.IsDeleted = item.IsDeleted.Trim().ToUpper() == "FALSE" ? "A" : "B";
+                item.ImagePath = ImageHelper.ProcessedImage(item.ImagePath);
+            }
+
+            PaginationFilterCommon dbRequestadvertise = new PaginationFilterCommon()
+            {
+                Skip = StartIndex2,
+                Take = PageSize2,
+                SearchFilter = !string.IsNullOrEmpty(Request.SearchFilter2) ? Request.SearchFilter2 : null
             };
-            var promotionalImages = _business.GetPromotionalImageLists(dbRequest);
-            ResponseModel.PromotionManagementListModel = promotionalImages.MapObjects<PromotionManagementListModel>();
+            var advertisementImages = _business.GetAdvertisementImageLists(dbRequestadvertise);
+            ResponseModel.AdvertisementManagementListModel = advertisementImages.MapObjects<AdvertisementManagementListModel>();
             foreach (var item in ResponseModel.PromotionManagementListModel)
             {
                 item.Id = item.Id?.EncryptParameter();
@@ -39,6 +54,8 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             }
             string RenderId = "";
             if (TempData.ContainsKey("PromotionManagementModel")) ResponseModel.PromotionManagementModel = TempData["PromotionManagementModel"] as PromotionManagementModel;
+            if (TempData.ContainsKey("RenderId")) RenderId = TempData["RenderId"].ToString();
+            if (TempData.ContainsKey("AdvertisementModel")) ResponseModel.AdvertisementManagementModel = TempData["AdvertisementModel"] as AdvertisementManagementModel;
             if (TempData.ContainsKey("RenderId")) RenderId = TempData["RenderId"].ToString();
             ViewBag.PopUpRenderValue = !string.IsNullOrEmpty(RenderId) ? RenderId : null;
             ViewBag.StartIndex = StartIndex;

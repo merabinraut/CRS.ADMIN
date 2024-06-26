@@ -187,6 +187,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Advetisements.
+        /// </summary>
+        public static string Advetisements {
+            get {
+                return ResourceManager.GetString("Advetisements", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Affiliate.
         /// </summary>
         public static string Affiliate {
@@ -660,6 +669,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         public static string Banner {
             get {
                 return ResourceManager.GetString("Banner", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Banners.
+        /// </summary>
+        public static string Banners {
+            get {
+                return ResourceManager.GetString("Banners", resourceCulture);
             }
         }
         
@@ -1969,6 +1987,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Gallery/Banner.
+        /// </summary>
+        public static string GalleryBanner {
+            get {
+                return ResourceManager.GetString("GalleryBanner", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Manage your gallery..
         /// </summary>
         public static string GallerySupoortMsg {
@@ -2527,6 +2554,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Link.
+        /// </summary>
+        public static string Link {
+            get {
+                return ResourceManager.GetString("Link", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Liquor.
         /// </summary>
         public static string Liquor {
@@ -2658,6 +2694,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         public static string Manage {
             get {
                 return ResourceManager.GetString("Manage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Manage Advertisement.
+        /// </summary>
+        public static string Manage_Advertisement {
+            get {
+                return ResourceManager.GetString("Manage Advertisement", resourceCulture);
             }
         }
         
@@ -2856,6 +2901,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         public static string Manage_your_profile_security {
             get {
                 return ResourceManager.GetString("Manage your profile security", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Manage your promotion details..
+        /// </summary>
+        public static string Manage_your_promotion_details_ {
+            get {
+                return ResourceManager.GetString("Manage your promotion details.", resourceCulture);
             }
         }
         

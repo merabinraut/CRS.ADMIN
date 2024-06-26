@@ -171,6 +171,10 @@
     <value>アドミン備考</value>
     <comment>Reservation Ledger</comment>
   </data>
+  <data name="Advetisements" xml:space="preserve">
+    <value>広告</value>
+    <comment>Promotional Management</comment>
+  </data>
   <data name="Affiliate" xml:space="preserve">
     <value>アフィリエイト</value>
     <comment>Dashboard</comment>
@@ -380,6 +384,10 @@
   <data name="Banner" xml:space="preserve">
     <value>バナー1</value>
     <comment>HostGallaryManagement</comment>
+  </data>
+  <data name="Banners" xml:space="preserve">
+    <value>バナー</value>
+    <comment>Promotional Management</comment>
   </data>
   <data name="Basic" xml:space="preserve">
     <value>基本</value>
@@ -953,6 +961,10 @@
     <value>画像</value>
     <comment>Gallery Management</comment>
   </data>
+  <data name="GalleryBanner" xml:space="preserve">
+    <value>写真</value>
+    <comment>Promotional Management</comment>
+  </data>
   <data name="GallerySupoortMsg" xml:space="preserve">
     <value>ホストの写真を管理する</value>
     <comment>Gallery Management</comment>
@@ -1200,6 +1212,10 @@
     <value>ライン</value>
     <comment>Affiliate Management</comment>
   </data>
+  <data name="Link" xml:space="preserve">
+    <value>リンク</value>
+    <comment>Promotional Management</comment>
+  </data>
   <data name="Liquor" xml:space="preserve">
     <value>お酒</value>
     <comment>Plan Management</comment>
@@ -1257,6 +1273,10 @@
   </data>
   <data name="Manage" xml:space="preserve">
     <value>管理する</value>
+  </data>
+  <data name="Manage Advertisement" xml:space="preserve">
+    <value>広告管理</value>
+    <comment>Promotional Management</comment>
   </data>
   <data name="Manage Club Events" xml:space="preserve">
     <value>クラブイベント管理</value>
@@ -1345,6 +1365,10 @@
   <data name="Manage your profile security" xml:space="preserve">
     <value>プロファイルのセキュリティを管理する</value>
     <comment>Security</comment>
+  </data>
+  <data name="Manage your promotion details." xml:space="preserve">
+    <value>プロモーションの詳細及び写真を管理します。</value>
+    <comment>Promotional Management</comment>
   </data>
   <data name="ManageAffiliate" xml:space="preserve">
     <value>アフィリエイト管理</value>

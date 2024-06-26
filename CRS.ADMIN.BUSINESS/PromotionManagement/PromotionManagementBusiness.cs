@@ -35,5 +35,9 @@ namespace CRS.ADMIN.BUSINESS.PromotionManagement
         {
             return _repo.GetPromotionalImageLists(Request);
         }
+        public List<AdvertisementManagementCommon> GetAdvertisementImageLists(PaginationFilterCommon Request)
+        {
+            return _repo.GetAdvertisementImageLists(Request);
+        }
     }
 }
