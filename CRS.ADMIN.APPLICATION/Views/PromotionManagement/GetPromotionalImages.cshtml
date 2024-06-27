@@ -3,6 +3,7 @@
     ViewBag.Title = "Promotion Management";
     Layout = "~/Views/Shared/_Layout.cshtml";
     var _PromotionManagementModel = Model.PromotionManagementModel as CRS.ADMIN.APPLICATION.Models.PromotionManagement.PromotionManagementModel;
+    var _AdvertisementModel = Model.AdvertisementManagementModel as CRS.ADMIN.APPLICATION.Models.PromotionManagement.AdvertisementManagementModel;
 
 }
 <style>
@@ -227,6 +228,8 @@
 </div>
 
 @Html.Partial("_ManagePormotion", _PromotionManagementModel)
+
+@Html.Partial("_ManageAdvertisementPartialView", _AdvertisementModel)
 <!--Manage Location-->
 @section scripts
 {
@@ -237,10 +240,35 @@
                 var element = document.getElementById('add-new-host-location');
                 element.classList.remove('translate-x-full');
             }
-        });
+            if (PopUpRenderValue != null && PopUpRenderValue != "" && PopUpRenderValue == "ManageAdvertisement") {
+                var element = document.getElementById('add-new-advertisement');
+                element.classList.remove('translate-x-full');
+            }
 
+        });
+        function addQueryParam2(url, paramName, paramValue, paramName2, paramValue2) {
+            // Add the first query parameter
+            if (paramValue != null && paramValue != "") {
+                // Check if it's the first parameter, if so, use "?" else use "&"
+                url += url.includes('?') ? `&${paramName}=${paramValue}` : `?${paramName}=${paramValue}`;
+            }
+
+            // Add the second query parameter
+            if (paramValue2 != null && paramValue2 != "") {
+                url += url.includes('?') ? `&${paramName2}=${paramValue2}` : `?${paramName2}=${paramValue2}`;
+            }
+
+            return url;
+        }
         function ManagePormotion(i) {
             window.location.href = '/PromotionManagement/ManagePromotionalImage?Id=' + i;
+        }
+        function ManageAdvertisement(i) {
+            const page_size = @ViewBag.PageSize2;
+            const total_data = @ViewBag.TotalData2;
+            const start_index_val = @ViewBag.StartIndex2;
+            var searchfilter = $("#default-search2").val();
+            window.location.href = '/PromotionManagement/ManageAdvertisementImage?Id=' +i+ '&SearchFilter2=' + searchfilter + '&StartIndex2=' + start_index_val + '&PageSize2=' + page_size;
         }
 
         function ManageStatus(i) {
@@ -268,24 +296,42 @@
                 event.preventDefault();
                 window.location.reload();
             });
+        document.getElementById('CloseIdadv').addEventListener('click',
+            function (event) {
+                event.preventDefault();
+                window.location.reload();
+            });
+        document.getElementById('CancelIdadv').addEventListener('click',
+            function (event) {
+                event.preventDefault();
+                window.location.reload();
+            });
     </script>
     <script>
-     document.addEventListener('DOMContentLoaded', function () {
-             const page_size = @ViewBag.PageSize;
-             const total_data = @ViewBag.TotalData;
-             const start_index_val = @ViewBag.StartIndex;
-             let URL = "/PromotionManagement/GetPromotionalImages";
-             let search_filter = $('#default-search').val();
-             URL = addQueryParam(URL, 'SearchFilter', search_filter);
-           LoadPagination(page_size, total_data, start_index_val, URL);
-
+        document.addEventListener('DOMContentLoaded', function () {
+         if ($("#ListType").val().toLowerCase() == "a") {
+          changeTab('advertisement', 'tab2Link')
           const page_size = @ViewBag.PageSize2;
           const total_data = @ViewBag.TotalData2;
           const start_index_val = @ViewBag.StartIndex2;
           let URL = "/PromotionManagement/GetPromotionalImages";
-          let search_filter = $('#default-search').val();
-          URL = addQueryParam(URL, 'SearchFilter', search_filter);
+          let search_filter = $('#default-search2').val();
+          URL = addQueryParam2(URL, 'SearchFilter2', search_filter);
           LoadPagination(page_size, total_data, start_index_val, URL);
+        }
+       else {
+          changeTab('banner', 'tab1Link')
+          const page_size = @ViewBag.PageSize;
+          const total_data = @ViewBag.TotalData;
+          const start_index_val = @ViewBag.StartIndex;
+          let URL = "/PromotionManagement/GetPromotionalImages";
+          let search_filter = $('#default-search').val();
+          URL = addQueryParam2(URL, 'SearchFilter', search_filter);
+          LoadPagination(page_size, total_data, start_index_val, URL);
+
+        }
+
+
          });
     </script>
 
@@ -320,6 +366,13 @@
                 document.getElementById('tab1Link').style.borderBottom = '#D75A8B 2px solid';
                 document.getElementById('tab2Link').style.borderBottom = '';
                 document.getElementById('tab2Link').style.color = '';
+               const page_size = @ViewBag.PageSize;
+               const total_data = @ViewBag.TotalData;
+               const start_index_val = @ViewBag.StartIndex;
+               let URL = "/PromotionManagement/GetPromotionalImages";
+               let search_filter = $('#default-search').val();
+               URL = addQueryParam2(URL, 'SearchFilter', search_filter);
+               LoadPagination(page_size, total_data, start_index_val, URL);
 
 
 
@@ -328,7 +381,14 @@
                 document.getElementById('tab1Link').style.borderBottom = '';
                 document.getElementById('tab2Link').style.color = '#D75A8B';
                 document.getElementById('tab2Link').style.borderBottom = '#D75A8B 2px solid';
-
+                $("#ListType").val("a");
+                const page_size = @ViewBag.PageSize2;
+                const total_data = @ViewBag.TotalData2;
+                const start_index_val = @ViewBag.StartIndex2;
+                let URL = "/PromotionManagement/GetPromotionalImages";
+                let search_filter = $('#default-search2').val();
+                URL = addQueryParam2(URL, 'SearchFilter2', search_filter);
+                LoadPagination(page_size, total_data, start_index_val, URL);
 
             }
         }

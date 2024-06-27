@@ -7,6 +7,7 @@
 </div>
 <div class="flex justify-between px-[12px] py-[16px]">
     <form action="/PromotionManagement/GetPromotionalImages" method="get">
+        @Html.HiddenFor(model => model.ListType)
         <div class="relative input-search-wrapper">
             <div class="absolute inset-y-0 left-0 flex items-center pl-[16px] pointer-events-none">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21" fill="none">
@@ -16,7 +17,7 @@
                 </svg>
             </div>
             <input type="search"
-                   id="default-search"
+                   id="default-search2"
                    class="input-search block w-full "
                    placeholder="@CRS.ADMIN.APPLICATION.Resources.Resource.Search"
                    value="@Model.SearchFilter2"
@@ -73,7 +74,7 @@
                 </th>
                 <th scope="col" class="p-[12px]">
                     <div class="flex">
-                        Link
+                        @CRS.ADMIN.APPLICATION.Resources.Resource.Link
                         <div class="relative pl-[5px]">
                             <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
                             <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
@@ -158,22 +159,12 @@
 
                         <td class="p-[12px]">
                             <div class="flex gap-[7px] justify-center text-[20px] ">
-                                @if (!string.IsNullOrEmpty(item.IsDeleted) && item.IsDeleted.ToLower() == "a")
-                                {
-                                    <div onclick="ManagePormotion('@item.Id');">
+                               
+                                    <div onclick="ManageAdvertisement('@item.Id');">
                                         <i class="las la-edit text-[#989898] cursor-pointer"></i>
                                     </div>
-                                    <div onclick="ManageStatus('@item.Id')">
-                                        @*<i class="fa-solid fa-lock"></i>*@
-                                        <i class="las la-lock text-[#CB3F3F] cursor-pointer"></i>
-                                    </div>
-                                }
-                                else
-                                {
-                                    <div onclick="ManageStatus('@item.Id')">
-                                        <i class="las la-unlock text-[#CB3F3F] cursor-pointer"></i>
-                                    </div>
-                                }
+                                    
+                                
                             </div>
                         </td>
                     </tr>

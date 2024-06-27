@@ -27,12 +27,12 @@
                 <div>
                     @CRS.ADMIN.APPLICATION.Resources.Resource.Manage_Advertisement
                 </div>
-                <button type="button" class="text-[20px]" id="CloseId">
+                <button type="button" class="text-[20px]" id="CloseIdadv">
                     <i class="las la-window-close text-white"></i>
                 </button>
             </div>
         </div>
-        @using (Html.BeginForm("ManagePromotionalImage", "PromotionManagement", FormMethod.Post, new { @id = "ManageAdvertisementImageForm", enctype = "multipart/form-data" }))
+        @using (Html.BeginForm("ManageAdvertisementImage", "PromotionManagement", FormMethod.Post, new { @id = "ManageAdvertisementImageForm", enctype = "multipart/form-data" }))
         {
             @Html.AntiForgeryToken()
             if (!string.IsNullOrEmpty(Model.Id))
@@ -42,6 +42,10 @@
             if (!string.IsNullOrEmpty(Model.ImagePath))
             {
                 @Html.HiddenFor(model => model.ImagePath)
+            }
+            if (!string.IsNullOrEmpty(Model.DisplayOrder))
+            {
+                @Html.HiddenFor(model => model.DisplayOrder)
             }
             <div class="p-[24px]">
                 <div class="pb-[16px] grid gap-4">
@@ -69,31 +73,45 @@
                             @CRS.ADMIN.APPLICATION.Resources.Resource.GalleryBanner
                         </label>
                         <div class="file-upload-common bg-gray-gallery">
-                            <label for="file_input_logo" class="custom-file-upload text-ellipsis-customer w-[128px] flex-none cursor-pointer">
+                            <label for="file_input_logo_adv" class="custom-file-upload text-ellipsis-customer w-[128px] flex-none cursor-pointer">
                                 <span>
                                     @CRS.ADMIN.APPLICATION.Resources.Resource.Choose_Images
                                 </span>
                             </label>
-                            <input id="file_input_logo" class="file-input" name="ImagePathFile" type="file" style="display:none;">
-                            <p id="file_name_logo" class="file-name w-max h-[23px] overflow-hidden pl-2 text-xs text-[#686868] leading-[25px]">
-                                @CRS.ADMIN.APPLICATION.Resources.Resource.No_File_Choosen
+                            <input id="file_input_logo_adv" class="file-input" name="ImagePathFile" type="file" style="display:none;">
+                            <p id="file_name_logo_adv" class="file-name w-max h-[23px] overflow-hidden pl-2 text-xs text-[#686868] leading-[25px]">
+                                @if (string.IsNullOrEmpty(Model.ImagePath))
+                                {
+                                    @CRS.ADMIN.APPLICATION.Resources.Resource.No_File_Choosen
+                                }
+                                else
+                                {
+                                    string fileName = Path.GetFileName(Model.ImagePath);
+                                    @fileName
+                                }
                             </p>
                         </div>
 
                         <!-- Modal for cropping -->
-                        <div id="cropModal" class="hidden fixed inset-0 bg-gray-800 bg-opacity-75 flex items-center justify-center">
+                        <div id="cropModal_adv" class="hidden fixed inset-0 bg-gray-800 bg-opacity-75 flex items-center justify-center">
                             <div class="bg-white p-4 rounded-lg max-w-lg w-full max-h-[80vh] overflow-auto">
                                 <div class="mb-4">
-                                    <img id="imageToCrop" src="" alt="Image to crop" class="max-w-full">
+                                    <img id="imageToCrop_adv" src="" alt="Image to crop" class="max-w-full">
                                 </div>
                                 <div class="flex justify-end">
-                                    <button id="cropImageButton" class="bg-blue-500 text-white px-4 py-2 rounded-md">Crop</button>
-                                    <button id="cancelCropButton" class="ml-2 bg-gray-500 text-white px-4 py-2 rounded-md">Cancel</button>
+                                    <button id="cropImageButton_adv" class="bg-blue-500 text-white px-4 py-2 rounded-md">Crop</button>
+                                    <button id="cancelCropButton_adv" class="ml-2 bg-gray-500 text-white px-4 py-2 rounded-md">Cancel</button>
                                 </div>
                             </div>
                         </div>
                     </div>
 
+
+                    <div class="text-xs text-error mt-[8px]">
+                        @CRS.ADMIN.APPLICATION.Resources.Resource.Note:
+                        @CRS.ADMIN.APPLICATION.Resources.Resource.Image_should_be_in_HEIF_format
+                        @CRS.ADMIN.APPLICATION.Resources.Resource.and_Maximum_file_size_is_5_MB
+                    </div>
                     <div class="input-field-common">
                         <label class="block mb-[12px] text-sm font-medium text-secondary-100 ">
                             @CRS.ADMIN.APPLICATION.Resources.Resource.Link
@@ -103,15 +121,19 @@
                             @Html.ValidationMessageFor(m => m.Link)
                         </span>
                     </div>
-                    <div class="text-xs text-error mt-[8px]">
-                        @CRS.ADMIN.APPLICATION.Resources.Resource.Note:
-                        @CRS.ADMIN.APPLICATION.Resources.Resource.Image_should_be_in_HEIF_format
-                        @CRS.ADMIN.APPLICATION.Resources.Resource.and_Maximum_file_size_is_5_MB
+                    <div class="input-field-common">
+                        <label class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Display_Order
+                        </label>
+                        @Html.TextBoxFor(model => model.DisplayOrder, new { @class = "w-full rounded-[4px]", @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.Display_Order, @style = "border-radius:4px !important", autocomplete = "off", @maxLength = "50", @disabled = "disabled" })
+                        <span class="validationMessage">
+                            @Html.ValidationMessageFor(m => m.DisplayOrder)
+                        </span>
                     </div>
                 </div>
                 <div class="flex justify-end py-4">
                     <div class="flex gap-6">
-                        <button class="resetForm btn btn-gray-white h-[40px] rounded-[4px] px-8 text-sm" id="CancelId">
+                        <button class="resetForm btn btn-gray-white h-[40px] rounded-[4px] px-8 text-sm" id="CancelIdadv">
                             @CRS.ADMIN.APPLICATION.Resources.Resource.Cancel
                         </button>
                         <button class="resetForm btn btn-primary-default h-[40px] px-8 rounded-[4px]  text-sm leading-[10px]" id="saveData">
@@ -127,10 +149,10 @@
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         let cropper;
-        const modal = document.getElementById('cropModal');
-        const imageToCrop = document.getElementById('imageToCrop');
-        const fileInput = document.getElementById('file_input_logo');
-        const fileNameDisplay = document.getElementById('file_name_logo');
+        const modal = document.getElementById('cropModal_adv');
+        const imageToCrop = document.getElementById('imageToCrop_adv');
+        const fileInput = document.getElementById('file_input_logo_adv');
+        const fileNameDisplay = document.getElementById('file_name_logo_adv');
 
         fileInput.addEventListener('change', function (event) {
             const file = event.target.files[0];
@@ -156,7 +178,7 @@
             }
         });
 
-        document.getElementById('cropImageButton').addEventListener('click', function (event) {
+        document.getElementById('cropImageButton_adv').addEventListener('click', function (event) {
             event.preventDefault();
 
             if (cropper) {
@@ -190,10 +212,10 @@
             }
         });
 
-        document.getElementById('cancelCropButton').addEventListener('click', function () {
+        document.getElementById('cancelCropButton_adv').addEventListener('click', function () {
             modal.style.display = 'none';
-            $('#file_name_logo').val('');
-            $('#file_input_logo').val('');
+            $('#file_name_logo_adv').val('');
+            $('#file_input_logo_adv').val('');
             if (cropper) {
                 cropper.destroy();
                 cropper = null;

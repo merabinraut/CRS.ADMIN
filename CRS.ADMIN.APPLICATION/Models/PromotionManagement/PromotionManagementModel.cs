@@ -7,6 +7,7 @@ namespace CRS.ADMIN.APPLICATION.Models.PromotionManagement
     public class PromotionManagementCommonModel
     {
         public string SearchFilter { get; set; }
+        public string ListType { get; set; }
         public string SearchFilter2 { get; set; }
         public List<PromotionManagementListModel> PromotionManagementListModel { get; set; } = new List<PromotionManagementListModel>();
         public List<AdvertisementManagementListModel> AdvertisementManagementListModel { get; set; } = new List<AdvertisementManagementListModel>();
@@ -47,11 +48,16 @@ namespace CRS.ADMIN.APPLICATION.Models.PromotionManagement
     public class AdvertisementManagementModel
     {
         public string Id { get; set; }
+        [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Required")]
         public string Title { get; set; }
+        [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Required")]
         public string Description { get; set; }
+        //[Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Required")]
         public string ImagePath { get; set; }
         public string IsDeleted { get; set; }
+        [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Required")]
         public string Link { get; set; }
+        //[Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Required")]
         public string DisplayOrder { get; set; }
     }
 }

@@ -13,5 +13,8 @@ namespace CRS.ADMIN.REPOSITORY.PromotionManagement
         CommonDbResponse EditPromotionalImage(PromotionManagementCommon promotion);
         CommonDbResponse DeletePromotionalImage(PromotionManagementCommon promotion);
         List<AdvertisementManagementCommon> GetAdvertisementImageLists(PaginationFilterCommon Request);
+        AdvertisementDetailCommon GetAdvertisementImageById(string Id);
+        CommonDbResponse UpdateAdvertisementImage(AdvertisementDetailCommon promotion);
+
     }
 }

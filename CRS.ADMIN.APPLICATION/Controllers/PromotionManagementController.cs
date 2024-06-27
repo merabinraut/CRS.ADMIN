@@ -19,7 +19,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
     {
         private readonly IPromotionManagementBusiness _business;
         public PromotionManagementController(IPromotionManagementBusiness business) => this._business = business;
-        public ActionResult GetPromotionalImages(PromotionManagementCommonModel Request, int StartIndex = 0, int PageSize = 10,int StartIndex2 = 0, int PageSize2 = 10)
+        public ActionResult GetPromotionalImages(PromotionManagementCommonModel Request,  int StartIndex = 0, int PageSize = 10,int StartIndex2 = 0, int PageSize2 = 10)
         {
             Session["CurrentUrl"] = "/PromotionManagement/GetPromotionalImages";
             PromotionManagementCommonModel ResponseModel = new PromotionManagementCommonModel();
@@ -37,6 +37,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 item.IsDeleted = item.IsDeleted.Trim().ToUpper() == "FALSE" ? "A" : "B";
                 item.ImagePath = ImageHelper.ProcessedImage(item.ImagePath);
             }
+            if (TempData.ContainsKey("AdvertisementManagementModel")) ResponseModel = TempData["AdvertisementManagementModel"] as PromotionManagementCommonModel;
 
             PaginationFilterCommon dbRequestadvertise = new PaginationFilterCommon()
             {
@@ -46,7 +47,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             };
             var advertisementImages = _business.GetAdvertisementImageLists(dbRequestadvertise);
             ResponseModel.AdvertisementManagementListModel = advertisementImages.MapObjects<AdvertisementManagementListModel>();
-            foreach (var item in ResponseModel.PromotionManagementListModel)
+            foreach (var item in ResponseModel.AdvertisementManagementListModel)
             {
                 item.Id = item.Id?.EncryptParameter();
                 item.IsDeleted = item.IsDeleted.Trim().ToUpper() == "FALSE" ? "A" : "B";
@@ -60,8 +61,12 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             ViewBag.PopUpRenderValue = !string.IsNullOrEmpty(RenderId) ? RenderId : null;
             ViewBag.StartIndex = StartIndex;
             ViewBag.PageSize = PageSize;
+            ViewBag.StartIndex2 = StartIndex2;
+            ViewBag.PageSize2 = PageSize2;
             ViewBag.TotalData = promotionalImages != null && promotionalImages.Any() ? promotionalImages[0].TotalRecords : 0;
+            ViewBag.TotalData2 = advertisementImages != null && advertisementImages.Any() ? advertisementImages[0].TotalRecords : 0;
             ResponseModel.SearchFilter = !string.IsNullOrEmpty(Request.SearchFilter) ? Request.SearchFilter : null;
+            ResponseModel.SearchFilter2 = !string.IsNullOrEmpty(Request.SearchFilter2) ? Request.SearchFilter2 : null;
             return View(ResponseModel);
         }
         [HttpGet]
@@ -91,10 +96,10 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             System.IO.Stream stream = ImagePathFile.InputStream;
 
             System.Drawing.Image img = System.Drawing.Image.FromStream(stream);
-            int width = img.Width;
-            int height = img.Height;
-            int size=img.Size.Width;
-            int sizeh=img.Size.Height;
+            //int width = img.Width;
+            //int height = img.Height;
+            //int size=img.Size.Width;
+            //int sizeh=img.Size.Height;
             if (!ModelState.IsValid)
             {
                 this.AddNotificationMessage(new NotificationModel()
@@ -225,5 +230,138 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             }
             return Json(dbResponse.Message);
         }
+
+        #region Advertisement Image
+
+        [HttpGet]
+        public ActionResult ManageAdvertisementImage(string Id,string SearchFilter2, int StartIndex2 = 0, int PageSize2 = 10)
+        {
+            var i = !string.IsNullOrEmpty(Id) ? Id.DecryptParameter() : null;
+            var models = new PromotionManagementCommonModel
+            {
+                SearchFilter2 = SearchFilter2,
+                ListType = "a"
+            };
+            
+            if (string.IsNullOrEmpty(i))
+            {
+                this.AddNotificationMessage(new NotificationModel()
+                {
+                    NotificationType = NotificationMessage.INFORMATION,
+                    Message = "Invalid details",
+                    Title = NotificationMessage.INFORMATION.ToString(),
+                });
+                return RedirectToAction("GetPromotionalImages", "PromotionManagement",new { StartIndex2 = StartIndex2 ,PageSize2 = PageSize2 });
+            }
+            var dbResponse = _business.GetAdvertisementImageById(i);
+            var model = dbResponse.MapObject<AdvertisementManagementModel>();
+            model.Id = model.Id.EncryptParameter();
+            TempData["AdvertisementModel"] = model;
+            TempData["RenderId"] = "ManageAdvertisement";
+            TempData["AdvertisementManagementModel"] = models;
+            return RedirectToAction("GetPromotionalImages", "PromotionManagement", new {  StartIndex2 = StartIndex2, PageSize2 = PageSize2 });
+        }
+
+        [HttpPost, ValidateAntiForgeryToken]
+        public async Task<ActionResult> ManageAdvertisementImage(AdvertisementManagementModel promotionManagementModel, HttpPostedFileBase ImagePathFile)
+        {
+            //System.IO.Stream stream = ImagePathFile.InputStream;
+
+            //System.Drawing.Image img = System.Drawing.Image.FromStream(stream);
+            //int width = img.Width;
+            //int height = img.Height;
+            //int size = img.Size.Width;
+            //int sizeh = img.Size.Height;
+
+            if (!ModelState.IsValid)
+            {
+                this.AddNotificationMessage(new NotificationModel()
+                {
+                    NotificationType = NotificationMessage.INFORMATION,
+                    Message = "Please fill all required fields",
+                    Title = NotificationMessage.INFORMATION.ToString(),
+                });
+                TempData["AdvertisementModel"] = promotionManagementModel;
+                TempData["RenderId"] = "ManageAdvertisement";
+                return RedirectToAction("GetPromotionalImages", "PromotionManagement");
+            }
+            var id = !string.IsNullOrEmpty(promotionManagementModel.Id) ? promotionManagementModel.Id.DecryptParameter() : null;
+            if (!string.IsNullOrEmpty(promotionManagementModel.Id) && string.IsNullOrEmpty(id))
+            {
+                this.AddNotificationMessage(new NotificationModel()
+                {
+                    NotificationType = NotificationMessage.INFORMATION,
+                    Message = "Invalid promotion details",
+                    Title = NotificationMessage.INFORMATION.ToString(),
+                });
+                return RedirectToAction("GetPromotionalImages", "PromotionManagement");
+            }
+
+            if (ImagePathFile == null)
+            {
+                if (string.IsNullOrEmpty(promotionManagementModel.ImagePath))
+                {
+                    this.AddNotificationMessage(new NotificationModel()
+                    {
+                        NotificationType = NotificationMessage.INFORMATION,
+                        Message = "Image required",
+                        Title = NotificationMessage.INFORMATION.ToString(),
+                    });
+                    TempData["AdvertisementModel"] = promotionManagementModel;
+                    TempData["RenderId"] = "ManageAdvertisement";
+                    return RedirectToAction("GetPromotionalImages", "PromotionManagement");
+                }
+            }
+            var promoImageCommon = promotionManagementModel.MapObject<AdvertisementDetailCommon>();
+            string fileName = string.Empty;
+            var allowedContenttype = AllowedImageContentType();
+            if (ImagePathFile != null)
+            {
+                var contentType = ImagePathFile.ContentType;
+                var ext = Path.GetExtension(ImagePathFile.FileName);
+                if (allowedContenttype.Contains(contentType.ToLower()))
+                {
+                    fileName = $"{AWSBucketFolderNameModel.ADMIN}/AdvertisementImage_{DateTime.Now.ToString("yyyyMMddHHmmssffff")}{ext.ToLower()}";
+                    promoImageCommon.ImagePath = $"/{fileName}";
+                }
+                else
+                {
+                    this.AddNotificationMessage(new NotificationModel()
+                    {
+                        NotificationType = NotificationMessage.INFORMATION,
+                        Message = "File Must be .jpg, .png, .jpeg, .heif",
+                        Title = NotificationMessage.INFORMATION.ToString(),
+                    });
+                    TempData["AdvertisementModel"] = promotionManagementModel;
+                    TempData["RenderId"] = "ManageAdvertisement";
+                    return RedirectToAction("GetPromotionalImages", "PromotionManagement");
+                }
+            }
+            promoImageCommon.ActionUser = ApplicationUtilities.GetSessionValue("Username").ToString();
+            promoImageCommon.ActionIP = ApplicationUtilities.GetIP();
+            promoImageCommon.Id = id;
+            var serviceResp = _business.UpdateAdvertisementImage(promoImageCommon);
+            if (serviceResp != null && serviceResp.Code == ResponseCode.Success)
+            {
+                if (ImagePathFile != null) await ImageHelper.ImageUpload(fileName, ImagePathFile);
+                this.AddNotificationMessage(new NotificationModel()
+                {
+                    NotificationType = NotificationMessage.SUCCESS,
+                    Message = serviceResp.Message ?? "Success",
+                    Title = NotificationMessage.SUCCESS.ToString(),
+                });
+                return RedirectToAction("GetPromotionalImages", "PromotionManagement");
+            }
+            this.AddNotificationMessage(new NotificationModel()
+            {
+                NotificationType = NotificationMessage.INFORMATION,
+                Message = serviceResp.Message ?? "Failed",
+                Title = NotificationMessage.INFORMATION.ToString()
+            });
+            TempData["AdvertisementModel"] = promotionManagementModel;
+            TempData["RenderId"] = "ManageAdvertisement";
+            return RedirectToAction("GetPromotionalImages", "PromotionManagement");
+        }
+        #endregion
     }
 }

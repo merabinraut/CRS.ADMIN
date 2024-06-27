@@ -128,5 +128,38 @@ namespace CRS.ADMIN.REPOSITORY.PromotionManagement
             }
             return advertisementManagement;
         }
+
+        public AdvertisementDetailCommon GetAdvertisementImageById(string Id)
+        {
+            var sql = "exec sproc_advertisement_management @Flag='gai'";
+            sql += ",@Id=" + _dao.FilterString(Id);
+            var dbResp = _dao.ExecuteDataTable(sql);
+            if (dbResp != null && dbResp.Rows.Count > 0)
+            {
+                return new AdvertisementDetailCommon()
+                {
+                    Id = Id,
+                    Title = dbResp.Rows[0]["Title"]?.ToString(),
+                    Description = dbResp.Rows[0]["ImgDescription"]?.ToString(),
+                    ImagePath = dbResp.Rows[0]["ImgPath"]?.ToString(),
+                    IsDeleted = dbResp.Rows[0]["IsDeleted"]?.ToString(),
+                    Link = dbResp.Rows[0]["Link"]?.ToString(),
+                    DisplayOrder = dbResp.Rows[0]["DisplayOrder"]?.ToString(),
+                };
+            }
+            return new AdvertisementDetailCommon();
+        }
+        public CommonDbResponse UpdateAdvertisementImage(AdvertisementDetailCommon promotion)
+        {
+            var sql = "Exec sproc_advertisement_management @Flag='u' ";
+            sql += ",@Id=" + _dao.FilterString(promotion.Id);
+            sql += ",@Title = " + _dao.FilterString(promotion.Title);
+            sql += ",@Description = " + _dao.FilterString(promotion.Description);
+            sql += ",@ImagePath = " + _dao.FilterString(promotion.ImagePath);
+            sql += ",@ActionUser=" + _dao.FilterString(promotion.ActionUser);
+            sql += ",@ActionIP=" + _dao.FilterString(promotion.IpAddress);
+            sql += ",@Link=" + _dao.FilterString(promotion.Link);
+            return _dao.ParseCommonDbResponse(sql);
+        }
     }
 }
