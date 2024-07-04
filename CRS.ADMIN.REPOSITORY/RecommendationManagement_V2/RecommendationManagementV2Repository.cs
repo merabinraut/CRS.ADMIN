@@ -72,6 +72,7 @@ namespace CRS.ADMIN.REPOSITORY.RecommendationManagement_V2
             sp_name += ",@DisplayOrderId=" + _dao.FilterString(commonModel.DisplayOrderId);
             sp_name += ",@ActionUser=" + _dao.FilterString(commonModel.ActionUser);
             sp_name += ",@ActionIP=" + _dao.FilterString(commonModel.ActionIP);
+            sp_name += ",@LocationId=" + _dao.FilterString(commonModel.LocationId);
             return _dao.ParseCommonDbResponse(sp_name);
         }
         #endregion

@@ -96,6 +96,8 @@
     <Compile Include="Home\IHomeBusiness.cs" />
     <Compile Include="HostManagement\HostManagementBusiness.cs" />
     <Compile Include="HostManagement\IHostManagementBusiness.cs" />
+    <Compile Include="Inquries\IInqueriesBusiness.cs" />
+    <Compile Include="Inquries\InqueriesBusiness.cs" />
     <Compile Include="LocationManagement\ILocationManagementBusiness.cs" />
     <Compile Include="LocationManagement\LocationManagementBusiness.cs" />
     <Compile Include="LogManagement\APILogManagement\APILogManagementBusiness.cs" />

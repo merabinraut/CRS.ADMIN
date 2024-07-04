@@ -118,6 +118,8 @@
     <Compile Include="Home\IHomeRepository.cs" />
     <Compile Include="HostManagement\HostManagementRepository.cs" />
     <Compile Include="HostManagement\IHostManagementRepository.cs" />
+    <Compile Include="Inquries\IInqueriesRepo.cs" />
+    <Compile Include="Inquries\InqueriesRepo.cs" />
     <Compile Include="LocationManagement\ILocationManagementRepository.cs" />
     <Compile Include="LocationManagement\LocationManagementRepository.cs" />
     <Compile Include="LogManagement\APILogManagement\APILogManagementRepository.cs" />

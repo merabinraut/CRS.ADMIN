@@ -1105,6 +1105,10 @@
     <value>Input Type</value>
     <comment>StaticDataManagement</comment>
   </data>
+  <data name="Inquiries" xml:space="preserve">
+    <value>Inquiries</value>
+    <comment>Inquries</comment>
+  </data>
   <data name="Instagram" xml:space="preserve">
     <value>Instagram</value>
     <comment>Club Management</comment>
@@ -1353,6 +1357,10 @@
     <value>Manage Tag</value>
     <comment>Club Management</comment>
   </data>
+  <data name="Manage the inquiries that has been made by customers" xml:space="preserve">
+    <value>Manage the inquiries that has been made by customers.</value>
+    <comment>Inquries</comment>
+  </data>
   <data name="Manage user roles and their privileges" xml:space="preserve">
     <value>Manage user roles and their privileges</value>
     <comment>Roles &amp; Privileges</comment>
@@ -1508,6 +1516,10 @@
   </data>
   <data name="Next" xml:space="preserve">
     <value>Next</value>
+  </data>
+  <data name="Nickname" xml:space="preserve">
+    <value>Nickname</value>
+    <comment>Inquries</comment>
   </data>
   <data name="No" xml:space="preserve">
     <value>No</value>
@@ -1791,6 +1803,10 @@
   <data name="Postal Code" xml:space="preserve">
     <value>Postal Code</value>
     <comment>ClubManagement</comment>
+  </data>
+  <data name="Posted Date" xml:space="preserve">
+    <value>Posted Date</value>
+    <comment>Inquries</comment>
   </data>
   <data name="Prefecture" xml:space="preserve">
     <value>Prefecture</value>

@@ -8,6 +8,7 @@ using CRS.ADMIN.BUSINESS.EmailLog;
 using CRS.ADMIN.BUSINESS.ErrorLog;
 using CRS.ADMIN.BUSINESS.Home;
 using CRS.ADMIN.BUSINESS.HostManagement;
+using CRS.ADMIN.BUSINESS.Inquries;
 using CRS.ADMIN.BUSINESS.LocationManagement;
 using CRS.ADMIN.BUSINESS.LogManagement.APILogManagement;
 using CRS.ADMIN.BUSINESS.LogManagement.EmailLogManagement;
@@ -75,6 +76,7 @@ namespace CRS.ADMIN.APPLICATION
             container.RegisterType<IPointsManagementBusiness, PointsManagementBusiness>();
             container.RegisterType<IClubPlanManagementBusiness, ClubPlanManagementBusiness>();
             container.RegisterType<IStaticDataManagementBusiness, StaticDataManagementBusiness>();
+            container.RegisterType<IInqueriesBusiness, InqueriesBusiness>();
             return container;
         }
     }

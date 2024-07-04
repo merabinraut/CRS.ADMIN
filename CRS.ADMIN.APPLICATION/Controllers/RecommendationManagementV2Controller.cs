@@ -126,6 +126,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 ManageGroupCommon commonModel = Model.MapObject<ManageGroupCommon>();
                 commonModel.ActionUser = ApplicationUtilities.GetSessionValue("Username").ToString();
                 commonModel.ActionIP = ApplicationUtilities.GetIP();
+                commonModel.LocationId = locationId.DecryptParameter();
                 if (!string.IsNullOrEmpty(displayOrderId?.DecryptParameter())) ModelState.Remove("DisplayOrderId");
                 commonModel.DisplayOrderId = displayOrderId?.DecryptParameter();
                 if (!string.IsNullOrEmpty(displayOrderId))

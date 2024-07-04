@@ -2311,6 +2311,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Inquiries.
+        /// </summary>
+        public static string Inquiries {
+            get {
+                return ResourceManager.GetString("Inquiries", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Instagram.
         /// </summary>
         public static string Instagram {
@@ -2878,6 +2887,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Manage the inquiries that has been made by customers..
+        /// </summary>
+        public static string Manage_the_inquiries_that_has_been_made_by_customers {
+            get {
+                return ResourceManager.GetString("Manage the inquiries that has been made by customers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Manage user roles and their privileges.
         /// </summary>
         public static string Manage_user_roles_and_their_privileges {
@@ -3234,6 +3252,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         public static string Next {
             get {
                 return ResourceManager.GetString("Next", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nickname.
+        /// </summary>
+        public static string Nickname {
+            get {
+                return ResourceManager.GetString("Nickname", resourceCulture);
             }
         }
         
@@ -3882,6 +3909,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         public static string Postal_Code {
             get {
                 return ResourceManager.GetString("Postal Code", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Posted Date.
+        /// </summary>
+        public static string Posted_Date {
+            get {
+                return ResourceManager.GetString("Posted Date", resourceCulture);
             }
         }
         
