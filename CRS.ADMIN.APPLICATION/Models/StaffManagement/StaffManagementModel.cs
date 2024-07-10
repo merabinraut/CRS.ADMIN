@@ -32,6 +32,7 @@ namespace CRS.ADMIN.APPLICATION.Models.StaffManagement
         public string EmailAddress { get; set; }
         [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Required")]
         public string MobileNumber { get; set; }
+        [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Required")]
         public string RoleId { get; set; }
     }
 }

@@ -66,7 +66,7 @@ namespace CRS.ADMIN.REPOSITORY.PointSetup
                         CategoryName = Convert.ToString(_DAO.ParseColumnValue(item, "CategoryName")),
                         CategoryDescription = Convert.ToString(_DAO.ParseColumnValue(item, "Description")),
                         CreatedBy = Convert.ToString(_DAO.ParseColumnValue(item, "ActionUser")),
-                        CreatedOn = Convert.ToString(_DAO.ParseColumnValue(item, "ActionDate")),
+                        CreatedOn =!string.IsNullOrEmpty(_DAO.ParseColumnValue(item, "ActionDate").ToString())? DateTime.Parse(_DAO.ParseColumnValue(item, "ActionDate").ToString()).ToString("yyyy'年'MM'月'dd'日' HH:mm:ss") : Convert.ToString(_DAO.ParseColumnValue(item, "ActionDate")),
                         Status = Convert.ToString(_DAO.ParseColumnValue(item, "Status"))
                     });
                 }
@@ -90,7 +90,7 @@ namespace CRS.ADMIN.REPOSITORY.PointSetup
                     CategoryName = Convert.ToString(_DAO.ParseColumnValue(dbResponse, "CategoryName")),
                     CategoryDescription = Convert.ToString(_DAO.ParseColumnValue(dbResponse, "Description")),
                     CreatedBy = Convert.ToString(_DAO.ParseColumnValue(dbResponse, "ActionUser")),
-                    CreatedOn = Convert.ToString(_DAO.ParseColumnValue(dbResponse, "ActionDate")),
+                    CreatedOn = !string.IsNullOrEmpty(_DAO.ParseColumnValue(dbResponse, "ActionDate").ToString()) ? DateTime.Parse(_DAO.ParseColumnValue(dbResponse, "ActionDate").ToString()).ToString("yyyy'年'MM'月'dd'日' HH:mm:ss") : Convert.ToString(_DAO.ParseColumnValue(dbResponse, "ActionDate")),
                     Status = Convert.ToString(_DAO.ParseColumnValue(dbResponse, "Status"))
 
                 };

@@ -8,10 +8,10 @@
     @Html.AntiForgeryToken()
     <div>
         <div class="heading-title">
-            Static Data Type
+            @CRS.ADMIN.APPLICATION.Resources.Resource.StaticDataType
         </div>
         <div class="span-title-light-gray">
-            Manage Static Data Type
+            @CRS.ADMIN.APPLICATION.Resources.Resource.ManageStaticDataType
         </div>
     </div>
     <!-- container  -->
@@ -61,9 +61,18 @@
                                 </div>
                             </div>
                         </th>
+                        @*<th scope="col" class="p-[12px]">
+                            <div class="flex w-max">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.StaticDataTypeId
+                                <div class="relative pl-[5px]">
+                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                </div>
+                            </div>
+                        </th>*@
                         <th scope="col" class="p-[12px]">
                             <div class="flex w-max">
-                                Static Data Type Id
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.StaticDataTypeName
                                 <div class="relative pl-[5px]">
                                     <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
                                     <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
@@ -72,16 +81,7 @@
                         </th>
                         <th scope="col" class="p-[12px]">
                             <div class="flex w-max">
-                                Static Data Type Name
-                                <div class="relative pl-[5px]">
-                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
-                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
-                                </div>
-                            </div>
-                        </th>
-                        <th scope="col" class="p-[12px]">
-                            <div class="flex w-max">
-                                Static Data Description
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.StaticDataDescription
                                 <div class="relative pl-[5px]">
                                     <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
                                     <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
@@ -108,9 +108,9 @@
                                 <td class="p-[12px]">
                                     @item.SNO
                                 </td>
-                                <td class="p-[12px]">
+                                @*<td class="p-[12px]">
                                     @item.StaticDataType
-                                </td>
+                                </td>*@
                                 <td class="p-[12px]">
                                     @item.StaticDataName
                                 </td>

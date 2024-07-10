@@ -1,4 +1,5 @@
 ﻿using CRS.ADMIN.SHARED.EmailLog;
+using System;
 using System.Collections.Generic;
 using System.Data;
 
@@ -30,7 +31,7 @@ namespace CRS.ADMIN.REPOSITORY.EmailLog
                         EmailSendStatus = row["EmailSendStatus"].ToString(),
                         EmailSendToCC = row["EmailSendToCC"].ToString(),
                         CreatedBy = row["CreatedBy"].ToString(),
-                        CreatedDate = row["CreatedDate"].ToString()
+                        CreatedDate = !string.IsNullOrEmpty(row["CreatedDate"].ToString()) ? DateTime.Parse(row["CreatedDate"].ToString()).ToString("yyyy'年'MM'月'dd'日' HH:mm:ss") : row["CreatedDate"].ToString() 
                     });
                 }
             }

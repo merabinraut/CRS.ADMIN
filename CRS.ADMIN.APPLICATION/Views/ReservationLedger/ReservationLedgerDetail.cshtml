@@ -11,10 +11,10 @@
     <div class="flex justify-between items-center">
         <div>
             <div class="heading-title">
-                Club Reservations Details
+                @CRS.ADMIN.APPLICATION.Resources.Resource.Club_Reservations_Details
             </div>
             <div class="span-title-light-gray">
-                Manage club's' reservation informations.
+                @CRS.ADMIN.APPLICATION.Resources.Resource.Manage_clubs_reservation_informations
             </div>
         </div>
     </div>
@@ -22,33 +22,36 @@
     <div class="flex flex-col gap-4">
         <div class="py-4">
             <div class="flex flex-col  gap-8">
+                @using (Html.BeginForm("ReservationLedgerDetail", "ReservationLedger", FormMethod.Get))
+                {
+                <input name="Date" value="@ViewBag.Date" hidden />
                 <div class="flex justify-between ">
-                    @using (Html.BeginForm("ReservationLedgerDetail", "ReservationLedger", FormMethod.Get))
-                    {
-                        <input name="FromDate" value="@ViewBag.ClubId" hidden />
+                    @*@using (Html.BeginForm("ReservationLedgerDetail", "ReservationLedger", FormMethod.Get))
+                        {*@
+                    @*<input name="FromDate" value="@ViewBag.ClubId" hidden />
                         <input name="FromDate" value="@ViewBag.FromDate" hidden />
-                        <input name="ToDate" value="@ViewBag.ToDate" hidden />
-                        <div class="relative input-search-wrapper">
-                            <div class="absolute inset-y-0 left-0 flex items-center pl-[16px] pointer-events-none">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21"
-                                     fill="none">
-                                    <path d="M17.5 18L13.875 14.375M15.8333 9.66667C15.8333 13.3486 12.8486 16.3333 9.16667 16.3333C5.48477 16.3333 2.5 13.3486 2.5 9.66667C2.5 5.98477 5.48477 3 9.16667 3C12.8486 3 15.8333 5.98477 15.8333 9.66667Z"
-                                          stroke="#667085" stroke-width="1.66667" stroke-linecap="round"
-                                          stroke-linejoin="round">
-                                    </path>
-                                </svg>
-                            </div>
-                            <input type="search" id="default-search"
-                                   class="input-search block w-full "
-                                   placeholder="@CRS.ADMIN.APPLICATION.Resources.Resource.Search"
-                                   name="searchText" value="@ViewBag.SearchText">
+                        <input name="ToDate" value="@ViewBag.ToDate" hidden />*@
+                    <div class="relative input-search-wrapper">
+                        <div class="absolute inset-y-0 left-0 flex items-center pl-[16px] pointer-events-none">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21"
+                                 fill="none">
+                                <path d="M17.5 18L13.875 14.375M15.8333 9.66667C15.8333 13.3486 12.8486 16.3333 9.16667 16.3333C5.48477 16.3333 2.5 13.3486 2.5 9.66667C2.5 5.98477 5.48477 3 9.16667 3C12.8486 3 15.8333 5.98477 15.8333 9.66667Z"
+                                      stroke="#667085" stroke-width="1.66667" stroke-linecap="round"
+                                      stroke-linejoin="round">
+                                </path>
+                            </svg>
                         </div>
+                        <input type="search" id="default-search"
+                               class="input-search block w-full "
+                               placeholder="@CRS.ADMIN.APPLICATION.Resources.Resource.Search"
+                               name="searchText" value="@ViewBag.SearchText">
+                    </div>
 
-                    }
+                    @*}*@
                     <div class="flex gap-4">
                     </div>
                 </div>
-
+                <br />
                 <div class="mb-4">
                     <div id="filter" class="export-button h-[40px] text-[#3E3E3E] w-max" onclick="showFilterContainer()">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21" fill="none">
@@ -104,6 +107,7 @@
                         </form>
                     </div>
                 </div>
+                }
 
                 <div class="bg-white  ">
                     <div id="tab1" class="tab-content">
@@ -188,7 +192,7 @@
                                             </th>
                                             <th scope="col" class="p-[12px]">
                                                 <div class="flex w-max">
-                                                    Club Verification
+                                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Club_Verification
                                                     <div class="relative pl-[5px]">
                                                         <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
                                                         <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
@@ -197,7 +201,7 @@
                                             </th>
                                             <th scope="col" class="p-[12px]">
                                                 <div class="flex w-max">
-                                                    Transaction Status
+                                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Transaction_Status
                                                     <div class="relative pl-[5px]">
                                                         <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
                                                         <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
@@ -206,7 +210,7 @@
                                             </th>
                                             <th scope="col" class="p-[12px]">
                                                 <div class="flex w-max">
-                                                    Reservation Type
+                                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Reservation_Type
                                                     <div class="relative pl-[5px]">
                                                         <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
                                                         <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
@@ -215,7 +219,7 @@
                                             </th>
                                             <th scope="col" class="p-[12px]">
                                                 <div class="flex w-max">
-                                                    Plan Amount
+                                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Plan_Amount
                                                     <div class="relative pl-[5px]">
                                                         <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
                                                         <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
@@ -224,7 +228,7 @@
                                             </th>
                                             <th scope="col" class="p-[12px]">
                                                 <div class="flex w-max">
-                                                    Total Plan Amount
+                                                    @CRS.ADMIN.APPLICATION.Resources.Resource.TotalPlanAmount
                                                     <div class="relative pl-[5px]">
                                                         <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
                                                         <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
@@ -233,7 +237,7 @@
                                             </th>
                                             <th scope="col" class="p-[12px]">
                                                 <div class="flex w-max">
-                                                    Total Club Plan Amount
+                                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Total_Club_Plan_Amount
                                                     <div class="relative pl-[5px]">
                                                         <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
                                                         <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
@@ -242,7 +246,7 @@
                                             </th>
                                             <th scope="col" class="p-[12px]">
                                                 <div class="flex w-max">
-                                                    Admin Plan Commission Amount
+                                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Admin_Plan_Commission_Amount
                                                     <div class="relative pl-[5px]">
                                                         <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
                                                         <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
@@ -251,7 +255,7 @@
                                             </th>
                                             <th scope="col" class="p-[12px]">
                                                 <div class="flex w-max">
-                                                    Total Admin Plan Commission Amount
+                                                    @CRS.ADMIN.APPLICATION.Resources.Resource.TotalAdminPlanCommissionAmount
                                                     <div class="relative pl-[5px]">
                                                         <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
                                                         <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
@@ -260,7 +264,7 @@
                                             </th>
                                             <th scope="col" class="p-[12px]">
                                                 <div class="flex w-max">
-                                                    Admin Commission Amount
+                                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Admin_Commission_Amount
                                                     <div class="relative pl-[5px]">
                                                         <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
                                                         <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
@@ -269,7 +273,7 @@
                                             </th>
                                             <th scope="col" class="p-[12px]">
                                                 <div class="flex w-max">
-                                                    Total Admin Commission Amount
+                                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Total_Admin_Commission_Amount
                                                     <div class="relative pl-[5px]">
                                                         <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
                                                         <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
@@ -278,7 +282,7 @@
                                             </th>
                                             <th scope="col" class="p-[12px]">
                                                 <div class="flex w-max">
-                                                    Total Admin Payable Amount
+                                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Total_Admin_Payable_Amount
                                                     <div class="relative pl-[5px]">
                                                         <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
                                                         <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
@@ -287,7 +291,7 @@
                                             </th>
                                             <th scope="col" class="p-[12px]">
                                                 <div class="flex w-max">
-                                                    Admin Remarks
+                                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Admin_Remarks
                                                     <div class="relative pl-[5px]">
                                                         <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
                                                         <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
@@ -300,89 +304,151 @@
                                         @{
                                             foreach (var paymentLedger in Model)
                                             {
-                                                <tr class="bg-white border-b ">
-                                                    <td class="p-[12px] w-max">
-                                                        @paymentLedger.SNO
-                                                    </td>
-                                                    <td class="p-[12px] w-max">
-                                                        <div class="round-image-text flex gap-[12px] w-max ">
-                                                            <img class="w-[32px] h-[32px] rounded-full"
-                                                                 src="@paymentLedger.CustomerImage" />
+                                            <tr class="bg-white border-b ">
+                                                <td class="p-[12px] w-max">
+                                                    @paymentLedger.SNO
+                                                </td>
+                                                <td class="p-[12px] w-max">
+                                                    <div class="round-image-text flex gap-[12px] w-max ">
+                                                        <img class="w-[32px] h-[32px] rounded-full"
+                                                             src="@paymentLedger.CustomerImage" />
 
-                                                            <div class="flex justify-between w-full">
-                                                                <div class="text-image grid flex-none">
-                                                                    <div class="text-sm font-semibold text-[#101828] ">
-                                                                        @paymentLedger.CustomerName
-                                                                    </div>
-                                                                    <div class='text-sm  text-[#667085] '>
-                                                                        @paymentLedger.CustomerNickName
-                                                                    </div>
+                                                        <div class="flex justify-between w-full">
+                                                            <div class="text-image grid flex-none">
+                                                                <div class="text-sm font-semibold text-[#101828] ">
+                                                                    @paymentLedger.CustomerName
+                                                                </div>
+                                                                <div class='text-sm  text-[#667085] '>
+                                                                    @paymentLedger.CustomerNickName
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    </td>
-                                                    <td class="p-[12px] w-max">
+                                                    </div>
+                                                </td>
+                                                <td class="p-[12px] w-max">
 
-                                                        <div class="plan-b">
-                                                            @paymentLedger.PlanName
-                                                        </div>
+                                                    <div class="plan-b">
+                                                        @paymentLedger.PlanName
+                                                    </div>
 
-                                                    </td>
-                                                    <td class="p-[12px] w-max">
-                                                        @paymentLedger.NoOfPeople
-                                                    </td>
+                                                </td>
+                                                <td class="p-[12px] w-max">
+                                                    @paymentLedger.NoOfPeople
+                                                </td>
 
-                                                    <td class="p-[12px] w-max">
-                                                        <div class="w-max ">@paymentLedger.VisitDate</div>
+                                                <td class="p-[12px] w-max">
+                                                    <div class="w-max ">@paymentLedger.VisitDate</div>
 
-                                                    </td>
-                                                    <td class="p-[12px] w-max">
-                                                        <div class="w-max ">@paymentLedger.VisitTime</div>
+                                                </td>
+                                                <td class="p-[12px] w-max">
+                                                    <div class="w-max ">@paymentLedger.VisitTime</div>
 
-                                                    </td>
-                                                    <td class="p-[12px] w-max">
-                                                        <div class="plan-b w-max">
-                                                            @paymentLedger.PaymentType
-                                                        </div>
-                                                    </td>
-                                                    <td class="p-[12px] w-max">
-                                                        <div class="w-max ">@paymentLedger.ClubVerification</div>
-                                                    </td>
-                                                    <td class="p-[12px] w-max">
-                                                        <div class="w-max ">@paymentLedger.TransactionStatus</div>
-                                                    </td>
-                                                    <td class="p-[12px] w-max">
-                                                        <div class="w-max ">@paymentLedger.ReservationType</div>
-                                                    </td>
-                                                    <td class="p-[12px] w-max">
-                                                        <div class="w-max text-[#1976D2]">¥@paymentLedger.PlanAmount</div>
+                                                </td>
+                                                <td class="p-[12px] w-max">
+                                                    <div class="plan-b w-max">
+                                                        @if (paymentLedger.PaymentType?.ToLower() == "on site payment")
+                                                            {
+                                                        @CRS.ADMIN.APPLICATION.Resources.Resource.On_Site_Payment
+                                                            }
+                                                            else
+                                                            {
+                                                        @paymentLedger.PaymentType
+                                                            }
 
-                                                    </td>
-                                                    <td class="p-[12px] w-max">
-                                                        <div class="w-max text-[#1976D2] ">¥@paymentLedger.TotalPlanAmount</div>
-                                                    </td>
-                                                    <td class="p-[12px] w-max">
-                                                        <div class="w-max text-[#1976D2] ">¥@paymentLedger.TotalClubPlanAmount</div>
-                                                    </td>
-                                                    <td class="p-[12px] w-max">
-                                                        <div class="w-max text-[#1976D2] ">¥@paymentLedger.AdminPlanCommissionAmount</div>
-                                                    </td>
-                                                    <td class="p-[12px] w-max">
-                                                        <div class="w-max text-[#1976D2] ">¥@paymentLedger.TotalAdminPlanCommissionAmount</div>
-                                                    </td>
-                                                    <td class="p-[12px] w-max">
-                                                        <div class="w-max text-[#1976D2] ">¥@paymentLedger.AdminCommissionAmount</div>
-                                                    </td>
-                                                    <td class="p-[12px] w-max">
-                                                        <div class="w-max text-[#1976D2] ">¥@paymentLedger.TotalAdminCommissionAmount</div>
-                                                    </td>
-                                                    <td class="p-[12px] w-max">
-                                                        <div class="w-max text-[#1976D2] ">¥@paymentLedger.TotalAdminPayableAmount</div>
-                                                    </td>
-                                                    <td class="p-[12px] w-max">
-                                                        <div class="w-max  ">@paymentLedger.AdminRemarks</div>
-                                                    </td>
-                                                </tr>
+                                                    </div>
+                                                </td>
+                                                <td class="p-[12px] w-max">
+                                                    <div class="w-max ">
+                                                        @if (paymentLedger.ClubVerification?.ToLower() == "verified")
+                                                            {
+                                                        @CRS.ADMIN.APPLICATION.Resources.Resource.Verified
+                                                            }
+                                                            else if (paymentLedger.ClubVerification?.ToLower() == "pending")
+                                                            {
+                                                        @CRS.ADMIN.APPLICATION.Resources.Resource.Pending
+                                                            }
+                                                            else if (paymentLedger.ClubVerification?.ToLower() == "rejected")
+                                                            {
+                                                        @CRS.ADMIN.APPLICATION.Resources.Resource.Rejected
+                                                            }
+                                                            else
+                                                            {
+                                                        @paymentLedger.ClubVerification
+                                                            }
+                                                    </div>
+                                                </td>
+                                                <td class="p-[12px] w-max">
+                                                    <div class="w-max ">
+                                                        @if (paymentLedger.TransactionStatus?.ToLower() == "success")
+                                                            {
+                                                        @CRS.ADMIN.APPLICATION.Resources.Resource.Success
+                                                            }
+                                                            else if (paymentLedger.TransactionStatus?.ToLower() == "rejected")
+                                                            {
+                                                        @CRS.ADMIN.APPLICATION.Resources.Resource.Rejected
+                                                            }
+                                                            else if (paymentLedger.TransactionStatus?.ToLower() == "cancelled")
+                                                            {
+                                                        @CRS.ADMIN.APPLICATION.Resources.Resource.Cancel
+                                                            }
+                                                            else if (paymentLedger.TransactionStatus?.ToLower() == "pending")
+                                                            {
+                                                        @CRS.ADMIN.APPLICATION.Resources.Resource.Pending
+                                                            }
+                                                            else
+                                                            {
+                                                        @paymentLedger.TransactionStatus
+                                                            }
+
+
+                                                    </div>
+                                                </td>
+                                                <td class="p-[12px] w-max">
+                                                    <div class="w-max ">
+                                                        @if (paymentLedger.ReservationType?.ToLower() == "first booking")
+                                                            {
+                                                        @CRS.ADMIN.APPLICATION.Resources.Resource.First_Booking
+                                                            }
+                                                            else if (paymentLedger.ReservationType?.ToLower() == "regular booking")
+                                                            {
+                                                        @CRS.ADMIN.APPLICATION.Resources.Resource.Regular_Booking
+                                                            }
+                                                            else
+                                                            {
+                                                        @paymentLedger.ReservationType
+                                                            }
+
+                                                    </div>
+                                                </td>
+                                                <td class="p-[12px] w-max">
+                                                    <div class="w-max text-[#1976D2]">¥@paymentLedger.PlanAmount</div>
+
+                                                </td>
+                                                <td class="p-[12px] w-max">
+                                                    <div class="w-max text-[#1976D2] ">¥@paymentLedger.TotalPlanAmount</div>
+                                                </td>
+                                                <td class="p-[12px] w-max">
+                                                    <div class="w-max text-[#1976D2] ">¥@paymentLedger.TotalClubPlanAmount</div>
+                                                </td>
+                                                <td class="p-[12px] w-max">
+                                                    <div class="w-max text-[#1976D2] ">¥@paymentLedger.AdminPlanCommissionAmount</div>
+                                                </td>
+                                                <td class="p-[12px] w-max">
+                                                    <div class="w-max text-[#1976D2] ">¥@paymentLedger.TotalAdminPlanCommissionAmount</div>
+                                                </td>
+                                                <td class="p-[12px] w-max">
+                                                    <div class="w-max text-[#1976D2] ">¥@paymentLedger.AdminCommissionAmount</div>
+                                                </td>
+                                                <td class="p-[12px] w-max">
+                                                    <div class="w-max text-[#1976D2] ">¥@paymentLedger.TotalAdminCommissionAmount</div>
+                                                </td>
+                                                <td class="p-[12px] w-max">
+                                                    <div class="w-max text-[#1976D2] ">¥@paymentLedger.TotalAdminPayableAmount</div>
+                                                </td>
+                                                <td class="p-[12px] w-max">
+                                                    <div class="w-max  ">@paymentLedger.AdminRemarks</div>
+                                                </td>
+                                            </tr>
                                             }
                                         }
                                     </tbody>
@@ -431,8 +497,10 @@
                 LoadPagination(page_size, total_data, start_index_val, URL);
 
                 var currentDate = new Date();
-                var lastThreeMonths = new Date();
-                lastThreeMonths.setMonth(currentDate.getMonth() - 3);
+            var lastThreeMonths = new Date();
+            var Future14days = new Date();
+            lastThreeMonths.setMonth(currentDate.getMonth() - 3);
+            Future14days.setDate(currentDate.getDate() + 14);
 
                  $("#FromDate").val("@ViewBag.FromDate");
                  jQuery(function ($) {
@@ -458,7 +526,8 @@
                      $.datepicker.setDefaults($.datepicker.regional['ja']);
                      $("#FromDate").datepicker({
                          minDate: lastThreeMonths,
-                         maxDate: new Date(),
+                         //maxDate: new Date(),
+                         maxDate: Future14days,
                          defaultDate: '@ViewBag.FromDate'
                      });
                  });
@@ -487,7 +556,8 @@
                      $.datepicker.setDefaults($.datepicker.regional['ja']);
                      $("#ToDate").datepicker({
                          minDate: lastThreeMonths,
-                         maxDate: new Date(),
+                         //maxDate: new Date(),
+                         maxDate: Future14days,
                          defaultDate: '@ViewBag.ToDate'
                      });
                  });

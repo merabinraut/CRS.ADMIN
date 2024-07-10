@@ -87,7 +87,7 @@ namespace CRS.ADMIN.REPOSITORY.PromotionManagement
                         ImagePath = item["ImgPath"].ToString(),
                         IsDeleted = item["IsDeleted"].ToString(),
                         ActionUser = item["ActionUser"].ToString(),
-                        ActionDate = item["ActionDate"].ToString(),
+                        ActionDate = !string.IsNullOrEmpty(item["ActionDate"].ToString()) ? DateTime.Parse(item["ActionDate"].ToString()).ToString("yyyy'年'MM'月'dd'日' HH:mm:ss") : item["ActionDate"].ToString(),
                         TotalRecords = Convert.ToInt32(_dao.ParseColumnValue(item, "TotalRecords").ToString()),
                         SNO = Convert.ToInt32(_dao.ParseColumnValue(item, "SN").ToString())
                     };
@@ -95,6 +95,71 @@ namespace CRS.ADMIN.REPOSITORY.PromotionManagement
                 }
             }
             return promotionManagements;
+        }
+
+        public List<AdvertisementManagementCommon> GetAdvertisementImageLists(PaginationFilterCommon Request)
+        {
+            var advertisementManagement = new List<AdvertisementManagementCommon>();
+            var sql = "Exec sproc_advertisement_management @Flag='s'";
+            sql += !string.IsNullOrEmpty(Request.SearchFilter) ? ",@SearchFilter=N" + _dao.FilterString(Request.SearchFilter) : null;
+            sql += ",@Skip=" + Request.Skip;
+            sql += ",@Take=" + Request.Take;
+            var dt = _dao.ExecuteDataTable(sql);
+            if (null != dt)
+            {
+                foreach (DataRow item in dt.Rows)
+                {
+                    var common = new AdvertisementManagementCommon()
+                    {
+                        Id = item["Sno"].ToString(),
+                        Title = item["Title"].ToString(),
+                        Description = item["ImgDescription"].ToString(),
+                        Link = item["Link"].ToString(),
+                        DisplayOrder = item["DisplayOrder"].ToString(),
+                        ImagePath = item["ImgPath"].ToString(),
+                        IsDeleted = item["IsDeleted"].ToString(),
+                        ActionUser = item["ActionUser"].ToString(),
+                        ActionDate = !string.IsNullOrEmpty(item["ActionDate"].ToString()) ? DateTime.Parse(item["ActionDate"].ToString()).ToString("yyyy'年'MM'月'dd'日' HH:mm:ss") : item["ActionDate"].ToString(),
+                        TotalRecords = Convert.ToInt32(_dao.ParseColumnValue(item, "TotalRecords").ToString()),
+                        SNO = Convert.ToInt32(_dao.ParseColumnValue(item, "SN").ToString())
+                    };
+                    advertisementManagement.Add(common);
+                }
+            }
+            return advertisementManagement;
+        }
+
+        public AdvertisementDetailCommon GetAdvertisementImageById(string Id)
+        {
+            var sql = "exec sproc_advertisement_management @Flag='gai'";
+            sql += ",@Id=" + _dao.FilterString(Id);
+            var dbResp = _dao.ExecuteDataTable(sql);
+            if (dbResp != null && dbResp.Rows.Count > 0)
+            {
+                return new AdvertisementDetailCommon()
+                {
+                    Id = Id,
+                    Title = dbResp.Rows[0]["Title"]?.ToString(),
+                    Description = dbResp.Rows[0]["ImgDescription"]?.ToString(),
+                    ImagePath = dbResp.Rows[0]["ImgPath"]?.ToString(),
+                    IsDeleted = dbResp.Rows[0]["IsDeleted"]?.ToString(),
+                    Link = dbResp.Rows[0]["Link"]?.ToString(),
+                    DisplayOrder = dbResp.Rows[0]["DisplayOrder"]?.ToString(),
+                };
+            }
+            return new AdvertisementDetailCommon();
+        }
+        public CommonDbResponse UpdateAdvertisementImage(AdvertisementDetailCommon promotion)
+        {
+            var sql = "Exec sproc_advertisement_management @Flag='u' ";
+            sql += ",@Id=" + _dao.FilterString(promotion.Id);
+            sql += ",@Title = " + _dao.FilterString(promotion.Title);
+            sql += ",@Description = " + _dao.FilterString(promotion.Description);
+            sql += ",@ImagePath = " + _dao.FilterString(promotion.ImagePath);
+            sql += ",@ActionUser=" + _dao.FilterString(promotion.ActionUser);
+            sql += ",@ActionIP=" + _dao.FilterString(promotion.IpAddress);
+            sql += ",@Link=" + _dao.FilterString(promotion.Link);
+            return _dao.ParseCommonDbResponse(sql);
         }
     }
 }

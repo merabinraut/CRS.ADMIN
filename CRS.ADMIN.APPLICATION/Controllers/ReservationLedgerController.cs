@@ -5,6 +5,7 @@ using CRS.ADMIN.BUSINESS.ReservationLedger;
 using CRS.ADMIN.SHARED;
 using CRS.ADMIN.SHARED.PaginationManagement;
 using CRS.ADMIN.SHARED.PaymentManagement;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
@@ -20,6 +21,8 @@ namespace CRS.ADMIN.APPLICATION.Controllers
         public ActionResult ReservationLedgerList(string SearchText = "", string ClubId = "", string Date = "", string FromDate = "", string ToDate = "", int StartIndex = 0, int PageSize = 10)
         {
             Session["CurrentURL"] = "/ReservationLedger/ReservationLedgerList";
+            var culture = Request.Cookies["culture"]?.Value;
+            culture = string.IsNullOrEmpty(culture) ? "ja" : culture;
             var cId = !string.IsNullOrEmpty(ClubId) ? ClubId.DecryptParameter() : null;
             var dbRequest = new PaginationFilterCommon()
             {
@@ -37,7 +40,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                     x.ClubLogo = ImageHelper.ProcessedImage(x.ClubLogo);
                 }
             );
-            ViewBag.ClubDDL = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("CLUBLIST") as Dictionary<string, string>, null, "--- Select ---");
+            ViewBag.ClubDDL = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("CLUBLIST","",culture) as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---");
             ViewBag.ClubIdKey = ClubId;
             ViewBag.LedgerList = responseInfo;
             ViewBag.SearchText = SearchText;
@@ -78,6 +81,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 {
                     x.ClubId = x.ClubId.EncryptParameter();
                     x.CustomerImage = ImageHelper.ProcessedImage(x.CustomerImage);
+                    x.VisitDate = !string.IsNullOrEmpty(x.VisitDate) ? DateTime.Parse(x.VisitDate).ToString("yyyy'年'MM'月'dd'日'"):x.VisitDate;
                 }
             );
             ViewBag.IsBackAllowed = true;
@@ -89,6 +93,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             ViewBag.ToDate = ToDate;
             ViewBag.StartIndex = StartIndex;
             ViewBag.PageSize = PageSize;
+            ViewBag.Date = Date;
             ViewBag.TotalData = dbResponse != null && dbResponse.Any() ? dbResponse[0].TotalRecords : 0;
             return View(Response);
         }

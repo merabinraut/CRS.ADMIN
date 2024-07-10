@@ -1,5 +1,6 @@
 ﻿using CRS.ADMIN.SHARED;
 using CRS.ADMIN.SHARED.CommissionManagement;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -26,7 +27,7 @@ namespace CRS.ADMIN.REPOSITORY.CommissionManagement
                         CategoryId = _DAO.ParseColumnValue(item, "CategoryId").ToString(),
                         CategoryName = _DAO.ParseColumnValue(item, "CategoryName").ToString(),
                         Status = _DAO.ParseColumnValue(item, "Status").ToString(),
-                        CreatedDate = _DAO.ParseColumnValue(item, "CreatedDate").ToString(),
+                        CreatedDate = !string.IsNullOrEmpty(_DAO.ParseColumnValue(item, "CreatedDate").ToString()) ? DateTime.Parse(_DAO.ParseColumnValue(item, "CreatedDate").ToString()).ToString("yyyy'年'MM'月'dd'日' HH:mm:ss") : _DAO.ParseColumnValue(item, "CreatedDate").ToString(),
                         CreatedByFullName = _DAO.ParseColumnValue(item, "CreatedByFullname").ToString(),
                         CreatedByUsername = _DAO.ParseColumnValue(item, "CreatedByUsername").ToString(),
                         CreatedByImage = _DAO.ParseColumnValue(item, "CreatedByImage").ToString(),
@@ -51,7 +52,7 @@ namespace CRS.ADMIN.REPOSITORY.CommissionManagement
                     CategoryName = dbResponse.Rows[0]["CategoryName"]?.ToString(),
                     Description = dbResponse.Rows[0]["Description"]?.ToString(),
                     Status = dbResponse.Rows[0]["Status"]?.ToString(),
-                    CreatedDate = dbResponse.Rows[0]["CreatedDate"]?.ToString(),
+                    CreatedDate =  dbResponse.Rows[0]["CreatedDate"]?.ToString(),
                     CreatedByFullName = dbResponse.Rows[0]["CreatedByFullname"]?.ToString(),
                     CreatedByUsername = dbResponse.Rows[0]["CreatedByUsername"]?.ToString(),
                     CreatedByImage = dbResponse.Rows[0]["CreatedByImage"]?.ToString(),

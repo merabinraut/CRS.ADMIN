@@ -1,4 +1,4 @@
-using CRS.ADMIN.APPLICATION.Helper;
+﻿using CRS.ADMIN.APPLICATION.Helper;
 using CRS.ADMIN.APPLICATION.Library;
 using CRS.ADMIN.APPLICATION.Models.HostManagement;
 using CRS.ADMIN.SHARED.PaginationManagement;
@@ -23,6 +23,7 @@ using System;
 using CRS.ADMIN.APPLICATION.Models.PointSetup;
 using CRS.ADMIN.SHARED.PointSetup;
 using System.Numerics;
+using System.Text.RegularExpressions;
 
 namespace CRS.ADMIN.APPLICATION.Controllers
 {
@@ -41,6 +42,8 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             culture = string.IsNullOrEmpty(culture) ? "ja" : culture;
             ViewBag.AgentId = AgentId;
             ViewBag.SearchFilter = SearchFilter;
+            ViewBag.IsBackAllowed = true;
+            ViewBag.BackButtonURL = "/ClubManagement/ClubList";
             string RenderId = "";
             var aId = !string.IsNullOrEmpty(AgentId) ? AgentId.DecryptParameter() : null;
             if (string.IsNullOrEmpty(aId))
@@ -61,7 +64,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             ViewBag.PopUpRenderValue = !string.IsNullOrEmpty(RenderId) ? RenderId : null;
             response.ClubId = aId; ;
             response.ManageClubPlanModel.ClubId = aId; ;
-            ViewBag.TimeIntervalList = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("PLANTIMEINTERVAL", aId) as Dictionary<string, string>, null, "--- Select ---"); ;
+            ViewBag.TimeIntervalList = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("PLANTIMEINTERVAL", aId,culture) as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---"); 
             ViewBag.PlansList = ApplicationUtilities.LoadDropdownList("CLUBPLANS") as Dictionary<string, string>;
             List<ClubplanListCommon> ClubplanListCommon = _BUSS.GetClubPlanList(culture, aId);
             response.planList = ClubplanListCommon.MapObjects<ClubplanListModel>();
@@ -145,7 +148,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             {
                 return RedirectToAction("ClubList", "ClubManagement");
             }
-            ViewBag.BackButtonURL = "/ClubPlanManagement/ClubPlanList";
+          
             ViewBag.StartIndex = StartIndex;
             ViewBag.PageSize = PageSize;
             ViewBag.TotalData = 0;
@@ -158,8 +161,10 @@ namespace CRS.ADMIN.APPLICATION.Controllers
         public async Task<ActionResult> ManageClubPlan(ManageClubPlanModel Model)
         {
             string ErrorMessage = string.Empty;
+            var culture = Request.Cookies["culture"]?.Value;
+            culture = string.IsNullOrEmpty(culture) ? "ja" : culture;
             ViewBag.PlansList = ApplicationUtilities.LoadDropdownList("CLUBPLANS") as Dictionary<string, string>;
-            ViewBag.TimeIntervalList = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("PLANTIMEINTERVAL", Model.ClubId.DecryptParameter()) as Dictionary<string, string>, null, "--- Select ---"); ;
+            ViewBag.TimeIntervalList = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("PLANTIMEINTERVAL", Model.ClubId.DecryptParameter()) as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---"); ;
             string concatenateplanvalue = string.Empty;
             bool isexception = false;
             bool isduplicate = false;
@@ -371,7 +376,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                         AgentId = AgentId
                     });
                 }
-                ViewBag.TimeIntervalList = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("PLANTIMEINTERVAL", agentids) as Dictionary<string, string>, null, "--- Select ---"); ;
+                ViewBag.TimeIntervalList = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("PLANTIMEINTERVAL", agentids) as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---"); ;
                 bool isexception = false;
                 List<PlanListCommon> planlist = _BUSS.EditClubPlanIdentityList(culture, agentids, planlistid);
                 response.ManageClubPlanModel.ClubPlanDetailList = planlist.MapObjects<PlanList>();

@@ -7,7 +7,7 @@
         <div class="drawer-form-container sticky top-0 z-[5] ">
             <div class="drawer-form flex justify-between bg-secondary-color-pink py-[16px] px-[24px] h-[56px]">
                 <div>
-                    Manage Static Data Type
+                    @CRS.ADMIN.APPLICATION.Resources.Resource.ManageStaticDataType
                 </div>
                 <button type="button" data-drawer-hide="add-new" aria-controls="add-new"
                         class="text-[20px]">
@@ -26,9 +26,13 @@
             {
                 @Html.HiddenFor(model => model.Status)
             }
+            if (!string.IsNullOrEmpty(Model.StaticDataType))
+            {
+                @Html.HiddenFor(model => model.StaticDataType)
+            }
             <div class="p-[24px]">
                 <div class=" py-4 grid gap-5">
-                    <div class="input-field-common">
+                    @*<div class="input-field-common">
                         <label class="block mb-[12px] text-sm font-medium text-secondary-100 ">
                             Static Data Type Id
                         </label>
@@ -41,10 +45,10 @@
                         <span class="error">
                             @Html.ValidationMessageFor(m => m.StaticDataType)
                         </span>
-                    </div>
+                    </div>*@
                     <div class="input-field-common">
                         <label class="block mb-[12px] text-sm font-medium text-secondary-100 ">
-                            Static Data Name
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.StaticDataTypeName
                         </label>
                         @Html.TextBoxFor(model => model.StaticDataName, new
                         {
@@ -58,7 +62,7 @@
                     </div>
                     <div class="input-field-common">
                         <label class="block mb-[12px] text-sm font-medium text-secondary-100 ">
-                            Static Data Description
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.StaticDataDescription
                         </label>
                         @Html.TextBoxFor(model => model.StaticDataDescription, new
                         {

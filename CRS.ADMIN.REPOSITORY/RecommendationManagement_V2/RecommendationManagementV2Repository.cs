@@ -1,5 +1,6 @@
 ﻿using CRS.ADMIN.SHARED;
 using CRS.ADMIN.SHARED.RecommendationManagement_V2;
+using System;
 using System.Collections.Generic;
 using System.Data;
 
@@ -51,7 +52,7 @@ namespace CRS.ADMIN.REPOSITORY.RecommendationManagement_V2
                         GroupId = row["GroupId"].ToString(),
                         GroupName = row["GroupName"].ToString(),
                         Descriptions = row["Description"].ToString(),
-                        RequestedDate = row["CreatedDate"].ToString(),
+                        RequestedDate =!string.IsNullOrEmpty(row["CreatedDate"].ToString()) ? DateTime.Parse(row["CreatedDate"].ToString()).ToString("yyyy'年'MM'月'dd'日' HH:mm:ss") : row["CreatedDate"].ToString(),
                         TotalClubs = row["TotalClubs"].ToString(),
                         DisplayOrderId = row["DisplayOrderId"].ToString(),
                         CreatedBy = row["CreatedBy"].ToString(),
@@ -71,6 +72,7 @@ namespace CRS.ADMIN.REPOSITORY.RecommendationManagement_V2
             sp_name += ",@DisplayOrderId=" + _dao.FilterString(commonModel.DisplayOrderId);
             sp_name += ",@ActionUser=" + _dao.FilterString(commonModel.ActionUser);
             sp_name += ",@ActionIP=" + _dao.FilterString(commonModel.ActionIP);
+            sp_name += ",@LocationId=" + _dao.FilterString(commonModel.LocationId);
             return _dao.ParseCommonDbResponse(sp_name);
         }
         #endregion
@@ -151,12 +153,12 @@ namespace CRS.ADMIN.REPOSITORY.RecommendationManagement_V2
                         HostName = row["HostName"].ToString(),
                         ClubCategory = row["ClubCategory"].ToString(),
                         DisplayPageLabel = row["DisplayPageLabel"].ToString(),
-                        RequestedDate = row["RequestedDate"].ToString(),
+                        RequestedDate = row["RequestedDate"].ToString() != "-" ? DateTime.Parse(row["RequestedDate"].ToString()).ToString("yyyy'年'MM'月'dd'日' HH:mm:ss") : row["RequestedDate"].ToString()  ,
                         ClubId = row["ClubId"].ToString(),
                         DisplayId = row["DisplayId"].ToString(),
                         RecommendationId = row["RecommendationId"].ToString(),
                         Status = row["Status"].ToString(),
-                        UpdatedDate = row["UpdatedDate"].ToString()
+                        UpdatedDate =row["UpdatedDate"].ToString() != "-" ? DateTime.Parse(row["UpdatedDate"].ToString()).ToString("yyyy'年'MM'月'dd'日' HH:mm:ss") : row["UpdatedDate"].ToString()
                     });
                 }
             }
@@ -207,12 +209,12 @@ namespace CRS.ADMIN.REPOSITORY.RecommendationManagement_V2
                         HostName = row["HostName"].ToString(),
                         ClubCategory = row["ClubCategory"].ToString(),
                         DisplayPageLabel = row["DisplayPageLabel"].ToString(),
-                        RequestedDate = row["RequestedDate"].ToString(),
+                        RequestedDate = row["RequestedDate"].ToString() != "-" ? DateTime.Parse(row["RequestedDate"].ToString()).ToString("yyyy'年'MM'月'dd'日' HH:mm:ss") : row["RequestedDate"].ToString(),
                         ClubId = row["ClubId"].ToString(),
                         DisplayId = row["DisplayId"].ToString(),
                         RecommendationId = row["RecommendationId"].ToString(),
                         Status = row["Status"].ToString(),
-                        UpdatedDate = row["UpdatedDate"].ToString()
+                        UpdatedDate = row["UpdatedDate"].ToString() != "-" ? DateTime.Parse(row["UpdatedDate"].ToString()).ToString("yyyy'年'MM'月'dd'日' HH:mm:ss") : row["UpdatedDate"].ToString(),
                     });
                 }
             }
@@ -263,12 +265,12 @@ namespace CRS.ADMIN.REPOSITORY.RecommendationManagement_V2
                         ClubLogo = row["ClubLogo"].ToString(),
                         ClubCategory = row["ClubCategory"].ToString(),
                         DisplayPageLabel = row["DisplayPageLabel"].ToString(),
-                        RequestedDate = row["RequestedDate"].ToString(),
+                        RequestedDate = row["RequestedDate"].ToString() != "-" ? DateTime.Parse(row["RequestedDate"].ToString()).ToString("yyyy'年'MM'月'dd'日' HH:mm:ss") : row["RequestedDate"].ToString(),
                         ClubId = row["ClubId"].ToString(),
                         DisplayId = row["DisplayId"].ToString(),
                         RecommendationId = row["RecommendationId"].ToString(),
                         Status = row["Status"].ToString(),
-                        UpdatedDate = row["UpdatedDate"].ToString()
+                        UpdatedDate =row["UpdatedDate"].ToString()!="-"? DateTime.Parse(row["UpdatedDate"].ToString()).ToString("yyyy'年'MM'月'dd'日' HH:mm:ss") : row["UpdatedDate"].ToString(),
                     });
                 }
             }
@@ -385,8 +387,8 @@ namespace CRS.ADMIN.REPOSITORY.RecommendationManagement_V2
                         RecommendationHostId = row["RecommendationHostId"].ToString(),
                         HostImage = row["HostImage"].ToString(),
                         HostName = row["HostName"].ToString(),
-                        CreatedOn = row["CreatedOn"].ToString(),
-                        UpdatedOn = row["UpdatedOn"].ToString(),
+                        CreatedOn = row["CreatedOn"].ToString() != "-"  ? DateTime.Parse(row["CreatedOn"].ToString()).ToString("yyyy'年'MM'月'dd'日' HH:mm:ss") : row["CreatedOn"].ToString(),
+                        UpdatedOn = row["UpdatedOn"].ToString() != "-" ? DateTime.Parse(row["UpdatedOn"].ToString()).ToString("yyyy'年'MM'月'dd'日' HH:mm:ss") : row["UpdatedOn"].ToString() ,
                         DisplayOrder = row["DisplayOrder"].ToString(),
                     });
                 }
@@ -428,8 +430,8 @@ namespace CRS.ADMIN.REPOSITORY.RecommendationManagement_V2
                         ClubLogo = row["ClubLogo"].ToString(),
                         DisplayPage = row["DisplayPage"].ToString(),
                         DisplayOrder = row["DisplayOrder"].ToString(),
-                        RequestedDate = row["RequestedDate"].ToString(),
-                        UpdatedDate = row["UpdatedDate"].ToString(),
+                        RequestedDate = !string.IsNullOrEmpty(row["RequestedDate"].ToString()) ? DateTime.Parse(row["RequestedDate"].ToString()).ToString("yyyy'年'MM'月'dd'日' HH:mm:ss") : row["RequestedDate"].ToString(),
+                        UpdatedDate = !string.IsNullOrEmpty(row["UpdatedDate"].ToString()) ? DateTime.Parse(row["UpdatedDate"].ToString()).ToString("yyyy'年'MM'月'dd'日' HH:mm:ss") : row["UpdatedDate"].ToString(),
                         Status = row["Status"].ToString(),
                         DisplayId = row["DisplayId"].ToString(),
                         LocationId = row["LocationId"].ToString(),

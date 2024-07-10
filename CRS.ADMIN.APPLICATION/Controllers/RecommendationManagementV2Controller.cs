@@ -7,6 +7,7 @@ using CRS.ADMIN.SHARED.RecommendationManagement_V2;
 using DocumentFormat.OpenXml.Office2010.Excel;
 using System;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -71,6 +72,8 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             ViewBag.SearchFilter = SearchFilter;
             string LocationId = "";
             string RenderId = "";
+            var culture = Request.Cookies["culture"]?.Value;
+            culture = string.IsNullOrEmpty(culture) ? "ja" : culture;
             if (!string.IsNullOrEmpty(locationid)) LocationId = locationid.DecryptParameter();
             CommonRecommendationModel responseInfo = new CommonRecommendationModel();
             if (TempData.ContainsKey("ManageGroupModel")) responseInfo.ManageGroup = TempData["ManageGroupModel"] as ManageGroup;
@@ -102,7 +105,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             }
             ViewBag.GroupShuffling = GroupList;
             ViewBag.SetShufflingTime = SetShufflingTime;
-            ViewBag.DisplayOrderDDL = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("DISPLAYORDERDDL", "", "") as Dictionary<string, string>, null, "--- Select ---"); ;
+            ViewBag.DisplayOrderDDL = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("DISPLAYORDERDDL", "", "") as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---"); ;
             TempData["OriginalUrl"] = Request.Url.ToString();
             ViewBag.LocationId = locationid;
             ViewBag.IsBackAllowed = true;
@@ -123,6 +126,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 ManageGroupCommon commonModel = Model.MapObject<ManageGroupCommon>();
                 commonModel.ActionUser = ApplicationUtilities.GetSessionValue("Username").ToString();
                 commonModel.ActionIP = ApplicationUtilities.GetIP();
+                commonModel.LocationId = locationId.DecryptParameter();
                 if (!string.IsNullOrEmpty(displayOrderId?.DecryptParameter())) ModelState.Remove("DisplayOrderId");
                 commonModel.DisplayOrderId = displayOrderId?.DecryptParameter();
                 if (!string.IsNullOrEmpty(displayOrderId))
@@ -303,6 +307,8 @@ namespace CRS.ADMIN.APPLICATION.Controllers
         public ActionResult ManageHomePageRequest(string locationid = "")
         {
             var id = !string.IsNullOrEmpty(locationid) ? locationid.DecryptParameter() : null;
+            var culture = Request.Cookies["culture"]?.Value;
+            culture = string.IsNullOrEmpty(culture) ? "ja" : culture;
             if (string.IsNullOrEmpty(id))
             {
                 AddNotificationMessage(new NotificationModel()
@@ -315,8 +321,8 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 return RedirectToAction("Index", "RecommendationManagementV2");
             }
             ViewBag.ClubLocation = ApplicationUtilities.LoadDropdownList("LOCATIONDDL", id, "") as Dictionary<string, string>;
-            ViewBag.ClubDDL = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("CLUBLIST", id, "") as Dictionary<string, string>, null, "--- Select ---");
-            ViewBag.HostDDLBYClubId = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("HOSTDDLBYCLUBID", "", "") as Dictionary<string, string>, null, "--- Select ---");
+            ViewBag.ClubDDL = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("CLUBLIST", id, "") as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---"  );
+            ViewBag.HostDDLBYClubId = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("HOSTDDLBYCLUBID", "", "") as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---");
             var Response = new ManageHomePageRequest()
             {
                 LocationId = locationid
@@ -434,6 +440,8 @@ namespace CRS.ADMIN.APPLICATION.Controllers
         public ActionResult ManageSearchPageRequest(string locationid = "")
         {
             var id = !string.IsNullOrEmpty(locationid) ? locationid.DecryptParameter() : null;
+            var culture = Request.Cookies["culture"]?.Value;
+            culture = string.IsNullOrEmpty(culture) ? "ja" : culture;
             if (string.IsNullOrEmpty(id))
             {
                 AddNotificationMessage(new NotificationModel()
@@ -446,8 +454,8 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 return RedirectToAction("Index", "RecommendationManagementV2");
             }
             ViewBag.ClubLocation = ApplicationUtilities.LoadDropdownList("LOCATIONDDL", id, "") as Dictionary<string, string>;
-            ViewBag.ClubDDL = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("CLUBLIST", id, "") as Dictionary<string, string>, null, "--- Select ---");
-            ViewBag.HostDDLBYClubId = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("HOSTDDLBYCLUBID", "", "") as Dictionary<string, string>, null, "--- Select ---");
+            ViewBag.ClubDDL = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("CLUBLIST", id, "") as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---");
+            ViewBag.HostDDLBYClubId = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("HOSTDDLBYCLUBID", "", "") as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---");
             var Response = new ManageSearchPageRequest
             {
                 LocationId = locationid
@@ -553,6 +561,8 @@ namespace CRS.ADMIN.APPLICATION.Controllers
         {
             var LocationId = !string.IsNullOrEmpty(locationId) ? locationId.DecryptParameter() : null;
             var Groupid = groupId.DecryptParameter();
+            var culture = Request.Cookies["culture"]?.Value;
+            culture = string.IsNullOrEmpty(culture) ? "ja" : culture;
             if (string.IsNullOrEmpty(LocationId))
             {
                 AddNotificationMessage(new NotificationModel()
@@ -580,9 +590,9 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             #region "Get All Required DDL"
             ViewBag.ClubLocation = ApplicationUtilities.LoadDropdownList("LOCATIONDDL", LocationId, "") as Dictionary<string, string>;
             ViewBag.GroupDDLByLocationId = ApplicationUtilities.LoadDropdownList("GROUPDDLBYLOCATIONID", Groupid, "") as Dictionary<string, string>;
-            ViewBag.ClubDDL = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("CLUBLIST", LocationId, "") as Dictionary<string, string>, null, "--- Select ---");
-            ViewBag.DisplayOrderDDL = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("DISPLAYORDERDDL", "", "") as Dictionary<string, string>, null, "--- Select ---");
-            ViewBag.HostDDLBYClubId = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("HOSTDDLBYCLUBID", "", "") as Dictionary<string, string>, null, "--- Select ---");
+            ViewBag.ClubDDL = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("CLUBLIST", LocationId, "") as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---");
+            ViewBag.DisplayOrderDDL = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("DISPLAYORDERDDL", "", "") as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---");
+            ViewBag.HostDDLBYClubId = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("HOSTDDLBYCLUBID", "", "") as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---");
             #endregion
 
             #region "Get Recommendation Detail"

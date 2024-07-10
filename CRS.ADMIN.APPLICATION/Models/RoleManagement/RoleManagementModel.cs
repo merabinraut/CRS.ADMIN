@@ -39,13 +39,13 @@ namespace CRS.ADMIN.APPLICATION.Models.RoleManagement
     {
         public string RoleId { get; set; }
         public string RoleType { get; set; }
-        [Required]
+        [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Required")]
         [DisplayName("Role Type")]
         public string RoleTypeName { get; set; }
-        [Required]
+        [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Required")]
         [DisplayName("Role Name")]
         public string RoleName { get; set; }
-        [Required]
+        [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Required")]
         [DisplayName("Description")]
         public string Description { get; set; }
     }

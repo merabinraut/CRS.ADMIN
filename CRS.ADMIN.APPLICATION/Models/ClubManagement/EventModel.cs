@@ -1,5 +1,6 @@
 ﻿
 using CRS.ADMIN.APPLICATION.Models.TagManagement;
+using CRS.ADMIN.APPLICATION.Resources;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -12,16 +13,16 @@ namespace CRS.ADMIN.APPLICATION.Models.ClubManagement
 
     public class EventModel
     {
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
+        [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Required")]
         public string EventType { get; set; }
         public string AgentId { get; set; }
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
+        [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Required")]
         public string EventDate { get; set; }
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
+        [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Required")]
         public string Description { get; set; }
         public string Image { get; set; }
 
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
+        [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Required")]
         public string Title { get; set; }
         public string EventId { get; set; }
         public string EventTypeName { get; set; }

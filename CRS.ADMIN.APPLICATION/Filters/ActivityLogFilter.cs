@@ -1,9 +1,14 @@
-﻿using CRS.ADMIN.APPLICATION.Library;
+﻿using CRS.ADMIN.APPLICATION.Helper;
+using CRS.ADMIN.APPLICATION.Library;
+using CRS.ADMIN.APPLICATION.Models.NotificationManagement;
 using CRS.ADMIN.BUSINESS.NotificationManagement;
 using CRS.ADMIN.SHARED;
+using System;
+using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using static Google.Apis.Requests.BatchRequest;
 
 namespace CRS.ADMIN.APPLICATION.Filters
 {
@@ -35,7 +40,16 @@ namespace CRS.ADMIN.APPLICATION.Filters
                 }
                 var _notificationBuss = new NotificationManagementBusiness();
                 var notifications = _notificationBuss.GetNotification(getUserId);
-                httpctx.Session["Notifications"] = notifications;
+                if (notifications != null &&  notifications.Count>0)              
+                    notifications.ForEach(x =>
+                    {
+                        x.NotificationId = x.NotificationId.EncryptParameter();
+                        x.NotificationImageURL = ImageHelper.ProcessedImage(x.NotificationImageURL);
+                        x.Time = !string.IsNullOrEmpty(x.Time) ? DateTime.Parse(x.Time).ToString("yyyy'年'MM'月'dd'日' HH:mm:ss") : x.Time;
+                        //x.UpdatedDate = !string.IsNullOrEmpty(x.UpdatedDate) ? DateTime.Parse(x.UpdatedDate).ToString("yyyy'年'MM'月'dd'日' HH:mm:ss") : x.UpdatedDate;
+                    });
+                
+                httpctx.Session["Notifications"] = notifications.MapObjects<NotificationDetailModel>().ToList() ;
             }
             base.OnActionExecuting(filterContext);
         }

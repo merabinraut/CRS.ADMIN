@@ -64,6 +64,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 var dbResponse = _business.GetStaticDataTypeDetail(Id);
                 model = dbResponse.MapObject<ManageStaticDataType>();
                 model.Id = Id.EncryptParameter();
+                model.StaticDataType = model.StaticDataType.EncryptParameter();
             }
             TempData["ManageStaticDataType"] = model;
             TempData["RenderId"] = "Manage";
@@ -72,13 +73,17 @@ namespace CRS.ADMIN.APPLICATION.Controllers
         [HttpPost, ValidateAntiForgeryToken]
         public ActionResult ManageStaticDataType(ManageStaticDataType model)
         {
+            if ( model.Id?.DecryptParameter()==null)
+            {
+                ModelState.Remove("StaticDataType");
+            }
             if (ModelState.IsValid)
             {
                 ManageStaticDataTypeCommon commonModel = model.MapObject<ManageStaticDataTypeCommon>();
                 commonModel.ActionUser = ApplicationUtilities.GetSessionValue("Username").ToString();
                 if (!string.IsNullOrEmpty(commonModel.Id))
                     commonModel.Id = commonModel.Id.DecryptParameter();
-
+                commonModel.StaticDataType = model.StaticDataType?.DecryptParameter();
                 var dbResponse = _business.ManageStaticDataType(commonModel);
                 if (dbResponse != null)
                 {
@@ -162,6 +167,8 @@ namespace CRS.ADMIN.APPLICATION.Controllers
         public ActionResult StaticDataIndex(string staticDataTypeId = "")
         {
             Session["CurrentUrl"] = "/StaticDataManagement/StaticDataIndex";
+            ViewBag.IsBackAllowed = true;
+            ViewBag.BackButtonURL = "/StaticDataManagement/Index";
             string RenderId = "";
             StaticDataManagement responseInfo = new StaticDataManagement();
             if (TempData.ContainsKey("ManageStaticData")) responseInfo.ManageStaticData = TempData["ManageStaticData"] as ManageStaticData;
@@ -248,6 +255,18 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             }
             else
             {
+                var errorMessages = ModelState.Where(x => x.Value.Errors.Count > 0)
+                                  .SelectMany(x => x.Value.Errors.Select(e => $"{x.Key}: {e.ErrorMessage}"))
+                                  .ToList();
+
+                var notificationModels = errorMessages.Select(errorMessage => new NotificationModel
+                {
+                    NotificationType = NotificationMessage.INFORMATION,
+                    Message = errorMessage,
+                    Title = NotificationMessage.INFORMATION.ToString(),
+                }).ToArray();
+                AddNotificationMessage(notificationModels);
+                var errors = ModelState.Where(x => x.Value.Errors.Count > 0).Select(x => new { x.Key }).ToList();
                 TempData["ManageStaticData"] = Model;
                 TempData["RenderId"] = "Manage";
                 return RedirectToAction("StaticDataIndex", new { staticDataTypeId = Model.StaticDataType });

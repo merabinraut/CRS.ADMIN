@@ -238,15 +238,28 @@
     </div>
 </div>
 <link href="https://cdn.syncfusion.com/ej2/material.css" rel="stylesheet">
-<script src="https://cdn.syncfusion.com/ej2/dist/ej2.min.js"></script>
+
 
 @section scripts
 {
     <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
+    <script src="https://cdn.syncfusion.com/ej2/dist/ej2.min.js"></script>
     <script>
-
+        
         var PopUpRenderValue = '@ViewBag.PopUpRenderValue';
-    if (PopUpRenderValue != null && PopUpRenderValue != "" && PopUpRenderValue == "Manage") {
+        function CancelFunction() {
+            location.reload();
+        }
+        function ManageClubPlanFunction(i, j) {
+            window.location.href = '/ClubPlanManagement/ManageClubPlan?AgentId=' + i + '&Id=' + j
+        }
+        function BlockFunction(i, j) {
+            window.location.href = '/ClubPlanManagement/BlockUnblockPlan?AgentId=' + i + '&Id=' + j + '&Status=B'
+        }
+        function UnBlockFunction(i, j) {
+            window.location.href = '/ClubPlanManagement/BlockUnblockPlan?AgentId=' + i + '&Id=' + j + '&Status=A'
+        }
+      if (PopUpRenderValue != null && PopUpRenderValue != "" && PopUpRenderValue == "Manage") {
         var element = document.getElementById('add-club-plan');
          element.classList.remove('translate-x-full');
      }
@@ -263,6 +276,15 @@
           LoadPagination(page_size, total_data, start_index_val, URL);
   });
         $(document).ready(function () {
+            $(".selectplan").change(function () {
+                var $this = this.name;
+                var value = $('[name="' + $this + '"]').val();
+                const selector = '.field-validation-valid[data-valmsg-for="' + $this + '"]';
+                if (value != "" ) {
+                    isvalid = false;
+                    $(selector).text('');
+                }
+            });
             $(".IdentityDescription").find("input[type='checkbox']:not(.input-validation-error)");
             $(".toogle1").change(function () {
                 var nameAttributeValue = this.name;
@@ -276,16 +298,30 @@
 
 
         });
+        $('#submit-id-plan').click(function (event) {
+            var isvalid = true;
+            event.preventDefault();
+            var rows = $('#container .plans select');
+            rows.each(function (index, element) {
+                var ss = $(element).attr('id');
+                var name = $(element).attr('name');
+                var value = $('[name="' + name + '"]').val();
+                const selector = '.field-validation-valid[data-valmsg-for="' + name + '"]';
+                if (value == null || value == "") {
+                    isvalid = false;
+                    $(selector).text('@CRS.ADMIN.APPLICATION.Resources.Resource.Required');
+                }
 
-        function ManageClubPlanFunction(i, j) {
-            window.location.href = '/ClubPlanManagement/ManageClubPlan?AgentId=' + i + '&Id=' + j
-        }
-        function BlockFunction(i, j) {
-            window.location.href = '/ClubPlanManagement/BlockUnblockPlan?AgentId=' + i + '&Id=' + j+ '&Status=B'
-        }
-        function UnBlockFunction(i, j) {
-            window.location.href = '/ClubPlanManagement/BlockUnblockPlan?AgentId=' + i + '&Id=' + j + '&Status=A'
-        }
+            });
+            if (isvalid == false) {
+                return false;
+            }
+            else {
+                $('#ManageClubPlanForm').submit();
+            }
+
+        });
+
 
 
     </script>

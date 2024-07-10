@@ -997,6 +997,7 @@ namespace CRS.ADMIN.APPLICATION.Library
             {
                 case "COMMISSIONTYPELIST":
                     return new List<SelectListItem> {
+                         
                         new SelectListItem { Text = "--- Select ---", Value = "" },
                         new SelectListItem { Text = "Percentage", Value = "P" },
                         new SelectListItem { Text = "Flat", Value = "F" }
@@ -1099,8 +1100,17 @@ namespace CRS.ADMIN.APPLICATION.Library
                     return response;
                 case "USERSTATUSDDL":
                     response = new Dictionary<string, string>();
-                    response.Add("A".EncryptParameter(), "Active");
-                    response.Add("B".EncryptParameter(), "Blocked");
+                    if (search2.ToLower()=="ja")
+                    {
+                        response.Add("A".EncryptParameter(), "アクティブ");
+                        response.Add("B".EncryptParameter(), "ブロック");
+                    }
+                    else
+                    {
+                        response.Add("A".EncryptParameter(), "Active");
+                        response.Add("B".EncryptParameter(), "Blocked");
+                    }
+                  
                     return response;
                 case "CLUBPLANS":
                     dbResponse = _CommonBuss.GetDropDown("040", search1, search2);
@@ -1144,6 +1154,10 @@ namespace CRS.ADMIN.APPLICATION.Library
                     return response;
                 case "LOCATIONDDLPREFECTURE":
                     dbResponse = _CommonBuss.GetDropDown("050", search1, search2);
+                    dbResponse.ForEach(item => { response.Add(item.Key.EncryptParameter(), item.Value); });
+                    return response;
+                case "LOCATIONTAG":
+                    dbResponse = _CommonBuss.GetDropDown("051", search1, search2);
                     dbResponse.ForEach(item => { response.Add(item.Key.EncryptParameter(), item.Value); });
                     return response;
                 default: return response;

@@ -1,4 +1,4 @@
-
+﻿
 using CRS.ADMIN.APPLICATION.Library;
 using CRS.ADMIN.APPLICATION.Models.ClubManagement;
 using CRS.ADMIN.APPLICATION.Models.PointSetup;
@@ -14,6 +14,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Mvc;
 using static Google.Apis.Requests.BatchRequest;
@@ -33,6 +34,8 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             ViewBag.SearchFilter = null;
             Session["CurrentURL"] = "/PointSetup/PointSetupUserTypeList";
             //string RenderId = "";
+            var culture = Request.Cookies["culture"]?.Value;
+            culture = string.IsNullOrEmpty(culture) ? "ja" : culture;
             var objPointSetupModel = new PointSetupModel();
             PaginationFilterCommon dbRequest = new PaginationFilterCommon()
             {
@@ -54,10 +57,10 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             }
             var dictionary = new Dictionary<string, string>();
             objPointSetupModel.UserTypeList.ForEach(item => { dictionary.Add(item.RoleTypeId, item.RoleTypeName); });
-            ViewBag.RoleTypeList = ApplicationUtilities.SetDDLValue(dictionary, null, "--- Select ---");
+            ViewBag.RoleTypeList = ApplicationUtilities.SetDDLValue(dictionary, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---");
             var dictionaryempty = new Dictionary<string, string>();
-            ViewBag.UserList = ApplicationUtilities.SetDDLValue(dictionaryempty, null, "--- Select ---");
-            ViewBag.PointsCategoryList = ApplicationUtilities.SetDDLValue(dictionaryempty, null, "--- Select ---");
+            ViewBag.UserList = ApplicationUtilities.SetDDLValue(dictionaryempty, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---");
+            ViewBag.PointsCategoryList = ApplicationUtilities.SetDDLValue(dictionaryempty, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---");
             ViewBag.StartIndex = StartIndex;
             ViewBag.PageSize = PageSize;
             ViewBag.TotalData = dbResponse != null && dbResponse.Any() ? dbResponse[0].TotalRecords : 0;
@@ -68,8 +71,10 @@ namespace CRS.ADMIN.APPLICATION.Controllers
         public ActionResult PointsCategoryList(string RoleTypeId, string SearchFilter = "", string value = "", int StartIndex = 0, int PageSize = 10)
         {
             ViewBag.SearchFilter = null;
-            Session["CurrentURL"] = "/PointSetup/ManagePointsCategory";
+            Session["CurrentURL"] = "/PointSetup/PointSetupUserTypeList";
             string RenderId = "";
+            ViewBag.IsBackAllowed = true;
+            ViewBag.BackButtonURL = "/PointSetup/PointSetupUserTypeList";
             var objPointSetupModel = new PointSetupModel();
             if (TempData.ContainsKey("ManageCategoryModel")) objPointSetupModel.ManageCategory = TempData["ManageCategoryModel"] as CategoryModel;
             else objPointSetupModel.ManageCategory = new CategoryModel();
@@ -313,8 +318,12 @@ namespace CRS.ADMIN.APPLICATION.Controllers
         public ActionResult PointsCategorySlabList(string roleTypeId, string categoryId, string SearchFilter = "", int StartIndex = 0, int PageSize = 10)
         {
             ViewBag.SearchFilter = null;
-            Session["CurrentURL"] = "/PointSetup/ManagePointsCategory";
+            Session["CurrentURL"] = "/PointSetup/PointSetupUserTypeList";
             string RenderId = "";
+            ViewBag.IsBackAllowed = true;
+            ViewBag.BackButtonURL = "/PointSetup/PointsCategoryList?RoleTypeId=" + roleTypeId;
+            var culture = Request.Cookies["culture"]?.Value;
+            culture = string.IsNullOrEmpty(culture) ? "ja" : culture;
             var objPointSetupModel = new PointSetupModel();
             if (TempData.ContainsKey("ManageCategorySlab")) objPointSetupModel.ManageCategorySlab = TempData["ManageCategorySlab"] as CategorySlabModel;
             else objPointSetupModel.ManageCategorySlab = new CategorySlabModel();
@@ -344,7 +353,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 objPointSetupModel.CategorySlabList.ForEach(x => x.CategorySlabId = !string.IsNullOrEmpty(x.CategorySlabId) ? x.CategorySlabId.EncryptParameter() : x.CategorySlabId);
 
             }
-            ViewBag.PointTypeDDLList = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("COMMISSIONPERCENTAGETYPELIST") as Dictionary<string, string>, null, "--- Select ---");
+            ViewBag.PointTypeDDLList = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("COMMISSIONPERCENTAGETYPELIST","",culture) as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---");
             ViewBag.PointTypeIdKey = objPointSetupModel.ManageCategorySlab.PointType;
             ViewBag.PointTypeIdKey = objPointSetupModel.ManageCategorySlab.PointType;
             if (objPointSetupModel.ManageCategorySlab.RoleTypeId.DecryptParameter() == "6")

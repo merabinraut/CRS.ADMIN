@@ -37,9 +37,9 @@
                         @Html.HiddenFor(model => model.Tag1Status)
                         <select id="large" name="tag1Select" class=" default_select select-common block w-full "
                                 style="width: 100%;">
-                            @foreach (var item in ViewBag.LocationDDLList as IEnumerable<SelectListItem>)
+                            @foreach (var item in ViewBag.LocationDDLListTag as IEnumerable<SelectListItem>)
                             {
-                                var selectedId = ViewBag.LocationIdKey as string;
+                                var selectedId = ViewBag.LocationIdtagKey as string;
                                 if (item.Value == selectedId)
                                 {
                                     <option value="@item.Value" selected>@item.Text</option>
@@ -167,7 +167,7 @@
                         </select>
                     </div>
                 </div>
-                <div style="padding-top:10px;padding-bottom:10px">Availability</div>
+                <div style="padding-top:10px;padding-bottom:10px">@CRS.ADMIN.APPLICATION.Resources.Resource.Availability</div>
                 @if (Model.GetAvailabilityTagModel != null) {
                         foreach(var item in Model.GetAvailabilityTagModel)
                             {

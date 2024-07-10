@@ -3,6 +3,7 @@ using CRS.ADMIN.APPLICATION.Library;
 using CRS.ADMIN.APPLICATION.Models.NotificationManagement;
 using CRS.ADMIN.BUSINESS.NotificationManagement;
 using CRS.ADMIN.SHARED.NotificationManagement;
+using System;
 using System.Collections.Generic;
 using System.Web.Mvc;
 
@@ -19,6 +20,8 @@ namespace CRS.ADMIN.APPLICATION.Controllers
         public ActionResult ViewAllNotifications(string NotificationId = "")
         {
             Session["CurrentURL"] = "/NotificationManagement/ViewAllNotifications";
+            ViewBag.IsBackAllowed = true;
+            ViewBag.BackButtonURL = "javascript:history.back()";
             var requestCommon = new ManageNotificationCommon()
             {
                 AdminId = ApplicationUtilities.GetSessionValue("UserId").ToString().DecryptParameter(),
@@ -26,10 +29,13 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             };
             var dbResponse = _buss.GetAllNotification(requestCommon);
             List<NotificationDetailModel> response = dbResponse.MapObjects<NotificationDetailModel>();
-            response.ForEach(x =>
+            if (response != null && response.Count > 0)
+                response.ForEach(x =>
             {
                 x.NotificationId = x.NotificationId.EncryptParameter();
                 x.NotificationImageURL = ImageHelper.ProcessedImage(x.NotificationImageURL);
+                x.CreatedDate = !string.IsNullOrEmpty(x.CreatedDate) ? DateTime.Parse(x.CreatedDate).ToString("yyyy'年'MM'月'dd'日' HH:mm:ss") : x.CreatedDate;
+                x.UpdatedDate = !string.IsNullOrEmpty(x.UpdatedDate) ? DateTime.Parse(x.UpdatedDate).ToString("yyyy'年'MM'月'dd'日' HH:mm:ss") : x.UpdatedDate;
             });
             return View(response);
         }

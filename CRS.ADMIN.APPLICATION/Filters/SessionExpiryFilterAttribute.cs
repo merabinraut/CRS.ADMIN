@@ -1,4 +1,6 @@
-﻿using CRS.ADMIN.APPLICATION.Library;
+﻿using CRS.ADMIN.APPLICATION.Helper;
+using CRS.ADMIN.APPLICATION.Library;
+using CRS.ADMIN.APPLICATION.Models.NotificationManagement;
 using CRS.ADMIN.BUSINESS.NotificationManagement;
 using CRS.ADMIN.SHARED.NotificationManagement;
 using System;
@@ -29,7 +31,17 @@ namespace CRS.ADMIN.APPLICATION.Filters
                 var notificationBussiness = new NotificationManagementBusiness();
                 var notificationList = new List<NotificationDetailCommon>();
                 notificationList = notificationBussiness.GetNotification(ctx.Session["UserId"].ToString().DecryptParameter()).ToList();
-                ctx.Session["Notifications"] = notificationList;
+                if (notificationList.Count > 0)
+                {
+                    notificationList.ForEach(x =>
+                    {
+                        x.NotificationId = x.NotificationId.EncryptParameter();
+                        x.NotificationImageURL = ImageHelper.ProcessedImage(x.NotificationImageURL);
+                        x.Time = !string.IsNullOrEmpty(x.Time) ? DateTime.Parse(x.Time).ToString("yyyy'年'MM'月'dd'日' HH:mm:ss") : x.Time;
+                        //x.UpdatedDate = !string.IsNullOrEmpty(x.UpdatedDate) ? DateTime.Parse(x.UpdatedDate).ToString("yyyy'年'MM'月'dd'日' HH:mm:ss") : x.UpdatedDate;
+                    });
+                }
+                ctx.Session["Notifications"] = notificationList.MapObjects<NotificationDetailModel>().ToList();
                 var controllerName = string.Empty;
                 var actionName = string.Empty;
                 var routeValues = HttpContext.Current.Request.RequestContext.RouteData.Values;

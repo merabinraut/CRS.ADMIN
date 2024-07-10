@@ -1,3 +1,4 @@
+using CRS.ADMIN.APPLICATION.Resources;
 using CRS.ADMIN.SHARED;
 using System;
 using System.Collections.Generic;
@@ -13,15 +14,15 @@ namespace CRS.ADMIN.APPLICATION.Models.ClubManagerModel
         public string ManagerId { get; set; }
         public string ClubId { get; set; }
         [DisplayName("Manager Name")]
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
+        [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Required")]
         public string ManagerName { get; set; }
         [DisplayName("Email Address")]
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
-        [MaxLength(75, ErrorMessage = "Maximum 75 characters allowed")]
+        [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Required")]
+        [MaxLength(75, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Maximum_75_characters_allowed")]
         public string Email { get; set; }
         [DisplayName("Mobile Number")]
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
-        [RegularExpression("^[0-9]{11}$", ErrorMessage = "The field must be a 11-digit number.")]
+        [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Required")]
+        [RegularExpression("^[0-9]{11}$", ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "The_field_must_be_a_11_digit_number")]
         public string MobileNumber { get; set; }
     }
 }

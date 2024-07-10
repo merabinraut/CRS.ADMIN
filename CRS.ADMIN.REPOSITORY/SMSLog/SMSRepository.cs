@@ -1,4 +1,5 @@
 ﻿using CRS.ADMIN.SHARED.SMSLog;
+using System;
 using System.Collections.Generic;
 using System.Data;
 
@@ -27,8 +28,8 @@ namespace CRS.ADMIN.REPOSITORY.SMSLog
                         Message = row["Message"].ToString(),
                         Status = row["Status"].ToString(),
                         CreatedBy = row["CreatedBy"].ToString(),
-                        CreatedDate = row["CreatedDate"].ToString()
-                    });
+                        CreatedDate = !string.IsNullOrEmpty(row["CreatedDate"].ToString()) ? DateTime.Parse(row["CreatedDate"].ToString()).ToString("yyyy'年'MM'月'dd'日' HH:mm:ss") : row["CreatedDate"].ToString()
+                    }); ;
                 }
             }
             return responseInfo;

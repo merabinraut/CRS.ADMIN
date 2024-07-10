@@ -8,7 +8,7 @@
         <div class="drawer-form-container sticky top-0 z-[5] ">
             <div class="drawer-form flex justify-between bg-secondary-color-pink py-[16px] px-[24px] h-[56px]">
                 <div>
-                    Manage Static Data Type
+                    @CRS.ADMIN.APPLICATION.Resources.Resource.ManageStaticDataType
                 </div>
                 <button type="button" data-drawer-hide="add-new_static_data" aria-controls="add-new_static_data"
                         class="text-[20px]">
@@ -27,13 +27,17 @@
             {
                 @Html.HiddenFor(model => model.StaticDataValue)
             }
+            if (!string.IsNullOrEmpty(Model.StaticDataType))
+            {
+                @Html.HiddenFor(model => model.StaticDataType)
+            }
             if (!string.IsNullOrEmpty(Model.Status))
             {
                 @Html.HiddenFor(model => model.Status)
             }
             <div class="p-[24px]">
                 <div class=" py-4 grid gap-5">
-                    <div class="input-field-common">
+                    @*<div class="input-field-common">
                         <label class="block mb-[12px] text-sm font-medium text-secondary-100 ">
                             Static Data Type Id
                         </label>
@@ -46,10 +50,10 @@
                         <span class="error">
                             @Html.ValidationMessageFor(m => m.StaticDataType)
                         </span>
-                    </div>
+                    </div>*@
                     <div class="input-field-common">
                         <label class="block mb-[12px] text-sm font-medium text-secondary-100 ">
-                            Static Data Label
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.StaticDataLabel
                         </label>
                         @Html.TextBoxFor(model => model.StaticDataLabel, new
                         {
@@ -62,7 +66,7 @@
                     </div>
                     <div class="input-field-common">
                         <label class="block mb-[12px] text-sm font-medium text-secondary-100 ">
-                            Static Data Description
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.StaticDataDescription
                         </label>
                         @Html.TextBoxFor(model => model.StaticDataDescription, new
                         {
@@ -75,7 +79,7 @@
                     </div>
                     <div class="input-field-common">
                         <label class="block mb-[12px] text-sm font-medium text-secondary-100 ">
-                            Static Data Value
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.StaticDataValue
                         </label>
                         @if (Model.StaticDataValue != null && !string.IsNullOrEmpty(Model.StaticDataValue))
                         {
@@ -103,7 +107,7 @@
                     </div>
                     <div class="input-field-common">
                         <label class="block mb-[12px] text-sm font-medium text-secondary-100 ">
-                            Additional Value1
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.AdditionalValue1
                         </label>
                         @Html.TextBoxFor(model => model.AdditionalValue1, new
                         {
@@ -116,7 +120,7 @@
                     </div>
                     <div class="input-field-common">
                         <label class="block mb-[12px] text-sm font-medium text-secondary-100 ">
-                            Additional Value2
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.AdditionalValue2
                         </label>
                         @Html.TextBoxFor(model => model.AdditionalValue2, new
                         {
@@ -129,7 +133,7 @@
                     </div>
                     <div class="input-field-common">
                         <label class="block mb-[12px] text-sm font-medium text-secondary-100 ">
-                            Additional Value3
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.AdditionalValue3
                         </label>
                         @Html.TextBoxFor(model => model.AdditionalValue3, new
                         {
@@ -142,7 +146,7 @@
                     </div>
                     <div class="input-field-common">
                         <label class="block mb-[12px] text-sm font-medium text-secondary-100 ">
-                            Additional Value4
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.AdditionalValue4
                         </label>
                         @Html.TextBoxFor(model => model.AdditionalValue4, new
                         {
@@ -155,7 +159,7 @@
                     </div>
                     <div class="input-field-common">
                         <label class="block mb-[12px] text-sm font-medium text-secondary-100 ">
-                            Input Type
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.InputType
                         </label>
                         @Html.TextBoxFor(model => model.InputType, new
                         {

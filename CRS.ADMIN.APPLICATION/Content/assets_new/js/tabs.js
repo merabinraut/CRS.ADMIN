@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 });
 
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function () {
     const tabs = document.querySelectorAll(".tab-content-plane");
     const tabButtons = document.querySelectorAll(".tab-button-plane");
 

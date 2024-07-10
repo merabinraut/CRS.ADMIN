@@ -28,7 +28,7 @@ namespace CRS.ADMIN.REPOSITORY.RoleManagement
                         RoleId = item["RoleId"].ToString(),
                         RoleName = item["RoleName"].ToString(),
                         RoleDescription = item["RoleDescription"].ToString(),
-                        ActionDate = item["ActionDate"].ToString(),
+                        ActionDate = !string.IsNullOrEmpty(item["ActionDate"].ToString()) ? DateTime.Parse(item["ActionDate"].ToString()).ToString("yyyy'年'MM'月'dd'日' HH:mm:ss") : item["ActionDate"].ToString() ,
                         ActionUser = item["ActionUser"].ToString()
                     });
                 }
@@ -53,7 +53,7 @@ namespace CRS.ADMIN.REPOSITORY.RoleManagement
                         RoleType = item["RoleType"].ToString(),
                         RoleName = item["RoleName"].ToString(),
                         RoleDescription = item["RoleDescription"].ToString(),
-                        ActionDate = item["ActionDate"].ToString(),
+                        ActionDate = !string.IsNullOrEmpty(item["ActionDate"].ToString()) ? DateTime.Parse(item["ActionDate"].ToString()).ToString("yyyy'年'MM'月'dd'日' HH:mm:ss") : item["ActionDate"].ToString(),
                         ActionUser = item["ActionUser"].ToString()
                     });
                 }

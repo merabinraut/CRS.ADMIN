@@ -1,5 +1,6 @@
 ﻿using CRS.ADMIN.APPLICATION.Models.ClubManagerModel;
 using CRS.ADMIN.APPLICATION.Models.TagManagement;
+using CRS.ADMIN.APPLICATION.Resources;
 using DocumentFormat.OpenXml.Drawing.Charts;
 using DocumentFormat.OpenXml.Office2013.Word;
 using DocumentFormat.OpenXml.Wordprocessing;
@@ -104,49 +105,49 @@ namespace CRS.ADMIN.APPLICATION.Models.ClubManagement
     {
         public string AgentId { get; set; }
         [DisplayName("Username")]
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
-        [MinLength(3, ErrorMessage = "Minimum 3 characters required")]
-        [MaxLength(16, ErrorMessage = "Maximum 16 characters allowed")]
+        [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Required")]
+        [MinLength(3, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Minimum_3_characters_required")]
+        [MaxLength(16, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Maximum_16_characters_allowed")]
         public string LoginId { get; set; }
         [DisplayName("Email Address")]
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
-        [MaxLength(75, ErrorMessage = "Maximum 75 characters allowed")]
+        [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Required")]
+        [MaxLength(75, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Maximum_75_characters_allowed")]
         public string Email { get; set; }
         [DisplayName("Contact Number")]
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
-        [RegularExpression("^[0-9]{11}$", ErrorMessage = "The field must be a 11-digit number.")]
+        [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Required")]
+        [RegularExpression("^[0-9]{11}$", ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "The_field_must_be_a_11_digit_number")]
         public string MobileNumber { get; set; }
         [DisplayName("Landline Number")]
-        [RegularExpression("^[0-9]{10,11}$", ErrorMessage = "The field must be a either 10-digit or 11-digit number.")]
+        [RegularExpression("^[0-9]{10,11}$", ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "The_field_must_be_a_either_10_digit_or_11_digit_number")]
         public string LandlineNumber { get; set; }
         [DisplayName("Club Name (English)")]
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
-        [MaxLength(50, ErrorMessage = "Maximum 50 characters allowed")]
+        [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Required")]
+        [MaxLength(50, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Maximum_50_characters_allowed")]
         public string ClubName1 { get; set; }
         [DisplayName("Club Name (Katakana)")]
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
-        [MaxLength(50, ErrorMessage = "Maximum 50 characters allowed")]
+        [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Required")]
+        [MaxLength(50, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Maximum_50_characters_allowed")]
         public string ClubName2 { get; set; }
         [DisplayName("Business Type")]
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
+        [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Required")]
         public string BusinessType { get; set; }
         [DisplayName("Group Name (English)")]
         //[Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
-        [MaxLength(50, ErrorMessage = "Maximum 50 characters allowed")]
+        [MaxLength(50, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Maximum_50_characters_allowed")]
         public string GroupName { get; set; }
         [DisplayName("Group Name (Katakana)")]
         //[Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
-        [MaxLength(50, ErrorMessage = "Maximum 50 characters allowed")]
+        [MaxLength(50, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Maximum_50_characters_allowed")]
         public string GroupName2 { get; set; }
         //[Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
-        [MaxLength(200, ErrorMessage = "Maximum 200 characters allowed")]
+        [MaxLength(200, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Maximum_200_characters_allowed")]
         public string Description { get; set; }
         [DisplayName("Location")]
         //[Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
         public string LocationURL { get; set; }
-        [MaxLength(30, ErrorMessage = "Maximum 30 characters allowed")]
+        [MaxLength(30, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Maximum_30_characters_allowed")]
         public string Longitude { get; set; }
-        [MaxLength(30, ErrorMessage = "Maximum 30 characters allowed")]
+        [MaxLength(30, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Maximum_30_characters_allowed")]
         public string Latitude { get; set; }
         [DisplayName("Logo")]
         public string Logo { get; set; }
@@ -167,46 +168,50 @@ namespace CRS.ADMIN.APPLICATION.Models.ClubManagement
         [DisplayName("Location")]
         //[Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
         public string LocationId { get; set; }
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
+        [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Required")]
         public string CompanyName { get; set; }
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
+        [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Required")]
         public string ceoFullName { get; set; }
         public string Line { get; set; }
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
+        [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Required")]
         public string GoogleMap { get; set; }
+        [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Required")]
         public string WorkingHrFrom { get; set; }
+        [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Required")]
         public string WorkingHrTo { get; set; }
         public string Holiday { get; set; }
+        [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Required")]
         public string LastOrderTime { get; set; }
+        [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Required")]
         public string LastEntryTime { get; set; }
-        [RegularExpression(@"^(?:100|\d{1,2})$", ErrorMessage = "l")]
+        [RegularExpression(@"^(?:100|\d{1,2})$", ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Invalid_Tax")]
         public string Tax { get; set; }
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
-        [RegularExpression(@"^\d{3} \d{4}$", ErrorMessage = "Invalid Postal Code")]
+        [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Required")]
+        [RegularExpression(@"^\d{3} \d{4}$", ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Invalid_Postal_Code")]
         public string PostalCode { get; set; }
         //[Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
         public string Prefecture { get; set; }
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
+        [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Required")]
         public string City { get; set; }
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
+        [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Required")]
         public string Street { get; set; }
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
+        [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Required")]
         public string BuildingRoomNo { get; set; }
 
-        [RegularExpression("^[0-9]+$", ErrorMessage = "Invalid amount")]
+        [RegularExpression("^[0-9]+$", ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Invalid_amount")]
         public string RegularFee { get; set; }
-        [RegularExpression("^[0-9]+$", ErrorMessage = "Invalid amount")]
+        [RegularExpression("^[0-9]+$", ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Invalid_amount")]
         public string DesignationFee { get; set; }
-        [RegularExpression("^[0-9]+$", ErrorMessage = "Invalid amount")]
+        [RegularExpression("^[0-9]+$", ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Invalid_amount")]
         public string CompanionFee { get; set; }
-        [RegularExpression("^[0-9]+$", ErrorMessage = "Invalid amount")]
+        [RegularExpression("^[0-9]+$", ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Invalid_amount")]
         public string ExtensionFee { get; set; }
-        [RegularExpression("^[0-9]+$", ErrorMessage = "Invalid amount")]
+        [RegularExpression("^[0-9]+$", ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Invalid_amount")]
         public string Drink { get; set; }
         public string Pref { get; set; }
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
+        [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Required")]
         public string LocationDDL { get; set; }
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
+        [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Required")]
         public string BusinessTypeDDL { get; set; }
         public List<PlanList> PlanDetailList { get; set; } = new List<PlanList>();
         //[Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
@@ -216,25 +221,31 @@ namespace CRS.ADMIN.APPLICATION.Models.ClubManagement
         public string BusinessLicenseNumber { get; set; }
         //[Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
         public string LicenseIssuedDate { get; set; }
+        [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Required")]
         public string Representative1_ContactName { get; set; }
+        [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Required")]
+        [RegularExpression("^[0-9]{11}$", ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "The_field_must_be_a_11_digit_number")]
         public string Representative1_MobileNo { get; set; }
+        [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Required")]
         public string Representative1_Email { get; set; }
+        [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Required")]
         public string Representative1_Furigana { get; set; }
         public string Representative2_ContactName { get; set; }
+        [RegularExpression("^[0-9]{11}$", ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "The_field_must_be_a_11_digit_number")]
         public string Representative2_MobileNo { get; set; }
         public string Representative2_Email { get; set; }
         public string Representative2_Furigana { get; set; }
         public string ClosingDate { get; set; }
         public string holdId { get; set; }
         public string LandLineCode { get; set; }
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
+        [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Required")]
         public string ClubName { get; set; }
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
+        [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Required")]
         public string CeoFurigana { get; set; }
 
         public string CompanyNameFurigana { get; set; }
         public string CorporateRegistryDocument { get; set; }
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
+        [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Required")]
         public string IdentificationType { get; set; }
         public string IdentificationTypeName { get; set; }
         public string DocumentType { get; set; }
@@ -262,13 +273,13 @@ namespace CRS.ADMIN.APPLICATION.Models.ClubManagement
     public class planIdentityDataModel
     {
         public string English { get; set; }
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
+        [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Required")]
         public string StaticDataValue { get; set; }
         public string japanese { get; set; }
         public string inputtype { get; set; }
         public string name { get; set; }
         public string IdentityLabel { get; set; }
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
+        [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName  = "Required")]
         public string IdentityDescription { get; set; }
         public string PlanListId { get; set; }
         public string Id { get; set; }

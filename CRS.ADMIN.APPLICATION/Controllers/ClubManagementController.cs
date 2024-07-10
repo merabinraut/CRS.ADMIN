@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -94,28 +95,30 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 item.ClubLogo = ImageHelper.ProcessedImage(item.ClubLogo);
             });
             ViewBag.Pref = DDLHelper.LoadDropdownList("PREF") as Dictionary<string, string>;
-            ViewBag.Holiday = ApplicationUtilities.SetDDLValue(DDLHelper.LoadDropdownList("Holiday") as Dictionary<string, string>, null, "--- Select ---");
+            ViewBag.Holiday = ApplicationUtilities.SetDDLValue(DDLHelper.LoadDropdownList("Holiday","",culture) as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---");
             ViewBag.IdentificationType = DDLHelper.LoadDropdownList("DOCUMENTTYPE") as Dictionary<string, string>;
             ViewBag.IdentificationTypeIdKey = response.ManageClubModel.IdentificationType;
             ViewBag.PopUpRenderValue = !string.IsNullOrEmpty(RenderId) ? RenderId : null;
-            ViewBag.LocationDDLList = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("LOCATIONDDLPREFECTURE") as Dictionary<string, string>, null, "--- Select ---");
-            ViewBag.BusinessTypeDDL = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("BUSINESSTYPEDDL") as Dictionary<string, string>, null, "");
-            ViewBag.RankDDL = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("RANKDDL") as Dictionary<string, string>, null, "--- Select ---");
-            ViewBag.ClubStoreDDL = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("CLUBSTOREDDL") as Dictionary<string, string>, null, "--- Select ---");
-            ViewBag.ClubCategoryDDL = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("CLUBCATEGORYDDL") as Dictionary<string, string>, null, "--- Select ---");
+            ViewBag.LocationDDLList = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("LOCATIONDDLPREFECTURE", "", culture) as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---");
+             ViewBag.LocationDDLListTag = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("LOCATIONTAG", "", culture) as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---");            
+            ViewBag.BusinessTypeDDL = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("BUSINESSTYPEDDL", "", culture) as Dictionary<string, string>, null, "");
+            ViewBag.RankDDL = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("RANKDDL", "", culture) as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---");
+            ViewBag.ClubStoreDDL = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("CLUBSTOREDDL", "", culture) as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---");
+            ViewBag.ClubCategoryDDL = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("CLUBCATEGORYDDL", "", culture) as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---");
             //ViewBag.CountryCodeDDL = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("COUNTRYCODE") as Dictionary<string, string>, null);
 
             ViewBag.RankDDLKey = response.ManageTag.Tag2RankName;
             ViewBag.ClubStoreDDLKey = response.ManageTag.Tag5StoreName;
             ViewBag.ClubCategoryDDLKey = response.ManageTag.Tag3CategoryName;
             ViewBag.LocationIdKey = response.ManageClubModel.LocationDDL;
+            ViewBag.LocationIdtagKey= response.ManageTag.Tag1Location;
 
             ViewBag.PrefIdKey = !string.IsNullOrEmpty(response.ManageClubModel.Prefecture) ? ViewBag.Pref[response.ManageClubModel.Prefecture] : null;
             ViewBag.HolidayIdKey = !string.IsNullOrEmpty(response.ManageClubModel.Holiday) ? response.ManageClubModel.Holiday : null;
             ViewBag.BusinessTypeKey = response.ManageClubModel.BusinessTypeDDL;
             //ViewBag.CountryCodeDDLKey = response.ManageClubModel.LandLineCode;
 
-            ViewBag.ClosingDate = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("CLOSINGDATE") as Dictionary<string, string>, null, "--- Select ---");
+            ViewBag.ClosingDate = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("CLOSINGDATE", "", culture) as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---");
             ViewBag.ClosingDateIdKey = response.ManageClubModel.ClosingDate;
 
             ViewBag.StartIndex2 = StartIndex2;
@@ -351,12 +354,19 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 {
                     ModelState.AddModelError("Representative1_Furigana", "Required");
                 }
+                if (string.IsNullOrEmpty(Model.CompanyName))
+                {
+                    ModelState.AddModelError("CompanyName", "Required");
+                }
 
             }
             else
             {
                 ModelState.Remove("CompanyName");
-                ModelState.Remove("CompanyNameFurigana");
+                ModelState.Remove("Representative1_ContactName");
+                ModelState.Remove("Representative1_MobileNo");
+                ModelState.Remove("Representative1_Email");
+                ModelState.Remove("Representative1_Furigana");
             }
             ModelState.Remove("LoginId");
             if (ModelState.IsValid)
@@ -993,6 +1003,8 @@ namespace CRS.ADMIN.APPLICATION.Controllers
         {
             var ResponseModel = new ManageTag();
             //var availabilityInfo = new List<AvailabilityTagModel>();
+            var culture = Request.Cookies["culture"]?.Value;
+            culture = string.IsNullOrEmpty(culture) ? "ja" : culture;
             var cId = ClubId?.DecryptParameter();
             if (string.IsNullOrEmpty(cId))
             {
@@ -1007,7 +1019,8 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             else
             {
                 var dbResponseInfo = _BUSS.GetTagDetails(cId);
-                var dbAvailabilityInfo = _BUSS.GetAvailabilityList(cId);
+                var dbAvailabilityInfo = _BUSS.GetAvailabilityList(cId, culture);
+
                 if (dbResponseInfo == null || dbResponseInfo.Code != "0")
                 {
                     this.AddNotificationMessage(new NotificationModel()
@@ -1038,10 +1051,17 @@ namespace CRS.ADMIN.APPLICATION.Controllers
         public ActionResult ManageTag(ManageTag Model, string tag1Select, string tag2Select, string tag3Select, string tag5Select, FormCollection form = null)
         {
             string[] updatedValues = form.GetValues("checkedValues");
-            var Request = new AvailabilityTagModelCommon();
-            Request.StaticType = "36";
+            var Requests = new AvailabilityTagModelCommon();
+            Requests.StaticType = "36";
+            var culture = Request.Cookies["culture"]?.Value;
+            culture = string.IsNullOrEmpty(culture) ? "ja" : culture;
             var ClubId = !string.IsNullOrEmpty(Model.ClubId) ? Model.ClubId.DecryptParameter() : null;
             var TagId = !string.IsNullOrEmpty(Model.TagId) ? Model.TagId.DecryptParameter() : null;
+            var dbAvailabilityInfo = _BUSS.GetAvailabilityList(ClubId, culture);
+            Model.GetAvailabilityTagModel = dbAvailabilityInfo.MapObjects<AvailabilityTagModel>();
+            Model.Tag1Location = tag1Select;
+            Model.Tag3CategoryName = tag3Select;
+            Model.Tag5StoreName = tag5Select;
             if (string.IsNullOrEmpty(ClubId) || string.IsNullOrEmpty(TagId))
             {
                 this.AddNotificationMessage(new NotificationModel()
@@ -1060,7 +1080,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 dbRequest.Tag1Status = string.IsNullOrEmpty(dbRequest.Tag1Status) ? "B" : dbRequest.Tag1Status;
                 dbRequest.Tag1Location = !string.IsNullOrEmpty(dbRequest.Tag1Status) ? tag1Select?.DecryptParameter() : null;
                 dbRequest.Tag2Status = string.IsNullOrEmpty(dbRequest.Tag2Status) ? "B" : dbRequest.Tag2Status;
-                //dbRequest.Tag2RankName = !string.IsNullOrEmpty(dbRequest.Tag2Status) ? "B": dbRequest.Tag2RankName;
+                dbRequest.Tag2RankName = Convert.ToString(dbRequest.Tag2Status) == "B" ? null : dbRequest.Tag2RankName;
                 dbRequest.Tag3Status = string.IsNullOrEmpty(dbRequest.Tag3Status) ? "B" : dbRequest.Tag3Status;
                 dbRequest.Tag3CategoryName = !string.IsNullOrEmpty(dbRequest.Tag3Status) ? tag3Select?.DecryptParameter() : null;
                 dbRequest.Tag4Status = string.IsNullOrEmpty(dbRequest.Tag4Status) ? "B" : dbRequest.Tag4Status;
@@ -1071,7 +1091,8 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 var dbResponse = _BUSS.ManageTag(dbRequest);
                 if (updatedValues != null)
                 {
-                    var dbAvailability = _BUSS.ManageClubAvailability(Request, dbRequest, updatedValues);
+                    var dbAvailability = _BUSS.ManageClubAvailability(Requests, dbRequest, updatedValues);
+                    Model.GetAvailabilityTagModel = dbAvailabilityInfo.MapObjects<AvailabilityTagModel>();
                 }
                 if (dbResponse != null && dbResponse.Code == 0)
                 {
@@ -1092,6 +1113,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                         Title = NotificationMessage.INFORMATION.ToString(),
                     });
                     TempData["ManageTagModel"] = Model;
+                    TempData["AvailabilityModel"] = Model.GetAvailabilityTagModel;
                     TempData["RenderId"] = "ManageTag";
                     return RedirectToAction("ClubList", "ClubManagement");
                 }
@@ -1109,6 +1131,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             AddNotificationMessage(notificationModels);
             var errors = ModelState.Where(x => x.Value.Errors.Count > 0).Select(x => new { x.Key }).ToList();
             TempData["ManageTagModel"] = Model;
+            TempData["AvailabilityModel"] = Model.GetAvailabilityTagModel;
             TempData["RenderId"] = "ManageTag";
             return RedirectToAction("ClubList", "ClubManagement");
         }
@@ -1350,6 +1373,8 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             ViewBag.SearchFilter = null;
             Session["CurrentURL"] = "/ClubManagement/EventList";
             string RenderId = "";
+            ViewBag.IsBackAllowed = true;
+            ViewBag.BackButtonURL = "/ClubManagement/ClubList";
             var response = new EventManagementCommonModel();
             if (TempData.ContainsKey("ManageEventModel")) response.ManageEventModel = TempData["ManageEventModel"] as EventModel;
             else response.ManageEventModel = new EventModel();
@@ -1404,9 +1429,9 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             Model.EventType = Model.EventType.DecryptParameter();
             if (Model.EventType.ToUpper() == "1") //check for notice event type
             {
-                Model.Title = "";
+                //Model.Title = "";
                 Model.Image = "";
-                ModelState.Remove("Title");
+                //ModelState.Remove("Title");
                 if (Model.EventDate == null || Model.Description == null)
                 {
                     bool allowRedirect = false;

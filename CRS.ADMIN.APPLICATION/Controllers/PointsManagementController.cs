@@ -1,4 +1,4 @@
-using CRS.ADMIN.APPLICATION.Helper;
+﻿using CRS.ADMIN.APPLICATION.Helper;
 using CRS.ADMIN.APPLICATION.Library;
 using CRS.ADMIN.APPLICATION.Models;
 using CRS.ADMIN.APPLICATION.Models.PointsManagement;
@@ -6,8 +6,6 @@ using CRS.ADMIN.BUSINESS.PointsManagement;
 using CRS.ADMIN.SHARED;
 using CRS.ADMIN.SHARED.PaginationManagement;
 using CRS.ADMIN.SHARED.PointsManagement;
-using DocumentFormat.OpenXml.Spreadsheet;
-using DocumentFormat.OpenXml.Wordprocessing;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -29,8 +27,8 @@ namespace CRS.ADMIN.APPLICATION.Controllers
         [HttpGet]
         public ActionResult PointsTransferList(PointBalanceStatementRequestModel modelRequest, string UserType = "", string UserName = "", string TransferTypeId = "", string FromDate = "", string ToDate = "", string SearchFilter = "", string value = "", int StartIndex = 0, int PageSize = 10, int StartIndex2 = 0, int PageSize2 = 10, int StartIndex3 = 0, int PageSize3 = 10, int StartIndex4 = 0, int PageSize4 = 10, string SearchFilter4 = "", string LocationId4 = "", string ClubName4 = "", string PaymentMethodId4 = "", string FromDate4 = "", string ToDate4 = "", int TotalData3 = 0)
         {
-            ViewBag.SearchFilter = SearchFilter;
             Session["CurrentURL"] = "/PointsManagement/PointsTransferList";
+            ViewBag.SearchFilter = SearchFilter;
             string RenderId = "";
             var culture = Request.Cookies["culture"]?.Value;
             culture = string.IsNullOrEmpty(culture) ? "ja" : culture;
@@ -42,22 +40,23 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 Take = PageSize,
                 SearchFilter = !string.IsNullOrEmpty(SearchFilter) ? SearchFilter : null
             };
-            ViewBag.UserTypeList = ApplicationUtilities.SetDDLValue(DDLHelper.LoadDropdownList("USERTYPELIST") as Dictionary<string, string>, null, "--- Select ---");
-            ViewBag.TransferTypeIdList = ApplicationUtilities.SetDDLValue(DDLHelper.LoadDropdownList("TRANSACTIONTYPE") as Dictionary<string, string>, null, "--- Select ---");
-            ViewBag.LocationIdList = ApplicationUtilities.SetDDLValue(DDLHelper.LoadDropdownList("LOCATIONLIST") as Dictionary<string, string>, null, "--- Select ---");
-            ViewBag.CLUBTOADMINPaymentMethodListIdList = ApplicationUtilities.SetDDLValue(DDLHelper.LoadDropdownList("CLUBTOADMINPAYMENTMETHODLIST") as Dictionary<string, string>, null, "--- Select ---");
+            ViewBag.UserTypeList = ApplicationUtilities.SetDDLValue(DDLHelper.LoadDropdownList("USERTYPELIST","", culture) as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---");
+            
+            ViewBag.TransferTypeIdList = ApplicationUtilities.SetDDLValue(DDLHelper.LoadDropdownList("TRANSACTIONTYPE", "", culture) as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---");
+            ViewBag.LocationIdList = ApplicationUtilities.SetDDLValue(DDLHelper.LoadDropdownList("LOCATIONLIST", "", culture) as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---");
+            ViewBag.CLUBTOADMINPaymentMethodListIdList = ApplicationUtilities.SetDDLValue(DDLHelper.LoadDropdownList("CLUBTOADMINPAYMENTMETHODLIST", "", culture) as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---");
             var dictionaryempty = new Dictionary<string, string>();
 
             if (string.IsNullOrEmpty(UserType))
             {
-                ViewBag.FilterUserList = ApplicationUtilities.SetDDLValue(dictionaryempty, null, "--- Select ---");
+                ViewBag.FilterUserList = ApplicationUtilities.SetDDLValue(dictionaryempty, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---");
             }
             else
             {
-                ViewBag.FilterUserList = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("USERTYPENAME", UserType.DecryptParameter()) as Dictionary<string, string>, null, "--- Select ---");
+                ViewBag.FilterUserList = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("USERTYPENAME", UserType.DecryptParameter()) as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---");
             }
 
-            ViewBag.UserList = ApplicationUtilities.SetDDLValue(dictionaryempty, null, "--- Select ---");
+            ViewBag.UserList = ApplicationUtilities.SetDDLValue(dictionaryempty, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---");
             PointsManagementCommon Commonmodel = new PointsManagementCommon();
             Commonmodel.UserType = !string.IsNullOrEmpty(UserType) ? UserType.DecryptParameter() : null;
             Commonmodel.UserName = !string.IsNullOrEmpty(UserName) ? UserName.DecryptParameter() : null;
@@ -129,12 +128,55 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             if (!string.IsNullOrEmpty(UserType))
                 ViewBag.UserTypeIdKey = UserType;
 
+
+
             PointRequestListFilterCommon getPointRequest = objPointsManagementModel.PointRequestCommonModel.MapObject<PointRequestListFilterCommon>();
             getPointRequest.LocationId = getPointRequest?.LocationId?.DecryptParameter() ?? string.Empty;
             getPointRequest.PaymentMethodId = getPointRequest?.PaymentMethodId?.DecryptParameter() ?? string.Empty;
             getPointRequest.Skip = StartIndex4;
             getPointRequest.Take = PageSize4;
             var getPointRequestListDBResponse = _BUSS.GetPointRequestList(getPointRequest);
+
+            if (value.ToUpper() != "ST")
+            {
+                SystemTransferRequestModel requestSystemTransferModel = new SystemTransferRequestModel();
+                var mappedObject = requestSystemTransferModel.MapObject<SystemTransferRequestCommon>();
+                var getSystemTransferReport = _BUSS.GetSystemTransferDetailsAsync(mappedObject);
+                var getSystemTransferReportResponse = getSystemTransferReport.MapObjects<SystemTransferReponseModel>();
+                TempData["ListModel"] = getSystemTransferReportResponse;
+                ViewBag.PageSize3 = requestSystemTransferModel.PageSize3;
+                ViewBag.TotalData3 = getSystemTransferReport.Count > 0 ? getSystemTransferReport?.FirstOrDefault().RowTotal : "0";
+                ViewBag.StartIndex3 = requestSystemTransferModel.StartIndex3;
+                objPointsManagementModel.SystemTransferModel = new SystemTransferRequestModel()
+                {
+                    User_type = null,
+                    User_name = null,
+                    TransferType = null,
+                    From_Date1 = null,
+                    To_Date1 = null
+                };
+
+            }
+            if (value.ToUpper() != "PBS")
+            {
+                PointBalanceStatementRequestModel pointBalanceStatementRequest = new PointBalanceStatementRequestModel();
+                var mappedpointBalanceStatementObject = pointBalanceStatementRequest.MapObject<PointBalanceStatementRequestCommon>();
+                var response = _BUSS.GetPointBalanceStatementDetailsAsync(mappedpointBalanceStatementObject);
+                var GetStatementReport = response.MapObjects<SystemTransferReponseModel>();
+                TempData["ListSatementModel"] = GetStatementReport;
+                ViewBag.PageSize2 = pointBalanceStatementRequest.PageSize2;
+                ViewBag.TotalData2 = response.Count > 0 ? response?.FirstOrDefault().RowTotal : "0";
+                ViewBag.StartIndex2 = pointBalanceStatementRequest.StartIndex2;
+                objPointsManagementModel.PointBalanceStatementRequest = new PointBalanceStatementRequestModel()
+                {
+                    UserTypeList = null,
+                    UserNameList = null,
+                    TransferTypeList = null,
+                    From_Date = null,
+                    To_Date = null
+                };
+            }
+
             objPointsManagementModel.PointRequestCommonModel.PointRequestsListModel = getPointRequestListDBResponse.MapObjects<PointRequestsListModel>();
             objPointsManagementModel.PointRequestCommonModel.PointRequestsListModel.ForEach(x =>
             {
@@ -228,6 +270,24 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                     TempData["RenderId"] = "Manage";
                     return RedirectToAction("PointsTransferList", "PointsManagement");
                 }
+            }
+            else
+            {
+                var errorMessages = ModelState.Where(x => x.Value.Errors.Count > 0)
+                                  .SelectMany(x => x.Value.Errors.Select(e => $"{x.Key}: {e.ErrorMessage}"))
+                                  .ToList();
+
+                var notificationModels = errorMessages.Select(errorMessage => new NotificationModel
+                {
+                    NotificationType = NotificationMessage.INFORMATION,
+                    Message = errorMessage,
+                    Title = NotificationMessage.INFORMATION.ToString(),
+                }).ToArray();
+                AddNotificationMessage(notificationModels);
+                var errors = ModelState.Where(x => x.Value.Errors.Count > 0).Select(x => new { x.Key }).ToList();
+                
+
+                
             }
             TempData["ManagePointsModel"] = objPointsTansferModel;
             TempData["RenderId"] = "Manage";
@@ -344,15 +404,14 @@ namespace CRS.ADMIN.APPLICATION.Controllers
         public async Task<ActionResult> GetPointBalanceStatementDetails(PointBalanceStatementRequestModel requestModel)
         {
             ViewBag.SearchFilter = requestModel.SearchFilter;
-            Session["CurrentURL"] = "/PointsManagement/PointsTransferList";
             string RenderId = "";
             var culture = Request.Cookies["culture"]?.Value;
             culture = string.IsNullOrEmpty(culture) ? "ja" : culture;
 
-            ViewBag.UserTypeList = ApplicationUtilities.SetDDLValue(DDLHelper.LoadDropdownList("USERTYPELIST") as Dictionary<string, string>, null, "--- All ---");
+            ViewBag.UserTypeList = ApplicationUtilities.SetDDLValue(DDLHelper.LoadDropdownList("USERTYPELIST") as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 全て ---" : "--- All ---");
             if (!string.IsNullOrEmpty(requestModel.UserTypeList))
-                ViewBag.FilterUserList = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("USERTYPENAME", requestModel.UserTypeList.DecryptParameter()) as Dictionary<string, string>, null, "--- All ---");
-            ViewBag.TransferTypeIdList = ApplicationUtilities.SetDDLValue(DDLHelper.LoadDropdownList("TRANSACTIONTYPE") as Dictionary<string, string>, null, "--- All ---");
+                ViewBag.FilterUserList = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("USERTYPENAME", requestModel.UserTypeList.DecryptParameter()) as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 全て ---" : "--- All ---");
+            ViewBag.TransferTypeIdList = ApplicationUtilities.SetDDLValue(DDLHelper.LoadDropdownList("TRANSACTIONTYPE") as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 全て ---" : "--- All ---");
 
             requestModel.UserTypeList = !string.IsNullOrEmpty(requestModel.UserTypeList) ? requestModel.UserTypeList.DecryptParameter() : null;
             requestModel.UserNameList = !string.IsNullOrEmpty(requestModel.UserNameList) ? requestModel.UserNameList.DecryptParameter() : null;
@@ -372,22 +431,21 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             ViewBag.StartIndex2 = requestModel.StartIndex2;
 
             TempData["ListModel"] = mappedResponseObjects;
-            return RedirectToAction("PointsTransferList", "PointsManagement", new { value = "pbs", FromDate = requestModel.From_Date, ToDate = requestModel.To_Date, UserType = requestModel.UserTypeList.EncryptParameter(), UserName = requestModel.UserNameList.EncryptParameter(), TransferTypeId = requestModel.TransferTypeList.EncryptParameter(), SearchFilter = requestModel.SearchFilter, TotalData2 = ViewBag.TotalData2 });
+            return RedirectToAction("PointsTransferList", "PointsManagement", new { value = "pbs", FromDate = requestModel.From_Date, ToDate = requestModel.To_Date, UserType = requestModel.UserTypeList.EncryptParameter(), UserName = requestModel.UserNameList.EncryptParameter(), TransferTypeId = requestModel.TransferTypeList.EncryptParameter(), SearchFilter = requestModel.SearchFilter, TotalData2 = ViewBag.TotalData2, PageSize2 = ViewBag.PageSize2, StartIndex2 = ViewBag.StartIndex2 });
             //return PartialView("PointsTransferList", mappedResponseObjects);
         }
         [HttpGet, OverrideActionFilters]
         public async Task<ActionResult> GetSystemTransferReportAsync(SystemTransferRequestModel requestModel)
         {
             ViewBag.SearchFilter = requestModel.SearchFilter;
-            Session["CurrentURL"] = "/PointsManagement/PointsTransferList";
             string RenderId = "";
             var culture = Request.Cookies["culture"]?.Value;
             culture = string.IsNullOrEmpty(culture) ? "ja" : culture;
 
-            ViewBag.UserTypeList = ApplicationUtilities.SetDDLValue(DDLHelper.LoadDropdownList("USERTYPELIST") as Dictionary<string, string>, null, "--- All ---");
+            ViewBag.UserTypeList = ApplicationUtilities.SetDDLValue(DDLHelper.LoadDropdownList("USERTYPELIST") as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 全て ---" : "--- All ---");
             if (!string.IsNullOrEmpty(requestModel.User_type))
-                ViewBag.FilterUserList = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("USERTYPENAME", requestModel.User_type.DecryptParameter()) as Dictionary<string, string>, null, "--- All ---");
-            ViewBag.TransferTypeIdList = ApplicationUtilities.SetDDLValue(DDLHelper.LoadDropdownList("TRANSACTIONTYPE") as Dictionary<string, string>, null, "--- All ---");
+                ViewBag.FilterUserList = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("USERTYPENAME", requestModel.User_type.DecryptParameter()) as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 全て ---" : "--- All ---");
+            ViewBag.TransferTypeIdList = ApplicationUtilities.SetDDLValue(DDLHelper.LoadDropdownList("TRANSACTIONTYPE") as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 全て ---" : "--- All ---");
 
             requestModel.User_type = !string.IsNullOrEmpty(requestModel.User_type) ? requestModel.User_type.DecryptParameter() : null;
             requestModel.User_name = !string.IsNullOrEmpty(requestModel.User_name) ? requestModel.User_name.DecryptParameter() : null;
@@ -403,10 +461,22 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             var mappedResponseObjects = response.MapObjects<SystemTransferReponseModel>();
 
             ViewBag.PageSize3 = requestModel.PageSize3;
-            ViewBag.TotalData3 = response.FirstOrDefault().RowTotal;
+            ViewBag.TotalData3 = response.Count > 0 ? response?.FirstOrDefault().RowTotal : "0";
             ViewBag.StartIndex3 = requestModel.StartIndex3;
             TempData["ListModel"] = mappedResponseObjects;
-            return RedirectToAction("PointsTransferList", "PointsManagement", new { value = "st", FromDate = requestModel.From_Date1, ToDate = requestModel.To_Date1, UserType = requestModel.User_type.EncryptParameter(), UserName = requestModel.User_name.EncryptParameter(), TransferTypeId = requestModel.TransferType.EncryptParameter(), SearchFilter = requestModel.SearchFilter, TotalData3 = response.FirstOrDefault().RowTotal });
+            return RedirectToAction("PointsTransferList", "PointsManagement", new
+            {
+                value = "st",
+                FromDate = requestModel.From_Date1,
+                ToDate = requestModel.To_Date1,
+                UserType = requestModel.User_type.EncryptParameter(),
+                UserName = requestModel.User_name.EncryptParameter(),
+                TransferTypeId = requestModel.TransferType.EncryptParameter(),
+                SearchFilter = requestModel.SearchFilter,
+                TotalData3 = ViewBag.TotalData3,
+                PageSize3 = ViewBag.PageSize3,
+                StartIndex3 = ViewBag.StartIndex3
+            });
         }
     }
 }

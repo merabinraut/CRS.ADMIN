@@ -89,7 +89,16 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 if (dbResponse.Code == 0)
                 {
                     var response = dbResponse.Data.MapObject<LoginResponseModel>();
-                    if (response.Notifications == null || response.Notifications.Count <= 0) response.Notifications = new List<NotificationDetailModel>();
+                    if (response.Notifications == null || response.Notifications.Count <= 0)
+                        response.Notifications = new List<NotificationDetailModel>();  
+                    if (response.Notifications != null  && response.Notifications.Count > 0)
+                        response.Notifications.ForEach(x =>
+                        {
+                            x.NotificationId = x.NotificationId.EncryptParameter();
+                            x.NotificationImageURL = ImageHelper.ProcessedImage(x.NotificationImageURL);
+                            x.Time = !string.IsNullOrEmpty(x.Time) ? DateTime.Parse(x.Time).ToString("yyyy'年'MM'月'dd'日' HH:mm:ss") : x.Time;
+                            //x.UpdatedDate = !string.IsNullOrEmpty(x.UpdatedDate) ? DateTime.Parse(x.UpdatedDate).ToString("yyyy'年'MM'月'dd'日' HH:mm:ss") : x.UpdatedDate;
+                        });
                     Session["SessionGuid"] = commonRequest.SessionId;
                     Session["UserId"] = response.UserId.EncryptParameter();
                     Session["RoleId"] = response.RoleId.EncryptParameter();

@@ -37,10 +37,10 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             if (TempData.ContainsKey("RenderId")) RenderId = TempData["RenderId"].ToString();
             ViewBag.PopUpRenderValue = !string.IsNullOrEmpty(RenderId) ? RenderId : null;
             ViewBag.BusinessTypeDDL = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("BUSINESSTYPEDDL") as Dictionary<string, string>, null, "");
-            ViewBag.Pref = DDLHelper.LoadDropdownList("PREF") as Dictionary<string, string>;
-            ViewBag.PrefIdKey = !string.IsNullOrEmpty(ResponseModel.ManageAffiliate.Prefecture) ? ViewBag.Pref[ResponseModel.ManageAffiliate.Prefecture] : null;
+            //ViewBag.Pref = DDLHelper.LoadDropdownList("PREF") as Dictionary<string, string>;
+            //ViewBag.PrefIdKey = !string.IsNullOrEmpty(ResponseModel.ManageAffiliate.Prefecture) ? ViewBag.Pref[ResponseModel.ManageAffiliate.Prefecture] : null;
             ViewBag.BusinessTypeKey = ResponseModel.ManageAffiliate.BusinessType;
-            var dbResponse = _affiliateBuss.GetAffiliateList(dbAffiliateListRequest);
+            var dbResponse = _affiliateBuss.GetAffiliateList(dbAffiliateListRequest);            
             var dbCustomerListRequest = new PaginationFilterCommon()
             {
                 Skip = StartIndex2,
@@ -65,15 +65,16 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             ResponseModel.AffiliatePageAnalyticModel = analyticDBResponse.MapObject<AffiliatePageAnalyticModel>();
             ViewBag.SearchFilter1 = SearchFilter1;
             ViewBag.SearchFilter2 = SearchFilter2;
-            var ActiveTab = "";
-            if (!string.IsNullOrEmpty(SearchFilter1)) ActiveTab = "Affiliates";
-            else if (!string.IsNullOrEmpty(SearchFilter2)) ActiveTab = "Converted Customers";
+            var ActiveTab = value;
+            //if (!string.IsNullOrEmpty(SearchFilter1)) ActiveTab = "Affiliates";
+            //else if (!string.IsNullOrEmpty(SearchFilter2)) ActiveTab = "Converted Customers";
             ResponseModel.ListType = value;
             ViewBag.ActiveTab = ActiveTab ?? "";
             ViewBag.StartIndex = StartIndex;
             ViewBag.PageSize = PageSize;
             ViewBag.TotalData = dbResponse != null && dbResponse.Any() ? dbResponse[0].TotalRecords : 0;
 
+            
             ViewBag.StartIndex2 = StartIndex2;
             ViewBag.PageSize2 = PageSize2;
             ViewBag.TotalData2 = dbReferalRes != null && dbReferalRes.Any() ? dbReferalRes[0].TotalRecords : 0;
@@ -102,12 +103,12 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 var dbResponse = _affiliateBuss.GetAffiliateDetails(id, culture);
                 model = dbResponse.MapObject<ManageAffiliateModel>();
                 model.AffiliateId =!string.IsNullOrEmpty(model.AffiliateId) ? model.AffiliateId.EncryptParameter():null;
-                model.Prefecture = !string.IsNullOrEmpty(model.Prefecture) ? model.Prefecture.EncryptParameter() : null;
+                //model.Prefecture = !string.IsNullOrEmpty(model.Prefecture) ? model.Prefecture.EncryptParameter() : null;
                 model.BusinessType = !string.IsNullOrEmpty(model.BusinessType) ? model.BusinessType.EncryptParameter() : null;                
             }
             TempData["ManageAffiliateModel"] = model;
             TempData["RenderId"] = "Manage";         
-            return RedirectToAction("Index", "AffiliateManagement", new { SearchFilter = SearchFilter, StartIndex = StartIndex, PageSize = PageSize });
+            return RedirectToAction("Index", "AffiliateManagement", new { SearchFilter1 = SearchFilter, value = "a" ,StartIndex = StartIndex, PageSize = PageSize });
         }
 
         [HttpPost, ValidateAntiForgeryToken]
@@ -139,8 +140,9 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 ManageAffiliateCommon commonModel = model.MapObject<ManageAffiliateCommon>();
                 commonModel.ActionUser = ApplicationUtilities.GetSessionValue("Username").ToString();
                 commonModel.ActionIP = ApplicationUtilities.GetIP();
+                commonModel.AffiliateId = model.AffiliateId?.DecryptParameter();
                 commonModel.BusinessType = model.BusinessType?.DecryptParameter();
-                commonModel.Prefecture = commonModel.Prefecture?.DecryptParameter();
+                //commonModel.Prefecture = commonModel.Prefecture?.DecryptParameter();
                 var dbResponse = _affiliateBuss.ManageAffiliate(commonModel);
                 if (dbResponse != null && dbResponse.Code == 0)
                 {
@@ -218,7 +220,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             return Json(response.Message, JsonRequestBehavior.AllowGet);
         }
 
-        [HttpGet]
+        [HttpGet, OverrideActionFilters]
         public ActionResult ManageAffiliateStatus(string AgentId, string Status)
         {
             var response = new CommonDbResponse();
@@ -253,7 +255,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             return RedirectToAction("Index", "AffiliateManagement");
         }
 
-        [HttpPost, ValidateAntiForgeryToken]
+        [HttpGet,OverrideActionFilters]
         public ActionResult ResetAffiliatePassword(string AgentId)
         {
             var response = new CommonDbResponse();

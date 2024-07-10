@@ -346,7 +346,7 @@
                  $('#large[name="NewCategoryId"]').empty();
                  $('#form [data-valmsg-for="UserTypeId"]').html("");
                  if (response.userNameList.length > 0) {
-                     $('#large[name="AgentId"]').append($("<option>").val("").text("--- Select ---"));
+                     $('#large[name="AgentId"]').append($("<option>").val("").text("--- @CRS.ADMIN.APPLICATION.Resources.Resource.Select ---"));
                      $.each(response.userNameList, function (i, value) {
                          $('#large[name="AgentId"]').append($("<option>").val(value.Value).text(value.Text));
                      });
@@ -356,7 +356,7 @@
                      $('#large[name="AgentId"]').empty();
                  }
                  if (response.categoryNamelist.length > 0) {
-                     $('#large[name="NewCategoryId"]').append($("<option>").val("").text("--- Select ---"));
+                     $('#large[name="NewCategoryId"]').append($("<option>").val("").text("--- @CRS.ADMIN.APPLICATION.Resources.Resource.Select ---"));
                      $.each(response.categoryNamelist, function (i, value) {
                          $('#large[name="NewCategoryId"]').append($("<option>").val(value.Value).text(value.Text));
                      });

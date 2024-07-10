@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using CRS.ADMIN.APPLICATION.Resources;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
@@ -40,16 +41,16 @@ namespace CRS.ADMIN.APPLICATION.Models.HostManagement
         public string AgentId { get; set; }
         public string HostId { get; set; }
         [Display(Name = "Host Name")]
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
-        [MaxLength(100, ErrorMessage = "Maximum 100 characters allowed")]
+        [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Required")]
+        [MaxLength(100, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Maximum_100_characters_allowed")]
         public string HostName { get; set; }
         [Display(Name = "Host Name Japanese")]
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
-        [MaxLength(100, ErrorMessage = "Maximum 100 characters allowed")]
+        [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Required")]
+        [MaxLength(100, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Maximum_100_characters_allowed")]
         public string HostNameJapanese { get; set; }
         [Display(Name = "Host Introduction")]
         //[Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
-        [MaxLength(500, ErrorMessage = "Maximum 500 characters allowed")]
+        [MaxLength(500, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Maximum_500_characters_allowed")]
         public string HostIntroduction { get; set; }
         [Display(Name = "Position")]
         //[Required(AllowEmptyStrings = false, ErrorMessage = "Required")]

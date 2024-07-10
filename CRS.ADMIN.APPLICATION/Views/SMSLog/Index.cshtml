@@ -2,16 +2,16 @@
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
-    string pending = "Pending";
-    string sent = "Sent";
+    string pending = @CRS.ADMIN.APPLICATION.Resources.Resource.Pending;
+    string sent = @CRS.ADMIN.APPLICATION.Resources.Resource.Sent;
 }
 <div class="px-8 py-4">
     <!-- title  -->
     <div class="flex flex-col  gap-8">
         <div class="flex justify-between items-center">
             <div>
-                <div class="heading-title">SMS Log Report</div>
-                <div class="span-title-light-gray">Supporting Texts</div>
+                <div class="heading-title">  @CRS.ADMIN.APPLICATION.Resources.Resource.SMSLogReport</div>
+                <div class="span-title-light-gray">  @CRS.ADMIN.APPLICATION.Resources.Resource.ManageSMSLogs</div>
             </div>
         </div>
         <div class="flex flex-col  gap-4">
@@ -120,7 +120,7 @@
                                 </th>
                                 <th scope="col" class="p-[12px]">
                                     <div class="flex">
-                                        Message
+                                        @CRS.ADMIN.APPLICATION.Resources.Resource.Message
                                         <div class="relative pl-[5px]">
                                             <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
                                             <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>

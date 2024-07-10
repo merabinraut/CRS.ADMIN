@@ -1,0 +1,189 @@
+@model CRS.ADMIN.APPLICATION.Models.PromotionManagement.PromotionManagementCommonModel
+
+
+<div class="px-[12px] py-[16px] flex justify-between entry-export-container">
+    <div class="flex items-center select-entries" id="ShowEntries-Id">
+    </div>
+</div>
+<div class="flex justify-between px-[12px] py-[16px]">
+    <form action="/PromotionManagement/GetPromotionalImages" method="get">
+        @Html.HiddenFor(model => model.ListType)
+        <div class="relative input-search-wrapper">
+            <div class="absolute inset-y-0 left-0 flex items-center pl-[16px] pointer-events-none">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21" fill="none">
+                    <path d="M17.5 18L13.875 14.375M15.8333 9.66667C15.8333 13.3486 12.8486 16.3333 9.16667 16.3333C5.48477 16.3333 2.5 13.3486 2.5 9.66667C2.5 5.98477 5.48477 3 9.16667 3C12.8486 3 15.8333 5.98477 15.8333 9.66667Z"
+                          stroke="#667085" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round">
+                    </path>
+                </svg>
+            </div>
+            <input type="search"
+                   id="default-search2"
+                   class="input-search block w-full "
+                   placeholder="@CRS.ADMIN.APPLICATION.Resources.Resource.Search"
+                   value="@Model.SearchFilter2"
+                   name="SearchFilter2">
+        </div>
+    </form>
+    @*<div class="btn btn-primary gap-[8px] h-[40px]" data-drawer-target="add-new-host-location"
+             data-drawer-show="add-new-host-location" data-drawer-placement="right" data-drawer-backdrop="false"
+             aria-controls="drawer-disabled-backdrop">
+            <img src="~/Content/assets_new/images/plus-circle-solid.svg">
+            @CRS.ADMIN.APPLICATION.Resources.Resource.Add_New
+        </div>*@
+</div>
+
+<div class="relative overflow-x-auto">
+    <table class="w-full  text-left club-table" id="table-id">
+        <thead class="club-table-thead">
+            <tr>
+                <th scope="col" class="p-[12px]">
+                    <div class="flex">
+                        S.N
+                        <div class="relative pl-[5px]">
+                            <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                            <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                        </div>
+                    </div>
+                </th>
+                <th scope="col" class="p-[12px]">
+                    <div class="flex">
+                        @CRS.ADMIN.APPLICATION.Resources.Resource.Image_Titile
+                        <div class="relative pl-[5px]">
+                            <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                            <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                        </div>
+                    </div>
+                </th>
+                <th scope="col" class="p-[12px]">
+                    <div class="flex">
+                        @CRS.ADMIN.APPLICATION.Resources.Resource.Image_Description
+                        <div class="relative pl-[5px]">
+                            <svg class="svg-inline--fa fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="chevron-up" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M233.4 105.4c12.5-12.5 32.8-12.5 45.3 0l192 192c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L256 173.3 86.6 342.6c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3l192-192z"></path></svg><!-- <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i> Font Awesome fontawesome.com -->
+                            <svg class="svg-inline--fa fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="chevron-down" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"></path></svg><!-- <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i> Font Awesome fontawesome.com -->
+                        </div>
+                    </div>
+                </th>
+                <th scope="col" class="p-[12px]">
+                    <div class="flex">
+                        @CRS.ADMIN.APPLICATION.Resources.Resource.Image
+                        <div class="relative pl-[5px]">
+                            <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                            <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                        </div>
+                    </div>
+                </th>
+                <th scope="col" class="p-[12px]">
+                    <div class="flex">
+                        @CRS.ADMIN.APPLICATION.Resources.Resource.Link
+                        <div class="relative pl-[5px]">
+                            <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                            <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                        </div>
+                    </div>
+                </th>
+                <th scope="col" class="p-[12px]">
+                    <div class="flex">
+                        @CRS.ADMIN.APPLICATION.Resources.Resource.Status
+                        <div class="relative pl-[5px]">
+                            <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                            <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                        </div>
+                    </div>
+                </th>
+                <th scope="col" class="p-[12px]">
+                    <div class="flex">
+                        @CRS.ADMIN.APPLICATION.Resources.Resource.Created_On
+                        <div class="relative pl-[5px]">
+                            <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                            <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                        </div>
+                    </div>
+                </th>
+                <th scope="col" class="p-[12px]">
+                    <div class="flex justify-center">
+                        @CRS.ADMIN.APPLICATION.Resources.Resource.Action
+                        <div class="relative pl-[5px]">
+                            <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                            <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                        </div>
+                    </div>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                foreach (var item in Model.AdvertisementManagementListModel)
+                {
+                    <tr class="bg-white border-b ">
+                        <td class="p-[12px]">
+                            @item.SNO
+                        </td>
+                        <td class="p-[12px]">
+                            <div class="round-image-text gap-[12px]">
+                                @item.Title
+                            </div>
+                        </td>
+                        <td class="p-[12px]">
+                            <div class="round-image-text gap-[12px]">
+                                @item.Description
+                            </div>
+                        </td>
+                        <td class="p-[12px]">
+                            @if (!string.IsNullOrEmpty(item.ImagePath))
+                            {
+                                <img class="table-image h-[36px] w-[88px]" src="@item.ImagePath">
+                            }
+                            else
+                            {
+                                <img class="table-image h-[36px] w-[88px]" src="~/Content/assets_new/images/demo-image.jpeg">
+                            }
+                        </td>
+                        <td class="p-[12px]">
+                            <div class="round-image-text gap-[12px]">
+                                @item.Link
+                            </div>
+                        </td>
+                        <td class="p-[12px]">
+                            @if (!string.IsNullOrEmpty(item.IsDeleted) && item.IsDeleted.ToUpper() == "A")
+                            {
+                                <span class="badge badge-success approved items-start gap-1">Active <i class="fa-solid fa-sort-down"></i></span>
+                            }
+                            else if (!string.IsNullOrEmpty(item.IsDeleted) && item.IsDeleted.ToUpper() == "B")
+                            {
+                                <span class="badge badge-danger blocked items-start gap-1">Blocked <i class="fa-solid fa-sort-down"></i></span>
+                            }
+                        </td>
+                        <td class="p-[12px]">
+                            @item.ActionDate
+                        </td>
+
+                        <td class="p-[12px]">
+                            <div class="flex gap-[7px] justify-center text-[20px] ">
+                               
+                                    <div onclick="ManageAdvertisement('@item.Id');">
+                                        <i class="las la-edit text-[#989898] cursor-pointer"></i>
+                                    </div>
+                                    
+                                
+                            </div>
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>
+@*<div class="pagination-club">
+    <div class="show-entry" id="Entries-Id">
+    </div>
+    <div class="flex gap-[12px]">
+        <div class="btn btn-secondary-box-shadow" id="prev-btn">
+            @CRS.ADMIN.APPLICATION.Resources.Resource.Previous
+        </div>
+        <div class="flex gap-[12px]" id="pagination-id">
+        </div>
+        <div class="btn btn-secondary-box-shadow" id="next-btn">
+            @CRS.ADMIN.APPLICATION.Resources.Resource.Next
+        </div>
+    </div>
+</div>*@

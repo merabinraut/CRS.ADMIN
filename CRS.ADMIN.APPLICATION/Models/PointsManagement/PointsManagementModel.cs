@@ -1,4 +1,5 @@
 using CRS.ADMIN.APPLICATION.Models.PaginationManagement;
+using CRS.ADMIN.APPLICATION.Resources;
 using CRS.ADMIN.SHARED;
 using CRS.ADMIN.SHARED.PaginationManagement;
 using System.Collections.Generic;
@@ -25,14 +26,15 @@ namespace CRS.ADMIN.APPLICATION.Models.PointsManagement
 
     public class PointsTansferModel
     {
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
+        [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Required")]
         public string UserTypeId { get; set; }
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
+        [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Required")]
         public string TransferType { get; set; }
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
+        [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Required")]
         public string UserId { get; set; }
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
-        [RegularExpression("^[0-9]*$", ErrorMessage = "The field must be a number.")]
+
+        [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Required")]
+        [RegularExpression("^[0-9]*$", ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "The_field_must_be_a_number")]
         public string Points { get; set; }
         public string Remarks { get; set; }
         public string Image { get; set; }
@@ -70,8 +72,8 @@ namespace CRS.ADMIN.APPLICATION.Models.PointsManagement
     public class PointsRequestModel
     {
         public string TransactionId { get; set; }
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
-        [RegularExpression("^[0-9]*$", ErrorMessage = "The field must be a number.")]
+        [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Required")]
+        [RegularExpression("^[0-9]*$", ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "The_field_must_be_a_number")]
         public string Points { get; set; }
         public string Remarks { get; set; }
         public string ActionIp { get; set; }

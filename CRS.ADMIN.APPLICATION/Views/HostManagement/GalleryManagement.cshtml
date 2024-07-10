@@ -9,7 +9,7 @@
     @Html.AntiForgeryToken()
     <div class="flex flex-col">
         <div class="mb-8">
-            <div class="heading-title">Gallery Management</div>
+            <div class="heading-title"> @CRS.ADMIN.APPLICATION.Resources.Resource.Gallery_Management</div>
             @*<div class="span-title-light-gray">Supporting Texts</div>*@
         </div>
 
@@ -25,7 +25,7 @@
                     </div>
                     <input name="AgentId" hidden value="@ViewBag.AgentId" />
                     <input name="HostId" hidden value="@ViewBag.HostId" />
-                    <input type="search" name="SearchFilter" value="@ViewBag.SearchFilter" class="input-search block w-full " placeholder="Search">
+                    <input type="search" name="SearchFilter" value="@ViewBag.SearchFilter" class="input-search block w-full " placeholder="@CRS.ADMIN.APPLICATION.Resources.Resource.Search">
                     <input type="submit" value="Submit" hidden>
                 </div>
             </form>
@@ -45,7 +45,7 @@
                      data-drawer-show="add-new-gallery" data-drawer-placement="right" data-drawer-backdrop="false"
                      aria-controls="drawer-disabled-backdrop">
                     <img src="~/Content/assets_new/images/plus-circle-solid.svg" />
-                    Add New
+                    @CRS.ADMIN.APPLICATION.Resources.Resource.Add_New
                 </div>
 
             </div>
@@ -65,7 +65,7 @@
                             </th>
                             <th scope="col" class="p-[12px]">
                                 <div class="flex">
-                                    Title
+                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Title
                                     <div class="relative pl-[5px]">
                                         <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
                                         <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
@@ -74,7 +74,7 @@
                             </th>
                             <th scope="col" class="p-[12px]">
                                 <div class="flex">
-                                    Image
+                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Image
                                     <div class="relative pl-[5px]">
                                         <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
                                         <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
@@ -83,7 +83,7 @@
                             </th>
                             <th scope="col" class="p-[12px]">
                                 <div class="flex">
-                                    Created On
+                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Created_On
                                     <div class="relative pl-[5px]">
                                         <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
                                         <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
@@ -92,7 +92,8 @@
                             </th>
                             <th scope="col" class="p-[12px]">
                                 <div class="flex">
-                                    Updated On <div class="relative pl-[5px]">
+                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Updated_On
+                                    <div class="relative pl-[5px]">
                                         <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
                                         <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
                                     </div>
@@ -100,7 +101,7 @@
                             </th>
                             <th scope="col" class="p-[12px]">
                                 <div class="flex justify-center">
-                                    Action
+                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Action
                                     <div class="relative pl-[5px]">
                                         <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
                                         <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
