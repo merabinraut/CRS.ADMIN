@@ -1168,10 +1168,12 @@ namespace CRS.ADMIN.APPLICATION.Library
         public static object LoadDropdownValuesList(string ForMethod, string search1 = "", string search2 = "", string culture = "")
         {
             var _CommonBuss = new CommonManagementBusiness();
+            var MultipleItemCommon = new List<MultipleItemCommon>();
             var dbResponse = new Dictionary<string, (string Text, string JapaneseValue, string culture)>();
             var dbResponse1 = new Dictionary<string, string>();
             //var response = new Dictionary<string ,string>();
             var response = new Dictionary<string, (string Text, string JapaneseValue, string culture)>();
+            var multipleitem = new object();
             switch (ForMethod.ToUpper())
             {
 
@@ -1193,7 +1195,15 @@ namespace CRS.ADMIN.APPLICATION.Library
                         (item.Key.EncryptParameter(), item.Value);
                     });
                     return response;
-
+                case "PLANTIMEINTERVAL":
+                    MultipleItemCommon = _CommonBuss.GetDropDownItem("049", search1, search2, culture);
+                    //MultipleItemCommon.ForEach(item =>
+                    //{
+                    //    MultipleItemCommon.Add
+                    //    //(item.Key.EncryptParameter(), culture == "en-US" ? item.Value.Text: item.Value.JapaneseValue);
+                    //    (item.Value.EncryptParameter(), item.Text, item.Item1);
+                    //});
+                    return MultipleItemCommon;
                 //case "PREF":
                 //    dbResponse = _CommonBuss.GetDropDownValues("041", search1, search2, culture);
                 //    dbResponse.ForEach(item => {

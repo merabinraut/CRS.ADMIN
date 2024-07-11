@@ -24,6 +24,7 @@ using CRS.ADMIN.APPLICATION.Models.PointSetup;
 using CRS.ADMIN.SHARED.PointSetup;
 using System.Numerics;
 using System.Text.RegularExpressions;
+using DocumentFormat.OpenXml.Vml.Spreadsheet;
 
 namespace CRS.ADMIN.APPLICATION.Controllers
 {
@@ -63,8 +64,9 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             if (TempData.ContainsKey("RenderId")) RenderId = TempData["RenderId"].ToString();
             ViewBag.PopUpRenderValue = !string.IsNullOrEmpty(RenderId) ? RenderId : null;
             response.ClubId = aId; ;
-            response.ManageClubPlanModel.ClubId = aId; ;
-            ViewBag.TimeIntervalList = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("PLANTIMEINTERVAL", aId,culture) as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---"); 
+            response.ManageClubPlanModel.ClubId = aId; ;         
+            ViewBag.TimeIntervalList = Dropdown(ApplicationUtilities.LoadDropdownValuesList("PLANTIMEINTERVAL", aId, culture) as List<MultipleItemCommon>, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---");
+           // ViewBag.TimeIntervalList = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownValuesList("PLANTIMEINTERVAL", aId,culture) as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---"); 
             ViewBag.PlansList = ApplicationUtilities.LoadDropdownList("CLUBPLANS") as Dictionary<string, string>;
             List<ClubplanListCommon> ClubplanListCommon = _BUSS.GetClubPlanList(culture, aId);
             response.planList = ClubplanListCommon.MapObjects<ClubplanListModel>();
@@ -164,7 +166,8 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             var culture = Request.Cookies["culture"]?.Value;
             culture = string.IsNullOrEmpty(culture) ? "ja" : culture;
             ViewBag.PlansList = ApplicationUtilities.LoadDropdownList("CLUBPLANS") as Dictionary<string, string>;
-            ViewBag.TimeIntervalList = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("PLANTIMEINTERVAL", Model.ClubId.DecryptParameter()) as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---"); ;
+            // ViewBag.TimeIntervalList = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("PLANTIMEINTERVAL", Model.ClubId.DecryptParameter()) as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---"); ;
+            ViewBag.TimeIntervalList = Dropdown(ApplicationUtilities.LoadDropdownValuesList("PLANTIMEINTERVAL", Model.ClubId.DecryptParameter(), culture) as List<MultipleItemCommon>, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---");
             string concatenateplanvalue = string.Empty;
             bool isexception = false;
             bool isduplicate = false;
@@ -376,7 +379,8 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                         AgentId = AgentId
                     });
                 }
-                ViewBag.TimeIntervalList = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("PLANTIMEINTERVAL", agentids) as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---"); ;
+                ViewBag.TimeIntervalList = Dropdown(ApplicationUtilities.LoadDropdownValuesList("PLANTIMEINTERVAL", agentids, culture) as List<MultipleItemCommon>, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---");
+                //ViewBag.TimeIntervalList = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("PLANTIMEINTERVAL", agentids) as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---"); ;
                 bool isexception = false;
                 List<PlanListCommon> planlist = _BUSS.EditClubPlanIdentityList(culture, agentids, planlistid);
                 response.ManageClubPlanModel.ClubPlanDetailList = planlist.MapObjects<PlanList>();
@@ -496,6 +500,38 @@ namespace CRS.ADMIN.APPLICATION.Controllers
 
         }
 
+        public static List<SelectListItem> Dropdown(List<MultipleItemCommon> obj, string selectedVal, string defLabel = "", bool isTextAsValue = false,string status="")
+        {
+            List<SelectListItem> items = new List<SelectListItem>();
+            
+            if (!string.IsNullOrWhiteSpace(defLabel))
+            {
+                items.Add(new SelectListItem { Text = defLabel, Value = "", Disabled = true });
+            }
+            if (obj.Count > 0)
+            {
+
+                foreach (var item in obj)
+                {
+                    string Value = item.Value;
+                    string Name = item.Text;
+                    string Status = item.Item1;
+                    if (isTextAsValue)
+                        Value = Name;
+                    bool disabled = !string.IsNullOrWhiteSpace(Status) && Status.ToLower() == "inactive";
+                    if (Value == selectedVal)
+                    {
+                        items.Add(new SelectListItem { Text = Name, Value = Value,  Selected = true, Disabled = disabled });
+                    }
+                    
+                    else
+                    {
+                        items.Add(new SelectListItem { Text = Name, Value = Value ,  Disabled = disabled });
+                    }
+                }
+            }
+            return items;
+        }
     }
 
 }

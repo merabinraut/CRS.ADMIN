@@ -1033,6 +1033,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Club Username.
+        /// </summary>
+        public static string Club_Username {
+            get {
+                return ResourceManager.GetString("Club Username", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Club Verification.
         /// </summary>
         public static string Club_Verification {
@@ -3157,6 +3166,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Mobile Number (Easily reachable).
+        /// </summary>
+        public static string Mobile_Number__Easily_reachable_ {
+            get {
+                return ResourceManager.GetString("Mobile Number (Easily reachable)", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Mobile Number.
         /// </summary>
         public static string MobileNumber {
@@ -4836,6 +4854,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         public static string Status {
             get {
                 return ResourceManager.GetString("Status", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Store Name (Katakana).
+        /// </summary>
+        public static string Store_Name__Katakana_ {
+            get {
+                return ResourceManager.GetString("Store Name (Katakana)", resourceCulture);
             }
         }
         

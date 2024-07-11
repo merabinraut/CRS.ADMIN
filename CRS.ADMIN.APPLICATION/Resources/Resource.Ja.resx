@@ -542,6 +542,10 @@
     <value>クラブステータス</value>
     <comment>Reservation Ledger</comment>
   </data>
+  <data name="Club Username" xml:space="preserve">
+    <value>クラブのユーザー名</value>
+    <comment>Club Management</comment>
+  </data>
   <data name="Club Verification" xml:space="preserve">
     <value>クラブ検証</value>
     <comment>Reservation Ledger</comment>
@@ -1478,6 +1482,10 @@
     <value>最低3文字必要です</value>
     <comment>Club Management</comment>
   </data>
+  <data name="Mobile Number (Easily reachable)" xml:space="preserve">
+    <value>電話番号（連絡の繋がりやすい）</value>
+    <comment>Club Management</comment>
+  </data>
   <data name="MobileNumber" xml:space="preserve">
     <value>電話番号</value>
     <comment>ClubManagement</comment>
@@ -2211,6 +2219,10 @@
   <data name="Status" xml:space="preserve">
     <value>状態</value>
     <comment>Customer Management</comment>
+  </data>
+  <data name="Store Name (Katakana)" xml:space="preserve">
+    <value>フリガナ</value>
+    <comment>Club Management</comment>
   </data>
   <data name="StoreName" xml:space="preserve">
     <value>店舗名</value>
