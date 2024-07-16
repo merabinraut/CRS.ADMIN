@@ -44,6 +44,7 @@ namespace CRS.ADMIN.APPLICATION.Models.PointSetup
         public string CreatedOn { get; set; }
         public string CreatedBy { get; set; }
         public string Status { get; set; }
+        public string CategoryType { get; set; }
     }
     public class CategorySlabModel
     {

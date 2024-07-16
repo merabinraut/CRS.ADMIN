@@ -67,7 +67,8 @@ namespace CRS.ADMIN.REPOSITORY.PointSetup
                         CategoryDescription = Convert.ToString(_DAO.ParseColumnValue(item, "Description")),
                         CreatedBy = Convert.ToString(_DAO.ParseColumnValue(item, "ActionUser")),
                         CreatedOn =!string.IsNullOrEmpty(_DAO.ParseColumnValue(item, "ActionDate").ToString())? DateTime.Parse(_DAO.ParseColumnValue(item, "ActionDate").ToString()).ToString("yyyy'年'MM'月'dd'日' HH:mm:ss") : Convert.ToString(_DAO.ParseColumnValue(item, "ActionDate")),
-                        Status = Convert.ToString(_DAO.ParseColumnValue(item, "Status"))
+                        Status = Convert.ToString(_DAO.ParseColumnValue(item, "Status")),
+                        CategoryType = Convert.ToString(_DAO.ParseColumnValue(item, "CategoryType"))
                     });
                 }
             }
