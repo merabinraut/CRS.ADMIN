@@ -214,7 +214,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                         Message = dbResponse.Message ?? "Failed",
                         Title = dbResponse.Code == ResponseCode.Success ? NotificationMessage.SUCCESS.ToString() : NotificationMessage.INFORMATION.ToString()
                     });
-                    return RedirectToAction("PointsCategoryList", "PointSetup", new
+                    return RedirectToAction("PointsCategoryList", " ", new
                     {
                         RoleTypeId = Model.RoleTypeId
                     });
