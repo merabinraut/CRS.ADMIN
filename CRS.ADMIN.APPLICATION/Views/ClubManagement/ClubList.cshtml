@@ -1082,6 +1082,7 @@
     </script>
     <script>
         $(document).ready(function () {
+            var commaSeparatedString = "";
             if ($("#holdId").val() != "" || $("#AgentId").val() != "") {
                 var Value = $('#large[name="IdentificationType"]').find("option:selected").text().trim();
                 if (Value.toLowerCase() == "passport + insurance card" || Value.toLowerCase() == "パスポート + 保険証") {
@@ -1163,9 +1164,49 @@
                 }
             });
 
+
+
+            //$('#large[name="holiday"]').change(function () {
+            //    debugger;
+            //    var maxHeight = 44; // Maximum height in pixels
+            //   var currentheight= $('ul.select2-selection__rendered').outerHeight()
+            //    if (currentheight > maxHeight) {
+            //        $(this).css('height', 'auto');
+            //    } else {
+            //        $(this).css('height', maxHeight + 'px');
+            //    }
+            //});
             $('select').select2({
                 minimumResultsForSearch: Infinity
             });
+
+            $('#large[name="holiday"]').select2({
+                multiple: true,
+                width: '100%',
+                placeholder: "@CRS.ADMIN.APPLICATION.Resources.Resource.Select"
+            });
+            $('#large[name="holiday"]').select2({
+                multiple: true,
+                width: '100%',
+                placeholder: "@CRS.ADMIN.APPLICATION.Resources.Resource.Select"
+            }).change(function () {
+                var value = $('#large[name="holiday"]').val();
+
+                if (value === null || value.length === 0) {
+                    $('.select2-container--default .select2-search--inline .select2-search__field').css('display', 'block');
+                } else {
+                    $('.select2-container--default .select2-search--inline .select2-search__field').css('display', 'none');
+                }
+                                
+             });
+            var value = $('#large[name="holiday"]').val();
+            if (value === null || value.length === 0) {
+                $('.select2-container--default .select2-search--inline .select2-search__field').css('display', 'block');
+            } else {
+                $('.select2-container--default .select2-search--inline .select2-search__field').css('display', 'none');
+            }
+
+
             var PopUpRenderValue = '@ViewBag.PopUpRenderValue';
             if (PopUpRenderValue != null && PopUpRenderValue != "" && PopUpRenderValue == "Manage") {
                  var element = document.getElementById('add-new-host-club');
@@ -1391,16 +1432,24 @@
 
             else if (id.toLowerCase() == "content3")
             {
+
                 var locationDDL = $('#large[name="LocationDDL"]').val();
                 if (locationDDL == "")
                 {
                     $('span.field-validation-valid[data-valmsg-for="LocationDDL"]').text('@CRS.ADMIN.APPLICATION.Resources.Resource.Required');
                     isimagevalid = false;
                 }
+                commaSeparatedString = [];
+                var items = [];
+                $('#large[name="holiday"] option:selected').each(function () {
+                    items.push($(this).val());
+                });
+                commaSeparatedString = items.join(', ');
+                $('input[name="HolidayStr"]').val(commaSeparatedString);
             }
 
 
-            
+
             var isValid = $('#ManageClubForm').valid();
             if (!isValid) {
                 return false;
@@ -1517,7 +1566,7 @@
                     Representative1_ContactName: {
                         required: $('#large[name="BusinessTypeDDL"]').find("option:selected").text().trim().toLowerCase() == "corporation"  ||
                                   $('#large[name="BusinessTypeDDL"]').find("option:selected").text().trim().toLowerCase() === "法人"
-                
+
                     },
                     Representative1_MobileNo: {
                         required: $('#large[name="BusinessTypeDDL"]').find("option:selected").text().trim().toLowerCase() == "corporation" ||
@@ -1525,11 +1574,11 @@
                     },
                     Representative1_Email: {
                         required: $('#large[name="BusinessTypeDDL"]').find("option:selected").text().trim().toLowerCase() == "corporation" ||
-                                  $('#large[name="BusinessTypeDDL"]').find("option:selected").text().trim().toLowerCase() === "法人" 
+                                  $('#large[name="BusinessTypeDDL"]').find("option:selected").text().trim().toLowerCase() === "法人"
                     },
                     Representative1_Furigana: {
                         required: $('#large[name="BusinessTypeDDL"]').find("option:selected").text().trim().toLowerCase() == "corporation" ||
-                                  $('#large[name="BusinessTypeDDL"]').find("option:selected").text().trim().toLowerCase() === "法人" 
+                                  $('#large[name="BusinessTypeDDL"]').find("option:selected").text().trim().toLowerCase() === "法人"
                     },
                     GoogleMap: {
                         required: true

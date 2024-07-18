@@ -1021,6 +1021,10 @@
     <value>身長</value>
     <comment>Host Management</comment>
   </data>
+  <data name="Height should be in between 135 220 cm" xml:space="preserve">
+    <value>身長は135以上220以内にしてください</value>
+    <comment>Host Management</comment>
+  </data>
   <data name="Hide" xml:space="preserve">
     <value>隠れる</value>
     <comment>Host Management</comment>

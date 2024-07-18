@@ -8,6 +8,7 @@ using CRS.ADMIN.BUSINESS.ClubManagement;
 using CRS.ADMIN.SHARED;
 using CRS.ADMIN.SHARED.ClubManagement;
 using CRS.ADMIN.SHARED.PaginationManagement;
+using DocumentFormat.OpenXml.Office2019.Excel.RichData2;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -95,7 +96,9 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 item.ClubLogo = ImageHelper.ProcessedImage(item.ClubLogo);
             });
             ViewBag.Pref = DDLHelper.LoadDropdownList("PREF") as Dictionary<string, string>;
-            ViewBag.Holiday = ApplicationUtilities.SetDDLValue(DDLHelper.LoadDropdownList("Holiday","",culture) as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---");
+            //ViewBag.Holiday = Dropdown(ApplicationUtilities.LoadDropdownValuesList("PLANTIMEINTERVAL", agentids, culture) as List<MultipleItemCommon>, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---");
+            //ViewBag.Holiday = ApplicationUtilities.SetDDLValue(DDLHelper.LoadDropdownList("Holiday","",culture) as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---");
+            ViewBag.Holiday = ApplicationUtilities.SetDDLValue(DDLHelper.LoadDropdownList("Holiday", "", culture) as Dictionary<string, string>, null, "");
             ViewBag.IdentificationType = DDLHelper.LoadDropdownList("DOCUMENTTYPE") as Dictionary<string, string>;
             ViewBag.IdentificationTypeIdKey = response.ManageClubModel.IdentificationType;
             ViewBag.PopUpRenderValue = !string.IsNullOrEmpty(RenderId) ? RenderId : null;
@@ -113,7 +116,8 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             ViewBag.LocationIdKey = response.ManageClubModel.LocationDDL;
             ViewBag.LocationIdtagKey= response.ManageTag.Tag1Location;
 
-            ViewBag.PrefIdKey = !string.IsNullOrEmpty(response.ManageClubModel.Prefecture) ? ViewBag.Pref[response.ManageClubModel.Prefecture] : null;
+            ViewBag.PrefIdKey = !string.IsNullOrEmpty(response.ManageClubModel.Prefecture) ? ViewBag.Pref[response.ManageClubModel.Prefecture] : null;           
+            //Model.Holiday = holidays;
             ViewBag.HolidayIdKey = !string.IsNullOrEmpty(response.ManageClubModel.Holiday) ? response.ManageClubModel.Holiday : null;
             ViewBag.BusinessTypeKey = response.ManageClubModel.BusinessTypeDDL;
             //ViewBag.CountryCodeDDLKey = response.ManageClubModel.LandLineCode;
@@ -168,7 +172,24 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 model.BusinessTypeDDL = !string.IsNullOrEmpty(model.BusinessType) ? model.BusinessType.EncryptParameter() : null;
                 model.Prefecture = !string.IsNullOrEmpty(model.Prefecture) ? model.Prefecture.EncryptParameter() : null;
                 model.IdentificationType = !string.IsNullOrEmpty(model.IdentificationType) ? model.IdentificationType.EncryptParameter() : null;
-                model.Holiday = !string.IsNullOrEmpty(model.Holiday) ? model.Holiday.EncryptParameter() : null;
+                string holidays = "";
+                string[] array = model.Holiday.Split(','); ;
+                string commaSeparatedString = string.Join(", ", array);
+                List<string> holidayList = commaSeparatedString.Split(new[] { ", " }, StringSplitOptions.RemoveEmptyEntries).ToList();
+                foreach (var holiday in holidayList)
+                {
+                    var item = holiday.EncryptParameter();
+                    if (string.IsNullOrEmpty(holidays))
+                    {
+                        holidays = item.Trim();
+                    }
+                    else
+                    {
+                        holidays = holidays + "," + item.Trim();
+                    }
+
+                }
+                model.Holiday = !string.IsNullOrEmpty(holidays) ? holidays : null;
                 model.ClosingDate = !string.IsNullOrEmpty(model.ClosingDate) ? model.ClosingDate.EncryptParameter() : null;
             }
             TempData["ManageClubModel"] = model;
@@ -306,7 +327,25 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             model.LocationDDL = !string.IsNullOrEmpty(model.LocationId) ? model.LocationId.EncryptParameter() : null;
             model.BusinessTypeDDL = !string.IsNullOrEmpty(model.BusinessType) ? model.BusinessType.EncryptParameter() : null;
             //model.Prefecture = !string.IsNullOrEmpty(model.Prefecture) ? model.Prefecture.EncryptParameter() : null;
-            model.Holiday = !string.IsNullOrEmpty(model.Holiday) ? model.Holiday.EncryptParameter() : null;
+            string holidays = "";
+            string[] array = model.Holiday.Split(','); ;
+            string commaSeparatedString = string.Join(", ", array);
+            List<string> holidayList = commaSeparatedString.Split(new[] { ", " }, StringSplitOptions.RemoveEmptyEntries).ToList();
+            foreach (var holiday in holidayList)
+            {
+                var item = holiday.EncryptParameter();
+                if (string.IsNullOrEmpty(holidays))
+                {
+                    holidays = item.Trim();
+                }
+                else
+                {
+                    holidays = holidays + "," + item.Trim();
+                }
+
+            }
+            model.Holiday = !string.IsNullOrEmpty(holidays) ? holidays : null;
+            //model.Holiday = !string.IsNullOrEmpty(model.Holiday) ? model.Holiday.EncryptParameter() : null;
             model.ClosingDate = !string.IsNullOrEmpty(model.ClosingDate) ? model.ClosingDate.EncryptParameter() : null;
             model.holdId = !string.IsNullOrEmpty(model.holdId) ? model.holdId.EncryptParameter() : null;
             model.IdentificationType = !string.IsNullOrEmpty(model.IdentificationType) ? model.IdentificationType.EncryptParameter() : null;
@@ -321,6 +360,24 @@ namespace CRS.ADMIN.APPLICATION.Controllers
         [HttpPost, ValidateAntiForgeryToken]
         public async Task<ActionResult> ManageClub(ManageClubModel Model, HttpPostedFileBase Business_Certificate, HttpPostedFileBase Logo_Certificate, HttpPostedFileBase CoverPhoto_Certificate, HttpPostedFileBase KYCDocument_Certificate, HttpPostedFileBase KYCDocumentBack_Certificate, HttpPostedFileBase PassportPhotot_Certificate, HttpPostedFileBase InsurancePhoto_Certificate, HttpPostedFileBase CorporateRegistry_Certificate, string LocationDDL, string BusinessTypeDDL)
         {
+            string holidays = "";
+            string[] array = Model.HolidayStr;
+            string commaSeparatedString = string.Join(", ", array);
+            List<string> holidayList = commaSeparatedString.Split(new[] { ", " }, StringSplitOptions.RemoveEmptyEntries).ToList();
+            foreach (var holiday in holidayList)
+            {
+               var item = holiday.DecryptParameter();
+                if (string.IsNullOrEmpty(holidays))
+                {
+                    holidays = item.Trim();
+                }
+                else
+                {
+                    holidays = holidays+"," + item.Trim();
+                }
+               
+            }
+            Model.Holiday= holidays;    
             string ErrorMessage = string.Empty;
             if (!string.IsNullOrEmpty(BusinessTypeDDL?.DecryptParameter())) ModelState.Remove("BusinessType");
 
@@ -697,7 +754,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 }
                 commonModel.LocationId = LocationDDL?.DecryptParameter();
                 commonModel.BusinessType = BusinessTypeDDL?.DecryptParameter();
-                commonModel.Holiday = commonModel.Holiday?.DecryptParameter();
+                //commonModel.Holiday = commonModel.Holiday?.DecryptParameter();
                 commonModel.Prefecture = commonModel.Prefecture?.DecryptParameter();
                 commonModel.ClosingDate = commonModel.ClosingDate?.DecryptParameter();
                 commonModel.IdentificationType = commonModel.IdentificationType?.DecryptParameter();

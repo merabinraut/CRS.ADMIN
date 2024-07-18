@@ -2122,6 +2122,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Height should be in between 135-220 cm.
+        /// </summary>
+        public static string Height_should_be_in_between_135_220_cm {
+            get {
+                return ResourceManager.GetString("Height should be in between 135 220 cm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Hide.
         /// </summary>
         public static string Hide {

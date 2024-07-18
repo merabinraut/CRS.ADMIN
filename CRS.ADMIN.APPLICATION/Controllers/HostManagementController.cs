@@ -96,10 +96,10 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             ViewBag.RankDDLKey = ResponseModel.ManageHostModel.Rank;
             ViewBag.SkillDDL = ApplicationUtilities.SetDDLValue(CustomLoadDropdownList("SKILLDDL") as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---");
             ViewBag.BirthPlaceDdl = ApplicationUtilities.SetDDLValue(DDLHelper.LoadDropdownList("BIRTHPLACE", "", culture) as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---");
-            ViewBag.heightlistddl = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("HEIGHTLIST", "", culture) as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---");
+            //ViewBag.heightlistddl = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("HEIGHTLIST", "", culture) as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---");
             ViewBag.positionddl = ApplicationUtilities.SetDDLValue(DDLHelper.LoadDropdownList("POSITIONLIST","",culture) as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---");
             ViewBag.BirthPlacekey = ResponseModel.ManageHostModel.Address;
-            ViewBag.heightlistkey = ResponseModel.ManageHostModel.Height;
+            //ViewBag.heightlistkey = ResponseModel.ManageHostModel.Height;
             ViewBag.postitionkey = ResponseModel.ManageHostModel.Position;
             ViewBag.StartIndex = StartIndex;
             ViewBag.PageSize = PageSize;
@@ -181,7 +181,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 model.HostIconImage = dbResponse.IconImagePath;
                 model.Rank = dbResponse.Rank.EncryptParameter();
                 model.Address = dbResponse.Address.EncryptParameter();
-                model.Height = dbResponse.Height.EncryptParameter();
+                //model.Height = dbResponse.Height.EncryptParameter();
                 model.Position = dbResponse.Position.EncryptParameter();
                 model.HostIdentityDataModel.ForEach(x => x.IdentityLabel = (!string.IsNullOrEmpty(culture) && culture == "en") ? x.IdentityLabelEnglish : x.IdentityLabelJapanese);
                 model.HostIdentityDataModel.ForEach(x => x.IdentityType = x.IdentityType.EncryptParameter());
@@ -341,8 +341,8 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                     requestCommon.LiquorStrength = LiquorStrengthDDLKey?.DecryptParameter();
                 if (!string.IsNullOrEmpty(requestCommon.Address))
                     requestCommon.Address = Model.Address?.DecryptParameter();
-                if (!string.IsNullOrEmpty(requestCommon.Height))
-                    requestCommon.Height = Model.Height?.DecryptParameter();
+                //if (!string.IsNullOrEmpty(requestCommon.Height))
+                //    requestCommon.Height = Model.Height?.DecryptParameter();
                 if (!string.IsNullOrEmpty(requestCommon.Position))
                     requestCommon.Position = Model.Position?.DecryptParameter();
                 requestCommon.DOB = Model.DOB.Contains("--")|| Model.DOB.Contains("-") ? "" : Model.DOB;

@@ -1021,6 +1021,10 @@
     <value>Height</value>
     <comment>Host Management</comment>
   </data>
+  <data name="Height should be in between 135 220 cm" xml:space="preserve">
+    <value>Height should be in between 135-220 cm</value>
+    <comment>Host Management</comment>
+  </data>
   <data name="Hide" xml:space="preserve">
     <value>Hide</value>
     <comment>Host Management</comment>
