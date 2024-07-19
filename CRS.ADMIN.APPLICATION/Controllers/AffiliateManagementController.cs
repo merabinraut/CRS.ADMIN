@@ -72,8 +72,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             ViewBag.ActiveTab = ActiveTab ?? "";
             ViewBag.StartIndex = StartIndex;
             ViewBag.PageSize = PageSize;
-            ViewBag.TotalData = dbResponse != null && dbResponse.Any() ? dbResponse[0].TotalRecords : 0;
-
+            ViewBag.TotalData1 = dbResponse != null && dbResponse.Any() ? dbResponse[0].TotalRecords : 0;
             
             ViewBag.StartIndex2 = StartIndex2;
             ViewBag.PageSize2 = PageSize2;
