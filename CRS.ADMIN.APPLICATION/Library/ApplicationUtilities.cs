@@ -1197,6 +1197,7 @@ namespace CRS.ADMIN.APPLICATION.Library
                     return response;
                 case "PLANTIMEINTERVAL":
                     MultipleItemCommon = _CommonBuss.GetDropDownItem("049", search1, search2, culture);
+                    MultipleItemCommon.ForEach(x => x.Value = !string.IsNullOrEmpty(x.Value) ? x.Value.EncryptParameter() : x.Value);
                     //MultipleItemCommon.ForEach(item =>
                     //{
                     //    MultipleItemCommon.Add
