@@ -180,6 +180,7 @@ namespace CRS.ADMIN.APPLICATION.Models.ClubManagement
         [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Required")]
         public string WorkingHrTo { get; set; }
         public string Holiday { get; set; }
+        public string[] HolidayStr { get; set; }
         [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Required")]
         public string LastOrderTime { get; set; }
         [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Required")]
@@ -238,7 +239,7 @@ namespace CRS.ADMIN.APPLICATION.Models.ClubManagement
         public string ClosingDate { get; set; }
         public string holdId { get; set; }
         public string LandLineCode { get; set; }
-        [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Required")]
+        //[Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Required")]
         public string ClubName { get; set; }
         [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Required")]
         public string CeoFurigana { get; set; }

@@ -56,5 +56,21 @@ namespace CRS.ADMIN.REPOSITORY.CommonManagement
                 ? _DAO.DataTableToListObject<StaticDataCommon>(dbResponse).ToList()
                 : new List<StaticDataCommon>();
         }
+        public List<MultipleItemCommon> GetDropDownItem(string Flag, string Extra1 = "", string Extra2 = "", string culture = "")
+        {
+            List<MultipleItemCommon> response = new List<MultipleItemCommon>();
+            string SQL = "EXEC sproc_dropdown_management ";
+            SQL += "@Flag=" + _DAO.FilterString(Flag);
+            SQL += ",@SearchField1=" + _DAO.FilterString(Extra1);
+            SQL += ",@SearchField2=" + _DAO.FilterString(Extra2);
+            var dbResponse = _DAO.ExecuteDataTable(SQL);
+            if (dbResponse != null && dbResponse.Rows.Count > 0)
+            {
+                return dbResponse != null && dbResponse.Rows.Count > 0
+                ? _DAO.DataTableToListObject<MultipleItemCommon>(dbResponse).ToList()
+                : new List<MultipleItemCommon>();
+            }
+            return response;
+        }
     }
 }

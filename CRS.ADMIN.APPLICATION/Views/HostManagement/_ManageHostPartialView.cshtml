@@ -433,24 +433,33 @@
                                     <label for="email" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
                                         @CRS.ADMIN.APPLICATION.Resources.Resource.Height
                                     </label>
-                                    <select id="large" class="select-common block w-full " name="Height">
-                                        @foreach (var item in ViewBag.heightlistddl as IEnumerable<SelectListItem>)
-                                        {
-                                            var selectedId = ViewBag.heightlistkey as string;
-                                            if (item.Value == selectedId)
+                                    @Html.TextBoxFor(model => model.Height, new
+                                    {
+                                       @class = "w-full",
+                                       @placeholder = CRS.ADMIN.APPLICATION.Resources.Resource.Height,
+                                       //@onkeypress = "return isNumber(event)",
+                                       autocomplete = "off",
+                                       @maxLength = "6"
+                                    })
+
+                                    @*<select id="large" class="select-common block w-full " name="Height">
+                                            @foreach (var item in ViewBag.heightlistddl as IEnumerable<SelectListItem>)
                                             {
-                                                <option value="@item.Value" selected>
-                                                    @item.Text
-                                                </option>
+                                                var selectedId = ViewBag.heightlistkey as string;
+                                                if (item.Value == selectedId)
+                                                {
+                                                    <option value="@item.Value" selected>
+                                                        @item.Text
+                                                    </option>
+                                                }
+                                                else
+                                                {
+                                                    <option value="@item.Value">
+                                                        @item.Text
+                                                    </option>
+                                                }
                                             }
-                                            else
-                                            {
-                                                <option value="@item.Value">
-                                                    @item.Text
-                                                </option>
-                                            }
-                                        }
-                                    </select>
+                                        </select>*@
                                     <span class="error">
                                         @Html.ValidationMessageFor(m => m.Height)
                                     </span>

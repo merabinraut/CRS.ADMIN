@@ -31,4 +31,11 @@ namespace CRS.ADMIN.SHARED
         public string StaticLabelJapanese { get; set; }
         public string StaticLabelEnglish { get; set; }
     }
+    public class MultipleItemCommon
+    {
+        public string Value { get; set; }
+        public string Text { get; set; }
+        public string Item1 { get; set; }
+        public string Item2 { get; set; }
+    }
 }

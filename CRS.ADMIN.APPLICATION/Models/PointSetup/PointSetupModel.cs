@@ -44,6 +44,7 @@ namespace CRS.ADMIN.APPLICATION.Models.PointSetup
         public string CreatedOn { get; set; }
         public string CreatedBy { get; set; }
         public string Status { get; set; }
+        public string CategoryType { get; set; }
     }
     public class CategorySlabModel
     {
@@ -60,7 +61,7 @@ namespace CRS.ADMIN.APPLICATION.Models.PointSetup
         [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Required")]
         public string PointType { get; set; }
         [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Required")]
-        [RegularExpression(@"^(?:[0-9]|[1-9][0-9]|1[0-4][0-9]|150)$", ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "The_field_must_be_a_number_between_0_and_150")]
+        //[RegularExpression(@"^(?:[0-9]|[1-9][0-9]|1[0-4][0-9]|150)$", ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "The_field_must_be_a_number_between_0_and_150")]
         public string PointValue { get; set; }
         public string CreatedOn { get; set; }
         public string CreatedBy { get; set; }
@@ -70,14 +71,14 @@ namespace CRS.ADMIN.APPLICATION.Models.PointSetup
         [RegularExpression("^[0-9]*$", ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "The_field_must_be_a_number")]
         public string MaxValue { get; set; }
         public string PointType2 { get; set; }
-        [RegularExpression(@"^(?:[0-9]|[1-9][0-9]|1[0-4][0-9]|150)$", ErrorMessage = "The_field_must_be_a_number_between_0_and_150")]
+        //[RegularExpression(@"^(?:[0-9]|[1-9][0-9]|1[0-4][0-9]|150)$", ErrorMessage = "The_field_must_be_a_number_between_0_and_150")]
         public string PointValue2 { get; set; }
         [RegularExpression("^[0-9]*$", ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "The_field_must_be_a_number")]
         public string MinValue2 { get; set; }
         [RegularExpression("^[0-9]*$", ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "The_field_must_be_a_number")]
         public string MaxValue2 { get; set; }
         public string PointType3 { get; set; }
-        [RegularExpression(@"^(?:[0-9]|[1-9][0-9]|1[0-4][0-9]|150)$", ErrorMessage = "The_field_must_be_a_number_between_0_and_150")]
+        //[RegularExpression(@"^(?:[0-9]|[1-9][0-9]|1[0-4][0-9]|150)$", ErrorMessage = "The_field_must_be_a_number_between_0_and_150")]
         public string PointValue3 { get; set; }
         [RegularExpression("^[0-9]*$", ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "The_field_must_be_a_number")]
         public string MinValue3 { get; set; }
