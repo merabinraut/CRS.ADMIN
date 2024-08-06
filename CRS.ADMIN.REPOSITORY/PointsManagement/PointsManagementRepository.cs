@@ -134,11 +134,11 @@ namespace CRS.ADMIN.REPOSITORY.PointsManagement
                         TransactionDate = !string.IsNullOrEmpty(_DAO.ParseColumnValue(item, "TransactionDate").ToString()) ? DateTime.Parse(_DAO.ParseColumnValue(item, "TransactionDate").ToString()).ToString("yyyy'年'MM'月'dd'日' HH:mm:ss") : _DAO.ParseColumnValue(item, "TransactionDate").ToString(),
                         TransactionType = Convert.ToString(_DAO.ParseColumnValue(item, "TransactionType")),
                         User = Convert.ToString(_DAO.ParseColumnValue(item, "Users")),
-                        TotalPrice = Convert.ToString(_DAO.ParseColumnValue(item, "TotalAmount")),
-                        TotalCommission = Convert.ToString(_DAO.ParseColumnValue(item, "TotalCommissionAmount")),
+                        TotalPrice = Convert.ToInt64(_DAO.ParseColumnValue(item, "TotalAmount")).ToString("N0"),
+                        TotalCommission = Convert.ToInt64(_DAO.ParseColumnValue(item, "TotalCommissionAmount")).ToString("N0"),
                         Remarks = Convert.ToString(_DAO.ParseColumnValue(item, "Remark")),
-                        Credit = Convert.ToString(_DAO.ParseColumnValue(item, "Credit")),
-                        Debit = Convert.ToString(_DAO.ParseColumnValue(item, "Debit"))                   
+                        Credit = Convert.ToInt64(_DAO.ParseColumnValue(item, "Credit")).ToString("N0"),
+                        Debit = Convert.ToInt64(_DAO.ParseColumnValue(item, "Debit")).ToString("N0")
                     });
                 }
             }

@@ -60,6 +60,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 x.PlanId = x.PlanId.EncryptParameter();
                 x.PlanImage = ImageHelper.ProcessedImage(x.PlanImage);
                 x.PlanImage2 = ImageHelper.ProcessedImage(x.PlanImage2);
+                x.Price = Convert.ToInt64(x.Price).ToString("N0");
             });
             ResModel.PlanManagementModel.ForEach(x => x.PlanStatus = x.PlanStatus.Trim().ToUpper() == "A" ? "A" : "B");
 

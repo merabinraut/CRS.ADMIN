@@ -38,6 +38,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 {
                     x.ClubId = x.ClubId.EncryptParameter();
                     x.ClubLogo = ImageHelper.ProcessedImage(x.ClubLogo);
+                    x.AdminPayment = Convert.ToInt64(x.AdminPayment).ToString("N0");
                 }
             );
             ViewBag.ClubDDL = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("CLUBLIST","",culture) as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---");
@@ -82,6 +83,14 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                     x.ClubId = x.ClubId.EncryptParameter();
                     x.CustomerImage = ImageHelper.ProcessedImage(x.CustomerImage);
                     x.VisitDate = !string.IsNullOrEmpty(x.VisitDate) ? DateTime.Parse(x.VisitDate).ToString("yyyy'年'MM'月'dd'日'"):x.VisitDate;
+                    x.PlanAmount = Convert.ToInt64(x.PlanAmount).ToString("N0");
+                    x.TotalPlanAmount = Convert.ToInt64(x.TotalPlanAmount).ToString("N0");
+                    x.TotalClubPlanAmount = Convert.ToInt64(x.TotalClubPlanAmount).ToString("N0");
+                    x.AdminPlanCommissionAmount = Convert.ToInt64(x.AdminPlanCommissionAmount).ToString("N0");
+                    x.TotalAdminPlanCommissionAmount = Convert.ToInt64(x.TotalAdminPlanCommissionAmount).ToString("N0");
+                    x.AdminCommissionAmount = Convert.ToInt64(x.AdminCommissionAmount).ToString("N0");
+                    x.TotalAdminCommissionAmount = Convert.ToInt64(x.TotalAdminCommissionAmount).ToString("N0");
+                    x.TotalAdminPayableAmount = Convert.ToInt64(x.TotalAdminPayableAmount).ToString("N0");
                 }
             );
             ViewBag.IsBackAllowed = true;

@@ -4,6 +4,7 @@ using CRS.ADMIN.APPLICATION.Models.CommissionManagement;
 using CRS.ADMIN.BUSINESS.CommissionManagement;
 using CRS.ADMIN.SHARED;
 using CRS.ADMIN.SHARED.CommissionManagement;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -237,6 +238,12 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 x.CategoryDetailId = x.CategoryDetailId.EncryptParameter();
                 x.CategoryId = x.CategoryId.EncryptParameter();
                 x.AdminCommissionTypeId = x.AdminCommissionTypeId.EncryptParameter();
+                x.FromAmount= Convert.ToInt64(x.FromAmount).ToString("N0");
+                x.ToAmount = Convert.ToInt64(x.ToAmount).ToString("N0");
+                x.CommissionValue = Convert.ToInt64(x.CommissionValue).ToString("N0");
+                x.MaxCommissionValue = Convert.ToInt64(x.MaxCommissionValue).ToString("N0");
+                x.MinCommissionValue = Convert.ToInt64(x.MinCommissionValue).ToString("N0");
+
             });
 
             if (TempData.ContainsKey("ManageCommissionDetailModel"))

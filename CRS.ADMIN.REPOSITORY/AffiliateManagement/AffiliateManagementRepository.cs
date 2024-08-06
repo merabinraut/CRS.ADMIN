@@ -69,7 +69,7 @@ namespace CRS.ADMIN.REPOSITORY.AffiliateManagement
                     responseInfo.Add(new ReferralConvertedCustomerListModelCommon()
                     {
                         AffiliateFullName = row["AffiliateFullName"].ToString(),
-                        AffiliateAmount = row["AffiliateAmount"].ToString(),
+                        AffiliateAmount =Convert.ToInt64( row["AffiliateAmount"]).ToString("N0"),
                         AffiliateId = row["AffiliateCode"].ToString(),
                         AffiliateImaeg = row["AffiliateImage"].ToString(),
                         CustomerConvertedDate = row["CustomerConvertedDate"].ToString(),
