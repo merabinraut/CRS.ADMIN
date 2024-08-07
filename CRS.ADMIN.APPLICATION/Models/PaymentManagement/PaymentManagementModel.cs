@@ -6,6 +6,7 @@ namespace CRS.ADMIN.APPLICATION.Models.PaymentManagement
     {
         public PaymentOverviewModel PaymentOverview { get; set; }
         public List<PaymentLogsModel> PaymentLogs { get; set; }
+       
     }
     public class PaymentOverviewModel
     {
@@ -29,6 +30,7 @@ namespace CRS.ADMIN.APPLICATION.Models.PaymentManagement
         public string TotalAdminCommissionAmount { get; set; }
         public string GrandTotal { get; set; }
         public string TransactionFormattedDate { get; set; }
+        public string Value { get; set; }
     }
 
     public class PaymentLedgerModel

@@ -654,7 +654,8 @@
                 $.datepicker.setDefaults($.datepicker.regional['ja']);
                 $("#FromDate").datepicker({
                 /*minDate: new Date(),*/
-                 /*   maxDate: new Date(),*/
+                    /*   maxDate: new Date(),*/
+                maxDate: new Date(),
                 defaultDate: '@Model.FromDate'
                 });
                 });
@@ -684,9 +685,8 @@
                };
                $.datepicker.setDefaults($.datepicker.regional['ja']);
                $("#ToDate").datepicker({
-                 /*  maxDate: new Date(),*/
-
-               defaultDate: '@Model.ToDate'
+                   maxDate: new Date(),
+                   defaultDate: '@Model.ToDate'
                });
                });
 
@@ -713,6 +713,7 @@
                };
                $.datepicker.setDefaults($.datepicker.regional['ja']);
                $("#FromDate4").datepicker({
+               maxDate: new Date(),
                defaultDate: '@_PointRequestCommonModel.FromDate'
                });
                });
@@ -742,6 +743,7 @@
               };
               $.datepicker.setDefaults($.datepicker.regional['ja']);
               $("#ToDate4").datepicker({
+              maxDate: new Date(),
               defaultDate: '@_PointRequestCommonModel.ToDate'
               });
               });
@@ -771,6 +773,7 @@
     };
     $.datepicker.setDefaults($.datepicker.regional['ja']);
     $("#From_Date").datepicker({
+    maxDate: new Date(),
     defaultDate: '@_PointStatementModel.From_Date'
     });
     });
@@ -800,6 +803,7 @@
    };
    $.datepicker.setDefaults($.datepicker.regional['ja']);
    $("#To_Date").datepicker({
+   maxDate: new Date(),
    defaultDate: '@_PointStatementModel.To_Date'
    });
    });
@@ -828,6 +832,7 @@
    };
    $.datepicker.setDefaults($.datepicker.regional['ja']);
    $("#From_Date1").datepicker({
+   maxDate: new Date(),
    defaultDate: '@_systemTransferModel.From_Date1'
    });
    });
@@ -857,6 +862,7 @@ $("#To_Date1").val("@_systemTransferModel.To_Date1");
   };
   $.datepicker.setDefaults($.datepicker.regional['ja']);
   $("#To_Date1").datepicker({
+  maxDate: new Date(),
   defaultDate: '@_systemTransferModel.To_Date1'
   });
   });
