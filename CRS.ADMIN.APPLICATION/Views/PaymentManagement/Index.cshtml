@@ -26,13 +26,13 @@
                 <div class="flex tab-container-plane bg-white gap-[16px]">
                     <div onclick="getActiveButtonValue()">
 
-                        <button id=" tab1Button" class="tab-button-plane tab-link active"
+                        <button id="tab1Button" class="tab-button-plane tab-link active"
                                 onclick="getActiveButtonValue()">
                             @CRS.ADMIN.APPLICATION.Resources.Resource.Overview
                         </button>
                     </div>
                     <div onclick="getActiveButtonValue()">
-                        <button id=" tab2Button" class="tab-button-plane tab-link ">
+                        <button id="tab2Button" class="tab-button-plane tab-link ">
                             @CRS.ADMIN.APPLICATION.Resources.Resource.Payment_Logs
                         </button>
                     </div>
@@ -74,6 +74,13 @@
                 }
             }
         }
+        if ("@ViewBag.TabValue" == "PL") {
+            $("#tab1Button").removeClass("active");
+            $("#tab2Button").addClass("tab-button-plane tab-link active");
+            $("#tab1").addClass("tab-content-plane hidden");
+            $("#tab2").removeClass("hidden");
+
+        }
 
         // Run the function when the page is loaded
         document.addEventListener('DOMContentLoaded', getActiveButtonValue);
@@ -87,6 +94,7 @@
     </script>
 
     <script>
+        
         document.addEventListener('DOMContentLoaded', function () {
                 const page_size = @ViewBag.PageSize;
                 const total_data = @ViewBag.TotalData;
@@ -103,6 +111,7 @@
                 URL = addQueryParam(URL, 'ToDate', ToDate);
                 URL = addQueryParam(URL, 'ClubId', ClubId);
                 URL = addQueryParam(URL, 'LocationId', LocationId);
+                URL = addQueryParam(URL, 'Value', 'PL');
                 LoadPagination(page_size, total_data, start_index_val, URL);
 
             var currentDate = new Date();

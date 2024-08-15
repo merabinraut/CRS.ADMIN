@@ -32,7 +32,6 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             string RenderId = "";
             var culture = Request.Cookies["culture"]?.Value;
             culture = string.IsNullOrEmpty(culture) ? "ja" : culture;
-
             var objPointsManagementModel = new PointsManagementModel();
             PaginationFilterCommon dbRequest = new PaginationFilterCommon()
             {
@@ -176,6 +175,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                     To_Date = null
                 };
             }
+           
 
             objPointsManagementModel.PointRequestCommonModel.PointRequestsListModel = getPointRequestListDBResponse.MapObjects<PointRequestsListModel>();
             objPointsManagementModel.PointRequestCommonModel.PointRequestsListModel.ForEach(x =>
@@ -430,7 +430,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             ViewBag.TotalData2 = response.Count > 0 ? response?.FirstOrDefault().RowTotal : "0";
             ViewBag.StartIndex2 = requestModel.StartIndex2;
 
-            TempData["ListModel"] = mappedResponseObjects;
+            TempData["ListSatementModel"] = mappedResponseObjects;
             return RedirectToAction("PointsTransferList", "PointsManagement", new { value = "pbs", FromDate = requestModel.From_Date, ToDate = requestModel.To_Date, UserType = requestModel.UserTypeList.EncryptParameter(), UserName = requestModel.UserNameList.EncryptParameter(), TransferTypeId = requestModel.TransferTypeList.EncryptParameter(), SearchFilter = requestModel.SearchFilter, TotalData2 = ViewBag.TotalData2, PageSize2 = ViewBag.PageSize2, StartIndex2 = ViewBag.StartIndex2 });
             //return PartialView("PointsTransferList", mappedResponseObjects);
         }

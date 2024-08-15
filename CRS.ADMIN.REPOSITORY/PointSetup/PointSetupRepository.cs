@@ -141,10 +141,10 @@ namespace CRS.ADMIN.REPOSITORY.PointSetup
                         RoleTypeId = Convert.ToString(_DAO.ParseColumnValue(item, "RoleType")),
                         CategoryId = Convert.ToString(_DAO.ParseColumnValue(item, "CategoryId")),
                         CategoryName = Convert.ToString(_DAO.ParseColumnValue(item, "CategoryName")),
-                        FromAmount = Convert.ToString(_DAO.ParseColumnValue(item, "FromAmount")),
+                        FromAmount = Convert.ToInt64(_DAO.ParseColumnValue(item, "FromAmount")).ToString("N0"),
                         PointType = Convert.ToString(_DAO.ParseColumnValue(item, "PointType")),
-                        ToAmount = Convert.ToString(_DAO.ParseColumnValue(item, "ToAmount")),
-                        PointValue = Convert.ToString(_DAO.ParseColumnValue(item, "PointValue")),
+                        ToAmount = Convert.ToInt64(_DAO.ParseColumnValue(item, "ToAmount")).ToString("N0"),
+                        PointValue = Convert.ToInt64(_DAO.ParseColumnValue(item, "PointValue")).ToString("N0"),
                         CategorySlabId = Convert.ToString(_DAO.ParseColumnValue(item, "Id")),
                         //CreatedOn = Convert.ToString(_DAO.ParseColumnValue(item, "ActionDate")),
                         //Status = Convert.ToString(_DAO.ParseColumnValue(item, "Status"))
