@@ -1,0 +1,1289 @@
+﻿
+@{
+    ViewBag.Title = "PointManagement";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<div class="px-8 py-4">
+    <div>
+        <div class="heading-title">
+            Points Management
+        </div>
+        <div class="span-title-light-gray">
+            Manage your points details.
+        </div>
+    </div>
+
+    <div class="flex gap-4 my-8 border-b ">
+        <div id="tab1Link" class="text-[#667085] text-[14px] styleCss active px-1 pb-4 cursor-pointer active" onclick="changeTab('Points_Transfer', 'tab1Link')">
+            Points Transfer
+        </div>
+        <div id="tab2Link" class="text-[#667085] text-[14px] styleCss px-1 pb-4 cursor-pointer" onclick="changeTab('Points_Balance', 'tab2Link')">
+            Points Balance Statement
+        </div>
+
+        <div id="tab3Link" class="text-[#667085] text-[14px] styleCss px-1 pb-4 cursor-pointer" onclick="changeTab('System_Transfer', 'tab3Link')">
+            System Transfer
+        </div>
+        <div id="tab4Link" class="text-[#667085] text-[14px] styleCss px-1 pb-4 cursor-pointer" onclick="changeTab('Point_Requests', 'tab4Link')">
+            Point Requests
+        </div>
+    </div>
+
+
+    <div class="flex justify-between pb-[24px]">
+
+
+
+        <div class="relative input-search-wrapper">
+            <div class="absolute inset-y-0 left-0 flex items-center pl-[16px] pointer-events-none">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21" fill="none">
+                    <path d="M17.5 18L13.875 14.375M15.8333 9.66667C15.8333 13.3486 12.8486 16.3333 9.16667 16.3333C5.48477 16.3333 2.5 13.3486 2.5 9.66667C2.5 5.98477 5.48477 3 9.16667 3C12.8486 3 15.8333 5.98477 15.8333 9.66667Z"
+                          stroke="#667085" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+            </div>
+            <input type="search"
+                   id="default-search"
+                   class="input-search block w-full "
+                   placeholder="Search"
+                   value="SearchFilter"
+                   name="SearchFilter">
+        </div>
+
+        <div class="flex gap-6">
+            <div class="export-button h-[40px]">
+                <img src="~/Content/assets_new/images/club/download-solid.svg">Export
+            </div>
+
+            <div class="btn btn-primary gap-[8px] h-[40px]" data-drawer-target="add-new-host-club"
+                 data-drawer-show="add-new-host-club" data-drawer-placement="right" data-drawer-backdrop="false"
+                 aria-controls="drawer-disabled-backdrop" id="add-new-id">
+                <img src="~/Content/assets_new/images/plus-circle-solid.svg" />
+                Add_New
+            </div>
+        </div>
+    </div>
+
+    @*filter*@
+    <div>
+
+        <div id="filter" class="export-button h-[40px] text-[#3E3E3E] w-max" onclick="showFilterContainer()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21" fill="none">
+                <path d="M5 10.5H15M2.5 5.5H17.5M7.5 15.5H12.5" stroke="#3E3E3E" stroke-width="1.67"
+                      stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+            @CRS.ADMIN.APPLICATION.Resources.Resource.Filter_By
+        </div>
+        <div id="filter-container" class="px-6 py-5 rounded-[5px] border border-[#D0D5DD]" style="display:none;">
+            <div class="flex flex-col gap-4">
+                <div class="flex text-[#3E3E3E] gap-1 items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20"
+                         height="21" viewBox="0 0 20 21" fill="none">
+                        <path d="M5 10.5H15M2.5 5.5H17.5M7.5 15.5H12.5" stroke="#3E3E3E" stroke-width="1.67"
+                              stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                    FIlter By
+                </div>
+
+                @*        filter input*@
+
+                <div class="flex flex-col gap-[27px]">
+
+                    <div class="grid grid-cols-3 gap-[27px]" id="notFor4th">
+                        <div class="input-field-common">
+                            <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
+                                User Type
+                            </label>
+                            <select id="large" name="Status" class=" default_select select-common block w-full "
+                                    style="width: 100%;">
+
+                                <option value="Value" selected>Select User Type</option>
+
+                                <option value="Value">
+                                    Text
+                                </option>
+                            </select>
+                        </div>
+                        <div class="input-field-common">
+                            <label class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                                User
+                            </label>
+                            <input type="text" class="w-full" placeholder="User Name" name="Username"
+                                   maxlength="11">
+                        </div>
+
+                        <div class="input-field-common">
+                            <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
+                                Transfer Type
+                            </label>
+                            <select id="large" name="Status" class=" default_select select-common block w-full "
+                                    style="width: 100%;">
+
+                                <option value="Value" selected>All</option>
+
+                                <option value="Value">
+                                    Text
+                                </option>
+                            </select>
+                        </div>
+
+                    </div>
+
+                    @*"filter Point Request"*@
+
+                    <div id="Point_Requests1" class="pane" style="display: none;">
+
+                        <div class=" grid grid-cols-3 gap-[27px]">
+                            <div class="input-field-common">
+                                <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
+                                    Location
+                                </label>
+                                <select id="large" name="Status" class=" default_select select-common block w-full "
+                                        style="width: 100%;">
+
+                                    <option value="Value" selected>Select User Type</option>
+
+                                    <option value="Value">
+                                        Text
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="input-field-common">
+                                <label class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                                    Club Name
+                                </label>
+                                <input type="text" class="w-full" placeholder="User Name" name="Username"
+                                       maxlength="11">
+                            </div>
+
+                            <div class="input-field-common">
+                                <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
+                                    Payment Method
+                                </label>
+                                <select id="large" name="Status" class=" default_select select-common block w-full "
+                                        style="width: 100%;">
+
+                                    <option value="Value" selected>All</option>
+
+                                    <option value="Value">
+                                        Text
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    @*"Point Request end"*@
+
+
+                    <div class="grid grid-cols-3 gap-[27px]">
+
+                        <div class="input-field-common">
+                            <label class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                                From_Date
+                            </label>
+
+                            <input type="date" class="w-full" placeholder="From_Date" name="FromDate" value="FromDate">
+                        </div>
+                        <div class="input-field-common">
+                            <label class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                                To_Date
+                            </label>
+
+                            <input type="date" class="w-full" placeholder="To_Date" name="ToDate" id="ToDate" value="ToDate">
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+                <div class=" flex gap-4 mt-4">
+                    <button id="cancelFilter" class="btn btn-primary-normal gap-1 rounded-[4px]"
+                            onclick="hideFilterContainerCustom()" type="button">
+                        <i class="las la-times"></i>@CRS.ADMIN.APPLICATION.Resources.Resource.Cancel
+                    </button>
+
+                    <button id="SubmitFilter" class="btn btn-primary-default gap-1 rounded-[4px]">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="19"
+                             viewBox="0 0 18 19" fill="none">
+                            <path d="M5.25 14.75V10.25H12.75V14.75H14.25V6.371L12.129 4.25H3.75V14.75H5.25ZM3 2.75H12.75L15.75 5.75V15.5C15.75 15.6989 15.671 15.8897 15.5303 16.0303C15.3897 16.171 15.1989 16.25 15 16.25H3C2.80109 16.25 2.61032 16.171 2.46967 16.0303C2.32902 15.8897 2.25 15.6989 2.25 15.5V3.5C2.25 3.30109 2.32902 3.11032 2.46967 2.96967C2.61032 2.82902 2.80109 2.75 3 2.75ZM6.75 11.75V14.75H11.25V11.75H6.75Z"
+                                  fill="white" />
+                        </svg>Apply
+                    </button>
+                </div>
+            </div>
+
+
+
+        </div>
+
+    </div>
+
+    @*filter end*@
+
+
+    @*Table start*@
+
+    <div id="Points_Transfer" class="pane active table-tab mt-6">
+        <div class="px-[12px] py-[16px] flex justify-between entry-export-container">
+            <div class="flex items-center select-entries" id="ShowEntries-Id">
+            </div>
+
+        </div>
+
+        <div class="relative overflow-x-auto">
+            <table class="w-full  text-left club-table" id="table-id">
+                <thead class="club-table-thead">
+                    <tr>
+                        <th scope="col" class="p-[12px]">
+                            <div class="flex  w-max">
+                                S.N
+                                <div class="relative pl-[5px]">
+                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                </div>
+                            </div>
+                        </th>
+                        <th scope="col" class="p-[12px]">
+                            <div class="flex  w-max">
+                                Transaction ID
+                                <div class="relative pl-[5px]">
+                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                </div>
+                            </div>
+                        </th>
+                        <th scope="col" class="p-[12px]">
+                            <div class="flex  w-max">
+                                Transaction Date
+                                <div class="relative pl-[5px]">
+                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                </div>
+                            </div>
+                        </th>
+                        <th scope="col" class="p-[12px]">
+                            <div class="flex  w-max">
+                                Transaction Type
+                                <div class="relative pl-[5px]">
+                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                </div>
+                            </div>
+                        </th>
+
+                        <th scope="col" class="p-[12px]">
+                            <div class="flex  w-max">
+                                User Type
+                                <div class="relative pl-[5px]">
+                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                </div>
+                            </div>
+                        </th>
+                        <th scope="col" class="p-[12px]">
+                            <div class="flex  w-max">
+                                From User
+                                <div class="relative pl-[5px]">
+                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                </div>
+                            </div>
+                        </th>
+                        <th scope="col" class="p-[12px]">
+                            <div class="flex  w-max">
+                                To User
+                                <div class="relative pl-[5px]">
+                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                </div>
+                            </div>
+                        </th>
+                        <th scope="col" class="p-[12px]">
+                            <div class="flex  w-max">
+                                Points
+                                <div class="relative pl-[5px]">
+                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                </div>
+                            </div>
+                        </th>
+                        <th scope="col" class="p-[12px]">
+                            <div class="flex  w-max">
+                                Remarks
+                                <div class="relative pl-[5px]">
+                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                </div>
+                            </div>
+                        </th>
+
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr class="bg-white border-b ">
+                        <td class="p-[12px]">
+                            1
+                        </td>
+                        <td class="p-[12px]">
+                            TRID91
+                        </td>
+                        <td class="p-[12px]">
+                            Oct 17, 2023
+                        </td>
+                        <td class="p-[12px]">
+                            Transfer
+                        </td>
+
+                        <td class="p-[12px]">
+                            Club Owner
+                        </td>
+                        <td class="p-[12px]">
+                            Superadmin
+                        </td>
+                        <td class="p-[12px]">
+                            ACQUA Fukuoka
+                        </td>
+                        <td class="p-[12px]">
+                            <div class="w-max">
+                                100,000
+                            </div>
+                        </td>
+                        <td class="p-[12px]">
+                            <div class="w-max">
+                                Admin Payment
+                            </div>
+                        </td>
+
+
+                </tbody>
+            </table>
+
+        </div>
+
+        <div class="pagination-club">
+            <div class="show-entry" id="Entries-Id">
+            </div>
+            <div class="flex gap-[12px]">
+                <div class="btn btn-secondary-box-shadow" id="prev-btn">
+                    @CRS.ADMIN.APPLICATION.Resources.Resource.Previous
+                </div>
+                <div class="flex gap-[12px]" id="pagination-id">
+                </div>
+                <div class="btn btn-secondary-box-shadow" id="next-btn">
+                    @CRS.ADMIN.APPLICATION.Resources.Resource.Next
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @*Table end*@
+
+
+    @*Points Balance*@
+    <div id="Points_Balance" class="pane" style="display: none;">
+
+        <div class="table-tab mt-6">
+            <div class="px-[12px] py-[16px] flex justify-between entry-export-container">
+                <div class="flex items-center select-entries" id="ShowEntries-Id-2">
+                </div>
+
+            </div>
+
+            <div class="relative overflow-x-auto">
+                <table class="w-full  text-left club-table" id="table-id">
+                    <thead class="club-table-thead">
+                        <tr>
+                            <th scope="col" class="p-[12px]">
+                                <div class="flex  w-max">
+                                    S.N
+                                    <div class="relative pl-[5px]">
+                                        <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                        <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                    </div>
+                                </div>
+                            </th>
+                            <th scope="col" class="p-[12px]">
+                                <div class="flex  w-max">
+                                    Transaction ID
+                                    <div class="relative pl-[5px]">
+                                        <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                        <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                    </div>
+                                </div>
+                            </th>
+                            <th scope="col" class="p-[12px]">
+                                <div class="flex  w-max">
+                                    Transaction Date
+                                    <div class="relative pl-[5px]">
+                                        <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                        <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                    </div>
+                                </div>
+                            </th>
+                            <th scope="col" class="p-[12px]">
+                                <div class="flex  w-max">
+                                    Transaction Type
+                                    <div class="relative pl-[5px]">
+                                        <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                        <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                    </div>
+                                </div>
+                            </th>
+
+                            <th scope="col" class="p-[12px]">
+                                <div class="flex  w-max">
+                                    User
+                                    <div class="relative pl-[5px]">
+                                        <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                        <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                    </div>
+                                </div>
+                            </th>
+                            <th scope="col" class="p-[12px]">
+                                <div class="flex  w-max">
+                                    Total Price
+                                    <div class="relative pl-[5px]">
+                                        <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                        <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                    </div>
+                                </div>
+                            </th>
+                            <th scope="col" class="p-[12px]">
+                                <div class="flex  w-max">
+                                    Total Commission
+                                    <div class="relative pl-[5px]">
+                                        <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                        <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                    </div>
+                                </div>
+                            </th>
+                            <th scope="col" class="p-[12px]">
+                                <div class="flex  w-max">
+                                    Remarks
+                                    <div class="relative pl-[5px]">
+                                        <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                        <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                    </div>
+                                </div>
+                            </th>
+                            <th scope="col" class="p-[12px]">
+                                <div class="flex  w-max">
+                                    Debit
+                                    <div class="relative pl-[5px]">
+                                        <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                        <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                    </div>
+                                </div>
+                            </th>
+                            <th scope="col" class="p-[12px]">
+                                <div class="flex  w-max">
+                                    Credit
+                                    <div class="relative pl-[5px]">
+                                        <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                        <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                    </div>
+                                </div>
+                            </th>
+                            <th scope="col" class="p-[12px]">
+
+                                <div class="flex  w-max">
+                                    Balance
+                                    <div class="relative pl-[5px]">
+                                        <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                        <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                    </div>
+                                </div>
+                            </th>
+
+
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        <tr class="bg-white border-b ">
+                            <td class="p-[12px]">
+                                1
+                            </td>
+                            <td class="p-[12px]">
+                                TRID92
+                            </td>
+                            <td class="p-[12px]">
+                                Oct 17, 2023
+                            </td>
+                            <td class="p-[12px]">
+                                Points Transfer
+                            </td>
+
+                            <td class="p-[12px]">
+                                User 1
+                            </td>
+                            <td class="p-[12px]">
+                                ¥11,234
+                            </td>
+                            <td class="p-[12px]">
+                                ¥134
+                            </td>
+                            <td class="p-[12px]">
+                                <div class="w-max">
+                                    Bid Approval
+                                </div>
+                            </td>
+                            <td class="p-[12px]">
+                                <div class="w-max">
+                                    ¥134
+                                </div>
+                            </td>
+                            <td class="p-[12px]">
+                                ¥134
+                            </td>
+                            <td class="p-[12px]">
+                                ¥13,234
+                            </td>
+                        </tr>
+
+
+                    </tbody>
+                </table>
+
+            </div>
+
+            <div class="pagination-club">
+                <div class="show-entry" id="Entries-Id-2">
+                </div>
+                <div class="flex gap-[12px]">
+                    <div class="btn btn-secondary-box-shadow" id="prev-btn-2">
+                        @CRS.ADMIN.APPLICATION.Resources.Resource.Previous
+                    </div>
+                    <div class="flex gap-[12px]" id="pagination-id-2">
+                    </div>
+                    <div class="btn btn-secondary-box-shadow" id="next-btn-2">
+                        @CRS.ADMIN.APPLICATION.Resources.Resource.Next
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    @*Points Balance end*@
+
+    @*System_Transfer*@
+    <div id="System_Transfer" class="pane" style="display: none;">
+
+        <div class="table-tab mt-6">
+            <div class="px-[12px] py-[16px] flex justify-between entry-export-container">
+                <div class="flex items-center select-entries" id="ShowEntries-Id-3">
+                </div>
+
+            </div>
+
+            <div class="relative overflow-x-auto">
+                <table class="w-full  text-left club-table" id="table-id">
+                    <thead class="club-table-thead">
+                        <tr>
+                            <th scope="col" class="p-[12px]">
+                                <div class="flex  w-max">
+                                    S.N
+                                    <div class="relative pl-[5px]">
+                                        <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                        <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                    </div>
+                                </div>
+                            </th>
+                            <th scope="col" class="p-[12px]">
+                                <div class="flex  w-max">
+                                    Transaction ID
+                                    <div class="relative pl-[5px]">
+                                        <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                        <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                    </div>
+                                </div>
+                            </th>
+                            <th scope="col" class="p-[12px]">
+                                <div class="flex  w-max">
+                                    Transaction Date
+                                    <div class="relative pl-[5px]">
+                                        <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                        <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                    </div>
+                                </div>
+                            </th>
+                            <th scope="col" class="p-[12px]">
+                                <div class="flex  w-max">
+                                    Transaction Type
+                                    <div class="relative pl-[5px]">
+                                        <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                        <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                    </div>
+                                </div>
+                            </th>
+
+                            <th scope="col" class="p-[12px]">
+                                <div class="flex  w-max">
+                                    User Type
+                                    <div class="relative pl-[5px]">
+                                        <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                        <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                    </div>
+                                </div>
+                            </th>
+                            <th scope="col" class="p-[12px]">
+                                <div class="flex  w-max">
+                                    User
+                                    <div class="relative pl-[5px]">
+                                        <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                        <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                    </div>
+                                </div>
+                            </th>
+                            <th scope="col" class="p-[12px]">
+                                <div class="flex  w-max">
+                                    Points
+                                    <div class="relative pl-[5px]">
+                                        <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                        <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                    </div>
+                                </div>
+                            </th>
+                            <th scope="col" class="p-[12px]">
+                                <div class="flex  w-max">
+                                    Remarks
+                                    <div class="relative pl-[5px]">
+                                        <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                        <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                    </div>
+                                </div>
+                            </th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        <tr class="bg-white border-b ">
+                            <td class="p-[12px]">
+                                1
+                            </td>
+                            <td class="p-[12px]">
+                                TRID92
+                            </td>
+                            <td class="p-[12px]">
+                                Oct 17, 2023
+                            </td>
+                            <td class="p-[12px]">
+                                Points Transfer
+                            </td>
+
+                            <td class="p-[12px]">
+                                Affiliate
+                            </td>
+                            <td class="p-[12px]">
+                                Hatake Kakashi
+                            </td>
+                            <td class="p-[12px]">
+                                100,000
+                            </td>
+                            <td class="p-[12px]">
+                                <div class="w-max">
+                                    Bank Transfer
+                                </div>
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+                </table>
+
+            </div>
+
+            <div class="pagination-club">
+                <div class="show-entry" id="Entries-Id-3">
+                </div>
+                <div class="flex gap-[12px]">
+                    <div class="btn btn-secondary-box-shadow" id="prev-btn-3">
+                        @CRS.ADMIN.APPLICATION.Resources.Resource.Previous
+                    </div>
+                    <div class="flex gap-[12px]" id="pagination-id-3">
+                    </div>
+                    <div class="btn btn-secondary-box-shadow" id="next-btn-3">
+                        @CRS.ADMIN.APPLICATION.Resources.Resource.Next
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    @*System Transfer end*@
+
+    @*Point_Requests*@
+    <div id="Point_Requests" class="pane" style="display: none;">
+
+        <div class="table-tab mt-6">
+            <div class="px-[12px] py-[16px] flex justify-between entry-export-container">
+                <div class="flex items-center select-entries" id="ShowEntries-Id-4">
+                </div>
+
+            </div>
+
+            <div class="relative overflow-x-auto">
+                <table class="w-full  text-left club-table" id="table-id">
+                    <thead class="club-table-thead">
+                        <tr>
+                            <th scope="col" class="p-[12px]">
+                                <div class="flex  w-max">
+                                    S.N
+                                    <div class="relative pl-[5px]">
+                                        <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                        <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                    </div>
+                                </div>
+                            </th>
+                            <th scope="col" class="p-[12px]">
+                                <div class="flex  w-max">
+                                    Request ID
+                                    <div class="relative pl-[5px]">
+                                        <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                        <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                    </div>
+                                </div>
+                            </th>
+                            <th scope="col" class="p-[12px]">
+                                <div class="flex  w-max">
+                                    Requested Date
+                                    <div class="relative pl-[5px]">
+                                        <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                        <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                    </div>
+                                </div>
+                            </th>
+                            <th scope="col" class="p-[12px]">
+                                <div class="flex  w-max">
+                                    Club Name
+                                    <div class="relative pl-[5px]">
+                                        <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                        <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                    </div>
+                                </div>
+                            </th>
+
+                            <th scope="col" class="p-[12px]">
+                                <div class="flex  w-max">
+                                    Payment Method
+                                    <div class="relative pl-[5px]">
+                                        <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                        <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                    </div>
+                                </div>
+                            </th>
+                            <th scope="col" class="p-[12px]">
+                                <div class="flex  w-max">
+                                    Amount Transferred
+                                    <div class="relative pl-[5px]">
+                                        <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                        <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                    </div>
+                                </div>
+                            </th>
+                            <th scope="col" class="p-[12px]">
+                                <div class="flex  w-max">
+                                    Status
+                                    <div class="relative pl-[5px]">
+                                        <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                        <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                    </div>
+                                </div>
+                            </th>
+                            <th scope="col" class="p-[12px]">
+                                <div class="flex  w-max">
+                                    Remarks
+                                    <div class="relative pl-[5px]">
+                                        <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                        <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                    </div>
+                                </div>
+                            </th>
+                            <th scope="col" class="p-[12px]">
+                                <div class="flex  w-max">
+                                    Updated By
+                                    <div class="relative pl-[5px]">
+                                        <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                        <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                    </div>
+                                </div>
+                            </th>
+                            <th scope="col" class="p-[12px]">
+                                <div class="flex  w-max justify-center">
+                                    Updated Date
+                                    <div class="relative pl-[5px]">
+                                        <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                        <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                    </div>
+                                </div>
+                            </th>
+                            <th scope="col" class="p-[12px]">
+                                <div class="flex  w-max justify-center">
+                                    Action
+                                    <div class="relative pl-[5px]">
+                                        <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                        <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                    </div>
+                                </div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        <tr class="bg-white border-b ">
+                            <td class="p-[12px]">
+                                1
+                            </td>
+                            <td class="p-[12px]">
+                                Res123
+                            </td>
+                            <td class="p-[12px]">
+                                Oct 17, 2023
+                            </td>
+                            <td class="p-[12px]">
+                                Club Acqua
+                            </td>
+
+                            <td class="p-[12px]">
+                                Credit Card
+                            </td>
+                            <td class="p-[12px]">
+                                100,000
+                            </td>
+                            <td class="p-[12px]">
+                                Pending
+                            </td>
+                            <td class="p-[12px]">
+                                <div class="w-max">
+                                    Point Re-new
+                                </div>
+                            </td>
+                            <td class="p-[12px]">
+                                <div class="w-max">
+                                    Superadmin
+                                </div>
+                            </td>
+                            <td class="p-[12px]">
+                                Oct 17, 2023
+                            </td>
+                            <td class="p-[12px] flex gap-[7px]">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                    <path d="M3.75 3.75V20.25H20.25V3.75H3.75ZM5.25 5.25H18.75V18.75H5.25V5.25ZM8.76562 7.73438L7.71094 8.78906L10.9219 12L7.66406 15.2578L8.71875 16.3125L11.9766 13.0547L15.2109 16.2891L16.2656 15.2344L13.0312 12L16.2188 8.8125L15.1641 7.75781L11.9766 10.9453L8.76562 7.73438Z" fill="#CB3F3F" />
+                                </svg>
+
+                                <div data-modal-target="popup-modal-accept"
+                                     data-modal-toggle="popup-modal-accept">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                        <path d="M3.75 3.75V20.25H20.25V3.75H3.75ZM5.25 5.25H18.75V18.75H5.25V5.25ZM15.9609 8.46094L10.5 13.9219L8.03906 11.4609L6.96094 12.5391L9.96094 15.5391L10.5 16.0547L11.0391 15.5391L17.0391 9.53906L15.9609 8.46094Z" fill="#4DAF51" />
+                                    </svg>
+                                </div>
+                            </td>
+                        </tr>
+
+                    </tbody>
+                </table>
+
+            </div>
+
+            <div class="pagination-club">
+                <div class="show-entry" id="Entries-Id-4">
+                </div>
+                <div class="flex gap-[12px]">
+                    <div class="btn btn-secondary-box-shadow" id="prev-btn-4">
+                        @CRS.ADMIN.APPLICATION.Resources.Resource.Previous
+                    </div>
+                    <div class="flex gap-[12px]" id="pagination-id-4">
+                    </div>
+                    <div class="btn btn-secondary-box-shadow" id="next-btn-4">
+                        @CRS.ADMIN.APPLICATION.Resources.Resource.Next
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    @*Point_Requests end*@
+</div>
+@*@model CRS.ADMIN.APPLICATION.Models.ClubManagement.ManageClubModel*@
+<div id="add-new-host-club"
+     class="drawer-close-disable  flex justify-end fixed top-0 right-0 z-40 h-screen overflow-y-auto transition-transform translate-x-full"
+     tabindex="-1" aria-labelledby="add-new-host-club" aria-modal="true" role="dialog">
+    <div class="bg-white w-[616px] drawer-container relative">
+        <div class="drawer-form-container sticky top-0 z-[5] ">
+            <div class="drawer-form flex justify-between bg-secondary-color-pink py-[16px] px-[24px] h-[56px]">
+                <div>
+                    Manage Points
+                </div>
+                <button type="button" data-drawer-hide="add-new-host-club" aria-controls="add-new-host-club"
+                        class="text-[20px]">
+                    <i class="las la-window-close text-white" onclick="CancelFunction()"></i>
+                </button>
+            </div>
+        </div>
+        <div class="p-[24px] flex flex-col gap-4">
+
+            <div class="flex gap-6">
+                <label>
+                    <input name="point" type="radio" value="Transfer" checked 
+                           class="w-4 h-4 bg-white rounded-full border border-[#A6A6A6] focus:ring-4 focus:ring-blue-300 checked:after:translate-x-full after:content-[''] after:absolute after:top-[3.8px] after:left-[2px] after:border-[#A6A6A6] after:bg-[#A6A6A6] after:border after:rounded-full after:h-3 after:w-3 after:transition-all checked:after:border-white checked:border-secondary-color-pink checked:bg-secondary-color-pink checked:after:bg-white"/>
+                    Transfer
+                </label>
+                <label>
+                    <input name="point" type="radio" value="Retrieve" 
+                           class="w-4 h-4 bg-white rounded-full border border-[#A6A6A6] focus:ring-4 focus:ring-blue-300 checked:after:translate-x-full after:content-[''] after:absolute after:top-[3.8px] after:left-[2px] after:border-[#A6A6A6] after:bg-[#A6A6A6] after:border after:rounded-full after:h-3 after:w-3 after:transition-all checked:after:border-white checked:border-secondary-color-pink checked:bg-secondary-color-pink checked:after:bg-white"/>
+                           
+                    Retrieve
+                </label>
+            </div>
+
+            <div id="Transfer" class="flex gap-2 text-primary-300 text-sm font-semibold items-center mt-[10px] show-hide">
+                <div class="flex-none uppercase">
+                    TRANSFER
+                </div>
+                <div class="bg-[#F4F4F4] h-[1px] w-full">
+                </div>
+            </div>
+
+            <div id="Retrieve" class="flex gap-2 text-primary-300 text-sm font-semibold items-center mt-[10px] show-hide" style="display:none">
+                <div class="flex-none uppercase">
+                    RETRIEVE
+                </div>
+                <div class="bg-[#F4F4F4] h-[1px] w-full">
+                </div>
+            </div>
+
+            <div class="flex flex-col gap-5">
+
+                <div class="input-field-common">
+                    <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
+                        User Type
+                    </label>
+                    <select id="large" name="Status" class=" default_select select-common block w-full "
+                            style="width: 100%;">
+
+                        <option value="Value" selected>Select User Type</option>
+
+                        <option value="Value">
+                            Club Owner
+                        </option>
+                        <option value="Value">
+                            Super Admin
+                        </option>
+                    </select>
+                </div>
+
+                <div class="input-field-common">
+                    <label class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                        User
+                    </label>
+                    <input type="text" class="w-full" placeholder="User Name" name="Username"
+                           maxlength="11">
+                </div>
+
+                <div class="input-field-common">
+                    <label class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                        Points
+                    </label>
+                    <input type="text" class="w-full" placeholder="Enter points" name="Username"
+                           maxlength="11">
+                </div>
+
+                <div class="input-field-common">
+                    <label class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                        Remarks
+                    </label>
+                    <textarea type="text" class="w-full" placeholder="write something." name="Username"
+                              maxlength="11"></textarea>
+                </div>
+
+                <div>
+                    <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
+                        Images
+                    </label>
+                    <div class="file-upload-common">
+
+                        <label for="file_input_logo" class="custom-file-upload bg-[#CC527A] w-[123px] flex-none ">
+                            <span>Choose_Images</span>
+                        </label>
+
+                        <p class="file-name w-max h-[23px] overflow-hidden pl-2 text-xs text-[#686868] leading-[25px]">
+
+                            No_File_Choosen
+                        </p>
+                    </div>
+                </div>
+                @*  <div class="text-xs text-error mt-[8px]">
+                         @CRS.ADMIN.APPLICATION.Resources.Resource.Note:
+                @CRS.ADMIN.APPLICATION.Resources.Resource.Image_should_be_in_HEIF_format
+                @CRS.ADMIN.APPLICATION.Resources.Resource.and_Maximum_file_size_is_5_MB .
+                    </div>*@
+            </div>
+
+
+        <div class="flex gap-2 justify-end mt-[45px]">
+          
+            <div class="btn btn-secondary w-[110px]">Cancel</div>
+            <div class="btn btn-primary w-[110px]">Confirm</div>
+        </div>
+        </div>
+
+    </div>
+</div>
+
+@*Popup modal*@
+<div id="popup-modal-accept" tabindex="-1"
+     class=" fixed top-0 left-0 right-0 z-50 hidden p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
+    <div class=" relative w-full max-w-md max-h-full">
+        <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+            <div class="bg-white w-[591px] p-6 text-start">
+                <div class="flex justify-between pb-[11px] border-b border-[rgba(44, 44, 44, 0.08)] text-base font-semibold text-secondary-100">
+                    <div>
+                        Confirmation
+                    </div>
+
+                    <button type="button"
+                            class=" top-4 right-3 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                            data-modal-hide="popup-modal-accept">
+                        <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                             viewBox="0 0 14 14">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                  d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                        </svg>
+                    </button>
+                </div>
+                <div>
+                    <div class="pt-[20px] text-base text-[16px] font-[400] mb-7 text-secondary-100">
+                        Are you sure you want to approve this request of <span class="font-[600] "> “Club Name” </span> ?
+                    </div>
+
+                    <div class="mb-5">
+                        <p class="mb-4">Remarks</p>
+                        <textarea class="w-[100%] pt-[13px] px-4 rounded-[4px] text-[#B7B7B7] text-[14px] font-[500] outline-none" placeholder="write something."></textarea>
+                        <div class="text-[#7D7D7D] text-[12px] font-[500]">Less than 200 words</div>
+                    </div>
+
+                    <div>
+                        <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
+                            Images
+                        </label>
+                        <div class="file-upload-common">
+
+                            <label for="file_input_logo" class="custom-file-upload bg-[#CC527A] w-[123px] flex-none ">
+                                <span>Choose_Images</span>
+                            </label>
+
+                            <p class="file-name w-max h-[23px] overflow-hidden pl-2 text-xs text-[#686868] leading-[25px]">
+
+                                No_File_Choosen
+                            </p>
+                        </div>
+                    </div>
+                    <div class="flex gap-2 justify-end mt-[45px]">
+                        <input id="ConfirmationRecommendationHoldId" value="" hidden />
+                        <input id="ConfirmationClubId" value="" hidden />
+                        <input id="ConfirmationDisplayId" value="" hidden />
+                        <input id="ConfirmationLocationId" value="" hidden />
+                        <div class="btn btn-secondary w-[110px]" data-modal-hide="popup-modal-accept">@CRS.ADMIN.APPLICATION.Resources.Resource.Cancel</div>
+                        <div class="btn btn-primary w-[110px]" onclick="acceptSearchAndHomePageReq()">@CRS.ADMIN.APPLICATION.Resources.Resource.Confirm</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section scripts
+{
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const page_size = "@ViewBag.PageSize";
+        const total_data = "@ViewBag.TotalData";
+        const start_index_val = "@ViewBag.StartIndex";
+        let URL = "/PointManagement/index";
+        let search_filter = $('#default-search').val();
+        URL = addQueryParam(URL, 'SearchFilter', search_filter);
+        LoadPagination(page_size, total_data, start_index_val, URL);
+
+        const page_size_2 = "@ViewBag.PageSize2";
+        const total_data_2 = "@ViewBag.TotalData2";
+        const start_index_val_2 = "@ViewBag.StartIndex2";
+        let URL_2 = "/PointManagement/index";
+        let search_filter_2 = $('#default-search').val();
+        URL_2 = addQueryParam(URL_2, 'SearchFilter', search_filter_2);
+        dynamicStartIndexLabel = "StartIndex2";
+        dynamicPageSizeLabel = "PageSize2";
+        LoadPagination(page_size_2, total_data_2, start_index_val_2, URL_2, 'pagination-id-2', 'prev-btn-2', 'next-btn-2', 'ShowEntries-Id-2', 'Entries-Id-2');
+
+         const page_size_3 = "@ViewBag.PageSize3";
+        const total_data_3 = "@ViewBag.TotalData3";
+        const start_index_val_3 = "@ViewBag.StartIndex3";
+        let URL_3 = "/PointManagement/index";
+        let search_filter_3 = $('#default-search').val();
+        URL_3 = addQueryParam(URL_3, 'SearchFilter', search_filter_3);
+        dynamicStartIndexLabel = "StartIndex3";
+        dynamicPageSizeLabel = "PageSize3";
+        LoadPagination(page_size_3, total_data_3, start_index_val_3, URL_3, 'pagination-id-3', 'prev-btn-3', 'next-btn-3', 'ShowEntries-Id-3', 'Entries-Id-3');
+
+      const page_size_4 = "@ViewBag.PageSize4";
+const total_data_4 = "@ViewBag.TotalData4";
+const start_index_val_4 = "@ViewBag.StartIndex4";
+let URL_4 = "/PointManagement/index";
+let search_filter_4 = $('#default-search').val();
+URL_4 = addQueryParam(URL_4, 'SearchFilter', search_filter_4);
+dynamicStartIndexLabel = "StartIndex4";
+dynamicPageSizeLabel = "PageSize4";
+LoadPagination(page_size_4, total_data_4, start_index_val_4, URL_4, 'pagination-id-4', 'prev-btn-4', 'next-btn-4', 'ShowEntries-Id-4', 'Entries-Id-4');
+
+    });
+    </script>
+
+
+
+
+
+    <script>
+        document.getElementById('tab1Link').style.color = '#D75A8B';
+        /*  document.getElementById('Point_Requests').style.display = 'none';*/
+        document.getElementById('tab1Link').style.borderBottom = '#D75A8B 2px solid';
+
+        function changeTab(selectedTabId, selectedLinkId) {
+            var tabLinks = document.querySelectorAll('.styleCss');
+            var tabContents = document.querySelectorAll('.pane');
+
+            // Toggle active class for tab links
+            tabLinks.forEach(function (link) {
+                if (link.id === selectedLinkId) {
+                    link.classList.add('active');
+                } else {
+                    link.classList.remove('active');
+                }
+            });
+
+            // Toggle display for tab contents
+            tabContents.forEach(function (content) {
+                if (content.id === selectedTabId) {
+                    content.style.display = 'block';
+                } else {
+                    content.style.display = 'none';
+                }
+            });
+
+            // Change color for tab links
+            if (selectedLinkId === 'tab1Link') {
+                document.getElementById('tab1Link').style.color = '#D75A8B';
+                document.getElementById('tab1Link').style.borderBottom = '#D75A8B 2px solid';
+                document.getElementById('tab2Link').style = ''; // Reset styles for other links
+                document.getElementById('tab2Link').style.borderBottom = '';
+                document.getElementById('tab2Link').style.color = '';
+                document.getElementById('tab3Link').style = ''; // Reset styles for other links
+                document.getElementById('tab3Link').style.borderBottom = '';
+                document.getElementById('tab3Link').style.color = '';
+                document.getElementById('tab4Link').style.borderBottom = '';
+                document.getElementById('tab4Link').style.color = '';
+                document.getElementById('notFor4th').style.display = '';
+
+
+            } else if (selectedLinkId === 'tab2Link') {
+                document.getElementById('tab1Link').style = ''; // Reset styles for other links
+                document.getElementById('tab1Link').style.borderBottom = '';
+                document.getElementById('tab1Link').style.color = '';
+                document.getElementById('tab2Link').style.color = '#D75A8B';
+                document.getElementById('tab2Link').style.borderBottom = '#D75A8B 2px solid';
+                document.getElementById('tab3Link').style = ''; // Reset styles for other links
+                document.getElementById('tab3Link').style.borderBottom = '';
+                document.getElementById('tab3Link').style.color = '';
+                document.getElementById('tab4Link').style.borderBottom = '';
+                document.getElementById('tab4Link').style.color = '';
+                document.getElementById('notFor4th').style.display = '';
+
+            } else if (selectedLinkId === 'tab3Link') {
+                document.getElementById('tab1Link').style = ''; // Reset styles for other links
+                document.getElementById('tab1Link').style.borderBottom = '';
+                document.getElementById('tab1Link').style.color = '';
+                document.getElementById('tab2Link').style = ''; // Reset styles for other links
+                document.getElementById('tab2Link').style.borderBottom = '';
+                document.getElementById('tab2Link').style.color = '';
+                document.getElementById('tab3Link').style.color = '#D75A8B';
+                document.getElementById('tab3Link').style.borderBottom = '#D75A8B 2px solid';
+                document.getElementById('tab4Link').style.borderBottom = '';
+                document.getElementById('tab4Link').style.color = '';
+                document.getElementById('notFor4th').style.display = '';
+
+            } else if (selectedLinkId === 'tab4Link') {
+                document.getElementById('tab1Link').style = ''; // Reset styles for other links
+                document.getElementById('tab1Link').style.borderBottom = '';
+                document.getElementById('tab1Link').style.color = '';
+                document.getElementById('tab2Link').style = ''; // Reset styles for other links
+                document.getElementById('tab2Link').style.borderBottom = '';
+                document.getElementById('tab2Link').style.color = '';
+                document.getElementById('tab3Link').style = ''; // Reset styles for other links
+                document.getElementById('tab3Link').style.borderBottom = '';
+                document.getElementById('tab3Link').style.color = '';
+                document.getElementById('notFor4th').style.display = 'none';
+                document.getElementById('Point_Requests1').style.display = 'block';
+                document.getElementById('tab4Link').style.color = '#D75A8B';
+                document.getElementById('tab4Link').style.borderBottom = '#D75A8B 2px solid';
+            }
+        }
+    </script>
+
+
+    <script>
+        $(document).ready(function () {
+            $("input[name=point]").change(function () {
+                var test = $(this).val();
+                $(".show-hide").hide();
+                $("#" + test).show();
+            });
+        });
+    </script>
+
+    <script>
+        // Get references to the file input and file name display element
+        const fileInput = document.getElementById("file_input");
+        const fileNameDisplay = document.getElementById("file_name_display");
+
+        // Add an event listener to the file input
+        fileInput.addEventListener("change", function () {
+            // Check if a file has been selected
+            if (fileInput.files.length > 0) {
+                // Display the name of the selected file
+                fileNameDisplay.textContent = `${fileInput.files[0].name}`;
+            } else {
+                // No file selected
+                fileNameDisplay.textContent = "";
+            }
+        });
+
+        function hideFilterContainerCustom() {
+            var filterDiv = document.getElementById("filter");
+            var filterContainer = document.getElementById("filter-container");
+
+            // Hide the filter container
+            filterContainer.style.display = "none";
+
+            // Show the filter div
+            filterDiv.style.display = "flex";
+
+            // Add animation classes
+            filterDiv.classList.add("slide-in-animation");
+            $('#MobileNumber').val('');
+            $('#FromDate').val('');
+            $('#ToDate').val('');
+            var dropdown = document.getElementById('large');
+            dropdown.value = dropdown.options[0].value;
+            document.getElementById("filter-id").submit();
+        }
+    </script>
+}
