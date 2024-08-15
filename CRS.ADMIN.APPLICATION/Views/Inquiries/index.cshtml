@@ -1,5 +1,7 @@
 ﻿@model CRS.ADMIN.APPLICATION.Models.Inquiries.InquiriesModel
-
+@{
+    var tempData = TempData["ListModel"] as List<CRS.ADMIN.APPLICATION.Models.Inquiries.InquiryListModel>;
+}
 <div class="px-8 py-4">
 
     <div class="flex flex-col  gap-6">
@@ -65,15 +67,15 @@
                                     </div>
                                 </div>
                             </th>
-                            <th scope="col" class="p-[12px]">
-                                <div class="flex w-max">
-                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Nickname
-                                    <div class="relative pl-[5px]">
-                                        <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
-                                        <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                            @*<th scope="col" class="p-[12px]">
+                                    <div class="flex w-max">
+                                        @CRS.ADMIN.APPLICATION.Resources.Resource.Nickname
+                                        <div class="relative pl-[5px]">
+                                            <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                            <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                        </div>
                                     </div>
-                                </div>
-                            </th>
+                                </th>*@
                             <th scope="col" class="p-[12px]">
                                 <div class="flex w-max">
                                     @CRS.ADMIN.APPLICATION.Resources.Resource.EmailAddress
@@ -94,58 +96,61 @@
                             </th>
                             <th scope="col" class="p-[12px]">
                                 <div class="flex w-max">
-                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Posted_Date
+                                    @CRS.ADMIN.APPLICATION.Resources.Resource.CreatedDate
                                     <div class="relative pl-[5px]">
                                         <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
                                         <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
                                     </div>
                                 </div>
                             </th>
-                            @*<th scope="col" class="p-[12px]">
-                                <div class="flex  w-max ">
+                            <th scope="col" class="p-[12px]">
+                                <div class="flex w-max">
+                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Created_By
+                                    <div class="relative pl-[5px]">
+                                        <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                        <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                    </div>
+                                </div>
+                            </th>
+                            <th scope="col" class="p-[12px]">
+                                <div class="flex w-max">
                                     @CRS.ADMIN.APPLICATION.Resources.Resource.Action
                                     <div class="relative pl-[5px]">
                                         <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
                                         <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
                                     </div>
                                 </div>
-                            </th>*@
+                            </th>
                         </tr>
                     </thead>
                     <tbody>
-
-                        <tr class="bg-white border-b ">
-                            <td class="p-[12px]">
-                                1
-                            </td>
-                            <td class="p-[12px]">
-                                <div class="">
-                                    ClubCategory
-                                </div>
-                            </td>
-                            <td class="p-[12px]">
-                                yuhoshi@gmail.com
-                            </td>
-                            <td class="p-[12px]">
-                                <div class="w-max content-container" id="long-content" onclick="toggleContent()">
-                                    🤐 I have something on my mind that's been bothering me, but I'm not sure how to express it. Can we talk about it? 💬🤔
-                                   
-                                </div>
-                            </td>
-                            <td class="p-[12px]">
-                                <div class="w-max">
-                                    Apr 1, 2023
-                                </div>
-                            </td>
-                            @*<td class="p-[12px]">
-                                <div class="w-max">
-
-
-                                </div>
-                            </td>*@
-                        </tr>
-
-
+                        @{
+                            if (tempData.Count > 0)
+                            {
+                                int SN = 1;
+                                foreach (var item in tempData)
+                                {
+                                    <tr class="bg-white border-b ">
+                                        <td class="p-[12px]">
+                                            @SN
+                                        </td>
+                                        <td class="p-[12px]">
+                                            @item.EmailAddress
+                                        </td>
+                                        <td class="p-[12px]">
+                                            @item.Message
+                                        </td>
+                                        <td class="p-[12px]">
+                                            @item.ActionDate
+                                        </td>
+                                        <td class="p-[12px]">
+                                            @item.ActionBy
+                                        </td>
+                                    </tr>
+                                    SN++;
+                                }
+                            }
+                        }
                     </tbody>
                 </table>
 
@@ -189,42 +194,42 @@
 
 
     <script>
-    function toggleContent() {
-        var content = document.getElementById("long-content");
-        var btn = document.querySelector(".see-more-btn");
+        function toggleContent() {
+            var content = document.getElementById("long-content");
+            var btn = document.querySelector(".see-more-btn");
 
-        if (content.style.maxWidth) {
-            content.style.maxWidth = null;
-           
-        } else {
-            content.style.maxWidth = "563px"; // Initial width to show
-            content.style.overflow="hidden";
-            content.style.textOverflow = "ellipsis";
-            content.style.whiteSpace = "nowrap";
+            if (content.style.maxWidth) {
+                content.style.maxWidth = null;
 
-        
+            } else {
+                content.style.maxWidth = "563px"; // Initial width to show
+                content.style.overflow = "hidden";
+                content.style.textOverflow = "ellipsis";
+                content.style.whiteSpace = "nowrap";
+
+
+            }
         }
-    }
 
-    // Check if the content width exceeds the threshold and show the button accordingly
-    document.addEventListener("DOMContentLoaded", function() {
-        var content = document.getElementById("long-content");
-        var btn = document.querySelector(".see-more-btn");
+        // Check if the content width exceeds the threshold and show the button accordingly
+        document.addEventListener("DOMContentLoaded", function () {
+            var content = document.getElementById("long-content");
+            var btn = document.querySelector(".see-more-btn");
 
-        if (content.clientWidth < content.scrollWidth) {
-            btn.style.display = "block";
-        } else {
-            btn.style.display = "none";
-        }
-    });
+            if (content.clientWidth < content.scrollWidth) {
+                btn.style.display = "block";
+            } else {
+                btn.style.display = "none";
+            }
+        });
     </script>
 }
 
 <style>
     .content-container {
         max-width: 500px; /* Initial width to show */
-     /*   white-space: nowrap;*/
-       /* overflow: hidden;
+        /*   white-space: nowrap;*/
+        /* overflow: hidden;
         text-overflow: ellipsis;*/
     }
 

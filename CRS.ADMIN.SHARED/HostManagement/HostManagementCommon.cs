@@ -58,4 +58,13 @@ namespace CRS.ADMIN.SHARED.HostManagement
         public string IdentityDescription { get; set; }
         public string InputType { get; set; }
     }
+
+    public class InquiryListCommon
+    {
+        public string Sno {  get; set; }
+        public string EmailAddress { get; set; }
+        public string Message { get; set; }
+        public string ActionDate { get; set; }
+        public string ActionBy { get; set; }
+    }
 }

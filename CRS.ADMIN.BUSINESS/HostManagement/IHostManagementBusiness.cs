@@ -19,6 +19,7 @@ namespace CRS.ADMIN.BUSINESS.HostManagement
         #region Host Identity Detail Management 
         List<HostIdentityDataCommon> GetHostIdentityDetail(string AgentId = "", string HostId = "");
         List<StaticDataCommon> GetSkillsDLL();
+        List<InquiryListCommon> GetInquiryListAsync(string SearchFilter,int StartIndex,int PageSize);
         #endregion
     }
 }
