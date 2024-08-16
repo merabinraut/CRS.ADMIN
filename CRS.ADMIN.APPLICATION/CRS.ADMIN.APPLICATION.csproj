@@ -2705,12 +2705,12 @@
     <Content Include="Views\ClubManagement\EventList.cshtml" />
     <Content Include="Views\ClubManagement\_ManageEvent.cshtml" />
     <Content Include="Views\ClubManagement\_ManageManagerPartialView.cshtml" />
-<<<<<<<<< Temporary merge branch 1
+
     <Content Include="Views\Inquiries\index.cshtml" />
-=========
+
     <Content Include="Views\PointSetup\PointSetupUserTypeList.cshtml" />
     <Content Include="Views\PointSetup\PointsCategoryList.cshtml" />
->>>>>>>>> Temporary merge branch 2
+
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
