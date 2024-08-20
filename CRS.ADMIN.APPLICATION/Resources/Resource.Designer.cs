@@ -1051,6 +1051,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Do you approve this store?.
+        /// </summary>
+        public static string clubApprovalMessage {
+            get {
+                return ResourceManager.GetString("clubApprovalMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Furigana.
         /// </summary>
         public static string ClubFurigana {
@@ -1087,6 +1096,24 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No.
+        /// </summary>
+        public static string clubNo {
+            get {
+                return ResourceManager.GetString("clubNo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Would you like to reject this store?.
+        /// </summary>
+        public static string clubRejectMessage {
+            get {
+                return ResourceManager.GetString("clubRejectMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Clubs.
         /// </summary>
         public static string Clubs {
@@ -1119,6 +1146,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         public static string ClubTabRejected {
             get {
                 return ResourceManager.GetString("ClubTabRejected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Yes.
+        /// </summary>
+        public static string clubYes {
+            get {
+                return ResourceManager.GetString("clubYes", resourceCulture);
             }
         }
         

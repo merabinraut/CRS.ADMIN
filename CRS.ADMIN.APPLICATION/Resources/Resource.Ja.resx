@@ -550,6 +550,10 @@
     <value>クラブ検証</value>
     <comment>Reservation Ledger</comment>
   </data>
+  <data name="clubApprovalMessage" xml:space="preserve">
+    <value>こちらの店舗を承認しますか？</value>
+    <comment>Club Management</comment>
+  </data>
   <data name="ClubFurigana" xml:space="preserve">
     <value>フリガナ</value>
     <comment>ClubManagement</comment>
@@ -566,6 +570,14 @@
     <value>クラブ名</value>
     <comment>Reports</comment>
   </data>
+  <data name="clubNo" xml:space="preserve">
+    <value>いいえ</value>
+    <comment>Club Management</comment>
+  </data>
+  <data name="clubRejectMessage" xml:space="preserve">
+    <value>こちらの店舗を拒否しますか？</value>
+    <comment>Club Management</comment>
+  </data>
   <data name="Clubs" xml:space="preserve">
     <value>クラブ</value>
     <comment>Dashboard</comment>
@@ -581,6 +593,10 @@
   <data name="ClubTabRejected" xml:space="preserve">
     <value>拒否済み</value>
     <comment>ClubManagement</comment>
+  </data>
+  <data name="clubYes" xml:space="preserve">
+    <value>はい</value>
+    <comment>Club Management</comment>
   </data>
   <data name="Commission" xml:space="preserve">
     <value>手数料</value>
