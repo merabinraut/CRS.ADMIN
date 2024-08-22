@@ -467,17 +467,27 @@
                                                                     </svg>
                                                                 </div>
                                                             }
-
-                                                            <div onclick="ApproveRejectClubManagerFunction('@item.SNO','a','@item.AgentId');" style="cursor: pointer;">
+                                                            <div onclick="openApproveModal('@item.SNO','a','@item.AgentId');" data-modal-target="approve-confirmation" data-modal-toggle="approve-confirmation" style="cursor: pointer;">
                                                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                                                                     <path d="M3.75 3.75V20.25H20.25V3.75H3.75ZM5.25 5.25H18.75V18.75H5.25V5.25ZM15.9609 8.46094L10.5 13.9219L8.03906 11.4609L6.96094 12.5391L9.96094 15.5391L10.5 16.0547L11.0391 15.5391L17.0391 9.53906L15.9609 8.46094Z" fill="#28A745" />
                                                                 </svg>
                                                             </div>
-                                                            <div onclick="ApproveRejectClubManagerFunction('@item.SNO','r','@item.AgentId');" style="cursor: pointer;">
+                                                            <div onclick="openRejectModal('@item.SNO','r','@item.AgentId');" data-modal-target="reject-confirmation" data-modal-toggle="reject-confirmation" style="cursor: pointer;">
                                                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                                                                     <path d="M3.75 3.75V20.25H20.25V3.75H3.75ZM5.25 5.25H18.75V18.75H5.25V5.25ZM8.76562 7.73438L7.71094 8.78906L10.9219 12L7.66406 15.2578L8.71875 16.3125L11.9766 13.0547L15.2109 16.2891L16.2656 15.2344L13.0312 12L16.2188 8.8125L15.1641 7.75781L11.9766 10.9453L8.76562 7.73438Z" fill="#CB3F3F" />
                                                                 </svg>
                                                             </div>
+
+                                                            @*<div onclick="ApproveRejectClubManagerFunction('@item.SNO','a','@item.AgentId');" style="cursor: pointer;">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                                                        <path d="M3.75 3.75V20.25H20.25V3.75H3.75ZM5.25 5.25H18.75V18.75H5.25V5.25ZM15.9609 8.46094L10.5 13.9219L8.03906 11.4609L6.96094 12.5391L9.96094 15.5391L10.5 16.0547L11.0391 15.5391L17.0391 9.53906L15.9609 8.46094Z" fill="#28A745" />
+                                                                    </svg>
+                                                                </div>
+                                                                <div onclick="ApproveRejectClubManagerFunction('@item.SNO','r','@item.AgentId');" style="cursor: pointer;">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                                                        <path d="M3.75 3.75V20.25H20.25V3.75H3.75ZM5.25 5.25H18.75V18.75H5.25V5.25ZM8.76562 7.73438L7.71094 8.78906L10.9219 12L7.66406 15.2578L8.71875 16.3125L11.9766 13.0547L15.2109 16.2891L16.2656 15.2344L13.0312 12L16.2188 8.8125L15.1641 7.75781L11.9766 10.9453L8.76562 7.73438Z" fill="#CB3F3F" />
+                                                                    </svg>
+                                                                </div>*@
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -864,6 +874,80 @@
     </div>
 </div>
 <!--Accept Reject Modal For Delete-->
+<!--Accept Reject Modal For club-->
+<div id="approve-confirmation" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 hidden w-full
+     p-4 overflow-x-hidden overflow-y-auto
+     md:inset-0 h-[calc(100%-1rem)] max-h-full " style="align-items: flex-start;">
+    <div class="relative max-w-2xl max-h-full w-[412px] px-4 pt-[40px] pb-[46px] mt-24">
+        <!-- Modal content -->
+        <div class="relative bg-white rounded-lg shadow">
+            <!-- Modal header -->
+            <button type="button"
+                    class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center absolute top-[24px] right-[20px] "
+                    data-modal-hide="approve-confirmation">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="25" viewBox="0 0 24 25" fill="none">
+                    <rect y="0.621094" width="24" height="24" rx="12" fill="#FAFAFA" />
+                    <path d="M5.41406 4.95703L4.33594 6.03516L10.9219 12.6211L4.33594 19.207L5.41406 20.2852L12 13.6992L18.5859 20.2852L19.6641 19.207L13.0781 12.6211L19.6641 6.03516L18.5859 4.95703L12 11.543L5.41406 4.95703Z"
+                          fill="#7A7A7A" />
+                </svg>
+            </button>
+            <!-- Modal body -->
+            <div class="grid gap-6 px-[20px] py-8">
+                <div class="text-[#333] font-semibold pb-[11px] border-b border-[#eeeeee]">@CRS.ADMIN.APPLICATION.Resources.Resource.Confirmation</div>
+                <div class="grid gap-[20px] text-[#062937] mb-[45px]">
+                    <div class="text-[14px] text-secondary-text-2 text-start" id="confirmationMessage">
+                        @CRS.ADMIN.APPLICATION.Resources.Resource.clubApprovalMessage
+                    </div>
+                </div>
+                <div class="flex justify-end">
+                    <div class="flex gap-2 justify-end mt-[45px]">
+                        <input id="request_id" value="" hidden />
+                        <div class="btn btn-secondary w-[110px]" data-modal-hide="approve-confirmation">@CRS.ADMIN.APPLICATION.Resources.Resource.clubNo</div>
+                        <div class="btn btn-primary w-[110px]" onclick="ApproveClubManagerFunction()" data-val1="" data-val2="" data-val3="" id="approve_id">@CRS.ADMIN.APPLICATION.Resources.Resource.clubYes</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div id="reject-confirmation" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 hidden w-full
+     p-4 overflow-x-hidden overflow-y-auto
+     md:inset-0 h-[calc(100%-1rem)] max-h-full " style="align-items: flex-start;">
+    <div class="relative max-w-2xl max-h-full w-[412px] px-4 pt-[40px] pb-[46px] mt-24">
+        <!-- Modal content -->
+        <div class="relative bg-white rounded-lg shadow">
+            <!-- Modal header -->
+            <button type="button"
+                    class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center absolute top-[24px] right-[20px] "
+                    data-modal-hide="reject-confirmation">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="25" viewBox="0 0 24 25" fill="none">
+                    <rect y="0.621094" width="24" height="24" rx="12" fill="#FAFAFA" />
+                    <path d="M5.41406 4.95703L4.33594 6.03516L10.9219 12.6211L4.33594 19.207L5.41406 20.2852L12 13.6992L18.5859 20.2852L19.6641 19.207L13.0781 12.6211L19.6641 6.03516L18.5859 4.95703L12 11.543L5.41406 4.95703Z"
+                          fill="#7A7A7A" />
+                </svg>
+            </button>
+            <!-- Modal body -->
+            <div class="grid gap-6 px-[20px] py-8">
+                <div class="text-[#333] font-semibold pb-[11px] border-b border-[#eeeeee]">@CRS.ADMIN.APPLICATION.Resources.Resource.Confirmation</div>
+                <div class="grid gap-[20px] text-[#062937] mb-[45px]">
+                    <div class="text-[14px] text-secondary-text-2 text-start" id="confirmationMessage">
+                        @CRS.ADMIN.APPLICATION.Resources.Resource.clubRejectMessage
+                    </div>
+                </div>
+                <div class="flex justify-end">
+                    <div class="flex gap-2 justify-end mt-[45px]">
+                        <input id="request_id" value="" hidden />
+                        <div class="btn btn-secondary w-[110px]" data-modal-hide="reject-confirmation">@CRS.ADMIN.APPLICATION.Resources.Resource.clubNo</div>
+                        <div class="btn btn-primary w-[110px]" onclick="RejectClubManagerFunction()" data-val1="" data-val2="" data-val3="" id="reject_id">@CRS.ADMIN.APPLICATION.Resources.Resource.clubYes</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Accept Reject Modal For club-->
 @Html.Partial("_ManageClubPartialView", _ManageClubModel)
 @Html.Partial("_ClubHoldDetailPartialView", _ClubHoldModel)
 @section scripts
@@ -871,6 +955,33 @@
     <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
     <script src="~/Content/assets_new/js/calendar-management.js"></script>
     <link rel="stylesheet" href="//code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
+    <script>
+    function openApproveModal(sno, type, agentid)
+    {
+      const modalTarget = document.querySelector("[data-modal-target='approve-confirmation']");
+     const confirmationMessageElement = document.getElementById("confirmationMessage");
+     confirmationMessageElement.textContent = ` ${name} , @CRS.ADMIN.APPLICATION.Resources.Resource.clubApprovalMessage ? `;
+     const modal = document.getElementById("approve-confirmation");
+     modal.classList.remove("hidden");
+     $('#approve_id').attr('data-val1', sno);
+     $('#approve_id').attr('data-val2', type);
+     $('#approve_id').attr('data-val3', agentid);
+     modal.setAttribute("aria-hidden", "false");
+    }
+
+
+    function openRejectModal(sno,type, agentid) {
+    const modalTarget = document.querySelector("[data-modal-target='reject-confirmation']");    
+    const confirmationMessageElement = document.getElementById("confirmationMessage");
+    confirmationMessageElement.textContent = ` ${name} , @CRS.ADMIN.APPLICATION.Resources.Resource.clubRejectMessage ? `;
+    const modal = document.getElementById("reject-confirmation");
+    modal.classList.remove("hidden");
+    $('#reject_id').attr('data-val1', sno);
+    $('#reject_id').attr('data-val2', type);
+    $('#reject_id').attr('data-val3', agentid);
+    modal.setAttribute("aria-hidden", "false");
+}
+    </script>
     <script>
      function openResetCustomerPasswordModal(name, agentid) {
      const modalTarget = document.querySelector("[data-modal-target='reset-customer-passwordconfirmation']");
@@ -1197,7 +1308,7 @@
                 } else {
                     $('.select2-container--default .select2-search--inline .select2-search__field').css('display', 'none');
                 }
-                                
+
              });
             var value = $('#large[name="holiday"]').val();
             if (value === null || value.length === 0) {
@@ -1782,8 +1893,17 @@
              const page_size = @ViewBag.PageSize;
             window.location.href = '/ClubManagement/ManageTag?ClubId=' + i + '&SearchFilter=' + search_filter + '&StartIndex=' + start_index_val + '&PageSize=' + page_size;;
         }
-        function ApproveRejectClubManagerFunction(i, j, k) {
+        function ApproveClubManagerFunction() {          
+           const i = $('#approve_id').attr('data-val1');
+           const j = $('#approve_id').attr('data-val2');
+           const k = $('#approve_id').attr('data-val3');           
             window.location.href = '/ClubManagement/ApproveRejectClub?holdid=' + i + '&type=' + j+ '&AgentId=' + k;
+        }
+        function RejectClubManagerFunction() {
+           const i = $('#reject_id').attr('data-val1');
+           const j = $('#reject_id').attr('data-val2');
+           const k = $('#reject_id').attr('data-val3');
+            window.location.href = '/ClubManagement/ApproveRejectClub?holdid=' + i + '&type=' + j + '&AgentId=' + k;
         }
         function EditPendingClub(i, j) {
 
