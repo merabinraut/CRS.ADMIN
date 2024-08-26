@@ -311,10 +311,10 @@
 
             <!-- -----  -->
 
-            @if (ApplicationUtilities.HasMenuRight("/PointSetup/PointSetupUserTypeList"))
-  {
-      if (!string.IsNullOrEmpty(CurrentURL) && CurrentURL.Trim().ToUpper() == "/POINTMANAGEMENT/INDEX") { MenuActiveClass = "menuActive"; }
-      else { MenuActiveClass = string.Empty; }
+            @if (ApplicationUtilities.HasMenuRight("/PointSetup/index"))  //@if (ApplicationUtilities.HasMenuRight("/PointSetup/PointSetupUserTypeList"))
+            {
+                if (!string.IsNullOrEmpty(CurrentURL) && CurrentURL.Trim().ToUpper() == "/POINTMANAGEMENT/INDEX") { MenuActiveClass = "menuActive"; }
+                else { MenuActiveClass = string.Empty; }
             <a href="@Url.Action("index", "PointManagement")">
                 <div class="menuContainer @MenuActiveClass">
                     <div class="menu-icon w-max">
