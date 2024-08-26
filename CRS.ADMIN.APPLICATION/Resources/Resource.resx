@@ -550,6 +550,10 @@
     <value>Club Verification</value>
     <comment>Reservation Ledger</comment>
   </data>
+  <data name="clubApprovalMessage" xml:space="preserve">
+    <value>Do you approve this store?</value>
+    <comment>Club Management</comment>
+  </data>
   <data name="ClubFurigana" xml:space="preserve">
     <value>Furigana</value>
     <comment>ClubManagement</comment>
@@ -566,6 +570,14 @@
     <value>Club Name</value>
     <comment>Reports</comment>
   </data>
+  <data name="clubNo" xml:space="preserve">
+    <value>No</value>
+    <comment>Club Management</comment>
+  </data>
+  <data name="clubRejectMessage" xml:space="preserve">
+    <value>Would you like to reject this store?</value>
+    <comment>Club Management</comment>
+  </data>
   <data name="Clubs" xml:space="preserve">
     <value>Clubs</value>
     <comment>Dashboard</comment>
@@ -581,6 +593,10 @@
   <data name="ClubTabRejected" xml:space="preserve">
     <value>Rejected</value>
     <comment>ClubManagement</comment>
+  </data>
+  <data name="clubYes" xml:space="preserve">
+    <value>Yes</value>
+    <comment>Club Management</comment>
   </data>
   <data name="Commission" xml:space="preserve">
     <value>Commission</value>
