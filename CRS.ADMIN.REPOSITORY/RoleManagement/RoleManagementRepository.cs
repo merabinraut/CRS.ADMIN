@@ -65,8 +65,8 @@ namespace CRS.ADMIN.REPOSITORY.RoleManagement
         {
             string SQL = "EXEC sproc_role_management @Flag='irt'";
             SQL += ",@RoleType=" + _DAO.FilterString(Request.RoleType);
-            SQL += ",@RoleName=" + _DAO.FilterString(Request.RoleName);
-            SQL += ",@RoleDescription=" + _DAO.FilterString(Request.Description);
+            SQL += ",@RoleName=N" + _DAO.FilterString(Request.RoleName);
+            SQL += ",@RoleDescription=N" + _DAO.FilterString(Request.Description);
             SQL += ",@ActionUser=" + _DAO.FilterString(Request.ActionUser);
             return _DAO.ParseCommonDbResponse(SQL);
         }

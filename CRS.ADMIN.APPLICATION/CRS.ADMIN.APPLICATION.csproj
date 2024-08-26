@@ -2708,6 +2708,7 @@
     <Content Include="Views\Inquiries\index.cshtml" />
     <Content Include="Views\PointSetup\PointSetupUserTypeList.cshtml" />
     <Content Include="Views\PointSetup\PointsCategoryList.cshtml" />
+
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
