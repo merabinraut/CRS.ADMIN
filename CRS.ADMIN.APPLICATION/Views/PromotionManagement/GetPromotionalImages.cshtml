@@ -286,6 +286,21 @@
                   }
               })
         }
+       function ManageAdvertisementStatus(i,j) {
+       var RequestVerificationToken = $('input[name="__RequestVerificationToken"]').val();
+       $.ajax({
+            type: "POST",
+            url: '@Url.Action("BlockUnblockAdvertisementImage", "PromotionManagement")',
+            data: {
+                '__RequestVerificationToken': RequestVerificationToken, 'Id': i, 'status': j},
+           success: function (response) {
+               window.location.reload();
+            },
+           error: function (error) {
+               window.location.reload();
+            }
+        })
+  }
         document.getElementById('CloseId').addEventListener('click',
             function (event) {
                 event.preventDefault();

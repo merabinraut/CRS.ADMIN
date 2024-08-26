@@ -41,6 +41,7 @@ namespace CRS.ADMIN.APPLICATION.Models.PromotionManagement
         public string Description { get; set; }
         public string ImagePath { get; set; }
         public string IsDeleted { get; set; }
+        public string Status { get; set; }
         public string ActionDate { get; set; }
         public string Link { get; set; }
         public string DisplayOrder { get; set; }

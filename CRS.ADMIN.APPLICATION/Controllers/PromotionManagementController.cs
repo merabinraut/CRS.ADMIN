@@ -362,6 +362,49 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             TempData["RenderId"] = "ManageAdvertisement";
             return RedirectToAction("GetPromotionalImages", "PromotionManagement");
         }
+
+        [HttpPost, ValidateAntiForgeryToken]
+        public JsonResult BlockUnblockAdvertisementImage(string id ,string status)
+        {
+            var i = !string.IsNullOrEmpty(id) ? id.DecryptParameter() : null;
+            if (string.IsNullOrEmpty(i))
+            {
+                this.AddNotificationMessage(new NotificationModel()
+                {
+                    NotificationType = NotificationMessage.INFORMATION,
+                    Message = "Invalid request",
+                    Title = NotificationMessage.INFORMATION.ToString(),
+                });
+                return Json(new { Code = 1, Message = "Invalid Request." });
+            }
+            var promoImageCommon = new AdvertisementDetailCommon()
+            {
+                Id = i,
+                Status= status,
+                ActionUser = ApplicationUtilities.GetSessionValue("Username")?.ToString(),
+                ActionIP = ApplicationUtilities.GetIP()
+            };
+            var dbResponse = _business.BlockUnblockAdvertisementImage(promoImageCommon);
+            if (dbResponse.Code == ResponseCode.Success)
+            {
+                this.AddNotificationMessage(new NotificationModel()
+                {
+                    NotificationType = NotificationMessage.SUCCESS,
+                    Message = dbResponse.Message ?? "Success",
+                    Title = NotificationMessage.SUCCESS.ToString(),
+                });
+            }
+            else
+            {
+                this.AddNotificationMessage(new NotificationModel()
+                {
+                    NotificationType = NotificationMessage.INFORMATION,
+                    Message = dbResponse.Message ?? "Failed",
+                    Title = NotificationMessage.INFORMATION.ToString(),
+                });
+            }
+            return Json(dbResponse.Message);
+        }
         #endregion
     }
 }

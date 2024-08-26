@@ -15,5 +15,6 @@ namespace CRS.ADMIN.BUSINESS.PromotionManagement
         List<AdvertisementManagementCommon> GetAdvertisementImageLists(PaginationFilterCommon Request);
         AdvertisementDetailCommon GetAdvertisementImageById(string Id);
         CommonDbResponse UpdateAdvertisementImage(AdvertisementDetailCommon promotion);
+        CommonDbResponse BlockUnblockAdvertisementImage(AdvertisementDetailCommon promotion);
     }
 }

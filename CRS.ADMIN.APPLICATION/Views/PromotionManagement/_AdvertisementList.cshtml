@@ -144,11 +144,11 @@
                             </div>
                         </td>
                         <td class="p-[12px]">
-                            @if (!string.IsNullOrEmpty(item.IsDeleted) && item.IsDeleted.ToUpper() == "A")
+                            @if (!string.IsNullOrEmpty(item.Status) && item.Status.ToUpper() == "A")
                             {
                                 <span class="badge badge-success approved items-start gap-1">Active <i class="fa-solid fa-sort-down"></i></span>
                             }
-                            else if (!string.IsNullOrEmpty(item.IsDeleted) && item.IsDeleted.ToUpper() == "B")
+                            else if (!string.IsNullOrEmpty(item.Status) && item.Status.ToUpper() == "B")
                             {
                                 <span class="badge badge-danger blocked items-start gap-1">Blocked <i class="fa-solid fa-sort-down"></i></span>
                             }
@@ -159,13 +159,32 @@
 
                         <td class="p-[12px]">
                             <div class="flex gap-[7px] justify-center text-[20px] ">
-                               
-                                    <div onclick="ManageAdvertisement('@item.Id');">
-                                        <i class="las la-edit text-[#989898] cursor-pointer"></i>
+
+                                <div onclick="ManageAdvertisement('@item.Id');">
+                                    <i class="las la-edit text-[#989898] cursor-pointer"></i>
+                                </div>
+                                @if (!string.IsNullOrEmpty(item.Status) && item.Status.ToUpper() == "A")
+                                {
+
+                                    <div onclick="ManageAdvertisementStatus('@item.Id','B');">
+                                        <i class="fa-solid fa-unlock text-primary-100 cursor-pointer"></i>
                                     </div>
-                                    
-                                
+
+                                }
+                                else if (!string.IsNullOrEmpty(item.Status) && item.Status.ToUpper() == "B")
+                                {
+
+                                    <div onclick="ManageAdvertisementStatus('@item.Id','A');">
+                                        <i class="fa-solid fa-lock text-primary-100 cursor-pointer"></i>
+                                    </div>
+
+                                }
                             </div>
+
+                            
+
+
+
                         </td>
                     </tr>
                 }
