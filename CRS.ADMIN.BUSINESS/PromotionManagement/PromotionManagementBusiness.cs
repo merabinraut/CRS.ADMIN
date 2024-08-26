@@ -46,6 +46,10 @@ namespace CRS.ADMIN.BUSINESS.PromotionManagement
         public CommonDbResponse UpdateAdvertisementImage(AdvertisementDetailCommon promotion)
         {
             return _repo.UpdateAdvertisementImage(promotion);
+        } 
+        public CommonDbResponse BlockUnblockAdvertisementImage(AdvertisementDetailCommon promotion)
+        {
+            return _repo.BlockUnblockAdvertisementImage(promotion);
         }
     }
 }
