@@ -1,7 +1,7 @@
 ﻿@model CRS.ADMIN.APPLICATION.Models.PromotionManagement.PromotionManagementModel
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.css">
 <style>
-    #cropModal {
+   /* #cropModal {
         display: none;
         position: fixed;
         top: 0;
@@ -15,6 +15,22 @@
 
     #imageToCrop {
         max-width: 50%;
+        max-height: 80vh;
+    }*/
+    #cropModal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        justify-content: center;
+        align-items: center;
+    }
+
+    #imageToCrop {
+        max-width: 90%;
         max-height: 80vh;
     }
 </style>
@@ -123,6 +139,82 @@
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js"></script>
 <script>
+    //document.addEventListener('DOMContentLoaded', function () {
+    //    let cropper;
+    //    const modal = document.getElementById('cropModal');
+    //    const imageToCrop = document.getElementById('imageToCrop');
+    //    const fileInput = document.getElementById('file_input_logo');
+    //    const fileNameDisplay = document.getElementById('file_name_logo');
+
+    //    fileInput.addEventListener('change', function (event) {
+    //        const file = event.target.files[0];
+    //        if (file) {
+    //            const reader = new FileReader();
+    //            reader.onload = function (e) {
+    //                imageToCrop.src = e.target.result;
+    //                modal.style.display = 'flex';
+
+    //                if (cropper) {
+    //                    cropper.replace(e.target.result);
+    //                } else {
+    //                    cropper = new Cropper(imageToCrop, {
+    //                        aspectRatio: 298 / 181,
+    //                        viewMode: 1,
+    //                        background: false,
+    //                    });
+    //                }
+
+    //                fileNameDisplay.textContent = file.name;
+    //            };
+    //            reader.readAsDataURL(file);
+    //        }
+    //    });
+
+    //    document.getElementById('cropImageButton').addEventListener('click', function (event) {
+    //        event.preventDefault();
+    //        if (cropper) {
+    //            const canvas = cropper.getCroppedCanvas({
+    //                width: 298,
+    //                height: 181,
+    //                maxWidth: 298,
+    //                maxHeight: 181,
+    //            });
+    //            if (canvas) {
+    //                canvas.toBlob(function (blob) {
+    //                    const formData = new FormData();
+    //                    formData.append('croppedImage', blob);
+    //                    console.log('Cropped image ready to upload', formData);
+
+    //                    const reader = new FileReader();
+    //                    reader.onload = function () {
+    //                        const dataUrl = reader.result;
+    //                        const dataTransfer = new DataTransfer();
+    //                        const file = new File([blob], "croppedImage.jpg", { type: "image/jpeg" });
+    //                        dataTransfer.items.add(file);
+    //                        fileInput.files = dataTransfer.files;
+    //                    };
+    //                    reader.readAsDataURL(blob);
+
+    //                    modal.style.display = 'none';
+    //                    cropper.destroy();
+    //                    cropper = null;
+    //                }, 'image/jpeg', 0.8);
+    //            }
+    //        }
+    //    });
+
+    //    document.getElementById('cancelCropButton').addEventListener('click', function () {
+    //        modal.style.display = 'none';
+    //        $('#file_name_logo').val('');
+    //        $('#file_input_logo').val('');
+    //        if (cropper) {
+    //            cropper.destroy();
+    //            cropper = null;
+    //        }
+    //    });
+    //});
+</script>
+<script>
     document.addEventListener('DOMContentLoaded', function () {
         let cropper;
         const modal = document.getElementById('cropModal');
@@ -142,9 +234,13 @@
                         cropper.replace(e.target.result);
                     } else {
                         cropper = new Cropper(imageToCrop, {
-                            aspectRatio: 298 / 181,
+                            aspectRatio: 298 / 181, // Maintain aspect ratio
                             viewMode: 1,
                             background: false,
+                            zoomable: true,
+                            scalable: true,
+                            responsive: true,
+                            autoCropArea: 1,
                         });
                     }
 
@@ -157,12 +253,14 @@
         document.getElementById('cropImageButton').addEventListener('click', function (event) {
             event.preventDefault();
             if (cropper) {
+                // Get a higher resolution cropped canvas
                 const canvas = cropper.getCroppedCanvas({
-                    width: 298,
-                    height: 181,
-                    maxWidth: 298,
-                    maxHeight: 181,
+                    width: 1600, // Increased width for high resolution
+                    height: 800, // Increased height for high resolution
+                    imageSmoothingEnabled: true,
+                    imageSmoothingQuality: 'high',
                 });
+
                 if (canvas) {
                     canvas.toBlob(function (blob) {
                         const formData = new FormData();
@@ -182,14 +280,13 @@
                         modal.style.display = 'none';
                         cropper.destroy();
                         cropper = null;
-                    }, 'image/jpeg', 0.8);
+                    }, 'image/jpeg', 0.95);
                 }
             }
         });
 
         document.getElementById('cancelCropButton').addEventListener('click', function () {
             modal.style.display = 'none';
-            $('#file_name_logo').val('');
             $('#file_input_logo').val('');
             if (cropper) {
                 cropper.destroy();
@@ -198,3 +295,4 @@
         });
     });
 </script>
+

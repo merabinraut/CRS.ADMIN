@@ -88,10 +88,10 @@ namespace CRS.ADMIN.REPOSITORY.PaymentManagement
                         Location = dataRow["ClubLocation"].ToString(),
                         Date = dataRow["TransactionDate"].ToString(),
                         TransactionFormattedDate = !string.IsNullOrEmpty(dataRow["TransactionFormattedDate"].ToString()) ? DateTime.Parse(dataRow["TransactionFormattedDate"].ToString()).ToString("yyyy'年'MM'月'dd'日' HH:mm:ss") : dataRow["TransactionFormattedDate"].ToString() ,
-                        TotalPlanAmount = dataRow["TotalPlanAmount"].ToString(),
-                        TotalAdminPlanCommissionAmount = dataRow["TotalAdminPlanCommissionAmount"].ToString(),
-                        TotalAdminCommissionAmount = dataRow["TotalAdminCommissionAmount"].ToString(),
-                        GrandTotal = dataRow["GrandTotal"].ToString(),
+                        TotalPlanAmount = Convert.ToInt64(dataRow["TotalPlanAmount"]).ToString("N0"),
+                        TotalAdminPlanCommissionAmount =Convert.ToInt64( dataRow["TotalAdminPlanCommissionAmount"]).ToString("N0"),
+                        TotalAdminCommissionAmount = Convert.ToInt64(dataRow["TotalAdminCommissionAmount"]).ToString("N0"),
+                        GrandTotal = Convert.ToInt64(dataRow["GrandTotal"]).ToString("N0"),
                         TotalRecords = Convert.ToInt32(_dao.ParseColumnValue(dataRow, "TotalRecords").ToString()),
                         SNO = Convert.ToInt32(_dao.ParseColumnValue(dataRow, "SNO").ToString())
                     });

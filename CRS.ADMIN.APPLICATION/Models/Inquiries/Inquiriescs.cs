@@ -15,4 +15,12 @@ namespace CRS.ADMIN.APPLICATION.Models.Inquiries
         public string Posted_Date { get; set; }
         public string Action { get; set; }
     }
+    public class InquiryListModel
+    {
+        public string Sno { get; set; }
+        public string EmailAddress { get; set; }
+        public string Message { get; set; }
+        public string ActionDate { get; set; }
+        public string ActionBy { get; set; }
+    }
 }

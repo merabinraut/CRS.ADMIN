@@ -213,6 +213,18 @@ namespace CRS.ADMIN.REPOSITORY.HostManagement
             if (dbResponse != null && dbResponse.Rows.Count > 0) return _DAO.DataTableToListObject<StaticDataCommon>(dbResponse).ToList();
             return new List<StaticDataCommon>();
         }
+
+        public List<InquiryListCommon> GetInquiryListAsync(string SearchFilter, int StartIndex, int PageSize)
+        {
+            string SQL = "EXEC sproc_get_customer_enquiry ";
+            SQL += !string.IsNullOrEmpty(SearchFilter) ? "@searchFilter=" + _DAO.FilterString(SearchFilter) + ",": "" ;
+            SQL += "@Skip=" + StartIndex;
+            SQL += ",@Take=" +PageSize;
+
+            var dbResponse = _DAO.ExecuteDataTable(SQL);
+            if (dbResponse != null && dbResponse.Rows.Count > 0) return _DAO.DataTableToListObject<InquiryListCommon>(dbResponse).ToList();
+            return new List<InquiryListCommon>();
+        }
         #endregion
     }
 }

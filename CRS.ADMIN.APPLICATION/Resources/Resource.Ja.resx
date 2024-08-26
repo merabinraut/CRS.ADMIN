@@ -542,9 +542,17 @@
     <value>クラブステータス</value>
     <comment>Reservation Ledger</comment>
   </data>
+  <data name="Club Username" xml:space="preserve">
+    <value>クラブのユーザー名</value>
+    <comment>Club Management</comment>
+  </data>
   <data name="Club Verification" xml:space="preserve">
     <value>クラブ検証</value>
     <comment>Reservation Ledger</comment>
+  </data>
+  <data name="clubApprovalMessage" xml:space="preserve">
+    <value>こちらの店舗を承認しますか？</value>
+    <comment>Club Management</comment>
   </data>
   <data name="ClubFurigana" xml:space="preserve">
     <value>フリガナ</value>
@@ -562,6 +570,14 @@
     <value>クラブ名</value>
     <comment>Reports</comment>
   </data>
+  <data name="clubNo" xml:space="preserve">
+    <value>いいえ</value>
+    <comment>Club Management</comment>
+  </data>
+  <data name="clubRejectMessage" xml:space="preserve">
+    <value>こちらの店舗を拒否しますか？</value>
+    <comment>Club Management</comment>
+  </data>
   <data name="Clubs" xml:space="preserve">
     <value>クラブ</value>
     <comment>Dashboard</comment>
@@ -577,6 +593,10 @@
   <data name="ClubTabRejected" xml:space="preserve">
     <value>拒否済み</value>
     <comment>ClubManagement</comment>
+  </data>
+  <data name="clubYes" xml:space="preserve">
+    <value>はい</value>
+    <comment>Club Management</comment>
   </data>
   <data name="Commission" xml:space="preserve">
     <value>手数料</value>
@@ -1015,6 +1035,10 @@
   </data>
   <data name="Height" xml:space="preserve">
     <value>身長</value>
+    <comment>Host Management</comment>
+  </data>
+  <data name="Height should be in between 135 220 cm" xml:space="preserve">
+    <value>身長は135以上220以内にしてください</value>
     <comment>Host Management</comment>
   </data>
   <data name="Hide" xml:space="preserve">
@@ -1476,6 +1500,10 @@
   </data>
   <data name="Minimum 3 characters required" xml:space="preserve">
     <value>最低3文字必要です</value>
+    <comment>Club Management</comment>
+  </data>
+  <data name="Mobile Number (Easily reachable)" xml:space="preserve">
+    <value>電話番号（連絡の繋がりやすい）</value>
     <comment>Club Management</comment>
   </data>
   <data name="MobileNumber" xml:space="preserve">
@@ -2211,6 +2239,10 @@
   <data name="Status" xml:space="preserve">
     <value>状態</value>
     <comment>Customer Management</comment>
+  </data>
+  <data name="Store Name (Katakana)" xml:space="preserve">
+    <value>フリガナ</value>
+    <comment>Club Management</comment>
   </data>
   <data name="StoreName" xml:space="preserve">
     <value>店舗名</value>

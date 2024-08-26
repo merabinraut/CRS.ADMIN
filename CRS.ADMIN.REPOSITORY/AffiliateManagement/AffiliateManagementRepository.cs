@@ -69,15 +69,15 @@ namespace CRS.ADMIN.REPOSITORY.AffiliateManagement
                     responseInfo.Add(new ReferralConvertedCustomerListModelCommon()
                     {
                         AffiliateFullName = row["AffiliateFullName"].ToString(),
-                        AffiliateAmount = row["AffiliateAmount"].ToString(),
-                        AffiliateId = row["AffiliateId"].ToString(),
+                        AffiliateAmount =Convert.ToInt64( row["AffiliateAmount"]).ToString("N0"),
+                        AffiliateId = row["AffiliateCode"].ToString(),
                         AffiliateImaeg = row["AffiliateImage"].ToString(),
                         CustomerConvertedDate = row["CustomerConvertedDate"].ToString(),
                         CustomerFullName = row["CustomerFullName"].ToString(),
-                        CustomerId = row["CustomerId"].ToString(),
+                        //CustomerId = row["CustomerId"].ToString(),
                         CustomerImage = row["CustomerImage"].ToString(),
-                        CustomerUserName = row["CustomerUserName"].ToString(),
-                        ReferCode = row["ReferCode"].ToString(),
+                        CustomerUserName = row["NickName"].ToString(),
+                        //ReferCode = row["ReferCode"].ToString(),
                         TotalRecords = Convert.ToInt32(_dao.ParseColumnValue(row, "TotalRecords").ToString()),
                         SNO = Convert.ToInt32(_dao.ParseColumnValue(row, "SNO").ToString())
                     });

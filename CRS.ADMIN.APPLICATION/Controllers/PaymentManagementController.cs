@@ -17,7 +17,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
 
         public PaymentManagementController(IPaymentManagementBusiness business) => this._business = business;
 
-        public ActionResult Index(string SearchText = "", string ClubId = "", string LocationId = "", string FromDate = "", string ToDate = "", int StartIndex = 0, int PageSize = 10, string Date = "")
+        public ActionResult Index(string SearchText = "", string ClubId = "", string LocationId = "", string FromDate = "", string ToDate = "", int StartIndex = 0, int PageSize = 10, string Date = "",string Value="")
         {
             Session["CurrentURL"] = "/PaymentManagement/Index";
             var cId = !string.IsNullOrEmpty(ClubId) ? ClubId.DecryptParameter() : null;
@@ -52,10 +52,11 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             ViewBag.LocationIdKey = LocationId;
             ViewBag.FromDate = FromDate;
             ViewBag.ToDate = ToDate;
+            ViewBag.TabValue = Value;
             return View(paymentManagementModel);
         }
 
-        public ActionResult GetPaymentLedger(string clubId, string searchText = "", string Date = "", int StartIndex = 0, int PageSize = 10, string FromDate = "", string ToDate = "")
+        public ActionResult GetPaymentLedger(string clubId, string LocationId,string searchText = "", string Date = "", int StartIndex = 0, int PageSize = 10, string FromDate = "", string ToDate = "")
         {
             var cId = !string.IsNullOrEmpty(clubId) ? clubId.DecryptParameter() : null;
             if (string.IsNullOrWhiteSpace(cId))
@@ -82,7 +83,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 x.CustomerImage = ImageHelper.ProcessedImage(x.CustomerImage);
             });
             ViewBag.IsBackAllowed = true;
-            ViewBag.BackButtonURL = "/PaymentManagement/Index";
+            ViewBag.BackButtonURL = "/PaymentManagement/Index?Value=PL&searchText="+ searchText + "&ClubId=" + clubId + "&LocationId=" + LocationId + "&StartIndex=" + StartIndex  + "&PageSize=" + PageSize + "&FromDate=" + FromDate+ "&ToDate=" + ToDate;
             ViewBag.StartIndex = StartIndex;
             ViewBag.PageSize = PageSize;
             ViewBag.FromDate = FromDate;

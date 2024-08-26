@@ -542,9 +542,17 @@
     <value>Club Status</value>
     <comment>Reservation Ledger</comment>
   </data>
+  <data name="Club Username" xml:space="preserve">
+    <value>Club Username</value>
+    <comment>Club Management</comment>
+  </data>
   <data name="Club Verification" xml:space="preserve">
     <value>Club Verification</value>
     <comment>Reservation Ledger</comment>
+  </data>
+  <data name="clubApprovalMessage" xml:space="preserve">
+    <value>Do you approve this store?</value>
+    <comment>Club Management</comment>
   </data>
   <data name="ClubFurigana" xml:space="preserve">
     <value>Furigana</value>
@@ -562,6 +570,14 @@
     <value>Club Name</value>
     <comment>Reports</comment>
   </data>
+  <data name="clubNo" xml:space="preserve">
+    <value>No</value>
+    <comment>Club Management</comment>
+  </data>
+  <data name="clubRejectMessage" xml:space="preserve">
+    <value>Would you like to reject this store?</value>
+    <comment>Club Management</comment>
+  </data>
   <data name="Clubs" xml:space="preserve">
     <value>Clubs</value>
     <comment>Dashboard</comment>
@@ -577,6 +593,10 @@
   <data name="ClubTabRejected" xml:space="preserve">
     <value>Rejected</value>
     <comment>ClubManagement</comment>
+  </data>
+  <data name="clubYes" xml:space="preserve">
+    <value>Yes</value>
+    <comment>Club Management</comment>
   </data>
   <data name="Commission" xml:space="preserve">
     <value>Commission</value>
@@ -1015,6 +1035,10 @@
   </data>
   <data name="Height" xml:space="preserve">
     <value>Height</value>
+    <comment>Host Management</comment>
+  </data>
+  <data name="Height should be in between 135 220 cm" xml:space="preserve">
+    <value>Height should be in between 135-220 cm</value>
     <comment>Host Management</comment>
   </data>
   <data name="Hide" xml:space="preserve">
@@ -1472,6 +1496,10 @@
   </data>
   <data name="Minimum 3 characters required" xml:space="preserve">
     <value>Minimum 3 characters required</value>
+    <comment>Club Management</comment>
+  </data>
+  <data name="Mobile Number (Easily reachable)" xml:space="preserve">
+    <value>Mobile Number (Easily reachable)</value>
     <comment>Club Management</comment>
   </data>
   <data name="MobileNumber" xml:space="preserve">
@@ -2204,6 +2232,10 @@
   <data name="Status" xml:space="preserve">
     <value>Status</value>
     <comment>Customer Management</comment>
+  </data>
+  <data name="Store Name (Katakana)" xml:space="preserve">
+    <value>Store Name (Katakana)</value>
+    <comment>Club Management</comment>
   </data>
   <data name="StoreName" xml:space="preserve">
     <value>Store Name</value>

@@ -17,6 +17,7 @@
                     <input id="FromDate" name="FromDate" value="@ViewBag.FromDate" hidden />
                     <input id="ToDate" name="ToDate" value="@ViewBag.ToDate" hidden />
                     <input id="LocationId" name="LocationId" value="@ViewBag.LocationIdKey" hidden />
+                    <input id="ValueId" name="Value" value="PL" hidden />
                     <input type="search"
                            id="default-search"
                            class="input-search block w-full"
@@ -38,6 +39,7 @@
 
             <div id="filter-container" class="px-6 py-5 rounded-[5px] border border-[#D0D5DD]" style="display: none;">
                 <form action="/PaymentManagement/Index" method="get" id="filter-id">
+                    <input id="ValueId" name="Value" value="PL" hidden />
                     <div class="flex flex-col gap-4">
                         <div class="flex text-[#3E3E3E] gap-1 items-center">
                             <svg xmlns="http://www.w3.org/2000/svg" width="20"
@@ -274,7 +276,7 @@
                                             </td>
                                             <td class="p-[12px] w-max">
                                                 <div class="flex justify-center items-center gap-3 w-full">
-                                                    <a href="@Url.Action("/GetPaymentLedger", new { clubId = paymentLog.ClubId, FromDate = ViewBag.FromDate, ToDate = ViewBag.ToDate})">
+                                                    <a href="@Url.Action("/GetPaymentLedger", new { clubId = ViewBag.ClubIdKey,LocationId=ViewBag.LocationId,StartIndex=ViewBag.StartIndex,PageSize= ViewBag.PageSize, FromDate = ViewBag.FromDate, ToDate = ViewBag.ToDate})">
                                                         <i class="las la-eye text-[20px] cursor-pointer text-[#A6A6A6]"></i>
                                                     </a>
                                                 </div>

@@ -1,7 +1,7 @@
 @model CRS.ADMIN.APPLICATION.Models.PromotionManagement.AdvertisementManagementModel
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.css">
 <style>
-    #cropModal {
+    #cropModal_adv {
         display: none;
         position: fixed;
         top: 0;
@@ -13,8 +13,8 @@
         align-items: center;
     }
 
-    #imageToCrop {
-        max-width: 50%;
+    #imageToCrop_adv {
+        max-width: 90%;
         max-height: 80vh;
     }
 </style>
@@ -130,6 +130,8 @@
                             @Html.ValidationMessageFor(m => m.DisplayOrder)
                         </span>
                     </div>
+                    
+
                 </div>
                 <div class="flex justify-end py-4">
                     <div class="flex gap-6">
@@ -141,11 +143,119 @@
                         </button>
                     </div>
                 </div>
+
+
+
             </div>
         }
     </div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js"></script>
+@*<script>
+        document.addEventListener('DOMContentLoaded', function () {
+            debugger;
+
+            const modal = document.getElementById('cropModal_adv');
+            const imageToCrop = document.getElementById('imageToCrop_adv');
+            const fileInput = document.getElementById('file_input_logo_adv');
+            const fileNameDisplay = document.getElementById('file_name_logo_adv');
+
+            let cropper;
+            cropper = new Cropper(imageToCrop, {
+                //aspectRatio: 1024 / 340,
+                dragMode: 'move',
+                viewMode: 0,
+                imageSmoothingEnabled: true,
+                imageSmoothingQuality: 'high'
+
+            });
+
+
+            fileInput.addEventListener('change', function (event) {
+                debugger;
+                const file = event.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function (e) {
+                        imageToCrop.src = e.target.result;
+                        modal.style.display = 'flex';
+
+                        if (cropper) {
+                            cropper.replace(e.target.result);
+                        } else {
+                            cropper = new Cropper(imageToCrop, {
+                                aspectRatio: 298 / 181,
+                                viewMode: 1,
+                                background: false,
+                                autoCropArea: 1,
+                            });
+                        }
+
+                        fileNameDisplay.textContent = file.name;
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+
+            document.getElementById('cropImageButton_adv').addEventListener('click', function (event) {
+                event.preventDefault();
+                debugger;
+                if (cropper) {
+                    debugger;
+                    const width = 298;
+                    const height = 181;
+                    //const aspectRatio = width / height;
+                    const canvas = cropper.getCroppedCanvas({
+                        //width: 298,
+                        //height: 181,
+                        //maxWidth: 298,
+                        //maxHeight: 181,
+                        width: width,
+                        height: height,
+                        maxWidth: width,
+                        maxHeight: height
+
+                    });
+                    if (canvas) {
+                        canvas.toBlob(function (blob) {
+                            const formData = new FormData();
+                            formData.append('croppedImage', blob);
+                            console.log('Cropped image ready to upload', formData);
+
+                            const reader = new FileReader();
+                            reader.onload = function () {
+                                const dataUrl = reader.result;
+                                const dataTransfer = new DataTransfer();
+                                //var croppedImageDataURL = cropper.getCroppedCanvas().toDataURL("image/png");
+                                const file = new File([blob], "croppedImage.jpg", { type: "image/jpeg" });
+                                dataTransfer.items.add(file);
+                                fileInput.files = dataTransfer.files;
+                            };
+                            reader.readAsDataURL(blob);
+
+                            modal.style.display = 'none';
+                            cropper.destroy();
+                            cropper = null;
+                        }, 'image/jpeg', 0.8);
+                    }
+                }
+            });
+
+
+
+
+            document.getElementById('cancelCropButton_adv').addEventListener('click', function () {
+                modal.style.display = 'none';
+                $('#file_name_logo_adv').val('');
+                $('#file_input_logo_adv').val('');
+                if (cropper) {
+                    cropper.destroy();
+                    cropper = null;
+                }
+            });
+        });
+    </script>*@
+
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         let cropper;
@@ -166,9 +276,13 @@
                         cropper.replace(e.target.result);
                     } else {
                         cropper = new Cropper(imageToCrop, {
-                            aspectRatio: 298 / 181,
+                            aspectRatio: 298 / 181, // Maintain aspect ratio
                             viewMode: 1,
                             background: false,
+                            zoomable: true,
+                            scalable: true,
+                            responsive: true,
+                            autoCropArea: 1,
                         });
                     }
 
@@ -182,40 +296,35 @@
             event.preventDefault();
 
             if (cropper) {
+                // Adjust the canvas size to maintain high quality
                 const canvas = cropper.getCroppedCanvas({
-                    width: 298,
-                    height: 181,
-                    maxWidth: 298,
-                    maxHeight: 181,
+                    width: 1600, // Increased width for high resolution
+                    height: 800, // Increased height for high resolution
+                    imageSmoothingEnabled: true,
+                    imageSmoothingQuality: 'high',
                 });
-                if (canvas) {
-                    canvas.toBlob(function (blob) {
-                        const formData = new FormData();
-                        formData.append('croppedImage', blob);
-                        console.log('Cropped image ready to upload', formData);
 
-                        const reader = new FileReader();
-                        reader.onload = function () {
-                            const dataUrl = reader.result;
-                            const dataTransfer = new DataTransfer();
-                            const file = new File([blob], "croppedImage.jpg", { type: "image/jpeg" });
-                            dataTransfer.items.add(file);
-                            fileInput.files = dataTransfer.files;
-                        };
-                        reader.readAsDataURL(blob);
+                canvas.toBlob(function (blob) {
+                    const formData = new FormData();
+                    formData.append('croppedImage', blob);
 
-                        modal.style.display = 'none';
-                        cropper.destroy();
-                        cropper = null;
-                    }, 'image/jpeg', 0.8);
-                }
+                    // Create a File object and update file input
+                    const file = new File([blob], "croppedImage.jpg", { type: "image/jpeg" });
+                    const dataTransfer = new DataTransfer();
+                    dataTransfer.items.add(file);
+                    fileInput.files = dataTransfer.files;
+
+                    modal.style.display = 'none';
+                    cropper.destroy();
+                    cropper = null;
+                }, 'image/jpeg', 0.95); // High quality setting
             }
         });
 
         document.getElementById('cancelCropButton_adv').addEventListener('click', function () {
             modal.style.display = 'none';
-            $('#file_name_logo_adv').val('');
-            $('#file_input_logo_adv').val('');
+            fileInput.value = ''; // Clear file input
+            fileNameDisplay.textContent = '@CRS.ADMIN.APPLICATION.Resources.Resource.No_File_Choosen';
             if (cropper) {
                 cropper.destroy();
                 cropper = null;

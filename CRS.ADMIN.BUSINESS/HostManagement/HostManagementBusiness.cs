@@ -55,6 +55,11 @@ namespace CRS.ADMIN.BUSINESS.HostManagement
         {
             return _REPO.GetSkillsDLL();
         }
+
+        public List<InquiryListCommon> GetInquiryListAsync(string SearchFilter, int StartIndex, int PageSize)
+        {
+            return _REPO.GetInquiryListAsync(SearchFilter,StartIndex,PageSize);
+        }
         #endregion
     }
 }
