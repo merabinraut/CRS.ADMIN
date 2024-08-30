@@ -328,6 +328,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resource.Ja.resx</DependentUpon>
     </Compile>
+    <Content Include="Views\ClubManagement\_PendingClubListPartialView.cshtml" />
+    <Content Include="Views\ClubManagement\_ApprovedClubListPartialView.cshtml" />
+    <None Include="Views\ClubManagement\_RejectedClubListPartialView.cshtml" />
     <Content Include="Views\AffiliateManagement\_ConvertedCustomerPointsReport.cshtml" />
     <None Include="Views\PromotionManagement\_ManageAdvertisementPartialView.cshtml" />
     <None Include="Views\PromotionManagement\_AdvertisementList.cshtml" />
@@ -349,7 +352,7 @@
     <None Include="Views\PointsManagement\PointsTransferList.cshtml" />
     <None Include="Views\PointSetup\PointsCategorySlabList.cshtml" />
     <None Include="Views\PointSetup\_ManagePointsSlabPartialView.cshtml" />
-	  <Content Include="Views\PointManagement\index.cshtml" />
+    <Content Include="Views\PointManagement\index.cshtml" />
     <None Include="Views\PointSetup\_ManagePointsCategoryPartialView.cshtml" />
     <None Include="Views\ClubManagement\_ClubHoldDetailPartialView.cshtml" />
     <None Include="Views\ClubManagement\_ManageClubPartialView.cshtml" />
@@ -2708,7 +2711,6 @@
     <Content Include="Views\Inquiries\index.cshtml" />
     <Content Include="Views\PointSetup\PointSetupUserTypeList.cshtml" />
     <Content Include="Views\PointSetup\PointsCategoryList.cshtml" />
-
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
