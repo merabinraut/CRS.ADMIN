@@ -231,6 +231,7 @@
     <Compile Include="App_Start\UnityMvcActivator.cs" />
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="Controllers\AffiliateManagementController.cs" />
+    <Compile Include="Controllers\ApiResponseMessageController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\ClubManagementController.cs" />
     <Compile Include="Controllers\ClubPlanManagementController.cs" />
@@ -278,6 +279,7 @@
     <Compile Include="Models\AdminDashboardModel.cs" />
     <Compile Include="Models\AffiliateManagement\AffiliateManagementModel.cs" />
     <Compile Include="Models\AmazonConfigruationModel.cs" />
+    <Compile Include="Models\ApiResponseMessage\ApiResponseMessageModel.cs" />
     <Compile Include="Models\ClubManagement\ClubManagementModel.cs" />
     <Compile Include="Models\ClubManagement\ClubManagerModel.cs" />
     <Compile Include="Models\ClubManagement\EventModel.cs" />
@@ -329,6 +331,10 @@
       <DependentUpon>Resource.Ja.resx</DependentUpon>
     </Compile>
     <Content Include="Views\AffiliateManagement\_ConvertedCustomerPointsReport.cshtml" />
+    <Content Include="Views\ApiResponseMessage\Index.cshtml" />
+    <Content Include="Views\ApiResponseMessage\ApiResponseMessageList.cshtml" />
+    <Content Include="Views\ApiResponseMessage\_AddResponseMessage.cshtml" />
+    <Content Include="Views\ApiResponseMessage\_EditResponseMessage.cshtml" />
     <None Include="Views\PromotionManagement\_ManageAdvertisementPartialView.cshtml" />
     <None Include="Views\PromotionManagement\_AdvertisementList.cshtml" />
     <Content Include="Content\assets\images\TickIcon.svg" />
@@ -349,7 +355,7 @@
     <None Include="Views\PointsManagement\PointsTransferList.cshtml" />
     <None Include="Views\PointSetup\PointsCategorySlabList.cshtml" />
     <None Include="Views\PointSetup\_ManagePointsSlabPartialView.cshtml" />
-	  <Content Include="Views\PointManagement\index.cshtml" />
+    <Content Include="Views\PointManagement\index.cshtml" />
     <None Include="Views\PointSetup\_ManagePointsCategoryPartialView.cshtml" />
     <None Include="Views\ClubManagement\_ClubHoldDetailPartialView.cshtml" />
     <None Include="Views\ClubManagement\_ManageClubPartialView.cshtml" />
@@ -2708,7 +2714,6 @@
     <Content Include="Views\Inquiries\index.cshtml" />
     <Content Include="Views\PointSetup\PointSetupUserTypeList.cshtml" />
     <Content Include="Views\PointSetup\PointsCategoryList.cshtml" />
-
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

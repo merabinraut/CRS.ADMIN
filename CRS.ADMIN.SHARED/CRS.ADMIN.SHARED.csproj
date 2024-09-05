@@ -100,6 +100,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AffiliateManagement\AffiliateManagementCommon.cs" />
+    <Compile Include="ApiResponseMessage\ApiResponseMessageCommon.cs" />
     <Compile Include="ClubManagement\ClubManagementCommon.cs" />
     <Compile Include="ClubManagement\EventManagementCommon.cs" />
     <Compile Include="ClubManagement\GalleryManagementCommon.cs" />

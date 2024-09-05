@@ -78,6 +78,8 @@
   <ItemGroup>
     <Compile Include="AffiliateManagement\AffiliateManagementBusiness.cs" />
     <Compile Include="AffiliateManagement\IAffiliateManagementBusiness.cs" />
+    <Compile Include="ApiResponseMessage\ApiResponseMessageBusiness.cs" />
+    <Compile Include="ApiResponseMessage\IApiResponseMessageBusiness.cs" />
     <Compile Include="ClubManagement\ClubManagementBusiness.cs" />
     <Compile Include="ClubManagement\IClubManagementBusiness.cs" />
     <Compile Include="ClubPlanManagement\ClubPlanManagementBusiness.cs" />

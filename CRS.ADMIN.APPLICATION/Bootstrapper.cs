@@ -1,4 +1,5 @@
 using CRS.ADMIN.BUSINESS.AffiliateManagement;
+using CRS.ADMIN.BUSINESS.ApiResponseMessage;
 using CRS.ADMIN.BUSINESS.ClubManagement;
 using CRS.ADMIN.BUSINESS.ClubPlanManagement;
 using CRS.ADMIN.BUSINESS.CommissionManagement;
@@ -77,6 +78,7 @@ namespace CRS.ADMIN.APPLICATION
             container.RegisterType<IClubPlanManagementBusiness, ClubPlanManagementBusiness>();
             container.RegisterType<IStaticDataManagementBusiness, StaticDataManagementBusiness>();
             container.RegisterType<IInqueriesBusiness, InqueriesBusiness>();
+            container.RegisterType<IApiResponseMessageBusiness, ApiResponseMessageBusiness>();
             return container;
         }
     }
