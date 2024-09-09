@@ -1,3 +1,4 @@
+using CRS.ADMIN.BUSINESS.AdminPointManagement;
 using CRS.ADMIN.BUSINESS.AffiliateManagement;
 using CRS.ADMIN.BUSINESS.ClubManagement;
 using CRS.ADMIN.BUSINESS.ClubPlanManagement;
@@ -77,6 +78,7 @@ namespace CRS.ADMIN.APPLICATION
             container.RegisterType<IClubPlanManagementBusiness, ClubPlanManagementBusiness>();
             container.RegisterType<IStaticDataManagementBusiness, StaticDataManagementBusiness>();
             container.RegisterType<IInqueriesBusiness, InqueriesBusiness>();
+            container.RegisterType<IAdminPointManagementBusiness, AdminPointManagementBusiness>();
             return container;
         }
     }

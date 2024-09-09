@@ -230,6 +230,7 @@
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="App_Start\UnityMvcActivator.cs" />
     <Compile Include="Bootstrapper.cs" />
+    <Compile Include="Controllers\AdminPointManagementController.cs" />
     <Compile Include="Controllers\AffiliateManagementController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\ClubManagementController.cs" />
@@ -276,6 +277,7 @@
     <Compile Include="Library\StaticData.cs" />
     <Compile Include="Library\StringCipher.cs" />
     <Compile Include="Models\AdminDashboardModel.cs" />
+    <Compile Include="Models\AdminPointManagement\AdminPointManagementModel.cs" />
     <Compile Include="Models\AffiliateManagement\AffiliateManagementModel.cs" />
     <Compile Include="Models\AmazonConfigruationModel.cs" />
     <Compile Include="Models\ClubManagement\ClubManagementModel.cs" />
@@ -330,6 +332,8 @@
     </Compile>
     <Content Include="Views\ClubManagement\_PendingClubListPartialView.cshtml" />
     <Content Include="Views\ClubManagement\_ApprovedClubListPartialView.cshtml" />
+    <Content Include="Views\AdminPointManagement\AdminPointList.cshtml" />
+    <Content Include="Views\AdminPointManagement\_ManageAdminPointPartialView.cshtml" />
     <None Include="Views\ClubManagement\_RejectedClubListPartialView.cshtml" />
     <Content Include="Views\AffiliateManagement\_ConvertedCustomerPointsReport.cshtml" />
     <None Include="Views\PromotionManagement\_ManageAdvertisementPartialView.cshtml" />

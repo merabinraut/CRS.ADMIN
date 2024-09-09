@@ -1,0 +1,87 @@
+@model CRS.ADMIN.APPLICATION.Models.AdminPointManagement.AdminPointManagementModel
+@{
+    ViewBag.Title = "Admin Point List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var _ManageAdminPointModel = Model.ManagePointRequest as CRS.ADMIN.APPLICATION.Models.AdminPointManagement.ManagePointRequestModel;
+}
+
+<div class="px-8 py-4">
+    @Html.AntiForgeryToken()
+    <!-- title  -->
+    <div class="flex flex-col  gap-6">
+        <div>
+            <div class="heading-title">
+               Admin Point Management
+            </div>
+            @*<div class="span-title-light-gray">
+                @CRS.ADMIN.APPLICATION.Resources.Resource.Club_Management_Supporting_Text
+            </div>*@
+        </div>
+        <div class="flex justify-between pb-[24px]">
+          
+            <div class="flex gap-6">
+                @*<div class="export-button h-[40px]" onclick="exportCSVExcel();">
+                        <img src="~/Content/assets_new/images/club/download-solid.svg"> @CRS.ADMIN.APPLICATION.Resources.Resource.Export
+                    </div>*@
+                <div class="btn btn-primary gap-[8px] h-[40px]" data-drawer-target="add-admin-points-request" data-drawer-show="add-admin-points-request"
+                     data-drawer-placement="right" data-drawer-backdrop="false" aria-controls="drawer-disabled-backdrop">
+                    <img src="~/Content/assets_new/images/plus-circle-solid.svg" />
+                    @CRS.ADMIN.APPLICATION.Resources.Resource.Add_New
+                </div>
+            </div>
+
+        </div>
+        <div class="table-tab">
+            <div class="px-[16px] py-[12px] flex justify-between entry-export-container">
+                <div class="flex items-center select-entries" id="ShowEntries-Id">
+                </div>
+                
+            </div>
+
+            <div class="relative overflow-x-auto">
+              
+
+
+
+
+            </div>
+            <div class="pagination-club">
+                <div class="show-entry" id="Entries-Id">
+                </div>
+                <div class="flex gap-[12px]">
+                    <div class="btn btn-secondary-box-shadow" id="prev-btn">
+                        @CRS.ADMIN.APPLICATION.Resources.Resource.Previous
+                    </div>
+                    <div class="flex gap-[12px]" id="pagination-id">
+                    </div>
+                    <div class="btn btn-secondary-box-shadow" id="next-btn">
+                        @CRS.ADMIN.APPLICATION.Resources.Resource.Next
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- drawer component -->
+        @Html.Partial("_ManageAdminPointPartialView", _ManageAdminPointModel)
+    </div>
+</div>
+<link href="https://cdn.syncfusion.com/ej2/material.css" rel="stylesheet">
+
+
+@section scripts
+{
+    <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
+    <script>
+         var PopUpRenderValue = '@ViewBag.PopUpRenderValue';
+        //if (PopUpRenderValue != null && PopUpRenderValue != "" && PopUpRenderValue == "Manage") {
+        //    var element = document.getElementById('add-club-plan');
+        //    element.classList.remove('translate-x-full');
+        //}
+
+
+
+
+    </script>
+
+
+}
