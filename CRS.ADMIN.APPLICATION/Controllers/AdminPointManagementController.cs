@@ -7,6 +7,7 @@ using CRS.ADMIN.SHARED;
 using System.Web.Mvc;
 using CRS.ADMIN.APPLICATION.Models.AdminPointManagement;
 using CRS.ADMIN.SHARED.AdminPointManagement;
+using CRS.ADMIN.SHARED.PaginationManagement;
 
 namespace CRS.ADMIN.APPLICATION.Controllers
 {
@@ -17,17 +18,32 @@ namespace CRS.ADMIN.APPLICATION.Controllers
         {
             _adminpointBuss = adminpointBuss;
         }
-        public ActionResult AdminPointList(string SearchFilter1 = "", int StartIndex = 0, int PageSize = 10)
+        public ActionResult AdminPointList(string SearchFilter = "", int StartIndex = 0, int PageSize = 10,string fromDate=null,string toDate=null )
         {
             ViewBag.SearchFilter = null;
             Session["CurrentURL"] = "/AdminPointManagement/AdminPointList";
             string RenderId = "";
-            var objPointsManagementModel = new AdminPointManagementModel();
-            if (TempData.ContainsKey("ManagePointRequestModel")) objPointsManagementModel.ManagePointRequest = TempData["ManagePointRequestModel"] as ManagePointRequestModel;
-            else objPointsManagementModel.ManagePointRequest = new ManagePointRequestModel();
+            var objAdminPointManagementModel = new AdminPointManagementModel();
+            if (TempData.ContainsKey("ManagePointRequestModel")) objAdminPointManagementModel.ManagePointRequest = TempData["ManagePointRequestModel"] as ManagePointRequestModel;
+            else objAdminPointManagementModel.ManagePointRequest = new ManagePointRequestModel();
             if (TempData.ContainsKey("RenderId")) RenderId = TempData["RenderId"].ToString();
             ViewBag.PopUpRenderValue = !string.IsNullOrEmpty(RenderId) ? RenderId : null;
-            return View(objPointsManagementModel);  
+            PaginationFilterCommon dbRequest = new PaginationFilterCommon()
+            {
+                Skip = StartIndex,
+                Take = PageSize,
+                SearchFilter = !string.IsNullOrEmpty(SearchFilter) ? SearchFilter : null
+            };
+            PointRequestDetailCommon Commonmodel = new PointRequestDetailCommon();
+            Commonmodel.fromDate = !string.IsNullOrEmpty(fromDate) ? fromDate : null;
+            Commonmodel.toDate = !string.IsNullOrEmpty(toDate) ? toDate : null;
+            Commonmodel.txnId = !string.IsNullOrEmpty(SearchFilter) ? SearchFilter: null;
+            var dbResponse = _adminpointBuss.GetManualEntryPointList(Commonmodel, dbRequest);
+            objAdminPointManagementModel.PointRequestDetailList = dbResponse.MapObjects<PointRequestDetail>();
+            objAdminPointManagementModel.fromDate = fromDate;
+            objAdminPointManagementModel.toDate = toDate;
+            objAdminPointManagementModel.searchFilter = SearchFilter;
+            return View(objAdminPointManagementModel);  
         }
 
         [HttpPost, ValidateAntiForgeryToken]
