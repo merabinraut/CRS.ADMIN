@@ -1053,6 +1053,10 @@
     <value>店休日</value>
     <comment>ClubManagement</comment>
   </data>
+  <data name="HoslogBalance" xml:space="preserve">
+    <value>ホスログ残高</value>
+    <comment>Home</comment>
+  </data>
   <data name="Host Info" xml:space="preserve">
     <value>ホスト情報</value>
     <comment>Host Management</comment>

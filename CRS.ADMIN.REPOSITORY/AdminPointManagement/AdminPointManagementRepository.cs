@@ -51,7 +51,7 @@ namespace CRS.ADMIN.REPOSITORY.AdminPointManagement
             string SQL = "EXEC sproc_insert_admin_current_point_balance";
             SQL += " @amount=" + _dao.FilterString(objManagePointRequestCommon.point);
             SQL += " ,@points=" + _dao.FilterString(objManagePointRequestCommon.point);
-            SQL += ",@remark=" + _dao.FilterString(objManagePointRequestCommon.remarks);
+            SQL += !string.IsNullOrEmpty(objManagePointRequestCommon.remarks) ? " ,@remark=N" + _dao.FilterString(objManagePointRequestCommon.remarks) : " ,@remark=NULL";  
             SQL += ",@ActionUser=" + _dao.FilterString(objManagePointRequestCommon.actionUser);
             SQL += ",@actionIp=" + _dao.FilterString(objManagePointRequestCommon.actionIp);
             return _dao.ParseCommonDbResponse(SQL);

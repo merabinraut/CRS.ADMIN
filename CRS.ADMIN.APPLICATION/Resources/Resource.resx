@@ -1053,6 +1053,10 @@
     <value>Holiday</value>
     <comment>ClubManagement</comment>
   </data>
+  <data name="HoslogBalance" xml:space="preserve">
+    <value>Hoslog Balance</value>
+    <comment>Home</comment>
+  </data>
   <data name="Host Info" xml:space="preserve">
     <value>Host Info</value>
     <comment>Host Management</comment>
