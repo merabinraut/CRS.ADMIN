@@ -4714,6 +4714,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Service Tax.
+        /// </summary>
+        public static string Service_tax {
+            get {
+                return ResourceManager.GetString("Service tax", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Set Shuffling Time.
         /// </summary>
         public static string Set_Shuffling_Time {

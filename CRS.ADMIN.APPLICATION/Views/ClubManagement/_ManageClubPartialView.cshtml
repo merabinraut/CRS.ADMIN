@@ -1631,49 +1631,6 @@
                                     </div>
                                     <div class="input-field-common">
                                         <label for="instagram" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
-                                            @CRS.ADMIN.APPLICATION.Resources.Resource.Designation_Fee
-                                        </label>
-                                        @Html.TextBoxFor(model => model.DesignationFee, new
-                                   {
-                                       @class = "w-full",
-                                       @placeholder = CRS.ADMIN.APPLICATION.Resources.Resource.Designation_Fee,
-                                       //@onkeypress = "return isNumber(event)",
-                                       autocomplete = "off",
-                                       @maxLength = "30"
-                                   })
-                                        @*<input type="text" class="w-full" placeholder="@CRS.ADMIN.APPLICATION.Resources.Resource.Latitude_Placeholder" name="Latitude" value="@Model.Latitude">*@
-                                        <span class="error">
-                                            @Html.ValidationMessageFor(m => m.DesignationFee)
-                                        </span>
-
-                                        @*<input type="number" class="w-full" placeholder="Enter Designation Fee" name="designationFee" required>*@
-                                        <!-- <span class="error">Validation msg</span> -->
-                                    </div>
-                                    <div class="input-field-common">
-                                        <label for="instagram" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
-                                            @CRS.ADMIN.APPLICATION.Resources.Resource.Companion_Fee
-                                        </label>
-                                        @Html.TextBoxFor(model => model.CompanionFee, new
-                                   {
-                                       @class = "w-full",
-                                       @placeholder = CRS.ADMIN.APPLICATION.Resources.Resource.Companion_Fee,
-                                       //@onkeypress = "return isNumber(event)",
-                                       autocomplete = "off",
-                                       @maxLength = "30"
-                                   })
-                                        @*<input type="text" class="w-full" placeholder="@CRS.ADMIN.APPLICATION.Resources.Resource.Latitude_Placeholder" name="Latitude" value="@Model.Latitude">*@
-                                        <span class="error">
-                                            @Html.ValidationMessageFor(m => m.CompanionFee)
-                                        </span>
-
-                                    </div>
-
-                                </div>
-
-                                <!-- for last order -->
-                                <div class="grid grid-cols-3 gap-x-4 gap-y-5">
-                                    <div class="input-field-common">
-                                        <label for="instagram" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
                                             @CRS.ADMIN.APPLICATION.Resources.Resource.Extension_Fee
                                         </label>
                                         @Html.TextBoxFor(model => model.ExtensionFee, new
@@ -1692,7 +1649,51 @@
                                     </div>
                                     <div class="input-field-common">
                                         <label for="instagram" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
-                                            @CRS.ADMIN.APPLICATION.Resources.Resource.Drink
+                                            @CRS.ADMIN.APPLICATION.Resources.Resource.Designation_Fee
+                                        </label>
+                                        @Html.TextBoxFor(model => model.DesignationFee, new
+                                   {
+                                       @class = "w-full",
+                                       @placeholder = CRS.ADMIN.APPLICATION.Resources.Resource.Designation_Fee,
+                                       //@onkeypress = "return isNumber(event)",
+                                       autocomplete = "off",
+                                       @maxLength = "30"
+                                   })
+                                        @*<input type="text" class="w-full" placeholder="@CRS.ADMIN.APPLICATION.Resources.Resource.Latitude_Placeholder" name="Latitude" value="@Model.Latitude">*@
+                                        <span class="error">
+                                            @Html.ValidationMessageFor(m => m.DesignationFee)
+                                        </span>
+
+                                        @*<input type="number" class="w-full" placeholder="Enter Designation Fee" name="designationFee" required>*@
+                                        <!-- <span class="error">Validation msg</span> -->
+                                    </div>
+                                    
+
+                                </div>
+
+                                <!-- for last order -->
+                                <div class="grid grid-cols-3 gap-x-4 gap-y-5">
+                                    <div class="input-field-common">
+                                        <label for="instagram" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                                            @CRS.ADMIN.APPLICATION.Resources.Resource.Companion_Fee
+                                        </label>
+                                        @Html.TextBoxFor(model => model.CompanionFee, new
+                                   {
+                                       @class = "w-full",
+                                       @placeholder = CRS.ADMIN.APPLICATION.Resources.Resource.Companion_Fee,
+                                       //@onkeypress = "return isNumber(event)",
+                                       autocomplete = "off",
+                                       @maxLength = "30"
+                                   })
+                                        @*<input type="text" class="w-full" placeholder="@CRS.ADMIN.APPLICATION.Resources.Resource.Latitude_Placeholder" name="Latitude" value="@Model.Latitude">*@
+                                        <span class="error">
+                                            @Html.ValidationMessageFor(m => m.CompanionFee)
+                                        </span>
+
+                                    </div>
+                                    <div class="input-field-common">
+                                        <label for="instagram" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                                            @CRS.ADMIN.APPLICATION.Resources.Resource.Service_tax
                                         </label>
                                         @Html.TextBoxFor(model => model.Drink, new
                                    {

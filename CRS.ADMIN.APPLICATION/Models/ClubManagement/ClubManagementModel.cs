@@ -208,7 +208,8 @@ namespace CRS.ADMIN.APPLICATION.Models.ClubManagement
         public string CompanionFee { get; set; }
         [RegularExpression("^[0-9]+$", ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Invalid_amount")]
         public string ExtensionFee { get; set; }
-        [RegularExpression("^[0-9]+$", ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Invalid_amount")]
+        //[RegularExpression("^[0-9]+$", ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Invalid_amount")]
+        [RegularExpression(@"^(?:100|\d{1,2})$", ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Invalid_Tax")]
         public string Drink { get; set; }
         public string Pref { get; set; }
         [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Required")]

@@ -698,17 +698,7 @@
                     <div> </div>
                 }
             <div class="flex-none flex gap-[64px]">
-
-                
-                <div class="border-card-balance">
-                    <img src="~/Content/assets_new/images/hoslog-balance.svg" />
-                    <div class="card-text">
-                        <strong align-text="center" id="adminamount"></strong>
-                        <div class="hoslog-text"> <span align-text="center">@CRS.ADMIN.APPLICATION.Resources.Resource.HoslogBalance</span></div>
-
-                    </div>
-
-                </div>
+                              
                     
                 @*<div class="h-[34px] w-[34px] " style="margin-top: 4px;display: contents;">
             <span align-text="center" id="adminamount"></span>
@@ -878,28 +868,7 @@
         var dynamicPageSizeLabel = "PageSize";
     </script>
 
-    <script>
-        $(document).ready(function () {
-            // Function to fetch and update the amount
-            function GetAdminBalance() {
-                $.ajax({
-                    url: '/Home/GetAdminBalance', // Adjust to your route configuration
-                    method: 'GET',
-                    async: true,
-                    success: function (response) {
-                        // Update the text content of the span with the new amount
-                        $('#adminamount').text(response.amount);
-                    },
-                    error: function () {
-                        console.error('Failed to fetch the amount');
-                    }
-                });
-            }
-           
-            setInterval(GetAdminBalance, 60000);
-            GetAdminBalance();
-        });
-    </script>
+
 </body>
 </html>
 <!-- #endregion -->

@@ -2158,6 +2158,10 @@
     <value>九月</value>
     <comment>Dashboard</comment>
   </data>
+  <data name="Service tax" xml:space="preserve">
+    <value>サービス料金</value>
+    <comment>Club Management</comment>
+  </data>
   <data name="Set Shuffling Time" xml:space="preserve">
     <value>シャッフル時間設定</value>
     <comment>Recommendation Management-&gt;Shuffling time</comment>

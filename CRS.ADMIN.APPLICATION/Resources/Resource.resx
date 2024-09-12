@@ -2151,6 +2151,10 @@
     <value>Sep</value>
     <comment>Dashboard</comment>
   </data>
+  <data name="Service tax" xml:space="preserve">
+    <value>Service Tax</value>
+    <comment>Club Management</comment>
+  </data>
   <data name="Set Shuffling Time" xml:space="preserve">
     <value>Set Shuffling Time</value>
     <comment>Recommendation Management-&gt;Shuffling time</comment>
