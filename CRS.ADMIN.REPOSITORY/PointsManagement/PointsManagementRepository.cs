@@ -19,7 +19,7 @@ namespace CRS.ADMIN.REPOSITORY.PointsManagement
         public List<PointsTansferReportCommon> GetPointTransferList(PointsManagementCommon objPointsTansferReportCommon = null, PaginationFilterCommon objPaginationFilterCommon = null)
         {
             var response = new List<PointsTansferReportCommon>();
-            string SQL = "EXEC sproc_admin_point_transfer_retrieve_select ";
+            string SQL = "EXEC sproc_admin_point_transfer_retrieve_report ";
             SQL += !string.IsNullOrEmpty(objPaginationFilterCommon.SearchFilter) ? " @SearchFilter=N" + _DAO.FilterString(objPaginationFilterCommon.SearchFilter) : " @SearchFilter=null ";
             SQL += !string.IsNullOrEmpty(objPointsTansferReportCommon.UserType) ? " ,@UserTypeId=" + _DAO.FilterString(objPointsTansferReportCommon.UserType) : " ,@UserTypeId=null ";
             SQL += !string.IsNullOrEmpty(objPointsTansferReportCommon.UserName) ? ",@UserId=" + _DAO.FilterString(objPointsTansferReportCommon.UserName) : ",@UserId=null";
@@ -45,7 +45,7 @@ namespace CRS.ADMIN.REPOSITORY.PointsManagement
                         UserType = Convert.ToString(_DAO.ParseColumnValue(item, "UserType")),
                         FromUser = Convert.ToString(_DAO.ParseColumnValue(item, "FromUser")),
                         ToUser = Convert.ToString(_DAO.ParseColumnValue(item, "ToUser")),
-                        Points = Convert.ToString(_DAO.ParseColumnValue(item, "Amount")),
+                        Points = Convert.ToString(_DAO.ParseColumnValue(item, "points")),
                         Remarks = Convert.ToString(_DAO.ParseColumnValue(item, "Remark"))
 
                     });
@@ -55,15 +55,16 @@ namespace CRS.ADMIN.REPOSITORY.PointsManagement
         }
         public CommonDbResponse ManagePoints(PointsTansferCommon objPointsTansferCommon)
         {
-            string SQL = "EXEC sproc_admin_point_transfer_retrieve ";
-            SQL += " @UserTypeId=" + _DAO.FilterString(objPointsTansferCommon.UserTypeId);
-            SQL += ",@UserId=" + _DAO.FilterString(objPointsTansferCommon.UserId);
-            SQL += ",@transactionType=" + _DAO.FilterString(objPointsTansferCommon.TransferType);
-            SQL += ",@Point=" + _DAO.FilterString(objPointsTansferCommon.Points);
-            SQL += ",@Remarks=N" + _DAO.FilterString(objPointsTansferCommon.Remarks);
-            SQL += ",@Image=" + _DAO.FilterString(objPointsTansferCommon.Image);
-            SQL += ",@ActionUser=" + _DAO.FilterString(objPointsTansferCommon.ActionUser);
-            SQL += ",@ActionIP=" + _DAO.FilterString(objPointsTansferCommon.ActionIP);
+            var Sp = objPointsTansferCommon.SpName;
+            string SQL = $"EXEC {Sp}"; 
+            SQL += " @roleType=" + _DAO.FilterString(objPointsTansferCommon.UserTypeId);
+            SQL += ",@agentId=" + _DAO.FilterString(objPointsTansferCommon.UserId);
+            //SQL += ",@transactionType=" + _DAO.FilterString(objPointsTansferCommon.TransferType);
+            SQL += ",@points=" + _DAO.FilterString(objPointsTansferCommon.Points);
+            SQL += ",@remark=N" + _DAO.FilterString(objPointsTansferCommon.Remarks);
+            SQL += ",@receiptPhoto=" + _DAO.FilterString(objPointsTansferCommon.Image);
+            SQL += ",@actionUser=" + _DAO.FilterString(objPointsTansferCommon.ActionUser);
+            SQL += ",@actionIP=" + _DAO.FilterString(objPointsTansferCommon.ActionIP);
             return _DAO.ParseCommonDbResponse(SQL);
         }
         public CommonDbResponse ManagePointsRequest(PointsRequestCommon objPointsRequestCommon)

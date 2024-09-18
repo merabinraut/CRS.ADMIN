@@ -30,7 +30,7 @@
     <div class="flex flex-col  gap-6">
         <div>
             <div class="heading-title">
-                @CRS.ADMIN.APPLICATION.Resources.Resource.Points_Setup
+                @CRS.ADMIN.APPLICATION.Resources.Resource.Points_Management
             </div>
             <div class="span-title-light-gray">
                 @CRS.ADMIN.APPLICATION.Resources.Resource.Manage_your_points_detail
@@ -656,7 +656,19 @@
                 /*minDate: new Date(),*/
                     /*   maxDate: new Date(),*/
                 maxDate: new Date(),
-                defaultDate: '@Model.FromDate'
+                defaultDate: '@Model.FromDate',
+                onSelect: function (selectedDate) {
+                     var fromDate = $(this).datepicker('getDate');
+                    var toDate = $("#ToDate").datepicker('getDate');
+                    $("#ToDate").datepicker("option", "minDate", selectedDate);
+                     if (toDate === null || (toDate && fromDate > toDate)) {
+                            var today = $.datepicker.formatDate('yy/mm/dd', new Date());
+                            $("#ToDate").val(today);
+
+                      }
+
+
+                    }
                 });
                 });
 
