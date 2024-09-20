@@ -2,6 +2,7 @@ using CRS.ADMIN.APPLICATION.Models.PaginationManagement;
 using CRS.ADMIN.APPLICATION.Resources;
 using CRS.ADMIN.SHARED;
 using CRS.ADMIN.SHARED.PaginationManagement;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
@@ -12,6 +13,7 @@ namespace CRS.ADMIN.APPLICATION.Models.PointsManagement
         public List<PointsTansferReportModel> PointsTansferReportList = new List<PointsTansferReportModel>();
         public PointsTansferModel ManagePointsTansfer { get; set; }
         public PointsRequestModel ManagePointsRequest { get; set; }
+        public PointsTansferRetriveDetailsModel PointsTransferRetriveDetails { get; set; }
         public string ListType { get; set; }
         public string SearchFilter { get; set; }
         public string UserType { get; set; }
@@ -56,6 +58,20 @@ namespace CRS.ADMIN.APPLICATION.Models.PointsManagement
         public string Remarks { get; set; }
         public string TransferTypeId { get; set; }
         public string UserTypeId { get; set; }
+        public string Id { get; set; }
+    }
+    public class PointsTansferRetriveDetailsModel
+    {
+        public string TransactionId { get; set; }
+        public string TransactionDate { get; set; }
+        public string TransactionType { get; set; }
+        public string UserType { get; set; }
+        public string FromUser { get; set; }
+        public string ToUser { get; set; }
+        public string Points { get; set; }
+        public string Remarks { get; set; }
+        public string Image { get; set; }
+        public string Id { get; set; }
     }
 
     public class PointRequestCommonModel
@@ -149,6 +165,18 @@ namespace CRS.ADMIN.APPLICATION.Models.PointsManagement
         public string UserName { get; set; }
         public string Points { get; set; }
         public string Remarks { get; set; }
+    }
+    public class PointsTransferRequest
+    {
+        public string Id { get; set; }
+        public string SearchFilter { get; set; }
+        public int StartIndex { get; set; }
+        public int PageSize { get; set; }
+        public string RoleType { get; set; }
+        public string UserId { get; set; }
+        public string TransferType { get; set; }
+        public string FromDate { get; set; }
+        public string ToDate { get; set; }
     }
 
 }

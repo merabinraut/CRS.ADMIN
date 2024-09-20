@@ -1,4 +1,5 @@
 ﻿using CRS.ADMIN.SHARED;
+using CRS.ADMIN.SHARED.ClubManagement;
 using CRS.ADMIN.SHARED.PaginationManagement;
 using CRS.ADMIN.SHARED.PointsManagement;
 using DocumentFormat.OpenXml.Office2016.Excel;
@@ -37,16 +38,17 @@ namespace CRS.ADMIN.REPOSITORY.PointsManagement
                 {
                     response.Add(new PointsTansferReportCommon()
                     {
-                        SNO = Convert.ToInt32(_DAO.ParseColumnValue(item, "SNO").ToString()),
-                        TotalRecords = Convert.ToInt32(_DAO.ParseColumnValue(item, "TotalRecords").ToString()),
-                        TransactionId = Convert.ToString(_DAO.ParseColumnValue(item, "TransactionId")),
-                        TransactionType = Convert.ToString(_DAO.ParseColumnValue(item, "TransactionTypeName")),
-                        TransactionDate = !string.IsNullOrEmpty(_DAO.ParseColumnValue(item, "TransactionDate").ToString()) ? DateTime.Parse(_DAO.ParseColumnValue(item, "TransactionDate").ToString()).ToString("yyyy'年'MM'月'dd'日' HH:mm:ss") : _DAO.ParseColumnValue(item, "TransactionDate").ToString(),
-                        UserType = Convert.ToString(_DAO.ParseColumnValue(item, "UserType")),
-                        FromUser = Convert.ToString(_DAO.ParseColumnValue(item, "FromUser")),
-                        ToUser = Convert.ToString(_DAO.ParseColumnValue(item, "ToUser")),
+                        SNO = Convert.ToInt32(_DAO.ParseColumnValue(item, "sNo").ToString()),
+                        TotalRecords = Convert.ToInt32(_DAO.ParseColumnValue(item, "totalRecords").ToString()),
+                        TransactionId = Convert.ToString(_DAO.ParseColumnValue(item, "transactionId")),
+                        TransactionType = Convert.ToString(_DAO.ParseColumnValue(item, "transactionTypeName")),
+                        TransactionDate = !string.IsNullOrEmpty(_DAO.ParseColumnValue(item, "transactionDate").ToString()) ? DateTime.Parse(_DAO.ParseColumnValue(item, "transactionDate").ToString()).ToString("yyyy'年'MM'月'dd'日' HH:mm:ss") : _DAO.ParseColumnValue(item, "transactionDate").ToString(),
+                        UserType = Convert.ToString(_DAO.ParseColumnValue(item, "userType")),
+                        FromUser = Convert.ToString(_DAO.ParseColumnValue(item, "fromUser")),
+                        ToUser = Convert.ToString(_DAO.ParseColumnValue(item, "toUser")),
                         Points = Convert.ToString(_DAO.ParseColumnValue(item, "points")),
-                        Remarks = Convert.ToString(_DAO.ParseColumnValue(item, "Remark"))
+                        Remarks = Convert.ToString(_DAO.ParseColumnValue(item, "remark")),
+                        Id = Convert.ToString(_DAO.ParseColumnValue(item, "id"))
 
                     });
                 }
@@ -180,6 +182,35 @@ namespace CRS.ADMIN.REPOSITORY.PointsManagement
             }
             return response;
         }
+
         #endregion
+
+        public PointsTansferRetriveDetailsCommon GetPointTransferDetails(string id)
+        {
+           
+            string SQL = "sproc_admin_point_transfer_retrieve_details ";
+            SQL += " @Id=" + _DAO.FilterString(id);
+            var dbResponse = _DAO.ExecuteDataRow(SQL);
+            if (dbResponse != null)
+            {
+                return new PointsTansferRetriveDetailsCommon()
+                {
+                   
+                    
+                    TransactionId = _DAO.ParseColumnValue(dbResponse, "transactionId").ToString(),
+                    TransactionType = _DAO.ParseColumnValue(dbResponse, "transactionTypeName").ToString(),
+                    Remarks = _DAO.ParseColumnValue(dbResponse, "remarks").ToString(),
+                    FromUser = _DAO.ParseColumnValue(dbResponse, "fromUser").ToString(),
+                    ToUser = _DAO.ParseColumnValue(dbResponse, "toUser").ToString(),
+                    UserType = _DAO.ParseColumnValue(dbResponse, "userType").ToString(),
+                    Points = _DAO.ParseColumnValue(dbResponse, "points").ToString(),
+                    Image = _DAO.ParseColumnValue(dbResponse, "receiptPhoto").ToString(),                   
+                    TransactionDate = !string.IsNullOrEmpty(_DAO.ParseColumnValue(dbResponse, "transactionDate").ToString()) ? Convert.ToDateTime(_DAO.ParseColumnValue(dbResponse, "transactionDate")).ToString("yyyy/MM/dd") : _DAO.ParseColumnValue(dbResponse, "transactionDate").ToString(),                    
+                   
+                };
+            }
+
+            return new PointsTansferRetriveDetailsCommon();
+        }
     }
 }

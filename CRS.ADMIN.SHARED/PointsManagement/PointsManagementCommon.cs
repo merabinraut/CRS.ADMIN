@@ -46,6 +46,7 @@ namespace CRS.ADMIN.SHARED.PointsManagement
         public string UserTypeId { get; set; }
         public string FromDate { get; set; }
         public string ToDate { get; set; }
+        public string Id { get; set; }
 
     }
     public class PointsRequestCommon
@@ -55,6 +56,19 @@ namespace CRS.ADMIN.SHARED.PointsManagement
         public string ActionIp { get; set; }
         public string ActionUser { get; set; }
 
+    }
+    public class PointsTansferRetriveDetailsCommon
+    {
+        public string TransactionId { get; set; }
+        public string TransactionDate { get; set; }
+        public string TransactionType { get; set; }
+        public string UserType { get; set; }
+        public string FromUser { get; set; }
+        public string ToUser { get; set; }
+        public string Points { get; set; }
+        public string Remarks { get; set; }
+        public string Image { get; set; }
+        public string Id { get; set; }
     }
 
 }

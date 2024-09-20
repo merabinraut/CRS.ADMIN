@@ -7,6 +7,7 @@
     var _PointRequestCommonModel = Model.PointRequestCommonModel as CRS.ADMIN.APPLICATION.Models.PointsManagement.PointRequestCommonModel;
     var _PointStatementModel = Model.PointBalanceStatementRequest as CRS.ADMIN.APPLICATION.Models.PointsManagement.PointBalanceStatementRequestModel;
     var _systemTransferModel = Model.SystemTransferModel as CRS.ADMIN.APPLICATION.Models.PointsManagement.SystemTransferRequestModel;
+    var _pointTransferDetails = Model.PointsTransferRetriveDetails as CRS.ADMIN.APPLICATION.Models.PointsManagement.PointsTansferRetriveDetailsModel;
 
 }
 <style>
@@ -222,10 +223,6 @@
                             </div>
                         </form>
 
-                        @*<div class="px-[12px] py-[16px] flex justify-between entry-export-container">
-                            <div class="flex items-center select-entries" id="ShowEntries-Id">
-                            </div>
-                        </div>*@
                         <div class="table-tab">
                             <div class="px-[16px] py-[12px] flex justify-between entry-export-container">
                                 <div class="flex items-center select-entries" id="ShowEntries-Id">
@@ -315,7 +312,15 @@
                                                     </div>
                                                 </div>
                                             </th>
-
+                                            <th scope="col" class="p-[12px]">
+                                                <div class="flex w-max">
+                                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Action
+                                                    <div class="relative pl-[5px]">
+                                                        <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                                        <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                                    </div>
+                                                </div>
+                                            </th>
 
                                         </tr>
                                     </thead>
@@ -352,7 +357,9 @@
                                                             @item.Points
                                                         </td>
 
-
+                                                        <td class="p-[12px]">
+                                                            <i class="las la-eye text-[20px] cursor-pointer text-[#A6A6A6]" onclick="ViewPointTransferRetriveDetail('@item.Id');"></i>
+                                                        </td>
                                                     </tr>
                                                     SN++;
                                                 }
@@ -395,7 +402,7 @@
 </div>
 @Html.Partial("_ManagePointsTransferPartialView", _ManagePointsModel)
 @Html.Partial("_ManagePointsRequestPartialView", _ManagePointsRequestModel)
-
+@Html.Partial("_PointTransferRetrivePartialView", _pointTransferDetails)
 
 @section scripts
 {
@@ -403,6 +410,11 @@
     @* <script src="~/Content/assets_new/js/jquery.min.js"></script>*@
     <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
     <script>
+        function openImage(url) {
+            var newTab = window.open();
+            newTab.document.write('<html><head><title>Image</title></head><body><img src="' + url + '"></body></html>');
+            newTab.document.close();
+        }
         $("input[name='TransferType'][value='Transfer']").prop("checked", true);
         //$(".cls_trftype").click(function () {
 
@@ -897,6 +909,10 @@ $("#To_Date1").val("@_systemTransferModel.To_Date1");
             var element = document.getElementById('add-new-points-request');
             element.classList.remove('translate-x-full');
         }
+        else if (PopUpRenderValue != null && PopUpRenderValue != "" && PopUpRenderValue == "PointTransferRetriveDetails") {
+            var element = document.getElementById('add-points-transfer-details');
+            element.classList.remove('translate-x-full');
+        }
     </script>
     <script>
         function InitateRejectRequest(AgentId, UserId, RequestId) {
@@ -968,5 +984,19 @@ $("#To_Date1").val("@_systemTransferModel.To_Date1");
                 }
             });
         }
+
+        function ViewPointTransferRetriveDetail(i) {
+         let search_filter = $('#default-search').val();
+         const start_index_val = @ViewBag.StartIndex;
+            const page_size = @ViewBag.PageSize;
+
+            const roletype = $('#large[name="UserType"]').val();
+            const userId = $('#large[name="UserName"]').val();
+            const transferType = $('#large[name="TransferTypeId"]').val();
+            const fromDate = $('#FromDate').val();
+            const toDate = $('#ToDate').val();
+            window.location.href = '/PointsManagement/PointsTransferListDetails?Id=' + i + '&SearchFilter=' + search_filter + '&StartIndex=' + start_index_val + '&PageSize=' + page_size + '&Roletype=' + roletype + '&UserId=' + userId + '&TransferType=' + transferType + '&FromDate=' + fromDate + '&ToDate=' + toDate;
+        }
+
     </script>
 }

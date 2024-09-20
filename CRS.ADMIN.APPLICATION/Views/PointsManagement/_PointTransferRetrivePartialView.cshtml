@@ -1,0 +1,148 @@
+@model CRS.ADMIN.APPLICATION.Models.PointsManagement.PointsTansferRetriveDetailsModel
+@{
+    string Image = System.IO.Path.GetExtension(Model.Image);
+    
+}
+<style>
+    .imagetextfield {
+        color: var(--link, #839AD6);
+        font-family: "Noto Sans";
+        font-size: 10px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: normal;
+        text-decoration-line: underline;
+    }
+</style>
+<div id="add-points-transfer-details"
+     class="drawer-close-disable  flex justify-end fixed top-0 right-0 z-40 h-screen overflow-y-auto transition-transform translate-x-full"
+     tabindex="-1" aria-labelledby="add-points-transfer-details" aria-modal="true" role="dialog">
+    <div class="bg-white w-[616px] drawer-container relative">
+        <div class="drawer-form-container sticky top-0 z-[5] ">
+            <div class="drawer-form flex justify-between bg-secondary-color-pink py-[16px] px-[24px] h-[56px]">
+                <div>
+                    @CRS.ADMIN.APPLICATION.Resources.Resource.Points_Transfer
+                </div>
+                <button type="button" data-drawer-hide="add-points-transfer-details" aria-controls="add-points-transfer-details"
+                        class="text-[20px]">
+                    <i class="las la-window-close text-white" onclick="CancelFunction()"></i>
+                </button>
+            </div>
+        </div>
+        <div class="p-[24px]">
+
+            <div class="my-5">             
+
+                <div class="pt-4 px-8">
+
+                    <div class="flex gap-1">
+                        @*<div class="border border-[#D75A8B] w-[1px] ">
+                        </div>*@
+
+                        @*<div class="text-[#D75A8B] font-[600] text-[16px]">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Club_Info
+                        </div>*@
+                    </div>
+
+                    <div class="grid  gap-2 mt-2">
+                        <div class=" grid grid-cols-2">
+                            <p class="text-[#7A7A7A] text-[14px]">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Transaction_ID :
+                            </p>
+                            <p class="text-[#3E3E3E] text-[14px] leading-[12px] font-bold" style="margin-top:4px;">
+                                @Model.TransactionId
+                            </p>
+                        </div>
+                        <div class=" grid grid-cols-2">
+                            <p class="text-[#7A7A7A] text-[14px]">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Transaction_Type :
+                            </p>
+                            <p class="text-[#3E3E3E] text-[14px] leading-[12px] font-bold" style="margin-top:4px;">
+
+                                @Model.TransactionType
+                            </p>
+                        </div>
+                        <div class=" grid grid-cols-2">
+                            <p class="text-[#7A7A7A] text-[14px]">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.User_Type:
+                            </p>
+                            <p class="text-[#3E3E3E] text-[14px] leading-[12px] font-bold" style="margin-top:4px;">
+                                @Model.UserType
+                            </p>
+                        </div>
+                        <div class=" grid grid-cols-2">
+                            <p class="text-[#7A7A7A] text-[14px]">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.From_User:
+                            </p>
+                            <p class="text-[#3E3E3E] text-[14px] leading-[12px] font-bold" style="margin-top:4px;">
+                                @Model.FromUser
+                            </p>
+                        </div>
+                        <div class=" grid grid-cols-2">
+                            <p class="text-[#7A7A7A] text-[14px]">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.To_User:
+                            </p>
+                            <p class="text-[#3E3E3E] text-[14px] leading-[12px] font-bold" style="margin-top:4px;">
+                                @Model.ToUser
+                            </p>
+                        </div>
+                        <div class=" grid grid-cols-2">
+                            <p class="text-[#7A7A7A] text-[14px]">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Points:
+                            </p>
+                            <p class="text-[#3E3E3E] text-[14px] leading-[12px] font-bold" style="margin-top:4px;">
+                                @Model.Points
+                            </p>
+                        </div>
+
+                        <div class=" grid grid-cols-2">
+                            <p class="text-[#7A7A7A] text-[14px]">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Remarks:
+                            </p>
+                            <p class="text-[#3E3E3E] text-[14px] leading-[12px] font-bold" style="margin-top:4px;">
+                                @Model.Remarks
+                            </p>
+                        </div>
+
+                        <div class=" grid grid-cols-2">
+                            <p class="text-[#7A7A7A] text-[14px]">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Image:
+                            </p>
+                            <img class="text-[#3E3E3E] h-[116px] w-[230px] text-[14px] leading-[12px] font-bold"
+                                 src="@Model.Image" />
+
+                        </div>
+                        <div class=" grid grid-cols-2">
+                            <p class="text-[#7A7A7A] text-[14px]">
+
+                            </p>
+                            <p>
+                                @if (Image == ".jpg" || Image == ".jpeg" || Image == ".png" || Image == ".gif")
+                                {
+
+                                    <a class="imagetextfield" href="#" onclick="openImage('@Model.Image'); return false;">
+                                        View
+                                    </a>
+                                }
+
+                                <a class="imagetextfield" style="padding-left: 7px;"
+                                   href="@Model.Image" download="">
+                                    Download
+                                </a>
+                            </p>
+                        </div>
+
+                    </div>
+
+             
+                </div>
+
+
+                <!-- third section -->
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
