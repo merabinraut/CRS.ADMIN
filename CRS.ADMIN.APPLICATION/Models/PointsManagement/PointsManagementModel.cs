@@ -98,8 +98,9 @@ namespace CRS.ADMIN.APPLICATION.Models.PointsManagement
 
     public class PointRequestsListModel
     {
-        public string AgentId { get; set; }
-        public string UserId { get; set; }
+        //public string AgentId { get; set; }
+        //public string UserId { get; set; }
+        public string Id { get; set; }
         public string RequestId { get; set; }
         public string RequestedDate { get; set; }
         public string ClubName { get; set; }

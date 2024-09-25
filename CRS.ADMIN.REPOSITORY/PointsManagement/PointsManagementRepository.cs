@@ -81,14 +81,16 @@ namespace CRS.ADMIN.REPOSITORY.PointsManagement
         public List<PointRequestListCommon> GetPointRequestList(PointRequestListFilterCommon request)
         {
             var response = new List<PointRequestListCommon>();
-            string SQL = "EXEC sproc_club_to_admin_payment_transaction_list";
+            //string SQL = "EXEC sproc_club_to_admin_payment_transaction_list";
+            string SQL = "EXEC sproc_admin_payment_transaction_list";
             SQL += !string.IsNullOrEmpty(request.SearchFilter) ? " @SearchFilter=N" + _DAO.FilterString(request.SearchFilter) : " @SearchFilter= ''";
             SQL += !string.IsNullOrEmpty(request.ClubName) ? ",@ClubName=N" + _DAO.FilterString(request.ClubName) : string.Empty;
             SQL += !string.IsNullOrEmpty(request.PaymentMethodId) ? ",@TxnType=" + _DAO.FilterString(request.PaymentMethodId) : string.Empty;
             SQL += !string.IsNullOrEmpty(request.FromDate) ? ",@FromDate=" + _DAO.FilterString(request.FromDate) : string.Empty;
             SQL += !string.IsNullOrEmpty(request.ToDate) ? ",@ToDate=" + _DAO.FilterString(request.ToDate) : string.Empty;
+            SQL += ",@Skip=" + request.Skip;           
             SQL += !string.IsNullOrEmpty(request.LocationId) ? ",@LocationId=" + _DAO.FilterString(request.LocationId) : string.Empty;
-            SQL += ",@Skip=" + request.Skip;
+
             SQL += ",@Take=" + request.Take;
             var dbResponse = _DAO.ExecuteDataTable(SQL);
             if (dbResponse != null)
@@ -98,16 +100,15 @@ namespace CRS.ADMIN.REPOSITORY.PointsManagement
 
         public CommonDbResponse ManageClubPointRequest(ManageClubPointRequestCommon request)
         {
-            string SQL = "EXEC sproc_admin_manage_club_to_admin_payment_transaction ";
-            SQL += "@AgentId=" + _DAO.FilterString(request.AgentId);
-            SQL += ",@UserId=" + _DAO.FilterString(request.UserId);
-            SQL += ",@TxnId=" + _DAO.FilterString(request.TxnId);
-            SQL += ",@Status=" + _DAO.FilterString(request.Status);
-            SQL += ",@AdminRemark=N" + _DAO.FilterString(request.AdminRemark);
-            SQL += ",@ImageURL=" + _DAO.FilterString(request.ImageURL);
-            SQL += ",@ActionUser=" + _DAO.FilterString(request.ActionUser);
-            SQL += ",@ActionIP=" + _DAO.FilterString(request.ActionIP);
-            SQL += ",@ActionPlatform=" + _DAO.FilterString(request.ActionPlatform);
+            string SQL = "EXEC sproc_admin_point_request_approvalrejection ";
+            //SQL += "@AgentId=" + _DAO.FilterString(request.AgentId);
+            //SQL += ",@UserId=" + _DAO.FilterString(request.UserId);
+            SQL += " @sno=" + _DAO.FilterString(request.Id);
+            SQL += ",@status=" + _DAO.FilterString(request.Status);
+            SQL += ",@remark=N" + _DAO.FilterString(request.AdminRemark);
+            SQL += ",@image=" + _DAO.FilterString(request.ImageURL);
+            SQL += ",@actionUser=" + _DAO.FilterString(request.ActionUser);
+            SQL += ",@actionIP=" + _DAO.FilterString(request.ActionIP);
             return _DAO.ParseCommonDbResponse(SQL);
         }
 

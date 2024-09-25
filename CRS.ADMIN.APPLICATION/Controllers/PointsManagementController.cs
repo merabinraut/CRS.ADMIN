@@ -143,7 +143,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             getPointRequest.Skip = StartIndex4;
             getPointRequest.Take = PageSize4;
             var getPointRequestListDBResponse = _BUSS.GetPointRequestList(getPointRequest);
-
+           
             if (value.ToUpper() != "ST")
             {
                 SystemTransferRequestModel requestSystemTransferModel = new SystemTransferRequestModel();
@@ -188,9 +188,13 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             objPointsManagementModel.PointRequestCommonModel.PointRequestsListModel = getPointRequestListDBResponse.MapObjects<PointRequestsListModel>();
             objPointsManagementModel.PointRequestCommonModel.PointRequestsListModel.ForEach(x =>
             {
-                x.AgentId = x?.AgentId?.EncryptParameter();
-                x.UserId = x?.UserId?.EncryptParameter();
+                x.Id = x?.Id?.EncryptParameter();
             });
+            //objPointsManagementModel.PointRequestCommonModel.PointRequestsListModel.ForEach(x =>
+            //{
+            //    x.AgentId = x?.AgentId?.EncryptParameter();
+            //    x.UserId = x?.UserId?.EncryptParameter();
+            //});
             ViewBag.TotalData4 = objPointsManagementModel?.PointRequestCommonModel?.PointRequestsListModel.Count > 0 ? objPointsManagementModel?.PointRequestCommonModel?.PointRequestsListModel?.FirstOrDefault().RowsTotal ?? "0" : "0";
             return View(objPointsManagementModel);
         }
@@ -367,7 +371,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                     return RedirectToAction("PointsTransferList", "PointsManagement");
                 }
                 else
-                {
+                { 
                     this.AddNotificationMessage(new NotificationModel()
                     {
                         NotificationType = NotificationMessage.INFORMATION,
@@ -389,12 +393,10 @@ namespace CRS.ADMIN.APPLICATION.Controllers
         public async Task<JsonResult> ManageClubPointRequest(ManageClubPointRequestModel request, HttpPostedFileBase Image)
         {
             var dbRequest = request.MapObject<ManageClubPointRequestCommon>();
-            dbRequest.AgentId = dbRequest?.AgentId?.DecryptParameter() ?? string.Empty;
-            dbRequest.UserId = dbRequest?.UserId?.DecryptParameter() ?? string.Empty;
-            if (string.IsNullOrEmpty(dbRequest.AgentId) ||
-                string.IsNullOrEmpty(dbRequest.UserId) ||
-                string.IsNullOrEmpty(dbRequest.TxnId))
-            {
+            dbRequest.Id = request.Id.DecryptParameter();
+            if (
+                string.IsNullOrEmpty(dbRequest.Id))
+              {
                 this.AddNotificationMessage(new NotificationModel()
                 {
                     NotificationType = NotificationMessage.INFORMATION,
@@ -402,8 +404,8 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                     Title = NotificationMessage.INFORMATION.ToString(),
                 });
                 return Json("Invalid request", JsonRequestBehavior.AllowGet);
-            }
-            if (dbRequest.Status.Trim().ToUpper() == "S" && Image == null)
+             }
+            if (dbRequest.Status.Trim().ToUpper() == "APPROVE" && Image == null)
             {
                 this.AddNotificationMessage(new NotificationModel()
                 {

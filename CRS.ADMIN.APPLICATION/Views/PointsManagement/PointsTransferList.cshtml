@@ -566,7 +566,7 @@
             });
 
         document.addEventListener('DOMContentLoaded', function () {
-
+            debugger;
             if ($("#ListType").val().toLowerCase() == "pbs") {
                 changeTab('pointsbalance', 'tab2Link')
                 const page_size2 = @ViewBag.PageSize2;
@@ -738,7 +738,19 @@
                $.datepicker.setDefaults($.datepicker.regional['ja']);
                $("#FromDate4").datepicker({
                maxDate: new Date(),
-               defaultDate: '@_PointRequestCommonModel.FromDate'
+                   defaultDate: '@_PointRequestCommonModel.FromDate',
+                    onSelect: function (selectedDate) {
+                       var fromDate = $(this).datepicker('getDate');
+                       var toDate = $("#ToDate4").datepicker('getDate');
+                       $("#ToDate4").datepicker("option", "minDate", selectedDate);
+                       if (toDate === null || (toDate && fromDate > toDate)) {
+                           var today = $.datepicker.formatDate('yy/mm/dd', new Date());
+                           $("#ToDate4").val(today);
+
+                       }
+
+
+                   }
                });
                });
 
@@ -857,7 +869,8 @@
    $.datepicker.setDefaults($.datepicker.regional['ja']);
    $("#From_Date1").datepicker({
    maxDate: new Date(),
-   defaultDate: '@_systemTransferModel.From_Date1'
+       defaultDate: '@_systemTransferModel.From_Date1',
+
    });
    });
 
@@ -915,16 +928,12 @@ $("#To_Date1").val("@_systemTransferModel.To_Date1");
         }
     </script>
     <script>
-        function InitateRejectRequest(AgentId, UserId, RequestId) {
-            $('#RejectAgentId').val(AgentId);
-            $('#RejectUserId').val(UserId);
-            $('#RejectTxnId').val(RequestId);
+        function InitateRejectRequest(Id) {
+            $('#RejectId').val(Id);
         }
 
-        function InitateApproveRequest(AgentId, UserId, RequestId) {
-            $('#ConfirmationAgentId').val(AgentId);
-            $('#ConfirmationUserId').val(UserId);
-            $('#ConfirmationTxnId').val(RequestId);
+        function InitateApproveRequest( Id) {          
+            $('#ConfirmationId').val(Id);
         }
 
         function ApproveClubPointRequestFunction() {
@@ -932,18 +941,15 @@ $("#To_Date1").val("@_systemTransferModel.To_Date1");
             var file = fileInput.files[0];
             var formData = new FormData();
             formData.append('Image', file);
-            let { AgentId, UserId, TxnId, AdminRemark } = {
-                AgentId: $('#ConfirmationAgentId').val(),
-                UserId: $('#ConfirmationUserId').val(),
-                TxnId: $('#ConfirmationTxnId').val(),
+            let {  Id, AdminRemark } = {
+                               
+                Id: $('#ConfirmationId').val(),
                 AdminRemark: $('#ConfirmationAdminRemark').val()
             };
-            formData.append('__RequestVerificationToken', $('input[name="__RequestVerificationToken"]').val());
-            formData.append('AgentId', AgentId);
-            formData.append('UserId', UserId);
-            formData.append('TxnId', TxnId);
+            formData.append('__RequestVerificationToken', $('input[name="__RequestVerificationToken"]').val());                      
+            formData.append('Id', Id);
             formData.append('AdminRemark', AdminRemark);
-            formData.append('Status', 'S');
+            formData.append('Status', 'Approve');
             $.ajax({
                 type: 'POST',
                 async: true,
@@ -961,10 +967,8 @@ $("#To_Date1").val("@_systemTransferModel.To_Date1");
         }
 
         function RejectClubPointRequestFunction() {
-            let { AgentId, UserId, TxnId, AdminRemark } = {
-                AgentId: $('#RejectAgentId').val(),
-                UserId: $('#RejectUserId').val(),
-                TxnId: $('#RejectTxnId').val(),
+            let { Id,AdminRemark } = {
+                Id: $('#RejectId').val(),
                 AdminRemark: $('#RejectAdminRemark').val(),
             };
 
@@ -974,7 +978,7 @@ $("#To_Date1").val("@_systemTransferModel.To_Date1");
                 url: "/PointsManagement/ManageClubPointRequest",
                 dataType: 'json',
                 data: {
-                    __RequestVerificationToken: $('input[name="__RequestVerificationToken"]').val(), AgentId, UserId, TxnId, AdminRemark, Status: 'R'
+                    __RequestVerificationToken: $('input[name="__RequestVerificationToken"]').val(), Id,  AdminRemark, Status: 'Reject'
                 },
                 success: function (responseData) {
                     window.location.reload();
