@@ -75,7 +75,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             }
             else
             {
-                var respDb = _buss.GetHostIdentityDetail(ResponseModel.ManageHostModel.AgentId.DecryptParameter(), ResponseModel.ManageHostModel.HostId.DecryptParameter());
+                var respDb = _buss.GetHostIdentityDetail(ResponseModel.ManageHostModel.AgentId.DecryptParameter(), ResponseModel.ManageHostModel.HostId?.DecryptParameter());
                 ResponseModel.ManageHostModel.HostIdentityDataModel = respDb.MapObjects<HostIdentityDataModel>();// model = dbResponse.MapObject<ManageHostModel>();
                 ResponseModel.ManageHostModel.HostIdentityDataModel.ForEach(x => x.IdentityLabel = (!string.IsNullOrEmpty(culture) && culture == "en") ? x.IdentityLabelEnglish : x.IdentityLabelJapanese);
                 ResponseModel.ManageHostModel.HostIdentityDataModel.ForEach(x => x.IdentityType = x.IdentityType.EncryptParameter());
