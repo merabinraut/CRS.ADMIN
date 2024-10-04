@@ -490,7 +490,6 @@
         }
 
       function openBlockEventModal(agentid) {
-      debugger;
       const modalTarget = document.querySelector("[data-modal-target='block-confirmation']");
       const modal = document.getElementById("block-confirmation");
       modal.classList.remove("hidden");
@@ -499,17 +498,16 @@
       modal.setAttribute("aria-hidden", "false");
      }
      function openUnBlockEventModal(agentid) {
-      debugger;
      const modalTarget = document.querySelector("[data-modal-target='unblock-confirmation']");
       const modal = document.getElementById("unblock-confirmation");
       modal.classList.remove("hidden");
-         $('#unblock_id').attr('data-val1', agentid);
+      $('#unblock_id').attr('data-val1', agentid);
       $('#unblock_id').attr('data-val2', 'A');
       modal.setAttribute("aria-hidden", "false");
      }
     function BlockEvent() {
-        const id = $('#block_id').attr('data-val1');
-        const Status = $('#block_id').attr('data-val2');
+     const id = $('#block_id').attr('data-val1');
+     const Status = $('#block_id').attr('data-val2');
      var RequestVerificationToken = $('input[name="__RequestVerificationToken"]').val();
      let search_filter = $('#default-search').val();
      const start_index_val = @ViewBag.StartIndex;
@@ -531,8 +529,8 @@
       })
         }
     function UnBlockEvent() {
-        const id = $('#unblock_id').attr('data-val1');
-        const Status = $('#unblock_id').attr('data-val2');
+    const id = $('#unblock_id').attr('data-val1');
+    const Status = $('#unblock_id').attr('data-val2');
     var RequestVerificationToken = $('input[name="__RequestVerificationToken"]').val();
     let search_filter = $('#default-search').val();
     const start_index_val = @ViewBag.StartIndex;

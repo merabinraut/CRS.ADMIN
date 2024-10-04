@@ -233,6 +233,7 @@
     <Compile Include="Controllers\AdminPointManagementController.cs" />
     <Compile Include="Controllers\AffiliateManagementController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\BasicClubManagementController.cs" />
     <Compile Include="Controllers\ClubManagementController.cs" />
     <Compile Include="Controllers\ClubPlanManagementController.cs" />
     <Compile Include="Controllers\CommissionManagementController.cs" />
@@ -280,6 +281,7 @@
     <Compile Include="Models\AdminPointManagement\AdminPointManagementModel.cs" />
     <Compile Include="Models\AffiliateManagement\AffiliateManagementModel.cs" />
     <Compile Include="Models\AmazonConfigruationModel.cs" />
+    <Compile Include="Models\BasicClubManagement\BasicClubManagementModel.cs" />
     <Compile Include="Models\ClubManagement\ClubManagementModel.cs" />
     <Compile Include="Models\ClubManagement\ClubManagerModel.cs" />
     <Compile Include="Models\ClubManagement\EventModel.cs" />
@@ -335,6 +337,8 @@
     <Content Include="Views\ClubManagement\_ApprovedClubListPartialView.cshtml" />
     <Content Include="Views\AdminPointManagement\AdminPointList.cshtml" />
     <Content Include="Views\AdminPointManagement\_ManageAdminPointPartialView.cshtml" />
+    <Content Include="Views\BasicClubManagement\BasicClubManagementList.cshtml" />
+    <Content Include="Views\BasicClubManagement\_ManageBasicClubPartialView.cshtml" />
     <None Include="Views\ClubManagement\_RejectedClubListPartialView.cshtml" />
     <Content Include="Views\AffiliateManagement\_ConvertedCustomerPointsReport.cshtml" />
     <None Include="Views\PromotionManagement\_ManageAdvertisementPartialView.cshtml" />

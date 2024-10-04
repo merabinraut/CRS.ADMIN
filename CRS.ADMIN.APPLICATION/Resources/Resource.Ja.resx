@@ -401,6 +401,10 @@
     <value>基本</value>
     <comment>Customer Management</comment>
   </data>
+  <data name="Basic Club Management" xml:space="preserve">
+    <value>ベーシック店舗管理</value>
+    <comment>Basic Club Management</comment>
+  </data>
   <data name="Basic Info" xml:space="preserve">
     <value>基本情報</value>
     <comment>Club Management</comment>
@@ -1401,6 +1405,10 @@
   <data name="Manage user roles and their privileges" xml:space="preserve">
     <value>ロールタイプの権限と機能を管理します。</value>
     <comment>Roles &amp; Privileges</comment>
+  </data>
+  <data name="Manage your club detail information" xml:space="preserve">
+    <value>クラブの詳細情報を管理します。</value>
+    <comment>Basic Club Management</comment>
   </data>
   <data name="Manage your points detail" xml:space="preserve">
     <value>ポイントの詳細を管理してください。</value>

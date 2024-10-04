@@ -102,6 +102,8 @@
     <Compile Include="AdminPointManagement\IAdminPointManagementRepository.cs" />
     <Compile Include="AffiliateManagement\AffiliateManagementRepository.cs" />
     <Compile Include="AffiliateManagement\IAffiliateManagementRepository.cs" />
+    <Compile Include="BasicClubManagement\BasicClubManagementRepository.cs" />
+    <Compile Include="BasicClubManagement\IBasicClubManagementRepository.cs" />
     <Compile Include="ClubManagement\ClubManagementRepository.cs" />
     <Compile Include="ClubManagement\IClubManagementRepository.cs" />
     <Compile Include="ClubPlanManagement\ClubPlanManagementRepository.cs" />

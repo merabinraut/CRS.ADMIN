@@ -709,6 +709,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Basic Club Management.
+        /// </summary>
+        public static string Basic_Club_Management {
+            get {
+                return ResourceManager.GetString("Basic Club Management", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Basic Info.
         /// </summary>
         public static string Basic_Info {
@@ -2982,6 +2991,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         public static string Manage_user_roles_and_their_privileges {
             get {
                 return ResourceManager.GetString("Manage user roles and their privileges", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Manage your club detail informations..
+        /// </summary>
+        public static string Manage_your_club_detail_information {
+            get {
+                return ResourceManager.GetString("Manage your club detail information", resourceCulture);
             }
         }
         
