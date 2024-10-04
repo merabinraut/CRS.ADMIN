@@ -249,7 +249,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
         }
 
         [HttpPost, ValidateAntiForgeryToken]
-        public JsonResult BlockClub(string AgentId )
+        public JsonResult DeleteClub(string AgentId )
         {
             var response = new CommonDbResponse();
             var aId = !string.IsNullOrEmpty(AgentId) ? AgentId.DecryptParameter() : null;
@@ -278,9 +278,38 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             });
             return Json(dbResponse.Message, JsonRequestBehavior.AllowGet);
         }
-
         [HttpPost, ValidateAntiForgeryToken]
-        public ActionResult UnBlockClub(string AgentId)
+        public JsonResult BlockClub(string AgentId)
+        {
+            var response = new CommonDbResponse();
+            var aId = !string.IsNullOrEmpty(AgentId) ? AgentId.DecryptParameter() : null;
+            if (string.IsNullOrEmpty(aId))
+            {
+                this.AddNotificationMessage(new NotificationModel()
+                {
+                    NotificationType = NotificationMessage.INFORMATION,
+                    Message = "Invalid details",
+                    Title = NotificationMessage.INFORMATION.ToString(),
+                });
+            }
+            var commonRequest = new Common()
+            {
+                ActionIP = ApplicationUtilities.GetIP(),
+                ActionUser = ApplicationUtilities.GetSessionValue("Username").ToString()
+            };
+            string status = "B";
+            var dbResponse = _BUSS.ManageClubStatus(aId, status, commonRequest);
+            response = dbResponse;
+            this.AddNotificationMessage(new NotificationModel()
+            {
+                NotificationType = response.Code == ResponseCode.Success ? NotificationMessage.SUCCESS : NotificationMessage.INFORMATION,
+                Message = response.Message ?? "Something went wrong. Please try again later",
+                Title = response.Code == ResponseCode.Success ? NotificationMessage.SUCCESS.ToString() : NotificationMessage.INFORMATION.ToString()
+            });
+            return Json(dbResponse.Message, JsonRequestBehavior.AllowGet);
+        }
+        [HttpPost, ValidateAntiForgeryToken]
+        public ActionResult UnBlockClub(string AgentId,string status)
         {
             var response = new CommonDbResponse();
             var aId = !string.IsNullOrEmpty(AgentId) ? AgentId.DecryptParameter() : null;
@@ -289,8 +318,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             {
                 ActionIP = ApplicationUtilities.GetIP(),
                 ActionUser = ApplicationUtilities.GetSessionValue("Username").ToString()
-            };
-            string status = "A";
+            };            
             var dbResponse = _BUSS.ManageClubStatus(aId, status, commonRequest);
             response = dbResponse;
             return Json(response.SetMessageInTempData(this));

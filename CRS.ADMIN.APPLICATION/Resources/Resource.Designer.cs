@@ -547,6 +547,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to block this club?.
+        /// </summary>
+        public static string Are_you_sure_you_want_to_block_this_club {
+            get {
+                return ResourceManager.GetString("Are you sure you want to block this club", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Are you sure you want to change the language.
         /// </summary>
         public static string Are_you_sure_you_want_to_change_the_language {
@@ -561,6 +570,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         public static string Are_you_sure_you_want_to_delete_this_club {
             get {
                 return ResourceManager.GetString("Are you sure you want to delete this club", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to unblock this club?.
+        /// </summary>
+        public static string Are_you_sure_you_want_to_unblock_this_club {
+            get {
+                return ResourceManager.GetString("Are you sure you want to unblock this club", resourceCulture);
             }
         }
         
