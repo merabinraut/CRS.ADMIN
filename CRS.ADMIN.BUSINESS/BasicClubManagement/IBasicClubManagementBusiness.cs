@@ -13,6 +13,7 @@ namespace CRS.ADMIN.BUSINESS.BasicClubManagement
     {
         List<BasicClubManagementCommon> GetBasicClubList(PaginationFilterCommon Request);
         CommonDbResponse ManageBasicClub(ManageBasicClubCommon Request);
+        ManageBasicClubCommon GetBasicClubDetails(string AgentId, String culture = "");
         CommonDbResponse ManageBasicClubStatus(string AgentId, string Status, Common Request);
     }
 }

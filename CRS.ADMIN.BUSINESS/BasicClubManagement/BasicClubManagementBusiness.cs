@@ -27,6 +27,10 @@ namespace CRS.ADMIN.BUSINESS.BasicClubManagement
         {
             return _REPO.ManageBasicClub(Request);
         }
+        public ManageBasicClubCommon GetBasicClubDetails(string AgentId, String culture = "")
+        {
+            return _REPO.GetBasicClubDetails(AgentId, culture);
+        }
         public CommonDbResponse ManageBasicClubStatus(string AgentId, string Status, Common Request)
         {
             return _REPO.ManageBasicClubStatus(AgentId, Status, Request);

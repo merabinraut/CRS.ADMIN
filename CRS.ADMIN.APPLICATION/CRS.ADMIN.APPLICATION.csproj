@@ -332,6 +332,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resource.Ja.resx</DependentUpon>
     </Compile>
+    <None Include="Views\BasicClubManagement\_PremiumClubtPartialView.cshtml" />
     <Content Include="Content\assets_new\images\hoslog-balance.svg" />
     <Content Include="Views\ClubManagement\_PendingClubListPartialView.cshtml" />
     <Content Include="Views\ClubManagement\_ApprovedClubListPartialView.cshtml" />

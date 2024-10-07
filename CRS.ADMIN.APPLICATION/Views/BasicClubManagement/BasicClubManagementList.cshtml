@@ -182,7 +182,7 @@
                                         </td>
                                         <td class="p-[12px]">
                                             <div class="flex gap-[7px]">
-                                                <i class="las la-edit text-[20px] cursor-pointer text-[#A6A6A6]" onclick="ManageClubGetDetailsFunction('@item.AgentId');"></i>
+                                                <i class="las la-edit text-[20px] cursor-pointer text-[#A6A6A6]" onclick="ManageBasicClubDetailsFunction('@item.AgentId');"></i>
                                                 @if (!string.IsNullOrEmpty(@item.Status) && @item.Status.ToUpper() == "A")
                                                 {
                                                     <div onclick="openBlockEventModal('@item.AgentId')" data-modal-target="block-confirmation" data-modal-toggle="block-confirmation">
@@ -342,22 +342,33 @@
 <!-- block and unblock -->
 @Html.Partial("_ManageBasicClubPartialView", _ManageClubModel)
 <script>
-     document.addEventListener('DOMContentLoaded', function () {
-         const page_size = @ViewBag.PageSize;
-         const total_data = @ViewBag.TotalData;
-         const start_index_val = @ViewBag.StartIndex;
-         let URL = "/BasicClubManagement/BasicClubManagementList";
-         let search_filter = $('#default-search').val();
-         URL = addQueryParam(URL, 'SearchFilter', search_filter);
-         LoadPagination(page_size, total_data, start_index_val, URL);
+
+
+
+    document.addEventListener('DOMContentLoaded', function () {
+
+        const page_size = @ViewBag.PageSize;
+        const total_data = @ViewBag.TotalData;
+        const start_index_val = @ViewBag.StartIndex;
+        let URL = "/BasicClubManagement/BasicClubManagementList";
+        let search_filter = $('#default-search').val();
+        URL = addQueryParam(URL, 'SearchFilter', search_filter);
+        LoadPagination(page_size, total_data, start_index_val, URL);
 
         var PopUpRenderValue = '@ViewBag.PopUpRenderValue';
         if (PopUpRenderValue != null && PopUpRenderValue != "" && PopUpRenderValue == "Manage") {
-             var element = document.getElementById('add-new-basic-club');
-             element.classList.remove('translate-x-full');
-         }
+            var element = document.getElementById('add-new-basic-club');
+            element.classList.remove('translate-x-full');
+        }
+    });
 
-
+    function ManageBasicClubDetailsFunction(i)
+       {
+          let search_filter = $('#default-search').val();
+          const start_index_val = @ViewBag.StartIndex;
+          const page_size = @ViewBag.PageSize;
+            window.location.href = '/BasicClubManagement/ManageBasicClub?AgentId=' + i + '&SearchFilter=' + search_filter + '&StartIndex=' + start_index_val + '&PageSize=' + page_size;;
+        }
         function openDeleteClubModal(agentid)
         {
             const modalTarget = document.querySelector("[data-modal-target='delete-basicclub-confirmation']");
@@ -366,14 +377,14 @@
            $('#delete_club_id').attr('data-val', agentid);
            modal.setAttribute("aria-hidden", "false");
         }
-        
+
         function DeleteFunction() {
             const id = $('#delete_club_id').attr('data-val');
             var RequestVerificationToken = $('input[name="__RequestVerificationToken"]').val();
             let search_filter = $('#default-search').val();
             const start_index_val = @ViewBag.StartIndex;
             const page_size = @ViewBag.PageSize;
-        
+
             $.ajax({
                  type: "POST",
                  url: '@Url.Action("DeleteBasicClub", "BasicClubManagement")',
@@ -387,7 +398,7 @@
                  }
              })
             }
-        
+
          function openBlockEventModal(agentid) {
          const modalTarget = document.querySelector("[data-modal-target='block-basicclub-confirmation']");
          const modal = document.getElementById("block-basicclub-confirmation");
@@ -411,7 +422,7 @@
          let search_filter = $('#default-search').val();
          const start_index_val = @ViewBag.StartIndex;
          const page_size = @ViewBag.PageSize;
-        
+
          $.ajax({
               type: "POST",
               url: '@Url.Action("BlockBasicClub", "BasicClubManagement")',
@@ -423,7 +434,8 @@
              error: function (error) {
                  window.location.href = '/BasicClubManagement/BasicClubManagementList?SearchFilter=' + search_filter + '&StartIndex=' + start_index_val + '&PageSize=' + page_size;
               }
-          })
+         })
+
             }
         function UnBlockEvent() {
         const id = $('#unblock_id').attr('data-val1');
@@ -432,7 +444,7 @@
         let search_filter = $('#default-search').val();
         const start_index_val = @ViewBag.StartIndex;
         const page_size = @ViewBag.PageSize;
-        
+
         $.ajax({
              type: "POST",
              url: '@Url.Action("UnBlockBasicClub", "BasicClubManagement")',
@@ -446,4 +458,19 @@
              }
          })
         }
+        var commaSeparatedString = "";
+        $(document).ready(function () {
+            $('#submit-button-basic-id').click(function () {
+                debugger;
+                commaSeparatedString = [];
+                var items = [];
+                $('#large[name="holiday"] option:selected').each(function () {
+                    items.push($(this).val());
+                });
+                commaSeparatedString = items.join(', ');
+                $('input[name="HolidayStr"]').val(commaSeparatedString);
+                $('#ManageBasicClubForm').submit(); // Submit the form
+            });
+        });
+
 </script>

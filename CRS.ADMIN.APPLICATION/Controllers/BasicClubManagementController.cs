@@ -44,7 +44,14 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             };
             if (TempData.ContainsKey("ManageBasicClub")) objBasicClubManagementModel.ManageBasicClub = TempData["ManageBasicClub"] as ManageBasicClubModel;
             else objBasicClubManagementModel.ManageBasicClub = new ManageBasicClubModel();
+            if (TempData.ContainsKey("RenderId")) RenderId = TempData["RenderId"].ToString();
             var dbResponse = _buss.GetBasicClubList(dbRequest);
+            objBasicClubManagementModel.BasicClubList = dbResponse.MapObjects<BasicClubListModel>();
+            foreach (var item in objBasicClubManagementModel.BasicClubList)
+            {
+                item.AgentId = item.AgentId?.EncryptParameter();
+                item.ClubLogo = ImageHelper.ProcessedImage(item.ClubLogo);
+            }
             ViewBag.StartIndex = StartIndex;
             ViewBag.PageSize = PageSize;
             ViewBag.TotalData = dbResponse != null && dbResponse.Any() ? dbResponse[0].TotalRecords : 0;
@@ -55,9 +62,9 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             ViewBag.LocationDDLList = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("LOCATIONDDLPREFECTURE", "", culture) as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---");
             ViewBag.LocationIdKey = objBasicClubManagementModel.ManageBasicClub.LocationDDL;
             objBasicClubManagementModel.SearchFilter = !string.IsNullOrEmpty(SearchFilter) ? SearchFilter : null;
+            ViewBag.PopUpRenderValue = !string.IsNullOrEmpty(RenderId) ? RenderId : null;
             return View(objBasicClubManagementModel);
         }
-
 
         [HttpPost, ValidateAntiForgeryToken]
         public async Task<ActionResult> ManageBasicClub(ManageBasicClubModel Model, HttpPostedFileBase Logo_Certificate, HttpPostedFileBase CoverPhoto_Certificate,   string LocationDDL, string BusinessTypeDDL)
@@ -66,12 +73,12 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             string[] array = Model.HolidayStr;
             string commaSeparatedString = string.Join(", ", array);
             List<string> holidayList = commaSeparatedString.Split(new[] { ", " }, StringSplitOptions.RemoveEmptyEntries).ToList();
-            ActionResult redirectresult = null;           
+            ActionResult redirectresult = null;
             redirectresult = RedirectToAction("BasicClubManagementList", "BasicClubManagement", new
-            {                    
+            {
                 SearchFilter = Model.SearchFilter,
                 StartIndex = Model.StartIndex,
-                PageSize = Model.PageSize
+                PageSize = Model.PageSize == 0 ? 10 : Model.PageSize
             });
             
             foreach (var holiday in holidayList)
@@ -110,11 +117,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                             ErrorMessage = "Logo required";
                             allowRedirect = true;
                         }
-                        else if (CoverPhoto_Certificate == null && string.IsNullOrEmpty(Model.CoverPhoto))
-                        {
-                            ErrorMessage = "Cover photo required";
-                            allowRedirect = true;
-                        }
+                      
 
                     }
                                         
@@ -253,6 +256,60 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             return redirectresult;
         }
 
+        [HttpGet]
+        public ActionResult ManageBasicClub(string AgentId = "")
+        {
+            var culture = Request.Cookies["culture"]?.Value;
+            culture = string.IsNullOrEmpty(culture) ? "ja" : culture;
+
+            ManageBasicClubModel model = new ManageBasicClubModel();            
+            if (!string.IsNullOrEmpty(AgentId))
+            {
+                var id = AgentId.DecryptParameter();
+                if (string.IsNullOrEmpty(id))
+                {
+                    this.AddNotificationMessage(new NotificationModel()
+                    {
+                        NotificationType = NotificationMessage.INFORMATION,
+                        Message = "Invalid club details",
+                        Title = NotificationMessage.INFORMATION.ToString(),
+                    });
+                    return RedirectToAction("BasicClubManagementList", "BasicClubManagement");
+                }              
+                var dbResponse = _buss.GetBasicClubDetails(id, culture);
+                model = dbResponse.MapObject<ManageBasicClubModel>();
+                //ViewBag.CountryCodeDDLKey = model.LandLineCode;
+                model.AgentId = model.AgentId.EncryptParameter();
+
+                model.LocationDDL = !string.IsNullOrEmpty(model.LocationId) ? model.LocationId.EncryptParameter() : null;
+                model.Prefecture = !string.IsNullOrEmpty(model.Prefecture) ? model.Prefecture.EncryptParameter() : null;
+                string holidays = "";
+                string[] array = model.Holiday.Split(','); ;
+                string commaSeparatedString = string.Join(", ", array);
+                List<string> holidayList = commaSeparatedString.Split(new[] { ", " }, StringSplitOptions.RemoveEmptyEntries).ToList();
+                foreach (var holiday in holidayList)
+                {
+                    var item = holiday.EncryptParameter();
+                    if (string.IsNullOrEmpty(holidays))
+                    {
+                        holidays = item.Trim();
+                    }
+                    else
+                    {
+                        holidays = holidays + "," + item.Trim();
+                    }
+
+                }
+                model.Holiday = !string.IsNullOrEmpty(holidays) ? holidays : null;
+                model.ClosingDate = !string.IsNullOrEmpty(model.ClosingDate) ? model.ClosingDate.EncryptParameter() : null;
+            }
+
+            //TempData["ManageBasicClubModel"] = model;
+            TempData["RenderId"] = "Manage";
+            TempData["ManageBasicClub"] = model;
+
+            return RedirectToAction("BasicClubManagementList", "BasicClubManagement");
+        }
 
         [HttpPost, ValidateAntiForgeryToken]
         public JsonResult DeleteBasicClub(string AgentId)

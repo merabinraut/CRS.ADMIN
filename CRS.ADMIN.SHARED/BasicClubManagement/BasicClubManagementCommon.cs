@@ -38,6 +38,7 @@ namespace CRS.ADMIN.SHARED.BasicClubManagement
         public string Longitude { get; set; }
         public string Latitude { get; set; }
         public string Logo { get; set; }
+        public string Status { get; set; }
         public string CoverPhoto { get; set; }
         public string WebsiteLink { get; set; }
         public string TiktokLink { get; set; }

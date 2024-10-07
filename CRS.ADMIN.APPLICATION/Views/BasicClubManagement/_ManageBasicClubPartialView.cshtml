@@ -52,7 +52,7 @@
 
             <div class=" py-4 grid gap-6">
 
-                @using (Html.BeginForm("ManageClub", "ClubManagement", FormMethod.Post, new { @id = "ManageClubForm", enctype = "multipart/form-data" }))
+                @using (Html.BeginForm("ManageBasicClub", "BasicClubManagement", FormMethod.Post, new { @id = "ManageBasicClubForm", enctype = "multipart/form-data" }))
                 {
                     @Html.AntiForgeryToken()
                     if (!string.IsNullOrEmpty(Model.AgentId))
@@ -663,7 +663,20 @@
 
 
                     </div>
+                    <div class="py-4 flex justify-end">
+                        <div class="flex gap-6">
+                            <button class="btn btn-secondary rounded-[4px]" type="button" data-drawer-hide="add-new-host-tag"
+                                    aria-controls="add-new-host-tag" onclick="CancelFunction();">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Cancel
+                            </button>
+                            <button class="btn btn-primary-default rounded-[4px]" id="submit-button-basic-id"> @CRS.ADMIN.APPLICATION.Resources.Resource.Submit</button>
+
+
+                        </div>
+
+                    </div>
                 }
+
             </div>
         </div>
     </div>
