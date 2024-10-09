@@ -44,6 +44,8 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             };
             if (TempData.ContainsKey("ManageBasicClub")) objBasicClubManagementModel.ManageBasicClub = TempData["ManageBasicClub"] as ManageBasicClubModel;
             else objBasicClubManagementModel.ManageBasicClub = new ManageBasicClubModel();
+            if (TempData.ContainsKey("ManageClubModel")) objBasicClubManagementModel.ManagePremiumClub = TempData["ManageClubModel"] as ManagePremiumClubModel;
+            else objBasicClubManagementModel.ManagePremiumClub = new ManagePremiumClubModel();
             if (TempData.ContainsKey("RenderId")) RenderId = TempData["RenderId"].ToString();
             var dbResponse = _buss.GetBasicClubList(dbRequest);
             objBasicClubManagementModel.BasicClubList = dbResponse.MapObjects<BasicClubListModel>();
@@ -56,12 +58,31 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             ViewBag.PageSize = PageSize;
             ViewBag.TotalData = dbResponse != null && dbResponse.Any() ? dbResponse[0].TotalRecords : 0;
             ViewBag.ClosingDate = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("CLOSINGDATE", "", culture) as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---");
-            ViewBag.ClosingDateIdKey = objBasicClubManagementModel.ManageBasicClub.ClosingDate;
+            ViewBag.ClosingDateIdKeyBasic = objBasicClubManagementModel.ManageBasicClub.ClosingDate;
             ViewBag.Holiday = ApplicationUtilities.SetDDLValue(DDLHelper.LoadDropdownList("Holiday", "", culture) as Dictionary<string, string>, null, "");
-            ViewBag.HolidayIdKey = !string.IsNullOrEmpty(objBasicClubManagementModel.ManageBasicClub.Holiday) ? objBasicClubManagementModel.ManageBasicClub.Holiday : null;
+            ViewBag.HolidayIdKeyBasic = !string.IsNullOrEmpty(objBasicClubManagementModel.ManageBasicClub.Holiday) ? objBasicClubManagementModel.ManageBasicClub.Holiday : null;
             ViewBag.LocationDDLList = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("LOCATIONDDLPREFECTURE", "", culture) as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---");
-            ViewBag.LocationIdKey = objBasicClubManagementModel.ManageBasicClub.LocationDDL;
+            ViewBag.LocationIdKeyBasic = objBasicClubManagementModel.ManageBasicClub.LocationDDL;
             objBasicClubManagementModel.SearchFilter = !string.IsNullOrEmpty(SearchFilter) ? SearchFilter : null;
+
+
+            ViewBag.Pref = DDLHelper.LoadDropdownList("PREF") as Dictionary<string, string>;
+            ViewBag.Holiday = ApplicationUtilities.SetDDLValue(DDLHelper.LoadDropdownList("Holiday", "", culture) as Dictionary<string, string>, null, "");
+            ViewBag.IdentificationType = DDLHelper.LoadDropdownList("DOCUMENTTYPE") as Dictionary<string, string>;
+            ViewBag.IdentificationTypeIdKey = objBasicClubManagementModel.ManagePremiumClub.IdentificationType;
+            ViewBag.PopUpRenderValue = !string.IsNullOrEmpty(RenderId) ? RenderId : null;
+            ViewBag.LocationDDLList = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("LOCATIONDDLPREFECTURE", "", culture) as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---");
+            ViewBag.LocationDDLListTag = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("LOCATIONTAG", "", culture) as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---");
+            ViewBag.BusinessTypeDDL = ApplicationUtilities.SetDDLValue(DDLHelper.LoadDropdownList("BUSINESSTYPEDDL", "", culture) as Dictionary<string, string>, null, "");
+            ViewBag.RankDDL = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("RANKDDL", "", culture) as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---");
+            ViewBag.ClubStoreDDL = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("CLUBSTOREDDL", "", culture) as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---");
+            ViewBag.ClubCategoryDDL = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("CLUBCATEGORYDDL", "", culture) as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---");        
+            ViewBag.LocationIdKey = objBasicClubManagementModel.ManagePremiumClub.LocationDDL;
+            ViewBag.PrefIdKey = !string.IsNullOrEmpty(objBasicClubManagementModel.ManagePremiumClub.Prefecture) ? ViewBag.Pref[objBasicClubManagementModel.ManagePremiumClub.Prefecture] : null;
+            ViewBag.HolidayIdKey = !string.IsNullOrEmpty(objBasicClubManagementModel.ManagePremiumClub.Holiday) ? objBasicClubManagementModel.ManagePremiumClub.Holiday : null;
+            ViewBag.BusinessTypeKey = objBasicClubManagementModel.ManagePremiumClub.BusinessTypeDDL;
+            ViewBag.ClosingDate = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("CLOSINGDATE", "", culture) as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---");
+            ViewBag.ClosingDateIdKey = objBasicClubManagementModel.ManagePremiumClub.ClosingDate;
             ViewBag.PopUpRenderValue = !string.IsNullOrEmpty(RenderId) ? RenderId : null;
             return View(objBasicClubManagementModel);
         }
@@ -278,9 +299,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 }              
                 var dbResponse = _buss.GetBasicClubDetails(id, culture);
                 model = dbResponse.MapObject<ManageBasicClubModel>();
-                //ViewBag.CountryCodeDDLKey = model.LandLineCode;
                 model.AgentId = model.AgentId.EncryptParameter();
-
                 model.LocationDDL = !string.IsNullOrEmpty(model.LocationId) ? model.LocationId.EncryptParameter() : null;
                 model.Prefecture = !string.IsNullOrEmpty(model.Prefecture) ? model.Prefecture.EncryptParameter() : null;
                 string holidays = "";
@@ -303,8 +322,6 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 model.Holiday = !string.IsNullOrEmpty(holidays) ? holidays : null;
                 model.ClosingDate = !string.IsNullOrEmpty(model.ClosingDate) ? model.ClosingDate.EncryptParameter() : null;
             }
-
-            //TempData["ManageBasicClubModel"] = model;
             TempData["RenderId"] = "Manage";
             TempData["ManageBasicClub"] = model;
 
@@ -330,8 +347,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 ActionIP = ApplicationUtilities.GetIP(),
                 ActionUser = ApplicationUtilities.GetSessionValue("Username").ToString()
             };
-            string status = "D";
-            var dbResponse = _buss.ManageBasicClubStatus(aId, status, commonRequest);
+            var dbResponse = _buss.DeleteBasicClubStatus(aId,commonRequest);
             response = dbResponse;
             this.AddNotificationMessage(new NotificationModel()
             {
@@ -360,8 +376,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 ActionIP = ApplicationUtilities.GetIP(),
                 ActionUser = ApplicationUtilities.GetSessionValue("Username").ToString()
             };
-            string status = "B";
-            var dbResponse = _buss.ManageBasicClubStatus(aId, status, commonRequest);
+            var dbResponse = _buss.BlockBasicClubStatus(aId,commonRequest);
             response = dbResponse;
             this.AddNotificationMessage(new NotificationModel()
             {
@@ -372,7 +387,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             return Json(dbResponse.Message, JsonRequestBehavior.AllowGet);
         }
         [HttpPost, ValidateAntiForgeryToken]
-        public ActionResult UnBlockBasicClub(string AgentId, string status)
+        public ActionResult UnBlockBasicClub(string AgentId)
         {
             var response = new CommonDbResponse();
             var aId = !string.IsNullOrEmpty(AgentId) ? AgentId.DecryptParameter() : null;
@@ -382,10 +397,544 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 ActionIP = ApplicationUtilities.GetIP(),
                 ActionUser = ApplicationUtilities.GetSessionValue("Username").ToString()
             };
-            var dbResponse = _buss.ManageBasicClubStatus(aId, status, commonRequest);
+            var dbResponse = _buss.UnBlockBasicClubStatus(aId,commonRequest);
             response = dbResponse;
+            this.AddNotificationMessage(new NotificationModel()
+            {
+                NotificationType = response.Code == ResponseCode.Success ? NotificationMessage.SUCCESS : NotificationMessage.INFORMATION,
+                Message = response.Message ?? "Something went wrong. Please try again later",
+                Title = response.Code == ResponseCode.Success ? NotificationMessage.SUCCESS.ToString() : NotificationMessage.INFORMATION.ToString()
+            });
             return Json(response.SetMessageInTempData(this));
         }
+
+        [HttpGet]
+        public ActionResult ManageConversionBasicClub(string AgentId = "", string SearchFilter = "", int StartIndex = 0, int PageSize = 10)
+        {
+            var culture = Request.Cookies["culture"]?.Value;
+            culture = string.IsNullOrEmpty(culture) ? "ja" : culture;
+            ManagePremiumClubModel model = new ManagePremiumClubModel();
+            if (!string.IsNullOrEmpty(AgentId))
+            {
+                var id = AgentId.DecryptParameter();
+                if (string.IsNullOrEmpty(id))
+                {
+                    this.AddNotificationMessage(new NotificationModel()
+                    {
+                        NotificationType = NotificationMessage.INFORMATION,
+                        Message = "Invalid basic club details",
+                        Title = NotificationMessage.INFORMATION.ToString(),
+                    });
+                    return RedirectToAction("BasicClubManagementList", "BasicClubManagement", new { SearchFilter = SearchFilter, StartIndex = StartIndex, PageSize = PageSize });
+                }
+                model.SearchFilter = SearchFilter;
+                model.StartIndex = StartIndex;
+                model.PageSize = PageSize;
+                var dbResponse = _buss.GetBasicConversionClubDetails(id, culture);
+                model = dbResponse.MapObject<ManagePremiumClubModel>();
+                model.AgentId = model.AgentId.EncryptParameter();
+                model.LocationDDL = !string.IsNullOrEmpty(model.LocationId) ? model.LocationId.EncryptParameter() : null;
+                model.BusinessTypeDDL = !string.IsNullOrEmpty(model.BusinessType) ? model.BusinessType.EncryptParameter() : null;
+                model.Prefecture = !string.IsNullOrEmpty(model.Prefecture) ? model.Prefecture.EncryptParameter() : null;
+                model.IdentificationType = !string.IsNullOrEmpty(model.IdentificationType) ? model.IdentificationType.EncryptParameter() : null;
+                string holidays = "";
+                string[] array = model.Holiday.Split(','); ;
+                string commaSeparatedString = string.Join(", ", array);
+                List<string> holidayList = commaSeparatedString.Split(new[] { ", " }, StringSplitOptions.RemoveEmptyEntries).ToList();
+                foreach (var holiday in holidayList)
+                {
+                    var item = holiday.EncryptParameter();
+                    if (string.IsNullOrEmpty(holidays))
+                    {
+                        holidays = item.Trim();
+                    }
+                    else
+                    {
+                        holidays = holidays + "," + item.Trim();
+                    }
+
+                }
+                model.Holiday = !string.IsNullOrEmpty(holidays) ? holidays : null;
+                model.ClosingDate = !string.IsNullOrEmpty(model.ClosingDate) ? model.ClosingDate.EncryptParameter() : null;
+            }
+
+            TempData["ManageClubModel"] = model;
+            TempData["RenderId"] = "ManagePremium";
+            return RedirectToAction("BasicClubManagementList", "BasicClubManagement", new { SearchFilter = SearchFilter, StartIndex = StartIndex, PageSize = PageSize });
+        }
+
+        [HttpPost, ValidateAntiForgeryToken]
+        public async Task<ActionResult> ManageConversionBasicClub(ManagePremiumClubModel Model, HttpPostedFileBase Business_Certificate, HttpPostedFileBase Logo_Certificate, HttpPostedFileBase CoverPhoto_Certificate, HttpPostedFileBase KYCDocument_Certificate, HttpPostedFileBase KYCDocumentBack_Certificate, HttpPostedFileBase PassportPhotot_Certificate, HttpPostedFileBase InsurancePhoto_Certificate, HttpPostedFileBase CorporateRegistry_Certificate, string LocationDDL, string BusinessTypeDDL)
+        {
+            string holidays = "";
+            string[] array = Model.HolidayStr;
+            string commaSeparatedString = string.Join(", ", array);
+            List<string> holidayList = commaSeparatedString.Split(new[] { ", " }, StringSplitOptions.RemoveEmptyEntries).ToList();
+            ActionResult redirectresult = null;
+            if (!string.IsNullOrEmpty(Model.holdId))
+            {
+                redirectresult = RedirectToAction("BasicClubManagementList", "BasicClubManagement", new
+                {
+                    TabValue = "02",
+                    SearchFilter = Model.SearchFilter,
+                    StartIndex2 = Model.StartIndex,
+                    PageSize2 = Model.PageSize
+                });
+            }
+            else
+            {
+                redirectresult = RedirectToAction("BasicClubManagementList", "BasicClubManagement", new
+                {
+                    SearchFilter = Model.SearchFilter,
+                    StartIndex = Model.StartIndex,
+                    PageSize = Model.PageSize
+                });
+            }
+            foreach (var holiday in holidayList)
+            {
+                var item = holiday.DecryptParameter();
+                if (string.IsNullOrEmpty(holidays))
+                {
+                    holidays = item.Trim();
+                }
+                else
+                {
+                    holidays = holidays + "," + item.Trim();
+                }
+
+            }
+            Model.Holiday = holidays;
+            string ErrorMessage = string.Empty;
+            if (!string.IsNullOrEmpty(BusinessTypeDDL?.DecryptParameter())) ModelState.Remove("BusinessType");
+            ViewBag.PlansList = ApplicationUtilities.LoadDropdownList("CLUBPLANS") as Dictionary<string, string>;
+            ModelState.Remove("LocationURL");
+            string concatenateplanvalue = string.Empty;
+            string businessCertificatePath = "";
+            string kycDocumentPath = "";
+            string LogoPath = "";
+            string coverPhotoPath = "";
+            var allowedContentType = AllowedImageContentType();
+            string dateTime = "";
+            if (Model.BusinessTypeDDL.DecryptParameter() == "1")
+            {
+                if (string.IsNullOrEmpty(Model.Representative1_ContactName))
+                {
+                    ModelState.AddModelError("Representative1_ContactName", "Required");
+                }
+                if (string.IsNullOrEmpty(Model.Representative1_MobileNo))
+                {
+                    ModelState.AddModelError("Representative1_MobileNo", "Required");
+                }
+                if (string.IsNullOrEmpty(Model.Representative1_Email))
+                {
+                    ModelState.AddModelError("Representative1_Email", "Required");
+                }
+                if (string.IsNullOrEmpty(Model.Representative1_Furigana))
+                {
+                    ModelState.AddModelError("Representative1_Furigana", "Required");
+                }
+                if (string.IsNullOrEmpty(Model.CompanyName))
+                {
+                    ModelState.AddModelError("CompanyName", "Required");
+                }
+
+            }
+            else
+            {
+                ModelState.Remove("CompanyName");
+                ModelState.Remove("Representative1_ContactName");
+                ModelState.Remove("Representative1_MobileNo");
+                ModelState.Remove("Representative1_Email");
+                ModelState.Remove("Representative1_Furigana");
+            }
+            ModelState.Remove("LoginId");
+            if (ModelState.IsValid)
+            {
+                if
+           (
+              string.IsNullOrEmpty(Model.BusinessCertificate) ||
+              string.IsNullOrEmpty(Model.KYCDocument) ||
+              string.IsNullOrEmpty(Model.Logo) ||
+              string.IsNullOrEmpty(Model.CoverPhoto) ||
+              string.IsNullOrEmpty(Model.Gallery) ||
+              string.IsNullOrEmpty(Model.KYCDocumentBack) ||
+              string.IsNullOrEmpty(Model.PassportPhoto) ||
+              string.IsNullOrEmpty(Model.InsurancePhoto)
+           )
+                {
+                    bool allowRedirect = false;
+                    if (Business_Certificate == null || Logo_Certificate == null || CoverPhoto_Certificate == null)
+                    {
+
+
+                        if (Business_Certificate == null && string.IsNullOrEmpty(Model.BusinessCertificate))
+                        {
+                            ErrorMessage = "Business certificate required";
+
+                            allowRedirect = true;
+                        }
+                        else if (Logo_Certificate == null && string.IsNullOrEmpty(Model.Logo))
+                        {
+                            ErrorMessage = "Logo required";
+                            allowRedirect = true;
+                        }
+                        else if (CoverPhoto_Certificate == null && string.IsNullOrEmpty(Model.CoverPhoto))
+                        {
+                            ErrorMessage = "Cover photo required";
+                            allowRedirect = true;
+                        }
+
+
+                        if (Model.BusinessTypeDDL.DecryptParameter() == "1")
+                        {
+                            if (CorporateRegistry_Certificate == null && string.IsNullOrEmpty(Model.CorporateRegistryDocument))
+                            {
+                                ErrorMessage = "Corporate registry required";
+                                allowRedirect = true;
+                            }
+                        }
+
+                    }
+                    if (Model.IdentificationType.DecryptParameter() == "2")
+                    {
+                        if (PassportPhotot_Certificate == null && string.IsNullOrEmpty(Model.PassportPhoto))
+                        {
+                            ErrorMessage = "Passport photo required";
+                            allowRedirect = true;
+                        }
+                        else if (InsurancePhoto_Certificate == null && string.IsNullOrEmpty(Model.InsurancePhoto))
+                        {
+                            ErrorMessage = "Insurance card required";
+                            allowRedirect = true;
+                        }
+                    }
+                    else
+                    {
+                        if (KYCDocument_Certificate == null && string.IsNullOrEmpty(Model.KYCDocument))
+                        {
+                            ErrorMessage = "KYC front document required";
+                            allowRedirect = true;
+                        }
+                        else if (KYCDocumentBack_Certificate == null && string.IsNullOrEmpty(Model.KYCDocumentBack))
+                        {
+                            ErrorMessage = "KYC back document required";
+                            allowRedirect = true;
+                        }
+
+                    }
+                    if (allowRedirect)
+                    {
+                        this.AddNotificationMessage(new NotificationModel()
+                        {
+                            NotificationType = NotificationMessage.INFORMATION,
+                            Message = ErrorMessage ?? "Something went wrong. Please try again later.",
+                            Title = NotificationMessage.INFORMATION.ToString(),
+                        });
+                        TempData["ManageClubModel"] = Model;
+                        TempData["RenderId"] = "Manage";
+                        return redirectresult;
+                    }
+                }
+
+                bool allowRedirectfile = false;
+                string businessCertificateFileName = string.Empty;
+                if (Business_Certificate != null)
+                {
+                    var contentType = Business_Certificate.ContentType;
+                    var ext = Path.GetExtension(Business_Certificate.FileName);
+                    if (allowedContentType.Contains(contentType.ToLower()))
+                    {
+                        businessCertificateFileName = $"{AWSBucketFolderNameModel.CLUB}/BusinessCertificate_{DateTime.Now.ToString("yyyyMMddHHmmssffff")}{ext.ToLower()}";
+                        Model.BusinessCertificate = $"/{businessCertificateFileName}";
+                    }
+                    else
+                    {
+                        this.AddNotificationMessage(new NotificationModel()
+                        {
+                            NotificationType = NotificationMessage.INFORMATION,
+                            Message = "Invalid image format.",
+                            Title = NotificationMessage.INFORMATION.ToString(),
+                        });
+                        allowRedirectfile = true;
+
+                    }
+                }
+
+                string LogoFileName = string.Empty;
+                if (Logo_Certificate != null)
+                {
+                    var contentType = Logo_Certificate.ContentType;
+                    var ext = Path.GetExtension(Logo_Certificate.FileName);
+                    if (allowedContentType.Contains(contentType.ToLower()))
+                    {
+                        LogoFileName = $"{AWSBucketFolderNameModel.CLUB}/Logo_{DateTime.Now.ToString("yyyyMMddHHmmssffff")}{ext.ToLower()}";
+                        Model.Logo = $"/{LogoFileName}";
+                    }
+                    else
+                    {
+                        this.AddNotificationMessage(new NotificationModel()
+                        {
+                            NotificationType = NotificationMessage.INFORMATION,
+                            Message = "Invalid image format.",
+                            Title = NotificationMessage.INFORMATION.ToString(),
+                        });
+                        allowRedirectfile = true;
+                    }
+                }
+
+                string CoverPhotoFileName = string.Empty;
+                if (CoverPhoto_Certificate != null)
+                {
+                    var contentType = CoverPhoto_Certificate.ContentType;
+                    var ext = Path.GetExtension(CoverPhoto_Certificate.FileName);
+                    if (allowedContentType.Contains(contentType.ToLower()))
+                    {
+                        CoverPhotoFileName = $"{AWSBucketFolderNameModel.CLUB}/CoverPhoto_{DateTime.Now.ToString("yyyyMMddHHmmssffff")}{ext.ToLower()}";
+                        Model.CoverPhoto = $"/{CoverPhotoFileName}";
+                    }
+                    else
+                    {
+                        this.AddNotificationMessage(new NotificationModel()
+                        {
+                            NotificationType = NotificationMessage.INFORMATION,
+                            Message = "Invalid image format.",
+                            Title = NotificationMessage.INFORMATION.ToString(),
+                        });
+                        allowRedirectfile = true;
+
+                    }
+                }
+                string CorporateRegistryFileName = string.Empty;
+                if (CorporateRegistry_Certificate != null)
+                {
+                    var contentType = CorporateRegistry_Certificate.ContentType;
+                    var ext = Path.GetExtension(CorporateRegistry_Certificate.FileName);
+                    if (allowedContentType.Contains(contentType.ToLower()))
+                    {
+                        CorporateRegistryFileName = $"{AWSBucketFolderNameModel.CLUB}/CompanyRegistry_{DateTime.Now.ToString("yyyyMMddHHmmssffff")}{ext.ToLower()}";
+                        Model.CorporateRegistryDocument = $"/{CorporateRegistryFileName}";
+                    }
+                    else
+                    {
+                        this.AddNotificationMessage(new NotificationModel()
+                        {
+                            NotificationType = NotificationMessage.INFORMATION,
+                            Message = "Invalid image format.",
+                            Title = NotificationMessage.INFORMATION.ToString(),
+                        });
+                        allowRedirectfile = true;
+
+                    }
+                }
+
+                string KYCDocumentFileName = string.Empty;
+                string KYCDocumentBackFileName = string.Empty;
+                string PassportFileName = string.Empty;
+                string InsuranceFileName = string.Empty;
+
+                if (Model.IdentificationType.DecryptParameter() == "2")
+                {
+                    if (PassportPhotot_Certificate != null)
+                    {
+                        var contentType = PassportPhotot_Certificate.ContentType;
+                        var ext = Path.GetExtension(PassportPhotot_Certificate.FileName);
+                        if (allowedContentType.Contains(contentType.ToLower()))
+                        {
+                            PassportFileName = $"{AWSBucketFolderNameModel.CLUB}/PassportPhotot_{DateTime.Now.ToString("yyyyMMddHHmmssffff")}{ext.ToLower()}";
+                            Model.PassportPhoto = $"/{PassportFileName}";
+                        }
+                        else
+                        {
+                            this.AddNotificationMessage(new NotificationModel()
+                            {
+                                NotificationType = NotificationMessage.INFORMATION,
+                                Message = "Invalid image format.",
+                                Title = NotificationMessage.INFORMATION.ToString(),
+                            });
+                            allowRedirectfile = true;
+
+                        }
+                    }
+
+                    if (InsurancePhoto_Certificate != null)
+                    {
+                        var contentType = InsurancePhoto_Certificate.ContentType;
+                        var ext = Path.GetExtension(InsurancePhoto_Certificate.FileName);
+                        if (allowedContentType.Contains(contentType.ToLower()))
+                        {
+                            InsuranceFileName = $"{AWSBucketFolderNameModel.CLUB}/InsuranceCard_{DateTime.Now.ToString("yyyyMMddHHmmssffff")}{ext.ToLower()}";
+                            Model.InsurancePhoto = $"/{InsuranceFileName}";
+                        }
+                        else
+                        {
+                            this.AddNotificationMessage(new NotificationModel()
+                            {
+                                NotificationType = NotificationMessage.INFORMATION,
+                                Message = "Invalid image format.",
+                                Title = NotificationMessage.INFORMATION.ToString(),
+                            });
+                            allowRedirectfile = true;
+
+                        }
+                    }
+
+                }
+                else
+                {
+                    if (KYCDocument_Certificate != null)
+                    {
+                        var contentType = KYCDocument_Certificate.ContentType;
+                        var ext = Path.GetExtension(KYCDocument_Certificate.FileName);
+                        if (allowedContentType.Contains(contentType.ToLower()))
+                        {
+                            KYCDocumentFileName = $"{AWSBucketFolderNameModel.CLUB}/KYCDocument_{DateTime.Now.ToString("yyyyMMddHHmmssffff")}{ext.ToLower()}";
+                            Model.KYCDocument = $"/{KYCDocumentFileName}";
+                        }
+                        else
+                        {
+                            this.AddNotificationMessage(new NotificationModel()
+                            {
+                                NotificationType = NotificationMessage.INFORMATION,
+                                Message = "Invalid image format.",
+                                Title = NotificationMessage.INFORMATION.ToString(),
+                            });
+                            allowRedirectfile = true;
+                        }
+                    }
+
+                    if (KYCDocumentBack_Certificate != null)
+                    {
+                        var contentType = KYCDocumentBack_Certificate.ContentType;
+                        var ext = Path.GetExtension(KYCDocumentBack_Certificate.FileName);
+                        if (allowedContentType.Contains(contentType.ToLower()))
+                        {
+                            KYCDocumentBackFileName = $"{AWSBucketFolderNameModel.CLUB}/KYCDocumentBack_{DateTime.Now.ToString("yyyyMMddHHmmssffff")}{ext.ToLower()}";
+                            Model.KYCDocumentBack = $"/{KYCDocumentBackFileName}";
+                        }
+                        else
+                        {
+                            this.AddNotificationMessage(new NotificationModel()
+                            {
+                                NotificationType = NotificationMessage.INFORMATION,
+                                Message = "Invalid image format.",
+                                Title = NotificationMessage.INFORMATION.ToString(),
+                            });
+                            allowRedirectfile = true;
+
+                        }
+                    }
+                }
+                if (allowRedirectfile == true)
+                {
+                    TempData["ManageClubModel"] = Model;
+                    TempData["RenderId"] = "Manage";
+                    return redirectresult;
+                }
+
+                ManageClubCommon commonModel = Model.MapObject<ManageClubCommon>();
+                commonModel.ActionUser = ApplicationUtilities.GetSessionValue("Username").ToString();
+                commonModel.ActionIP = ApplicationUtilities.GetIP();
+                if (!string.IsNullOrEmpty(commonModel.AgentId))
+                {
+                    commonModel.AgentId = commonModel.AgentId.DecryptParameter();
+                    if (string.IsNullOrEmpty(commonModel.AgentId))
+                    {
+                        this.AddNotificationMessage(new NotificationModel()
+                        {
+                            NotificationType = NotificationMessage.INFORMATION,
+                            Message = "Invalid club details.",
+                            Title = NotificationMessage.INFORMATION.ToString(),
+                        });
+
+                        TempData["ManageClubModel"] = Model;
+                        TempData["RenderId"] = "Manage";
+                        return redirectresult;
+                    }
+                }
+                if (!string.IsNullOrEmpty(commonModel.holdId))
+                {
+                    commonModel.holdId = commonModel.holdId.DecryptParameter();
+                    if (string.IsNullOrEmpty(commonModel.holdId))
+                    {
+                        this.AddNotificationMessage(new NotificationModel()
+                        {
+                            NotificationType = NotificationMessage.INFORMATION,
+                            Message = "Invalid club details.",
+                            Title = NotificationMessage.INFORMATION.ToString(),
+                        });
+
+                        TempData["ManageClubModel"] = Model;
+                        TempData["RenderId"] = "Manage";
+                        return redirectresult;
+                    }
+                }
+                commonModel.LocationId = LocationDDL?.DecryptParameter();
+                commonModel.BusinessType = BusinessTypeDDL?.DecryptParameter();
+                commonModel.Prefecture = commonModel.Prefecture?.DecryptParameter();
+                commonModel.ClosingDate = commonModel.ClosingDate?.DecryptParameter();
+                commonModel.IdentificationType = commonModel.IdentificationType?.DecryptParameter();
+                Model.BusinessType = BusinessTypeDDL;
+                var returntype = string.Empty;
+                var dbResponse = _buss.ManageConversionClub(commonModel);
+                if (dbResponse != null && dbResponse.Code == 0)
+                {
+                    if (Business_Certificate != null) await ImageHelper.ImageUpload(businessCertificateFileName, Business_Certificate);
+                    if (Logo_Certificate != null) await ImageHelper.ImageUpload(LogoFileName, Logo_Certificate);
+                    if (CoverPhoto_Certificate != null) await ImageHelper.ImageUpload(CoverPhotoFileName, CoverPhoto_Certificate);
+                    if (commonModel.IdentificationType == "2")
+                    {
+                        if (PassportPhotot_Certificate != null) await ImageHelper.ImageUpload(PassportFileName, PassportPhotot_Certificate);
+                        if (InsurancePhoto_Certificate != null) await ImageHelper.ImageUpload(InsuranceFileName, InsurancePhoto_Certificate);
+                    }
+                    else
+                    {
+                        if (KYCDocument_Certificate != null) await ImageHelper.ImageUpload(KYCDocumentFileName, KYCDocument_Certificate);
+                        if (KYCDocumentBack_Certificate != null) await ImageHelper.ImageUpload(KYCDocumentBackFileName, KYCDocumentBack_Certificate);
+                    }
+
+                    if (commonModel.BusinessType == "1")
+                    {
+                        if (CorporateRegistry_Certificate != null) await ImageHelper.ImageUpload(CorporateRegistryFileName, CorporateRegistry_Certificate);
+                    }
+                    this.AddNotificationMessage(new NotificationModel()
+                    {
+                        NotificationType = dbResponse.Code == ResponseCode.Success ? NotificationMessage.SUCCESS : NotificationMessage.INFORMATION,
+                        Message = dbResponse.Message ?? "Failed",
+                        Title = dbResponse.Code == ResponseCode.Success ? NotificationMessage.SUCCESS.ToString() : NotificationMessage.INFORMATION.ToString()
+                    });
+                    return redirectresult;
+                }
+                else
+                {
+                    this.AddNotificationMessage(new NotificationModel()
+                    {
+                        NotificationType = NotificationMessage.INFORMATION,
+                        Message = dbResponse.Message ?? "Failed",
+                        Title = NotificationMessage.INFORMATION.ToString()
+                    });
+
+                    TempData["ManageClubModel"] = Model;
+                    TempData["RenderId"] = "Manage";
+                    return redirectresult;
+                }
+            }
+            var errorMessages = ModelState.Where(x => x.Value.Errors.Count > 0)
+                                  .SelectMany(x => x.Value.Errors.Select(e => $"{x.Key}: {e.ErrorMessage}"))
+                                  .ToList();
+
+            var notificationModels = errorMessages.Select(errorMessage => new NotificationModel
+            {
+                NotificationType = NotificationMessage.INFORMATION,
+                Message = errorMessage,
+                Title = NotificationMessage.INFORMATION.ToString(),
+            }).ToArray();
+            AddNotificationMessage(notificationModels);
+            var errors = ModelState.Where(x => x.Value.Errors.Count > 0).Select(x => new { x.Key }).ToList();
+            TempData["ManageClubModel"] = Model;
+            TempData["RenderId"] = "Manage";
+            return redirectresult;
+        }
+
 
     }
 }

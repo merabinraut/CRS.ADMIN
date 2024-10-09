@@ -72,7 +72,7 @@
                     @Html.HiddenFor(model => model.StartIndex)
                     @Html.HiddenFor(model => model.PageSize)
 
-                    <div id="content1" class="content-section " style="display: block;">
+                    <div id="contentBasic" class="content-section " style="display:block" >
                         <div class="grid gap-4 py-[10px]">
                             <div class="flex gap-2 text-primary-300 text-sm font-semibold items-center mt-[10px]">
                                 <div class="flex-none uppercase">@CRS.ADMIN.APPLICATION.Resources.Resource.Basic_Info</div>
@@ -87,6 +87,7 @@
                                     @Html.TextBoxFor(model => model.ClubName1, new
                                {
                                    @class = "w-full",
+                                   @id= "ClubName1_basic",
                                    @placeholder = CRS.ADMIN.APPLICATION.Resources.Resource.StoreName,
                                    @onkeypress = "return isAlphabetWithSpace(event)",
                                    autocomplete = "off",
@@ -104,6 +105,7 @@
                                     @Html.TextBoxFor(model => model.ClubName2, new
                                {
                                    @class = "w-full",
+                                   @id = "ClubName2_basic",
                                    @placeholder = CRS.ADMIN.APPLICATION.Resources.Resource.Furigana,
                                    @onkeypress = "return isAlphabetWithSpace(event)",
                                    autocomplete = "off",
@@ -127,6 +129,7 @@
                                     @Html.TextBoxFor(model => model.GroupName, new
                                {
                                    @class = "w-full",
+                                   @id = "GroupName_basic",
                                    @placeholder = CRS.ADMIN.APPLICATION.Resources.Resource.Group_Name_Placeholder,
                                    autocomplete = "off",
                                    @maxLength = "50"
@@ -143,14 +146,15 @@
                                     </label>
                                     <div class="w-full flex">
                                         @Html.TextBoxFor(model => model.LandlineNumber, new
-                                         {
-                                           @class = "w-full",
-                                           @placeholder = "090-6490-3254",
-                                           @onkeypress = "return isNumber(event)",
-                                           autocomplete = "off",
-                                           @maxLength = "11"
+                                   {
+                                       @class = "w-full",
+                                       @id = "LandlineNumber_basic",
+                                       @placeholder = "090-6490-3254",
+                                       @onkeypress = "return isNumber(event)",
+                                       autocomplete = "off",
+                                       @maxLength = "11"
 
-                                       })
+                                   })
                                     </div>
                                     <span class="error">
                                         @Html.ValidationMessageFor(m => m.LandlineNumber)
@@ -166,11 +170,11 @@
                                         @CRS.ADMIN.APPLICATION.Resources.Resource.Logo
                                     </label>
                                     <div class="file-upload-common">
-                                        <label for="file_input_logo" class="custom-file-upload bg-[#CC527A] w-[123px] flex-none ">
+                                        <label for="file_input_logo1" class="custom-file-upload bg-[#CC527A] w-[123px] flex-none ">
                                             <span> @CRS.ADMIN.APPLICATION.Resources.Resource.Choose_Images</span>
                                         </label>
-                                        <input id="file_input_logo" class="file-input" name="Logo_Certificate" value="@Model.Logo" type="file" style="display:none;">
-                                        <p id="file_name_logo"
+                                        <input id="file_input_logo1" class="file-input" name="Logo_Certificate" value="@Model.Logo" type="file" style="display:none;">
+                                        <p id="file_name_logo1"
                                            class="file-name w-max h-[23px] overflow-hidden pl-2 text-xs text-[#686868] leading-[25px]">
                                             @if (string.IsNullOrEmpty(Model.Logo))
                                             {
@@ -200,11 +204,11 @@
                                         @CRS.ADMIN.APPLICATION.Resources.Resource.Cover_Photo
                                     </label>
                                     <div class="file-upload-common">
-                                        <label for="file_input_cover" class="custom-file-upload bg-[#CC527A] w-[123px] flex-none ">
+                                        <label for="file_input_cover1" class="custom-file-upload bg-[#CC527A] w-[123px] flex-none ">
                                             <span>  @CRS.ADMIN.APPLICATION.Resources.Resource.Choose_Images</span>
                                         </label>
-                                        <input id="file_input_cover" class="file-input" name="CoverPhoto_Certificate" type="file" value="@Model.CoverPhoto" style="display:none;">
-                                        <p id="file_name_cover"
+                                        <input id="file_input_cover1" class="file-input" name="CoverPhoto_Certificate" type="file" value="@Model.CoverPhoto" style="display:none;">
+                                        <p id="file_name_cover1"
                                            class="file-name w-max h-[23px] overflow-hidden pl-2 text-xs text-[#686868] leading-[25px]">
                                             @if (string.IsNullOrEmpty(Model.CoverPhoto))
                                             {
@@ -247,6 +251,7 @@
                                         @Html.TextBoxFor(model => model.WorkingHrFrom, new
                                    {
                                        @class = "w-full",
+                                       @id = "WorkingHrFrom_basic",
                                        @placeholder = "HH:MM",
                                        //@onkeypress = "return isNumber(event)",
                                        autocomplete = "off",
@@ -266,10 +271,11 @@
                                         @Html.TextBoxFor(model => model.WorkingHrTo, new
                                    {
                                        @class = "w-full",
+                                       @id = "WorkingHrTo_basic",
                                        @placeholder = "HH:MM",
                                        //@onkeypress = "return isNumber(event)",
                                        autocomplete = "off",
-                                        @maxLength = "30",
+                                       @maxLength = "30",
                                        @type = "time"
                                    })
                                         <span class="error">
@@ -287,7 +293,7 @@
                                                 style="width: 100%;" multiple="multiple" placeholder="Select">
                                             @foreach (var item in ViewBag.Holiday as IEnumerable<SelectListItem>)
                                             {
-                                                var selectedId = ViewBag.HolidayIdKey as string;
+                                                var selectedId = ViewBag.HolidayIdKeyBasic as string;
                                                 string[] selectedIds = !string.IsNullOrEmpty(selectedId) ? selectedId.Split(',') : new string[0]; ;
                                                 bool isSelected = selectedIds.Contains(item.Value);
                                                 if (isSelected == true)
@@ -320,6 +326,7 @@
                                         @Html.TextBoxFor(model => model.LastOrderTime, new
                                    {
                                        @class = "w-full",
+                                       @id = "LastOrderTime_basic",
                                        @placeholder = "HH:MM",
                                        //@onkeypress = "return isNumber(event)",
                                        autocomplete = "off",
@@ -338,10 +345,11 @@
                                         @Html.TextBoxFor(model => model.LastEntryTime, new
                                    {
                                        @class = "w-full",
+                                       @id = "LastEntryTime_basic",
                                        @placeholder = "HH:MM",
                                        //@onkeypress = "return isNumber(event)",
                                        autocomplete = "off",
-                                        @maxLength = "30",
+                                       @maxLength = "30",
                                        @type = "time"
                                    })
                                         <span class="error">
@@ -359,7 +367,7 @@
                                                 style="width: 100%;">
                                             @foreach (var item in ViewBag.ClosingDate as IEnumerable<SelectListItem>)
                                             {
-                                                var selectedId = ViewBag.ClosingDateIdKey as string;
+                                                var selectedId = ViewBag.ClosingDateIdKeyBasic as string;
                                                 if (item.Value == selectedId)
                                                 {
                                                     <option value="@item.Value" selected>
@@ -393,6 +401,7 @@
                                         @Html.TextBoxFor(model => model.Longitude, new
                                    {
                                        @class = "w-full",
+                                       @id = "Longitude_basic",
                                        @placeholder = CRS.ADMIN.APPLICATION.Resources.Resource.Longitude_Placeholder,
                                        //@onkeypress = "return isNumber(event)",
                                        autocomplete = "off",
@@ -410,6 +419,7 @@
                                         @Html.TextBoxFor(model => model.Latitude, new
                                    {
                                        @class = "w-full",
+                                       @id = "Latitude_basic",
                                        @placeholder = CRS.ADMIN.APPLICATION.Resources.Resource.Latitude_Placeholder,
                                        //@onkeypress = "return isNumber(event)",
                                        autocomplete = "off",
@@ -433,6 +443,7 @@
                                         @Html.TextBoxFor(model => model.PostalCode, new
                                    {
                                        @class = "w-full",
+                                       @id = "PostalCode_basic",
                                        @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.Enter_Postal_Code,
                                        //@onkeypress = "return isNumber(event)",
                                        autocomplete = "off",
@@ -451,7 +462,7 @@
                                                 style="width: 100%;" name="LocationDDL">
                                             @foreach (var item in ViewBag.LocationDDLList as IEnumerable<SelectListItem>)
                                             {
-                                                var selectedId = ViewBag.LocationIdKey as string;
+                                                var selectedId = ViewBag.LocationIdKeyBasic as string;
                                                 if (item.Value == selectedId)
                                                 {
                                                     <option value="@item.Value" selected>
@@ -478,6 +489,7 @@
                                         @Html.TextBoxFor(model => model.City, new
                                    {
                                        @class = "w-full",
+                                       @id = "City_basic",
                                        @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.Enter_City,
                                        //@onkeypress = "return isNumber(event)",
                                        autocomplete = "off",
@@ -498,6 +510,7 @@
                                         @Html.TextBoxFor(model => model.Street, new
                                    {
                                        @class = "w-full",
+                                       @id = "Street_basic",
                                        @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.Enter_Street,
                                        //@onkeypress = "return isNumber(event)",
                                        autocomplete = "off",
@@ -515,6 +528,7 @@
                                         @Html.TextBoxFor(model => model.BuildingRoomNo, new
                                    {
                                        @class = "w-full",
+                                       @id = "BuildingRoomNo_basic",
                                        @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.Building___Room_No,
                                        //@onkeypress = "return isNumber(event)",
                                        autocomplete = "off",
@@ -545,6 +559,7 @@
                                             @Html.TextBoxFor(model => model.InstagramLink, new
                                        {
                                            @class = "w-full",
+                                           @id = "InstagramLink_basic",
                                            @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.Instagram,
                                            //@onkeypress = "return isNumber(event)",
                                            autocomplete = "off"
@@ -562,6 +577,7 @@
                                             @Html.TextBoxFor(model => model.TiktokLink, new
                                        {
                                            @class = "w-full",
+                                           @id = "TiktokLink_basic",
                                            @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.Tiktok,
                                            //@onkeypress = "return isNumber(event)",
                                            autocomplete = "off"
@@ -582,6 +598,7 @@
                                             @Html.TextBoxFor(model => model.Line, new
                                        {
                                            @class = "w-full",
+                                           @id = "Line_basic",
                                            @placeholder = "i.e. www.line.com/+09033333333 ",
                                            //@onkeypress = "return isNumber(event)",
                                            autocomplete = "off"
@@ -600,6 +617,7 @@
                                             @Html.TextBoxFor(model => model.TwitterLink, new
                                        {
                                            @class = "w-full",
+                                           @id = "TwitterLink_basic",
                                            @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.Twitter,
                                            //@onkeypress = "return isNumber(event)",
                                            autocomplete = "off"
@@ -627,6 +645,7 @@
                                             @Html.TextBoxFor(model => model.WebsiteLink, new
                                        {
                                            @class = "w-full",
+                                           @id = "WebsiteLink_basic",
                                            @placeholder = "i.e. www.clubglobal.com",
                                            //@onkeypress = "return isNumber(event)",
                                            autocomplete = "off"
@@ -643,6 +662,7 @@
                                             @Html.TextBoxFor(model => model.GoogleMap, new
                                        {
                                            @class = "w-full",
+                                           @id = "GoogleMap_basic",
                                            @placeholder = "i.e. www.clubglobal.com",
                                            //@onkeypress = "return isNumber(event)",
                                            autocomplete = "off"

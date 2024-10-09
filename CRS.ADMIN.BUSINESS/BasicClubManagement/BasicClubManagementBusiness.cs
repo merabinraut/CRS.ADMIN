@@ -31,9 +31,25 @@ namespace CRS.ADMIN.BUSINESS.BasicClubManagement
         {
             return _REPO.GetBasicClubDetails(AgentId, culture);
         }
-        public CommonDbResponse ManageBasicClubStatus(string AgentId, string Status, Common Request)
+        public CommonDbResponse DeleteBasicClubStatus(string AgentId, Common Request)
         {
-            return _REPO.ManageBasicClubStatus(AgentId, Status, Request);
+            return _REPO.DeleteBasicClubStatus(AgentId, Request);
+        }
+        public CommonDbResponse BlockBasicClubStatus(string AgentId, Common Request)
+        {
+            return _REPO.BlockBasicClubStatus(AgentId, Request);
+        }
+        public CommonDbResponse UnBlockBasicClubStatus(string AgentId, Common Request)
+        {
+            return _REPO.UnBlockBasicClubStatus(AgentId, Request);
+        }
+        public ClubDetailCommon GetBasicConversionClubDetails(string AgentId, String culture = "")
+        {
+            return _REPO.GetBasicConversionClubDetails(AgentId, culture);
+        }
+        public CommonDbResponse ManageConversionClub(ManageClubCommon Request)
+        {
+            return _REPO.ManageConversionClub(Request);
         }
     }
 }

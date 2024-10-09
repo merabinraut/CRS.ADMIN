@@ -54,7 +54,7 @@
 
             <div class=" py-4 grid gap-6">
 
-                @using (Html.BeginForm("ManageClub", "ClubManagement", FormMethod.Post, new { @id = "ManageClubForm", enctype = "multipart/form-data" }))
+                @using (Html.BeginForm("ManageConversionBasicClub", "BasicClubManagement", FormMethod.Post, new { @id = "ManagePremiumClubForm", enctype = "multipart/form-data" }))
                 {
                     @Html.AntiForgeryToken()
                     if (!string.IsNullOrEmpty(Model.AgentId))
@@ -399,11 +399,11 @@
                                         @CRS.ADMIN.APPLICATION.Resources.Resource.CompanyNameFurigana
                                     </label>
                                     @Html.TextBoxFor(model => model.CompanyNameFurigana, new
-                               {
+                                 {
                                    @class = "w-full",
                                    @placeholder = CRS.ADMIN.APPLICATION.Resources.Resource.CompanyNameFurigana,
                                    autocomplete = "off"
-                               })
+                                })
                                     <span class="error">
                                         @Html.ValidationMessageFor(m => m.CompanyNameFurigana)
                                     </span>
@@ -454,26 +454,6 @@
                                         @CRS.ADMIN.APPLICATION.Resources.Resource.Phone_Number
                                     </label>
                                     <div class="number-input w-full">
-
-                                        @if (!string.IsNullOrEmpty(Model.AgentId) || !string.IsNullOrEmpty(Model.holdId))
-                                        {
-                                            <div class="flag-section" style="background: #e5e5e5;">
-                                                <div class="japan-flag" style="background: white;">
-                                                    <div></div>
-                                                </div>
-                                                <div>
-                                                    +81
-                                                </div>
-                                                <div class="line-y">
-
-                                                </div>
-
-                                            </div>
-                                            @Html.HiddenFor(model => model.MobileNumber)
-                                            <input type="text" class="w-full" placeholder="@CRS.ADMIN.APPLICATION.Resources.Resource.Phone_Number" name="MobileNumber" value="@Model.MobileNumber" disabled>
-                                        }
-                                        else
-                                        {
                                             <div class="flag-section">
                                                 <div class="japan-flag" style="border: 1px solid #dbd6d6;">
                                                     <div></div>
@@ -494,10 +474,7 @@
                                            autocomplete = "off",
                                            @maxLength = "11"
                                        })                                            
-
-                                        }
-
-
+                                     
                                     </div>
                                     <span class="error">
                                         @Html.ValidationMessageFor(m => m.MobileNumber)
@@ -507,13 +484,7 @@
                                     <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
                                         @CRS.ADMIN.APPLICATION.Resources.Resource.Email
                                     </label>
-                                    @if (!string.IsNullOrEmpty(Model.AgentId) || !string.IsNullOrEmpty(Model.holdId))
-                                    {
-                                        @Html.HiddenFor(model => model.Email)
-                                        <input type="text" class="w-full" placeholder="e.g abc@gmail.om" name="@CRS.ADMIN.APPLICATION.Resources.Resource.Email" value="@Model.Email" disabled>
-                                    }
-                                    else
-                                    {
+                                    
                                         @Html.TextBoxFor(model => model.Email, new
                                    {
                                        @class = "w-full",
@@ -524,7 +495,7 @@
                                         <span class="error">
                                             @Html.ValidationMessageFor(m => m.Email)
                                         </span>
-                                    }
+                       
                                 </div>
                                 @if (!string.IsNullOrEmpty(Model.AgentId) || !string.IsNullOrEmpty(Model.holdId))
                                 {

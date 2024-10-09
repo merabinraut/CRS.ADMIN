@@ -428,7 +428,7 @@
      // Set the message content in the modal
      confirmationMessageElement.textContent = ` ${name} , @CRS.ADMIN.APPLICATION.Resources.Resource.password_reset_confirmation ? `;
      // Open the modal
-         const modal = document.getElementById("reset-customer-passwordconfirmation");
+     const modal = document.getElementById("reset-customer-passwordconfirmation");
      modal.classList.remove("hidden");
      $('#reset_customer_id').attr('data-val', agentid);
      modal.setAttribute("aria-hidden", "false");
@@ -702,6 +702,7 @@
     </script>
     <script>
         $(document).ready(function () {
+            debugger;
             var commaSeparatedString = "";
             if ($("#holdId").val() != "" || $("#AgentId").val() != "") {
                 var Value = $('#large[name="IdentificationType"]').find("option:selected").text().trim();
