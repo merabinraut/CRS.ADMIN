@@ -75,6 +75,17 @@ namespace CRS.ADMIN.REPOSITORY.RecommendationManagement_V2
             sp_name += ",@LocationId=" + _dao.FilterString(commonModel.LocationId);
             return _dao.ParseCommonDbResponse(sp_name);
         }
+
+        public CommonDbResponse DeleteGroup(string groupid , string locationid , Common commonRequest)
+        {
+            string sp_name = "EXEC sproc_admin_mainpage_group_delete ";
+            sp_name += " @groupid=" + _dao.FilterString(groupid);
+            sp_name += ",@locationid=" + _dao.FilterString(locationid);
+            sp_name += ",@actionUser=" + _dao.FilterString(commonRequest.ActionUser);
+            sp_name += ",@actionIp=" + _dao.FilterString(commonRequest.ActionIP);
+            return _dao.ParseCommonDbResponse(sp_name);
+        }
+
         #endregion
 
         #region "Recommendation Request and Location Management"

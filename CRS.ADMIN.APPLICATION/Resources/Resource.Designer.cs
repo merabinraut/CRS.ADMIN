@@ -547,6 +547,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to block this club?.
+        /// </summary>
+        public static string Are_you_sure_you_want_to_block_this_club {
+            get {
+                return ResourceManager.GetString("Are you sure you want to block this club", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Are you sure you want to change the language.
         /// </summary>
         public static string Are_you_sure_you_want_to_change_the_language {
@@ -561,6 +570,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         public static string Are_you_sure_you_want_to_delete_this_club {
             get {
                 return ResourceManager.GetString("Are you sure you want to delete this club", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to unblock this club?.
+        /// </summary>
+        public static string Are_you_sure_you_want_to_unblock_this_club {
+            get {
+                return ResourceManager.GetString("Are you sure you want to unblock this club", resourceCulture);
             }
         }
         
@@ -687,6 +705,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         public static string Basic {
             get {
                 return ResourceManager.GetString("Basic", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Basic Club Management.
+        /// </summary>
+        public static string Basic_Club_Management {
+            get {
+                return ResourceManager.GetString("Basic Club Management", resourceCulture);
             }
         }
         
@@ -2968,6 +2995,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Manage your club detail informations..
+        /// </summary>
+        public static string Manage_your_club_detail_information {
+            get {
+                return ResourceManager.GetString("Manage your club detail information", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Manage your points detail..
         /// </summary>
         public static string Manage_your_points_detail {
@@ -4710,6 +4746,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         public static string September {
             get {
                 return ResourceManager.GetString("September", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Service Tax.
+        /// </summary>
+        public static string Service_tax {
+            get {
+                return ResourceManager.GetString("Service tax", resourceCulture);
             }
         }
         

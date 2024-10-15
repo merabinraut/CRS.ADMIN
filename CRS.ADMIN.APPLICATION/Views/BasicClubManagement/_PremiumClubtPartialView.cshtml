@@ -1,10 +1,5 @@
-@model CRS.ADMIN.APPLICATION.Models.ClubManagement.ManageClubModel
-@{
-    //ViewBag.Title = "Club Management";
-    //Layout = "~/Views/Shared/_Layout.cshtml";
-    var rowcouunt = 0;
-    var id = "";
-}
+@model CRS.ADMIN.APPLICATION.Models.BasicClubManagement.ManagePremiumClubModel
+
 
 <style>
 
@@ -59,7 +54,7 @@
 
             <div class=" py-4 grid gap-6">
 
-                @using (Html.BeginForm("ManageClub", "ClubManagement", FormMethod.Post, new { @id = "ManageClubForm", enctype = "multipart/form-data" }))
+                @using (Html.BeginForm("ManageConversionBasicClub", "BasicClubManagement", FormMethod.Post, new { @id = "ManagePremiumClubForm", enctype = "multipart/form-data" }))
                 {
                     @Html.AntiForgeryToken()
                     if (!string.IsNullOrEmpty(Model.AgentId))
@@ -173,7 +168,6 @@
                                    autocomplete = "off",
                                    @maxLength = "50"
                                })
-                                    @*<input type="text" class="w-full" placeholder="@CRS.ADMIN.APPLICATION.Resources.Resource.Club_Name_Katakana_Placeholder" name="ClubName2" value="@Model.ClubName2">*@
                                     <span class="error">
                                         @Html.ValidationMessageFor(m => m.ClubName1)
                                     </span>
@@ -191,7 +185,6 @@
                                    autocomplete = "off",
                                    @maxLength = "50"
                                })
-                                    @*<input type="text" class="w-full" placeholder="@CRS.ADMIN.APPLICATION.Resources.Resource.Club_Name_Katakana_Placeholder" name="ClubName2" value="@Model.ClubName2">*@
                                     <span class="error">
                                         @Html.ValidationMessageFor(m => m.ClubName2)
                                     </span>
@@ -208,10 +201,7 @@
                                    autocomplete = "off",
                                    @maxLength = "50"
                                })
-                                    @* <input type="text" class="w-full" placeholder="@CRS.ADMIN.APPLICATION.Resources.Resource.Club_Name_English_Placeholder" name="ClubName1" value="@Model.ClubName1">*@
-                                    @*<span class="error">
-                                @Html.ValidationMessageFor(m => m.ClubName)
-                            </span>*@
+                                 
                                 </div>
 
 
@@ -227,30 +217,13 @@
                                {
                                    @class = "w-full",
                                    @placeholder = CRS.ADMIN.APPLICATION.Resources.Resource.Group_Name_Placeholder,
-                                   //@onkeypress = "return isAlphabetWithSpace(event)",
                                    autocomplete = "off",
                                    @maxLength = "50"
                                })
-                                    @*<input type="text" class="w-full" placeholder="@CRS.ADMIN.APPLICATION.Resources.Resource.Group_Name_Placeholder" name="GroupName" value="@Model.GroupName">*@
                                     <span class="error">
                                         @Html.ValidationMessageFor(m => m.GroupName)
                                     </span>
-                                </div>
-                                @*<div class="input-field-common">
-                             <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
-                                 @CRS.ADMIN.APPLICATION.Resources.Resource.GroupNameJap
-                             </label>
-                             @Html.TextBoxFor(model => model.GroupName2, new
-                        {
-                            @class = "w-full",
-                            @placeholder = CRS.ADMIN.APPLICATION.Resources.Resource.Group_Name_Placeholder,
-                            autocomplete = "off",
-                            @maxLength = "50"
-                        })
-                             <span class="error">
-                                 @Html.ValidationMessageFor(m => m.GroupName2)
-                             </span>
-                         </div>*@
+                                </div>                               
                             </div>
 
                             <!-- description start -->
@@ -262,7 +235,6 @@
                            {
                                @class = "w-full",
                                @placeholder = CRS.ADMIN.APPLICATION.Resources.Resource.Description_Placeholder,
-                               //@onkeypress = "return isNumber(event)",
                                autocomplete = "off",
                                @maxLength = "500"
                            })
@@ -385,9 +357,7 @@
                                {
                                    @class = "w-full",
                                    @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.CEO_Full_Name,
-                                   //@onkeypress = "return isNumber(event)",
                                    autocomplete = "off"
-                                   //@maxLength = "30"
                                })
                                     <span class="error">
                                         @Html.ValidationMessageFor(m => m.ceoFullName)
@@ -401,9 +371,7 @@
                                {
                                    @class = "w-full",
                                    @placeholder = CRS.ADMIN.APPLICATION.Resources.Resource.CEOFurigana,
-                                   //@onkeypress = "return isNumber(event)",
                                    autocomplete = "off"
-                                   //@maxLength = "30"
                                })
                                     <span class="error">
                                         @Html.ValidationMessageFor(m => m.CeoFurigana)
@@ -419,9 +387,7 @@
                                {
                                    @class = "w-full",
                                    @placeholder = CRS.ADMIN.APPLICATION.Resources.Resource.Company_Name_Placeholder,
-                                   //@onkeypress = "return isNumber(event)",
                                    autocomplete = "off"
-                                   //@maxLength = "30"
                                })
                                     <span class="error">
                                         @Html.ValidationMessageFor(m => m.CompanyName)
@@ -433,13 +399,11 @@
                                         @CRS.ADMIN.APPLICATION.Resources.Resource.CompanyNameFurigana
                                     </label>
                                     @Html.TextBoxFor(model => model.CompanyNameFurigana, new
-                               {
+                                 {
                                    @class = "w-full",
                                    @placeholder = CRS.ADMIN.APPLICATION.Resources.Resource.CompanyNameFurigana,
-                                   //@onkeypress = "return isNumber(event)",
                                    autocomplete = "off"
-                                   //@maxLength = "30"
-                               })
+                                })
                                     <span class="error">
                                         @Html.ValidationMessageFor(m => m.CompanyNameFurigana)
                                     </span>
@@ -454,9 +418,7 @@
                                {
                                    @class = "w-full",
                                    @placeholder = CRS.ADMIN.APPLICATION.Resources.Resource.CompanyAddress,
-                                   //@onkeypress = "return isNumber(event)",
                                    autocomplete = "off"
-                                   //@maxLength = "30"
                                })
                                     <span class="error">
                                         @Html.ValidationMessageFor(m => m.CompanyAddress)
@@ -467,70 +429,10 @@
                                     <label class="block mb-4 text-sm font-medium text-secondary-100 ">
                                         @CRS.ADMIN.APPLICATION.Resources.Resource.LandlineNumber
                                     </label>
-                                    @*<div class="number-input w-full">
-
-                                <select id="large" name="CountryCode" class=" default_select select-common block w-full "
-                                        style="width: text-2%;">
-                                    @foreach (var item in ViewBag.CountryCodeDDL as IEnumerable<SelectListItem>)
-                                    {
-                                        var selectedId = ViewBag.CountryCodeDDLKey as string;
-                                        if (item.Value == selectedId)
-                                        {
-                                            <option value="@item.Value" selected>
-                                                @item.Value
-                                            </option>
-                                        }
-                                        else
-                                        {
-                                            <option value="@item.Value">
-                                                @item.Value
-                                            </option>
-                                        }
-                                    }
-                                </select>
-                                @Html.TextBoxFor(model => model.LandlineNumber, new
-                               {
-                                   @class = "w-full",
-                                   @placeholder = "090-6490-3254",
-                                   @onkeypress = "return isNumber(event)",
-                                   autocomplete = "off",
-                                   @maxLength = "8"
-                               })
+                                    
 
 
-                            </div>*@
-
-
-                                    <div class="w-full flex">
-                                        @*<select id="large" name="LandLineCode" class="default_select select-common block"
-                                        style=" width:40%">
-                                    @foreach (var item in ViewBag.CountryCodeDDL as IEnumerable<SelectListItem>)
-                                    {
-                                        var selectedId = ViewBag.CountryCodeDDLKey as string;
-                                        if (item.Value == selectedId)
-                                        {
-                                            <option value="@item.Value" selected>
-                                                @item.Value
-                                            </option>
-                                        }
-                                        else
-                                        {
-                                            <option value="@item.Value">
-                                                @item.Value
-                                            </option>
-                                        }
-                                    }
-                                </select>*@
-                                        @*@Html.TextBoxFor(model => model.LandlineNumber, new
-                                {
-
-                                    @placeholder = "090-6490-3254",
-                                    @onkeypress = "return isNumber(event)",
-                                    autocomplete = "off",
-                                    @maxLength = "8",
-                                    @class="landline-number-input",
-                                    style = "width:70% ; padding:10px 5px"
-                                })*@
+                                    <div class="w-full flex">                                       
 
                                         @Html.TextBoxFor(model => model.LandlineNumber, new
                                      {
@@ -552,26 +454,6 @@
                                         @CRS.ADMIN.APPLICATION.Resources.Resource.Phone_Number
                                     </label>
                                     <div class="number-input w-full">
-
-                                        @if (!string.IsNullOrEmpty(Model.AgentId) || !string.IsNullOrEmpty(Model.holdId))
-                                        {
-                                            <div class="flag-section" style="background: #e5e5e5;">
-                                                <div class="japan-flag" style="background: white;">
-                                                    <div></div>
-                                                </div>
-                                                <div>
-                                                    +81
-                                                </div>
-                                                <div class="line-y">
-
-                                                </div>
-
-                                            </div>
-                                            @Html.HiddenFor(model => model.MobileNumber)
-                                            <input type="text" class="w-full" placeholder="@CRS.ADMIN.APPLICATION.Resources.Resource.Phone_Number" name="MobileNumber" value="@Model.MobileNumber" disabled>
-                                        }
-                                        else
-                                        {
                                             <div class="flag-section">
                                                 <div class="japan-flag" style="border: 1px solid #dbd6d6;">
                                                     <div></div>
@@ -591,12 +473,8 @@
                                            @onkeypress = "return isNumber(event)",
                                            autocomplete = "off",
                                            @maxLength = "11"
-                                       })
-                                            @*<input type="text" class="w-full" placeholder="@CRS.ADMIN.APPLICATION.Resources.Resource.Phone_Number" name="MobileNumber" value="@Model.MobileNumber">*@
-
-                                        }
-
-
+                                       })                                            
+                                     
                                     </div>
                                     <span class="error">
                                         @Html.ValidationMessageFor(m => m.MobileNumber)
@@ -606,25 +484,18 @@
                                     <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
                                         @CRS.ADMIN.APPLICATION.Resources.Resource.Email
                                     </label>
-                                    @if (!string.IsNullOrEmpty(Model.AgentId) || !string.IsNullOrEmpty(Model.holdId))
-                                    {
-                                        @Html.HiddenFor(model => model.Email)
-                                        <input type="text" class="w-full" placeholder="e.g abc@gmail.om" name="@CRS.ADMIN.APPLICATION.Resources.Resource.Email" value="@Model.Email" disabled>
-                                    }
-                                    else
-                                    {
+                                    
                                         @Html.TextBoxFor(model => model.Email, new
                                    {
                                        @class = "w-full",
                                        @placeholder = CRS.ADMIN.APPLICATION.Resources.Resource.Email,
-                                       //@onkeypress = "return isAlphabetWithSpace(event)",
                                        autocomplete = "off",
                                        @maxLength = "200"
                                    })
                                         <span class="error">
                                             @Html.ValidationMessageFor(m => m.Email)
                                         </span>
-                                    }
+                       
                                 </div>
                                 @if (!string.IsNullOrEmpty(Model.AgentId) || !string.IsNullOrEmpty(Model.holdId))
                                 {
@@ -634,21 +505,6 @@
                                         </label>
                                         @Html.HiddenFor(model => model.LoginId)
                                         <input type="text" class="w-full" placeholder="@CRS.ADMIN.APPLICATION.Resources.Resource.Username" name="LoginId" value="@Model.LoginId" disabled>
-
-                                        @*else
-                                 {
-                                     @Html.TextBoxFor(model => model.LoginId, new
-                                {
-                                    @class = "w-full",
-                                    @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.Username,
-
-                                    autocomplete = "off"
-
-                                })
-                                      <span class="error">
-                                         @Html.ValidationMessageFor(m => m.LoginId)
-                                     </span>
-                                 }*@
                                     </div>
                                 }
 
@@ -660,7 +516,6 @@
                                         <label for="file_input_corporateregistrydocument" class="custom-file-upload w-[123px] bg-[#CC527A] flex-none ">
                                             <span>@CRS.ADMIN.APPLICATION.Resources.Resource.Choose_Images</span>
                                         </label>
-                                        @*<input type="hidden" name="Business_Certificate" value="@Model.Business_Certificate"/>*@
                                         <input id="file_input_corporateregistrydocument" class="file-input" type="file" name="CorporateRegistry_Certificate" value="@Model.CorporateRegistryDocument"
                                                style="display:none;">
                                         <p id="file_name_corporateregistrydocument"
@@ -725,7 +580,6 @@
                                         <label for="file_input_kycdocument" class="custom-file-upload w-[123px] bg-[#CC527A] flex-none ">
                                             <span>@CRS.ADMIN.APPLICATION.Resources.Resource.Choose_Images</span>
                                         </label>
-                                        @*<input type="hidden" name="Business_Certificate" value="@Model.Business_Certificate"/>*@
                                         <input id="file_input_kycdocument" class="file-input" type="file" name="KYCDocument_Certificate" value="@Model.KYCDocument"
                                                style="display:none;">
                                         <p id="file_name_kycdocument"
@@ -795,7 +649,6 @@
                                         <label for="file_input_kycdocumentback" class="custom-file-upload w-[123px] bg-[#CC527A] flex-none ">
                                             <span>@CRS.ADMIN.APPLICATION.Resources.Resource.Choose_Images</span>
                                         </label>
-                                        @*<input type="hidden" name="Business_Certificate" value="@Model.Business_Certificate"/>*@
                                         <input id="file_input_kycdocumentback" class="file-input" type="file" name="KYCDocumentBack_Certificate" value="@Model.KYCDocumentBack"
                                                style="display:none;">
                                         <p id="file_name_kycdocumentback"
@@ -828,7 +681,6 @@
                                         <label for="file_input_insurancephoto" class="custom-file-upload w-[123px] bg-[#CC527A] flex-none ">
                                             <span>@CRS.ADMIN.APPLICATION.Resources.Resource.Choose_Images</span>
                                         </label>
-                                        @*<input type="hidden" name="Business_Certificate" value="@Model.Business_Certificate"/>*@
                                         <input id="file_input_insurancephoto" class="file-input" type="file" name="InsurancePhoto_Certificate" value="@Model.InsurancePhoto"
                                                style="display:none;">
                                         <p id="file_name_insurancephoto"
@@ -861,7 +713,6 @@
                                         <label for="file_input_business_certificate" class="custom-file-upload w-[123px] bg-[#CC527A] flex-none ">
                                             <span>@CRS.ADMIN.APPLICATION.Resources.Resource.Choose_Images</span>
                                         </label>
-                                        @*<input type="hidden" name="Business_Certificate" value="@Model.Business_Certificate"/>*@
                                         <input id="file_input_business_certificate" class="file-input" type="file" name="Business_Certificate" value="@Model.BusinessCertificate"
                                                style="display:none;">
                                         <p id="file_name_bussiness_certificate"
@@ -899,11 +750,9 @@
                                {
                                    @class = "w-full",
                                    @placeholder = CRS.ADMIN.APPLICATION.Resources.Resource.BusinessLicenseNumber_Placeholder,
-                                   //@onkeypress = "return isAlphabetWithSpace(event)",
                                    autocomplete = "off",
                                    @maxLength = "50"
                                })
-                                    @*<input type="text" class="w-full" placeholder="@CRS.ADMIN.APPLICATION.Resources.Resource.Group_Name_Placeholder" name="GroupName" value="@Model.GroupName">*@
                                     <span class="error">
                                         @Html.ValidationMessageFor(m => m.BusinessLicenseNumber)
                                     </span>
@@ -946,11 +795,9 @@
                                {
                                    @class = "w-full",
                                    @placeholder = CRS.ADMIN.APPLICATION.Resources.Resource.ContactName,
-                                   //@onkeypress = "return isAlphabetWithSpace(event)",
                                    autocomplete = "off",
                                    @maxLength = "50"
                                })
-                                    @*<input type="text" class="w-full" placeholder="@CRS.ADMIN.APPLICATION.Resources.Resource.Group_Name_Placeholder" name="GroupName" value="@Model.GroupName">*@
                                     <span class="error">
                                         @Html.ValidationMessageFor(m => m.Representative1_ContactName)
                                     </span>
@@ -963,11 +810,9 @@
                                {
                                    @class = "w-full",
                                    @placeholder = CRS.ADMIN.APPLICATION.Resources.Resource.MobileNumber,
-                                   //@onkeypress = "return isAlphabetWithSpace(event)",
                                    autocomplete = "off",
                                    @maxLength = "11"
                                })
-                                    @*<input type="text" class="w-full" placeholder="@CRS.ADMIN.APPLICATION.Resources.Resource.Group_Name_Placeholder" name="GroupName" value="@Model.GroupName">*@
                                     <span class="error">
                                         @Html.ValidationMessageFor(m => m.Representative1_MobileNo)
                                     </span>
@@ -980,11 +825,9 @@
                                {
                                    @class = "w-full",
                                    @placeholder = CRS.ADMIN.APPLICATION.Resources.Resource.Email_Address,
-                                   //@onkeypress = "return isAlphabetWithSpace(event)",
                                    autocomplete = "off",
                                    @maxLength = "50"
                                })
-                                    @*<input type="text" class="w-full" placeholder="@CRS.ADMIN.APPLICATION.Resources.Resource.Group_Name_Placeholder" name="GroupName" value="@Model.GroupName">*@
                                     <span class="error">
                                         @Html.ValidationMessageFor(m => m.Representative1_Email)
                                     </span>
@@ -1000,7 +843,6 @@
                                    autocomplete = "off",
                                    @maxLength = "100"
                                })
-                                    @*<input type="text" class="w-full" placeholder="@CRS.ADMIN.APPLICATION.Resources.Resource.Group_Name_Placeholder" name="GroupName" value="@Model.GroupName">*@
                                     <span class="error">
                                         @Html.ValidationMessageFor(m => m.Representative1_Furigana)
                                     </span>
@@ -1022,11 +864,9 @@
                                {
                                    @class = "w-full",
                                    @placeholder = CRS.ADMIN.APPLICATION.Resources.Resource.ContactName,
-                                   //@onkeypress = "return isAlphabetWithSpace(event)",
                                    autocomplete = "off",
                                    @maxLength = "50"
                                })
-                                    @*<input type="text" class="w-full" placeholder="@CRS.ADMIN.APPLICATION.Resources.Resource.Group_Name_Placeholder" name="GroupName" value="@Model.GroupName">*@
                                     <span class="error">
                                         @Html.ValidationMessageFor(m => m.Representative2_ContactName)
                                     </span>
@@ -1039,11 +879,9 @@
                                {
                                    @class = "w-full",
                                    @placeholder = CRS.ADMIN.APPLICATION.Resources.Resource.MobileNumber,
-                                   //@onkeypress = "return isAlphabetWithSpace(event)",
                                    autocomplete = "off",
                                    @maxLength = "11"
                                })
-                                    @*<input type="text" class="w-full" placeholder="@CRS.ADMIN.APPLICATION.Resources.Resource.Group_Name_Placeholder" name="GroupName" value="@Model.GroupName">*@
                                     <span class="error">
                                         @Html.ValidationMessageFor(m => m.Representative2_MobileNo)
                                     </span>
@@ -1056,11 +894,9 @@
                                {
                                    @class = "w-full",
                                    @placeholder = CRS.ADMIN.APPLICATION.Resources.Resource.Email_Address,
-                                   //@onkeypress = "return isAlphabetWithSpace(event)",
                                    autocomplete = "off",
                                    @maxLength = "50"
                                })
-                                    @*<input type="text" class="w-full" placeholder="@CRS.ADMIN.APPLICATION.Resources.Resource.Group_Name_Placeholder" name="GroupName" value="@Model.GroupName">*@
                                     <span class="error">
                                         @Html.ValidationMessageFor(m => m.Representative2_Email)
                                     </span>
@@ -1073,11 +909,9 @@
                                {
                                    @class = "w-full",
                                    @placeholder = CRS.ADMIN.APPLICATION.Resources.Resource.RepresentiveFurigana,
-                                   //@onkeypress = "return isAlphabetWithSpace(event)",
                                    autocomplete = "off",
                                    @maxLength = "100"
                                })
-                                    @*<input type="text" class="w-full" placeholder="@CRS.ADMIN.APPLICATION.Resources.Resource.Group_Name_Placeholder" name="GroupName" value="@Model.GroupName">*@
                                     <span class="error">
                                         @Html.ValidationMessageFor(m => m.Representative2_Furigana)
                                     </span>
@@ -1108,9 +942,7 @@
                                    {
                                        @class = "w-full",
                                        @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.Instagram,
-                                       //@onkeypress = "return isNumber(event)",
                                        autocomplete = "off"
-                                       //@maxLength = "30"
                                    })
 
                                         <span class="error">
@@ -1125,9 +957,7 @@
                                    {
                                        @class = "w-full",
                                        @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.Tiktok,
-                                       //@onkeypress = "return isNumber(event)",
                                        autocomplete = "off"
-                                       //@maxLength = "30"
                                    })
 
                                         <span class="error">
@@ -1145,9 +975,7 @@
                                    {
                                        @class = "w-full",
                                        @placeholder = "i.e. www.line.com/+09033333333 ",
-                                       //@onkeypress = "return isNumber(event)",
                                        autocomplete = "off"
-                                       //@maxLength = "30"
                                    })
 
                                         <span class="error">
@@ -1163,9 +991,7 @@
                                    {
                                        @class = "w-full",
                                        @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.Twitter,
-                                       //@onkeypress = "return isNumber(event)",
                                        autocomplete = "off"
-                                       //@maxLength = "30"
                                    })
 
                                         <span class="error">
@@ -1185,14 +1011,11 @@
                                         <label for="website" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
                                             @CRS.ADMIN.APPLICATION.Resources.Resource.Website
                                         </label>
-
                                         @Html.TextBoxFor(model => model.WebsiteLink, new
                                    {
                                        @class = "w-full",
                                        @placeholder = "i.e. www.clubglobal.com",
-                                       //@onkeypress = "return isNumber(event)",
                                        autocomplete = "off"
-                                       //@maxLength = "30"
                                    })
                                         <span class="error">
                                             @Html.ValidationMessageFor(m => m.WebsiteLink)
@@ -1206,9 +1029,7 @@
                                    {
                                        @class = "w-full",
                                        @placeholder = "i.e. www.clubglobal.com",
-                                       //@onkeypress = "return isNumber(event)",
                                        autocomplete = "off"
-                                       //@maxLength = "30"
                                    })
                                         <span class="error">
                                             @Html.ValidationMessageFor(m => m.GoogleMap)
@@ -1241,7 +1062,6 @@
                                    {
                                        @class = "w-full",
                                        @placeholder = "HH:MM",
-                                       //@onkeypress = "return isNumber(event)",
                                        autocomplete = "off",
                                        @maxLength = "30",
                                        @type = "time"
@@ -1260,7 +1080,6 @@
                                    {
                                        @class = "w-full",
                                        @placeholder = "HH:MM",
-                                       //@onkeypress = "return isNumber(event)",
                                        autocomplete = "off",
                                         @maxLength = "30",
                                        @type = "time"
@@ -1275,13 +1094,8 @@
                                             @CRS.ADMIN.APPLICATION.Resources.Resource.Holiday
                                         </label>
                                         @Html.HiddenFor(m => m.HolidayStr)
-                                        @*@Html.ListBoxFor(
-                                model => model.Holiday, // WorkingHrTo property from the model
-                                ViewBag.Holiday as SelectList, // Binding to the ViewBag data as SelectList
-                                new { @id = "large", @class = " default_select select-common block w-full ", @style = "width: 100%;" })*@
-                                        @*@Html.DropDownListFor(model => model.Holiday, new MultiSelectList(ViewBag.Holiday, "Value", "Text"), new { id = "large" ,@class = " default_select select-common block w-full ", @style = "width: 100%;" })*@
-                                        <select id="large" name="holiday" class=" default_select select-common block w-full "
-                                                style="width: 100%;" multiple="multiple" placeholder="Select">
+                                           <select id="large" name="holiday" class=" default_select select-common block w-full "
+                                             style="width: 100%;" multiple="multiple" placeholder="Select">
                                             @foreach (var item in ViewBag.Holiday as IEnumerable<SelectListItem>)
                                             {
                                                 var selectedId = ViewBag.HolidayIdKey as string;
@@ -1300,45 +1114,12 @@
                                                     </option>
                                                 }
 
-                                                @*if (item.Value == selectedId)
-                                        {
-                                            <option value="@item.Value" selected @(item.Disabled == true ? "selected disabled" : "")>
-                                                @item.Text
-                                            </option>
-                                        }
-                                        else
-                                        {
-                                            <option value="@item.Value" @(item.Disabled == true ? "selected disabled" : "")>
-                                                @item.Text
-                                            </option>
-                                        }*@
                                             }
 
                                         </select>
                                     </div>
                                 </div>
-
-
-                                @*<div class="grid  gap-4">
-                            <div class="input-field-common">
-                                <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
-                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Holiday
-                                </label>
-                                <div class="box">
-                                    @foreach (var item in ViewBag.Holiday as IEnumerable<SelectListItem>)
-                                    {
-
-
-                                        <i data-val="@item.Value"><img src="/Content/assets/images/TickIcon.svg"> <p>@item.Text</p></i>
-
-                                        <i data-val="@item.Value"><img src="/Content/assets/images/TickIcon.svg"> <p>@item.Text</p></i>
-
-
-                                    }
-                                </div>
-
-                            </div>
-                        </div>*@
+                              
                                 <!-- for last order -->
                                 <div class="grid grid-cols-3 gap-x-4 gap-y-5">
                                     <div class="input-field-common">
@@ -1349,7 +1130,6 @@
                                    {
                                        @class = "w-full",
                                        @placeholder = "HH:MM",
-                                       //@onkeypress = "return isNumber(event)",
                                        autocomplete = "off",
                                        @maxLength = "30",
                                        @type = "time"
@@ -1367,7 +1147,6 @@
                                    {
                                        @class = "w-full",
                                        @placeholder = "HH:MM",
-                                       //@onkeypress = "return isNumber(event)",
                                        autocomplete = "off",
                                         @maxLength = "30",
                                        @type = "time"
@@ -1385,9 +1164,7 @@
                                    {
                                        @class = "w-full",
                                        @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.Tax,
-                                       //@onkeypress = "return isNumber(event)",
                                        autocomplete = "off"
-                                       //@maxLength = "30"
                                    })
                                         <span class="error">
                                             @Html.ValidationMessageFor(m => m.Tax)
@@ -1430,34 +1207,7 @@
                             </div>
                             <div class="grid  gap-4">
                                 <div class="grid grid-cols-3 gap-x-4 gap-y-5">
-                                    @*<div class="input-field-common">
-                                <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
-                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Location
-                                </label>
-                                <select id="large" class=" default_select select-common block w-full "
-                                        style="width: 100%;" name="LocationDDL">
-                                    @foreach (var item in ViewBag.LocationDDLList as IEnumerable<SelectListItem>)
-                                    {
-                                        var selectedId = ViewBag.LocationIdKey as string;
-                                        if (item.Value == selectedId)
-                                        {
-                                            <option value="@item.Value" selected>
-                                                @item.Text
-                                            </option>
-                                        }
-                                        else
-                                        {
-                                            <option value="@item.Value">
-                                                @item.Text
-                                            </option>
-                                        }
-                                    }
-                                </select>
-                                <span class="error">
-                                    @Html.ValidationMessageFor(m => m.LocationId)
-                                </span>
-                            </div>*@
-
+                                    
                                     <div class="input-field-common">
                                         <label for="instagram" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
                                             @CRS.ADMIN.APPLICATION.Resources.Resource.Longitude
@@ -1466,7 +1216,6 @@
                                    {
                                        @class = "w-full",
                                        @placeholder = CRS.ADMIN.APPLICATION.Resources.Resource.Longitude_Placeholder,
-                                       //@onkeypress = "return isNumber(event)",
                                        autocomplete = "off",
                                        @maxLength = "30"
                                    })
@@ -1483,11 +1232,9 @@
                                    {
                                        @class = "w-full",
                                        @placeholder = CRS.ADMIN.APPLICATION.Resources.Resource.Latitude_Placeholder,
-                                       //@onkeypress = "return isNumber(event)",
                                        autocomplete = "off",
                                        @maxLength = "30"
-                                   })
-                                        @*<input type="text" class="w-full" placeholder="@CRS.ADMIN.APPLICATION.Resources.Resource.Latitude_Placeholder" name="Latitude" value="@Model.Latitude">*@
+                                   })                                       
                                         <span class="error">
                                             @Html.ValidationMessageFor(m => m.Latitude)
                                         </span>
@@ -1506,7 +1253,6 @@
                                    {
                                        @class = "w-full",
                                        @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.Enter_Postal_Code,
-                                       //@onkeypress = "return isNumber(event)",
                                        autocomplete = "off",
                                        @maxLength = "30"
                                    })
@@ -1551,9 +1297,7 @@
                                    {
                                        @class = "w-full",
                                        @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.Enter_City,
-                                       //@onkeypress = "return isNumber(event)",
-                                       autocomplete = "off",
-                                       //@maxLength = "30"
+                                       autocomplete = "off"
                                    })
                                         <span class="error">
                                             @Html.ValidationMessageFor(m => m.City)
@@ -1571,9 +1315,7 @@
                                    {
                                        @class = "w-full",
                                        @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.Enter_Street,
-                                       //@onkeypress = "return isNumber(event)",
                                        autocomplete = "off",
-                                       //@maxLength = "30"
                                    })
                                         <span class="error">
                                             @Html.ValidationMessageFor(m => m.Street)
@@ -1588,7 +1330,6 @@
                                    {
                                        @class = "w-full",
                                        @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.Building___Room_No,
-                                       //@onkeypress = "return isNumber(event)",
                                        autocomplete = "off",
                                        @maxLength = "30"
                                    })
@@ -1619,11 +1360,9 @@
                                    {
                                        @class = "w-full",
                                        @placeholder = CRS.ADMIN.APPLICATION.Resources.Resource.Regular_Fee,
-                                       //@onkeypress = "return isNumber(event)",
                                        autocomplete = "off",
                                        @maxLength = "30"
                                    })
-                                        @*<input type="text" class="w-full" placeholder="@CRS.ADMIN.APPLICATION.Resources.Resource.Latitude_Placeholder" name="Latitude" value="@Model.Latitude">*@
                                         <span class="error">
                                             @Html.ValidationMessageFor(m => m.RegularFee)
                                         </span>
@@ -1637,14 +1376,12 @@
                                    {
                                        @class = "w-full",
                                        @placeholder = CRS.ADMIN.APPLICATION.Resources.Resource.Extension_Fee,
-                                       //@onkeypress = "return isNumber(event)",
                                        autocomplete = "off",
                                        @maxLength = "30"
                                    })
                                         <span class="error">
                                             @Html.ValidationMessageFor(m => m.ExtensionFee)
-                                        </span>
-                                        @*<input type="number" class="w-full" placeholder="Enter Extension Fee" name="extensionFee" required>*@
+                                        </span> 
                                         <!-- <span class="error">Validation msg</span> -->
                                     </div>
                                     <div class="input-field-common">
@@ -1655,16 +1392,13 @@
                                    {
                                        @class = "w-full",
                                        @placeholder = CRS.ADMIN.APPLICATION.Resources.Resource.Designation_Fee,
-                                       //@onkeypress = "return isNumber(event)",
                                        autocomplete = "off",
                                        @maxLength = "30"
                                    })
-                                        @*<input type="text" class="w-full" placeholder="@CRS.ADMIN.APPLICATION.Resources.Resource.Latitude_Placeholder" name="Latitude" value="@Model.Latitude">*@
                                         <span class="error">
                                             @Html.ValidationMessageFor(m => m.DesignationFee)
                                         </span>
 
-                                        @*<input type="number" class="w-full" placeholder="Enter Designation Fee" name="designationFee" required>*@
                                         <!-- <span class="error">Validation msg</span> -->
                                     </div>
                                     
@@ -1681,11 +1415,9 @@
                                    {
                                        @class = "w-full",
                                        @placeholder = CRS.ADMIN.APPLICATION.Resources.Resource.Companion_Fee,
-                                       //@onkeypress = "return isNumber(event)",
                                        autocomplete = "off",
                                        @maxLength = "30"
                                    })
-                                        @*<input type="text" class="w-full" placeholder="@CRS.ADMIN.APPLICATION.Resources.Resource.Latitude_Placeholder" name="Latitude" value="@Model.Latitude">*@
                                         <span class="error">
                                             @Html.ValidationMessageFor(m => m.CompanionFee)
                                         </span>
@@ -1699,186 +1431,19 @@
                                    {
                                        @class = "w-full",
                                        @placeholder = CRS.ADMIN.APPLICATION.Resources.Resource.Drink,
-                                       //@onkeypress = "return isNumber(event)",
                                        autocomplete = "off",
                                        @maxLength = "30"
                                    })
                                         <span class="error">
                                             @Html.ValidationMessageFor(m => m.Drink)
                                         </span>
-                                        @*<input type="text" class="w-full" placeholder="Enter Drink Fee" name="drink" required>*@
                                         <!-- <span class="error">Validation msg</span> -->
                                     </div>
                                 </div>
                             </div>
 
                             <!-- for Plan list -->
-                            @* <div class="flex gap-2 text-primary-300 text-sm font-semibold items-center mt-[10px]">
-                        <div class="flex-none uppercase">@CRS.ADMIN.APPLICATION.Resources.Resource.Plan_list</div>
-                        <div class="bg-[#F4F4F4] h-[1px] w-full">
-                        </div>
-                    </div>
-                    <div class="grid  gap-4">
-
-
-
-                        <div id="container">
-
-
-                            @for (int i = 0; i < Model.PlanDetailList.Count; i++)
-                            {
-                                var planList = Model.PlanDetailList[i];
-                                id = i + "_large";
-                                <div class="plans">
-                                    <div class="grid grid-cols-3 gap-x-4 gap-y-5">
-
-                                        @for (int j = 0; j < planList.PlanIdentityList.Count; j++)
-                                        {
-                                            var planIdentity = planList.PlanIdentityList[j];
-                                            if (@Model.PlanDetailList[i].PlanIdentityList[j].inputtype.ToLower() == "dropdown")
-                                            {
-                                                <div class="input-field-common">
-                                                    <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
-                                                        @Model.PlanDetailList[i].PlanIdentityList[j].IdentityLabel
-                                                    </label>
-                                                    @Html.HiddenFor(model => model.PlanDetailList[i].PlanIdentityList[j].name, new { @class = "name" })
-                                                    @Html.HiddenFor(model => model.PlanDetailList[i].PlanIdentityList[j].StaticDataValue, new { @class = "StaticDataValue" })
-                                                    @Html.HiddenFor(model => model.PlanDetailList[i].PlanIdentityList[j].PlanId, new { @class = "PlanId" })
-                                                    @Html.HiddenFor(model => model.PlanDetailList[i].PlanIdentityList[j].IdentityDescription, new { @class = "IdentityDescription" })
-                                                    @Html.HiddenFor(model => model.PlanDetailList[i].PlanIdentityList[j].Id, new { @class = "Id" })
-                                                    @Html.HiddenFor(model => model.PlanDetailList[i].PlanIdentityList[j].IdentityLabel, new { @class = "IdentityLabel" })
-                                                    @Html.HiddenFor(model => model.PlanDetailList[i].PlanIdentityList[j].inputtype, new { @class = "inputtype" })
-
-                                                    <select id=@id class="default_select select-common block w-full"
-                                                            style="width: 100%;" name="PlanDetailList[@i].PlanIdentityList[@j].IdentityDescription">
-                                                        @foreach (KeyValuePair<string, string> item in ViewBag.PlansList as Dictionary<string, string>)
-                                                        {
-                                                            var selectedId = Model.PlanDetailList[i].PlanIdentityList[j].PlanId;
-                                                            if (item.Value == selectedId)
-                                                            {
-                                                                <option value="@item.Key" selected>
-                                                                    @item.Value
-                                                                </option>
-                                                            }
-                                                            else
-                                                            {
-                                                                <option value="@item.Key">
-                                                                    @item.Value
-                                                                </option>
-                                                            }
-                                                        }
-                                                    </select>
-
-                                                </div>
-                                            }
-                                            else if (@Model.PlanDetailList[i].PlanIdentityList[j].inputtype.ToLower() == "textbox")
-                                            {
-                                                <div class="input-field-common">
-                                                    <label class="block mb-[12px] text-sm font-medium text-secondary-text-2">
-                                                        @Model.PlanDetailList[i].PlanIdentityList[j].IdentityLabel
-                                                    </label>
-                                                    @Html.HiddenFor(model => model.PlanDetailList[i].PlanIdentityList[j].name, new { @class = "name" })
-                                                    @Html.HiddenFor(model => model.PlanDetailList[i].PlanIdentityList[j].StaticDataValue, new { @class = "StaticDataValue" })
-                                                    @Html.HiddenFor(model => model.PlanDetailList[i].PlanIdentityList[j].PlanId, new { @class = "PlanId" })
-                                                    @Html.HiddenFor(model => model.PlanDetailList[i].PlanIdentityList[j].Id, new { @class = "Id" })
-                                                    @Html.HiddenFor(model => model.PlanDetailList[i].PlanIdentityList[j].inputtype, new { @class = "inputtype" })
-                                                    @Html.HiddenFor(model => model.PlanDetailList[i].PlanIdentityList[j].IdentityLabel, new { @class = "IdentityLabel" })
-                                                    @Html.TextBoxFor(model => model.PlanDetailList[i].PlanIdentityList[j].IdentityDescription, new
-                                               {
-                                                   @class = "w-full",
-                                                   @placeholder = Model.PlanDetailList[i].PlanIdentityList[j].IdentityLabel,
-                                                   //@onkeypress = "return isAlphabetWithSpace(event)",
-                                                   autocomplete = "off",
-                                                   @maxLength = "100"
-                                            ,
-
-                                               })
-                                                    <span class="error">
-                                                        @Html.ValidationMessageFor(model => Model.PlanDetailList[i].PlanIdentityList[j].IdentityDescription)
-                                                    </span>
-                                                </div>
-                                            }
-                                            else if (@Model.PlanDetailList[i].PlanIdentityList[j].inputtype.ToLower() == "time")
-                                            {
-                                                <div class="input-field-common">
-                                                    <label for="instagram" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
-                                                        @Model.PlanDetailList[i].PlanIdentityList[j].IdentityLabel
-                                                    </label>
-                                                    @Html.HiddenFor(model => model.PlanDetailList[i].PlanIdentityList[j].name, new { @class = "name" })
-                                                    @Html.HiddenFor(model => model.PlanDetailList[i].PlanIdentityList[j].StaticDataValue, new { @class = "StaticDataValue" })
-                                                    @Html.HiddenFor(model => model.PlanDetailList[i].PlanIdentityList[j].PlanId, new { @class = "PlanId" })
-                                                    @Html.HiddenFor(model => model.PlanDetailList[i].PlanIdentityList[j].Id, new { @class = "Id" })
-                                                    @Html.HiddenFor(model => model.PlanDetailList[i].PlanIdentityList[j].inputtype, new { @class = "inputtype" })
-                                                    @Html.HiddenFor(model => model.PlanDetailList[i].PlanIdentityList[j].IdentityLabel, new { @class = "IdentityLabel" })
-                                                    @Html.TextBoxFor(model => model.PlanDetailList[i].PlanIdentityList[j].IdentityDescription, new
-                                               {
-                                                   @class = "w-full",
-                                                   @placeholder = "HH:MM",
-                                                   //@onkeypress = "return isNumber(event)",
-                                                   autocomplete = "off",
-                                                   @maxLength = "30",
-
-                                                   @type = "time"
-                                               })
-                                                    <span class="error">
-                                                        @Html.ValidationMessageFor(model => Model.PlanDetailList[i].PlanIdentityList[j].IdentityDescription)
-                                                    </span>
-                                                    //<input type="time" class="w-full" placeholder="HH:MM" name="lastOrderTime" required>
-                                                    <!-- <span class="error">Validation msg</span> -->
-                                                </div>
-                                            }
-                                            else if (@Model.PlanDetailList[i].PlanIdentityList[j].inputtype.ToLower() == "toggle")
-                                            {
-                                                <div class="toogle-common">
-                                                    <label class="relative inline-flex items-center cursor-pointer">
-                                                        @Html.HiddenFor(model => model.PlanDetailList[i].PlanIdentityList[j].name, new { @class = "name" })
-                                                        @Html.HiddenFor(model => model.PlanDetailList[i].PlanIdentityList[j].StaticDataValue, new { @class = "StaticDataValue" })
-                                                        @Html.HiddenFor(model => model.PlanDetailList[i].PlanIdentityList[j].PlanId, new { @class = "PlanId" })
-                                                        @Html.HiddenFor(model => model.PlanDetailList[i].PlanIdentityList[j].Id, new { @class = "Id" })
-                                                        @Html.HiddenFor(model => model.PlanDetailList[i].PlanIdentityList[j].inputtype, new { @class = "inputtype" })
-                                                        @Html.HiddenFor(model => model.PlanDetailList[i].PlanIdentityList[j].IdentityLabel, new { @class = "IdentityLabel" })
-                                                        @Html.HiddenFor(model => model.PlanDetailList[i].PlanIdentityList[j].IdentityDescription, new { @class = "IdentityDescription" })
-                                                        <input type="checkbox" value="@Model.PlanDetailList[i].PlanIdentityList[j].IdentityDescription" name="PlanDetailList[@i].PlanIdentityList[@j].IdentityDescription" class="sr-only peer" id="toogle1">
-                                                        <div class="w-7 h-4 bg-white rounded-full border border-[#A6A6A6] peer peer-focus:ring-4 peer-focus:ring-blue-300 peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[3.8px] after:left-[2px] after:border-[#A6A6A6] after:bg-[#A6A6A6] after:border after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:after:border-white peer-checked:border-secondary-color-pink peer-checked:bg-secondary-color-pink peer-checked:after:bg-white">
-                                                        </div>
-                                                        <span class="pl-2 text-sm font-medium text-secondary-100">
-                                                            @Model.PlanDetailList[i].PlanIdentityList[j].IdentityLabel
-                                                        </span>
-                                                    </label>
-                                                </div>
-
-                                            }
-                                        }
-
-
-                                    </div>
-
-
-                                </div>
-
-                            }
-
-                            <br />
-
-                            <!-- for max reservation code -->
-
-
-                        </div>
-
-
-                        <div id="originalContent">
-
-                        </div>
-
-
-                        <div class="flex gap-2 text-primary-300 text-sm font-semibold items-center mt-[10px]">
-                            <!-- <div class="flex-none uppercase">plan fee</div> -->
-                            <div class="bg-[#F4F4F4] h-[1px] w-full">
-                            </div>
-                        </div>
-
-
-                    </div>*@
+                           
                         </div>
                     </div>
                     <div class="flex justify-between ">
@@ -1917,9 +1482,6 @@
 
 
 
-
-
-
 <style>
     .select2-container--default .select2-selection--single {
         height: 44px !important;
@@ -1929,10 +1491,7 @@
         height: 44px !important;
         overflow-y: auto;
     }
-    /*.select2-search__field {
-        padding-left: 20px;
-        padding-top: 6px;*/ /* Center align the placeholder text */
-    /*}*/
+
     .select2-container--default .select2-search--inline .select2-search__field {
         width: 259px !important;
         padding-left: 20px;

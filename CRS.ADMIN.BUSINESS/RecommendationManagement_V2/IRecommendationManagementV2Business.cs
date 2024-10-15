@@ -28,6 +28,7 @@ namespace CRS.ADMIN.BUSINESS.RecommendationManagement_V2
         List<MainPageHostListForUpdateCommon> MainPageHostRecommendationReqForUpdate(string RecommendationHoldId, string clubId, string displayIdHold, string locationId);
         ManageClubRecommendationRequestCommon MainPageRecommendationReqForUpdate(string clubId, string displayIdHold, string locationId);
         CommonDbResponse ManageGroup(ManageGroupCommon commonModel);
+        CommonDbResponse DeleteGroup(string groupid, string locationid, Common commonRequest);
         CommonDbResponse ManageHomePageRequest(ManageHomePageRequestCommon commonModel);
         CommonDbResponse ManageMainPageRequest(ManageClubRecommendationRequestCommon commonModel);
         CommonDbResponse ManageSearchPageRequest(ManageSearchPageRequestCommon commonModel);

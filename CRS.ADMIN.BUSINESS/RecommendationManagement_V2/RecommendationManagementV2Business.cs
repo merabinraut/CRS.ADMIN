@@ -122,6 +122,10 @@ namespace CRS.ADMIN.BUSINESS.RecommendationManagement_V2
         {
             return _repo.ManageGroup(commonModel);
         }
+        public CommonDbResponse DeleteGroup(string groupid, string locationid, Common commonRequest)
+        {
+            return _repo.DeleteGroup(groupid, locationid, commonRequest);
+        }
 
         public CommonDbResponse ManageHomePageRequest(ManageHomePageRequestCommon commonModel)
         {

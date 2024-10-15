@@ -164,9 +164,17 @@
                                 </td>
                                 <td class="p-[12px]">
                                     <div class="flex gap-2 items-center justify-center">
+
+
+                                        @if (item.TotalClubs == "0")
+                                        {
+
+                                            <i class="las la-trash-alt text-[24px] text-[#CB3F3F] cursor-pointer" onclick="DeleteGroup('@item.GroupId')"></i>
+
+                                        }
                                         <i class="las la-eye text-[24px] text-[#e3ab00] cursor-pointer" onclick="GotoClubRecommendation('@item.GroupId')"></i>
                                     </div>
-                                </td>
+                                    </td>
                             </tr>
                             sno++;
                         }
@@ -371,6 +379,25 @@
         function GotoClubRecommendation(groupid) {
             window.location.href = "/RecommendationManagementV2/ClubListForMainPage?groupid=" + groupid + "&locationid=" + '@ViewBag.LocationId';
         }
+
+        function DeleteGroup(groupid) {
+            $.ajax({
+                type: 'POST',
+                async: true,
+                url: "/RecommendationManagementV2/DeleteGroup?groupid=" + groupid + "&locationid=" + '@ViewBag.LocationId',
+                dataType: 'json',
+                data: {
+                    __RequestVerificationToken: $('input[name="__RequestVerificationToken"]').val(),
+                },
+                success: function (responseData) {
+                    window.location.reload();
+                },
+                error: function (ex) {
+
+                }
+            });
+        }
+    
     </script>
 }
 

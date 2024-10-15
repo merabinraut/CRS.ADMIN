@@ -181,6 +181,18 @@
                                         <i class="las la-edit text-[20px] cursor-pointer text-[#A6A6A6]" onclick="ManageClubGetDetailsFunction('@item.AgentId');"></i>
                                         <img src="/Content/assets/images/manager-setting.svg" onclick="ManageClubManagerFunction('@item.AgentId');">
                                         <i class="las la-tag text-[20px] cursor-pointer text-[#C8B477]" onclick="ManageClubTagFunction('@item.AgentId');"></i>
+                                        if (!string.IsNullOrEmpty(@item.Status) && @item.Status.ToUpper() == "A")
+                                        {
+                                            <div onclick="openBlockEventModal('@item.AgentId')" data-modal-target="block-confirmation" data-modal-toggle="block-confirmation">
+                                                <i class="fa-solid fa-lock text-primary-100 cursor-pointer" ></i>
+                                            </div>
+                                        }
+                                        else if (!string.IsNullOrEmpty(@item.Status) && @item.Status.ToUpper() == "B")
+                                        {
+                                            <div onclick="openUnBlockEventModal('@item.AgentId')" data-modal-target="unblock-confirmation" data-modal-toggle="unblock-confirmation">
+                                                <i class="fa-solid fa-unlock text-primary-100 cursor-pointer"></i>
+                                            </div>
+                                        }
                                         <i class=" las la-trash-alt text-[20px] cursor-pointer text-[#CB3F3F]" onclick="openDeleteClubModal('@item.AgentId');" data-modal-target="delete-club-confirmation" data-modal-toggle="delete-club-confirmation"></i>
                                         <i class="las la-key text-[24px] text-[#C8B477] cursor-pointer" onclick="openResetCustomerPasswordModal('@item.ClubNameEng','@item.AgentId')" data-name="@item.ClubNameEng" data-id="@item.AgentId" data-modal-target="reset-customer-passwordconfirmation" data-modal-toggle="reset-customer-passwordconfirmation"></i>
                                         <img src="/Content/assets/images/notice.svg" alt="plan" class="cursor-pointer h-[20px] aspect-square" onclick="PlanRedirectFunction('@item.AgentId');" data-drawer-target="add-new-plan-tag" data-drawer-show="add-new-plan-tag" data-drawer-placement="right" data-drawer-backdrop="false" aria-controls="drawer-disabled-backdrop">

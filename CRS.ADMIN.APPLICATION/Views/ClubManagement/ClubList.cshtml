@@ -312,7 +312,81 @@
         </div>
     </div>
 </div>
-<!--Accept Reject Modal For club-->
+<!--block unblock Reject Modal For club-->
+<div id="unblock-confirmation" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 hidden w-full
+     p-4 overflow-x-hidden overflow-y-auto
+     md:inset-0 h-[calc(100%-1rem)] max-h-full " style="align-items: flex-start;">
+    <div class="relative max-w-2xl max-h-full w-[412px] px-4 pt-[40px] pb-[46px] mt-24">
+        <!-- Modal content -->
+        <div class="relative bg-white rounded-lg shadow">
+            <!-- Modal header -->
+            <button type="button"
+                    class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center absolute top-[24px] right-[20px] "
+                    data-modal-hide="unblock-confirmation">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="25" viewBox="0 0 24 25" fill="none">
+                    <rect y="0.621094" width="24" height="24" rx="12" fill="#FAFAFA" />
+                    <path d="M5.41406 4.95703L4.33594 6.03516L10.9219 12.6211L4.33594 19.207L5.41406 20.2852L12 13.6992L18.5859 20.2852L19.6641 19.207L13.0781 12.6211L19.6641 6.03516L18.5859 4.95703L12 11.543L5.41406 4.95703Z"
+                          fill="#7A7A7A" />
+                </svg>
+            </button>
+            <!-- Modal body -->
+            <div class="grid gap-6 px-[20px] py-8">
+                <div class="text-[#333] font-semibold pb-[11px] border-b border-[#eeeeee]">@CRS.ADMIN.APPLICATION.Resources.Resource.Confirmation</div>
+                <div class="grid gap-[20px] text-[#062937] mb-[45px]">
+                    <div class="text-[14px] text-secondary-text-2 text-start" id="confirmationMessage">
+                        @CRS.ADMIN.APPLICATION.Resources.Resource.Are_you_sure_you_want_to_unblock_this_club
+                    </div>
+                </div>
+                <div class="flex justify-end">
+                    <div class="flex gap-2 justify-end mt-[45px]">
+                        <input id="request_id" value="" hidden />
+                        <div class="btn btn-secondary w-[110px]" data-modal-hide="unblock-confirmation">@CRS.ADMIN.APPLICATION.Resources.Resource.clubNo</div>
+                        <div class="btn btn-primary w-[110px]" onclick="UnBlockEvent()" data-val1="" data-val2="" id="unblock_id">@CRS.ADMIN.APPLICATION.Resources.Resource.clubYes</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div id="block-confirmation" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 hidden w-full 
+     p-4 overflow-x-hidden overflow-y-auto
+     md:inset-0 h-[calc(100%-1rem)] max-h-full " style="align-items: flex-start; ">
+    <div class="relative max-w-2xl max-h-full w-[412px] px-4 pt-[40px] pb-[46px] mt-24">
+        <!-- Modal content -->
+        <div class="relative bg-white rounded-lg shadow">
+            <!-- Modal header -->
+            <button type="button"
+                    class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center absolute top-[24px] right-[20px] "
+                    data-modal-hide="block-confirmation">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="25" viewBox="0 0 24 25" fill="none">
+                    <rect y="0.621094" width="24" height="24" rx="12" fill="#FAFAFA" />
+                    <path d="M5.41406 4.95703L4.33594 6.03516L10.9219 12.6211L4.33594 19.207L5.41406 20.2852L12 13.6992L18.5859 20.2852L19.6641 19.207L13.0781 12.6211L19.6641 6.03516L18.5859 4.95703L12 11.543L5.41406 4.95703Z"
+                          fill="#7A7A7A" />
+                </svg>
+            </button>
+            <!-- Modal body -->
+            <div class="grid gap-6 px-[20px] py-8">
+                <div class="text-[#333] font-semibold pb-[11px] border-b border-[#eeeeee]">@CRS.ADMIN.APPLICATION.Resources.Resource.Confirmation</div>
+                <div class="grid gap-[20px] text-[#062937] mb-[45px]">
+                    <div class="text-[14px] text-secondary-text-2 text-start" id="confirmationMessage">
+                        @CRS.ADMIN.APPLICATION.Resources.Resource.Are_you_sure_you_want_to_block_this_club
+                    </div>
+                </div>
+                <div class="flex justify-end">
+                    <div class="flex gap-2 justify-end mt-[45px]">
+                        <input id="request_id" value="" hidden />
+                        <div class="btn btn-secondary w-[110px]" data-modal-hide="block-confirmation">@CRS.ADMIN.APPLICATION.Resources.Resource.clubNo</div>
+                        <div class="btn btn-primary w-[110px]" onclick="BlockEvent()" data-val1="" data-val2="" id="block_id">@CRS.ADMIN.APPLICATION.Resources.Resource.clubYes</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- block and unblock -->
 @Html.Partial("_ManageClubPartialView", _ManageClubModel)
 @Html.Partial("_ClubHoldDetailPartialView", _ClubHoldModel)
 @section scripts
@@ -354,7 +428,7 @@
      // Set the message content in the modal
      confirmationMessageElement.textContent = ` ${name} , @CRS.ADMIN.APPLICATION.Resources.Resource.password_reset_confirmation ? `;
      // Open the modal
-         const modal = document.getElementById("reset-customer-passwordconfirmation");
+     const modal = document.getElementById("reset-customer-passwordconfirmation");
      modal.classList.remove("hidden");
      $('#reset_customer_id').attr('data-val', agentid);
      modal.setAttribute("aria-hidden", "false");
@@ -388,9 +462,9 @@
        const modalTarget = document.querySelector("[data-modal-target='delete-club-confirmation']");
        const modal = document.getElementById("delete-club-confirmation");
        modal.classList.remove("hidden");
-           $('#delete_club_id').attr('data-val', agentid);
+       $('#delete_club_id').attr('data-val', agentid);
        modal.setAttribute("aria-hidden", "false");
-        }
+    }
 
     function DeleteFunction() {
         const id = $('#delete_club_id').attr('data-val');
@@ -401,7 +475,7 @@
 
         $.ajax({
              type: "POST",
-             url: '@Url.Action("BlockClub", "ClubManagement")',
+             url: '@Url.Action("DeleteClub", "ClubManagement")',
              data: {
                  '__RequestVerificationToken': RequestVerificationToken, 'AgentId': id},
             success: function (response) {
@@ -413,8 +487,70 @@
                 //window.location.reload();
              }
          })
-    }
+        }
 
+      function openBlockEventModal(agentid) {
+      const modalTarget = document.querySelector("[data-modal-target='block-confirmation']");
+      const modal = document.getElementById("block-confirmation");
+      modal.classList.remove("hidden");
+      $('#block_id').attr('data-val1', agentid);
+      $('#block_id').attr('data-val2', 'B');
+      modal.setAttribute("aria-hidden", "false");
+     }
+     function openUnBlockEventModal(agentid) {
+     const modalTarget = document.querySelector("[data-modal-target='unblock-confirmation']");
+      const modal = document.getElementById("unblock-confirmation");
+      modal.classList.remove("hidden");
+      $('#unblock_id').attr('data-val1', agentid);
+      $('#unblock_id').attr('data-val2', 'A');
+      modal.setAttribute("aria-hidden", "false");
+     }
+    function BlockEvent() {
+     const id = $('#block_id').attr('data-val1');
+     const Status = $('#block_id').attr('data-val2');
+     var RequestVerificationToken = $('input[name="__RequestVerificationToken"]').val();
+     let search_filter = $('#default-search').val();
+     const start_index_val = @ViewBag.StartIndex;
+     const page_size = @ViewBag.PageSize;
+
+     $.ajax({
+          type: "POST",
+          url: '@Url.Action("BlockClub", "ClubManagement")',
+          data: {
+              '__RequestVerificationToken': RequestVerificationToken, 'AgentId': id,'Status':Status},
+         success: function (response) {
+             window.location.href = '/ClubManagement/ClubList?SearchFilter=' + search_filter + '&StartIndex=' + start_index_val + '&PageSize=' + page_size  ;
+             //window.location.reload();
+          },
+         error: function (error) {
+             window.location.href = '/ClubManagement/ClubList?SearchFilter=' + search_filter + '&StartIndex=' + start_index_val + '&PageSize=' + page_size;
+             //window.location.reload();
+          }
+      })
+        }
+    function UnBlockEvent() {
+    const id = $('#unblock_id').attr('data-val1');
+    const Status = $('#unblock_id').attr('data-val2');
+    var RequestVerificationToken = $('input[name="__RequestVerificationToken"]').val();
+    let search_filter = $('#default-search').val();
+    const start_index_val = @ViewBag.StartIndex;
+    const page_size = @ViewBag.PageSize;
+
+    $.ajax({
+         type: "POST",
+         url: '@Url.Action("UnBlockClub", "ClubManagement")',
+         data: {
+             '__RequestVerificationToken': RequestVerificationToken, 'AgentId': id,'Status':Status},
+        success: function (response) {
+            window.location.href = '/ClubManagement/ClubList?SearchFilter=' + search_filter + '&StartIndex=' + start_index_val + '&PageSize=' + page_size  ;
+            //window.location.reload();
+         },
+        error: function (error) {
+            window.location.href = '/ClubManagement/ClubList?SearchFilter=' + search_filter + '&StartIndex=' + start_index_val + '&PageSize=' + page_size;
+            //window.location.reload();
+         }
+     })
+    }
     </script>
     <script>
         const checkbox = document.getElementById('tag1');
@@ -566,6 +702,7 @@
     </script>
     <script>
         $(document).ready(function () {
+            debugger;
             var commaSeparatedString = "";
             if ($("#holdId").val() != "" || $("#AgentId").val() != "") {
                 var Value = $('#large[name="IdentificationType"]').find("option:selected").text().trim();
