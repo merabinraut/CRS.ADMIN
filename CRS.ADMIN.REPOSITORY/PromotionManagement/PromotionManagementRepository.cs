@@ -118,6 +118,7 @@ namespace CRS.ADMIN.REPOSITORY.PromotionManagement
                         DisplayOrder = item["DisplayOrder"].ToString(),
                         ImagePath = item["ImgPath"].ToString(),
                         IsDeleted = item["IsDeleted"].ToString(),
+                        Status = item["Status"].ToString(),
                         ActionUser = item["ActionUser"].ToString(),
                         ActionDate = !string.IsNullOrEmpty(item["ActionDate"].ToString()) ? DateTime.Parse(item["ActionDate"].ToString()).ToString("yyyy'年'MM'月'dd'日' HH:mm:ss") : item["ActionDate"].ToString(),
                         TotalRecords = Convert.ToInt32(_dao.ParseColumnValue(item, "TotalRecords").ToString()),
@@ -143,6 +144,7 @@ namespace CRS.ADMIN.REPOSITORY.PromotionManagement
                     Description = dbResp.Rows[0]["ImgDescription"]?.ToString(),
                     ImagePath = dbResp.Rows[0]["ImgPath"]?.ToString(),
                     IsDeleted = dbResp.Rows[0]["IsDeleted"]?.ToString(),
+                    Status = dbResp.Rows[0]["Status"]?.ToString(),
                     Link = dbResp.Rows[0]["Link"]?.ToString(),
                     DisplayOrder = dbResp.Rows[0]["DisplayOrder"]?.ToString(),
                 };
@@ -159,6 +161,16 @@ namespace CRS.ADMIN.REPOSITORY.PromotionManagement
             sql += ",@ActionUser=" + _dao.FilterString(promotion.ActionUser);
             sql += ",@ActionIP=" + _dao.FilterString(promotion.IpAddress);
             sql += ",@Link=" + _dao.FilterString(promotion.Link);
+            return _dao.ParseCommonDbResponse(sql);
+        }
+        public CommonDbResponse BlockUnblockAdvertisementImage(AdvertisementDetailCommon promotion)
+        {
+            var sql = "Exec sproc_advertisement_management";
+            sql += " @Flag='bu'";
+            sql += ",@Id=" + _dao.FilterString(promotion.Id);
+            sql += ",@Status=" + _dao.FilterString(promotion.Status);
+            sql += ", @ActionUser=" + _dao.FilterString(promotion.ActionUser);
+            sql += ", @ActionIP=" + _dao.FilterString(promotion.ActionIP);
             return _dao.ParseCommonDbResponse(sql);
         }
     }

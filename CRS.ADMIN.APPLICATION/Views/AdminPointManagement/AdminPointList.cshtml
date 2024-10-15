@@ -1,0 +1,329 @@
+﻿@model CRS.ADMIN.APPLICATION.Models.AdminPointManagement.AdminPointManagementModel
+@{
+    ViewBag.Title = "Admin Point List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var _ManageAdminPointModel = Model.ManagePointRequest as CRS.ADMIN.APPLICATION.Models.AdminPointManagement.ManagePointRequestModel;
+}
+<style>
+    .filterborder {
+        outline: 1px solid #d0d5dd;
+        border-radius: 0;
+    }
+
+    .filteroutlinepadding {
+        padding-left: 18px;
+        padding-top: 18px;
+        padding-right: 18px;
+    }
+</style>
+<link href="~/Content/css/jquery-ui.min.css" rel="stylesheet" />
+
+
+<div class="px-8 py-4">
+    @Html.AntiForgeryToken()
+    <!-- title  -->
+    <div class="flex flex-col  gap-6">
+        <div>
+            <div class="heading-title">
+                Admin Point Management
+            </div>
+            @*<div class="span-title-light-gray">
+                    @CRS.ADMIN.APPLICATION.Resources.Resource.Club_Management_Supporting_Text
+                </div>*@
+        </div>
+        <div id="tab1" class="tab-content-plane">
+            <div class="flex flex-col gap-8">
+                <div id="tab1" class="tab-content">
+                    <form action="/AdminPointManagement/AdminPointList" method="get">
+                        <div class="flex justify-between pb-[24px]">
+
+
+                            <div class="relative input-search-wrapper">
+                                <div class="absolute inset-y-0 left-0 flex items-center pl-[16px] pointer-events-none">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21" fill="none">
+                                        <path d="M17.5 18L13.875 14.375M15.8333 9.66667C15.8333 13.3486 12.8486 16.3333 9.16667 16.3333C5.48477 16.3333 2.5 13.3486 2.5 9.66667C2.5 5.98477 5.48477 3 9.16667 3C12.8486 3 15.8333 5.98477 15.8333 9.66667Z"
+                                              stroke="#667085" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round" />
+                                    </svg>
+                                </div>
+
+                                <input type="search"
+                                       id="default-search"
+                                       class="input-search block w-full "
+                                       placeholder="@CRS.ADMIN.APPLICATION.Resources.Resource.Search"
+                                       value="@Model.searchFilter"
+                                       name="SearchFilter">
+                            </div>
+
+                            <div class="flex gap-6">
+                                <div class="btn btn-primary gap-[8px] h-[40px]" data-drawer-target="add-admin-points-request"
+                                     data-drawer-show="add-admin-points-request" data-drawer-placement="right" data-drawer-backdrop="false"
+                                     aria-controls="drawer-disabled-backdrop" id="add-new-id">
+                                    <img src="~/Content/assets_new/images/plus-circle-solid.svg" />
+                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Add_New
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-3 gap-x-6 table-tab filteroutlinepadding">
+
+
+                            <div class="input-field-common mb-[20px]" id="tagInput1">
+                                <div class="input-field-common filteroutlinepadding">
+                                    <label for="date" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                                        @CRS.ADMIN.APPLICATION.Resources.Resource.From_Date
+                                    </label>
+                                    @Html.TextBoxFor(model => model.fromDate, new
+                                   {
+                                   @class = "w-full",
+                                   @placeholder = "YYYY/MM/DD",
+                                   @autocomplete = "off",
+                                   @type = "text",
+                                     @readonly = "readonly"
+                                      })
+                                    <span class="error">
+                                        @Html.ValidationMessageFor(m => m.fromDate)
+                                    </span>
+                                </div>
+                            </div>
+                             <div class="input-field-common mb-[20px]" id="tagInput2">
+                                <div class="input-field-common filteroutlinepadding">
+                                    <label for="date" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                                        @CRS.ADMIN.APPLICATION.Resources.Resource.To_Date
+                                    </label>
+                                    @Html.TextBoxFor(model => model.toDate, new
+                               {
+                                   @class = "w-full",
+                                   @placeholder = "YYYY/MM/DD",
+                                   @autocomplete = "off",
+                                   @type = "text",
+                                    @readonly = "readonly"
+                                      })
+                                    <span class="error">
+                                        @Html.ValidationMessageFor(m => m.toDate)
+                                    </span>
+                                </div>
+                            </div>
+
+                             <div>
+                                 <div class="py-12 flex justify-end">
+                                     <div class="flex gap-4">
+                                         <button class="btn btn-secondary rounded-[4px]" type="button" data-drawer-hide="add-new-points-request"
+                                                 aria-controls="add-new-points-request" onclick="CancelFunction();">
+                                             @CRS.ADMIN.APPLICATION.Resources.Resource.Cancel
+                                         </button>
+                                         <button class="btn btn-primary-default rounded-[4px]" type="submit"> @CRS.ADMIN.APPLICATION.Resources.Resource.Apply</button>
+                                     </div>
+
+                                 </div>
+                             </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="table-tab">
+            <div class="px-[16px] py-[12px] flex justify-between entry-export-container">
+                <div class="flex items-center select-entries" id="ShowEntries-Id">
+                </div>
+
+            </div>
+
+            <div class="relative overflow-x-auto">
+
+                <table class="w-full  text-left club-table" id="table-id">
+                    <thead class="club-table-thead">
+                        <tr>
+                            <th scope="col" class="p-[12px]">
+                                <div class="flex  w-max">
+                                    S.N
+                                    <div class="relative pl-[5px]">
+                                        <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                        <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                    </div>
+                                </div>
+                            </th>
+                            <th scope="col" class="p-[12px]">
+                                <div class="flex  w-max">
+                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Transaction_ID
+                                    <div class="relative pl-[5px]">
+                                        <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                        <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                    </div>
+                                </div>
+                            </th>
+
+
+                            <th scope="col" class="p-[12px]">
+                                <div class="flex  w-max">
+                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Points
+                                    <div class="relative pl-[5px]">
+                                        <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                        <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                    </div>
+                                </div>
+                            </th>
+                            <th scope="col" class="p-[12px]">
+                                <div class="flex  w-max">
+                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Remarks
+                                    <div class="relative pl-[5px]">
+                                        <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                        <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                    </div>
+                                </div>
+                            </th>
+                            <th scope="col" class="p-[12px]">
+                                <div class="flex  w-max">
+                                    @CRS.ADMIN.APPLICATION.Resources.Resource.CreatedDate
+                                    <div class="relative pl-[5px]">
+                                        <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                        <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                    </div>
+                                </div>
+                            </th>
+
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            int SN = 1;
+                            foreach (var item in Model.PointRequestDetailList)
+                            {
+                                <tr class="bg-white border-b ">
+                                    <td class="p-[12px]">
+                                        @SN
+                                    </td>
+
+                                    <td class="p-[12px]">
+                                        @item.txnId
+                                    </td>
+
+                                    <td class="p-[12px]">
+                                        @item.point
+                                    </td>
+                                    <td class="p-[12px]">
+                                        @item.remarks
+                                    </td>
+                                    <td class="p-[12px]">
+                                        @item.txnDate
+                                    </td>
+                                </tr>
+                                SN++;
+                            }
+                        }
+                    </tbody>
+                </table>
+
+
+
+
+            </div>
+            <div class="pagination-club">
+                <div class="show-entry" id="Entries-Id">
+                </div>
+                <div class="flex gap-[12px]">
+                    <div class="btn btn-secondary-box-shadow" id="prev-btn">
+                        @CRS.ADMIN.APPLICATION.Resources.Resource.Previous
+                    </div>
+                    <div class="flex gap-[12px]" id="pagination-id">
+                    </div>
+                    <div class="btn btn-secondary-box-shadow" id="next-btn">
+                        @CRS.ADMIN.APPLICATION.Resources.Resource.Next
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- drawer component -->
+        @Html.Partial("_ManageAdminPointPartialView", _ManageAdminPointModel)
+    </div>
+</div>
+<link href="https://cdn.syncfusion.com/ej2/material.css" rel="stylesheet">
+
+
+@section scripts
+{
+    <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
+    <script>
+      
+      document.addEventListener('DOMContentLoaded', function () {
+        $("#fromDate").val("@Model.fromDate");
+             jQuery(function ($) {
+             $.datepicker.regional['ja'] = {
+             closeText: '閉じる',
+             prevText: '&#x3c;前',
+             nextText: '次&#x3e;',
+             currentText: '今日',
+             monthNames: ['1月', '2月', '3月', '4月', '5月', '6月',
+             '7月', '8月', '9月', '10月', '11月', '12月'],
+             monthNamesShort: ['1月', '2月', '3月', '4月', '5月', '6月',
+             '7月', '8月', '9月', '10月', '11月', '12月'],
+             dayNames: ['日曜日', '月曜日', '火曜日', '水曜日', '木曜日', '金曜日', '土曜日'],
+             dayNamesShort: ['日', '月', '火', '水', '木', '金', '土'],
+             dayNamesMin: ['日', '月', '火', '水', '木', '金', '土'],
+             weekHeader: '週',
+             dateFormat: 'yy/mm/dd',
+             firstDay: 0,
+             isRTL: false,
+             showMonthAfterYear: true,
+             yearSuffix: '年'
+             };
+             $.datepicker.setDefaults($.datepicker.regional['ja']);
+             $("#fromDate").datepicker({
+             /*minDate: new Date(),*/
+                 /*   maxDate: new Date(),*/
+             maxDate: new Date(),
+                 defaultDate: '@Model.fromDate',
+                 onSelect: function (selectedDate) {
+                     var fromDate = $(this).datepicker('getDate');
+                     var toDate = $("#toDate").datepicker('getDate');
+                     $("#toDate").datepicker("option", "minDate", selectedDate);
+                     if (toDate===null || ( toDate && fromDate > toDate)) {
+                         var today = $.datepicker.formatDate('yy/mm/dd', new Date());
+                         $("#toDate").val(today);
+                        
+                     }
+                     
+                    
+                 }
+             });
+          });
+
+
+        $("#toDate").val("@Model.toDate");
+           jQuery(function ($) {
+           $.datepicker.regional['ja'] = {
+           closeText: '閉じる',
+           prevText: '&#x3c;前',
+           nextText: '次&#x3e;',
+           currentText: '今日',
+           monthNames: ['1月', '2月', '3月', '4月', '5月', '6月',
+           '7月', '8月', '9月', '10月', '11月', '12月'],
+           monthNamesShort: ['1月', '2月', '3月', '4月', '5月', '6月',
+           '7月', '8月', '9月', '10月', '11月', '12月'],
+           dayNames: ['日曜日', '月曜日', '火曜日', '水曜日', '木曜日', '金曜日', '土曜日'],
+           dayNamesShort: ['日', '月', '火', '水', '木', '金', '土'],
+           dayNamesShort: ['日', '月', '火', '水', '木', '金', '土'],
+           dayNamesMin: ['日', '月', '火', '水', '木', '金', '土'],
+           weekHeader: '週',
+           dateFormat: 'yy/mm/dd',
+           firstDay: 0,
+           isRTL: false,
+           showMonthAfterYear: true,
+           yearSuffix: '年'
+           };
+           $.datepicker.setDefaults($.datepicker.regional['ja']);
+           $("#toDate").datepicker({
+               maxDate: new Date(),
+               defaultDate: '@Model.toDate'
+           });
+        });
+      });
+
+    </script>
+
+
+}

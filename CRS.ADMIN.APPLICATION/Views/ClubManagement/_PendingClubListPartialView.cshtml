@@ -1,0 +1,211 @@
+@model CRS.ADMIN.APPLICATION.Models.ClubManagement.ClubManagementCommonModel
+<div class="flex justify-between pb-[24px]">
+    @Html.HiddenFor(model => model.ListType)
+    <form action="/ClubManagement/ClubList" method="get">
+
+        <input name="TabValue" id="valueTypeid" type="hidden" />
+        <div class="relative input-search-wrapper">
+            <div class="absolute inset-y-0 left-0 flex items-center pl-[16px] pointer-events-none">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21" fill="none">
+                    <path d="M17.5 18L13.875 14.375M15.8333 9.66667C15.8333 13.3486 12.8486 16.3333 9.16667 16.3333C5.48477 16.3333 2.5 13.3486 2.5 9.66667C2.5 5.98477 5.48477 3 9.16667 3C12.8486 3 15.8333 5.98477 15.8333 9.66667Z"
+                          stroke="#667085" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+            </div>
+            <input type="search"
+                   id="default-search-pending"
+                   class="input-search block w-full "
+                   placeholder="@CRS.ADMIN.APPLICATION.Resources.Resource.Search"
+                   value="@Model.SearchFilter"
+                   name="SearchFilter">
+        </div>
+    </form>
+
+</div>
+
+
+<div class="table-tab">
+    <div class="px-[12px] py-[16px] flex justify-between entry-export-container">
+        <div class="flex items-center select-entries" id="ShowEntries-Id-2">
+        </div>
+    </div>
+    <div class="relative overflow-x-auto">
+        <table class="w-full text-left club-table" id="table-id">
+            <thead class="club-table-thead">
+                <tr>
+                    <th scope="col" class="p-[12px]">
+                        <div class="flex w-max">
+                            S.N
+                            <div class="relative pl-[5px]">
+                                <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                            </div>
+                        </div>
+                    </th>
+                    <th scope="col" class="p-[12px]">
+                        <div class="flex w-max">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Club_Profile
+                            <div class="relative pl-[5px]">
+                                <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                            </div>
+                        </div>
+                    </th>
+
+                    <th scope="col" class="p-[12px]">
+                        <div class="flex w-max">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Phone_Number
+                            <div class="relative pl-[5px]">
+                                <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                            </div>
+                        </div>
+                    </th>
+                    <th scope="col" class="p-[12px]">
+                        <div class="flex w-max">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Location
+                            <div class="relative pl-[5px]">
+                                <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                            </div>
+                        </div>
+                    </th>
+
+                    <th scope="col" class="p-[12px]">
+                        <div class="flex w-max">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Created_On
+                            <div class="relative pl-[5px]">
+                                <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                            </div>
+                        </div>
+                    </th>
+                    <th scope="col" class="p-[12px]">
+                        <div class="flex  w-max ">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Updated_On
+                            <div class="relative pl-[5px]">
+                                <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                            </div>
+                        </div>
+                    </th>
+                    <th scope="col" class="p-[12px] flex justify-center">
+                        <div class="flex w-max justify-center">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Action
+                            <div class="relative pl-[5px]">
+                                <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                            </div>
+                        </div>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    int SNP = 1;
+                    foreach (var item in Model.ClubPendingListModel)
+                    {
+                        <tr class="bg-white border-b ">
+                            <td class="p-[12px]">
+                                @SNP
+                            </td>
+                            <td class="p-[12px]">
+                                <div class="round-image-text flex gap-[12px] w-max">
+                                    <img class="w-[32px] h-[32px] rounded-full" src="@item.ClubLogo" />
+
+                                    <div class="flex justify-between w-full">
+                                        <div class="text-image grid flex-none ">
+                                            <div class="text-sm font-semibold text-[#101828] ">@item.ClubNameEng</div>
+                                            @if (!string.IsNullOrEmpty(item.ClubCategory))
+                                            {
+                                                <div class="@item.ClubCategory.ToLower()">
+                                                    @item.ClubCategory.ToUpper()
+                                                </div>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="p-[12px]">
+                                @item.MobileNumber
+                            </td>
+
+                            <td class="p-[12px]">
+                                <div class="w-max">
+                                    @item.Location
+                                </div>
+                            </td>
+                            <td class="p-[12px]">
+                                <div class="w-max">
+                                    @item.CreatedDate
+                                </div>
+                            </td>
+                            <td class="p-[12px]">
+                                <div class="w-max">
+                                    @item.UpdatedDate
+                                </div>
+                            </td>
+                            <td class="p-[12px]">
+                                <div class="flex gap-[7px]">
+                                    @*<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                            <path d="M18.75 3.02344C18.1758 3.02344 17.6133 3.24609 17.1797 3.67969L9.75 11.0859L9.58594 11.25L9.53906 11.4844L9.02344 14.1094L8.78906 15.2109L9.89062 14.9766L12.5156 14.4609L12.75 14.4141L12.9141 14.25L20.3203 6.82031C21.1846 5.95605 21.1846 4.54395 20.3203 3.67969C19.8867 3.24609 19.3242 3.02344 18.75 3.02344ZM18.75 4.47656C18.9258 4.47656 19.0986 4.56738 19.2656 4.73438C19.5996 5.06836 19.5996 5.43164 19.2656 5.76562L12 13.0312L10.7109 13.2891L10.9688 12L18.2344 4.73438C18.4014 4.56738 18.5742 4.47656 18.75 4.47656ZM3 6V21H18V11.1094L16.5 12.6094V19.5H4.5V7.5H11.3906L12.8906 6H3Z" fill="#989898" />
+                                        </svg>*@
+                                    @if (item.ActionPlatform.ToLower() == "club")
+                                    {
+                                        <i class="las la-eye text-[20px] cursor-pointer text-[#A6A6A6]" onclick="EditClubHoldDetail('@item.SNO');"></i>
+
+                                    }
+                                    else
+                                    {
+                                        <div onclick="EditPendingClub('@item.SNO','@item.AgentId');" style="cursor: pointer;">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                                <path d="M18.75 3.02344C18.1758 3.02344 17.6133 3.24609 17.1797 3.67969L9.75 11.0859L9.58594 11.25L9.53906 11.4844L9.02344 14.1094L8.78906 15.2109L9.89062 14.9766L12.5156 14.4609L12.75 14.4141L12.9141 14.25L20.3203 6.82031C21.1846 5.95605 21.1846 4.54395 20.3203 3.67969C19.8867 3.24609 19.3242 3.02344 18.75 3.02344ZM18.75 4.47656C18.9258 4.47656 19.0986 4.56738 19.2656 4.73438C19.5996 5.06836 19.5996 5.43164 19.2656 5.76562L12 13.0312L10.7109 13.2891L10.9688 12L18.2344 4.73438C18.4014 4.56738 18.5742 4.47656 18.75 4.47656ZM3 6V21H18V11.1094L16.5 12.6094V19.5H4.5V7.5H11.3906L12.8906 6H3Z" fill="#989898" />
+                                            </svg>
+                                        </div>
+                                    }
+                                    <div onclick="openApproveModal('@item.SNO','a','@item.AgentId');" data-modal-target="approve-confirmation" data-modal-toggle="approve-confirmation" style="cursor: pointer;">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                            <path d="M3.75 3.75V20.25H20.25V3.75H3.75ZM5.25 5.25H18.75V18.75H5.25V5.25ZM15.9609 8.46094L10.5 13.9219L8.03906 11.4609L6.96094 12.5391L9.96094 15.5391L10.5 16.0547L11.0391 15.5391L17.0391 9.53906L15.9609 8.46094Z" fill="#28A745" />
+                                        </svg>
+                                    </div>
+                                    <div onclick="openRejectModal('@item.SNO','r','@item.AgentId');" data-modal-target="reject-confirmation" data-modal-toggle="reject-confirmation" style="cursor: pointer;">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                            <path d="M3.75 3.75V20.25H20.25V3.75H3.75ZM5.25 5.25H18.75V18.75H5.25V5.25ZM8.76562 7.73438L7.71094 8.78906L10.9219 12L7.66406 15.2578L8.71875 16.3125L11.9766 13.0547L15.2109 16.2891L16.2656 15.2344L13.0312 12L16.2188 8.8125L15.1641 7.75781L11.9766 10.9453L8.76562 7.73438Z" fill="#CB3F3F" />
+                                        </svg>
+                                    </div>
+
+                                    @*<div onclick="ApproveRejectClubManagerFunction('@item.SNO','a','@item.AgentId');" style="cursor: pointer;">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                                <path d="M3.75 3.75V20.25H20.25V3.75H3.75ZM5.25 5.25H18.75V18.75H5.25V5.25ZM15.9609 8.46094L10.5 13.9219L8.03906 11.4609L6.96094 12.5391L9.96094 15.5391L10.5 16.0547L11.0391 15.5391L17.0391 9.53906L15.9609 8.46094Z" fill="#28A745" />
+                                            </svg>
+                                        </div>
+                                        <div onclick="ApproveRejectClubManagerFunction('@item.SNO','r','@item.AgentId');" style="cursor: pointer;">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                                <path d="M3.75 3.75V20.25H20.25V3.75H3.75ZM5.25 5.25H18.75V18.75H5.25V5.25ZM8.76562 7.73438L7.71094 8.78906L10.9219 12L7.66406 15.2578L8.71875 16.3125L11.9766 13.0547L15.2109 16.2891L16.2656 15.2344L13.0312 12L16.2188 8.8125L15.1641 7.75781L11.9766 10.9453L8.76562 7.73438Z" fill="#CB3F3F" />
+                                            </svg>
+                                        </div>*@
+                                </div>
+                            </td>
+                        </tr>
+                        SNP++;
+                    }
+                }
+
+            </tbody>
+        </table>
+
+    </div>
+    <div class="pagination-club">
+        <div class="show-entry" id="Entries-Id-2">
+        </div>
+        <div class="flex gap-[12px]">
+            <div class="btn btn-secondary-box-shadow" id="prev-btn-2">
+                @CRS.ADMIN.APPLICATION.Resources.Resource.Previous
+            </div>
+            <div class="flex gap-[12px]" id="pagination-id-2">
+            </div>
+            <div class="btn btn-secondary-box-shadow" id="next-btn-2">
+                @CRS.ADMIN.APPLICATION.Resources.Resource.Next
+            </div>
+        </div>
+    </div>
+</div>

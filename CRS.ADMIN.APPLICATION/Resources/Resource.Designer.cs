@@ -2194,6 +2194,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Hoslog Balance.
+        /// </summary>
+        public static string HoslogBalance {
+            get {
+                return ResourceManager.GetString("HoslogBalance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Host Info.
         /// </summary>
         public static string Host_Info {

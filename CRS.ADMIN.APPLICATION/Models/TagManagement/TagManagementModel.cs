@@ -68,6 +68,9 @@ namespace CRS.ADMIN.APPLICATION.Models.TagManagement
         [DisplayName("Status")]
         public string Tag5Status { get; set; }
         public List<AvailabilityTagModel> GetAvailabilityTagModel { get; set; }
+        public string SearchFilter { get; set; }
+        public int StartIndex { get; set; }
+        public int PageSize { get; set; }
         //public string StaticType { get; set; }
         //public string StaticLabel { get; set; }
         //public string StaticVaue { get; set; }

@@ -1,6 +1,7 @@
 ﻿using CRS.ADMIN.APPLICATION.Helper;
 using CRS.ADMIN.APPLICATION.Library;
 using CRS.ADMIN.APPLICATION.Models;
+using CRS.ADMIN.APPLICATION.Models.ClubManagement;
 using CRS.ADMIN.APPLICATION.Models.PointsManagement;
 using CRS.ADMIN.BUSINESS.PointsManagement;
 using CRS.ADMIN.SHARED;
@@ -13,6 +14,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using static Google.Apis.Requests.BatchRequest;
 
 namespace CRS.ADMIN.APPLICATION.Controllers
 {
@@ -67,11 +69,17 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             ViewBag.TransferTypeIdKey = !string.IsNullOrEmpty(TransferTypeId) ? TransferTypeId : null;
             var dbResponse = _BUSS.GetPointTransferList(Commonmodel, dbRequest);
             objPointsManagementModel.PointsTansferReportList = dbResponse.MapObjects<PointsTansferReportModel>();
+            objPointsManagementModel.PointsTansferReportList.ForEach(x =>
+            {
+                x.Id = x?.Id?.EncryptParameter();
+            });
             if (TempData.ContainsKey("ManagePointsModel")) objPointsManagementModel.ManagePointsTansfer = TempData["ManagePointsModel"] as PointsTansferModel;
             else objPointsManagementModel.ManagePointsTansfer = new PointsTansferModel();
             if (TempData.ContainsKey("ManagePointsRequestModel")) objPointsManagementModel.ManagePointsRequest = TempData["ManagePointsRequestModel"] as PointsRequestModel;
             else objPointsManagementModel.ManagePointsRequest = new PointsRequestModel();
             if (TempData.ContainsKey("RenderId")) RenderId = TempData["RenderId"].ToString();
+            if (TempData.ContainsKey("PointTransferRetriveDetails")) objPointsManagementModel.PointsTransferRetriveDetails = TempData["PointTransferRetriveDetails"] as PointsTansferRetriveDetailsModel;
+            else objPointsManagementModel.PointsTransferRetriveDetails = new PointsTansferRetriveDetailsModel();
             ViewBag.PopUpRenderValue = !string.IsNullOrEmpty(RenderId) ? RenderId : null;
             ViewBag.StartIndex = StartIndex;
             ViewBag.PageSize = PageSize;
@@ -135,7 +143,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             getPointRequest.Skip = StartIndex4;
             getPointRequest.Take = PageSize4;
             var getPointRequestListDBResponse = _BUSS.GetPointRequestList(getPointRequest);
-
+           
             if (value.ToUpper() != "ST")
             {
                 SystemTransferRequestModel requestSystemTransferModel = new SystemTransferRequestModel();
@@ -180,9 +188,13 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             objPointsManagementModel.PointRequestCommonModel.PointRequestsListModel = getPointRequestListDBResponse.MapObjects<PointRequestsListModel>();
             objPointsManagementModel.PointRequestCommonModel.PointRequestsListModel.ForEach(x =>
             {
-                x.AgentId = x?.AgentId?.EncryptParameter();
-                x.UserId = x?.UserId?.EncryptParameter();
+                x.Id = x?.Id?.EncryptParameter();
             });
+            //objPointsManagementModel.PointRequestCommonModel.PointRequestsListModel.ForEach(x =>
+            //{
+            //    x.AgentId = x?.AgentId?.EncryptParameter();
+            //    x.UserId = x?.UserId?.EncryptParameter();
+            //});
             ViewBag.TotalData4 = objPointsManagementModel?.PointRequestCommonModel?.PointRequestsListModel.Count > 0 ? objPointsManagementModel?.PointRequestCommonModel?.PointRequestsListModel?.FirstOrDefault().RowsTotal ?? "0" : "0";
             return View(objPointsManagementModel);
         }
@@ -244,6 +256,14 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 commonModel.ActionIP = ApplicationUtilities.GetIP();
                 commonModel.UserTypeId = objPointsTansferModel.UserTypeId.DecryptParameter();
                 commonModel.UserId = objPointsTansferModel.UserId.DecryptParameter();
+                if (commonModel.TransferType.ToUpper()== "TRANSFER")
+                {
+                    commonModel.SpName = "sproc_point_transfer";
+                }
+                else
+                {
+                    commonModel.SpName = "sproc_point_retrive";
+                }
                 var dbResponse = _BUSS.ManagePoints(commonModel);
                 if (dbResponse != null && dbResponse.Code == 0)
                 {
@@ -294,6 +314,38 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             return RedirectToAction("PointsTransferList", "PointsManagement");
         }
 
+        [HttpGet]
+        [OverrideActionFilters]
+        public ActionResult PointsTransferListDetails(PointsTransferRequest obj)
+        {
+            string id = ""; string SearchFilter = ""; int StartIndex = 0; int PageSize = 10;
+            var ResponseModel = new PointsTansferRetriveDetailsModel();
+            var culture = Request.Cookies["culture"]?.Value;
+            culture = string.IsNullOrEmpty(culture) ? "ja" : culture;
+            //var availabilityInfo = new List<AvailabilityTagModel>();
+            var Id = obj.Id?.DecryptParameter();
+            if (string.IsNullOrEmpty(Id))
+            {
+                this.AddNotificationMessage(new NotificationModel()
+                {
+                    NotificationType = NotificationMessage.INFORMATION,
+                    Message = "Invalid details",
+                    Title = NotificationMessage.INFORMATION.ToString(),
+                });
+                return RedirectToAction("PointsTransferList", "PointsManagement", new { SearchFilter = obj.SearchFilter, StartIndex = obj.StartIndex, PageSize = obj.PageSize ,  UserType = obj.RoleType,  UserName = obj.UserId,  TransferTypeId = obj.TransferType,  FromDate = obj.FromDate,  ToDate = obj.ToDate });
+            }
+            else
+            {
+
+                var dbResponseInfo = _BUSS.GetPointTransferDetails(Id);
+                ResponseModel = dbResponseInfo.MapObject<PointsTansferRetriveDetailsModel>();
+                ResponseModel.Image = ImageHelper.ProcessedImage(ResponseModel.Image);
+                TempData["PointTransferRetriveDetails"] = ResponseModel;
+                TempData["RenderId"] = "PointTransferRetriveDetails";
+                return RedirectToAction("PointsTransferList", "PointsManagement", new { SearchFilter = obj.SearchFilter, StartIndex = obj.StartIndex, PageSize = obj.PageSize, UserType = obj.RoleType, UserName = obj.UserId, TransferTypeId = obj.TransferType, FromDate = obj.FromDate, ToDate = obj.ToDate });
+            }
+        }
+
         [HttpPost, ValidateAntiForgeryToken]
         public ActionResult ManagePointsRequest(PointsRequestModel objPointsRequestModel)
         {
@@ -319,7 +371,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                     return RedirectToAction("PointsTransferList", "PointsManagement");
                 }
                 else
-                {
+                { 
                     this.AddNotificationMessage(new NotificationModel()
                     {
                         NotificationType = NotificationMessage.INFORMATION,
@@ -341,12 +393,10 @@ namespace CRS.ADMIN.APPLICATION.Controllers
         public async Task<JsonResult> ManageClubPointRequest(ManageClubPointRequestModel request, HttpPostedFileBase Image)
         {
             var dbRequest = request.MapObject<ManageClubPointRequestCommon>();
-            dbRequest.AgentId = dbRequest?.AgentId?.DecryptParameter() ?? string.Empty;
-            dbRequest.UserId = dbRequest?.UserId?.DecryptParameter() ?? string.Empty;
-            if (string.IsNullOrEmpty(dbRequest.AgentId) ||
-                string.IsNullOrEmpty(dbRequest.UserId) ||
-                string.IsNullOrEmpty(dbRequest.TxnId))
-            {
+            dbRequest.Id = request.Id.DecryptParameter();
+            if (
+                string.IsNullOrEmpty(dbRequest.Id))
+              {
                 this.AddNotificationMessage(new NotificationModel()
                 {
                     NotificationType = NotificationMessage.INFORMATION,
@@ -354,8 +404,8 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                     Title = NotificationMessage.INFORMATION.ToString(),
                 });
                 return Json("Invalid request", JsonRequestBehavior.AllowGet);
-            }
-            if (dbRequest.Status.Trim().ToUpper() == "S" && Image == null)
+             }
+            if (dbRequest.Status.Trim().ToUpper() == "APPROVE" && Image == null)
             {
                 this.AddNotificationMessage(new NotificationModel()
                 {

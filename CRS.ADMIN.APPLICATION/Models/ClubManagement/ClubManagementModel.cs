@@ -16,10 +16,11 @@ namespace CRS.ADMIN.APPLICATION.Models.ClubManagement
         public string SearchFilterPending { get; set; }
         public string SearchFilterReject { get; set; }
         public string value { get; set; }
+        public string TabValue { get; set; }
         public string ListType { get; set; }
         public List<ClubListModel> ClubListModel { get; set; }
         public List<ClubListModel> ClubPendingListModel { get; set; }
-        public List<ClubListModel> ClubRejectedListModel { get; set; }
+        public List<ClubListModel> ClubRejectedListModel { get; set; } = new List<ClubListModel>();
         public ManageClubModel ManageClubModel { get; set; }
         public ManageClubModel ClubHoldModel { get; set; }
         public ManageTag ManageTag { get; set; }
@@ -253,6 +254,9 @@ namespace CRS.ADMIN.APPLICATION.Models.ClubManagement
         public string KYCDocumentBack { get; set; }
         public string PassportPhoto { get; set; }
         public string InsurancePhoto { get; set; }
+        public string SearchFilter { get; set; }
+        public int StartIndex { get; set; }
+        public int PageSize { get; set; }
 
         // public List<planIdentityDataModel> PlanList { get; set; }
     }

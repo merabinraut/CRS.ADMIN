@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
@@ -90,8 +91,8 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 {
                     var response = dbResponse.Data.MapObject<LoginResponseModel>();
                     if (response.Notifications == null || response.Notifications.Count <= 0)
-                        response.Notifications = new List<NotificationDetailModel>();  
-                    if (response.Notifications != null  && response.Notifications.Count > 0)
+                        response.Notifications = new List<NotificationDetailModel>();
+                    if (response.Notifications != null && response.Notifications.Count > 0)
                         response.Notifications.ForEach(x =>
                         {
                             x.NotificationId = x.NotificationId.EncryptParameter();
@@ -184,6 +185,17 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             ViewBag.RecievedAount = recievedAmountInfo;
             #endregion
             return View();
+        }
+        [OverrideActionFilters]
+        [HttpGet]
+        public async Task<ActionResult> GetAdminBalance()
+        {
+            // Simulate an async operation
+            await Task.Delay(100); // Simulating async delay
+                                   // Here, you would typically get the amount from a database or another service
+             var amount = _BUSS.GetAdminBalance();
+            //var amount = "1,555,678,832,567,156,145";
+            return Json(new { amount = $"¥ {amount} " }, JsonRequestBehavior.AllowGet);
         }
     }
 }

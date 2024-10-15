@@ -115,8 +115,9 @@
   border: 2px solid var(---white);
 }
 .profile-details {
-  display: flex;
-  gap: 8px;
+    display: flex;
+    gap: 8px;
+    align-items:center
 }
 .profile-details-user h3 {
   line-height: 1;
