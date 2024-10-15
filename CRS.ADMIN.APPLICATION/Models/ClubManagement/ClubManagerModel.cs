@@ -24,5 +24,9 @@ namespace CRS.ADMIN.APPLICATION.Models.ClubManagerModel
         [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Required")]
         [RegularExpression("^[0-9]{11}$", ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "The_field_must_be_a_11_digit_number")]
         public string MobileNumber { get; set; }
+        public string SearchFilter { get; set; }
+        public int StartIndex { get; set; }
+        public int PageSize { get; set; }    
+
     }
 }

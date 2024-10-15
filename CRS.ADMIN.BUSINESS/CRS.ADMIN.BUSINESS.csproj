@@ -76,10 +76,17 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AdminPointManagement\AdminPointManagementBusiness.cs" />
+    <Compile Include="AdminPointManagement\IAdminPointManagementBusiness.cs" />
     <Compile Include="AffiliateManagement\AffiliateManagementBusiness.cs" />
     <Compile Include="AffiliateManagement\IAffiliateManagementBusiness.cs" />
+
     <Compile Include="ApiResponseMessage\ApiResponseMessageBusiness.cs" />
     <Compile Include="ApiResponseMessage\IApiResponseMessageBusiness.cs" />
+
+    <Compile Include="BasicClubManagement\BasicClubManagementBusiness.cs" />
+    <Compile Include="BasicClubManagement\IBasicClubManagementBusiness.cs" />
+
     <Compile Include="ClubManagement\ClubManagementBusiness.cs" />
     <Compile Include="ClubManagement\IClubManagementBusiness.cs" />
     <Compile Include="ClubPlanManagement\ClubPlanManagementBusiness.cs" />

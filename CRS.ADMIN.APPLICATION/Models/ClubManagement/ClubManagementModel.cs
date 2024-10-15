@@ -16,10 +16,11 @@ namespace CRS.ADMIN.APPLICATION.Models.ClubManagement
         public string SearchFilterPending { get; set; }
         public string SearchFilterReject { get; set; }
         public string value { get; set; }
+        public string TabValue { get; set; }
         public string ListType { get; set; }
         public List<ClubListModel> ClubListModel { get; set; }
         public List<ClubListModel> ClubPendingListModel { get; set; }
-        public List<ClubListModel> ClubRejectedListModel { get; set; }
+        public List<ClubListModel> ClubRejectedListModel { get; set; } = new List<ClubListModel>();
         public ManageClubModel ManageClubModel { get; set; }
         public ManageClubModel ClubHoldModel { get; set; }
         public ManageTag ManageTag { get; set; }
@@ -207,7 +208,8 @@ namespace CRS.ADMIN.APPLICATION.Models.ClubManagement
         public string CompanionFee { get; set; }
         [RegularExpression("^[0-9]+$", ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Invalid_amount")]
         public string ExtensionFee { get; set; }
-        [RegularExpression("^[0-9]+$", ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Invalid_amount")]
+        //[RegularExpression("^[0-9]+$", ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Invalid_amount")]
+        [RegularExpression(@"^(?:100|\d{1,2})$", ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Invalid_Tax")]
         public string Drink { get; set; }
         public string Pref { get; set; }
         [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Required")]
@@ -253,6 +255,9 @@ namespace CRS.ADMIN.APPLICATION.Models.ClubManagement
         public string KYCDocumentBack { get; set; }
         public string PassportPhoto { get; set; }
         public string InsurancePhoto { get; set; }
+        public string SearchFilter { get; set; }
+        public int StartIndex { get; set; }
+        public int PageSize { get; set; }
 
         // public List<planIdentityDataModel> PlanList { get; set; }
     }

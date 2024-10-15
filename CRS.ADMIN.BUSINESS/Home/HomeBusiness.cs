@@ -42,5 +42,9 @@ namespace CRS.ADMIN.BUSINESS.Home
         {
             return _REPO.Login(Request);
         }
+        public string GetAdminBalance()
+        {
+            return _REPO.GetAdminBalance();
+        }
     }
 }

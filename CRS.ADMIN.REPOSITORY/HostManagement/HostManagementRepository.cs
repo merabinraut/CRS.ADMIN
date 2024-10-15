@@ -114,6 +114,8 @@ namespace CRS.ADMIN.REPOSITORY.HostManagement
             SQL += ",@PreviousOccupation=" + _DAO.FilterString(Request.PreviousOccupation);
             SQL += ",@LiquorStrength=" + _DAO.FilterString(Request.LiquorStrength);
             //SQL += ",@WebsiteLink=" + _DAO.FilterString(Request.WebsiteLink);
+
+
             SQL += ",@TiktokLink=" + _DAO.FilterString(Request.TiktokLink);
             SQL += ",@TwitterLink=" + _DAO.FilterString(Request.TwitterLink);
             SQL += ",@InstagramLink=" + _DAO.FilterString(Request.InstagramLink);
@@ -123,10 +125,9 @@ namespace CRS.ADMIN.REPOSITORY.HostManagement
             SQL += ",@ImagePath=" + _DAO.FilterString(Request.ImagePath);
             SQL += ",@Line=" + _DAO.FilterString(Request.Line);
             SQL += ",@IconImagePath=" + _DAO.FilterString(Request.IconImagePath);
-            SQL += string.IsNullOrEmpty(Request.Address) ? ",@Address=" + _DAO.FilterString(Request.Address) : ",@Address=N" + _DAO.FilterString(Request.Address); 
-            SQL += string.IsNullOrEmpty(Request.HostIntroduction) ? ",@HostIntroduction=" + _DAO.FilterString(Request.HostIntroduction) : ",@HostIntroduction=N" + _DAO.FilterString(Request.HostIntroduction);  
+            SQL += string.IsNullOrEmpty(Request.Address) ? ",@Address=" + _DAO.FilterString(Request.Address) : ",@Address=N" + _DAO.FilterString(Request.Address);
+            SQL += string.IsNullOrEmpty(Request.HostIntroduction) ? ",@HostIntroduction=" + _DAO.FilterString(Request.HostIntroduction) : ",@HostIntroduction=N" + _DAO.FilterString(Request.HostIntroduction);
             Response = _DAO.ParseCommonDbResponse(SQL);
-
             foreach (var item in Request.HostIdentityDataModel)
             {
                 var SQL2 = "EXEC sproc_host_identity_detail_management @Flag = 'mhid'";
@@ -135,7 +136,7 @@ namespace CRS.ADMIN.REPOSITORY.HostManagement
                 SQL2 += ",@IdentityType=" + _DAO.FilterString(item.IdentityType);
                 SQL2 += ",@IdentityValue=" + _DAO.FilterString(item.IdentityValue);
                 SQL2 += !string.IsNullOrEmpty(item.IdentityDDLType) ? ",@IdentityDDLType=" + _DAO.FilterString(item.IdentityDDLType) : null;
-                SQL2 += string.IsNullOrEmpty(item.IdentityDescription) ? ",@IdentityDescription=" + _DAO.FilterString(item.IdentityDescription) : ",@IdentityDescription=N" + _DAO.FilterString(item.IdentityDescription); 
+                SQL2 += string.IsNullOrEmpty(item.IdentityDescription) ? ",@IdentityDescription=" + _DAO.FilterString(item.IdentityDescription) : ",@IdentityDescription=N" + _DAO.FilterString(item.IdentityDescription);
                 SQL2 += ",@ActionIP=" + _DAO.FilterString(Request.ActionIP);
                 SQL2 += ",@ActionPlatform=" + _DAO.FilterString(Request.ActionPlatform);
                 _DAO.ParseCommonDbResponse(SQL2);
@@ -217,9 +218,9 @@ namespace CRS.ADMIN.REPOSITORY.HostManagement
         public List<InquiryListCommon> GetInquiryListAsync(string SearchFilter, int StartIndex, int PageSize)
         {
             string SQL = "EXEC sproc_get_customer_enquiry ";
-            SQL += !string.IsNullOrEmpty(SearchFilter) ? "@searchFilter=" + _DAO.FilterString(SearchFilter) + ",": "" ;
+            SQL += !string.IsNullOrEmpty(SearchFilter) ? "@searchFilter=" + _DAO.FilterString(SearchFilter) + "," : "";
             SQL += "@Skip=" + StartIndex;
-            SQL += ",@Take=" +PageSize;
+            SQL += ",@Take=" + PageSize;
 
             var dbResponse = _DAO.ExecuteDataTable(SQL);
             if (dbResponse != null && dbResponse.Rows.Count > 0) return _DAO.DataTableToListObject<InquiryListCommon>(dbResponse).ToList();

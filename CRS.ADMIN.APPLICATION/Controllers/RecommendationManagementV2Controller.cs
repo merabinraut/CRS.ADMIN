@@ -172,6 +172,53 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             TempData["RenderId"] = "Manage";
             return RedirectToAction("GroupView", new { pageid = pageid, locationId = locationId });
         }
+
+        [HttpPost, ValidateAntiForgeryToken]
+        public ActionResult DeleteGroup( string groupid = "",string locationid = "")
+        {
+            if (!string.IsNullOrEmpty(locationid)) locationid = locationid.DecryptParameter();
+            if (!string.IsNullOrEmpty(groupid)) groupid = groupid.DecryptParameter();           
+            if (string.IsNullOrEmpty(locationid)|| string.IsNullOrEmpty(groupid))
+            {
+                AddNotificationMessage(new NotificationModel()
+                {
+                    NotificationType = NotificationMessage.INFORMATION,
+                    Message = "Invalid request",
+                    Title = NotificationMessage.INFORMATION.ToString()
+
+                });
+                return RedirectToAction("GroupView", "RecommendationManagementV2");
+            }
+            var responseInfo = new CommonDbResponse();
+            var commonRequest = new Common()
+            {
+                ActionIP = ApplicationUtilities.GetIP(),
+                ActionUser = ApplicationUtilities.GetSessionValue("Username").ToString(),
+            };
+            var dbResponseInfo = _business.DeleteGroup(groupid, locationid, commonRequest);
+            responseInfo = dbResponseInfo;
+            if (dbResponseInfo != null && dbResponseInfo.Code == ResponseCode.Success)
+            {
+                AddNotificationMessage(new NotificationModel()
+                {
+                    NotificationType = NotificationMessage.SUCCESS,
+                    Message = dbResponseInfo.Message ?? "Group has been deleted successfully",
+                    Title = NotificationMessage.SUCCESS.ToString()
+                });
+                return Json(responseInfo.SetMessageInTempData(this));
+            }
+            else
+            {
+                AddNotificationMessage(new NotificationModel()
+                {
+                    NotificationType = NotificationMessage.INFORMATION,
+                    Message = dbResponseInfo.Message ?? "Something went wrong try again later",
+                    Title = NotificationMessage.INFORMATION.ToString()
+                });
+                return Json(responseInfo.SetMessageInTempData(this));
+            }
+        }
+
         #endregion
 
         #region "Manage Shuffling"

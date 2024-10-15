@@ -1,0 +1,1504 @@
+@model CRS.ADMIN.APPLICATION.Models.BasicClubManagement.ManagePremiumClubModel
+
+
+<style>
+
+    .landline-number-input {
+        padding: 1px !important;
+    }
+
+    .box {
+        display: flex;
+        height: 40px;
+        align-items: flex-start;
+        gap: 10px;
+        align-self: stretch;
+    }
+
+        .box i {
+            display: flex;
+            width: fit-content;
+            height: 40px;
+            padding: 0px 8px;
+            align-items: center;
+            gap: 5px;
+            border-radius: 4px;
+            border: 1px solid #A09E91;
+        }
+
+        .box p {
+            color: #B7B7B7;
+            font-family: &quot;
+            Noto Sans&quot;
+            font-size: 16px;
+            font-style: normal;
+            font-weight: 500;
+            line-height: 100%;
+        }
+</style>
+
+<div id="add-new-host-club" class="drawer-close-disable  flex justify-end fixed top-0 right-0 z-40 h-screen overflow-y-auto transition-transform translate-x-full "
+     tabindex="-1" aria-labelledby="drawer-right-label">
+    <div class="bg-white w-[863px] drawer-container relative">
+        <div class="drawer-form-container sticky top-0 z-[5] ">
+            <div class="drawer-form flex justify-between bg-secondary-color-pink py-[16px] px-[24px] h-[56px]">
+                <div>  @CRS.ADMIN.APPLICATION.Resources.Resource.Manage_Club_Profile</div>
+                <button type="button" data-drawer-hide="add-new-host-club" aria-controls="add-new-host-club" onclick="CancelFunction()"
+                        class="text-[20px]">
+                    <i class="las la-window-close text-white"></i>
+                </button>
+            </div>
+        </div>
+
+        <div class="p-[24px]">
+
+            <div class=" py-4 grid gap-6">
+
+                @using (Html.BeginForm("ManageConversionBasicClub", "BasicClubManagement", FormMethod.Post, new { @id = "ManagePremiumClubForm", enctype = "multipart/form-data" }))
+                {
+                    @Html.AntiForgeryToken()
+                    if (!string.IsNullOrEmpty(Model.AgentId))
+                    {
+                        @Html.HiddenFor(model => model.AgentId)
+                    }
+                    if (!string.IsNullOrEmpty(Model.holdId))
+                    {
+                        @Html.HiddenFor(model => model.holdId)
+                    }
+                    if (!string.IsNullOrEmpty(Model.Logo))
+                    {
+                        @Html.HiddenFor(model => model.Logo)
+                    }
+                    if (!string.IsNullOrEmpty(Model.CoverPhoto))
+                    {
+                        @Html.HiddenFor(model => model.CoverPhoto)
+                    }
+                    if (!string.IsNullOrEmpty(Model.BusinessCertificate))
+                    {
+                        @Html.HiddenFor(model => model.BusinessCertificate)
+                    }
+                    if (!string.IsNullOrEmpty(Model.KYCDocument))
+                    {
+                        @Html.HiddenFor(model => model.KYCDocument)
+                    }
+                    if (!string.IsNullOrEmpty(Model.KYCDocumentBack))
+                    {
+                        @Html.HiddenFor(model => model.KYCDocumentBack)
+                    }
+                    if (!string.IsNullOrEmpty(Model.PassportPhoto))
+                    {
+                        @Html.HiddenFor(model => model.PassportPhoto)
+                    }
+                    if (!string.IsNullOrEmpty(Model.InsurancePhoto))
+                    {
+                        @Html.HiddenFor(model => model.InsurancePhoto)
+                    }
+                    if (!string.IsNullOrEmpty(Model.CorporateRegistryDocument))
+                    {
+                        @Html.HiddenFor(model => model.CorporateRegistryDocument)
+                    }
+                    @Html.HiddenFor(model => model.SearchFilter)
+                    @Html.HiddenFor(model => model.StartIndex)
+                    @Html.HiddenFor(model => model.PageSize)
+                    @*if (!string.IsNullOrEmpty(Model.LoginId))
+            {
+                @Html.HiddenFor(model => model.LoginId)
+            }*@
+                    <div class="flex gap-2 ">
+                        <div class="flex items-center gap-2 profile-steps add-new-host-wizard  active" id="step1">
+                            <div class="steps-number ">
+                                1
+                            </div>
+                            <div class="steps-text">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Basic_Information
+                            </div>
+                            <hr class="setp-divider  flex-1" style="width: 121px;" />
+                        </div>
+                        <div class="flex items-center gap-2 profile-steps add-new-host-wizard " id="step2">
+                            <div class="steps-number ">
+                                2
+                            </div>
+                            <div class="steps-text">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Social_Links
+                            </div>
+                            <hr class="setp-divider" style="width: 121px;" />
+
+                        </div>
+
+                        <div class="flex items-center gap-2 profile-steps add-new-host-wizard " id="step3">
+                            <div class="steps-number ">
+                                3
+                            </div>
+                            <div class="steps-text">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Club_Info
+                            </div>
+                            <hr class="setp-divider" style="width: 121px;" />
+
+                        </div>
+
+                        <div class="flex items-center gap-2 profile-steps add-new-host-wizard " id="step4">
+                            <div class="steps-number ">
+                                4
+                            </div>
+                            <div class="steps-text">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Plans
+                            </div>
+                            <hr class="setp-divider" style="width: 121px;" />
+
+                        </div>
+
+                    </div>
+                    <div id="content1" class="content-section " style="display: block;">
+                        <div class="grid gap-4 py-[10px]">
+                            <div class="flex gap-2 text-primary-300 text-sm font-semibold items-center mt-[10px]">
+                                <div class="flex-none uppercase">@CRS.ADMIN.APPLICATION.Resources.Resource.Basic_Info</div>
+                                <div class="bg-[#F4F4F4] h-[1px] w-full">
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-3 gap-x-5 gap-y-4">
+                                <div class="input-field-common">
+                                    <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
+                                        @CRS.ADMIN.APPLICATION.Resources.Resource.StoreName
+                                    </label>
+                                    @Html.TextBoxFor(model => model.ClubName1, new
+                               {
+                                   @class = "w-full",
+                                   @placeholder = CRS.ADMIN.APPLICATION.Resources.Resource.StoreName,
+                                   @onkeypress = "return isAlphabetWithSpace(event)",
+                                   autocomplete = "off",
+                                   @maxLength = "50"
+                               })
+                                    <span class="error">
+                                        @Html.ValidationMessageFor(m => m.ClubName1)
+                                    </span>
+                                </div>
+
+                                <div class="input-field-common">
+                                    <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
+                                        @CRS.ADMIN.APPLICATION.Resources.Resource.Furigana
+                                    </label>
+                                    @Html.TextBoxFor(model => model.ClubName2, new
+                               {
+                                   @class = "w-full",
+                                   @placeholder = CRS.ADMIN.APPLICATION.Resources.Resource.Furigana,
+                                   @onkeypress = "return isAlphabetWithSpace(event)",
+                                   autocomplete = "off",
+                                   @maxLength = "50"
+                               })
+                                    <span class="error">
+                                        @Html.ValidationMessageFor(m => m.ClubName2)
+                                    </span>
+                                </div>
+                                <div class="input-field-common">
+                                    <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
+                                        @CRS.ADMIN.APPLICATION.Resources.Resource.English
+                                    </label>
+                                    @Html.TextBoxFor(model => model.ClubName, new
+                               {
+                                   @class = "w-full",
+                                   @placeholder = CRS.ADMIN.APPLICATION.Resources.Resource.English,
+                                   @onkeypress = "return isAlphabetWithSpace(event)",
+                                   autocomplete = "off",
+                                   @maxLength = "50"
+                               })
+                                 
+                                </div>
+
+
+                            </div>
+
+
+                            <div class="grid grid-cols-3 gap-x-5 gap-y-4">
+                                <div class="input-field-common">
+                                    <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
+                                        @CRS.ADMIN.APPLICATION.Resources.Resource.Group_Name
+                                    </label>
+                                    @Html.TextBoxFor(model => model.GroupName, new
+                               {
+                                   @class = "w-full",
+                                   @placeholder = CRS.ADMIN.APPLICATION.Resources.Resource.Group_Name_Placeholder,
+                                   autocomplete = "off",
+                                   @maxLength = "50"
+                               })
+                                    <span class="error">
+                                        @Html.ValidationMessageFor(m => m.GroupName)
+                                    </span>
+                                </div>                               
+                            </div>
+
+                            <!-- description start -->
+                            <div class="input-field-common">
+                                <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
+                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Description
+                                </label>
+                                @Html.TextAreaFor(model => model.Description, new
+                           {
+                               @class = "w-full",
+                               @placeholder = CRS.ADMIN.APPLICATION.Resources.Resource.Description_Placeholder,
+                               autocomplete = "off",
+                               @maxLength = "500"
+                           })
+
+                                <span class="error">
+                                    @Html.ValidationMessageFor(m => m.Description)
+                                </span>
+                            </div>
+                            <!-- description end -->
+                            <!-- logo and cover page start -->
+                            <div class="grid grid-cols-2 gap-x-5 gap-y-4">
+                                <div>
+                                    <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
+                                        @CRS.ADMIN.APPLICATION.Resources.Resource.Logo
+                                    </label>
+                                    <div class="file-upload-common">
+                                        <label for="file_input_logo" class="custom-file-upload bg-[#CC527A] w-[123px] flex-none ">
+                                            <span> @CRS.ADMIN.APPLICATION.Resources.Resource.Choose_Images</span>
+                                        </label>
+                                        <input id="file_input_logo" class="file-input" name="Logo_Certificate" value="@Model.Logo" type="file" style="display:none;">
+                                        <p id="file_name_logo"
+                                           class="file-name w-max h-[23px] overflow-hidden pl-2 text-xs text-[#686868] leading-[25px]">
+                                            @if (string.IsNullOrEmpty(Model.Logo))
+                                            {
+                                                @CRS.ADMIN.APPLICATION.Resources.Resource.No_File_Choosen
+                                            }
+                                            else
+                                            {
+                                                string fileName = Path.GetFileName(Model.Logo);
+                                                @fileName
+                                            }
+                                        </p>
+
+                                    </div>
+                                    <div class="text-xs text-error mt-[8px]">
+                                        @CRS.ADMIN.APPLICATION.Resources.Resource.Note:
+                                        @CRS.ADMIN.APPLICATION.Resources.Resource.Image_should_be_in_HEIF_format
+                                        @CRS.ADMIN.APPLICATION.Resources.Resource.and_Maximum_file_size_is_5_MB
+                                        <span class="error">
+                                            @Html.ValidationMessageFor(m => m.Logo)
+                                        </span>
+                                    </div>
+
+                                </div>
+
+                                <div>
+                                    <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
+                                        @CRS.ADMIN.APPLICATION.Resources.Resource.Cover_Photo
+                                    </label>
+                                    <div class="file-upload-common">
+                                        <label for="file_input_cover" class="custom-file-upload bg-[#CC527A] w-[123px] flex-none ">
+                                            <span>  @CRS.ADMIN.APPLICATION.Resources.Resource.Choose_Images</span>
+                                        </label>
+                                        <input id="file_input_cover" class="file-input" name="CoverPhoto_Certificate" type="file" value="@Model.CoverPhoto" style="display:none;">
+                                        <p id="file_name_cover"
+                                           class="file-name w-max h-[23px] overflow-hidden pl-2 text-xs text-[#686868] leading-[25px]">
+                                            @if (string.IsNullOrEmpty(Model.CoverPhoto))
+                                            {
+                                                @CRS.ADMIN.APPLICATION.Resources.Resource.No_File_Choosen
+                                            }
+                                            else
+                                            {
+                                                string fileName = Path.GetFileName(Model.CoverPhoto);
+                                                @fileName
+                                            }
+                                        </p>
+                                    </div>
+                                    <div class="text-xs text-error mt-[8px]">
+                                        @CRS.ADMIN.APPLICATION.Resources.Resource.Note:
+                                        @CRS.ADMIN.APPLICATION.Resources.Resource.Image_should_be_in_HEIF_format
+                                        @CRS.ADMIN.APPLICATION.Resources.Resource.and_Maximum_file_size_is_5_MB
+                                        <span class="error">
+                                            @Html.ValidationMessageFor(m => m.CoverPhoto)
+                                        </span>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                            <!-- logo and cover page end -->
+                            <!-- for Business Information -->
+                            <div class="flex gap-2 text-primary-300 text-sm font-semibold items-center mt-[10px]">
+                                <div class="flex-none uppercase">  @CRS.ADMIN.APPLICATION.Resources.Resource.BusinessInfo</div>
+                                <div class="bg-[#F4F4F4] h-[1px] w-full">
+                                </div>
+                            </div>
+
+                            <!-- businesstype, ceofullname, companyaddress, email, contact number, landline and Username start -->
+
+                            <div class="grid grid-cols-3 gap-x-5 gap-y-4">
+                                <div class="input-field-common">
+                                    <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
+                                        @CRS.ADMIN.APPLICATION.Resources.Resource.Business_Type
+                                    </label>
+                                    <select id="large" name="BusinessTypeDDL" class=" default_select select-common block w-full "
+                                            style="width: text-2%;">
+                                        @foreach (var item in ViewBag.BusinessTypeDDL as IEnumerable<SelectListItem>)
+                                        {
+                                            var selectedId = ViewBag.BusinessTypeKey as string;
+                                            if (item.Value == selectedId)
+                                            {
+                                                <option value="@item.Value" selected>
+                                                    @item.Text
+                                                </option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@item.Value">
+                                                    @item.Text
+                                                </option>
+                                            }
+                                        }
+                                    </select>
+                                </div>
+                                <div class="input-field-common">
+                                    <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
+                                        @CRS.ADMIN.APPLICATION.Resources.Resource.CEO_Full_Name
+                                    </label>
+                                    @Html.TextBoxFor(model => model.ceoFullName, new
+                               {
+                                   @class = "w-full",
+                                   @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.CEO_Full_Name,
+                                   autocomplete = "off"
+                               })
+                                    <span class="error">
+                                        @Html.ValidationMessageFor(m => m.ceoFullName)
+                                    </span>
+                                </div>
+                                <div class="input-field-common">
+                                    <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
+                                        @CRS.ADMIN.APPLICATION.Resources.Resource.CEOFurigana
+                                    </label>
+                                    @Html.TextBoxFor(model => model.CeoFurigana, new
+                               {
+                                   @class = "w-full",
+                                   @placeholder = CRS.ADMIN.APPLICATION.Resources.Resource.CEOFurigana,
+                                   autocomplete = "off"
+                               })
+                                    <span class="error">
+                                        @Html.ValidationMessageFor(m => m.CeoFurigana)
+                                    </span>
+                                </div>
+
+
+                                <div class="input-field-common" id="Corp_id" style="display:none;">
+                                    <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
+                                        @CRS.ADMIN.APPLICATION.Resources.Resource.Company_Name
+                                    </label>
+                                    @Html.TextBoxFor(model => model.CompanyName, new
+                               {
+                                   @class = "w-full",
+                                   @placeholder = CRS.ADMIN.APPLICATION.Resources.Resource.Company_Name_Placeholder,
+                                   autocomplete = "off"
+                               })
+                                    <span class="error">
+                                        @Html.ValidationMessageFor(m => m.CompanyName)
+                                    </span>
+                                </div>
+
+                                <div class="input-field-common" id="Corp_idFurigana" style="display:none;">
+                                    <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
+                                        @CRS.ADMIN.APPLICATION.Resources.Resource.CompanyNameFurigana
+                                    </label>
+                                    @Html.TextBoxFor(model => model.CompanyNameFurigana, new
+                                 {
+                                   @class = "w-full",
+                                   @placeholder = CRS.ADMIN.APPLICATION.Resources.Resource.CompanyNameFurigana,
+                                   autocomplete = "off"
+                                })
+                                    <span class="error">
+                                        @Html.ValidationMessageFor(m => m.CompanyNameFurigana)
+                                    </span>
+                                </div>
+
+
+                                <div class="input-field-common">
+                                    <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
+                                        @CRS.ADMIN.APPLICATION.Resources.Resource.CompanyAddress
+                                    </label>
+                                    @Html.TextBoxFor(model => model.CompanyAddress, new
+                               {
+                                   @class = "w-full",
+                                   @placeholder = CRS.ADMIN.APPLICATION.Resources.Resource.CompanyAddress,
+                                   autocomplete = "off"
+                               })
+                                    <span class="error">
+                                        @Html.ValidationMessageFor(m => m.CompanyAddress)
+                                    </span>
+                                </div>
+
+                                <div class="input-field-common w-full">
+                                    <label class="block mb-4 text-sm font-medium text-secondary-100 ">
+                                        @CRS.ADMIN.APPLICATION.Resources.Resource.LandlineNumber
+                                    </label>
+                                    
+
+
+                                    <div class="w-full flex">                                       
+
+                                        @Html.TextBoxFor(model => model.LandlineNumber, new
+                                     {
+                                       @class = "w-full",
+                                       @placeholder = "090-6490-3254",
+                                       @onkeypress = "return isNumber(event)",
+                                       autocomplete = "off",
+                                       @maxLength = "11"
+
+                                   })
+                                    </div>
+                                    <span class="error">
+                                        @Html.ValidationMessageFor(m => m.LandlineNumber)
+                                    </span>
+                                </div>
+
+                                <div class="input-field-common w-full">
+                                    <label class="block mb-4 text-sm font-medium text-secondary-100 ">
+                                        @CRS.ADMIN.APPLICATION.Resources.Resource.Phone_Number
+                                    </label>
+                                    <div class="number-input w-full">
+                                            <div class="flag-section">
+                                                <div class="japan-flag" style="border: 1px solid #dbd6d6;">
+                                                    <div></div>
+                                                </div>
+                                                <div>
+                                                    +81
+                                                </div>
+                                                <div class="line-y">
+
+                                                </div>
+
+                                            </div>
+                                            @Html.TextBoxFor(model => model.MobileNumber, new
+                                         {
+                                           @class = "w-full",
+                                           @placeholder = CRS.ADMIN.APPLICATION.Resources.Resource.Phone_Number,
+                                           @onkeypress = "return isNumber(event)",
+                                           autocomplete = "off",
+                                           @maxLength = "11"
+                                       })                                            
+                                     
+                                    </div>
+                                    <span class="error">
+                                        @Html.ValidationMessageFor(m => m.MobileNumber)
+                                    </span>
+                                </div>
+                                <div class="input-field-common">
+                                    <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
+                                        @CRS.ADMIN.APPLICATION.Resources.Resource.Email
+                                    </label>
+                                    
+                                        @Html.TextBoxFor(model => model.Email, new
+                                   {
+                                       @class = "w-full",
+                                       @placeholder = CRS.ADMIN.APPLICATION.Resources.Resource.Email,
+                                       autocomplete = "off",
+                                       @maxLength = "200"
+                                   })
+                                        <span class="error">
+                                            @Html.ValidationMessageFor(m => m.Email)
+                                        </span>
+                       
+                                </div>
+                                @if (!string.IsNullOrEmpty(Model.AgentId) || !string.IsNullOrEmpty(Model.holdId))
+                                {
+                                    <div class="input-field-common">
+                                        <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
+                                            @CRS.ADMIN.APPLICATION.Resources.Resource.Username
+                                        </label>
+                                        @Html.HiddenFor(model => model.LoginId)
+                                        <input type="text" class="w-full" placeholder="@CRS.ADMIN.APPLICATION.Resources.Resource.Username" name="LoginId" value="@Model.LoginId" disabled>
+                                    </div>
+                                }
+
+                                <div id="Corp_idCorporate" style="display:none;">
+                                    <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
+                                        @CRS.ADMIN.APPLICATION.Resources.Resource.CorporateRegistry
+                                    </label>
+                                    <div class="file-upload-common" style="width: 360px;">
+                                        <label for="file_input_corporateregistrydocument" class="custom-file-upload w-[123px] bg-[#CC527A] flex-none ">
+                                            <span>@CRS.ADMIN.APPLICATION.Resources.Resource.Choose_Images</span>
+                                        </label>
+                                        <input id="file_input_corporateregistrydocument" class="file-input" type="file" name="CorporateRegistry_Certificate" value="@Model.CorporateRegistryDocument"
+                                               style="display:none;">
+                                        <p id="file_name_corporateregistrydocument"
+                                           class="file-name w-max h-[23px] overflow-hidden pl-2 text-xs text-[#686868] leading-[25px]">
+                                            @if (string.IsNullOrEmpty(Model.CorporateRegistryDocument))
+                                            {
+                                                @CRS.ADMIN.APPLICATION.Resources.Resource.No_File_Choosen
+                                            }
+                                            else
+                                            {
+                                                string fileName = Path.GetFileName(Model.CorporateRegistryDocument);
+                                                @fileName
+                                            }
+                                        </p>
+                                    </div>
+                                    <div class="text-xs text-error mt-[8px]">
+                                        @CRS.ADMIN.APPLICATION.Resources.Resource.Note:
+                                        @CRS.ADMIN.APPLICATION.Resources.Resource.and_Maximum_file_size_is_5_MB
+                                        <span class="error">
+                                            @Html.ValidationMessageFor(m => m.CorporateRegistryDocument)
+                                        </span>
+                                    </div>
+                                </div>
+
+
+                            </div>
+
+                            <div class="grid grid-cols-3 gap-x-5 gap-y-4">
+
+                                <div class="input-field-common">
+                                    <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
+                                        @CRS.ADMIN.APPLICATION.Resources.Resource.IdentificationType
+                                    </label>
+                                    <select id="large" name="IdentificationType" class=" default_select select-common block w-full "
+                                            style="width: 100%;">
+                                        @foreach (KeyValuePair<string, string> item in ViewBag.IdentificationType as Dictionary<string, string>)
+                                        {
+                                            var selectedId = ViewBag.IdentificationTypeIdKey as string;
+                                            if (item.Key == selectedId)
+                                            {
+                                                <option value="@item.Key" selected>
+                                                    @item.Value
+                                                </option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@item.Key">
+                                                    @item.Value
+                                                </option>
+                                            }
+                                        }
+
+
+                                    </select>
+                                </div>
+
+                                <div id="kycfront">
+                                    <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
+                                        @CRS.ADMIN.APPLICATION.Resources.Resource.KYCFront
+                                    </label>
+                                    <div class="file-upload-common" style="width: 360px;">
+                                        <label for="file_input_kycdocument" class="custom-file-upload w-[123px] bg-[#CC527A] flex-none ">
+                                            <span>@CRS.ADMIN.APPLICATION.Resources.Resource.Choose_Images</span>
+                                        </label>
+                                        <input id="file_input_kycdocument" class="file-input" type="file" name="KYCDocument_Certificate" value="@Model.KYCDocument"
+                                               style="display:none;">
+                                        <p id="file_name_kycdocument"
+                                           class="file-name w-max h-[23px] overflow-hidden pl-2 text-xs text-[#686868] leading-[25px]">
+                                            @if (string.IsNullOrEmpty(Model.KYCDocument))
+                                            {
+                                                @CRS.ADMIN.APPLICATION.Resources.Resource.No_File_Choosen
+                                            }
+                                            else
+                                            {
+                                                string fileName = Path.GetFileName(Model.KYCDocument);
+                                                @fileName
+                                            }
+                                        </p>
+                                    </div>
+                                    <div class="text-xs text-error mt-[8px]">
+                                        @CRS.ADMIN.APPLICATION.Resources.Resource.Note:
+                                        @CRS.ADMIN.APPLICATION.Resources.Resource.and_Maximum_file_size_is_5_MB
+                                        <span class="error">
+                                            @Html.ValidationMessageFor(m => m.KYCDocument)
+                                        </span>
+                                    </div>
+                                </div>
+                                <div id="Passport" style="display:none">
+                                    <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
+                                        @CRS.ADMIN.APPLICATION.Resources.Resource.Passport
+                                    </label>
+                                    <div class="file-upload-common" style="width: 360px;">
+                                        <label for="file_input_passportphoto" class="custom-file-upload w-[123px] bg-[#CC527A] flex-none ">
+                                            <span>@CRS.ADMIN.APPLICATION.Resources.Resource.Choose_Images</span>
+                                        </label>
+                                        @*<input type="hidden" name="Business_Certificate" value="@Model.Business_Certificate"/>*@
+                                        <input id="file_input_passportphoto" class="file-input" type="file" name="PassportPhotot_Certificate" value="@Model.PassportPhoto"
+                                               style="display:none;">
+                                        <p id="file_name_passportphoto"
+                                           class="file-name w-max h-[23px] overflow-hidden pl-2 text-xs text-[#686868] leading-[25px]">
+                                            @if (string.IsNullOrEmpty(Model.PassportPhoto))
+                                            {
+                                                @CRS.ADMIN.APPLICATION.Resources.Resource.No_File_Choosen
+                                            }
+                                            else
+                                            {
+                                                string fileName = Path.GetFileName(Model.PassportPhoto);
+                                                @fileName
+                                            }
+                                        </p>
+                                    </div>
+                                    <div class="text-xs text-error mt-[8px]">
+                                        @CRS.ADMIN.APPLICATION.Resources.Resource.Note:
+                                        @CRS.ADMIN.APPLICATION.Resources.Resource.and_Maximum_file_size_is_5_MB
+                                        <span class="error">
+                                            @Html.ValidationMessageFor(m => m.PassportPhoto)
+                                        </span>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <!-- businesstype, ceofullname, companyaddress, email, contact number, landline and Username end -->
+                            <!-- kyc certificate and business certificate start -->
+                            <div class="grid grid-cols-2 gap-x-5 gap-y-4">
+                                <div id="kycback">
+                                    <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
+                                        @CRS.ADMIN.APPLICATION.Resources.Resource.KYCBack
+                                    </label>
+                                    <div class="file-upload-common">
+                                        <label for="file_input_kycdocumentback" class="custom-file-upload w-[123px] bg-[#CC527A] flex-none ">
+                                            <span>@CRS.ADMIN.APPLICATION.Resources.Resource.Choose_Images</span>
+                                        </label>
+                                        <input id="file_input_kycdocumentback" class="file-input" type="file" name="KYCDocumentBack_Certificate" value="@Model.KYCDocumentBack"
+                                               style="display:none;">
+                                        <p id="file_name_kycdocumentback"
+                                           class="file-name w-max h-[23px] overflow-hidden pl-2 text-xs text-[#686868] leading-[25px]">
+                                            @if (string.IsNullOrEmpty(Model.KYCDocumentBack))
+                                            {
+                                                @CRS.ADMIN.APPLICATION.Resources.Resource.No_File_Choosen
+                                            }
+                                            else
+                                            {
+                                                string fileName = Path.GetFileName(Model.KYCDocumentBack);
+                                                @fileName
+                                            }
+                                        </p>
+                                    </div>
+                                    <div class="text-xs text-error mt-[8px]">
+                                        @CRS.ADMIN.APPLICATION.Resources.Resource.Note:
+                                        @CRS.ADMIN.APPLICATION.Resources.Resource.Image_should_be_in_HEIF_format
+                                        @CRS.ADMIN.APPLICATION.Resources.Resource.and_Maximum_file_size_is_5_MB
+                                        <span class="error">
+                                            @Html.ValidationMessageFor(m => m.KYCDocumentBack)
+                                        </span>
+                                    </div>
+                                </div>
+                                <div id="Insurance" style="display:none">
+                                    <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
+                                        @CRS.ADMIN.APPLICATION.Resources.Resource.Insurance
+                                    </label>
+                                    <div class="file-upload-common">
+                                        <label for="file_input_insurancephoto" class="custom-file-upload w-[123px] bg-[#CC527A] flex-none ">
+                                            <span>@CRS.ADMIN.APPLICATION.Resources.Resource.Choose_Images</span>
+                                        </label>
+                                        <input id="file_input_insurancephoto" class="file-input" type="file" name="InsurancePhoto_Certificate" value="@Model.InsurancePhoto"
+                                               style="display:none;">
+                                        <p id="file_name_insurancephoto"
+                                           class="file-name w-max h-[23px] overflow-hidden pl-2 text-xs text-[#686868] leading-[25px]">
+                                            @if (string.IsNullOrEmpty(Model.InsurancePhoto))
+                                            {
+                                                @CRS.ADMIN.APPLICATION.Resources.Resource.No_File_Choosen
+                                            }
+                                            else
+                                            {
+                                                string fileName = Path.GetFileName(Model.InsurancePhoto);
+                                                @fileName
+                                            }
+                                        </p>
+                                    </div>
+                                    <div class="text-xs text-error mt-[8px]">
+                                        @CRS.ADMIN.APPLICATION.Resources.Resource.Note:
+                                        @CRS.ADMIN.APPLICATION.Resources.Resource.Image_should_be_in_HEIF_format
+                                        @CRS.ADMIN.APPLICATION.Resources.Resource.and_Maximum_file_size_is_5_MB
+                                        <span class="error">
+                                            @Html.ValidationMessageFor(m => m.InsurancePhoto)
+                                        </span>
+                                    </div>
+                                </div>
+                                <div>
+                                    <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
+                                        @CRS.ADMIN.APPLICATION.Resources.Resource.Business_Cerfificate
+                                    </label>
+                                    <div class="file-upload-common">
+                                        <label for="file_input_business_certificate" class="custom-file-upload w-[123px] bg-[#CC527A] flex-none ">
+                                            <span>@CRS.ADMIN.APPLICATION.Resources.Resource.Choose_Images</span>
+                                        </label>
+                                        <input id="file_input_business_certificate" class="file-input" type="file" name="Business_Certificate" value="@Model.BusinessCertificate"
+                                               style="display:none;">
+                                        <p id="file_name_bussiness_certificate"
+                                           class="file-name w-max h-[23px] overflow-hidden pl-2 text-xs text-[#686868] leading-[25px]">
+                                            @if (string.IsNullOrEmpty(Model.BusinessCertificate))
+                                            {
+                                                @CRS.ADMIN.APPLICATION.Resources.Resource.No_File_Choosen
+                                            }
+                                            else
+                                            {
+                                                string fileName = Path.GetFileName(Model.BusinessCertificate);
+                                                @fileName
+                                            }
+                                        </p>
+                                    </div>
+                                    <div class="text-xs text-error mt-[8px]">
+                                        @CRS.ADMIN.APPLICATION.Resources.Resource.Note:
+                                        @CRS.ADMIN.APPLICATION.Resources.Resource.Image_should_be_in_HEIF_format
+                                        @CRS.ADMIN.APPLICATION.Resources.Resource.and_Maximum_file_size_is_5_MB
+                                        <span class="error">
+                                            @Html.ValidationMessageFor(m => m.BusinessCertificate)
+                                        </span>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <!-- kyc certificate and business certificate end -->
+
+                            <div class="grid grid-cols-3 gap-x-5 gap-y-4">
+                                <div class="input-field-common">
+                                    <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
+                                        @CRS.ADMIN.APPLICATION.Resources.Resource.BusinessLicenseNumber
+                                    </label>
+                                    @Html.TextBoxFor(model => model.BusinessLicenseNumber, new
+                               {
+                                   @class = "w-full",
+                                   @placeholder = CRS.ADMIN.APPLICATION.Resources.Resource.BusinessLicenseNumber_Placeholder,
+                                   autocomplete = "off",
+                                   @maxLength = "50"
+                               })
+                                    <span class="error">
+                                        @Html.ValidationMessageFor(m => m.BusinessLicenseNumber)
+                                    </span>
+                                </div>
+                                <div class="input-field-common mb-[20px]" id="tagInput1">
+                                    <div class="input-field-common">
+                                        <label for="date" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                                            @CRS.ADMIN.APPLICATION.Resources.Resource.LicenseIssuedDate
+                                        </label>
+                                        @Html.TextBoxFor(model => model.LicenseIssuedDate, new
+                                   {
+                                       @class = "w-full",
+                                       @placeholder = "YYYY/MM/DD",
+                                       @autocomplete = "off",
+                                       @type = "text",
+                                         @readonly = "readonly"
+                                          })
+                                        <span class="error">
+                                            @Html.ValidationMessageFor(m => m.LicenseIssuedDate)
+                                        </span>
+                                    </div>
+                                </div>
+
+
+                            </div>
+
+
+                            <!-- for Representative1 start -->
+                            <div class="flex gap-2 text-primary-300 text-sm font-semibold items-center mt-[10px]" id="corp_representive1" style="display:none;">
+                                <div class="flex-none uppercase">  @CRS.ADMIN.APPLICATION.Resources.Resource.Representative1</div>
+                                <div class="bg-[#F4F4F4] h-[1px] w-full">
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-3 gap-x-5 gap-y-4" id="corpdetail_representive1" style="display:none;">
+                                <div class="input-field-common">
+                                    <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
+                                        @CRS.ADMIN.APPLICATION.Resources.Resource.ContactName
+                                    </label>
+                                    @Html.TextBoxFor(model => model.Representative1_ContactName, new
+                               {
+                                   @class = "w-full",
+                                   @placeholder = CRS.ADMIN.APPLICATION.Resources.Resource.ContactName,
+                                   autocomplete = "off",
+                                   @maxLength = "50"
+                               })
+                                    <span class="error">
+                                        @Html.ValidationMessageFor(m => m.Representative1_ContactName)
+                                    </span>
+                                </div>
+                                <div class="input-field-common">
+                                    <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
+                                        @CRS.ADMIN.APPLICATION.Resources.Resource.MobileNumber
+                                    </label>
+                                    @Html.TextBoxFor(model => model.Representative1_MobileNo, new
+                               {
+                                   @class = "w-full",
+                                   @placeholder = CRS.ADMIN.APPLICATION.Resources.Resource.MobileNumber,
+                                   autocomplete = "off",
+                                   @maxLength = "11"
+                               })
+                                    <span class="error">
+                                        @Html.ValidationMessageFor(m => m.Representative1_MobileNo)
+                                    </span>
+                                </div>
+                                <div class="input-field-common">
+                                    <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
+                                        @CRS.ADMIN.APPLICATION.Resources.Resource.Email
+                                    </label>
+                                    @Html.TextBoxFor(model => model.Representative1_Email, new
+                               {
+                                   @class = "w-full",
+                                   @placeholder = CRS.ADMIN.APPLICATION.Resources.Resource.Email_Address,
+                                   autocomplete = "off",
+                                   @maxLength = "50"
+                               })
+                                    <span class="error">
+                                        @Html.ValidationMessageFor(m => m.Representative1_Email)
+                                    </span>
+                                </div>
+                                <div class="input-field-common">
+                                    <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
+                                        @CRS.ADMIN.APPLICATION.Resources.Resource.RepresentiveFurigana
+                                    </label>
+                                    @Html.TextBoxFor(model => model.Representative1_Furigana, new
+                               {
+                                   @class = "w-full",
+                                   @placeholder = CRS.ADMIN.APPLICATION.Resources.Resource.RepresentiveFurigana,
+                                   autocomplete = "off",
+                                   @maxLength = "100"
+                               })
+                                    <span class="error">
+                                        @Html.ValidationMessageFor(m => m.Representative1_Furigana)
+                                    </span>
+                                </div>
+                            </div>
+                            <!-- for Representative1 end -->
+                            <!-- for Representative 2 start -->
+                            <div class="flex gap-2 text-primary-300 text-sm font-semibold items-center mt-[10px]" id="corp_representive2" style="display:none;">
+                                <div class="flex-none uppercase">  @CRS.ADMIN.APPLICATION.Resources.Resource.Representative2</div>
+                                <div class="bg-[#F4F4F4] h-[1px] w-full">
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-3 gap-x-5 gap-y-4" id="corpdetail_representive2" style="display:none;">
+                                <div class="input-field-common">
+                                    <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
+                                        @CRS.ADMIN.APPLICATION.Resources.Resource.ContactName
+                                    </label>
+                                    @Html.TextBoxFor(model => model.Representative2_ContactName, new
+                               {
+                                   @class = "w-full",
+                                   @placeholder = CRS.ADMIN.APPLICATION.Resources.Resource.ContactName,
+                                   autocomplete = "off",
+                                   @maxLength = "50"
+                               })
+                                    <span class="error">
+                                        @Html.ValidationMessageFor(m => m.Representative2_ContactName)
+                                    </span>
+                                </div>
+                                <div class="input-field-common">
+                                    <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
+                                        @CRS.ADMIN.APPLICATION.Resources.Resource.MobileNumber
+                                    </label>
+                                    @Html.TextBoxFor(model => model.Representative2_MobileNo, new
+                               {
+                                   @class = "w-full",
+                                   @placeholder = CRS.ADMIN.APPLICATION.Resources.Resource.MobileNumber,
+                                   autocomplete = "off",
+                                   @maxLength = "11"
+                               })
+                                    <span class="error">
+                                        @Html.ValidationMessageFor(m => m.Representative2_MobileNo)
+                                    </span>
+                                </div>
+                                <div class="input-field-common">
+                                    <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
+                                        @CRS.ADMIN.APPLICATION.Resources.Resource.Email
+                                    </label>
+                                    @Html.TextBoxFor(model => model.Representative2_Email, new
+                               {
+                                   @class = "w-full",
+                                   @placeholder = CRS.ADMIN.APPLICATION.Resources.Resource.Email_Address,
+                                   autocomplete = "off",
+                                   @maxLength = "50"
+                               })
+                                    <span class="error">
+                                        @Html.ValidationMessageFor(m => m.Representative2_Email)
+                                    </span>
+                                </div>
+                                <div class="input-field-common">
+                                    <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
+                                        @CRS.ADMIN.APPLICATION.Resources.Resource.RepresentiveFurigana
+                                    </label>
+                                    @Html.TextBoxFor(model => model.Representative2_Furigana, new
+                               {
+                                   @class = "w-full",
+                                   @placeholder = CRS.ADMIN.APPLICATION.Resources.Resource.RepresentiveFurigana,
+                                   autocomplete = "off",
+                                   @maxLength = "100"
+                               })
+                                    <span class="error">
+                                        @Html.ValidationMessageFor(m => m.Representative2_Furigana)
+                                    </span>
+                                </div>
+                            </div>
+                            <!-- for Representative 2 end -->
+
+
+                        </div>
+
+
+                    </div>
+                    <div id="content2" class="content-section" style="display: none;">
+                        <div class="grid gap-4 py-[10px]">
+                            <div class="flex gap-2 text-primary-300 text-sm font-semibold items-center mt-[10px]">
+                                <div class="flex-none uppercase"> @CRS.ADMIN.APPLICATION.Resources.Resource.Social_Links</div>
+                                <div class="bg-[#F4F4F4] h-[1px] w-full">
+                                </div>
+                            </div>
+                            <div class="grid  gap-4">
+                                <div class="grid grid-cols-2 gap-x-4 gap-y-5">
+                                    <div class="input-field-common">
+                                        <label for="instagram" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                                            @CRS.ADMIN.APPLICATION.Resources.Resource.Instagram
+                                        </label>
+
+                                        @Html.TextBoxFor(model => model.InstagramLink, new
+                                   {
+                                       @class = "w-full",
+                                       @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.Instagram,
+                                       autocomplete = "off"
+                                   })
+
+                                        <span class="error">
+                                            @Html.ValidationMessageFor(m => m.InstagramLink)
+                                        </span>
+                                    </div>
+                                    <div class="input-field-common">
+                                        <label for="tiktok" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                                            @CRS.ADMIN.APPLICATION.Resources.Resource.Tiktok
+                                        </label>
+                                        @Html.TextBoxFor(model => model.TiktokLink, new
+                                   {
+                                       @class = "w-full",
+                                       @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.Tiktok,
+                                       autocomplete = "off"
+                                   })
+
+                                        <span class="error">
+                                            @Html.ValidationMessageFor(m => m.TiktokLink)
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div class="grid grid-cols-2 gap-x-4 gap-y-5">
+                                    <div class="input-field-common">
+                                        <label for="line" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                                            @CRS.ADMIN.APPLICATION.Resources.Resource.Line
+                                        </label>
+                                        @Html.TextBoxFor(model => model.Line, new
+                                   {
+                                       @class = "w-full",
+                                       @placeholder = "i.e. www.line.com/+09033333333 ",
+                                       autocomplete = "off"
+                                   })
+
+                                        <span class="error">
+                                            @Html.ValidationMessageFor(m => m.Line)
+                                        </span>
+
+                                    </div>
+                                    <div class="input-field-common">
+                                        <label for="twitter" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                                            @CRS.ADMIN.APPLICATION.Resources.Resource.Twitter
+                                        </label>
+                                        @Html.TextBoxFor(model => model.TwitterLink, new
+                                   {
+                                       @class = "w-full",
+                                       @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.Twitter,
+                                       autocomplete = "off"
+                                   })
+
+                                        <span class="error">
+                                            @Html.ValidationMessageFor(m => m.TwitterLink)
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <!-- for other links -->
+                                <div class="flex gap-2 text-primary-300 text-sm font-semibold items-center mt-[10px]">
+                                    <div class="flex-none uppercase">Other Links</div>
+                                    <div class="bg-[#F4F4F4] h-[1px] w-full">
+                                    </div>
+                                </div>
+                                <div class="grid grid-cols-2 gap-x-4 gap-y-5">
+                                    <div class="input-field-common">
+                                        <label for="website" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                                            @CRS.ADMIN.APPLICATION.Resources.Resource.Website
+                                        </label>
+                                        @Html.TextBoxFor(model => model.WebsiteLink, new
+                                   {
+                                       @class = "w-full",
+                                       @placeholder = "i.e. www.clubglobal.com",
+                                       autocomplete = "off"
+                                   })
+                                        <span class="error">
+                                            @Html.ValidationMessageFor(m => m.WebsiteLink)
+                                        </span>
+                                    </div>
+                                    <div class="input-field-common">
+                                        <label for="googleMap" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                                            @CRS.ADMIN.APPLICATION.Resources.Resource.Google_Map
+                                        </label>
+                                        @Html.TextBoxFor(model => model.GoogleMap, new
+                                   {
+                                       @class = "w-full",
+                                       @placeholder = "i.e. www.clubglobal.com",
+                                       autocomplete = "off"
+                                   })
+                                        <span class="error">
+                                            @Html.ValidationMessageFor(m => m.GoogleMap)
+                                        </span>
+
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+                    <div id="content3" class="content-section" style="display: none;">
+                        <div class="grid gap-4 py-[10px]">
+                            <div class="flex gap-2 text-primary-300 text-sm font-semibold items-center mt-[10px]">
+                                <div class="flex-none uppercase">@CRS.ADMIN.APPLICATION.Resources.Resource.Club_Info</div>
+                                <div class="bg-[#F4F4F4] h-[1px] w-full">
+                                </div>
+                            </div>
+
+
+
+                            <div class="grid  gap-4">
+                                <div class="grid grid-cols-3 gap-x-4 gap-y-5">
+                                    <div class="input-field-common">
+                                        <label for="instagram" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                                            @CRS.ADMIN.APPLICATION.Resources.Resource.Working_Hours__From_
+                                        </label>
+                                        @Html.TextBoxFor(model => model.WorkingHrFrom, new
+                                   {
+                                       @class = "w-full",
+                                       @placeholder = "HH:MM",
+                                       autocomplete = "off",
+                                       @maxLength = "30",
+                                       @type = "time"
+                                   })
+
+                                        <span class="error">
+                                            @Html.ValidationMessageFor(m => m.WorkingHrFrom)
+                                        </span>
+
+                                    </div>
+                                    <div class="input-field-common">
+                                        <label for="WorkingHrTo" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                                            @CRS.ADMIN.APPLICATION.Resources.Resource.Working_Hours__To_
+                                        </label>
+                                        @Html.TextBoxFor(model => model.WorkingHrTo, new
+                                   {
+                                       @class = "w-full",
+                                       @placeholder = "HH:MM",
+                                       autocomplete = "off",
+                                        @maxLength = "30",
+                                       @type = "time"
+                                   })
+                                        <span class="error">
+                                            @Html.ValidationMessageFor(m => m.WorkingHrTo)
+                                        </span>
+
+                                    </div>
+                                    <div class="input-field-common">
+                                        <label class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                                            @CRS.ADMIN.APPLICATION.Resources.Resource.Holiday
+                                        </label>
+                                        @Html.HiddenFor(m => m.HolidayStr)
+                                           <select id="large" name="holiday" class=" default_select select-common block w-full "
+                                             style="width: 100%;" multiple="multiple" placeholder="Select">
+                                            @foreach (var item in ViewBag.Holiday as IEnumerable<SelectListItem>)
+                                            {
+                                                var selectedId = ViewBag.HolidayIdKey as string;
+                                                string[] selectedIds = !string.IsNullOrEmpty(selectedId) ? selectedId.Split(',') : new string[0]; ;
+                                                bool isSelected = selectedIds.Contains(item.Value);
+                                                if (isSelected == true)
+                                                {
+                                                    <option value="@item.Value" selected @(item.Disabled == true ? "selected disabled" : "")>
+                                                        @item.Text
+                                                    </option>
+                                                }
+                                                else
+                                                {
+                                                    <option value="@item.Value" @(item.Disabled == true ? "selected disabled" : "")>
+                                                        @item.Text
+                                                    </option>
+                                                }
+
+                                            }
+
+                                        </select>
+                                    </div>
+                                </div>
+                              
+                                <!-- for last order -->
+                                <div class="grid grid-cols-3 gap-x-4 gap-y-5">
+                                    <div class="input-field-common">
+                                        <label for="instagram" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                                            @CRS.ADMIN.APPLICATION.Resources.Resource.Last_Order_Time
+                                        </label>
+                                        @Html.TextBoxFor(model => model.LastOrderTime, new
+                                   {
+                                       @class = "w-full",
+                                       @placeholder = "HH:MM",
+                                       autocomplete = "off",
+                                       @maxLength = "30",
+                                       @type = "time"
+                                   })
+                                        <span class="error">
+                                            @Html.ValidationMessageFor(m => m.LastOrderTime)
+                                        </span>
+
+                                    </div>
+                                    <div class="input-field-common">
+                                        <label for="instagram" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                                            @CRS.ADMIN.APPLICATION.Resources.Resource.LastEntryTime
+                                        </label>
+                                        @Html.TextBoxFor(model => model.LastEntryTime, new
+                                   {
+                                       @class = "w-full",
+                                       @placeholder = "HH:MM",
+                                       autocomplete = "off",
+                                        @maxLength = "30",
+                                       @type = "time"
+                                   })
+                                        <span class="error">
+                                            @Html.ValidationMessageFor(m => m.LastEntryTime)
+                                        </span>
+
+                                    </div>
+                                    <div class="input-field-common">
+                                        <label for="instagram" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                                            @CRS.ADMIN.APPLICATION.Resources.Resource.Tax
+                                        </label>
+                                        @Html.TextBoxFor(model => model.Tax, new
+                                   {
+                                       @class = "w-full",
+                                       @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.Tax,
+                                       autocomplete = "off"
+                                   })
+                                        <span class="error">
+                                            @Html.ValidationMessageFor(m => m.Tax)
+                                        </span>
+
+                                    </div>
+
+                                    <div class="input-field-common">
+                                        <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
+                                            @CRS.ADMIN.APPLICATION.Resources.Resource.ClosingDate
+                                        </label>
+                                        <select id="large" name="ClosingDate" class=" default_select select-common block w-full "
+                                                style="width: 100%;">
+                                            @foreach (var item in ViewBag.ClosingDate as IEnumerable<SelectListItem>)
+                                            {
+                                                var selectedId = ViewBag.ClosingDateIdKey as string;
+                                                if (item.Value == selectedId)
+                                                {
+                                                    <option value="@item.Value" selected>
+                                                        @item.Text
+                                                    </option>
+                                                }
+                                                else
+                                                {
+                                                    <option value="@item.Value">
+                                                        @item.Text
+                                                    </option>
+                                                }
+                                            }
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- for address -->
+                            <div class="flex gap-2 text-primary-300 text-sm font-semibold items-center mt-[10px]">
+                                <div class="flex-none uppercase">@CRS.ADMIN.APPLICATION.Resources.Resource.Address</div>
+                                <div class="bg-[#F4F4F4] h-[1px] w-full">
+                                </div>
+                            </div>
+                            <div class="grid  gap-4">
+                                <div class="grid grid-cols-3 gap-x-4 gap-y-5">
+                                    
+                                    <div class="input-field-common">
+                                        <label for="instagram" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                                            @CRS.ADMIN.APPLICATION.Resources.Resource.Longitude
+                                        </label>
+                                        @Html.TextBoxFor(model => model.Longitude, new
+                                   {
+                                       @class = "w-full",
+                                       @placeholder = CRS.ADMIN.APPLICATION.Resources.Resource.Longitude_Placeholder,
+                                       autocomplete = "off",
+                                       @maxLength = "30"
+                                   })
+                                        <span class="error">
+                                            @Html.ValidationMessageFor(m => m.Longitude)
+                                        </span>
+
+                                    </div>
+                                    <div class="input-field-common">
+                                        <label for="instagram" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                                            @CRS.ADMIN.APPLICATION.Resources.Resource.Latitude
+                                        </label>
+                                        @Html.TextBoxFor(model => model.Latitude, new
+                                   {
+                                       @class = "w-full",
+                                       @placeholder = CRS.ADMIN.APPLICATION.Resources.Resource.Latitude_Placeholder,
+                                       autocomplete = "off",
+                                       @maxLength = "30"
+                                   })                                       
+                                        <span class="error">
+                                            @Html.ValidationMessageFor(m => m.Latitude)
+                                        </span>
+
+                                    </div>
+                                </div>
+
+                                <!-- for postal code -->
+                                <div class="grid grid-cols-3 gap-x-4 gap-y-5">
+
+                                    <div class="input-field-common">
+                                        <label for="instagram" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                                            @CRS.ADMIN.APPLICATION.Resources.Resource.Postal_Code
+                                        </label>
+                                        @Html.TextBoxFor(model => model.PostalCode, new
+                                   {
+                                       @class = "w-full",
+                                       @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.Enter_Postal_Code,
+                                       autocomplete = "off",
+                                       @maxLength = "30"
+                                   })
+                                        <span class="error">
+                                            @Html.ValidationMessageFor(m => m.PostalCode)
+                                        </span>
+
+                                    </div>
+                                    <div class="input-field-common">
+                                        <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
+                                            @CRS.ADMIN.APPLICATION.Resources.Resource.Prefecture
+                                        </label>
+                                        <select id="large" class=" default_select select-common block w-full "
+                                                style="width: 100%;" name="LocationDDL">
+                                            @foreach (var item in ViewBag.LocationDDLList as IEnumerable<SelectListItem>)
+                                            {
+                                                var selectedId = ViewBag.LocationIdKey as string;
+                                                if (item.Value == selectedId)
+                                                {
+                                                    <option value="@item.Value" selected>
+                                                        @item.Text
+                                                    </option>
+                                                }
+                                                else
+                                                {
+                                                    <option value="@item.Value">
+                                                        @item.Text
+                                                    </option>
+                                                }
+                                            }
+                                        </select>
+                                        <span class="error">
+                                            @Html.ValidationMessageFor(m => m.LocationDDL)
+                                        </span>
+
+                                    </div>
+                                    <div class="input-field-common">
+                                        <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
+                                            @CRS.ADMIN.APPLICATION.Resources.Resource.City
+                                        </label>
+                                        @Html.TextBoxFor(model => model.City, new
+                                   {
+                                       @class = "w-full",
+                                       @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.Enter_City,
+                                       autocomplete = "off"
+                                   })
+                                        <span class="error">
+                                            @Html.ValidationMessageFor(m => m.City)
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <!-- for street code -->
+                                <div class="grid grid-cols-3 gap-x-4 gap-y-5">
+                                    <div class="input-field-common">
+                                        <label for="instagram" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                                            @CRS.ADMIN.APPLICATION.Resources.Resource.Street
+                                        </label>
+                                        @Html.TextBoxFor(model => model.Street, new
+                                   {
+                                       @class = "w-full",
+                                       @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.Enter_Street,
+                                       autocomplete = "off",
+                                   })
+                                        <span class="error">
+                                            @Html.ValidationMessageFor(m => m.Street)
+                                        </span>
+
+                                    </div>
+                                    <div class="input-field-common">
+                                        <label for="instagram" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                                            @CRS.ADMIN.APPLICATION.Resources.Resource.Building___Room_No
+                                        </label>
+                                        @Html.TextBoxFor(model => model.BuildingRoomNo, new
+                                   {
+                                       @class = "w-full",
+                                       @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.Building___Room_No,
+                                       autocomplete = "off",
+                                       @maxLength = "30"
+                                   })
+                                        <span class="error">
+                                            @Html.ValidationMessageFor(m => m.BuildingRoomNo)
+                                        </span>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div id="content4" class="content-section" style="display: none;">
+                        <div class="grid gap-4 py-[10px]">
+                            <div class="flex gap-2 text-primary-300 text-sm font-semibold items-center mt-[10px]">
+                                <div class="flex-none uppercase">@CRS.ADMIN.APPLICATION.Resources.Resource.Plan_Fee</div>
+                                <div class="bg-[#F4F4F4] h-[1px] w-full">
+                                </div>
+                            </div>
+                            <div class="grid  gap-4">
+                                <div class="grid grid-cols-3 gap-x-4 gap-y-5">
+                                    <div class="input-field-common">
+                                        <label for="instagram" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                                            @CRS.ADMIN.APPLICATION.Resources.Resource.Regular_Fee
+                                        </label>
+                                        @Html.TextBoxFor(model => model.RegularFee, new
+                                   {
+                                       @class = "w-full",
+                                       @placeholder = CRS.ADMIN.APPLICATION.Resources.Resource.Regular_Fee,
+                                       autocomplete = "off",
+                                       @maxLength = "30"
+                                   })
+                                        <span class="error">
+                                            @Html.ValidationMessageFor(m => m.RegularFee)
+                                        </span>
+
+                                    </div>
+                                    <div class="input-field-common">
+                                        <label for="instagram" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                                            @CRS.ADMIN.APPLICATION.Resources.Resource.Extension_Fee
+                                        </label>
+                                        @Html.TextBoxFor(model => model.ExtensionFee, new
+                                   {
+                                       @class = "w-full",
+                                       @placeholder = CRS.ADMIN.APPLICATION.Resources.Resource.Extension_Fee,
+                                       autocomplete = "off",
+                                       @maxLength = "30"
+                                   })
+                                        <span class="error">
+                                            @Html.ValidationMessageFor(m => m.ExtensionFee)
+                                        </span> 
+                                        <!-- <span class="error">Validation msg</span> -->
+                                    </div>
+                                    <div class="input-field-common">
+                                        <label for="instagram" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                                            @CRS.ADMIN.APPLICATION.Resources.Resource.Designation_Fee
+                                        </label>
+                                        @Html.TextBoxFor(model => model.DesignationFee, new
+                                   {
+                                       @class = "w-full",
+                                       @placeholder = CRS.ADMIN.APPLICATION.Resources.Resource.Designation_Fee,
+                                       autocomplete = "off",
+                                       @maxLength = "30"
+                                   })
+                                        <span class="error">
+                                            @Html.ValidationMessageFor(m => m.DesignationFee)
+                                        </span>
+
+                                        <!-- <span class="error">Validation msg</span> -->
+                                    </div>
+                                    
+
+                                </div>
+
+                                <!-- for last order -->
+                                <div class="grid grid-cols-3 gap-x-4 gap-y-5">
+                                    <div class="input-field-common">
+                                        <label for="instagram" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                                            @CRS.ADMIN.APPLICATION.Resources.Resource.Companion_Fee
+                                        </label>
+                                        @Html.TextBoxFor(model => model.CompanionFee, new
+                                   {
+                                       @class = "w-full",
+                                       @placeholder = CRS.ADMIN.APPLICATION.Resources.Resource.Companion_Fee,
+                                       autocomplete = "off",
+                                       @maxLength = "30"
+                                   })
+                                        <span class="error">
+                                            @Html.ValidationMessageFor(m => m.CompanionFee)
+                                        </span>
+
+                                    </div>
+                                    <div class="input-field-common">
+                                        <label for="instagram" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                                            @CRS.ADMIN.APPLICATION.Resources.Resource.Service_tax
+                                        </label>
+                                        @Html.TextBoxFor(model => model.Drink, new
+                                   {
+                                       @class = "w-full",
+                                       @placeholder = CRS.ADMIN.APPLICATION.Resources.Resource.Drink,
+                                       autocomplete = "off",
+                                       @maxLength = "30"
+                                   })
+                                        <span class="error">
+                                            @Html.ValidationMessageFor(m => m.Drink)
+                                        </span>
+                                        <!-- <span class="error">Validation msg</span> -->
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- for Plan list -->
+                           
+                        </div>
+                    </div>
+                    <div class="flex justify-between ">
+                        <div>
+                            <button type="button" class="btn btn-primary-normal leading-[12px] rounded-[4px] px-3 text-sm"
+                                    id="previousBtn">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Previous
+                            </button>
+                        </div>
+                        <div class="flex gap-6">
+                            <button type="button" onclick="CancelFunction()" class="resetForm btn btn-gray-white rounded-[4px] px-8 text-sm"
+                                    data-drawer-hide="add-new-host-club">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Cancel
+                            </button>
+                            <button type="button" class="btn btn-primary-default rounded-[4px] px-8 text-sm leading-[10px]"
+                                    id="nextBtn">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Next
+                            </button>
+                        </div>
+                    </div>
+                    <div class="flex justify-end py-4">
+                        <div class="flex gap-6">
+                            <a>
+                                <button class="resetForm btn btn-primary-default h-[40px] px-8 rounded-[4px]  text-sm leading-[10px]" type="submit" id="submit-button-id">
+                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Submit
+                                </button>
+                            </a>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+
+<style>
+    .select2-container--default .select2-selection--single {
+        height: 44px !important;
+    }
+
+    .select2-container--default .select2-selection--multiple {
+        height: 44px !important;
+        overflow-y: auto;
+    }
+
+    .select2-container--default .select2-search--inline .select2-search__field {
+        width: 259px !important;
+        padding-left: 20px;
+        padding-top: 6px; 
+       /* background:red;*/
+        display:flex;
+        justify-content:flex-start;
+       
+    }
+</style>

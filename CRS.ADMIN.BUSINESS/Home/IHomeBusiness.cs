@@ -12,5 +12,6 @@ namespace CRS.ADMIN.BUSINESS.Home
         List<HostListModelCommon> GetHostList();
         List<TopBookedHostRankingModelCommon> GetTopBookedHostList();
         CommonDbResponse Login(LoginRequestCommon Request);
+        string GetAdminBalance();
     }
 }

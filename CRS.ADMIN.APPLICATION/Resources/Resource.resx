@@ -329,12 +329,20 @@
     <value>Apr</value>
     <comment>Dashboard</comment>
   </data>
+  <data name="Are you sure you want to block this club" xml:space="preserve">
+    <value>Are you sure you want to block this club?</value>
+    <comment>Club Management</comment>
+  </data>
   <data name="Are you sure you want to change the language" xml:space="preserve">
     <value>Are you sure you want to change the language</value>
     <comment>Language Preference</comment>
   </data>
   <data name="Are you sure you want to delete this club" xml:space="preserve">
     <value>Are you sure you want to delete this club?</value>
+    <comment>Club Management</comment>
+  </data>
+  <data name="Are you sure you want to unblock this club" xml:space="preserve">
+    <value>Are you sure you want to unblock this club?</value>
     <comment>Club Management</comment>
   </data>
   <data name="Assign" xml:space="preserve">
@@ -392,6 +400,10 @@
   <data name="Basic" xml:space="preserve">
     <value>Basic</value>
     <comment>Customer Management</comment>
+  </data>
+  <data name="Basic Club Management" xml:space="preserve">
+    <value>Basic Club Management</value>
+    <comment>Basic Club Management</comment>
   </data>
   <data name="Basic Info" xml:space="preserve">
     <value>Basic Info</value>
@@ -1053,6 +1065,10 @@
     <value>Holiday</value>
     <comment>ClubManagement</comment>
   </data>
+  <data name="HoslogBalance" xml:space="preserve">
+    <value>Hoslog Balance</value>
+    <comment>Home</comment>
+  </data>
   <data name="Host Info" xml:space="preserve">
     <value>Host Info</value>
     <comment>Host Management</comment>
@@ -1388,6 +1404,10 @@
   <data name="Manage user roles and their privileges" xml:space="preserve">
     <value>Manage user roles and their privileges</value>
     <comment>Roles &amp; Privileges</comment>
+  </data>
+  <data name="Manage your club detail information" xml:space="preserve">
+    <value>Manage your club detail informations.</value>
+    <comment>Basic Club Management</comment>
   </data>
   <data name="Manage your points detail" xml:space="preserve">
     <value>Manage your points detail.</value>
@@ -2146,6 +2166,10 @@
   <data name="September" xml:space="preserve">
     <value>Sep</value>
     <comment>Dashboard</comment>
+  </data>
+  <data name="Service tax" xml:space="preserve">
+    <value>Service Tax</value>
+    <comment>Club Management</comment>
   </data>
   <data name="Set Shuffling Time" xml:space="preserve">
     <value>Set Shuffling Time</value>

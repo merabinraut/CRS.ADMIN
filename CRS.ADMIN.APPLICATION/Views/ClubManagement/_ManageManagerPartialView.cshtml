@@ -20,7 +20,9 @@
                 @Html.AntiForgeryToken()
                 @Html.HiddenFor(model => model.ManagerId);
                 @Html.HiddenFor(model => model.ClubId);
-
+                @Html.HiddenFor(model => model.SearchFilter);
+                @Html.HiddenFor(model => model.StartIndex);
+                @Html.HiddenFor(model => model.PageSize);
                 <div class="py-4 grid gap-6">
                     <div class="input-field-common" id="tagInput3">
                         <div class="input-field-common">
@@ -89,7 +91,7 @@
                                @maxLength = "11"
                            })
                             </div>
-                           
+
                         </div>
                     </div>
 

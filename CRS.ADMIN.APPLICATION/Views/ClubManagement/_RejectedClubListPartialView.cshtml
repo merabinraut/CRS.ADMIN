@@ -1,0 +1,165 @@
+﻿@model CRS.ADMIN.APPLICATION.Models.ClubManagement.ClubManagementCommonModel
+
+<div class="flex justify-between pb-[24px]">
+    @Html.HiddenFor(model => model.ListType)
+    <form action="/ClubManagement/ClubList" method="get">
+        <input name="TabValue" id="valueTypeidreject" type="hidden" />
+        <div class="relative input-search-wrapper">
+            <div class="absolute inset-y-0 left-0 flex items-center pl-[16px] pointer-events-none">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21" fill="none">
+                    <path d="M17.5 18L13.875 14.375M15.8333 9.66667C15.8333 13.3486 12.8486 16.3333 9.16667 16.3333C5.48477 16.3333 2.5 13.3486 2.5 9.66667C2.5 5.98477 5.48477 3 9.16667 3C12.8486 3 15.8333 5.98477 15.8333 9.66667Z"
+                          stroke="#667085" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+            </div>
+            <input type="search"
+                   id="default-search-reject"
+                   class="input-search block w-full "
+                   placeholder="@CRS.ADMIN.APPLICATION.Resources.Resource.Search"
+                   value="@Model.SearchFilter"
+                   name="SearchFilter">
+        </div>
+    </form>
+
+</div>
+
+<div class="table-tab">
+    <div class="px-[12px] py-[16px] flex justify-between entry-export-container">
+        <div class="flex items-center select-entries" id="ShowEntries-Id-3">
+        </div>
+    </div>
+    <div class="relative overflow-x-auto">
+        <table class="w-full text-left club-table" id="table-id">
+            <thead class="club-table-thead">
+                <tr>
+                    <th scope="col" class="p-[12px]">
+                        <div class="flex w-max">
+                            S.N
+                            <div class="relative pl-[5px]">
+                                <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                            </div>
+                        </div>
+                    </th>
+                    <th scope="col" class="p-[12px]">
+                        <div class="flex w-max">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Club_Profile
+                            <div class="relative pl-[5px]">
+                                <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                            </div>
+                        </div>
+                    </th>
+
+                    <th scope="col" class="p-[12px]">
+                        <div class="flex w-max">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Phone_Number
+                            <div class="relative pl-[5px]">
+                                <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                            </div>
+                        </div>
+                    </th>
+
+                    <th scope="col" class="p-[12px]">
+                        <div class="flex w-max">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Location
+                            <div class="relative pl-[5px]">
+                                <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                            </div>
+                        </div>
+                    </th>
+                    <th scope="col" class="p-[12px]">
+                        <div class="flex w-max">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Created_On
+                            <div class="relative pl-[5px]">
+                                <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                            </div>
+                        </div>
+                    </th>
+                    <th scope="col" class="p-[12px]">
+                        <div class="flex  w-max ">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Updated_On
+                            <div class="relative pl-[5px]">
+                                <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                            </div>
+                        </div>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    int SNR = 1;
+                    
+                        
+                            foreach (var item in Model.ClubRejectedListModel)
+                            {
+                                <tr class="bg-white border-b ">
+                                    <td class="p-[12px]">
+                                        @SNR
+                                    </td>
+                                    <td class="p-[12px]">
+                                        <div class="round-image-text flex gap-[12px] w-max">
+                                            <img class="w-[32px] h-[32px] rounded-full" src="@item.ClubLogo" />
+
+                                            <div class="flex justify-between w-full">
+                                                <div class="text-image grid flex-none ">
+                                                    <div class="text-sm font-semibold text-[#101828] ">@item.ClubNameEng</div>
+                                                    @if (!string.IsNullOrEmpty(item.ClubCategory))
+                                                    {
+                                                        <div class="@item.ClubCategory.ToLower()">
+                                                            @item.ClubCategory.ToUpper()
+                                                        </div>
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="p-[12px]">
+                                        @item.MobileNumber
+                                    </td>
+
+                                    <td class="p-[12px]">
+                                        <div class="w-max">
+                                            @item.Location
+                                        </div>
+                                    </td>
+                                    <td class="p-[12px]">
+                                        <div class="w-max">
+                                            @item.CreatedDate
+                                        </div>
+                                    </td>
+                                    <td class="p-[12px]">
+                                        <div class="w-max">
+                                            @item.UpdatedDate
+                                        </div>
+                                    </td>
+
+                                </tr>
+                                        SNR++;
+                                    }
+                               
+
+                }
+
+            </tbody>
+        </table>
+
+    </div>
+    <div class="pagination-club">
+        <div class="show-entry" id="Entries-Id-3">
+        </div>
+        <div class="flex gap-[12px]">
+            <div class="btn btn-secondary-box-shadow" id="prev-btn-3">
+                @CRS.ADMIN.APPLICATION.Resources.Resource.Previous
+            </div>
+            <div class="flex gap-[12px]" id="pagination-id-3">
+            </div>
+            <div class="btn btn-secondary-box-shadow" id="next-btn-3">
+                @CRS.ADMIN.APPLICATION.Resources.Resource.Next
+            </div>
+        </div>
+    </div>
+</div>

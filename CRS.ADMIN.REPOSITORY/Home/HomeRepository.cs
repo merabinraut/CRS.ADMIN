@@ -195,5 +195,25 @@ namespace CRS.ADMIN.REPOSITORY.Home
             };
         }
         #endregion
+
+        #region get admin balance
+        public string GetAdminBalance()
+        {
+            string spName = "sproc_get_admin_balance"; // Stored procedure name
+            var dbResponseInfo = _DAO.ExecuteDataTable(spName);
+
+            // Check if the response is valid and contains rows
+            if (dbResponseInfo != null && dbResponseInfo.Rows.Count > 0)
+            {
+                // Retrieve and convert the value to string
+                var points = dbResponseInfo.Rows[0]["Points"];
+                return points != DBNull.Value ? points.ToString() : string.Empty;
+            }
+
+            // Return a default or empty string if no rows are returned
+            return string.Empty;
+        }
+
+        #endregion
     }
 }

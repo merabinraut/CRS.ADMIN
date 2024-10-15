@@ -1,0 +1,1061 @@
+﻿@model CRS.ADMIN.APPLICATION.Models.BasicClubManagement.BasicClubManagementModel
+@{
+    ViewBag.Title = "Basic Club List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var _ManageClubModel = Model.ManageBasicClub as CRS.ADMIN.APPLICATION.Models.BasicClubManagement.ManageBasicClubModel;
+    var _PremiumManageClubModel = Model.ManagePremiumClub as CRS.ADMIN.APPLICATION.Models.BasicClubManagement.ManagePremiumClubModel;
+}
+<div class="px-8 py-4">
+    @Html.AntiForgeryToken()
+
+    <!-- title  -->
+    <div class="flex flex-col  gap-6">
+        <div>
+            <div class="heading-title">
+                @CRS.ADMIN.APPLICATION.Resources.Resource.Basic_Club_Management
+            </div>
+            <div class="span-title-light-gray">
+                @CRS.ADMIN.APPLICATION.Resources.Resource.Manage_your_club_detail_information
+            </div>
+        </div>
+
+
+
+
+        <div class="flex justify-between pb-[24px]">
+            <form action="/BasicClubManagement/BasicClubManagementList" method="get">
+
+                @*<input name="value" id="valueTypeid" type="hidden" />*@
+                <div class="relative input-search-wrapper">
+                    <div class="absolute inset-y-0 left-0 flex items-center pl-[16px] pointer-events-none">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21" fill="none">
+                            <path d="M17.5 18L13.875 14.375M15.8333 9.66667C15.8333 13.3486 12.8486 16.3333 9.16667 16.3333C5.48477 16.3333 2.5 13.3486 2.5 9.66667C2.5 5.98477 5.48477 3 9.16667 3C12.8486 3 15.8333 5.98477 15.8333 9.66667Z"
+                                  stroke="#667085" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                    </div>
+                    <input type="search"
+                           id="default-search"
+                           class="input-search block w-full "
+                           placeholder="@CRS.ADMIN.APPLICATION.Resources.Resource.Search"
+                           value="@Model.SearchFilter"
+                           name="SearchFilter">
+                </div>
+            </form>
+            <div class="flex gap-6">
+                <div class="export-button h-[40px]" onclick="exportExcel('table-id', 'Club')">
+                    <img src="~/Content/assets_new/images/club/download-solid.svg">@CRS.ADMIN.APPLICATION.Resources.Resource.Export
+                </div>
+
+                <div class="btn btn-primary gap-[8px] h-[40px]" data-drawer-target="add-new-basic-club"
+                     data-drawer-show="add-new-basic-club" data-drawer-placement="right" data-drawer-backdrop="false"
+                     aria-controls="drawer-disabled-backdrop" id="add-new-id">
+                    <img src="~/Content/assets_new/images/plus-circle-solid.svg" />
+                    @CRS.ADMIN.APPLICATION.Resources.Resource.Add_New
+                </div>
+            </div>
+        </div>
+        <div class="table-tab">
+            <div class="px-[12px] py-[16px] flex justify-between entry-export-container">
+                <div class="flex items-center select-entries" id="ShowEntries-Id">
+                </div>
+            </div>
+            <div class="relative overflow-x-auto">
+                <table class="w-full text-left club-table" id="table-id">
+                    <thead class="club-table-thead">
+                        <tr>
+                            <th scope="col" class="p-[12px]">
+                                <div class="flex w-max">
+                                    S.N
+                                    <div class="relative pl-[5px]">
+                                        <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                        <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                    </div>
+                                </div>
+                            </th>
+                            <th scope="col" class="p-[12px]">
+                                <div class="flex w-max">
+                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Club_Profile
+                                    <div class="relative pl-[5px]">
+                                        <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                        <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                    </div>
+                                </div>
+                            </th>
+
+                            <th scope="col" class="p-[12px]">
+                                <div class="flex w-max">
+                                    @CRS.ADMIN.APPLICATION.Resources.Resource.LandlineNumber
+                                    <div class="relative pl-[5px]">
+                                        <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                        <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                    </div>
+                                </div>
+                            </th>
+                            <th scope="col" class="p-[12px]">
+                                <div class="flex w-max">
+                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Location
+                                    <div class="relative pl-[5px]">
+                                        <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                        <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                    </div>
+                                </div>
+                            </th>
+                            <th scope="col" class="p-[12px]">
+                                <div class="flex w-max">
+                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Status
+                                    <div class="relative pl-[5px]">
+                                        <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                        <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                    </div>
+                                </div>
+                            </th>
+
+                            <th scope="col" class="p-[12px]">
+                                <div class="flex w-max">
+                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Created_On
+                                    <div class="relative pl-[5px]">
+                                        <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                        <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                    </div>
+                                </div>
+                            </th>
+                            <th scope="col" class="p-[12px]">
+                                <div class="flex  w-max ">
+                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Updated_On
+                                    <div class="relative pl-[5px]">
+                                        <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                        <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                    </div>
+                                </div>
+                            </th>
+                            <th scope="col" class="p-[12px] flex justify-center">
+                                <div class="flex w-max justify-center">
+                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Action
+                                    <div class="relative pl-[5px]">
+                                        <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                        <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                    </div>
+                                </div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            if (Model.BasicClubList.Count > 0)
+                            {
+                                int SN = 1;
+                                foreach (var item in Model.BasicClubList)
+                                {
+                                    <tr class="bg-white border-b ">
+                                        <td class="p-[12px]">
+                                            @SN
+                                        </td>
+                                        <td class="p-[12px]">
+                                            <div class="round-image-text flex gap-[12px] w-max">
+                                                <img class="w-[32px] h-[32px] rounded-full" src="@item.ClubLogo" />
+
+                                                <div class="flex justify-between w-full">
+                                                    <div class="text-image grid flex-none ">
+                                                        <div class="text-sm font-semibold text-[#101828] ">@item.ClubNameEng</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="p-[12px]">
+                                            @item.LandLineNumber
+                                        </td>
+                                        <td class="p-[12px]">
+                                            @item.Location
+                                        </td>
+                                        <td class="p-[12px]">
+                                            @item.Status
+                                        </td>
+
+                                        <td class="p-[12px]">
+                                            <div class="w-max">
+                                                @item.CreatedDate
+                                            </div>
+                                        </td>
+                                        <td class="p-[12px]">
+                                            <div class="w-max">
+                                                @item.UpdatedDate
+                                            </div>
+                                        </td>
+                                        <td class="p-[12px]">
+                                            <div class="flex gap-[7px]">
+                                                <i class="las la-edit text-[20px] cursor-pointer text-[#A6A6A6]" onclick="ManageBasicClubDetailsFunction('@item.AgentId');"></i>
+                                                @*@if (!string.IsNullOrEmpty(@item.Status) && @item.Status.ToUpper() == "A")
+                                                    {
+                                                        <div onclick="openBlockEventModal('@item.AgentId')" data-modal-target="block-basicclub-confirmation" data-modal-toggle="block-basicclub-confirmation">
+                                                            <i class="fa-solid fa-lock text-primary-100 cursor-pointer"></i>
+                                                        </div>
+                                                    }
+                                                    else if (!string.IsNullOrEmpty(@item.Status) && @item.Status.ToUpper() == "B")
+                                                    {
+                                                        <div onclick="openUnBlockEventModal('@item.AgentId')" data-modal-target="unblock-basicclub-confirmation" data-modal-toggle="unblock-basicclub-confirmation">
+                                                            <i class="fa-solid fa-unlock text-primary-100 cursor-pointer"></i>
+                                                        </div>
+                                                    }*@
+                                                <i class=" las la-trash-alt text-[20px] cursor-pointer text-[#CB3F3F]" onclick="openDeleteClubModal('@item.AgentId');" data-modal-target="delete-basicclub-confirmation" data-modal-toggle="delete-basicclub-confirmation"></i>
+                                                @*<i class="las la-edit text-[20px] cursor-pointer text-[#A6A6A6]" onclick="ManageConversionBasicClub('@item.AgentId');"></i>*@
+                                                <img src="/Content/assets/images/conversion.svg" alt="notice" class="cursor-pointer h-[20px] aspect-square" onclick="ManageConversionBasicClub('@item.AgentId');" data-drawer-target="conversion-to preminum-club" data-drawer-show="conversion-to preminum-club" data-drawer-placement="right" data-drawer-backdrop="false" aria-controls="drawer-disabled-backdrop">
+
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    SN++;
+                                }
+                            }
+
+                        }
+                    </tbody>
+                </table>
+
+            </div>
+            <div class="pagination-club">
+                <div class="show-entry" id="Entries-Id">
+                </div>
+                <div class="flex gap-[12px]">
+                    <div class="btn btn-secondary-box-shadow" id="prev-btn">
+                        @CRS.ADMIN.APPLICATION.Resources.Resource.Previous
+                    </div>
+                    <div class="flex gap-[12px]" id="pagination-id">
+                    </div>
+                    <div class="btn btn-secondary-box-shadow" id="next-btn">
+                        @CRS.ADMIN.APPLICATION.Resources.Resource.Next
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Accept Reject Modal For Delete-->
+<div id="delete-basicclub-confirmation" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 hidden w-full
+     p-4 overflow-x-hidden overflow-y-auto
+     md:inset-0 h-[calc(100%-1rem)] max-h-full " style="align-items: flex-start;">
+    <div class="relative max-w-2xl max-h-full w-[412px] px-4 pt-[40px] pb-[46px] mt-24">
+        <!-- Modal content -->
+        <div class="relative bg-white rounded-lg shadow">
+            <!-- Modal header -->
+            <button type="button"
+                    class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center absolute top-[24px] right-[20px] "
+                    data-modal-hide="delete-basicclub-confirmation">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="25" viewBox="0 0 24 25" fill="none">
+                    <rect y="0.621094" width="24" height="24" rx="12" fill="#FAFAFA" />
+                    <path d="M5.41406 4.95703L4.33594 6.03516L10.9219 12.6211L4.33594 19.207L5.41406 20.2852L12 13.6992L18.5859 20.2852L19.6641 19.207L13.0781 12.6211L19.6641 6.03516L18.5859 4.95703L12 11.543L5.41406 4.95703Z"
+                          fill="#7A7A7A" />
+                </svg>
+            </button>
+            <!-- Modal body -->
+            <div class="grid gap-6 px-[20px] py-8">
+                <div class="text-[#333] font-semibold pb-[11px] border-b border-[#eeeeee]">@CRS.ADMIN.APPLICATION.Resources.Resource.Confirmation</div>
+                <div class="grid gap-[20px] text-[#062937] mb-[45px]">
+                    <div class="text-[14px] text-secondary-text-2 text-start">
+                        @CRS.ADMIN.APPLICATION.Resources.Resource.Are_you_sure_you_want_to_delete_this_club
+                    </div>
+                </div>
+                <div class="flex justify-end">
+                    <div class="flex gap-2 justify-end mt-[45px]">
+                        <input id="request_id" value="" hidden />
+                        <div class="btn btn-secondary w-[110px]" data-modal-hide="delete-basicclub-confirmation">@CRS.ADMIN.APPLICATION.Resources.Resource.No</div>
+                        <div class="btn btn-primary w-[110px]" onclick="DeleteFunction()" data-val="" id="delete_club_id">@CRS.ADMIN.APPLICATION.Resources.Resource.Yes</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Accept Reject Modal For Delete-->
+<!--block unblock Reject Modal For club-->
+<div id="unblock-basicclub-confirmation" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 hidden w-full
+     p-4 overflow-x-hidden overflow-y-auto
+     md:inset-0 h-[calc(100%-1rem)] max-h-full " style="align-items: flex-start;">
+    <div class="relative max-w-2xl max-h-full w-[412px] px-4 pt-[40px] pb-[46px] mt-24">
+        <!-- Modal content -->
+        <div class="relative bg-white rounded-lg shadow">
+            <!-- Modal header -->
+            <button type="button"
+                    class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center absolute top-[24px] right-[20px] "
+                    data-modal-hide="unblock-basicclub-confirmation">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="25" viewBox="0 0 24 25" fill="none">
+                    <rect y="0.621094" width="24" height="24" rx="12" fill="#FAFAFA" />
+                    <path d="M5.41406 4.95703L4.33594 6.03516L10.9219 12.6211L4.33594 19.207L5.41406 20.2852L12 13.6992L18.5859 20.2852L19.6641 19.207L13.0781 12.6211L19.6641 6.03516L18.5859 4.95703L12 11.543L5.41406 4.95703Z"
+                          fill="#7A7A7A" />
+                </svg>
+            </button>
+            <!-- Modal body -->
+            <div class="grid gap-6 px-[20px] py-8">
+                <div class="text-[#333] font-semibold pb-[11px] border-b border-[#eeeeee]">@CRS.ADMIN.APPLICATION.Resources.Resource.Confirmation</div>
+                <div class="grid gap-[20px] text-[#062937] mb-[45px]">
+                    <div class="text-[14px] text-secondary-text-2 text-start" id="confirmationMessage">
+                        @CRS.ADMIN.APPLICATION.Resources.Resource.Are_you_sure_you_want_to_unblock_this_club
+                    </div>
+                </div>
+                <div class="flex justify-end">
+                    <div class="flex gap-2 justify-end mt-[45px]">
+                        <input id="request_id" value="" hidden />
+                        <div class="btn btn-secondary w-[110px]" data-modal-hide="unblock-basicclub-confirmation">@CRS.ADMIN.APPLICATION.Resources.Resource.clubNo</div>
+                        <div class="btn btn-primary w-[110px]" onclick="UnBlockEvent()" data-val1="" data-val2="" id="unblock_id">@CRS.ADMIN.APPLICATION.Resources.Resource.clubYes</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div id="block-basicclub-confirmation" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 hidden w-full
+     p-4 overflow-x-hidden overflow-y-auto
+     md:inset-0 h-[calc(100%-1rem)] max-h-full " style="align-items: flex-start; ">
+    <div class="relative max-w-2xl max-h-full w-[412px] px-4 pt-[40px] pb-[46px] mt-24">
+        <!-- Modal content -->
+        <div class="relative bg-white rounded-lg shadow">
+            <!-- Modal header -->
+            <button type="button"
+                    class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center absolute top-[24px] right-[20px] "
+                    data-modal-hide="block-basicclub-confirmation">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="25" viewBox="0 0 24 25" fill="none">
+                    <rect y="0.621094" width="24" height="24" rx="12" fill="#FAFAFA" />
+                    <path d="M5.41406 4.95703L4.33594 6.03516L10.9219 12.6211L4.33594 19.207L5.41406 20.2852L12 13.6992L18.5859 20.2852L19.6641 19.207L13.0781 12.6211L19.6641 6.03516L18.5859 4.95703L12 11.543L5.41406 4.95703Z"
+                          fill="#7A7A7A" />
+                </svg>
+            </button>
+            <!-- Modal body -->
+            <div class="grid gap-6 px-[20px] py-8">
+                <div class="text-[#333] font-semibold pb-[11px] border-b border-[#eeeeee]">@CRS.ADMIN.APPLICATION.Resources.Resource.Confirmation</div>
+                <div class="grid gap-[20px] text-[#062937] mb-[45px]">
+                    <div class="text-[14px] text-secondary-text-2 text-start" id="confirmationMessage">
+                        @CRS.ADMIN.APPLICATION.Resources.Resource.Are_you_sure_you_want_to_block_this_club
+                    </div>
+                </div>
+                <div class="flex justify-end">
+                    <div class="flex gap-2 justify-end mt-[45px]">
+                        <input id="request_id" value="" hidden />
+                        <div class="btn btn-secondary w-[110px]" data-modal-hide="block-basicclub-confirmation">@CRS.ADMIN.APPLICATION.Resources.Resource.clubNo</div>
+                        <div class="btn btn-primary w-[110px]" onclick="BlockEvent()" data-val1="" data-val2="" id="block_id">@CRS.ADMIN.APPLICATION.Resources.Resource.clubYes</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- block and unblock -->
+@Html.Partial("_ManageBasicClubPartialView", _ManageClubModel)
+@Html.Partial("_PremiumClubtPartialView", _PremiumManageClubModel)
+@section scripts
+{
+    <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
+    <script src="~/Content/assets_new/js/calendar-management.js"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
+    <script>
+
+
+
+    document.addEventListener('DOMContentLoaded', function () {
+
+        const page_size = @ViewBag.PageSize;
+        const total_data = @ViewBag.TotalData;
+        const start_index_val = @ViewBag.StartIndex;
+        let URL = "/BasicClubManagement/BasicClubManagementList";
+        let search_filter = $('#default-search').val();
+        URL = addQueryParam(URL, 'SearchFilter', search_filter);
+        LoadPagination(page_size, total_data, start_index_val, URL);
+        $("#LicenseIssuedDate").val("@_PremiumManageClubModel.LicenseIssuedDate");
+       jQuery(function ($) {
+       $.datepicker.regional['ja'] = {
+         closeText: '閉じる',
+         prevText: '&#x3c;前',
+         nextText: '次&#x3e;',
+         currentText: '今日',
+         monthNames: ['1月', '2月', '3月', '4月', '5月', '6月',
+             '7月', '8月', '9月', '10月', '11月', '12月'],
+         monthNamesShort: ['1月', '2月', '3月', '4月', '5月', '6月',
+             '7月', '8月', '9月', '10月', '11月', '12月'],
+         dayNames: ['日曜日', '月曜日', '火曜日', '水曜日', '木曜日', '金曜日', '土曜日'],
+         dayNamesShort: ['日', '月', '火', '水', '木', '金', '土'],
+         dayNamesMin: ['日', '月', '火', '水', '木', '金', '土'],
+         weekHeader: '週',
+         dateFormat: 'yy/mm/dd',
+         firstDay: 0,
+         isRTL: false,
+         showMonthAfterYear: true,
+         yearSuffix: '年'
+     };
+     $.datepicker.setDefaults($.datepicker.regional['ja']);
+     $("#LicenseIssuedDate").datepicker({
+         /*minDate: new Date(),*/
+         maxDate: new Date(),
+         defaultDate: '@_PremiumManageClubModel.LicenseIssuedDate'
+     });
+ })
+
+    });
+
+       function ManageBasicClubDetailsFunction(i)
+       {
+          let search_filter = $('#default-search').val();
+          const start_index_val = @ViewBag.StartIndex;
+          const page_size = @ViewBag.PageSize;
+            window.location.href = '/BasicClubManagement/ManageBasicClub?AgentId=' + i + '&SearchFilter=' + search_filter + '&StartIndex=' + start_index_val + '&PageSize=' + page_size;;
+    }
+    function ManageConversionBasicClub(i)
+        {
+           let search_filter = $('#default-search').val();
+           const start_index_val = @ViewBag.StartIndex;
+           const page_size = @ViewBag.PageSize;
+            window.location.href = '/BasicClubManagement/ManageConversionBasicClub?AgentId=' + i + '&SearchFilter=' + search_filter + '&StartIndex=' + start_index_val + '&PageSize=' + page_size;;
+         }
+        function openDeleteClubModal(agentid)
+        {
+            const modalTarget = document.querySelector("[data-modal-target='delete-basicclub-confirmation']");
+            const modal = document.getElementById("delete-basicclub-confirmation");
+           modal.classList.remove("hidden");
+           $('#delete_club_id').attr('data-val', agentid);
+           modal.setAttribute("aria-hidden", "false");
+        }
+
+        function DeleteFunction() {
+            const id = $('#delete_club_id').attr('data-val');
+            var RequestVerificationToken = $('input[name="__RequestVerificationToken"]').val();
+            let search_filter = $('#default-search').val();
+            const start_index_val = @ViewBag.StartIndex;
+            const page_size = @ViewBag.PageSize;
+
+            $.ajax({
+                 type: "POST",
+                 url: '@Url.Action("DeleteBasicClub", "BasicClubManagement")',
+                 data: {
+                     '__RequestVerificationToken': RequestVerificationToken, 'AgentId': id},
+                success: function (response) {
+                    window.location.href = '/BasicClubManagement/BasicClubManagementList?SearchFilter=' + search_filter + '&StartIndex=' + start_index_val + '&PageSize=' + page_size  ;
+                 },
+                error: function (error) {
+                    window.location.href = '/BasicClubManagement/BasicClubManagementList?SearchFilter=' + search_filter + '&StartIndex=' + start_index_val + '&PageSize=' + page_size;
+                 }
+             })
+            }
+
+         function openBlockEventModal(agentid) {
+         const modalTarget = document.querySelector("[data-modal-target='block-basicclub-confirmation']");
+         const modal = document.getElementById("block-basicclub-confirmation");
+         modal.classList.remove("hidden");
+         $('#block_id').attr('data-val1', agentid);
+         $('#block_id').attr('data-val2', 'B');
+         modal.setAttribute("aria-hidden", "false");
+         }
+         function openUnBlockEventModal(agentid) {
+          const modalTarget = document.querySelector("[data-modal-target='unblock-basicclub-confirmation']");
+          const modal = document.getElementById("unblock-basicclub-confirmation");
+          modal.classList.remove("hidden");
+          $('#unblock_id').attr('data-val1', agentid);
+          $('#unblock_id').attr('data-val2', 'A');
+          modal.setAttribute("aria-hidden", "false");
+         }
+        function BlockEvent() {
+         const id = $('#block_id').attr('data-val1');
+         var RequestVerificationToken = $('input[name="__RequestVerificationToken"]').val();
+         let search_filter = $('#default-search').val();
+         const start_index_val = @ViewBag.StartIndex;
+         const page_size = @ViewBag.PageSize;
+
+         $.ajax({
+              type: "POST",
+              url: '@Url.Action("BlockBasicClub", "BasicClubManagement")',
+              data: {
+                  '__RequestVerificationToken': RequestVerificationToken, 'AgentId': id},
+             success: function (response) {
+                 window.location.href = '/BasicClubManagement/BasicClubManagementList?SearchFilter=' + search_filter + '&StartIndex=' + start_index_val + '&PageSize=' + page_size  ;
+              },
+             error: function (error) {
+                 window.location.href = '/BasicClubManagement/BasicClubManagementList?SearchFilter=' + search_filter + '&StartIndex=' + start_index_val + '&PageSize=' + page_size;
+              }
+         })
+
+            }
+        function UnBlockEvent() {
+        const id = $('#unblock_id').attr('data-val1');
+        var RequestVerificationToken = $('input[name="__RequestVerificationToken"]').val();
+        let search_filter = $('#default-search').val();
+        const start_index_val = @ViewBag.StartIndex;
+        const page_size = @ViewBag.PageSize;
+
+        $.ajax({
+             type: "POST",
+             url: '@Url.Action("UnBlockBasicClub", "BasicClubManagement")',
+             data: {
+                 '__RequestVerificationToken': RequestVerificationToken, 'AgentId': id},
+            success: function (response) {
+                window.location.href = '/BasicClubManagement/BasicClubManagementList?SearchFilter=' + search_filter + '&StartIndex=' + start_index_val + '&PageSize=' + page_size  ;
+             },
+            error: function (error) {
+                window.location.href = '/BasicClubManagement/BasicClubManagementList?SearchFilter=' + search_filter + '&StartIndex=' + start_index_val + '&PageSize=' + page_size;
+             }
+         })
+        }
+        var commaSeparatedString = "";
+        $(document).ready(function () {
+            $('#submit-button-basic-id').click(function () {
+                debugger;
+                commaSeparatedString = [];
+                var items = [];
+                $('#large[name="holiday"] option:selected').each(function () {
+                    items.push($(this).val());
+                });
+                commaSeparatedString = items.join(', ');
+                $('input[name="HolidayStr"]').val(commaSeparatedString);
+                $('#ManageBasicClubForm').submit(); // Submit the form
+            });
+        });
+
+    </script>
+
+    <script>
+        function CancelFunction() {
+            location.reload();
+        }
+        $(document).ready(function () {
+            var commaSeparatedString = "";
+            if ( $("#AgentId").val() != "") {
+                var Value = $('#large[name="IdentificationType"]').find("option:selected").text().trim();
+                if (Value.toLowerCase() == "passport + insurance card" || Value.toLowerCase() == "パスポート + 保険証") {
+                    $("#kycfront").hide();
+                    $("#kycback").hide();
+                    $("#Passport").show();
+                    $("#Insurance").show();
+
+                }
+                else {
+                    $("#kycfront").show();
+                    $("#kycback").show();
+                    $("#Passport").hide();
+                    $("#Insurance").hide();
+                }
+
+                var val = $('#large[name="BusinessTypeDDL"]').find("option:selected").text().trim();
+                if (val.toLowerCase() == "corporation" || val.toLowerCase() == "法人") {
+                    $("#Corp_id").show();
+                    $("#Corp_idFurigana").show();
+                    $("#Corp_idCorporate").show();
+                    $("#corp_representive1").show();
+                    $("#corpdetail_representive1").show();
+                    $("#corp_representive2").show();
+                    $("#corpdetail_representive2").show();
+                    //initializeValidation(val);
+                }
+                else {
+                    $("#Corp_id").hide();
+                    $("#Corp_idFurigana").hide();
+                    $("#Corp_idCorporate").hide();
+                    $("#corp_representive1").hide();
+                    $("#corpdetail_representive1").hide();
+                    $("#corp_representive2").hide();
+                    $("#corpdetail_representive2").hide();
+                   // initializeValidation(val);
+                }
+            }
+
+            $('#large[name="BusinessTypeDDL"]').change(function () {
+                var selectedValue = $(this).find("option:selected").text().trim();
+                if (selectedValue.toLowerCase() == "corporation" || selectedValue.toLowerCase() == "法人") {
+                    $("#Corp_id").show();
+                    $("#Corp_idFurigana").show();
+                    $("#Corp_idCorporate").show();
+                    $("#corp_representive1").show();
+                    $("#corpdetail_representive1").show();
+                    $("#corp_representive2").show();
+                    $("#corpdetail_representive2").show();
+                   // initializeValidation(selectedValue);
+                }
+                else {
+                    $("#Corp_id").hide();
+                    $("#Corp_idFurigana").hide();
+                    $("#Corp_idCorporate").hide();
+                    $("#corp_representive1").hide();
+                    $("#corpdetail_representive1").hide();
+                    $("#corp_representive2").hide();
+                    $("#corpdetail_representive2").hide();
+                   /* $('#ManageClubForm').validate().destroy(); // Destroy existing validation rules*/
+                   // initializeValidation(selectedValue);
+                }
+            });
+
+            $('#large[name="IdentificationType"]').change(function () {
+                var selectedValue = $(this).find("option:selected").text().trim();
+                if (selectedValue.toLowerCase() == "passport + insurance card" || selectedValue.toLowerCase() == "パスポート + 保険証") {
+                    $("#kycfront").hide();
+                    $("#kycback").hide();
+                    $("#Passport").show();
+                    $("#Insurance").show();
+
+                }
+                else {
+                    $("#kycfront").show();
+                    $("#kycback").show();
+                    $("#Passport").hide();
+                    $("#Insurance").hide();
+                }
+            });
+
+
+            $('select').select2({
+                minimumResultsForSearch: Infinity
+            });
+
+            $('#large[name="holiday"]').select2({
+                multiple: true,
+                width: '100%',
+                placeholder: "@CRS.ADMIN.APPLICATION.Resources.Resource.Select"
+            });
+            $('#large[name="holiday"]').select2({
+                multiple: true,
+                width: '100%',
+                placeholder: "@CRS.ADMIN.APPLICATION.Resources.Resource.Select"
+            }).change(function () {
+                var value = $('#large[name="holiday"]').val();
+
+                if (value === null || value.length === 0) {
+                    $('.select2-container--default .select2-search--inline .select2-search__field').css('display', 'block');
+                } else {
+                    $('.select2-container--default .select2-search--inline .select2-search__field').css('display', 'none');
+                }
+
+             });
+            var value = $('#large[name="holiday"]').val();
+            if (value === null || value.length === 0) {
+                $('.select2-container--default .select2-search--inline .select2-search__field').css('display', 'block');
+            } else {
+                $('.select2-container--default .select2-search--inline .select2-search__field').css('display', 'none');
+            }
+
+
+        var PopUpRenderValue = '@ViewBag.PopUpRenderValue';
+        if (PopUpRenderValue != null && PopUpRenderValue != "" && PopUpRenderValue == "Manage") {
+            var element = document.getElementById('add-new-basic-club');
+            element.classList.remove('translate-x-full');
+
+        }
+        else if (PopUpRenderValue != null && PopUpRenderValue != "" && PopUpRenderValue == "ManagePremium") {
+            var element = document.getElementById('add-new-host-club');
+            element.classList.remove('translate-x-full');
+            $('div #content1').css('display', 'block');
+            currentStep = 1;
+        }
+            $('div #contentBasic').css('display', 'block');
+        });
+        const steps = document.querySelectorAll('.profile-steps');
+        const nextButton = document.getElementById('nextBtn');
+        const saveData = document.getElementById('saveData');
+        const previousButton = document.getElementById('previousBtn');
+        const submitButton = document.getElementById('submit-button-id');
+        const contentSections = document.querySelectorAll('.content-section');
+
+        let currentStep = 1;
+        const cancelButton = document.querySelector('.resetForm');
+
+        cancelButton.addEventListener('click', () => {
+            currentStep = 1; // Reset the step to 0
+            updateStep(); // Update the UI to reflect the new step
+        });
+
+        const updateStep = () => {
+            steps.forEach((step, index) => {
+                if (index === currentStep) {
+                    step.classList.add('active');
+                    step.classList.remove('active-green');
+                } else if (index < currentStep) {
+                    step.classList.remove('active');
+                    step.classList.add('active-green');
+                } else {
+                    step.classList.remove('active', 'active-green');
+                }
+            });
+
+            contentSections.forEach((section, index) => {
+                if (index === currentStep) {
+                    section.style.display = 'block';
+                } else {
+                    section.style.display = 'none';
+                }
+            });
+
+            if (currentStep === 1) {
+                previousButton.style.display = 'none';
+                previousButton.setAttribute('type', 'button');
+            } else {
+                previousButton.style.display = 'inline';
+                previousButton.setAttribute('type', 'button');
+            }
+
+            if (currentStep === steps.length) {
+                nextButton.style.display = 'none';
+                //saveData.style.display = 'block';
+                nextButton.textContent = '@CRS.ADMIN.APPLICATION.Resources.Resource.Save_Changes';
+                submitButton.style.display = 'block';
+                nextButton.setAttribute('type', 'button');
+            } else {
+                nextButton.style.display = 'block';
+                submitButton.style.display = 'none';
+                nextButton.textContent = '@CRS.ADMIN.APPLICATION.Resources.Resource.Next';
+                nextButton.setAttribute('type', 'button');
+
+            }
+        };
+        var isvalid = true;
+
+    //---------------------------------------START required validation according to next button-------------------------------------////
+        nextButton.addEventListener('click', () => {
+            var id = $('.content-section[style*="display: block"]').attr('id');
+
+            if (id.toLowerCase() == "content1") {
+                var isimagevalid = true;
+                var logo = $("#file_name_logo").text().trim().toLowerCase(); //$("input[name='Logo_Certificate']").val();
+                var CoverPhoto = $("#file_name_cover").text().trim().toLowerCase();  //$("input[name='CoverPhoto_Certificate']").val();
+                var CorporateRegistryDocument = $("#file_name_corporateregistrydocument").text().trim().toLowerCase();  //$("input[name='CorporateRegistry_Certificate']").val();
+                var KYCDocument = $("#file_name_kycdocument").text().trim().toLowerCase();   //$("input[name='KYCDocument_Certificate']").val();
+                var PassportPhoto = $("#file_name_passportphoto").text().trim().toLowerCase();   //$("input[name='PassportPhotot_Certificate']").val();
+                var KYCDocumentBack = $("#file_name_kycdocumentback").text().trim().toLowerCase();   //$("input[name='KYCDocumentBack_Certificate']").val();
+                var Insurance = $("#file_name_insurancephoto").text().trim().toLowerCase();    //$("input[name='InsurancePhoto_Certificate']").val();
+                var Business = $("#file_name_bussiness_certificate").text().trim().toLowerCase();    //$("input[name='Business_Certificate']").val();
+                var identificationtype = $('#large[name="IdentificationType"]').find("option:selected").text().trim().toLowerCase();
+                var businesstype = $('#large[name="BusinessTypeDDL"]').find("option:selected").text().trim().toLowerCase();
+
+                if (logo == "no file choosen" || logo == "ファイルが選択されていません")
+                {
+                    $('span.field-validation-valid[data-valmsg-for="Logo"]').text('@CRS.ADMIN.APPLICATION.Resources.Resource.Required');
+                    isimagevalid = false;
+                }
+                if (CoverPhoto == "no file choosen" || CoverPhoto == "ファイルが選択されていません")
+                {
+                    $('span.field-validation-valid[data-valmsg-for="CoverPhoto"]').text('@CRS.ADMIN.APPLICATION.Resources.Resource.Required');
+                    isimagevalid = false;
+                }
+                if ((CorporateRegistryDocument == "no file choosen" || CorporateRegistryDocument == "ファイルが選択されていません") && (businesstype == "corporation" || businesstype == "法人"))
+                {
+                    $('span.field-validation-valid[data-valmsg-for="CorporateRegistryDocument"]').text('@CRS.ADMIN.APPLICATION.Resources.Resource.Required');
+                    isimagevalid = false;
+                }
+                if (KYCDocument == "no file choosen" || KYCDocument == "ファイルが選択されていません")
+                {
+                      if (identificationtype != "passport + insurance card")
+                       {
+                          if (identificationtype != "パスポート + 保険証")
+                          {
+                              $('span.field-validation-valid[data-valmsg-for="KYCDocument"]').text('@CRS.ADMIN.APPLICATION.Resources.Resource.Required');
+                              isimagevalid = false;
+                          }
+
+                       }
+                       else if (identificationtype != "パスポート + 保険証")
+                       {
+                           if (identificationtype != "passport + insurance card") {
+                               $('span.field-validation-valid[data-valmsg-for="KYCDocument"]').text('@CRS.ADMIN.APPLICATION.Resources.Resource.Required');
+                               isimagevalid = false;
+                           }
+
+                       }
+                }
+                if ((PassportPhoto == "no file choosen" || PassportPhoto == "ファイルが選択されていません") && (identificationtype == "passport + insurance card" || identificationtype == "パスポート + 保険証"))
+                {
+                    $('span.field-validation-valid[data-valmsg-for="PassportPhoto"]').text('@CRS.ADMIN.APPLICATION.Resources.Resource.Required');
+                    isimagevalid = false;
+                }
+                if (KYCDocumentBack == "no file choosen" || KYCDocumentBack == "ファイルが選択されていません")
+                {
+                    if (identificationtype != "passport + insurance card")
+                    {
+                       if (identificationtype != "パスポート + 保険証")
+                       {
+                           $('span.field-validation-valid[data-valmsg-for="KYCDocumentBack"]').text('@CRS.ADMIN.APPLICATION.Resources.Resource.Required');
+                           isimagevalid = false;
+                       }
+
+                    }
+                    else if (identificationtype != "パスポート + 保険証")
+                    {
+                        if (identificationtype != "passport + insurance card") {
+                            $('span.field-validation-valid[data-valmsg-for="KYCDocumentBack"]').text('@CRS.ADMIN.APPLICATION.Resources.Resource.Required');
+                            isimagevalid = false;
+                        }
+
+                    }
+
+
+                }
+                if ((Insurance == "no file choosen" || Insurance == "ファイルが選択されていません") && (identificationtype == "passport + insurance card" || identificationtype == "パスポート + 保険証"))
+                {
+                    $('span.field-validation-valid[data-valmsg-for="InsurancePhoto"]').text('@CRS.ADMIN.APPLICATION.Resources.Resource.Required');
+                    isimagevalid = false;
+                }
+                if (Business == "no file choosen" || Business == "ファイルが選択されていません") {
+                    $('span.field-validation-valid[data-valmsg-for="BusinessCertificate"]').text('@CRS.ADMIN.APPLICATION.Resources.Resource.Required');
+                    isimagevalid = false;
+                }
+
+            }
+
+            else if (id.toLowerCase() == "content3")
+            {
+
+                var locationDDL = $('div #content3').find('#large[name="LocationDDL"]').val();
+                if (locationDDL == "")
+                {
+                    $('div #content3').find('span.field-validation-valid[data-valmsg-for="LocationDDL"]').text('@CRS.ADMIN.APPLICATION.Resources.Resource.Required');
+                    @*$('span.field-validation-valid[data-valmsg-for="LocationDDL"]').text('@CRS.ADMIN.APPLICATION.Resources.Resource.Required');*@
+                    isimagevalid = false;
+                }
+                commaSeparatedString = [];
+                var items = [];
+                $('#large[name="holiday"] option:selected').each(function () {
+                    items.push($(this).val());
+                });
+                commaSeparatedString = items.join(', ');
+                $('input[name="HolidayStr"]').val(commaSeparatedString);
+            }
+
+
+
+            var isValid = $('#ManagePremiumClubForm').valid();
+            if (!isValid) {
+                return false;
+            }
+            if (isimagevalid == false) {
+                return false;
+            }
+            if (currentStep <= steps.length - 1) {
+                currentStep++;
+                updateStep();
+            }
+        });
+
+        previousButton.addEventListener('click', () => {
+            if (currentStep > 0) {
+                currentStep--;
+                updateStep();
+            }
+        });
+
+        // Initial state setup
+        updateStep();
+
+
+        $('#file_input_logo').on('change', function () {
+            debugger;
+            var logo = $("#file_name_logo").text().trim().toLowerCase();
+            if (logo != "") {
+                $('span.field-validation-valid[data-valmsg-for="Logo"]').text('');
+            }
+        });
+        $('#file_input_cover').on('change', function () {
+            debugger;
+            var CoverPhoto = $("#file_name_cover").text().trim().toLowerCase();
+            if (CoverPhoto != "") {
+                $('span.field-validation-valid[data-valmsg-for="CoverPhoto"]').text('');
+            }
+        });
+        $('#file_input_corporateregistrydocument').on('change', function () {
+            var CorporateRegistryDocument = $("#file_name_corporateregistrydocument").text().trim().toLowerCase();
+            if (CorporateRegistryDocument != "") {
+                $('span.field-validation-valid[data-valmsg-for="CorporateRegistryDocument"]').text('');
+            }
+        });
+        $('#file_input_kycdocument').on('change', function () {
+            var KYCDocument = $("#file_name_kycdocument").text().trim().toLowerCase();
+            if (KYCDocument != "") {
+                $('span.field-validation-valid[data-valmsg-for="KYCDocument"]').text('');
+            }
+        });
+        $('#file_input_passportphoto').on('change', function () {
+            var PassportPhoto = $("#file_name_passportphoto").text().trim().toLowerCase();
+            if (PassportPhoto != "") {
+                $('span.field-validation-valid[data-valmsg-for="PassportPhoto"]').text('');
+            }
+        });
+        $('#file_input_kycdocumentback').on('change', function () {
+            var KYCDocumentBack = $("#file_name_kycdocumentback").text().trim().toLowerCase();
+            if (KYCDocumentBack != "") {
+                $('span.field-validation-valid[data-valmsg-for="KYCDocumentBack"]').text('');
+            }
+        });
+        $('#file_input_insurancephoto').on('change', function () {
+            var Insurance = $("#file_name_insurancephoto").text().trim().toLowerCase();
+            if (Insurance != "") {
+                $('span.field-validation-valid[data-valmsg-for="InsurancePhoto"]').text('');
+            }
+        });
+        $('#file_input_business_certificate').on('change', function () {
+            var Business = $("#file_name_bussiness_certificate").text().trim().toLowerCase();
+            if (Business != "") {
+                $('span.field-validation-valid[data-valmsg-for="BusinessCertificate"]').text('');
+            }
+        });
+        $('#large[name="LocationDDL"]').on('change', function () {
+            var locationDDL = $('#large[name="LocationDDL"]').val();
+            if (locationDDL != "")
+            {
+                $('span.field-validation-valid[data-valmsg-for="LocationDDL"]').text('');
+                isimagevalid = false;
+            }
+        });
+        $(document).ready(function () {
+
+            var validator = $('#ManagePremiumClubForm').validate({
+                errorClass: 'invalid',
+                errorElement: 'div',
+                errorPlacement: function (error, element) {
+                    error.insertAfter(element);
+                },
+                rules: {
+                    ClubName1: {
+                        required: true
+                    },
+                    ClubName2: {
+                        required: true
+                    },
+                    ClubName: {
+                        required: true
+                    },
+                    ceoFullName: {
+                        required: true
+                    },
+                    CeoFurigana: {
+                        required: true
+                    },
+                    CompanyName: {
+                        required: true
+                    },
+                    MobileNumber: {
+                        required: true
+                    },
+                    Email: {
+                        required: true
+                    },
+                    Representative1_ContactName: {
+                        required: $('#large[name="BusinessTypeDDL"]').find("option:selected").text().trim().toLowerCase() == "corporation"  ||
+                                  $('#large[name="BusinessTypeDDL"]').find("option:selected").text().trim().toLowerCase() === "法人"
+
+                    },
+                    Representative1_MobileNo: {
+                        required: $('#large[name="BusinessTypeDDL"]').find("option:selected").text().trim().toLowerCase() == "corporation" ||
+                                  $('#large[name="BusinessTypeDDL"]').find("option:selected").text().trim().toLowerCase() === "法人"
+                    },
+                    Representative1_Email: {
+                        required: $('#large[name="BusinessTypeDDL"]').find("option:selected").text().trim().toLowerCase() == "corporation" ||
+                                  $('#large[name="BusinessTypeDDL"]').find("option:selected").text().trim().toLowerCase() === "法人"
+                    },
+                    Representative1_Furigana: {
+                        required: $('#large[name="BusinessTypeDDL"]').find("option:selected").text().trim().toLowerCase() == "corporation" ||
+                                  $('#large[name="BusinessTypeDDL"]').find("option:selected").text().trim().toLowerCase() === "法人"
+                    },
+                    GoogleMap: {
+                        required: true
+                    },
+                    PostalCode: {
+                        required: true
+                    },
+                    LocationDDL: {
+                        required: true
+                    },
+                    City: {
+                        required: true
+                    },
+                    Street: {
+                        required: true
+                    },
+                    BuildingRoomNo: {
+                        required: true
+                    },
+                    WorkingHrFrom: {
+                        required: true
+                    },
+                    WorkingHrTo: {
+                        required: true
+                    },
+                    LastOrderTime: {
+                        required: true
+                    },
+                    LastEntryTime: {
+                        required: true
+                    },
+                },
+                messages: {
+                    ClubName1: {
+                        required: '@CRS.ADMIN.APPLICATION.Resources.Resource.Required'
+,                    },
+                    ClubName2: {
+                       required: '@CRS.ADMIN.APPLICATION.Resources.Resource.Required'
+                    },
+                    ClubName: {
+                        required: '@CRS.ADMIN.APPLICATION.Resources.Resource.Required'
+                    },
+                    ceoFullName: {
+                        required: '@CRS.ADMIN.APPLICATION.Resources.Resource.Required'
+                    },
+                    CeoFurigana : {
+                        required: '@CRS.ADMIN.APPLICATION.Resources.Resource.Required'
+                    },
+                    CompanyName : {
+                        required: '@CRS.ADMIN.APPLICATION.Resources.Resource.Required'
+                    },
+                    MobileNumber : {
+                        required: '@CRS.ADMIN.APPLICATION.Resources.Resource.Required'
+                    },
+                    Email: {
+                        required: '@CRS.ADMIN.APPLICATION.Resources.Resource.Required'
+                    },
+                    Representative1_ContactName: {
+                        required: '@CRS.ADMIN.APPLICATION.Resources.Resource.Required'
+                    },
+                    Representative1_MobileNo : {
+                        required: '@CRS.ADMIN.APPLICATION.Resources.Resource.Required'
+                    },
+                    Representative1_Email : {
+                        required: '@CRS.ADMIN.APPLICATION.Resources.Resource.Required'
+                    },
+                    Representative1_Furigana: {
+                        required: '@CRS.ADMIN.APPLICATION.Resources.Resource.Required'
+                    },
+                    GoogleMap: {
+                        required: '@CRS.ADMIN.APPLICATION.Resources.Resource.Required'
+                    },
+                    PostalCode: {
+                        required: '@CRS.ADMIN.APPLICATION.Resources.Resource.Required'
+                    },
+                    LocationDDL: {
+                        required: '@CRS.ADMIN.APPLICATION.Resources.Resource.Required'
+                   },
+                    City: {
+                       required: '@CRS.ADMIN.APPLICATION.Resources.Resource.Required'
+                   },
+                   Street: {
+                        required: '@CRS.ADMIN.APPLICATION.Resources.Resource.Required'
+                   },
+                   BuildingRoomNo: {
+                        required: '@CRS.ADMIN.APPLICATION.Resources.Resource.Required'
+                    },
+                    WorkingHrFrom: {
+                       required: '@CRS.ADMIN.APPLICATION.Resources.Resource.Required'
+                    },
+                    WorkingHrTo: {
+                     required: '@CRS.ADMIN.APPLICATION.Resources.Resource.Required'
+                    },
+                    LastOrderTime: {
+                    required: '@CRS.ADMIN.APPLICATION.Resources.Resource.Required'
+                    },
+                    LastEntryTime: {
+                       required: '@CRS.ADMIN.APPLICATION.Resources.Resource.Required'
+                    },
+                }
+            });
+
+
+
+
+
+
+        });
+
+        //---------------------------------------END required validation according to next button-------------------------------------////
+    </script>
+}

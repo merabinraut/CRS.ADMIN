@@ -102,11 +102,13 @@
                     {
                         @Html.HiddenFor(model => model.CorporateRegistryDocument)
                     }
-
+                    @Html.HiddenFor(model => model.SearchFilter)
+                    @Html.HiddenFor(model => model.StartIndex)
+                    @Html.HiddenFor(model => model.PageSize)
                     @*if (!string.IsNullOrEmpty(Model.LoginId))
-                        {
-                            @Html.HiddenFor(model => model.LoginId)
-                        }*@
+            {
+                @Html.HiddenFor(model => model.LoginId)
+            }*@
                     <div class="flex gap-2 ">
                         <div class="flex items-center gap-2 profile-steps add-new-host-wizard  active" id="step1">
                             <div class="steps-number ">
@@ -208,8 +210,8 @@
                                })
                                     @* <input type="text" class="w-full" placeholder="@CRS.ADMIN.APPLICATION.Resources.Resource.Club_Name_English_Placeholder" name="ClubName1" value="@Model.ClubName1">*@
                                     @*<span class="error">
-                                        @Html.ValidationMessageFor(m => m.ClubName)
-                                    </span>*@
+                                @Html.ValidationMessageFor(m => m.ClubName)
+                            </span>*@
                                 </div>
 
 
@@ -235,20 +237,20 @@
                                     </span>
                                 </div>
                                 @*<div class="input-field-common">
-                                         <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
-                                             @CRS.ADMIN.APPLICATION.Resources.Resource.GroupNameJap
-                                         </label>
-                                         @Html.TextBoxFor(model => model.GroupName2, new
-                                    {
-                                        @class = "w-full",
-                                        @placeholder = CRS.ADMIN.APPLICATION.Resources.Resource.Group_Name_Placeholder,
-                                        autocomplete = "off",
-                                        @maxLength = "50"
-                                    })
-                                         <span class="error">
-                                             @Html.ValidationMessageFor(m => m.GroupName2)
-                                         </span>
-                                     </div>*@
+                             <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
+                                 @CRS.ADMIN.APPLICATION.Resources.Resource.GroupNameJap
+                             </label>
+                             @Html.TextBoxFor(model => model.GroupName2, new
+                        {
+                            @class = "w-full",
+                            @placeholder = CRS.ADMIN.APPLICATION.Resources.Resource.Group_Name_Placeholder,
+                            autocomplete = "off",
+                            @maxLength = "50"
+                        })
+                             <span class="error">
+                                 @Html.ValidationMessageFor(m => m.GroupName2)
+                             </span>
+                         </div>*@
                             </div>
 
                             <!-- description start -->
@@ -467,68 +469,68 @@
                                     </label>
                                     @*<div class="number-input w-full">
 
-                                            <select id="large" name="CountryCode" class=" default_select select-common block w-full "
-                                                    style="width: text-2%;">
-                                                @foreach (var item in ViewBag.CountryCodeDDL as IEnumerable<SelectListItem>)
-                                                {
-                                                    var selectedId = ViewBag.CountryCodeDDLKey as string;
-                                                    if (item.Value == selectedId)
-                                                    {
-                                                        <option value="@item.Value" selected>
-                                                            @item.Value
-                                                        </option>
-                                                    }
-                                                    else
-                                                    {
-                                                        <option value="@item.Value">
-                                                            @item.Value
-                                                        </option>
-                                                    }
-                                                }
-                                            </select>
-                                            @Html.TextBoxFor(model => model.LandlineNumber, new
-                                           {
-                                               @class = "w-full",
-                                               @placeholder = "090-6490-3254",
-                                               @onkeypress = "return isNumber(event)",
-                                               autocomplete = "off",
-                                               @maxLength = "8"
-                                           })
+                                <select id="large" name="CountryCode" class=" default_select select-common block w-full "
+                                        style="width: text-2%;">
+                                    @foreach (var item in ViewBag.CountryCodeDDL as IEnumerable<SelectListItem>)
+                                    {
+                                        var selectedId = ViewBag.CountryCodeDDLKey as string;
+                                        if (item.Value == selectedId)
+                                        {
+                                            <option value="@item.Value" selected>
+                                                @item.Value
+                                            </option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@item.Value">
+                                                @item.Value
+                                            </option>
+                                        }
+                                    }
+                                </select>
+                                @Html.TextBoxFor(model => model.LandlineNumber, new
+                               {
+                                   @class = "w-full",
+                                   @placeholder = "090-6490-3254",
+                                   @onkeypress = "return isNumber(event)",
+                                   autocomplete = "off",
+                                   @maxLength = "8"
+                               })
 
 
-                                        </div>*@
+                            </div>*@
 
 
                                     <div class="w-full flex">
                                         @*<select id="large" name="LandLineCode" class="default_select select-common block"
-                                                    style=" width:40%">
-                                                @foreach (var item in ViewBag.CountryCodeDDL as IEnumerable<SelectListItem>)
-                                                {
-                                                    var selectedId = ViewBag.CountryCodeDDLKey as string;
-                                                    if (item.Value == selectedId)
-                                                    {
-                                                        <option value="@item.Value" selected>
-                                                            @item.Value
-                                                        </option>
-                                                    }
-                                                    else
-                                                    {
-                                                        <option value="@item.Value">
-                                                            @item.Value
-                                                        </option>
-                                                    }
-                                                }
-                                            </select>*@
+                                        style=" width:40%">
+                                    @foreach (var item in ViewBag.CountryCodeDDL as IEnumerable<SelectListItem>)
+                                    {
+                                        var selectedId = ViewBag.CountryCodeDDLKey as string;
+                                        if (item.Value == selectedId)
+                                        {
+                                            <option value="@item.Value" selected>
+                                                @item.Value
+                                            </option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@item.Value">
+                                                @item.Value
+                                            </option>
+                                        }
+                                    }
+                                </select>*@
                                         @*@Html.TextBoxFor(model => model.LandlineNumber, new
-                                            {
+                                {
 
-                                                @placeholder = "090-6490-3254",
-                                                @onkeypress = "return isNumber(event)",
-                                                autocomplete = "off",
-                                                @maxLength = "8",
-                                                @class="landline-number-input",
-                                                style = "width:70% ; padding:10px 5px"
-                                            })*@
+                                    @placeholder = "090-6490-3254",
+                                    @onkeypress = "return isNumber(event)",
+                                    autocomplete = "off",
+                                    @maxLength = "8",
+                                    @class="landline-number-input",
+                                    style = "width:70% ; padding:10px 5px"
+                                })*@
 
                                         @Html.TextBoxFor(model => model.LandlineNumber, new
                                      {
@@ -634,19 +636,19 @@
                                         <input type="text" class="w-full" placeholder="@CRS.ADMIN.APPLICATION.Resources.Resource.Username" name="LoginId" value="@Model.LoginId" disabled>
 
                                         @*else
-                                             {
-                                                 @Html.TextBoxFor(model => model.LoginId, new
-                                            {
-                                                @class = "w-full",
-                                                @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.Username,
+                                 {
+                                     @Html.TextBoxFor(model => model.LoginId, new
+                                {
+                                    @class = "w-full",
+                                    @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.Username,
 
-                                                autocomplete = "off"
+                                    autocomplete = "off"
 
-                                            })
-                                                  <span class="error">
-                                                     @Html.ValidationMessageFor(m => m.LoginId)
-                                                 </span>
-                                             }*@
+                                })
+                                      <span class="error">
+                                         @Html.ValidationMessageFor(m => m.LoginId)
+                                     </span>
+                                 }*@
                                     </div>
                                 }
 
@@ -1274,69 +1276,69 @@
                                         </label>
                                         @Html.HiddenFor(m => m.HolidayStr)
                                         @*@Html.ListBoxFor(
-                                            model => model.Holiday, // WorkingHrTo property from the model
-                                            ViewBag.Holiday as SelectList, // Binding to the ViewBag data as SelectList
-                                            new { @id = "large", @class = " default_select select-common block w-full ", @style = "width: 100%;" })*@
+                                model => model.Holiday, // WorkingHrTo property from the model
+                                ViewBag.Holiday as SelectList, // Binding to the ViewBag data as SelectList
+                                new { @id = "large", @class = " default_select select-common block w-full ", @style = "width: 100%;" })*@
                                         @*@Html.DropDownListFor(model => model.Holiday, new MultiSelectList(ViewBag.Holiday, "Value", "Text"), new { id = "large" ,@class = " default_select select-common block w-full ", @style = "width: 100%;" })*@
-                                    <select id="large" name="holiday" class=" default_select select-common block w-full "
-                                            style="width: 100%;" multiple="multiple" placeholder="Select">
-                                        @foreach (var item in ViewBag.Holiday as IEnumerable<SelectListItem>)
+                                        <select id="large" name="holiday" class=" default_select select-common block w-full "
+                                                style="width: 100%;" multiple="multiple" placeholder="Select">
+                                            @foreach (var item in ViewBag.Holiday as IEnumerable<SelectListItem>)
+                                            {
+                                                var selectedId = ViewBag.HolidayIdKey as string;
+                                                string[] selectedIds = !string.IsNullOrEmpty(selectedId) ? selectedId.Split(',') : new string[0]; ;
+                                                bool isSelected = selectedIds.Contains(item.Value);
+                                                if (isSelected == true)
+                                                {
+                                                    <option value="@item.Value" selected @(item.Disabled == true ? "selected disabled" : "")>
+                                                        @item.Text
+                                                    </option>
+                                                }
+                                                else
+                                                {
+                                                    <option value="@item.Value" @(item.Disabled == true ? "selected disabled" : "")>
+                                                        @item.Text
+                                                    </option>
+                                                }
+
+                                                @*if (item.Value == selectedId)
                                         {
-                                            var selectedId = ViewBag.HolidayIdKey as string;
-                                            string[] selectedIds = !string.IsNullOrEmpty(selectedId) ? selectedId.Split(',') : new string[0]; ;
-                                            bool isSelected = selectedIds.Contains(item.Value);
-                                            if (isSelected==true)
-                                            {
-                                                <option value="@item.Value" selected @(item.Disabled == true ? "selected disabled" : "")>
-                                                    @item.Text
-                                                </option>
-                                            }
-                                            else
-                                            {
-                                                <option value="@item.Value" @(item.Disabled == true ? "selected disabled" : "")>
-                                                    @item.Text
-                                                </option>
-                                            }
-
-                                            @*if (item.Value == selectedId)
-            {
-                <option value="@item.Value" selected @(item.Disabled == true ? "selected disabled" : "")>
-                    @item.Text
-                </option>
-            }
-            else
-            {
-                <option value="@item.Value" @(item.Disabled == true ? "selected disabled" : "")>
-                    @item.Text
-                </option>
-            }*@
+                                            <option value="@item.Value" selected @(item.Disabled == true ? "selected disabled" : "")>
+                                                @item.Text
+                                            </option>
                                         }
+                                        else
+                                        {
+                                            <option value="@item.Value" @(item.Disabled == true ? "selected disabled" : "")>
+                                                @item.Text
+                                            </option>
+                                        }*@
+                                            }
 
-                                    </select>
+                                        </select>
                                     </div>
                                 </div>
 
 
                                 @*<div class="grid  gap-4">
-                                        <div class="input-field-common">
-                                            <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
-                                                @CRS.ADMIN.APPLICATION.Resources.Resource.Holiday
-                                            </label>
-                                            <div class="box">
-                                                @foreach (var item in ViewBag.Holiday as IEnumerable<SelectListItem>)
-                                                {
+                            <div class="input-field-common">
+                                <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
+                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Holiday
+                                </label>
+                                <div class="box">
+                                    @foreach (var item in ViewBag.Holiday as IEnumerable<SelectListItem>)
+                                    {
 
 
-                                                    <i data-val="@item.Value"><img src="/Content/assets/images/TickIcon.svg"> <p>@item.Text</p></i>
+                                        <i data-val="@item.Value"><img src="/Content/assets/images/TickIcon.svg"> <p>@item.Text</p></i>
 
-                                                    <i data-val="@item.Value"><img src="/Content/assets/images/TickIcon.svg"> <p>@item.Text</p></i>
+                                        <i data-val="@item.Value"><img src="/Content/assets/images/TickIcon.svg"> <p>@item.Text</p></i>
 
 
-                                                }
-                                            </div>
+                                    }
+                                </div>
 
-                                        </div>
-                                    </div>*@
+                            </div>
+                        </div>*@
                                 <!-- for last order -->
                                 <div class="grid grid-cols-3 gap-x-4 gap-y-5">
                                     <div class="input-field-common">
@@ -1429,32 +1431,32 @@
                             <div class="grid  gap-4">
                                 <div class="grid grid-cols-3 gap-x-4 gap-y-5">
                                     @*<div class="input-field-common">
-                                            <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
-                                                @CRS.ADMIN.APPLICATION.Resources.Resource.Location
-                                            </label>
-                                            <select id="large" class=" default_select select-common block w-full "
-                                                    style="width: 100%;" name="LocationDDL">
-                                                @foreach (var item in ViewBag.LocationDDLList as IEnumerable<SelectListItem>)
-                                                {
-                                                    var selectedId = ViewBag.LocationIdKey as string;
-                                                    if (item.Value == selectedId)
-                                                    {
-                                                        <option value="@item.Value" selected>
-                                                            @item.Text
-                                                        </option>
-                                                    }
-                                                    else
-                                                    {
-                                                        <option value="@item.Value">
-                                                            @item.Text
-                                                        </option>
-                                                    }
-                                                }
-                                            </select>
-                                            <span class="error">
-                                                @Html.ValidationMessageFor(m => m.LocationId)
-                                            </span>
-                                        </div>*@
+                                <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
+                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Location
+                                </label>
+                                <select id="large" class=" default_select select-common block w-full "
+                                        style="width: 100%;" name="LocationDDL">
+                                    @foreach (var item in ViewBag.LocationDDLList as IEnumerable<SelectListItem>)
+                                    {
+                                        var selectedId = ViewBag.LocationIdKey as string;
+                                        if (item.Value == selectedId)
+                                        {
+                                            <option value="@item.Value" selected>
+                                                @item.Text
+                                            </option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@item.Value">
+                                                @item.Text
+                                            </option>
+                                        }
+                                    }
+                                </select>
+                                <span class="error">
+                                    @Html.ValidationMessageFor(m => m.LocationId)
+                                </span>
+                            </div>*@
 
                                     <div class="input-field-common">
                                         <label for="instagram" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
@@ -1629,49 +1631,6 @@
                                     </div>
                                     <div class="input-field-common">
                                         <label for="instagram" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
-                                            @CRS.ADMIN.APPLICATION.Resources.Resource.Designation_Fee
-                                        </label>
-                                        @Html.TextBoxFor(model => model.DesignationFee, new
-                                   {
-                                       @class = "w-full",
-                                       @placeholder = CRS.ADMIN.APPLICATION.Resources.Resource.Designation_Fee,
-                                       //@onkeypress = "return isNumber(event)",
-                                       autocomplete = "off",
-                                       @maxLength = "30"
-                                   })
-                                        @*<input type="text" class="w-full" placeholder="@CRS.ADMIN.APPLICATION.Resources.Resource.Latitude_Placeholder" name="Latitude" value="@Model.Latitude">*@
-                                        <span class="error">
-                                            @Html.ValidationMessageFor(m => m.DesignationFee)
-                                        </span>
-
-                                        @*<input type="number" class="w-full" placeholder="Enter Designation Fee" name="designationFee" required>*@
-                                        <!-- <span class="error">Validation msg</span> -->
-                                    </div>
-                                    <div class="input-field-common">
-                                        <label for="instagram" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
-                                            @CRS.ADMIN.APPLICATION.Resources.Resource.Companion_Fee
-                                        </label>
-                                        @Html.TextBoxFor(model => model.CompanionFee, new
-                                   {
-                                       @class = "w-full",
-                                       @placeholder = CRS.ADMIN.APPLICATION.Resources.Resource.Companion_Fee,
-                                       //@onkeypress = "return isNumber(event)",
-                                       autocomplete = "off",
-                                       @maxLength = "30"
-                                   })
-                                        @*<input type="text" class="w-full" placeholder="@CRS.ADMIN.APPLICATION.Resources.Resource.Latitude_Placeholder" name="Latitude" value="@Model.Latitude">*@
-                                        <span class="error">
-                                            @Html.ValidationMessageFor(m => m.CompanionFee)
-                                        </span>
-
-                                    </div>
-
-                                </div>
-
-                                <!-- for last order -->
-                                <div class="grid grid-cols-3 gap-x-4 gap-y-5">
-                                    <div class="input-field-common">
-                                        <label for="instagram" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
                                             @CRS.ADMIN.APPLICATION.Resources.Resource.Extension_Fee
                                         </label>
                                         @Html.TextBoxFor(model => model.ExtensionFee, new
@@ -1690,7 +1649,51 @@
                                     </div>
                                     <div class="input-field-common">
                                         <label for="instagram" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
-                                            @CRS.ADMIN.APPLICATION.Resources.Resource.Drink
+                                            @CRS.ADMIN.APPLICATION.Resources.Resource.Designation_Fee
+                                        </label>
+                                        @Html.TextBoxFor(model => model.DesignationFee, new
+                                   {
+                                       @class = "w-full",
+                                       @placeholder = CRS.ADMIN.APPLICATION.Resources.Resource.Designation_Fee,
+                                       //@onkeypress = "return isNumber(event)",
+                                       autocomplete = "off",
+                                       @maxLength = "30"
+                                   })
+                                        @*<input type="text" class="w-full" placeholder="@CRS.ADMIN.APPLICATION.Resources.Resource.Latitude_Placeholder" name="Latitude" value="@Model.Latitude">*@
+                                        <span class="error">
+                                            @Html.ValidationMessageFor(m => m.DesignationFee)
+                                        </span>
+
+                                        @*<input type="number" class="w-full" placeholder="Enter Designation Fee" name="designationFee" required>*@
+                                        <!-- <span class="error">Validation msg</span> -->
+                                    </div>
+                                    
+
+                                </div>
+
+                                <!-- for last order -->
+                                <div class="grid grid-cols-3 gap-x-4 gap-y-5">
+                                    <div class="input-field-common">
+                                        <label for="instagram" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                                            @CRS.ADMIN.APPLICATION.Resources.Resource.Companion_Fee
+                                        </label>
+                                        @Html.TextBoxFor(model => model.CompanionFee, new
+                                   {
+                                       @class = "w-full",
+                                       @placeholder = CRS.ADMIN.APPLICATION.Resources.Resource.Companion_Fee,
+                                       //@onkeypress = "return isNumber(event)",
+                                       autocomplete = "off",
+                                       @maxLength = "30"
+                                   })
+                                        @*<input type="text" class="w-full" placeholder="@CRS.ADMIN.APPLICATION.Resources.Resource.Latitude_Placeholder" name="Latitude" value="@Model.Latitude">*@
+                                        <span class="error">
+                                            @Html.ValidationMessageFor(m => m.CompanionFee)
+                                        </span>
+
+                                    </div>
+                                    <div class="input-field-common">
+                                        <label for="instagram" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                                            @CRS.ADMIN.APPLICATION.Resources.Resource.Service_tax
                                         </label>
                                         @Html.TextBoxFor(model => model.Drink, new
                                    {
@@ -1711,171 +1714,171 @@
 
                             <!-- for Plan list -->
                             @* <div class="flex gap-2 text-primary-300 text-sm font-semibold items-center mt-[10px]">
-                                    <div class="flex-none uppercase">@CRS.ADMIN.APPLICATION.Resources.Resource.Plan_list</div>
-                                    <div class="bg-[#F4F4F4] h-[1px] w-full">
-                                    </div>
-                                </div>
-                                <div class="grid  gap-4">
+                        <div class="flex-none uppercase">@CRS.ADMIN.APPLICATION.Resources.Resource.Plan_list</div>
+                        <div class="bg-[#F4F4F4] h-[1px] w-full">
+                        </div>
+                    </div>
+                    <div class="grid  gap-4">
 
 
 
-                                    <div id="container">
+                        <div id="container">
 
 
-                                        @for (int i = 0; i < Model.PlanDetailList.Count; i++)
+                            @for (int i = 0; i < Model.PlanDetailList.Count; i++)
+                            {
+                                var planList = Model.PlanDetailList[i];
+                                id = i + "_large";
+                                <div class="plans">
+                                    <div class="grid grid-cols-3 gap-x-4 gap-y-5">
+
+                                        @for (int j = 0; j < planList.PlanIdentityList.Count; j++)
                                         {
-                                            var planList = Model.PlanDetailList[i];
-                                            id = i + "_large";
-                                            <div class="plans">
-                                                <div class="grid grid-cols-3 gap-x-4 gap-y-5">
+                                            var planIdentity = planList.PlanIdentityList[j];
+                                            if (@Model.PlanDetailList[i].PlanIdentityList[j].inputtype.ToLower() == "dropdown")
+                                            {
+                                                <div class="input-field-common">
+                                                    <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
+                                                        @Model.PlanDetailList[i].PlanIdentityList[j].IdentityLabel
+                                                    </label>
+                                                    @Html.HiddenFor(model => model.PlanDetailList[i].PlanIdentityList[j].name, new { @class = "name" })
+                                                    @Html.HiddenFor(model => model.PlanDetailList[i].PlanIdentityList[j].StaticDataValue, new { @class = "StaticDataValue" })
+                                                    @Html.HiddenFor(model => model.PlanDetailList[i].PlanIdentityList[j].PlanId, new { @class = "PlanId" })
+                                                    @Html.HiddenFor(model => model.PlanDetailList[i].PlanIdentityList[j].IdentityDescription, new { @class = "IdentityDescription" })
+                                                    @Html.HiddenFor(model => model.PlanDetailList[i].PlanIdentityList[j].Id, new { @class = "Id" })
+                                                    @Html.HiddenFor(model => model.PlanDetailList[i].PlanIdentityList[j].IdentityLabel, new { @class = "IdentityLabel" })
+                                                    @Html.HiddenFor(model => model.PlanDetailList[i].PlanIdentityList[j].inputtype, new { @class = "inputtype" })
 
-                                                    @for (int j = 0; j < planList.PlanIdentityList.Count; j++)
-                                                    {
-                                                        var planIdentity = planList.PlanIdentityList[j];
-                                                        if (@Model.PlanDetailList[i].PlanIdentityList[j].inputtype.ToLower() == "dropdown")
+                                                    <select id=@id class="default_select select-common block w-full"
+                                                            style="width: 100%;" name="PlanDetailList[@i].PlanIdentityList[@j].IdentityDescription">
+                                                        @foreach (KeyValuePair<string, string> item in ViewBag.PlansList as Dictionary<string, string>)
                                                         {
-                                                            <div class="input-field-common">
-                                                                <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
-                                                                    @Model.PlanDetailList[i].PlanIdentityList[j].IdentityLabel
-                                                                </label>
-                                                                @Html.HiddenFor(model => model.PlanDetailList[i].PlanIdentityList[j].name, new { @class = "name" })
-                                                                @Html.HiddenFor(model => model.PlanDetailList[i].PlanIdentityList[j].StaticDataValue, new { @class = "StaticDataValue" })
-                                                                @Html.HiddenFor(model => model.PlanDetailList[i].PlanIdentityList[j].PlanId, new { @class = "PlanId" })
-                                                                @Html.HiddenFor(model => model.PlanDetailList[i].PlanIdentityList[j].IdentityDescription, new { @class = "IdentityDescription" })
-                                                                @Html.HiddenFor(model => model.PlanDetailList[i].PlanIdentityList[j].Id, new { @class = "Id" })
-                                                                @Html.HiddenFor(model => model.PlanDetailList[i].PlanIdentityList[j].IdentityLabel, new { @class = "IdentityLabel" })
-                                                                @Html.HiddenFor(model => model.PlanDetailList[i].PlanIdentityList[j].inputtype, new { @class = "inputtype" })
-
-                                                                <select id=@id class="default_select select-common block w-full"
-                                                                        style="width: 100%;" name="PlanDetailList[@i].PlanIdentityList[@j].IdentityDescription">
-                                                                    @foreach (KeyValuePair<string, string> item in ViewBag.PlansList as Dictionary<string, string>)
-                                                                    {
-                                                                        var selectedId = Model.PlanDetailList[i].PlanIdentityList[j].PlanId;
-                                                                        if (item.Value == selectedId)
-                                                                        {
-                                                                            <option value="@item.Key" selected>
-                                                                                @item.Value
-                                                                            </option>
-                                                                        }
-                                                                        else
-                                                                        {
-                                                                            <option value="@item.Key">
-                                                                                @item.Value
-                                                                            </option>
-                                                                        }
-                                                                    }
-                                                                </select>
-
-                                                            </div>
+                                                            var selectedId = Model.PlanDetailList[i].PlanIdentityList[j].PlanId;
+                                                            if (item.Value == selectedId)
+                                                            {
+                                                                <option value="@item.Key" selected>
+                                                                    @item.Value
+                                                                </option>
+                                                            }
+                                                            else
+                                                            {
+                                                                <option value="@item.Key">
+                                                                    @item.Value
+                                                                </option>
+                                                            }
                                                         }
-                                                        else if (@Model.PlanDetailList[i].PlanIdentityList[j].inputtype.ToLower() == "textbox")
-                                                        {
-                                                            <div class="input-field-common">
-                                                                <label class="block mb-[12px] text-sm font-medium text-secondary-text-2">
-                                                                    @Model.PlanDetailList[i].PlanIdentityList[j].IdentityLabel
-                                                                </label>
-                                                                @Html.HiddenFor(model => model.PlanDetailList[i].PlanIdentityList[j].name, new { @class = "name" })
-                                                                @Html.HiddenFor(model => model.PlanDetailList[i].PlanIdentityList[j].StaticDataValue, new { @class = "StaticDataValue" })
-                                                                @Html.HiddenFor(model => model.PlanDetailList[i].PlanIdentityList[j].PlanId, new { @class = "PlanId" })
-                                                                @Html.HiddenFor(model => model.PlanDetailList[i].PlanIdentityList[j].Id, new { @class = "Id" })
-                                                                @Html.HiddenFor(model => model.PlanDetailList[i].PlanIdentityList[j].inputtype, new { @class = "inputtype" })
-                                                                @Html.HiddenFor(model => model.PlanDetailList[i].PlanIdentityList[j].IdentityLabel, new { @class = "IdentityLabel" })
-                                                                @Html.TextBoxFor(model => model.PlanDetailList[i].PlanIdentityList[j].IdentityDescription, new
-                                                           {
-                                                               @class = "w-full",
-                                                               @placeholder = Model.PlanDetailList[i].PlanIdentityList[j].IdentityLabel,
-                                                               //@onkeypress = "return isAlphabetWithSpace(event)",
-                                                               autocomplete = "off",
-                                                               @maxLength = "100"
-                                                        ,
-
-                                                           })
-                                                                <span class="error">
-                                                                    @Html.ValidationMessageFor(model => Model.PlanDetailList[i].PlanIdentityList[j].IdentityDescription)
-                                                                </span>
-                                                            </div>
-                                                        }
-                                                        else if (@Model.PlanDetailList[i].PlanIdentityList[j].inputtype.ToLower() == "time")
-                                                        {
-                                                            <div class="input-field-common">
-                                                                <label for="instagram" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
-                                                                    @Model.PlanDetailList[i].PlanIdentityList[j].IdentityLabel
-                                                                </label>
-                                                                @Html.HiddenFor(model => model.PlanDetailList[i].PlanIdentityList[j].name, new { @class = "name" })
-                                                                @Html.HiddenFor(model => model.PlanDetailList[i].PlanIdentityList[j].StaticDataValue, new { @class = "StaticDataValue" })
-                                                                @Html.HiddenFor(model => model.PlanDetailList[i].PlanIdentityList[j].PlanId, new { @class = "PlanId" })
-                                                                @Html.HiddenFor(model => model.PlanDetailList[i].PlanIdentityList[j].Id, new { @class = "Id" })
-                                                                @Html.HiddenFor(model => model.PlanDetailList[i].PlanIdentityList[j].inputtype, new { @class = "inputtype" })
-                                                                @Html.HiddenFor(model => model.PlanDetailList[i].PlanIdentityList[j].IdentityLabel, new { @class = "IdentityLabel" })
-                                                                @Html.TextBoxFor(model => model.PlanDetailList[i].PlanIdentityList[j].IdentityDescription, new
-                                                           {
-                                                               @class = "w-full",
-                                                               @placeholder = "HH:MM",
-                                                               //@onkeypress = "return isNumber(event)",
-                                                               autocomplete = "off",
-                                                               @maxLength = "30",
-
-                                                               @type = "time"
-                                                           })
-                                                                <span class="error">
-                                                                    @Html.ValidationMessageFor(model => Model.PlanDetailList[i].PlanIdentityList[j].IdentityDescription)
-                                                                </span>
-                                                                //<input type="time" class="w-full" placeholder="HH:MM" name="lastOrderTime" required>
-                                                                <!-- <span class="error">Validation msg</span> -->
-                                                            </div>
-                                                        }
-                                                        else if (@Model.PlanDetailList[i].PlanIdentityList[j].inputtype.ToLower() == "toggle")
-                                                        {
-                                                            <div class="toogle-common">
-                                                                <label class="relative inline-flex items-center cursor-pointer">
-                                                                    @Html.HiddenFor(model => model.PlanDetailList[i].PlanIdentityList[j].name, new { @class = "name" })
-                                                                    @Html.HiddenFor(model => model.PlanDetailList[i].PlanIdentityList[j].StaticDataValue, new { @class = "StaticDataValue" })
-                                                                    @Html.HiddenFor(model => model.PlanDetailList[i].PlanIdentityList[j].PlanId, new { @class = "PlanId" })
-                                                                    @Html.HiddenFor(model => model.PlanDetailList[i].PlanIdentityList[j].Id, new { @class = "Id" })
-                                                                    @Html.HiddenFor(model => model.PlanDetailList[i].PlanIdentityList[j].inputtype, new { @class = "inputtype" })
-                                                                    @Html.HiddenFor(model => model.PlanDetailList[i].PlanIdentityList[j].IdentityLabel, new { @class = "IdentityLabel" })
-                                                                    @Html.HiddenFor(model => model.PlanDetailList[i].PlanIdentityList[j].IdentityDescription, new { @class = "IdentityDescription" })
-                                                                    <input type="checkbox" value="@Model.PlanDetailList[i].PlanIdentityList[j].IdentityDescription" name="PlanDetailList[@i].PlanIdentityList[@j].IdentityDescription" class="sr-only peer" id="toogle1">
-                                                                    <div class="w-7 h-4 bg-white rounded-full border border-[#A6A6A6] peer peer-focus:ring-4 peer-focus:ring-blue-300 peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[3.8px] after:left-[2px] after:border-[#A6A6A6] after:bg-[#A6A6A6] after:border after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:after:border-white peer-checked:border-secondary-color-pink peer-checked:bg-secondary-color-pink peer-checked:after:bg-white">
-                                                                    </div>
-                                                                    <span class="pl-2 text-sm font-medium text-secondary-100">
-                                                                        @Model.PlanDetailList[i].PlanIdentityList[j].IdentityLabel
-                                                                    </span>
-                                                                </label>
-                                                            </div>
-
-                                                        }
-                                                    }
-
+                                                    </select>
 
                                                 </div>
+                                            }
+                                            else if (@Model.PlanDetailList[i].PlanIdentityList[j].inputtype.ToLower() == "textbox")
+                                            {
+                                                <div class="input-field-common">
+                                                    <label class="block mb-[12px] text-sm font-medium text-secondary-text-2">
+                                                        @Model.PlanDetailList[i].PlanIdentityList[j].IdentityLabel
+                                                    </label>
+                                                    @Html.HiddenFor(model => model.PlanDetailList[i].PlanIdentityList[j].name, new { @class = "name" })
+                                                    @Html.HiddenFor(model => model.PlanDetailList[i].PlanIdentityList[j].StaticDataValue, new { @class = "StaticDataValue" })
+                                                    @Html.HiddenFor(model => model.PlanDetailList[i].PlanIdentityList[j].PlanId, new { @class = "PlanId" })
+                                                    @Html.HiddenFor(model => model.PlanDetailList[i].PlanIdentityList[j].Id, new { @class = "Id" })
+                                                    @Html.HiddenFor(model => model.PlanDetailList[i].PlanIdentityList[j].inputtype, new { @class = "inputtype" })
+                                                    @Html.HiddenFor(model => model.PlanDetailList[i].PlanIdentityList[j].IdentityLabel, new { @class = "IdentityLabel" })
+                                                    @Html.TextBoxFor(model => model.PlanDetailList[i].PlanIdentityList[j].IdentityDescription, new
+                                               {
+                                                   @class = "w-full",
+                                                   @placeholder = Model.PlanDetailList[i].PlanIdentityList[j].IdentityLabel,
+                                                   //@onkeypress = "return isAlphabetWithSpace(event)",
+                                                   autocomplete = "off",
+                                                   @maxLength = "100"
+                                            ,
 
+                                               })
+                                                    <span class="error">
+                                                        @Html.ValidationMessageFor(model => Model.PlanDetailList[i].PlanIdentityList[j].IdentityDescription)
+                                                    </span>
+                                                </div>
+                                            }
+                                            else if (@Model.PlanDetailList[i].PlanIdentityList[j].inputtype.ToLower() == "time")
+                                            {
+                                                <div class="input-field-common">
+                                                    <label for="instagram" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                                                        @Model.PlanDetailList[i].PlanIdentityList[j].IdentityLabel
+                                                    </label>
+                                                    @Html.HiddenFor(model => model.PlanDetailList[i].PlanIdentityList[j].name, new { @class = "name" })
+                                                    @Html.HiddenFor(model => model.PlanDetailList[i].PlanIdentityList[j].StaticDataValue, new { @class = "StaticDataValue" })
+                                                    @Html.HiddenFor(model => model.PlanDetailList[i].PlanIdentityList[j].PlanId, new { @class = "PlanId" })
+                                                    @Html.HiddenFor(model => model.PlanDetailList[i].PlanIdentityList[j].Id, new { @class = "Id" })
+                                                    @Html.HiddenFor(model => model.PlanDetailList[i].PlanIdentityList[j].inputtype, new { @class = "inputtype" })
+                                                    @Html.HiddenFor(model => model.PlanDetailList[i].PlanIdentityList[j].IdentityLabel, new { @class = "IdentityLabel" })
+                                                    @Html.TextBoxFor(model => model.PlanDetailList[i].PlanIdentityList[j].IdentityDescription, new
+                                               {
+                                                   @class = "w-full",
+                                                   @placeholder = "HH:MM",
+                                                   //@onkeypress = "return isNumber(event)",
+                                                   autocomplete = "off",
+                                                   @maxLength = "30",
 
-                                            </div>
+                                                   @type = "time"
+                                               })
+                                                    <span class="error">
+                                                        @Html.ValidationMessageFor(model => Model.PlanDetailList[i].PlanIdentityList[j].IdentityDescription)
+                                                    </span>
+                                                    //<input type="time" class="w-full" placeholder="HH:MM" name="lastOrderTime" required>
+                                                    <!-- <span class="error">Validation msg</span> -->
+                                                </div>
+                                            }
+                                            else if (@Model.PlanDetailList[i].PlanIdentityList[j].inputtype.ToLower() == "toggle")
+                                            {
+                                                <div class="toogle-common">
+                                                    <label class="relative inline-flex items-center cursor-pointer">
+                                                        @Html.HiddenFor(model => model.PlanDetailList[i].PlanIdentityList[j].name, new { @class = "name" })
+                                                        @Html.HiddenFor(model => model.PlanDetailList[i].PlanIdentityList[j].StaticDataValue, new { @class = "StaticDataValue" })
+                                                        @Html.HiddenFor(model => model.PlanDetailList[i].PlanIdentityList[j].PlanId, new { @class = "PlanId" })
+                                                        @Html.HiddenFor(model => model.PlanDetailList[i].PlanIdentityList[j].Id, new { @class = "Id" })
+                                                        @Html.HiddenFor(model => model.PlanDetailList[i].PlanIdentityList[j].inputtype, new { @class = "inputtype" })
+                                                        @Html.HiddenFor(model => model.PlanDetailList[i].PlanIdentityList[j].IdentityLabel, new { @class = "IdentityLabel" })
+                                                        @Html.HiddenFor(model => model.PlanDetailList[i].PlanIdentityList[j].IdentityDescription, new { @class = "IdentityDescription" })
+                                                        <input type="checkbox" value="@Model.PlanDetailList[i].PlanIdentityList[j].IdentityDescription" name="PlanDetailList[@i].PlanIdentityList[@j].IdentityDescription" class="sr-only peer" id="toogle1">
+                                                        <div class="w-7 h-4 bg-white rounded-full border border-[#A6A6A6] peer peer-focus:ring-4 peer-focus:ring-blue-300 peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[3.8px] after:left-[2px] after:border-[#A6A6A6] after:bg-[#A6A6A6] after:border after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:after:border-white peer-checked:border-secondary-color-pink peer-checked:bg-secondary-color-pink peer-checked:after:bg-white">
+                                                        </div>
+                                                        <span class="pl-2 text-sm font-medium text-secondary-100">
+                                                            @Model.PlanDetailList[i].PlanIdentityList[j].IdentityLabel
+                                                        </span>
+                                                    </label>
+                                                </div>
 
+                                            }
                                         }
 
-                                        <br />
-
-                                        <!-- for max reservation code -->
-
 
                                     </div>
 
 
-                                    <div id="originalContent">
+                                </div>
 
-                                    </div>
+                            }
 
+                            <br />
 
-                                    <div class="flex gap-2 text-primary-300 text-sm font-semibold items-center mt-[10px]">
-                                        <!-- <div class="flex-none uppercase">plan fee</div> -->
-                                        <div class="bg-[#F4F4F4] h-[1px] w-full">
-                                        </div>
-                                    </div>
+                            <!-- for max reservation code -->
 
 
-                                </div>*@
+                        </div>
+
+
+                        <div id="originalContent">
+
+                        </div>
+
+
+                        <div class="flex gap-2 text-primary-300 text-sm font-semibold items-center mt-[10px]">
+                            <!-- <div class="flex-none uppercase">plan fee</div> -->
+                            <div class="bg-[#F4F4F4] h-[1px] w-full">
+                            </div>
+                        </div>
+
+
+                    </div>*@
                         </div>
                     </div>
                     <div class="flex justify-between ">
