@@ -76,7 +76,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             ViewBag.BusinessTypeDDL = ApplicationUtilities.SetDDLValue(DDLHelper.LoadDropdownList("BUSINESSTYPEDDL", "", culture) as Dictionary<string, string>, null, "");
             ViewBag.RankDDL = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("RANKDDL", "", culture) as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---");
             ViewBag.ClubStoreDDL = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("CLUBSTOREDDL", "", culture) as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---");
-            ViewBag.ClubCategoryDDL = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("CLUBCATEGORYDDL", "", culture) as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---");        
+            ViewBag.ClubCategoryDDL = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("CLUBCATEGORYDDL", "", culture) as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---");
             ViewBag.LocationIdKey = objBasicClubManagementModel.ManagePremiumClub.LocationDDL;
             ViewBag.PrefIdKey = !string.IsNullOrEmpty(objBasicClubManagementModel.ManagePremiumClub.Prefecture) ? ViewBag.Pref[objBasicClubManagementModel.ManagePremiumClub.Prefecture] : null;
             ViewBag.HolidayIdKey = !string.IsNullOrEmpty(objBasicClubManagementModel.ManagePremiumClub.Holiday) ? objBasicClubManagementModel.ManagePremiumClub.Holiday : null;
@@ -88,7 +88,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
         }
 
         [HttpPost, ValidateAntiForgeryToken]
-        public async Task<ActionResult> ManageBasicClub(ManageBasicClubModel Model, HttpPostedFileBase Logo_Certificate, HttpPostedFileBase CoverPhoto_Certificate,   string LocationDDL, string BusinessTypeDDL)
+        public async Task<ActionResult> ManageBasicClub(ManageBasicClubModel Model, HttpPostedFileBase Logo_Certificate, HttpPostedFileBase CoverPhoto_Certificate, string LocationDDL, string BusinessTypeDDL)
         {
             string holidays = "";
             string[] array = Model.HolidayStr;
@@ -101,7 +101,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 StartIndex = Model.StartIndex,
                 PageSize = Model.PageSize == 0 ? 10 : Model.PageSize
             });
-            
+
             foreach (var holiday in holidayList)
             {
                 var item = holiday.DecryptParameter();
@@ -121,27 +121,27 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             string LogoPath = "";
             string coverPhotoPath = "";
             var allowedContentType = AllowedImageContentType();
-            string dateTime = "";           
+            string dateTime = "";
             if (ModelState.IsValid)
             {
                 if
-           (              
+           (
               string.IsNullOrEmpty(Model.Logo) ||
-              string.IsNullOrEmpty(Model.CoverPhoto)              
+              string.IsNullOrEmpty(Model.CoverPhoto)
            )
                 {
                     bool allowRedirect = false;
-                    if ( Logo_Certificate == null || CoverPhoto_Certificate == null)
-                    {                       
+                    if (Logo_Certificate == null || CoverPhoto_Certificate == null)
+                    {
                         if (Logo_Certificate == null && string.IsNullOrEmpty(Model.Logo))
                         {
                             ErrorMessage = "Logo required";
                             allowRedirect = true;
                         }
-                      
+
 
                     }
-                                        
+
                     if (allowRedirect)
                     {
                         this.AddNotificationMessage(new NotificationModel()
@@ -157,7 +157,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 }
 
                 bool allowRedirectfile = false;
-               
+
                 string LogoFileName = string.Empty;
                 if (Logo_Certificate != null)
                 {
@@ -202,9 +202,9 @@ namespace CRS.ADMIN.APPLICATION.Controllers
 
                     }
                 }
-       
+
                 if (allowRedirectfile == true)
-                {                    
+                {
                     TempData["ManageBasicClub"] = Model;
                     TempData["RenderId"] = "Manage";
                     return redirectresult;
@@ -227,17 +227,17 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                         TempData["RenderId"] = "Manage";
                         return redirectresult;
                     }
-                }                
-                commonModel.LocationId = LocationDDL?.DecryptParameter();               
+                }
+                commonModel.LocationId = LocationDDL?.DecryptParameter();
                 commonModel.Prefecture = commonModel.Prefecture?.DecryptParameter();
                 commonModel.ClosingDate = commonModel.ClosingDate?.DecryptParameter();
                 var returntype = string.Empty;
                 var dbResponse = _buss.ManageBasicClub(commonModel);
                 if (dbResponse != null && dbResponse.Code == 0)
                 {
-                    
+
                     if (Logo_Certificate != null) await ImageHelper.ImageUpload(LogoFileName, Logo_Certificate);
-                    if (CoverPhoto_Certificate != null) await ImageHelper.ImageUpload(CoverPhotoFileName, CoverPhoto_Certificate);                    
+                    if (CoverPhoto_Certificate != null) await ImageHelper.ImageUpload(CoverPhotoFileName, CoverPhoto_Certificate);
                     this.AddNotificationMessage(new NotificationModel()
                     {
                         NotificationType = dbResponse.Code == ResponseCode.Success ? NotificationMessage.SUCCESS : NotificationMessage.INFORMATION,
@@ -283,7 +283,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             var culture = Request.Cookies["culture"]?.Value;
             culture = string.IsNullOrEmpty(culture) ? "ja" : culture;
 
-            ManageBasicClubModel model = new ManageBasicClubModel();            
+            ManageBasicClubModel model = new ManageBasicClubModel();
             if (!string.IsNullOrEmpty(AgentId))
             {
                 var id = AgentId.DecryptParameter();
@@ -296,7 +296,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                         Title = NotificationMessage.INFORMATION.ToString(),
                     });
                     return RedirectToAction("BasicClubManagementList", "BasicClubManagement");
-                }              
+                }
                 var dbResponse = _buss.GetBasicClubDetails(id, culture);
                 model = dbResponse.MapObject<ManageBasicClubModel>();
                 model.AgentId = model.AgentId.EncryptParameter();
@@ -347,7 +347,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 ActionIP = ApplicationUtilities.GetIP(),
                 ActionUser = ApplicationUtilities.GetSessionValue("Username").ToString()
             };
-            var dbResponse = _buss.DeleteBasicClubStatus(aId,commonRequest);
+            var dbResponse = _buss.DeleteBasicClubStatus(aId, commonRequest);
             response = dbResponse;
             this.AddNotificationMessage(new NotificationModel()
             {
@@ -376,7 +376,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 ActionIP = ApplicationUtilities.GetIP(),
                 ActionUser = ApplicationUtilities.GetSessionValue("Username").ToString()
             };
-            var dbResponse = _buss.BlockBasicClubStatus(aId,commonRequest);
+            var dbResponse = _buss.BlockBasicClubStatus(aId, commonRequest);
             response = dbResponse;
             this.AddNotificationMessage(new NotificationModel()
             {
@@ -397,7 +397,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 ActionIP = ApplicationUtilities.GetIP(),
                 ActionUser = ApplicationUtilities.GetSessionValue("Username").ToString()
             };
-            var dbResponse = _buss.UnBlockBasicClubStatus(aId,commonRequest);
+            var dbResponse = _buss.UnBlockBasicClubStatus(aId, commonRequest);
             response = dbResponse;
             this.AddNotificationMessage(new NotificationModel()
             {
@@ -467,9 +467,6 @@ namespace CRS.ADMIN.APPLICATION.Controllers
         public async Task<ActionResult> ManageConversionBasicClub(ManagePremiumClubModel Model, HttpPostedFileBase Business_Certificate, HttpPostedFileBase Logo_Certificate, HttpPostedFileBase CoverPhoto_Certificate, HttpPostedFileBase KYCDocument_Certificate, HttpPostedFileBase KYCDocumentBack_Certificate, HttpPostedFileBase PassportPhotot_Certificate, HttpPostedFileBase InsurancePhoto_Certificate, HttpPostedFileBase CorporateRegistry_Certificate, string LocationDDL, string BusinessTypeDDL)
         {
             string holidays = "";
-            string[] array = Model.HolidayStr;
-            string commaSeparatedString = string.Join(", ", array);
-            List<string> holidayList = commaSeparatedString.Split(new[] { ", " }, StringSplitOptions.RemoveEmptyEntries).ToList();
             ActionResult redirectresult = null;
             if (!string.IsNullOrEmpty(Model.holdId))
             {
@@ -490,20 +487,27 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                     PageSize = Model.PageSize
                 });
             }
-            foreach (var holiday in holidayList)
+            string[] array = Model.HolidayStr;
+            if (Model.HolidayStr != null && Model.HolidayStr.Any(str => !string.IsNullOrEmpty(str)))
             {
-                var item = holiday.DecryptParameter();
-                if (string.IsNullOrEmpty(holidays))
+                string commaSeparatedString = string.Join(", ", array);
+                List<string> holidayList = commaSeparatedString.Split(new[] { ", " }, StringSplitOptions.RemoveEmptyEntries).ToList();
+                foreach (var holiday in holidayList)
                 {
-                    holidays = item.Trim();
-                }
-                else
-                {
-                    holidays = holidays + "," + item.Trim();
-                }
+                    var item = holiday.DecryptParameter();
+                    if (string.IsNullOrEmpty(holidays))
+                    {
+                        holidays = item.Trim();
+                    }
+                    else
+                    {
+                        holidays = holidays + "," + item.Trim();
+                    }
 
+                }
+                Model.Holiday = holidays;
             }
-            Model.Holiday = holidays;
+
             string ErrorMessage = string.Empty;
             if (!string.IsNullOrEmpty(BusinessTypeDDL?.DecryptParameter())) ModelState.Remove("BusinessType");
             ViewBag.PlansList = ApplicationUtilities.LoadDropdownList("CLUBPLANS") as Dictionary<string, string>;

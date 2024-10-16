@@ -189,11 +189,15 @@
                                                 <div>
                                                     <i class="fa-regular fa-pen-to-square text-[#989898] cursor-pointer" onclick="ManageHostGetDetailsFunction('@item.AgentId', '@item.HostId');"></i>
                                                 </div>
-                                                <div>
-                                                    <a onclick="HostGalleryRedirectFunction('@item.AgentId', '@item.HostId');">
-                                                        <i class="las la-image text-[#C8B477] text-[20px] mt-[1px] cursor-pointer"></i>
-                                                    </a>
-                                                </div>
+                                                if (string.IsNullOrEmpty(_ManageHostModel.clubCategory))
+                                                {
+
+                                                    <div>
+                                                        <a onclick="HostGalleryRedirectFunction('@item.AgentId', '@item.HostId');">
+                                                            <i class="las la-image text-[#C8B477] text-[20px] mt-[1px] cursor-pointer"></i>
+                                                        </a>
+                                                    </div>
+                                                }
                                             }
                                             <div>
                                                 <i class="las la-trash-alt text-[20px] cursor-pointer text-[#CB3F3F]" title="Delete Host" onclick="LangChangeAlert('Are you sure you want to delete this host?','Confirm','@item.AgentId', '@item.HostId','D')"></i>
@@ -207,7 +211,7 @@
                                             else
                                             {
                                                 <div>
-                                                    <i class="las la-unlock cursor-pointer text-[#CB3F3F] text-[18px]" title="Block Host" onclick="LangChangeAlert('Are you sure you want to block this host?','Confirm','@item.AgentId', '@item.HostId','B')"></i>
+                                                    <i class="las la-lock cursor-pointer text-[#CB3F3F] text-[18px]" title="Block Host" onclick="LangChangeAlert('Are you sure you want to block this host?','Confirm','@item.AgentId', '@item.HostId','B')"></i>
                                                 </div>
                                             }
 
@@ -364,7 +368,7 @@
 
 
         function HostGalleryRedirectFunction(i, j) {
-            window.location.href = '/HostManagement/GalleryManagement?AgentId=' + i + '&&HostId=' + j;
+            window.location.href = '/HostManagement/GalleryManagement?AgentId=' + i + '&HostId=' + j;
         }
     </script>
 
@@ -373,8 +377,9 @@
             location.reload();
         }
         function ManageHostGetDetailsFunction(i, j) {
-            window.location.href = '/HostManagement/ManageHost?AgentId=' + i + '&&HostId=' + j;
-        }
+            var category ='@Html.Raw(_ManageHostModel.clubCategory)';
+        window.location.href = '/HostManagement/ManageHost?AgentId=' + i + '&HostId=' + j + '&clubCategory=' + category;
+    }
     </script>
 
     <script>

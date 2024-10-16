@@ -28,7 +28,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             _buss = buss;
         }
         [HttpGet]
-        public ActionResult HostList(string AgentId, string SearchFilter = "", int StartIndex = 0, int PageSize = 10)
+        public ActionResult HostList(string AgentId, string SearchFilter = "", int StartIndex = 0, int PageSize = 10, string clubCategory = "")
         {
             var culture = Request.Cookies["culture"]?.Value;
             culture = string.IsNullOrEmpty(culture) ? "ja" : culture;
@@ -36,6 +36,17 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             ViewBag.SearchFilter = SearchFilter;
             string RenderId = "";
             var aId = !string.IsNullOrEmpty(AgentId) ? AgentId.DecryptParameter() : null;
+            ActionResult redirectresult = null;
+            if (!string.IsNullOrEmpty(clubCategory) && clubCategory.ToUpper() == "BASIC")
+            {
+                redirectresult = RedirectToAction("BasicClubManagementList", "BasicClubManagement");
+
+            }
+            else
+            {
+                redirectresult = RedirectToAction("ClubList", "ClubManagement");
+            }
+
             if (string.IsNullOrEmpty(aId))
             {
                 this.AddNotificationMessage(new NotificationModel()
@@ -44,7 +55,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                     Message = "Invalid details",
                     Title = NotificationMessage.INFORMATION.ToString(),
                 });
-                return RedirectToAction("ClubList", "ClubManagement");
+                return redirectresult;
             }
             var ResponseModel = new ManageHostCommonModel();
             if (TempData.ContainsKey("ManageHostModel")) ResponseModel.ManageHostModel = TempData["ManageHostModel"] as ManageHostModel;
@@ -81,7 +92,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 ResponseModel.ManageHostModel.HostIdentityDataModel.ForEach(x => x.IdentityType = x.IdentityType.EncryptParameter());
                 ResponseModel.ManageHostModel.HostIdentityDataModel.ForEach(x => x.IdentityValue = x.IdentityValue.EncryptParameter());
             }
-            ViewBag.ZodiacSignsDDL = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("ZODIACSIGNSDDL","",culture) as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---");
+            ViewBag.ZodiacSignsDDL = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("ZODIACSIGNSDDL", "", culture) as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---");
             ViewBag.ZodiacSignsDDLKey = ResponseModel.ManageHostModel.ConstellationGroup;
             ViewBag.BloodGroupDDL = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("BLOODGROUPDDL", "", culture) as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---");
             ViewBag.BloodGroupDDLKey = ResponseModel.ManageHostModel.BloodType;
@@ -91,27 +102,46 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             ViewBag.LiquorStrengthDDLKey = ResponseModel.ManageHostModel.LiquorStrength;
             ViewBag.PopUpRenderValue = !string.IsNullOrEmpty(RenderId) ? RenderId : null;
             ViewBag.IsBackAllowed = true;
-            ViewBag.BackButtonURL = "/ClubManagement/ClubList";
+            if (!string.IsNullOrEmpty(clubCategory) && clubCategory.ToUpper() == "BASIC")
+            {
+                ViewBag.BackButtonURL = "/BasicClubManagement/BasicClubManagementList";
+            }
+            else
+            {
+                ViewBag.BackButtonURL = "/ClubManagement/ClubList";
+            }
+
             ViewBag.RankDDL = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("RANKDDL", "", culture) as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---");
             ViewBag.RankDDLKey = ResponseModel.ManageHostModel.Rank;
             ViewBag.SkillDDL = ApplicationUtilities.SetDDLValue(CustomLoadDropdownList("SKILLDDL") as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---");
             ViewBag.BirthPlaceDdl = ApplicationUtilities.SetDDLValue(DDLHelper.LoadDropdownList("BIRTHPLACE", "", culture) as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---");
             //ViewBag.heightlistddl = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("HEIGHTLIST", "", culture) as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---");
-            ViewBag.positionddl = ApplicationUtilities.SetDDLValue(DDLHelper.LoadDropdownList("POSITIONLIST","",culture) as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---");
+            ViewBag.positionddl = ApplicationUtilities.SetDDLValue(DDLHelper.LoadDropdownList("POSITIONLIST", "", culture) as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---");
             ViewBag.BirthPlacekey = ResponseModel.ManageHostModel.Address;
             //ViewBag.heightlistkey = ResponseModel.ManageHostModel.Height;
             ViewBag.postitionkey = ResponseModel.ManageHostModel.Position;
             ViewBag.StartIndex = StartIndex;
             ViewBag.PageSize = PageSize;
+            ResponseModel.ManageHostModel.clubCategory = clubCategory;
             ViewBag.TotalData = dbResponse != null && dbResponse.Any() ? dbResponse[0].TotalRecords : 0;
             return View(ResponseModel);
         }
 
         [HttpGet]
-        public ActionResult ManageHost(string AgentId, string HostId = null)
+        public ActionResult ManageHost(string AgentId, string HostId = null, string clubCategory = null)
         {
             var culture = Request.Cookies["culture"]?.Value;
             culture = string.IsNullOrEmpty(culture) ? "ja" : culture;
+            ActionResult redirectresult = null;
+            if (!string.IsNullOrEmpty(clubCategory) && clubCategory.ToUpper() == "BASIC")
+            {
+                redirectresult = RedirectToAction("BasicClubManagementList", "BasicClubManagement");
+
+            }
+            else
+            {
+                redirectresult = RedirectToAction("ClubList", "ClubManagement");
+            }
             if (string.IsNullOrEmpty(AgentId))
             {
                 this.AddNotificationMessage(new NotificationModel()
@@ -120,7 +150,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                     Message = "Invalid details",
                     Title = NotificationMessage.INFORMATION.ToString(),
                 });
-                return RedirectToAction("ClubList", "ClubManagement");
+                return redirectresult;
             }
             ManageHostModel model = new ManageHostModel();
             if (string.IsNullOrEmpty(HostId)) return View(model);
@@ -128,6 +158,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             {
                 var aId = AgentId.DecryptParameter();
                 var hId = HostId.DecryptParameter();
+
                 if (string.IsNullOrEmpty(aId))
                 {
                     this.AddNotificationMessage(new NotificationModel()
@@ -136,7 +167,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                         Message = "Invalid club details",
                         Title = NotificationMessage.INFORMATION.ToString(),
                     });
-                    return RedirectToAction("ClubList", "ClubManagement");
+                    return redirectresult;
                 }
                 if (string.IsNullOrEmpty(hId))
                 {
@@ -147,32 +178,100 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                         Title = NotificationMessage.INFORMATION.ToString(),
                     });
                     TempData["RenderId"] = "ManageHost";
-                    return RedirectToAction("HostList", "HostManagement", new { AgentId });
+                    return RedirectToAction("HostList", "HostManagement", new { AgentId, clubCategory = clubCategory });
                 }
                 var dbResponse = _buss.GetHostDetail(aId, hId);
                 model = dbResponse.MapObject<ManageHostModel>();
-                if (!string.IsNullOrEmpty(model.DOB))
-                {
-                    DateTime parsedDate;
-                    if (DateTime.TryParse(model.DOB, out parsedDate))
-                    {
-                        model.DOB = parsedDate.ToString("yyyy-MM-dd");
-                    }
-                }
+                //if (!string.IsNullOrEmpty(model.DOB))
+                //{
+                //    DateTime parsedDate;
+                //    if (DateTime.TryParse(model.DOB, out parsedDate))
+                //    {
+                //        model.DOB = parsedDate.ToString("yyyy-MM-dd");
+                //    }
+                //}
                 //    model.DOB = DateTime.Parse(model.DOB).ToString("yyyy-MM-dd");
 
                 model.AgentId = AgentId;
                 model.HostId = HostId;
+                //if (!string.IsNullOrEmpty(model.DOB))
+                //{
+                //    DateTime dob;
+                //    if (DateTime.TryParseExact(model.DOB, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out dob))
+                //    {
+                //        model.BirthYear = dob.Year.ToString();
+                //        model.BirthMonth = dob.Month.ToString("00");
+                //        model.BirthDate = dob.Day.ToString("00");
+                //    }
+                //}
+
+
+
                 if (!string.IsNullOrEmpty(model.DOB))
                 {
-                    DateTime dob;
-                    if (DateTime.TryParseExact(model.DOB, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out dob))
+                    var Dateparts1 = model.DOB.Split('-');
+                    if (model.DOB.Count(c => c == '-') == 2)
                     {
-                        model.BirthYear = dob.Year.ToString();
-                        model.BirthMonth = dob.Month.ToString("00");
-                        model.BirthDate = dob.Day.ToString("00");
+                        // Case: 1995--10 => year and day
+                        var parts = model.DOB.Split('-');
+                        if (parts.Length == 3 && !string.IsNullOrEmpty(parts[0]) && string.IsNullOrEmpty(parts[1]) && !string.IsNullOrEmpty(parts[2]))
+                        {
+                            model.BirthYear = parts[0]; // Extract year
+                            model.BirthDate = parts[2]; // Extract day
+
+                        }
+                        else
+                        {
+                            // Case: 1995-09-11 => yyyy-mm-dd
+                            DateTime dob;
+                            if (DateTime.TryParseExact(model.DOB, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out dob))
+                            {
+                                model.BirthYear = dob.Year.ToString();
+                                model.BirthMonth = dob.Month.ToString("00");
+                                model.BirthDate = dob.Day.ToString("00");
+                               
+                            }
+                        }
                     }
+                     if (model.DOB.StartsWith("--"))
+                    {
+                        // Case: --11 => day
+                        model.BirthDate = model.DOB.Substring(2, 2); // Extract day
+
+                    }
+                    else if (model.DOB.EndsWith("--") && model.DOB.Count(c => c == '-') == 2)
+                    {
+                        // Case: 1995-- => year
+                        model.BirthYear = model.DOB.Substring(0, 4); // Extract year
+
+                    }
+                    else if (model.DOB.StartsWith("-") && model.DOB.Count(c => c == '-') == 2 && string.IsNullOrEmpty(Dateparts1[2]))
+                    {
+                        // Case: -12- => month
+                        model.BirthMonth = model.DOB.Substring(1, 2); // Extract month
+
+                    }
+                    else if ( model.DOB.StartsWith("-")  && model.DOB.Count(c => c == '-') == 2 )
+                    {
+                        // Case: -12-10 => mm-dd
+                        model.BirthMonth = model.DOB.Substring(1, 2); // Extract month
+                        model.BirthDate = model.DOB.Substring(4, 2);  // Extract day
+                        
+                    }
+                    
+                    
+                     
+                    else if (model.DOB.EndsWith("-") && model.DOB.Count(c => c == '-') == 2)
+                    {
+                        // Case: 1995-09- => year and month
+                        var parts = model.DOB.Split('-');
+                        model.BirthYear = parts[0]; // Extract year
+                        model.BirthMonth = parts[1]; // Extract month                       
+                    }
+                    
+
                 }
+
                 model.ConstellationGroup = model.ConstellationGroup?.EncryptParameter();
                 model.BloodType = model.BloodType?.EncryptParameter();
                 model.PreviousOccupation = model.PreviousOccupation?.EncryptParameter();
@@ -189,7 +288,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 model.HostIdentityDataModel.ForEach(x => x.IdentityDDLType = !string.IsNullOrEmpty(x.IdentityDDLType) ? x.IdentityDDLType.EncryptParameter() : null);
                 TempData["RenderId"] = "ManageHost";
                 TempData["ManageHostModel"] = model;
-                return RedirectToAction("HostList", "HostManagement", new { AgentId });
+                return RedirectToAction("HostList", "HostManagement", new { AgentId, clubCategory = clubCategory });
             }
         }
 
@@ -288,7 +387,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                     });
                     TempData["RenderId"] = "ManageHost";
                     TempData["ManageHostModel"] = Model;
-                    return RedirectToAction("HostList", "HostManagement", new { AgentId = Model.AgentId });
+                    return RedirectToAction("HostList", "HostManagement", new { AgentId = Model.AgentId, clubCategory = Model.clubCategory });
                 }
             }
             string HostIconImageFileName = string.Empty;
@@ -311,13 +410,23 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                     });
                     TempData["RenderId"] = "ManageHost";
                     TempData["ManageHostModel"] = Model;
-                    return RedirectToAction("HostList", "HostManagement", new { AgentId = Model.AgentId });
+                    return RedirectToAction("HostList", "HostManagement", new { AgentId = Model.AgentId, clubCategory = Model.clubCategory });
                 }
             }
             if (ModelState.IsValid)
             {
                 var requestCommon = Model.MapObject<ManageHostCommon>();
                 requestCommon.AgentId = !string.IsNullOrEmpty(Model.AgentId) ? Model.AgentId.DecryptParameter() : null;
+                ActionResult redirectresult = null;
+                if (!string.IsNullOrEmpty(Model.clubCategory) && Model.clubCategory.ToUpper() == "BASIC")
+                {
+                    redirectresult = RedirectToAction("BasicClubManagementList", "BasicClubManagement");
+
+                }
+                else
+                {
+                    redirectresult = RedirectToAction("ClubList", "ClubManagement");
+                }
                 if (string.IsNullOrEmpty(requestCommon.AgentId))
                 {
                     this.AddNotificationMessage(new NotificationModel()
@@ -326,7 +435,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                         Message = "Invalid club details",
                         Title = NotificationMessage.INFORMATION.ToString(),
                     });
-                    return RedirectToAction("ClubList", "ClubManagement");
+                    return redirectresult;
                 }
                 if (!string.IsNullOrEmpty(requestCommon.HostId)) requestCommon.HostId = !string.IsNullOrEmpty(Model.HostId) ? Model.HostId.DecryptParameter() : null;
                 if (!string.IsNullOrEmpty(requestCommon.Rank))
@@ -344,8 +453,8 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 //if (!string.IsNullOrEmpty(requestCommon.Height))
                 //    requestCommon.Height = Model.Height?.DecryptParameter();
                 if (!string.IsNullOrEmpty(requestCommon.Position))
-                    requestCommon.Position = Model.Position?.DecryptParameter();
-                requestCommon.DOB = Model.DOB.Contains("--")|| Model.DOB.Contains("-") ? "" : Model.DOB;
+                requestCommon.Position = Model.Position?.DecryptParameter();               
+                requestCommon.DOB =  Model.DOB;               
                 requestCommon.ActionUser = ApplicationUtilities.GetSessionValue("Username").ToString();
                 requestCommon.ActionIP = ApplicationUtilities.GetIP();
                 requestCommon.ImagePath = Model.HostLogo;
@@ -364,7 +473,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                         Message = dbResponse.Message ?? "Success",
                         Title = NotificationMessage.SUCCESS.ToString()
                     });
-                    return RedirectToAction("HostList", "HostManagement", new { AgentId = Model.AgentId });
+                    return RedirectToAction("HostList", "HostManagement", new { AgentId = Model.AgentId, clubCategory = Model.clubCategory });
                 }
                 else
                 {
@@ -376,7 +485,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                     });
                     TempData["RenderId"] = "ManageHost";
                     TempData["ManageHostModel"] = Model;
-                    return RedirectToAction("HostList", "HostManagement", new { AgentId = Model.AgentId });
+                    return RedirectToAction("HostList", "HostManagement", new { AgentId = Model.AgentId, clubCategory = Model.clubCategory });
                 }
             }
             var errorMessages = ModelState.Where(x => x.Value.Errors.Count > 0)
@@ -392,7 +501,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             var errors = ModelState.Where(x => x.Value.Errors.Count > 0).Select(x => new { x.Key }).ToList();
             TempData["RenderId"] = "ManageHost";
             TempData["ManageHostModel"] = Model;
-            return RedirectToAction("HostList", "HostManagement", new { AgentId = Model.AgentId });
+            return RedirectToAction("HostList", "HostManagement", new { AgentId = Model.AgentId, clubCategory = Model.clubCategory });
         }
 
         [HttpGet]
