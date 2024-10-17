@@ -486,8 +486,6 @@ namespace CRS.ADMIN.REPOSITORY.ClubManagement
             var dbResponse = _DAO.ExecuteDataTable(SQL);
             if (dbResponse != null)
             {
-
-
                 foreach (DataRow item in dbResponse.Rows)
                 {
                     response.Add(new planIdentityDataCommon()
