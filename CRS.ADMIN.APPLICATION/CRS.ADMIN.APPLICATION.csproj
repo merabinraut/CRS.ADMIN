@@ -272,9 +272,12 @@
     </Compile>
     <Compile Include="Helper\DDLHelper.cs" />
     <Compile Include="Helper\ImageHelper.cs" />
+    <Compile Include="Helper\NotificationHelper.cs" />
     <Compile Include="Library\ApplicationUtilities.cs" />
+    <Compile Include="Library\HttpClientHelper.cs" />
     <Compile Include="Library\ManageLanguage.cs" />
     <Compile Include="Library\ProjectGrid.cs" />
+    <Compile Include="Library\SignalRStringCipher.cs" />
     <Compile Include="Library\StaticData.cs" />
     <Compile Include="Library\StringCipher.cs" />
     <Compile Include="Models\AdminDashboardModel.cs" />
@@ -300,6 +303,7 @@
     <Compile Include="Models\HostManagement\HostManagementModel.cs" />
     <Compile Include="Models\Inquiries\Inquiriescs.cs" />
     <Compile Include="Models\LocationManagement\LocationModel.cs" />
+    <Compile Include="Models\NotificationHelper\NotificationHelperModel.cs" />
     <Compile Include="Models\NotificationManagement\NotificationManagementModel.cs" />
     <Compile Include="Models\PaginationManagement\PaginationModel.cs" />
     <Compile Include="Models\PaymentManagement\PaymentManagementModel.cs" />
@@ -317,6 +321,7 @@
     <Compile Include="Models\RoleManagement\RoleManagementModel.cs" />
     <Compile Include="Models\ProfileManagement\UserProfileModel.cs" />
     <Compile Include="Models\ScheduleManagement\ScheduleManagementModel.cs" />
+    <Compile Include="Models\SignalRConfigruationModel.cs" />
     <Compile Include="Models\SMSLog\SMSLogModel.cs" />
     <Compile Include="Models\StaffManagement\StaffManagementModel.cs" />
     <Compile Include="Models\StaticDataManagement\StaticDataManagementModel.cs" />
