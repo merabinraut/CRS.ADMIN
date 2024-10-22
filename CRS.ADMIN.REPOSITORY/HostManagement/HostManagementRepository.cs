@@ -107,7 +107,7 @@ namespace CRS.ADMIN.REPOSITORY.HostManagement
             SQL += ",@HostNameJapanese=N" + _DAO.FilterString(Request.HostNameJapanese);
             SQL += ",@Position=N" + _DAO.FilterString(Request.Position);
             SQL += !string.IsNullOrEmpty(Request.Rank?.ToString()) ? ",@Rank=" + Request.Rank : "";
-            SQL += ",@DOB=" + _DAO.FilterString(Request.DOB);
+            SQL += ",@DOB=" + "'" + Request.DOB + "'";
             SQL += ",@ConstellationGroup=" + _DAO.FilterString(Request.ConstellationGroup);
             SQL += ",@Height=" + _DAO.FilterString(Request.Height);
             SQL += ",@BloodType=" + _DAO.FilterString(Request.BloodType);

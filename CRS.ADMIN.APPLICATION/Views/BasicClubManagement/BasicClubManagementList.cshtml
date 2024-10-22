@@ -184,7 +184,7 @@
                                         <td class="p-[12px]">
                                             <div class="flex gap-[7px]">
                                                 <i class="las la-edit text-[20px] cursor-pointer text-[#A6A6A6]" onclick="ManageBasicClubDetailsFunction('@item.AgentId');"></i>
-                                                @*@if (!string.IsNullOrEmpty(@item.Status) && @item.Status.ToUpper() == "A")
+                                                @if (!string.IsNullOrEmpty(@item.Status) && @item.Status.ToUpper() == "A")
                                                     {
                                                         <div onclick="openBlockEventModal('@item.AgentId')" data-modal-target="block-basicclub-confirmation" data-modal-toggle="block-basicclub-confirmation">
                                                             <i class="fa-solid fa-lock text-primary-100 cursor-pointer"></i>
@@ -195,11 +195,11 @@
                                                         <div onclick="openUnBlockEventModal('@item.AgentId')" data-modal-target="unblock-basicclub-confirmation" data-modal-toggle="unblock-basicclub-confirmation">
                                                             <i class="fa-solid fa-unlock text-primary-100 cursor-pointer"></i>
                                                         </div>
-                                                    }*@
+                                                    }
                                                 <i class=" las la-trash-alt text-[20px] cursor-pointer text-[#CB3F3F]" onclick="openDeleteClubModal('@item.AgentId');" data-modal-target="delete-basicclub-confirmation" data-modal-toggle="delete-basicclub-confirmation"></i>
                                                 @*<i class="las la-edit text-[20px] cursor-pointer text-[#A6A6A6]" onclick="ManageConversionBasicClub('@item.AgentId');"></i>*@
                                                 <img src="/Content/assets/images/conversion.svg" alt="notice" class="cursor-pointer h-[20px] aspect-square" onclick="ManageConversionBasicClub('@item.AgentId');" data-drawer-target="conversion-to preminum-club" data-drawer-show="conversion-to preminum-club" data-drawer-placement="right" data-drawer-backdrop="false" aria-controls="drawer-disabled-backdrop">
-
+                                                <i class="las la-user text-[20px] cursor-pointer text-[#A6A6A6]" onclick="HostRedirectFunction('@item.AgentId');"></i>
                                             </div>
                                         </td>
                                     </tr>
@@ -494,6 +494,10 @@
              }
          })
         }
+
+        function HostRedirectFunction(i) {
+            window.location.href = '/HostManagement/HostList?AgentId=' + i +'&clubCategory=BASIC';
+        }
         var commaSeparatedString = "";
         $(document).ready(function () {
             $('#submit-button-basic-id').click(function () {
@@ -706,8 +710,8 @@
 
     //---------------------------------------START required validation according to next button-------------------------------------////
         nextButton.addEventListener('click', () => {
-            var id = $('.content-section[style*="display: block"]').attr('id');
-
+            var id = $('.PremiumClub[style*="display: block"]').attr('id');
+            debugger;
             if (id.toLowerCase() == "content1") {
                 var isimagevalid = true;
                 var logo = $("#file_name_logo").text().trim().toLowerCase(); //$("input[name='Logo_Certificate']").val();
@@ -899,7 +903,12 @@
             }
         });
         $(document).ready(function () {
-
+            $('#ManagePremiumClubForm').on('keypress', function (e) {
+                if (e.key === 'Enter') { // Use 'Enter' for better readability
+                    e.preventDefault(); // Prevent form submission
+                    return false; // Prevent any default action
+                }
+            });
             var validator = $('#ManagePremiumClubForm').validate({
                 errorClass: 'invalid',
                 errorElement: 'div',

@@ -28,6 +28,7 @@
                     @Html.HiddenFor(model => model.AgentId)
                     @Html.HiddenFor(model => model.HostLogo)
                     @Html.HiddenFor(model => model.HostIconImage)
+                    @Html.HiddenFor(model => model.clubCategory)
                     if (!string.IsNullOrEmpty(Model.HostId))
                     {
                         @Html.HiddenFor(model => model.HostId)
@@ -119,16 +120,16 @@
                                         @CRS.ADMIN.APPLICATION.Resources.Resource.Position
                                     </label>
                                     @*@Html.TextBoxFor(model => model.Position, new
-                                        {
-                                           @class = "w-full",
-                                           @placeholder = CRS.ADMIN.APPLICATION.Resources.Resource.Position,
-                                           //@onkeypress = "return isAlphabetWithSpace(event)",
-                                           autocomplete = "off",
-                                           @maxLength = "100"
-                                        })
-                                        <span class="error">
-                                            @Html.ValidationMessageFor(m => m.Position)
-                                        </span>*@
+                            {
+                               @class = "w-full",
+                               @placeholder = CRS.ADMIN.APPLICATION.Resources.Resource.Position,
+                               //@onkeypress = "return isAlphabetWithSpace(event)",
+                               autocomplete = "off",
+                               @maxLength = "100"
+                            })
+                            <span class="error">
+                                @Html.ValidationMessageFor(m => m.Position)
+                            </span>*@
 
                                     <select id="large" class="select-common block w-full " name="Position">
                                         @foreach (var item in ViewBag.positionddl as IEnumerable<SelectListItem>)
@@ -275,8 +276,8 @@
                                            @maxlength = "2"
                                            })
                                         @*<input id="birthYear" class="input-common block w-[100px]" type="text" name="BirthYearKey" value="@ViewBag.BirthYear" maxlength="4" placeholder="YYYY">
-                                            <input id="birthMonth" class="input-common block w-[100px]" type="text" name="BirthMonthKey" value="@ViewBag.BirthMonth" maxlength="2" placeholder="MM">
-                                            <input id="birthDay" class="input-common block w-[100px]" type="text" name="BirthDayKey" value="@ViewBag.BirthDate" maxlength="2" placeholder="DD">*@
+                                <input id="birthMonth" class="input-common block w-[100px]" type="text" name="BirthMonthKey" value="@ViewBag.BirthMonth" maxlength="2" placeholder="MM">
+                                <input id="birthDay" class="input-common block w-[100px]" type="text" name="BirthDayKey" value="@ViewBag.BirthDate" maxlength="2" placeholder="DD">*@
 
                                     </div>
 
@@ -443,23 +444,23 @@
                                     })
 
                                     @*<select id="large" class="select-common block w-full " name="Height">
-                                            @foreach (var item in ViewBag.heightlistddl as IEnumerable<SelectListItem>)
-                                            {
-                                                var selectedId = ViewBag.heightlistkey as string;
-                                                if (item.Value == selectedId)
-                                                {
-                                                    <option value="@item.Value" selected>
-                                                        @item.Text
-                                                    </option>
-                                                }
-                                                else
-                                                {
-                                                    <option value="@item.Value">
-                                                        @item.Text
-                                                    </option>
-                                                }
-                                            }
-                                        </select>*@
+                                @foreach (var item in ViewBag.heightlistddl as IEnumerable<SelectListItem>)
+                                {
+                                    var selectedId = ViewBag.heightlistkey as string;
+                                    if (item.Value == selectedId)
+                                    {
+                                        <option value="@item.Value" selected>
+                                            @item.Text
+                                        </option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@item.Value">
+                                            @item.Text
+                                        </option>
+                                    }
+                                }
+                            </select>*@
                                     <span class="error">
                                         @Html.ValidationMessageFor(m => m.Height)
                                     </span>
