@@ -1,0 +1,222 @@
+@model CRS.ADMIN.APPLICATION.Models.Withdraw.ManageWithdrawSetupModel
+   
+<div id="add-new-withdraw-setup"
+     class="drawer-close-disable  flex justify-end fixed top-0 right-0 z-40 h-screen overflow-y-auto transition-transform translate-x-full"
+     tabindex="-1" aria-labelledby="add-new-withdraw-setup" aria-modal="true" role="dialog">
+    <div class="bg-white w-[616px] drawer-container relative">
+        <div class="drawer-form-container sticky top-0 z-[5] ">
+            <div class="drawer-form flex justify-between bg-secondary-color-pink py-[16px] px-[24px] h-[56px]">
+                <div>
+                    @CRS.ADMIN.APPLICATION.Resources.Resource.Manage_Withdrawal
+                </div>
+                <button type="button" data-drawer-hide="add-new-withdraw-setup" aria-controls="add-new-withdraw-setup"
+                        class="text-[20px]">
+                    <i class="las la-window-close text-white" onclick="CancelFunction()"></i>
+                </button>
+            </div>
+        </div>
+        <div class="p-[24px]">
+            @using (Html.BeginForm("ManageWithdrawSetup", "WithdrawSetup", FormMethod.Post, new { @id = "ManageEventForm", enctype = "multipart/form-data" }))
+            {
+                @Html.AntiForgeryToken()               
+                @Html.HiddenFor(model => model.InsertType)
+                <div class="grid gap-4">
+                    <div class="grid grid-cols-2 gap-x-4 gap-y-5">
+                        <div class="input-field-common">
+                            <label for="instagram" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Min_Limit_Amount
+                            </label>
+                            @Html.TextBoxFor(model => model.minAmount, new
+                       {
+                           @class = "w-full",
+                           @placeholder = CRS.ADMIN.APPLICATION.Resources.Resource.Designation_Fee,
+                           //@onkeypress = "return isNumber(event)",
+                           autocomplete = "off",
+                           @maxLength = "30"
+                       })
+                            <span class="error">
+                                @Html.ValidationMessageFor(m => m.minAmount)
+                            </span>
+                        </div>
+                        <div class="input-field-common">
+                            <label for="instagram" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Max_Limit_Amount
+                            </label>
+                            @Html.TextBoxFor(model => model.maxAmount, new
+                       {
+                           @class = "w-full",
+                           @placeholder = CRS.ADMIN.APPLICATION.Resources.Resource.Designation_Fee,
+                           //@onkeypress = "return isNumber(event)",
+                           autocomplete = "off",
+                           @maxLength = "30"
+                       })
+                            <span class="error">
+                                @Html.ValidationMessageFor(m => m.maxAmount)
+                            </span>
+                        </div>
+
+                    </div>
+                    <div class="grid grid-cols-2 gap-x-4 gap-y-5">
+                        <div class="input-field-common">
+                            <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Requesting_Day__From_
+                            </label>
+                            <select id="large" class=" default_select select-common block w-full "
+                                    style="width: 100%;" name="fromDate">
+                                @foreach (var item in ViewBag.FromDate as IEnumerable<SelectListItem>)
+                                {
+                                    var selectedId = ViewBag.fromDateKey as string;
+                                    if (item.Value == selectedId)
+                                    {
+                                        <option value="@item.Value" selected>
+                                            @item.Text
+                                        </option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@item.Value">
+                                            @item.Text
+                                        </option>
+                                    }
+                                }
+                            </select>
+                            <span class="error">
+                                @Html.ValidationMessageFor(m => m.fromDate)
+                            </span>
+                        </div>
+                        <div class="input-field-common">
+                            <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Requesting_Day__To_
+                            </label>
+
+                            @if (!string.IsNullOrEmpty(ViewBag.toDateKey))
+                            {
+                                <select id="large" class="default_select select-common block w-full "
+                                        style="width: 100%;" name="toDate">
+                                    }
+
+                                    @foreach (var item in ViewBag.ToDate as IEnumerable<SelectListItem>)
+                                    {
+                                        var selectedId = ViewBag.toDateKey as string;
+                                        if (item.Value == selectedId)
+                                        {
+                                            <option value="@item.Value" selected>
+                                                @item.Text
+                                            </option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@item.Value">
+                                                @item.Text
+                                            </option>
+                                        }
+                                    }
+                                </select>
+                            }
+                            else
+                            {
+                                <select id="large" class="default_select select-common block w-full "
+                                        style="width: 100%;" name="toDate" disabled>
+                                    }
+
+                                    @foreach (var item in ViewBag.ToDate as IEnumerable<SelectListItem>)
+                                    {
+                                        var selectedId = ViewBag.toDateKey as string;
+                                        if (item.Value == selectedId)
+                                        {
+                                            <option value="@item.Value" selected>
+                                                @item.Text
+                                            </option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@item.Value">
+                                                @item.Text
+                                            </option>
+                                        }
+                                    }
+                                </select>
+                            }
+
+                            <span class="error">
+                                @Html.ValidationMessageFor(m => m.toDate)
+                            </span>
+
+                        </div>
+
+                    </div>
+                    <div class="input-field-common">
+                        <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Withdraw_able_Date
+                        </label>
+                        @if (!string.IsNullOrEmpty(ViewBag.WithdrawDateKey))
+                        {
+                            <select id="large" class=" default_select select-common block w-full "
+                                    style="width: 100%;" name="WithdrawDate">
+                                @foreach (var item in ViewBag.WithdrawDate as IEnumerable<SelectListItem>)
+                                {
+                                    var selectedId = ViewBag.WithdrawDateKey as string;
+                                    if (item.Value == selectedId)
+                                    {
+                                        <option value="@item.Value" selected>
+                                            @item.Text
+                                        </option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@item.Value">
+                                            @item.Text
+                                        </option>
+                                    }
+                                }
+                            </select>
+                        }
+                        else
+                        {
+                            <select id="large" class=" default_select select-common block w-full "
+                                    style="width: 100%;" name="WithdrawDate" disabled>
+                                @foreach (var item in ViewBag.WithdrawDate as IEnumerable<SelectListItem>)
+                                {
+                                    var selectedId = ViewBag.WithdrawDateKey as string;
+                                    if (item.Value == selectedId)
+                                    {
+                                        <option value="@item.Value" selected>
+                                            @item.Text
+                                        </option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@item.Value">
+                                            @item.Text
+                                        </option>
+                                    }
+                                }
+                            </select>
+
+                        }
+
+                        <span class="error">
+                            @Html.ValidationMessageFor(m => m.withdrawDate)
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- for submit button -->
+                <div class="py-4 flex justify-end">
+                    <div class="flex gap-6">
+                        <button class="btn btn-secondary rounded-[4px]" type="button" data-drawer-hide="add-new-withdraw-setup"
+                                aria-controls="add-new-withdraw-setup" onclick="CancelFunction();">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Cancel
+                        </button>
+                        <button class="btn btn-primary-default rounded-[4px]" type="submit"> @CRS.ADMIN.APPLICATION.Resources.Resource.Submit</button>
+                    </div>
+
+                </div>
+            }
+        </div>
+    </div>
+</div>
+

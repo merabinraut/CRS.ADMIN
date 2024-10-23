@@ -1401,6 +1401,10 @@
     <value>Manage Notification</value>
     <comment>Notification</comment>
   </data>
+  <data name="Manage payment withdrawal setting" xml:space="preserve">
+    <value>Manage payment withdrawal setting.</value>
+    <comment>Withdraw Setup</comment>
+  </data>
   <data name="Manage Points" xml:space="preserve">
     <value>Manage Points</value>
     <comment>Points Management</comment>
@@ -1436,6 +1440,10 @@
   <data name="Manage user roles and their privileges" xml:space="preserve">
     <value>Manage user roles and their privileges</value>
     <comment>Roles &amp; Privileges</comment>
+  </data>
+  <data name="Manage Withdrawal" xml:space="preserve">
+    <value>Manage Withdrawal</value>
+    <comment>Withdraw Setup</comment>
   </data>
   <data name="Manage your club detail information" xml:space="preserve">
     <value>Manage your club detail informations.</value>
@@ -1484,6 +1492,10 @@
   <data name="March" xml:space="preserve">
     <value>Mar</value>
     <comment>Dashboard</comment>
+  </data>
+  <data name="Max Limit Amount" xml:space="preserve">
+    <value>Max Limit Amount (¥)</value>
+    <comment>Withdraw Setup</comment>
   </data>
   <data name="Max Value" xml:space="preserve">
     <value>Max Value</value>
@@ -1537,6 +1549,10 @@
   <data name="Message" xml:space="preserve">
     <value>Message</value>
     <comment>SMS</comment>
+  </data>
+  <data name="Min Limit Amount" xml:space="preserve">
+    <value>Min Limit Amount (¥)</value>
+    <comment>Withdraw Setup</comment>
   </data>
   <data name="Min Value" xml:space="preserve">
     <value>Min Value</value>
@@ -2035,6 +2051,22 @@
   </data>
   <data name="RequestId" xml:space="preserve">
     <value>Request Id</value>
+  </data>
+  <data name="Requesting Date (From)" xml:space="preserve">
+    <value>Requesting Date (From)</value>
+    <comment>Withdraw Setup</comment>
+  </data>
+  <data name="Requesting Date (To)" xml:space="preserve">
+    <value>Requesting Date (To)</value>
+    <comment>Withdraw Setup</comment>
+  </data>
+  <data name="Requesting Day (From)" xml:space="preserve">
+    <value>Requesting Day (From)</value>
+    <comment>Withdraw Setup</comment>
+  </data>
+  <data name="Requesting Day (To)" xml:space="preserve">
+    <value>Requesting Day (To)</value>
+    <comment>Withdraw Setup</comment>
   </data>
   <data name="Requests" xml:space="preserve">
     <value>Requests</value>
@@ -2618,6 +2650,14 @@
   <data name="Welcome back" xml:space="preserve">
     <value>Welcome back</value>
     <comment>Dashboard</comment>
+  </data>
+  <data name="Withdraw Setup" xml:space="preserve">
+    <value>Withdraw Setup</value>
+    <comment>Withdraw Setup</comment>
+  </data>
+  <data name="Withdraw-able Date" xml:space="preserve">
+    <value>Withdraw-able Date</value>
+    <comment>Withdraw Setup</comment>
   </data>
   <data name="Working Hours (From)" xml:space="preserve">
     <value>Working Hours (From)</value>

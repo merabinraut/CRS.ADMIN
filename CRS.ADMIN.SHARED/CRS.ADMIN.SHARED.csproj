@@ -146,6 +146,7 @@
     <Compile Include="UserCommon.cs" />
     <Compile Include="UserManagement\PasswordCommon.cs" />
     <Compile Include="UserManagement\UserProfileCommon.cs" />
+    <Compile Include="WithdrawSetup\WithdrawSetupCommon.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

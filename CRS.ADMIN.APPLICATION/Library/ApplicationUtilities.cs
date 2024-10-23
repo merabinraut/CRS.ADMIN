@@ -1160,6 +1160,30 @@ namespace CRS.ADMIN.APPLICATION.Library
                     dbResponse = _CommonBuss.GetDropDown("051", search1, search2);
                     dbResponse.ForEach(item => { response.Add(item.Key.EncryptParameter(), item.Value); });
                     return response;
+                case "FROMDATE":
+                    dbResponse = _CommonBuss.GetDropDown("052", search1, search2);
+                    dbResponse.ForEach(item =>
+                    {
+                        response.Add
+                        (item.Key.EncryptParameter(), item.Value);
+                    });
+                    return response;
+                case "TODATE":
+                    dbResponse = _CommonBuss.GetDropDown("053", search1, search2);
+                    dbResponse.ForEach(item =>
+                    {
+                        response.Add
+                        (item.Key.EncryptParameter(), item.Value);
+                    });
+                    return response;
+                 case "WITHDRAWDAY":
+                    dbResponse = _CommonBuss.GetDropDown("054", search1, search2);
+                    dbResponse.ForEach(item =>
+                    {
+                        response.Add
+                        (item.Key.EncryptParameter(), item.Value);
+                    });
+                    return response;
                 default: return response;
             }
         }

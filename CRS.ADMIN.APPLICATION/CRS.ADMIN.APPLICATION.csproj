@@ -265,6 +265,7 @@
     <Compile Include="Controllers\SMSLogController.cs" />
     <Compile Include="Controllers\StaffManagementController.cs" />
     <Compile Include="Controllers\StaticDataManagementController.cs" />
+    <Compile Include="Controllers\WithdrawSetupController.cs" />
     <Compile Include="CustomHelpers\CustomHtmlHelpers.cs" />
     <Compile Include="Filters\ActivityLogFilter.cs" />
     <Compile Include="Filters\SessionExpiryFilterAttribute.cs" />
@@ -323,6 +324,7 @@
     <Compile Include="Models\StaffManagement\StaffManagementModel.cs" />
     <Compile Include="Models\StaticDataManagement\StaticDataManagementModel.cs" />
     <Compile Include="Models\TagManagement\TagManagementModel.cs" />
+    <Compile Include="Models\Withdraw\WithdrawSetupModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\Resource.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -2725,6 +2727,8 @@
     <Content Include="Views\Inquiries\index.cshtml" />
     <Content Include="Views\PointSetup\PointSetupUserTypeList.cshtml" />
     <Content Include="Views\PointSetup\PointsCategoryList.cshtml" />
+    <Content Include="Views\WithdrawSetup\Index.cshtml" />
+    <Content Include="Views\WithdrawSetup\_ManageWithdrawsetupPartial.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
