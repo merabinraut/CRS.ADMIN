@@ -99,6 +99,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AccountInformation\AccountInformationCommon.cs" />
     <Compile Include="AdminPointManagement\AdminPointManagementCommon.cs" />
     <Compile Include="AffiliateManagement\AffiliateManagementCommon.cs" />
     <Compile Include="BasicClubManagement\BasicClubManagementCommon.cs" />

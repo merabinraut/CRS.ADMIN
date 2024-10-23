@@ -76,6 +76,8 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AccountInformation\AccountInformationBusiness.cs" />
+    <Compile Include="AccountInformation\IAccountInformationBusiness.cs" />
     <Compile Include="AdminPointManagement\AdminPointManagementBusiness.cs" />
     <Compile Include="AdminPointManagement\IAdminPointManagementBusiness.cs" />
     <Compile Include="AffiliateManagement\AffiliateManagementBusiness.cs" />

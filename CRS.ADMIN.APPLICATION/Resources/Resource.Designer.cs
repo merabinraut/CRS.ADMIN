@@ -61,6 +61,51 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Account Holder Name.
+        /// </summary>
+        public static string Account_Holder_Name {
+            get {
+                return ResourceManager.GetString("Account Holder Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Account Information.
+        /// </summary>
+        public static string Account_Information {
+            get {
+                return ResourceManager.GetString("Account Information", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Account Number.
+        /// </summary>
+        public static string Account_Number {
+            get {
+                return ResourceManager.GetString("Account Number", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Account Symbol.
+        /// </summary>
+        public static string Account_Symbol {
+            get {
+                return ResourceManager.GetString("Account Symbol", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Account Type.
+        /// </summary>
+        public static string Account_Type {
+            get {
+                return ResourceManager.GetString("Account Type", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Action.
         /// </summary>
         public static string Action {
@@ -682,6 +727,24 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Bank Name.
+        /// </summary>
+        public static string Bank_Name {
+            get {
+                return ResourceManager.GetString("Bank Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bank Type.
+        /// </summary>
+        public static string Bank_Type {
+            get {
+                return ResourceManager.GetString("Bank Type", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Banner.
         /// </summary>
         public static string Banner {
@@ -777,6 +840,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         public static string Booked {
             get {
                 return ResourceManager.GetString("Booked", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Branch Name.
+        /// </summary>
+        public static string Branch_Name {
+            get {
+                return ResourceManager.GetString("Branch Name", resourceCulture);
             }
         }
         

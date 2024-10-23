@@ -117,6 +117,26 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Account Holder Name" xml:space="preserve">
+    <value>口座名義人名</value>
+    <comment>Account Information</comment>
+  </data>
+  <data name="Account Information" xml:space="preserve">
+    <value>アカウント情報</value>
+    <comment>Account Information</comment>
+  </data>
+  <data name="Account Number" xml:space="preserve">
+    <value>口座番号</value>
+    <comment>Account Information</comment>
+  </data>
+  <data name="Account Symbol" xml:space="preserve">
+    <value>口座記号</value>
+    <comment>Account Information</comment>
+  </data>
+  <data name="Account Type" xml:space="preserve">
+    <value>アカウントの種類</value>
+    <comment>Account Information</comment>
+  </data>
   <data name="Action" xml:space="preserve">
     <value>アクション</value>
   </data>
@@ -389,6 +409,14 @@
     <value>戻る</value>
     <comment>Dashboard</comment>
   </data>
+  <data name="Bank Name" xml:space="preserve">
+    <value>銀行名</value>
+    <comment>Account Information</comment>
+  </data>
+  <data name="Bank Type" xml:space="preserve">
+    <value>銀行の種類</value>
+    <comment>Account Information</comment>
+  </data>
   <data name="Banner" xml:space="preserve">
     <value>バナー1</value>
     <comment>HostGallaryManagement</comment>
@@ -431,6 +459,10 @@
   <data name="Booked" xml:space="preserve">
     <value>予約済み</value>
     <comment>Dashboard</comment>
+  </data>
+  <data name="Branch Name" xml:space="preserve">
+    <value>支店名</value>
+    <comment>Account Information</comment>
   </data>
   <data name="Building &amp; Room No" xml:space="preserve">
     <value>建物と部屋番号</value>

@@ -230,6 +230,7 @@
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="App_Start\UnityMvcActivator.cs" />
     <Compile Include="Bootstrapper.cs" />
+    <Compile Include="Controllers\AccountInformationController.cs" />
     <Compile Include="Controllers\AdminPointManagementController.cs" />
     <Compile Include="Controllers\AffiliateManagementController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
@@ -277,6 +278,7 @@
     <Compile Include="Library\ProjectGrid.cs" />
     <Compile Include="Library\StaticData.cs" />
     <Compile Include="Library\StringCipher.cs" />
+    <Compile Include="Models\AccountInformation\AccountInformationModel.cs" />
     <Compile Include="Models\AdminDashboardModel.cs" />
     <Compile Include="Models\AdminPointManagement\AdminPointManagementModel.cs" />
     <Compile Include="Models\AffiliateManagement\AffiliateManagementModel.cs" />
@@ -332,6 +334,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resource.Ja.resx</DependentUpon>
     </Compile>
+    <Content Include="Views\AccountInformation\GetAccountInformation.cshtml" />
     <None Include="Views\BasicClubManagement\_PremiumClubtPartialView.cshtml" />
     <Content Include="Content\assets\images\conversion.svg" />
     <Content Include="Content\assets_new\images\hoslog-balance.svg" />

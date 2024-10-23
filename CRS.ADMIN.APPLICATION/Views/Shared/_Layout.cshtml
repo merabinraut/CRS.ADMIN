@@ -401,6 +401,24 @@
             }
 
             <!-- -----  -->
+            <!-- -----  -->
+            @if (ApplicationUtilities.HasMenuRight("/AccountInformation/GetAccountInformation"))
+            {
+                if (!string.IsNullOrEmpty(CurrentURL) && CurrentURL.Trim().ToUpper() == "/ACCOUNTINFORMATION/GETACCOUNTINFORMATION") { MenuActiveClass = "menuActive"; }
+                else { MenuActiveClass = string.Empty; }
+                <a href="@Url.Action("GETACCOUNTINFORMATION", "ACCOUNTINFORMATION")">
+                    <div class="menuContainer @MenuActiveClass">
+                        <div class="menu-icon w-max">
+                            <img src="~/Content/assets_new/images/affiliate.svg" class="image" />
+                            <img src="~/Content/assets_new/images/affiliate-active.svg" class="active-image" />
+
+                        </div>
+                        <div class="label">@CRS.ADMIN.APPLICATION.Resources.Resource.Account_Information</div>
+                    </div>
+                </a>
+            }
+
+            <!-- -----  -->
 
             @if (ApplicationUtilities.HasMenuRight("/PointSetup/index"))  //@if (ApplicationUtilities.HasMenuRight("/PointSetup/PointSetupUserTypeList"))
             {

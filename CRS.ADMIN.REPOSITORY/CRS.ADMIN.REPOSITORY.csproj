@@ -98,6 +98,8 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AccountInformation\AccountInformationRepository.cs" />
+    <Compile Include="AccountInformation\IAccountInformationRepository.cs" />
     <Compile Include="AdminPointManagement\AdminPointManagementRepository.cs" />
     <Compile Include="AdminPointManagement\IAdminPointManagementRepository.cs" />
     <Compile Include="AffiliateManagement\AffiliateManagementRepository.cs" />
