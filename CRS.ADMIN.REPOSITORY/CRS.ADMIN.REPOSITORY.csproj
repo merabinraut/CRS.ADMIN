@@ -166,6 +166,8 @@
     <Compile Include="StaffManagement\StaffManagementRepository.cs" />
     <Compile Include="StaticDataManagement\IStaticDataManagementRepository.cs" />
     <Compile Include="StaticDataManagement\StaticDataManagementRepository.cs" />
+    <Compile Include="WithdrawSetup\IWithdrawSetupRepository.cs" />
+    <Compile Include="WithdrawSetup\WithdrawSetupRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

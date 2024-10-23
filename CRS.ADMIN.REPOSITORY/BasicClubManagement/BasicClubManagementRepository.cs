@@ -91,8 +91,7 @@ namespace CRS.ADMIN.REPOSITORY.BasicClubManagement
             SQL += ",@city=N" + _DAO.FilterString(Request.City);
             SQL += ",@closingDate=" + _DAO.FilterString(Request.ClosingDate);
             SQL += ",@street=N" + _DAO.FilterString(Request.Street);
-            SQL += ",@roomNumber=N" + _DAO.FilterString(Request.BuildingRoomNo);
-           
+            SQL += ",@roomNumber=" + (!string.IsNullOrEmpty(Request.BuildingRoomNo) ? "N" + _DAO.FilterString(Request.BuildingRoomNo) : _DAO.FilterString(Request.BuildingRoomNo));         
             Response = _DAO.ParseCommonDbResponse(SQL);
             return Response;
         }

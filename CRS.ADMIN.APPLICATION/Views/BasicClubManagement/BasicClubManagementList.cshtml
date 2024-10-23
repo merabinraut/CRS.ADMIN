@@ -501,7 +501,6 @@
         var commaSeparatedString = "";
         $(document).ready(function () {
             $('#submit-button-basic-id').click(function () {
-                debugger;
                 commaSeparatedString = [];
                 var items = [];
                 $('#large[name="holiday"] option:selected').each(function () {
@@ -711,7 +710,6 @@
     //---------------------------------------START required validation according to next button-------------------------------------////
         nextButton.addEventListener('click', () => {
             var id = $('.PremiumClub[style*="display: block"]').attr('id');
-            debugger;
             if (id.toLowerCase() == "content1") {
                 var isimagevalid = true;
                 var logo = $("#file_name_logo").text().trim().toLowerCase(); //$("input[name='Logo_Certificate']").val();
@@ -801,7 +799,6 @@
 
             else if (id.toLowerCase() == "content3")
             {
-
                 var locationDDL = $('div #content3').find('#large[name="LocationDDL"]').val();
                 if (locationDDL == "")
                 {
@@ -845,14 +842,12 @@
 
 
         $('#file_input_logo').on('change', function () {
-            debugger;
             var logo = $("#file_name_logo").text().trim().toLowerCase();
             if (logo != "") {
                 $('span.field-validation-valid[data-valmsg-for="Logo"]').text('');
             }
         });
         $('#file_input_cover').on('change', function () {
-            debugger;
             var CoverPhoto = $("#file_name_cover").text().trim().toLowerCase();
             if (CoverPhoto != "") {
                 $('span.field-validation-valid[data-valmsg-for="CoverPhoto"]').text('');
@@ -972,9 +967,9 @@
                     Street: {
                         required: true
                     },
-                    BuildingRoomNo: {
-                        required: true
-                    },
+                    //BuildingRoomNo: {
+                    //    required: true
+                    //},
                     WorkingHrFrom: {
                         required: true
                     },
@@ -1040,9 +1035,9 @@
                    Street: {
                         required: '@CRS.ADMIN.APPLICATION.Resources.Resource.Required'
                    },
-                   BuildingRoomNo: {
+                   @*BuildingRoomNo: {
                         required: '@CRS.ADMIN.APPLICATION.Resources.Resource.Required'
-                    },
+                    },*@
                     WorkingHrFrom: {
                        required: '@CRS.ADMIN.APPLICATION.Resources.Resource.Required'
                     },

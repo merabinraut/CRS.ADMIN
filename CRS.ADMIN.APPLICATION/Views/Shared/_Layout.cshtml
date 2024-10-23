@@ -481,6 +481,22 @@
                     </div>
                 </a>
             }
+            @if (ApplicationUtilities.HasMenuRight("/WithdrawSetup/Index"))
+            {
+                if (!string.IsNullOrEmpty(CurrentURL) && CurrentURL.Trim().ToUpper() == "/WITHDRAWSETUP/INDEX") { MenuActiveClass = "menuActive"; }
+                else { MenuActiveClass = string.Empty; }
+                <a href="@Url.Action("Index", "WithdrawSetup")">
+                    <div class="menuContainer @MenuActiveClass">
+                        <div class="menu-icon w-max">
+                            <img src="~/Content/assets_new/images/payment.svg" class="image" />
+                            <img src="~/Content/assets_new/images/payment-active.svg" class="active-image" />
+                        </div>
+                        <div class="label">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Withdraw_Setup
+                        </div>
+                    </div>
+                </a>
+            }
             <!-- -----  -->
             @if (ApplicationUtilities.HasMenuRight(""))
             {

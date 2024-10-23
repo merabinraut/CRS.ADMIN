@@ -31,6 +31,7 @@ using CRS.ADMIN.BUSINESS.ScheduleManagement;
 using CRS.ADMIN.BUSINESS.SMSLog;
 using CRS.ADMIN.BUSINESS.StaffManagement;
 using CRS.ADMIN.BUSINESS.StaticDataManagement;
+using CRS.ADMIN.BUSINESS.WithdrawSetup;
 using System.Web.Mvc;
 using Unity;
 using Unity.AspNet.Mvc;
@@ -81,6 +82,7 @@ namespace CRS.ADMIN.APPLICATION
             container.RegisterType<IInqueriesBusiness, InqueriesBusiness>();
             container.RegisterType<IAdminPointManagementBusiness, AdminPointManagementBusiness>();
             container.RegisterType<IBasicClubManagementBusiness, BasicClubManagementBusiness>();
+            container.RegisterType<IWithdrawSetupBusiness, WithdrawSetupBusiness>();
             return container;
         }
     }
