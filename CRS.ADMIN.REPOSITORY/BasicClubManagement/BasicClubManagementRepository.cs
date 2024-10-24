@@ -307,7 +307,7 @@ namespace CRS.ADMIN.REPOSITORY.BasicClubManagement
             SQL += ",@prefecture=" + _DAO.FilterString(Request.Prefecture);
             SQL += ",@city=N" + _DAO.FilterString(Request.City);
             SQL += ",@inputStreet=N" + _DAO.FilterString(Request.Street);
-            SQL += ",@buildingRoomNo=N" + _DAO.FilterString(Request.BuildingRoomNo);
+            SQL += ",@buildingRoomNo=" + (!string.IsNullOrEmpty(Request.BuildingRoomNo) ? "N" + _DAO.FilterString(Request.BuildingRoomNo) : _DAO.FilterString(Request.BuildingRoomNo));            
             SQL += ",@regularFee=" + _DAO.FilterString(Request.RegularFee);
             SQL += ",@DesignationFee=" + _DAO.FilterString(Request.DesignationFee);
             SQL += ",@accompanyingFee=" + _DAO.FilterString(Request.CompanionFee);

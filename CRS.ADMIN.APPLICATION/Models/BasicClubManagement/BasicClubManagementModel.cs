@@ -21,7 +21,7 @@ namespace CRS.ADMIN.APPLICATION.Models.BasicClubManagement
         public string Status { get; set; }
         public string ClubNameEng { get; set; }
         public string ClubNameJap { get; set; }
-        public string LandLineNumber { get; set; }
+        public string MobileNumber { get; set; }
         public string Location { get; set; }
         public string ClubLogo { get; set; }
         public string CreatedDate { get; set; }
