@@ -209,6 +209,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
 
                 if (!string.IsNullOrEmpty(model.DOB))
                 {
+                 if( model.DOB != "--") { 
                     var Dateparts1 = model.DOB.Split('-');
                     if (model.DOB.Count(c => c == '-') == 2)
                     {
@@ -229,11 +230,11 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                                 model.BirthYear = dob.Year.ToString();
                                 model.BirthMonth = dob.Month.ToString("00");
                                 model.BirthDate = dob.Day.ToString("00");
-                               
+
                             }
                         }
                     }
-                     if (model.DOB.StartsWith("--"))
+                    if (model.DOB.StartsWith("--"))
                     {
                         // Case: --11 => day
                         model.BirthDate = model.DOB.Substring(2, 2); // Extract day
@@ -251,16 +252,16 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                         model.BirthMonth = model.DOB.Substring(1, 2); // Extract month
 
                     }
-                    else if ( model.DOB.StartsWith("-")  && model.DOB.Count(c => c == '-') == 2 )
+                    else if (model.DOB.StartsWith("-") && model.DOB.Count(c => c == '-') == 2)
                     {
                         // Case: -12-10 => mm-dd
                         model.BirthMonth = model.DOB.Substring(1, 2); // Extract month
                         model.BirthDate = model.DOB.Substring(4, 2);  // Extract day
-                        
+
                     }
-                    
-                    
-                     
+
+
+
                     else if (model.DOB.EndsWith("-") && model.DOB.Count(c => c == '-') == 2)
                     {
                         // Case: 1995-09- => year and month
@@ -268,8 +269,8 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                         model.BirthYear = parts[0]; // Extract year
                         model.BirthMonth = parts[1]; // Extract month                       
                     }
-                    
 
+                }
                 }
 
                 model.ConstellationGroup = model.ConstellationGroup?.EncryptParameter();
