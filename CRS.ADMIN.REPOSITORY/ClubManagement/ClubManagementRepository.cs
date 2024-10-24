@@ -81,6 +81,8 @@ namespace CRS.ADMIN.REPOSITORY.ClubManagement
                         //LandLineCode = _DAO.ParseColumnValue(item, "LandLineCode").ToString(),
                         TotalRecords = Convert.ToInt32(_DAO.ParseColumnValue(item, "TotalRecords").ToString()),
                         SNO = Convert.ToInt32(_DAO.ParseColumnValue(item, "holdId").ToString()),
+                        Sno = _DAO.ParseColumnValue(item, "SNO").ToString(),
+
                         AgentId = _DAO.ParseColumnValue(item, "AgentId").ToString()
                     });
                 }
@@ -110,7 +112,8 @@ namespace CRS.ADMIN.REPOSITORY.ClubManagement
                         ClubLogo = _DAO.ParseColumnValue(item, "ClubLogo").ToString(),
                         //LandLineCode = _DAO.ParseColumnValue(item, "LandLineCode").ToString(),
                         TotalRecords = Convert.ToInt32(_DAO.ParseColumnValue(item, "TotalRecords").ToString()),
-                        SNO = Convert.ToInt32(_DAO.ParseColumnValue(item, "holdId").ToString())
+                        SNO = Convert.ToInt32(_DAO.ParseColumnValue(item, "holdId").ToString()),
+                        Sno = _DAO.ParseColumnValue(item, "SNO").ToString(),
                     });
                 }
             }

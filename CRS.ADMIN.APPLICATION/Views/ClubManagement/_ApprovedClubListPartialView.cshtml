@@ -131,7 +131,7 @@
                     {
                         <tr class="bg-white border-b ">
                             <td class="p-[12px]">
-                                @SN
+                                @item.SNO
                             </td>
                             <td class="p-[12px]">
                                 <div class="round-image-text flex gap-[12px] w-max">
@@ -184,7 +184,7 @@
                                         if (!string.IsNullOrEmpty(@item.Status) && @item.Status.ToUpper() == "A")
                                         {
                                             <div onclick="openBlockEventModal('@item.AgentId')" data-modal-target="block-confirmation" data-modal-toggle="block-confirmation">
-                                                <i class="fa-solid fa-lock text-primary-100 cursor-pointer" ></i>
+                                                <i class="fa-solid fa-lock text-primary-100 cursor-pointer"></i>
                                             </div>
                                         }
                                         else if (!string.IsNullOrEmpty(@item.Status) && @item.Status.ToUpper() == "B")
