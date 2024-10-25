@@ -1681,6 +1681,9 @@
     <value>Order</value>
     <comment>Recommendation Management-&gt;Host List</comment>
   </data>
+  <data name="Other" xml:space="preserve">
+    <value />
+  </data>
   <data name="Others" xml:space="preserve">
     <value>Others</value>
     <comment>AffiliateManagement</comment>

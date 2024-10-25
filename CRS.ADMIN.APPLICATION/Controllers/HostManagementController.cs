@@ -205,8 +205,6 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 //    }
                 //}
 
-
-
                 if (!string.IsNullOrEmpty(model.DOB))
                 {
                  if( model.DOB != "--") { 
@@ -528,7 +526,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
         }
 
         [HttpPost, ValidateAntiForgeryToken]
-        public JsonResult BlockHost(string AgentId, string HostId)
+        public JsonResult BlockHost(string AgentId, string HostId, string clubCategory)
         {
             var response = new CommonDbResponse();
             var aId = AgentId.DecryptParameter();
@@ -561,7 +559,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
         }
 
         [HttpPost, ValidateAntiForgeryToken]
-        public ActionResult UnBlockHost(string AgentId, string HostId)
+        public ActionResult UnBlockHost(string AgentId, string HostId, string clubCategory)
         {
             var response = new CommonDbResponse();
             var aId = AgentId.DecryptParameter();
@@ -594,7 +592,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
         }
 
         [HttpPost, ValidateAntiForgeryToken, OverrideActionFilters]
-        public JsonResult DeleteHostAsync(string AgentId, string HostId)
+        public JsonResult DeleteHostAsync(string AgentId, string HostId, string clubCategory)
         {
             var response = new CommonDbResponse();
             var aId = AgentId.DecryptParameter();
@@ -630,7 +628,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
 
         #region Gallery Management
         [HttpGet]
-        public ActionResult GalleryManagement(string AgentId, string HostId, string SearchFilter = "")
+        public ActionResult GalleryManagement(string AgentId, string HostId, string SearchFilter = "",string clubCategory="")
         {
             ViewBag.AgentId = AgentId;
             ViewBag.HostId = HostId;
@@ -638,6 +636,16 @@ namespace CRS.ADMIN.APPLICATION.Controllers
 
             var aId = AgentId?.DecryptParameter();
             var hId = HostId?.DecryptParameter();
+            ActionResult redirectresult = null;
+            if (!string.IsNullOrEmpty(clubCategory) && clubCategory.ToUpper() == "BASIC")
+            {
+                redirectresult = RedirectToAction("BasicClubManagementList", "BasicClubManagement");
+
+            }
+            else
+            {
+                redirectresult = RedirectToAction("ClubList", "ClubManagement");
+            }
             if (string.IsNullOrEmpty(aId) || string.IsNullOrEmpty(hId))
             {
                 this.AddNotificationMessage(new NotificationModel()
@@ -646,7 +654,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                     Message = "Invalid club details",
                     Title = NotificationMessage.INFORMATION.ToString(),
                 });
-                return RedirectToAction("ClubList", "ClubManagement");
+                return redirectresult;
             }
             string RenderId = "";
             var ReturnModel = new CommonHostGalleryManagementModel();
@@ -669,17 +677,35 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             ReturnModel.HostManageGalleryImageModel.HostId = HostId;
             ViewBag.PopUpRenderValue = !string.IsNullOrEmpty(RenderId) ? RenderId : null;
             ViewBag.IsBackAllowed = true;
-            ViewBag.BackButtonURL = "/HostManagement/HostList?AgentId=" + AgentId;
+            if (!string.IsNullOrEmpty(clubCategory) && clubCategory.ToUpper() == "BASIC")
+            {
+                ViewBag.BackButtonURL = "/HostManagement/HostList?AgentId=" + AgentId + "&clubCategory=" +clubCategory;
+            }
+            else
+            {
+                ViewBag.BackButtonURL = "/HostManagement/HostList?AgentId=" + AgentId;
+            }
+            ReturnModel.HostManageGalleryImageModel.clubCategory = clubCategory;
             return View(ReturnModel);
         }
 
         [HttpGet]
-        public ActionResult ManageGallery(string AgentId, string HostId, string GalleryId)
+        public ActionResult ManageGallery(string AgentId, string HostId, string GalleryId,string clubCategory)
         {
             HostManageGalleryImageModel model = new HostManageGalleryImageModel();
             var aId = AgentId?.DecryptParameter();
             var hId = HostId?.DecryptParameter();
             var gId = GalleryId?.DecryptParameter();
+            ActionResult redirectresult = null;
+            if (!string.IsNullOrEmpty(clubCategory) && clubCategory.ToUpper() == "BASIC")
+            {
+                redirectresult = RedirectToAction("BasicClubManagementList", "BasicClubManagement");
+
+            }
+            else
+            {
+                redirectresult = RedirectToAction("ClubList", "ClubManagement");
+            }
             if (string.IsNullOrEmpty(aId) || string.IsNullOrEmpty(hId))
             {
                 this.AddNotificationMessage(new NotificationModel()
@@ -688,7 +714,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                     Message = "Invalid details",
                     Title = NotificationMessage.INFORMATION.ToString(),
                 });
-                return RedirectToAction("ClubList", "ClubManagement");
+                return redirectresult;
             }
             if (string.IsNullOrEmpty(gId))
             {
@@ -698,7 +724,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                     Message = "Invalid gallery details",
                     Title = NotificationMessage.INFORMATION.ToString(),
                 });
-                return RedirectToAction("GalleryManagement", "HostManagement");
+                return RedirectToAction("GalleryManagement", "HostManagement", new { AgentId, HostId, clubCategory });
             }
             var dbResponse = _buss.GetGalleryImage(aId, hId, gId);
             if (dbResponse.Count > 0) model = dbResponse[0].MapObject<HostManageGalleryImageModel>();
@@ -707,7 +733,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             model.GalleryId = model.GalleryId.EncryptParameter();
             TempData["GalleryManagementModel"] = model;
             TempData["RenderId"] = "ManageHostGallery";
-            return RedirectToAction("GalleryManagement", "HostManagement", new { AgentId, HostId });
+            return RedirectToAction("GalleryManagement", "HostManagement", new { AgentId, HostId, clubCategory });
         }
 
         [HttpPost, ValidateAntiForgeryToken]
@@ -715,6 +741,16 @@ namespace CRS.ADMIN.APPLICATION.Controllers
         {
             var aId = Model.AgentId?.DecryptParameter();
             var hId = Model.HostId?.DecryptParameter();
+            ActionResult redirectresult = null;
+            if (!string.IsNullOrEmpty(Model.clubCategory) && Model.clubCategory.ToUpper() == "BASIC")
+            {
+                redirectresult = RedirectToAction("BasicClubManagementList", "BasicClubManagement");
+
+            }
+            else
+            {
+                redirectresult = RedirectToAction("ClubList", "ClubManagement");
+            }
             if (string.IsNullOrEmpty(aId) || string.IsNullOrEmpty(hId))
             {
                 this.AddNotificationMessage(new NotificationModel()
@@ -723,7 +759,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                     Message = "Invalid details",
                     Title = NotificationMessage.INFORMATION.ToString(),
                 });
-                return RedirectToAction("ClubList", "ClubManagement");
+                return redirectresult;
             }
             if (!string.IsNullOrEmpty(Model.GalleryId))
             {
@@ -738,7 +774,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                     });
                     TempData["GalleryManagementModel"] = Model;
                     TempData["RenderId"] = "ManageHostGallery";
-                    return RedirectToAction("GalleryManagement", "HostManagement", new { AgentId = Model.AgentId, HostId = Model.HostId });
+                    return RedirectToAction("GalleryManagement", "HostManagement", new { AgentId = Model.AgentId, HostId = Model.HostId, clubCategory =Model.clubCategory});
                 }
             }
             if (string.IsNullOrEmpty(Model.ImagePath))
@@ -762,7 +798,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                         });
                         TempData["GalleryManagementModel"] = Model;
                         TempData["RenderId"] = "ManageHostGallery";
-                        return RedirectToAction("GalleryManagement", "HostManagement", new { AgentId = Model.AgentId, HostId = Model.HostId });
+                        return RedirectToAction("GalleryManagement", "HostManagement", new { AgentId = Model.AgentId, HostId = Model.HostId, clubCategory = Model.clubCategory });
                     }
                 }
             }
@@ -787,7 +823,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                     });
                     TempData["GalleryManagementModel"] = Model;
                     TempData["RenderId"] = "ManageHostGallery";
-                    return RedirectToAction("GalleryManagement", "HostManagement", new { AgentId = Model.AgentId, HostId = Model.HostId });
+                    return RedirectToAction("GalleryManagement", "HostManagement", new { AgentId = Model.AgentId, HostId = Model.HostId, clubCategory = Model.clubCategory });
                 }
             }
             var dbRequest = Model.MapObject<HostManageGalleryImageCommon>();
@@ -806,7 +842,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                     Message = dbResponse.Message ?? "Failed",
                     Title = dbResponse.Code == ResponseCode.Success ? NotificationMessage.SUCCESS.ToString() : NotificationMessage.INFORMATION.ToString()
                 });
-                return RedirectToAction("GalleryManagement", "HostManagement", new { AgentId = Model.AgentId, HostId = Model.HostId });
+                return RedirectToAction("GalleryManagement", "HostManagement", new { AgentId = Model.AgentId, HostId = Model.HostId, clubCategory = Model.clubCategory });
             }
             else
             {
@@ -818,12 +854,12 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 });
                 TempData["GalleryManagementModel"] = Model;
                 TempData["RenderId"] = "ManageHostGallery";
-                return RedirectToAction("GalleryManagement", "HostManagement", new { AgentId = Model.AgentId, HostId = Model.HostId });
+                return RedirectToAction("GalleryManagement", "HostManagement", new { AgentId = Model.AgentId, HostId = Model.HostId, clubCategory = Model.clubCategory });
             }
         }
 
         [HttpPost, ValidateAntiForgeryToken]
-        public JsonResult ManageGalleryStatus(string AgentId, string HostId, string GalleryId)
+        public JsonResult ManageGalleryStatus(string AgentId, string HostId, string GalleryId,string clubCategory)
         {
             var response = new CommonDbResponse();
             var aId = !string.IsNullOrEmpty(AgentId) ? AgentId.DecryptParameter() : null;

@@ -137,10 +137,10 @@
                                     <td class="p-[12px]">
                                         <div class="flex gap-[7px] justify-center ">
                                             <div>
-                                                <i class="fa-regular fa-pen-to-square text-[#989898] cursor-pointer" onclick="ManageGalleryFunction('@item.AgentId','@item.HostId', '@item.GalleryId');"></i>
+                                                <i class="fa-regular fa-pen-to-square text-[#989898] cursor-pointer" onclick="ManageGalleryFunction('@item.AgentId','@item.HostId', '@item.GalleryId','@_HostManageGalleryImageModel.clubCategory');"></i>
                                             </div>
                                             <div>
-                                                <i class="fa-solid fa-trash-can text-primary-100 cursor-pointer" onclick="ManageStatusFunction('@item.AgentId','@item.HostId', '@item.GalleryId');"></i>
+                                                <i class="fa-solid fa-trash-can text-primary-100 cursor-pointer" onclick="ManageStatusFunction('@item.AgentId','@item.HostId', '@item.GalleryId','@_HostManageGalleryImageModel.clubCategory');"></i>
                                             </div>
 
                                         </div>
@@ -211,17 +211,17 @@
             document.getElementById("ManageHostGalleryForm").submit();
         }
 
-        function ManageGalleryFunction(i, j, k) {
-            window.location.href = '/HostManagement/ManageGallery?AgentId=' + i + '&&HostId=' + j+ '&&GalleryId=' + k;
+        function ManageGalleryFunction(i, j, k,l) {
+            window.location.href = '/HostManagement/ManageGallery?AgentId=' + i + '&&HostId=' + j + '&&GalleryId=' + k + '&clubCategory=' + l;;
         }
 
-        function ManageStatusFunction(i,j,k) {
+        function ManageStatusFunction(i,j,k,l) {
         var RequestVerificationToken = $('input[name="__RequestVerificationToken"]').val();
         $.ajax({
              type: "POST",
              url: '@Url.Action("ManageGalleryStatus", "HostManagement")',
              data: {
-                 '__RequestVerificationToken': RequestVerificationToken, 'AgentId': i,'HostId': j, 'GalleryId' : k},
+                 '__RequestVerificationToken': RequestVerificationToken, 'AgentId': i, 'HostId': j, 'GalleryId': k, 'clubCategory' : l },
             success: function (response) {
                 window.location.reload();
              },
