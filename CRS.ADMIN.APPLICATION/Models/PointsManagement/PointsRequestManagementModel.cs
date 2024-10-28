@@ -17,9 +17,9 @@ namespace CRS.ADMIN.APPLICATION.Models.PointsManagement
     public class ManageClubPointRequestModel
     {
         public string Id { get; set; }
-        //public string AgentId { get; set; }
-        //public string UserId { get; set; }
-        //public string TxnId { get; set; }
+        public string AgentId { get; set; }
+        public string UserId { get; set; }
+        public string TxnId { get; set; }
         public string Status { get; set; }
         public string AdminRemark { get; set; }
         public string ImageURL { get; set; }
