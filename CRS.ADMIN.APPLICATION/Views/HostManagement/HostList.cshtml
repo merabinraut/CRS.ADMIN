@@ -255,6 +255,7 @@
                 }
                 else {
                     $("#otherpositionid").hide();
+                    $("#OtherPositionRemark").val('');
                 }
             }
          $('select').select2({
@@ -486,9 +487,12 @@
             var selectedValue = $(this).find("option:selected").text().trim();
             if (selectedValue.toLowerCase() == "other" || selectedValue.toLowerCase() == "スタッフ") {
                 $("#otherpositionid").show();
+       
+
             }
             else {
                 $("#otherpositionid").hide();
+                $("#OtherPositionRemark").val('');
             }
         });
     </script>
