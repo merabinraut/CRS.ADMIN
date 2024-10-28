@@ -128,7 +128,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
         }
 
         [HttpGet]
-        public ActionResult ManageHost(string AgentId, string HostId = null, string clubCategory = null)
+        public ActionResult ManageHost(string AgentId, string HostId = null, string clubCategory = null, string SearchFilter = "", int StartIndex = 0, int PageSize = 10)
         {
             var culture = Request.Cookies["culture"]?.Value;
             culture = string.IsNullOrEmpty(culture) ? "ja" : culture;
@@ -178,7 +178,11 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                         Title = NotificationMessage.INFORMATION.ToString(),
                     });
                     TempData["RenderId"] = "ManageHost";
-                    return RedirectToAction("HostList", "HostManagement", new { AgentId, clubCategory = clubCategory });
+                    return RedirectToAction("HostList", "HostManagement", new { AgentId, clubCategory = clubCategory,
+                        SearchFilter = SearchFilter,
+                        StartIndex = StartIndex,
+                        PageSize = PageSize
+                    });
                 }
                 var dbResponse = _buss.GetHostDetail(aId, hId);
                 model = dbResponse.MapObject<ManageHostModel>();
@@ -287,7 +291,11 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 model.HostIdentityDataModel.ForEach(x => x.IdentityDDLType = !string.IsNullOrEmpty(x.IdentityDDLType) ? x.IdentityDDLType.EncryptParameter() : null);
                 TempData["RenderId"] = "ManageHost";
                 TempData["ManageHostModel"] = model;
-                return RedirectToAction("HostList", "HostManagement", new { AgentId, clubCategory = clubCategory });
+                return RedirectToAction("HostList", "HostManagement", new { AgentId, clubCategory = clubCategory,
+                    SearchFilter = SearchFilter,
+                    StartIndex = StartIndex,
+                    PageSize = PageSize
+                });
             }
         }
 
@@ -526,7 +534,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
         }
 
         [HttpPost, ValidateAntiForgeryToken]
-        public JsonResult BlockHost(string AgentId, string HostId, string clubCategory)
+        public JsonResult BlockHost(string AgentId, string HostId, string clubCategory, string SearchFilter = "", int StartIndex = 0, int PageSize = 10)
         {
             var response = new CommonDbResponse();
             var aId = AgentId.DecryptParameter();
@@ -559,7 +567,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
         }
 
         [HttpPost, ValidateAntiForgeryToken]
-        public ActionResult UnBlockHost(string AgentId, string HostId, string clubCategory)
+        public ActionResult UnBlockHost(string AgentId, string HostId, string clubCategory, string SearchFilter = "", int StartIndex = 0, int PageSize = 10)
         {
             var response = new CommonDbResponse();
             var aId = AgentId.DecryptParameter();
@@ -592,7 +600,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
         }
 
         [HttpPost, ValidateAntiForgeryToken, OverrideActionFilters]
-        public JsonResult DeleteHostAsync(string AgentId, string HostId, string clubCategory)
+        public JsonResult DeleteHostAsync(string AgentId, string HostId, string clubCategory, string SearchFilter = "", int StartIndex = 0, int PageSize = 10)
         {
             var response = new CommonDbResponse();
             var aId = AgentId.DecryptParameter();

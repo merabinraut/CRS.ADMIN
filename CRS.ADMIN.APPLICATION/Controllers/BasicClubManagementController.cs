@@ -278,7 +278,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
         }
 
         [HttpGet]
-        public ActionResult ManageBasicClub(string AgentId = "")
+        public ActionResult ManageBasicClub(string AgentId = "", string SearchFilter = "", int StartIndex = 0, int PageSize = 10)
         {
             var culture = Request.Cookies["culture"]?.Value;
             culture = string.IsNullOrEmpty(culture) ? "ja" : culture;
@@ -295,7 +295,12 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                         Message = "Invalid club details",
                         Title = NotificationMessage.INFORMATION.ToString(),
                     });
-                    return RedirectToAction("BasicClubManagementList", "BasicClubManagement");
+                    return RedirectToAction("BasicClubManagementList", "BasicClubManagement", new
+                    {
+                        SearchFilter = SearchFilter,
+                        StartIndex = StartIndex,
+                        PageSize = PageSize
+                    });
                 }
                 var dbResponse = _buss.GetBasicClubDetails(id, culture);
                 model = dbResponse.MapObject<ManageBasicClubModel>();
@@ -325,11 +330,16 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             TempData["RenderId"] = "Manage";
             TempData["ManageBasicClub"] = model;
 
-            return RedirectToAction("BasicClubManagementList", "BasicClubManagement");
+            return RedirectToAction("BasicClubManagementList", "BasicClubManagement", new
+            {
+                SearchFilter= SearchFilter,
+                StartIndex= StartIndex,
+                PageSize= PageSize
+            });
         }
 
         [HttpPost, ValidateAntiForgeryToken]
-        public JsonResult DeleteBasicClub(string AgentId)
+        public JsonResult DeleteBasicClub(string AgentId, string SearchFilter = "", int StartIndex = 0, int PageSize = 10)
         {
             var response = new CommonDbResponse();
             var aId = !string.IsNullOrEmpty(AgentId) ? AgentId.DecryptParameter() : null;
@@ -358,7 +368,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             return Json(dbResponse.Message, JsonRequestBehavior.AllowGet);
         }
         [HttpPost, ValidateAntiForgeryToken]
-        public JsonResult BlockBasicClub(string AgentId)
+        public JsonResult BlockBasicClub(string AgentId, string SearchFilter = "", int StartIndex = 0, int PageSize = 10)
         {
             var response = new CommonDbResponse();
             var aId = !string.IsNullOrEmpty(AgentId) ? AgentId.DecryptParameter() : null;
@@ -387,7 +397,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             return Json(dbResponse.Message, JsonRequestBehavior.AllowGet);
         }
         [HttpPost, ValidateAntiForgeryToken]
-        public ActionResult UnBlockBasicClub(string AgentId)
+        public ActionResult UnBlockBasicClub(string AgentId, string SearchFilter = "", int StartIndex = 0, int PageSize = 10)
         {
             var response = new CommonDbResponse();
             var aId = !string.IsNullOrEmpty(AgentId) ? AgentId.DecryptParameter() : null;

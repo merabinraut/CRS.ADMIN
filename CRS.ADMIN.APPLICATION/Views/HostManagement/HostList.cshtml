@@ -81,14 +81,14 @@
                                 </div>
                             </th>
                             @*<th scope="col" class="p-[12px]">
-                                <div class="flex  w-max">
-                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Ratings
-                                    <div class="relative pl-[5px]">
-                                        <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
-                                        <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                    <div class="flex  w-max">
+                                        @CRS.ADMIN.APPLICATION.Resources.Resource.Ratings
+                                        <div class="relative pl-[5px]">
+                                            <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                            <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                        </div>
                                     </div>
-                                </div>
-                            </th>*@
+                                </th>*@
 
                             <th scope="col" class="p-[12px]">
                                 <div class="flex  w-max">
@@ -159,9 +159,9 @@
                                         </div>
                                     </td>
                                     @*<td class="p-[12px]">
-                                        @item.Ratings
+                                            @item.Ratings
 
-                                    </td>*@
+                                        </td>*@
                                     <td class="p-[12px]">
                                         @item.TotalVisitors
 
@@ -320,32 +320,44 @@
 
 
         function BlockFunction(i, j,k) {
-    var RequestVerificationToken = $('input[name="__RequestVerificationToken"]').val();
-    $.ajax({
-        type: "POST",
-        url: '@Url.Action("BlockHost", "HostManagement")',
-        data: {
-            '__RequestVerificationToken': RequestVerificationToken,
-            'AgentId': i,
-            'HostId': j,
-            'clubCategory': k
-        },
-        success: function (response) {
-            window.location.reload();
-        },
-        error: function (error) {
-            window.location.reload();
-        }
-    });
-}
+           var RequestVerificationToken = $('input[name="__RequestVerificationToken"]').val();
+           const page_size = @ViewBag.PageSize;
+           const start_index_val = @ViewBag.StartIndex;
+           let search_filter = '@ViewBag.SearchFilter';
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("BlockHost", "HostManagement")',
+            data: {
+                '__RequestVerificationToken': RequestVerificationToken,
+                'AgentId': i,
+                'HostId': j,
+                'clubCategory': k,
+                'SearchFilter': search_filter,
+                'StartIndex': start_index_val,
+                'PageSize': page_size
+            },
+            success: function (response) {
+                window.location.reload();
+            },
+            error: function (error) {
+                window.location.reload();
+            }
+        });
+       }
 
         function UnBlockFunction(i, j,k) {
             var RequestVerificationToken = $('input[name="__RequestVerificationToken"]').val();
+            const page_size = @ViewBag.PageSize;
+            const start_index_val = @ViewBag.StartIndex;
+            let search_filter = '@ViewBag.SearchFilter';
         $.ajax({
                  type: "POST",
                  url: '@Url.Action("UnBlockHost", "HostManagement")',
                  data: {
-                     '__RequestVerificationToken': RequestVerificationToken, 'AgentId': i, 'HostId' : j,'clubCategory': k},
+                     '__RequestVerificationToken': RequestVerificationToken, 'AgentId': i, 'HostId': j, 'clubCategory': k,'SearchFilter': search_filter,
+                     'StartIndex': start_index_val,
+                     'PageSize': page_size
+},
                 success: function (response) {
                     window.location.reload();
                  },
@@ -357,7 +369,10 @@
 
 
    function DeleteHostFunction(i, j,k) {
-    var RequestVerificationToken = $('input[name="__RequestVerificationToken"]').val();
+       var RequestVerificationToken = $('input[name="__RequestVerificationToken"]').val();
+       const page_size = @ViewBag.PageSize;
+       const start_index_val = @ViewBag.StartIndex;
+       let search_filter = '@ViewBag.SearchFilter';
     $.ajax({
         type: "POST",
         url: '@Url.Action("DeleteHostAsync", "HostManagement")',
@@ -365,7 +380,10 @@
             '__RequestVerificationToken': RequestVerificationToken,
             'AgentId': i,
             'HostId': j,
-            'clubCategory': k
+            'clubCategory': k,
+            'SearchFilter': search_filter,
+            'StartIndex': start_index_val,
+            'PageSize': page_size
         },
         success: function (response) {
             window.location.reload();
@@ -377,8 +395,11 @@
 }
 
 
-        function HostGalleryRedirectFunction(i, j,k) {
-            window.location.href = '/HostManagement/GalleryManagement?AgentId=' + i + '&HostId=' + j + '&clubCategory=' + k;;
+        function HostGalleryRedirectFunction(i, j, k) {
+            const page_size = @ViewBag.PageSize;
+            const start_index_val = @ViewBag.StartIndex;
+            let search_filter = '@ViewBag.SearchFilter';
+            window.location.href = '/HostManagement/GalleryManagement?AgentId=' + i + '&HostId=' + j + '&clubCategory=' + k + '&SearchFilter=' + search_filter + '&StartIndex=' + start_index_val + '&PageSize=' + page_size;;
         }
     </script>
 
@@ -387,21 +408,26 @@
             location.reload();
         }
         function ManageHostGetDetailsFunction(i, j) {
+            const page_size = @ViewBag.PageSize;
+            const start_index_val = @ViewBag.StartIndex;
+            let search_filter = '@ViewBag.SearchFilter';
             var category ='@Html.Raw(_ManageHostModel.clubCategory)';
-        window.location.href = '/HostManagement/ManageHost?AgentId=' + i + '&HostId=' + j + '&clubCategory=' + category;
+            window.location.href = '/HostManagement/ManageHost?AgentId=' + i + '&HostId=' + j + '&clubCategory=' + category + '&SearchFilter=' + search_filter + '&StartIndex=' + start_index_val + '&PageSize=' + page_size;
     }
     </script>
 
     <script>
-     document.addEventListener('DOMContentLoaded', function () {
+        document.addEventListener('DOMContentLoaded', function () {
              const page_size = @ViewBag.PageSize;
              const total_data = @ViewBag.TotalData;
              const start_index_val = @ViewBag.StartIndex;
+             var category ='@Html.Raw(_ManageHostModel.clubCategory)';
              let URL = "/HostManagement/HostList";
              let search_filter = '@ViewBag.SearchFilter';
              let AgentId = '@ViewBag.AgentId';
              URL = addQueryParam(URL, 'SearchFilter', search_filter);
              URL = addQueryParam(URL, 'AgentId', AgentId);
+             URL = addQueryParam(URL, 'clubCategory', category);
              LoadPagination(page_size, total_data, start_index_val, URL);
          });
     </script>
@@ -487,7 +513,7 @@
             var selectedValue = $(this).find("option:selected").text().trim();
             if (selectedValue.toLowerCase() == "other" || selectedValue.toLowerCase() == "スタッフ") {
                 $("#otherpositionid").show();
-       
+
 
             }
             else {
