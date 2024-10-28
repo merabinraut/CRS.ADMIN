@@ -894,14 +894,12 @@ $("#To_Date1").val("@_systemTransferModel.To_Date1");
         }
 
         function InitateApproveRequest(AgentId, UserId, RequestId) {
-            debugger;
             $('#ConfirmationAgentId').val(AgentId);
             $('#ConfirmationUserId').val(UserId);
             $('#ConfirmationTxnId').val(RequestId);
         }
 
         function ApproveClubPointRequestFunction() {
-            debugger;
             var fileInput = document.getElementById('file_input_cover');
             var file = fileInput.files[0];
             var formData = new FormData();
