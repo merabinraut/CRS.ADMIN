@@ -100,7 +100,7 @@ namespace CRS.ADMIN.REPOSITORY.PointsManagement
             SQL += ",@UserId=" + _DAO.FilterString(request.UserId);
             SQL += ",@TxnId=" + _DAO.FilterString(request.TxnId);
             SQL += ",@Status=" + _DAO.FilterString(request.Status);
-            SQL += ",@AdminRemark=N" + _DAO.FilterString(request.AdminRemark);
+            SQL += ",@AdminRemark=" + (!string.IsNullOrEmpty(request.AdminRemark) ? "N" + _DAO.FilterString(request.AdminRemark) : _DAO.FilterString(request.AdminRemark));
             SQL += ",@ImageURL=" + _DAO.FilterString(request.ImageURL);
             SQL += ",@ActionUser=" + _DAO.FilterString(request.ActionUser);
             SQL += ",@ActionIP=" + _DAO.FilterString(request.ActionIP);

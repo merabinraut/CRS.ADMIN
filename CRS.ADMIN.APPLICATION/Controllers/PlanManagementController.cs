@@ -153,21 +153,21 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 TempData["RenderId"] = "Manage";
                 return RedirectToAction("PlanList", "PlanManagement");
             }
-            if (ImageFile == null && ImageFile2 == null)
-            {
-                if (string.IsNullOrEmpty(model.PlanImage) || string.IsNullOrEmpty(model.PlanImage2))
-                {
-                    this.AddNotificationMessage(new NotificationModel()
-                    {
-                        NotificationType = NotificationMessage.INFORMATION,
-                        Message = "Image required",
-                        Title = NotificationMessage.INFORMATION.ToString(),
-                    });
-                    TempData["PlanManagementModel"] = model;
-                    TempData["RenderId"] = "Manage";
-                    return RedirectToAction("PlanList", "PlanManagement");
-                }
-            }
+            //if (ImageFile == null && ImageFile2 == null)
+            //{
+            //    if (string.IsNullOrEmpty(model.PlanImage) || string.IsNullOrEmpty(model.PlanImage2))
+            //    {
+            //        this.AddNotificationMessage(new NotificationModel()
+            //        {
+            //            NotificationType = NotificationMessage.INFORMATION,
+            //            Message = "Image required",
+            //            Title = NotificationMessage.INFORMATION.ToString(),
+            //        });
+            //        TempData["PlanManagementModel"] = model;
+            //        TempData["RenderId"] = "Manage";
+            //        return RedirectToAction("PlanList", "PlanManagement");
+            //    }
+            //}
             var common = model.MapObject<PlanManagementCommon>();
             common.PlanType = !string.IsNullOrEmpty(common.PlanType) ? common.PlanType.DecryptParameter() : null;
             common.PlanTime = !string.IsNullOrEmpty(common.PlanTime) ? common.PlanTime.DecryptParameter() : null;
