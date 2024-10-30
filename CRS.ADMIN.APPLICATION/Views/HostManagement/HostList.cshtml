@@ -80,15 +80,15 @@
                                     </div>
                                 </div>
                             </th>
-                            <th scope="col" class="p-[12px]">
-                                <div class="flex  w-max">
-                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Ratings
-                                    <div class="relative pl-[5px]">
-                                        <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
-                                        <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                            @*<th scope="col" class="p-[12px]">
+                                    <div class="flex  w-max">
+                                        @CRS.ADMIN.APPLICATION.Resources.Resource.Ratings
+                                        <div class="relative pl-[5px]">
+                                            <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                            <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                        </div>
                                     </div>
-                                </div>
-                            </th>
+                                </th>*@
 
                             <th scope="col" class="p-[12px]">
                                 <div class="flex  w-max">
@@ -158,10 +158,10 @@
                                             </div>
                                         </div>
                                     </td>
-                                    <td class="p-[12px]">
-                                        @item.Ratings
+                                    @*<td class="p-[12px]">
+                                            @item.Ratings
 
-                                    </td>
+                                        </td>*@
                                     <td class="p-[12px]">
                                         @item.TotalVisitors
 
@@ -179,7 +179,7 @@
                                         }
                                         else if (item.Status.Trim().ToUpper() == "A")
                                         {
-                                    <div class="approved"> @CRS.ADMIN.APPLICATION.Resources.Resource.Active</div>
+                                            <div class="approved"> @CRS.ADMIN.APPLICATION.Resources.Resource.Active</div>
                                         }
                                     </td>
                                     <td class="p-[12px]">
@@ -190,24 +190,25 @@
                                                     <i class="fa-regular fa-pen-to-square text-[#989898] cursor-pointer" onclick="ManageHostGetDetailsFunction('@item.AgentId', '@item.HostId');"></i>
                                                 </div>
                                                 <div>
-                                                    <a onclick="HostGalleryRedirectFunction('@item.AgentId', '@item.HostId');">
+                                                    <a onclick="HostGalleryRedirectFunction('@item.AgentId', '@item.HostId','@_ManageHostModel.clubCategory');">
                                                         <i class="las la-image text-[#C8B477] text-[20px] mt-[1px] cursor-pointer"></i>
                                                     </a>
                                                 </div>
+
                                             }
                                             <div>
-                                                <i class="las la-trash-alt text-[20px] cursor-pointer text-[#CB3F3F]" title="Delete Host" onclick="LangChangeAlert('Are you sure you want to delete this host?','Confirm','@item.AgentId', '@item.HostId','D')"></i>
+                                                <i class="las la-trash-alt text-[20px] cursor-pointer text-[#CB3F3F]" title="Delete Host" onclick="LangChangeAlert('Are you sure you want to delete this host?','Confirm','@item.AgentId', '@item.HostId','D','@_ManageHostModel.clubCategory')"></i>
                                             </div>
                                             @if (item.Status.Trim().ToUpper() == "B")
                                             {
                                                 <div>
-                                                    <i class="las la-unlock cursor-pointer text-[#697DBF] text-[18px]" title="Unblock Host" onclick="LangChangeAlert('Are you sure you want to unblock this host?','Confirm','@item.AgentId', '@item.HostId','U')"></i>
+                                                    <i class="las la-unlock cursor-pointer text-[#697DBF] text-[18px]" title="Unblock Host" onclick="LangChangeAlert('Are you sure you want to unblock this host?','Confirm','@item.AgentId', '@item.HostId','U','@_ManageHostModel.clubCategory')"></i>
                                                 </div>
                                             }
                                             else
                                             {
                                                 <div>
-                                                    <i class="las la-unlock cursor-pointer text-[#CB3F3F] text-[18px]" title="Block Host" onclick="LangChangeAlert('Are you sure you want to block this host?','Confirm','@item.AgentId', '@item.HostId','B')"></i>
+                                                    <i class="las la-lock cursor-pointer text-[#CB3F3F] text-[18px]" title="Block Host" onclick="LangChangeAlert('Are you sure you want to block this host?','Confirm','@item.AgentId', '@item.HostId','B','@_ManageHostModel.clubCategory')"></i>
                                                 </div>
                                             }
 
@@ -245,7 +246,18 @@
 @section scripts
 {
     <script>
-     $(document).ready(function () {
+        $(document).ready(function () {
+            $("#otherpositionid").hide();
+            if ($("#HostId").val() != "" || $("#AgentId").val() != "") {
+                var Value = $('#large[name="Position"]').find("option:selected").text().trim();
+                if (Value.toLowerCase() == "other" || Value.toLowerCase() == "スタッフ") {
+                    $("#otherpositionid").show();
+                }
+                else {
+                    $("#otherpositionid").hide();
+                    $("#OtherPositionRemark").val('');
+                }
+            }
          $('select').select2({
              minimumResultsForSearch: Infinity
          });
@@ -258,7 +270,7 @@
     </script>
     <script>
 
-        function LangChangeAlert(message, buttonText, agentId, hostId, type) {
+        function LangChangeAlert(message, buttonText, agentId, hostId, type, clubCategory) {
             toastr.options = {
                 "closeButton": true,
                 "debug": false,
@@ -280,7 +292,7 @@
             let buttonHtml;
                 buttonHtml = `
             <button style="display: block; margin-top: 10px; background-color: #007bff; color: #fff; border: none; padding: 5px 10px; cursor: pointer;"
-                    onclick="handleLanguageSelection('${agentId}', '${hostId}', '${type}')">
+                    onclick="handleLanguageSelection('${agentId}', '${hostId}', '${type}', '${clubCategory}')">
                 ${buttonText}
             </button>`;
 
@@ -292,47 +304,60 @@
 
 
 
-        function handleLanguageSelection(agentId, hostId, type) {
+        function handleLanguageSelection(agentId, hostId, type, clubCategory) {
             switch (type) {
                 case "B":
-                    BlockFunction(agentId, hostId);
+                    BlockFunction(agentId, hostId, clubCategory);
                     break;
                 case "U":
-                    UnBlockFunction(agentId, hostId);
+                    UnBlockFunction(agentId, hostId, clubCategory);
                     break;
                 default:
-                    DeleteHostFunction(agentId, hostId);
+                    DeleteHostFunction(agentId, hostId, clubCategory);
                     break;
             }
         }
 
 
-        function BlockFunction(i, j) {
-    var RequestVerificationToken = $('input[name="__RequestVerificationToken"]').val();
-    $.ajax({
-        type: "POST",
-        url: '@Url.Action("BlockHost", "HostManagement")',
-        data: {
-            '__RequestVerificationToken': RequestVerificationToken,
-            'AgentId': i,
-            'HostId': j
-        },
-        success: function (response) {
-            window.location.reload();
-        },
-        error: function (error) {
-            window.location.reload();
-        }
-    });
-}
+        function BlockFunction(i, j,k) {
+           var RequestVerificationToken = $('input[name="__RequestVerificationToken"]').val();
+           const page_size = @ViewBag.PageSize;
+           const start_index_val = @ViewBag.StartIndex;
+           let search_filter = '@ViewBag.SearchFilter';
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("BlockHost", "HostManagement")',
+            data: {
+                '__RequestVerificationToken': RequestVerificationToken,
+                'AgentId': i,
+                'HostId': j,
+                'clubCategory': k,
+                'SearchFilter': search_filter,
+                'StartIndex': start_index_val,
+                'PageSize': page_size
+            },
+            success: function (response) {
+                window.location.reload();
+            },
+            error: function (error) {
+                window.location.reload();
+            }
+        });
+       }
 
-        function UnBlockFunction(i, j) {
+        function UnBlockFunction(i, j,k) {
             var RequestVerificationToken = $('input[name="__RequestVerificationToken"]').val();
+            const page_size = @ViewBag.PageSize;
+            const start_index_val = @ViewBag.StartIndex;
+            let search_filter = '@ViewBag.SearchFilter';
         $.ajax({
                  type: "POST",
                  url: '@Url.Action("UnBlockHost", "HostManagement")',
                  data: {
-                     '__RequestVerificationToken': RequestVerificationToken, 'AgentId': i, 'HostId' : j},
+                     '__RequestVerificationToken': RequestVerificationToken, 'AgentId': i, 'HostId': j, 'clubCategory': k,'SearchFilter': search_filter,
+                     'StartIndex': start_index_val,
+                     'PageSize': page_size
+},
                 success: function (response) {
                     window.location.reload();
                  },
@@ -343,15 +368,22 @@
         }
 
 
-   function DeleteHostFunction(i, j) {
-    var RequestVerificationToken = $('input[name="__RequestVerificationToken"]').val();
+   function DeleteHostFunction(i, j,k) {
+       var RequestVerificationToken = $('input[name="__RequestVerificationToken"]').val();
+       const page_size = @ViewBag.PageSize;
+       const start_index_val = @ViewBag.StartIndex;
+       let search_filter = '@ViewBag.SearchFilter';
     $.ajax({
         type: "POST",
         url: '@Url.Action("DeleteHostAsync", "HostManagement")',
         data: {
             '__RequestVerificationToken': RequestVerificationToken,
             'AgentId': i,
-            'HostId': j
+            'HostId': j,
+            'clubCategory': k,
+            'SearchFilter': search_filter,
+            'StartIndex': start_index_val,
+            'PageSize': page_size
         },
         success: function (response) {
             window.location.reload();
@@ -363,8 +395,11 @@
 }
 
 
-        function HostGalleryRedirectFunction(i, j) {
-            window.location.href = '/HostManagement/GalleryManagement?AgentId=' + i + '&&HostId=' + j;
+        function HostGalleryRedirectFunction(i, j, k) {
+            const page_size = @ViewBag.PageSize;
+            const start_index_val = @ViewBag.StartIndex;
+            let search_filter = '@ViewBag.SearchFilter';
+            window.location.href = '/HostManagement/GalleryManagement?AgentId=' + i + '&HostId=' + j + '&clubCategory=' + k + '&SearchFilter=' + search_filter + '&StartIndex=' + start_index_val + '&PageSize=' + page_size;;
         }
     </script>
 
@@ -373,20 +408,26 @@
             location.reload();
         }
         function ManageHostGetDetailsFunction(i, j) {
-            window.location.href = '/HostManagement/ManageHost?AgentId=' + i + '&&HostId=' + j;
-        }
+            const page_size = @ViewBag.PageSize;
+            const start_index_val = @ViewBag.StartIndex;
+            let search_filter = '@ViewBag.SearchFilter';
+            var category ='@Html.Raw(_ManageHostModel.clubCategory)';
+            window.location.href = '/HostManagement/ManageHost?AgentId=' + i + '&HostId=' + j + '&clubCategory=' + category + '&SearchFilter=' + search_filter + '&StartIndex=' + start_index_val + '&PageSize=' + page_size;
+    }
     </script>
 
     <script>
-     document.addEventListener('DOMContentLoaded', function () {
+        document.addEventListener('DOMContentLoaded', function () {
              const page_size = @ViewBag.PageSize;
              const total_data = @ViewBag.TotalData;
              const start_index_val = @ViewBag.StartIndex;
+             var category ='@Html.Raw(_ManageHostModel.clubCategory)';
              let URL = "/HostManagement/HostList";
              let search_filter = '@ViewBag.SearchFilter';
              let AgentId = '@ViewBag.AgentId';
              URL = addQueryParam(URL, 'SearchFilter', search_filter);
              URL = addQueryParam(URL, 'AgentId', AgentId);
+             URL = addQueryParam(URL, 'clubCategory', category);
              LoadPagination(page_size, total_data, start_index_val, URL);
          });
     </script>
@@ -466,5 +507,19 @@
 
         // Initial state setup
         updateStep();
+
+        $('#large[name="Position"]').change(function () {
+
+            var selectedValue = $(this).find("option:selected").text().trim();
+            if (selectedValue.toLowerCase() == "other" || selectedValue.toLowerCase() == "スタッフ") {
+                $("#otherpositionid").show();
+
+
+            }
+            else {
+                $("#otherpositionid").hide();
+                $("#OtherPositionRemark").val('');
+            }
+        });
     </script>
 }

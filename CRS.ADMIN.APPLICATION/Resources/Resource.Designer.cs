@@ -61,6 +61,51 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Account Holder Name.
+        /// </summary>
+        public static string Account_Holder_Name {
+            get {
+                return ResourceManager.GetString("Account Holder Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Account Information.
+        /// </summary>
+        public static string Account_Information {
+            get {
+                return ResourceManager.GetString("Account Information", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Account Number.
+        /// </summary>
+        public static string Account_Number {
+            get {
+                return ResourceManager.GetString("Account Number", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Account Symbol.
+        /// </summary>
+        public static string Account_Symbol {
+            get {
+                return ResourceManager.GetString("Account Symbol", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Account Type.
+        /// </summary>
+        public static string Account_Type {
+            get {
+                return ResourceManager.GetString("Account Type", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Action.
         /// </summary>
         public static string Action {
@@ -682,6 +727,24 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Bank Name.
+        /// </summary>
+        public static string Bank_Name {
+            get {
+                return ResourceManager.GetString("Bank Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bank Type.
+        /// </summary>
+        public static string Bank_Type {
+            get {
+                return ResourceManager.GetString("Bank Type", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Banner.
         /// </summary>
         public static string Banner {
@@ -777,6 +840,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         public static string Booked {
             get {
                 return ResourceManager.GetString("Booked", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Branch Name.
+        /// </summary>
+        public static string Branch_Name {
+            get {
+                return ResourceManager.GetString("Branch Name", resourceCulture);
             }
         }
         
@@ -2914,6 +2986,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Manage payment withdrawal setting..
+        /// </summary>
+        public static string Manage_payment_withdrawal_setting {
+            get {
+                return ResourceManager.GetString("Manage payment withdrawal setting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Manage Points.
         /// </summary>
         public static string Manage_Points {
@@ -2991,6 +3072,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         public static string Manage_user_roles_and_their_privileges {
             get {
                 return ResourceManager.GetString("Manage user roles and their privileges", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Manage Withdrawal.
+        /// </summary>
+        public static string Manage_Withdrawal {
+            get {
+                return ResourceManager.GetString("Manage Withdrawal", resourceCulture);
             }
         }
         
@@ -3099,6 +3189,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         public static string March {
             get {
                 return ResourceManager.GetString("March", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Max Limit Amount (¥).
+        /// </summary>
+        public static string Max_Limit_Amount {
+            get {
+                return ResourceManager.GetString("Max Limit Amount", resourceCulture);
             }
         }
         
@@ -3225,6 +3324,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         public static string Message {
             get {
                 return ResourceManager.GetString("Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Min Limit Amount (¥).
+        /// </summary>
+        public static string Min_Limit_Amount {
+            get {
+                return ResourceManager.GetString("Min Limit Amount", resourceCulture);
             }
         }
         
@@ -3513,6 +3621,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         public static string Order {
             get {
                 return ResourceManager.GetString("Order", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string Other {
+            get {
+                return ResourceManager.GetString("Other", resourceCulture);
             }
         }
         
@@ -4368,6 +4485,42 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         public static string RequestId {
             get {
                 return ResourceManager.GetString("RequestId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Requesting Date (From).
+        /// </summary>
+        public static string Requesting_Date__From_ {
+            get {
+                return ResourceManager.GetString("Requesting Date (From)", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Requesting Date (To).
+        /// </summary>
+        public static string Requesting_Date__To_ {
+            get {
+                return ResourceManager.GetString("Requesting Date (To)", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Requesting Day (From).
+        /// </summary>
+        public static string Requesting_Day__From_ {
+            get {
+                return ResourceManager.GetString("Requesting Day (From)", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Requesting Day (To).
+        /// </summary>
+        public static string Requesting_Day__To_ {
+            get {
+                return ResourceManager.GetString("Requesting Day (To)", resourceCulture);
             }
         }
         
@@ -5718,6 +5871,24 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         public static string Welcome_back {
             get {
                 return ResourceManager.GetString("Welcome back", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Withdraw-able Date.
+        /// </summary>
+        public static string Withdraw_able_Date {
+            get {
+                return ResourceManager.GetString("Withdraw-able Date", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Withdraw Setup.
+        /// </summary>
+        public static string Withdraw_Setup {
+            get {
+                return ResourceManager.GetString("Withdraw Setup", resourceCulture);
             }
         }
         

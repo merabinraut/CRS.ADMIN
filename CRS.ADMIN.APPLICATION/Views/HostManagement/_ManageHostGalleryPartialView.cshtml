@@ -18,7 +18,8 @@
             {
                 @Html.AntiForgeryToken()
                 @Html.HiddenFor(model => model.AgentId);
-                @Html.HiddenFor(model => model.HostId);
+                @Html.HiddenFor(model => model.HostId);  
+                @Html.HiddenFor(model => model.clubCategory);
                 if (!string.IsNullOrEmpty(Model.GalleryId))
                 {
                     @Html.HiddenFor(model => model.GalleryId);
@@ -56,7 +57,15 @@
                             <input id="file_input-gallery" type="file" style="display:none;" name="Image_Path" required>
                             <p id="file_name_display-gallery"
                                class="w-max h-[23px] overflow-hidden pl-2 text-[#686868]">
-                                @CRS.ADMIN.APPLICATION.Resources.Resource.No_File_Choosen
+                                @if (string.IsNullOrEmpty(Model.ImagePath))
+                                {
+                                    @CRS.ADMIN.APPLICATION.Resources.Resource.No_File_Choosen
+                                }
+                                else
+                                {
+                                    string fileName = Path.GetFileName(Model.ImagePath);
+                                    @fileName
+                                }
                             </p>
                         </div>
                         <div class="text-xs text-error mt-[8px]">

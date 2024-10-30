@@ -30,5 +30,6 @@ namespace CRS.ADMIN.APPLICATION.Models.HostManagement
         [MinLength(1, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Minimum_1_characters_required")]
         public string ImageTitle { get; set; }
         public string ImagePath { get; set; }
+        public string clubCategory { get; set; }
     }
 }

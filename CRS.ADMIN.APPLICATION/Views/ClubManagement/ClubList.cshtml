@@ -702,7 +702,6 @@
     </script>
     <script>
         $(document).ready(function () {
-            debugger;
             var commaSeparatedString = "";
             if ($("#holdId").val() != "" || $("#AgentId").val() != "") {
                 var Value = $('#large[name="IdentificationType"]').find("option:selected").text().trim();
@@ -1216,9 +1215,9 @@
                     Street: {
                         required: true
                     },
-                    BuildingRoomNo: {
-                        required: true
-                    },
+                    //BuildingRoomNo: {
+                    //    required: true
+                    //},
                     WorkingHrFrom: {
                         required: true
                     },
@@ -1284,9 +1283,9 @@
                    Street: {
                         required: '@CRS.ADMIN.APPLICATION.Resources.Resource.Required'
                    },
-                   BuildingRoomNo: {
+                   @*BuildingRoomNo: {
                         required: '@CRS.ADMIN.APPLICATION.Resources.Resource.Required'
-                    },
+                    },*@
                     WorkingHrFrom: {
                        required: '@CRS.ADMIN.APPLICATION.Resources.Resource.Required'
                     },
@@ -1680,7 +1679,6 @@
 
     <script>
         function changeTab(selectedTabId) {
-            debugger;
             var tabPanes = document.querySelectorAll(".tab-pane");
             tabPanes.forEach(function (tab) {
 

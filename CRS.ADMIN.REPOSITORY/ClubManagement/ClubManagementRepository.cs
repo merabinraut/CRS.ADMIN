@@ -81,6 +81,8 @@ namespace CRS.ADMIN.REPOSITORY.ClubManagement
                         //LandLineCode = _DAO.ParseColumnValue(item, "LandLineCode").ToString(),
                         TotalRecords = Convert.ToInt32(_DAO.ParseColumnValue(item, "TotalRecords").ToString()),
                         SNO = Convert.ToInt32(_DAO.ParseColumnValue(item, "holdId").ToString()),
+                        Sno = _DAO.ParseColumnValue(item, "SNO").ToString(),
+
                         AgentId = _DAO.ParseColumnValue(item, "AgentId").ToString()
                     });
                 }
@@ -110,7 +112,8 @@ namespace CRS.ADMIN.REPOSITORY.ClubManagement
                         ClubLogo = _DAO.ParseColumnValue(item, "ClubLogo").ToString(),
                         //LandLineCode = _DAO.ParseColumnValue(item, "LandLineCode").ToString(),
                         TotalRecords = Convert.ToInt32(_DAO.ParseColumnValue(item, "TotalRecords").ToString()),
-                        SNO = Convert.ToInt32(_DAO.ParseColumnValue(item, "holdId").ToString())
+                        SNO = Convert.ToInt32(_DAO.ParseColumnValue(item, "holdId").ToString()),
+                        Sno = _DAO.ParseColumnValue(item, "SNO").ToString(),
                     });
                 }
             }
@@ -378,7 +381,7 @@ namespace CRS.ADMIN.REPOSITORY.ClubManagement
             SQL += ",@Prefecture=" + _DAO.FilterString(Request.Prefecture);
             SQL += ",@City=N" + _DAO.FilterString(Request.City);
             SQL += ",@InputStreet=N" + _DAO.FilterString(Request.Street);
-            SQL += ",@BuildingRoomNo=N" + _DAO.FilterString(Request.BuildingRoomNo);
+            SQL += ",@BuildingRoomNo=" + (!string.IsNullOrEmpty(Request.BuildingRoomNo) ? "N" + _DAO.FilterString(Request.BuildingRoomNo) : _DAO.FilterString(Request.BuildingRoomNo));
             SQL += ",@RegularFee=" + _DAO.FilterString(Request.RegularFee);
             SQL += ",@DesignationFee=" + _DAO.FilterString(Request.DesignationFee);
             SQL += ",@CompanionFee=" + _DAO.FilterString(Request.CompanionFee);
@@ -486,8 +489,6 @@ namespace CRS.ADMIN.REPOSITORY.ClubManagement
             var dbResponse = _DAO.ExecuteDataTable(SQL);
             if (dbResponse != null)
             {
-
-
                 foreach (DataRow item in dbResponse.Rows)
                 {
                     response.Add(new planIdentityDataCommon()

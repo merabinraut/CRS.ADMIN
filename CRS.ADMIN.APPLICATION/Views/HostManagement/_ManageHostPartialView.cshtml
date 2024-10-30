@@ -28,6 +28,7 @@
                     @Html.HiddenFor(model => model.AgentId)
                     @Html.HiddenFor(model => model.HostLogo)
                     @Html.HiddenFor(model => model.HostIconImage)
+                    @Html.HiddenFor(model => model.clubCategory)
                     if (!string.IsNullOrEmpty(Model.HostId))
                     {
                         @Html.HiddenFor(model => model.HostId)
@@ -116,6 +117,32 @@
                             <div class="grid grid-cols-2 gap-x-5 gap-y-4">
                                 <div class="input-field-common">
                                     <label for="email" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                                        @CRS.ADMIN.APPLICATION.Resources.Resource.Rank
+                                    </label>
+                                    <select id="large" class="select-common block w-full " name="Rank">
+                                        @foreach (var item in ViewBag.RankDDL as IEnumerable<SelectListItem>)
+                                        {
+                                            var selectedId = ViewBag.RankDDLKey as string;
+                                            if (item.Value == selectedId)
+                                            {
+                                                <option value="@item.Value" selected>
+                                                    @item.Text
+                                                </option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@item.Value">
+                                                    @item.Text
+                                                </option>
+                                            }
+                                        }
+                                    </select>
+                                    <span class="error">
+                                        @Html.ValidationMessageFor(m => m.Rank)
+                                    </span>
+                                </div>
+                                <div class="input-field-common">
+                                    <label for="email" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
                                         @CRS.ADMIN.APPLICATION.Resources.Resource.Position
                                     </label>
                                     @*@Html.TextBoxFor(model => model.Position, new
@@ -153,34 +180,26 @@
                                         @Html.ValidationMessageFor(m => m.Position)
                                     </span>
                                 </div>
+
+                            </div>
+                            <div class="grid grid-cols-2 gap-x-5 gap-y-4" id="otherpositionid">
                                 <div class="input-field-common">
-                                    <label for="email" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
-                                        @CRS.ADMIN.APPLICATION.Resources.Resource.Rank
+                                    <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
+                                        @CRS.ADMIN.APPLICATION.Resources.Resource.Others
                                     </label>
-                                    <select id="large" class="select-common block w-full " name="Rank">
-                                        @foreach (var item in ViewBag.RankDDL as IEnumerable<SelectListItem>)
-                                        {
-                                            var selectedId = ViewBag.RankDDLKey as string;
-                                            if (item.Value == selectedId)
-                                            {
-                                                <option value="@item.Value" selected>
-                                                    @item.Text
-                                                </option>
-                                            }
-                                            else
-                                            {
-                                                <option value="@item.Value">
-                                                    @item.Text
-                                                </option>
-                                            }
-                                        }
-                                    </select>
+                                    @Html.TextBoxFor(model => model.OtherPositionRemark, new
+                                   {
+                                       @class = "w-full",
+                                       @placeholder = CRS.ADMIN.APPLICATION.Resources.Resource.Others,
+                                       //@onkeypress = "return isAlphabetWithSpace(event)",
+                                       autocomplete = "off",
+                                       @maxLength = "100"
+                                   })
                                     <span class="error">
-                                        @Html.ValidationMessageFor(m => m.Rank)
+                                        @Html.ValidationMessageFor(m => m.OtherPositionRemark)
                                     </span>
                                 </div>
                             </div>
-
                             <div>
                                 <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
                                     @CRS.ADMIN.APPLICATION.Resources.Resource.ProfileImage
@@ -609,9 +628,11 @@
                                             {
                                                 <div>
                                                     @{
-                                                        var valueRange = string.IsNullOrEmpty(Model.HostIdentityDataModel[i].IdentityDescription) || Model.HostIdentityDataModel[i].IdentityDescription == "0" ? "20" : Model.HostIdentityDataModel[i].IdentityDescription;
-                                                    }
-                                                    <input type="range" class="sliderBlue" min="0" max="100" value="@valueRange" step="@valueRange" id="myRange_@k" oninput="updateRangeValue(@k, this.value)" />
+                                                        var valueRange = string.IsNullOrEmpty(Model.HostIdentityDataModel[i].IdentityDescription) || Model.HostIdentityDataModel[i].IdentityDescription == "0" ? "0" : Model.HostIdentityDataModel[i].IdentityDescription;
+                                                        //var valueRangeVal = string.IsNullOrEmpty(Model.HostIdentityDataModel[i].IdentityDescription) || Model.HostIdentityDataModel[i].IdentityDescription == "0" ? "0" : Model.HostIdentityDataModel[i].IdentityDescription;
+
+                                                     }
+                                                    <input type="range" class="sliderBlue" min="0" max="100" value="@valueRange" step="20" id="myRange_@k" oninput="updateRangeValue(@k, this.value)" />
                                                     @*<input type="range" min="0" max="100" value="20" step="20" oninput="updateRangeValue(@k, this.value)">*@
                                                     @*<p id="rangeValues_@k" name="">@valueRange</p>*@
                                                     <p id="rangeValue_@k" name="">@valueRange</p>
@@ -682,9 +703,9 @@
                                             {
                                                 <div>
                                                     @{
-                                                        var valueRange = string.IsNullOrEmpty(Model.HostIdentityDataModel[i].IdentityDescription) || Model.HostIdentityDataModel[i].IdentityDescription == "0" ? "20" : Model.HostIdentityDataModel[i].IdentityDescription;
+                                                        var valueRange = string.IsNullOrEmpty(Model.HostIdentityDataModel[i].IdentityDescription) || Model.HostIdentityDataModel[i].IdentityDescription == "0" ? "0" : Model.HostIdentityDataModel[i].IdentityDescription;
                                                     }
-                                                    <input type="range" class="sliderBlue" min="0" max="100" value="@valueRange" step="@valueRange" id="myRange_@k" oninput="updateRangeValue(@k, this.value)" />
+                                                    <input type="range" class="sliderBlue" min="0" max="100" value="@valueRange" step="20" id="myRange_@k" oninput="updateRangeValue(@k, this.value)" />
                                                     <p id="rangeValue_@k" name="">@valueRange</p>
 
                                                     @Html.HiddenFor(model => Model.HostIdentityDataModel[i].IdentityDescription, new
@@ -744,9 +765,10 @@
                                         {
                                             <div>
                                                 @{
-                                                    var valueRange = string.IsNullOrEmpty(Model.HostIdentityDataModel[i].IdentityDescription) || Model.HostIdentityDataModel[i].IdentityDescription == "0" ? "20" : Model.HostIdentityDataModel[i].IdentityDescription;
-                                                }
-                                                <input type="range" class="sliderBlue" min="0" max="100" value="@valueRange" step="@valueRange" id="myRange_@k" oninput="updateRangeValue(@k, this.value)" />
+                                                    var valueRange = string.IsNullOrEmpty(Model.HostIdentityDataModel[i].IdentityDescription) || Model.HostIdentityDataModel[i].IdentityDescription == "0" ? "0" : Model.HostIdentityDataModel[i].IdentityDescription;
+                                                    
+                                                 }
+                                                <input type="range" class="sliderBlue" min="0" max="100" value="@valueRange" step="20" id="myRange_@k" oninput="updateRangeValue(@k, this.value)" />
                                                 <p id="rangeValue_@k" name="">@valueRange</p>
 
                                                 @Html.HiddenFor(model => Model.HostIdentityDataModel[i].IdentityDescription, new

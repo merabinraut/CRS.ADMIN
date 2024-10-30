@@ -39,8 +39,8 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 Take = PageSize,
                 SearchFilter = !string.IsNullOrEmpty(SearchFilter) ? SearchFilter : null
             };
-            ViewBag.UserTypeList = ApplicationUtilities.SetDDLValue(DDLHelper.LoadDropdownList("USERTYPELIST","", culture) as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---");
-            
+            ViewBag.UserTypeList = ApplicationUtilities.SetDDLValue(DDLHelper.LoadDropdownList("USERTYPELIST", "", culture) as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---");
+
             ViewBag.TransferTypeIdList = ApplicationUtilities.SetDDLValue(DDLHelper.LoadDropdownList("TRANSACTIONTYPE", "", culture) as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---");
             ViewBag.LocationIdList = ApplicationUtilities.SetDDLValue(DDLHelper.LoadDropdownList("LOCATIONLIST", "", culture) as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---");
             ViewBag.CLUBTOADMINPaymentMethodListIdList = ApplicationUtilities.SetDDLValue(DDLHelper.LoadDropdownList("CLUBTOADMINPAYMENTMETHODLIST", "", culture) as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---");
@@ -175,7 +175,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                     To_Date = null
                 };
             }
-           
+
 
             objPointsManagementModel.PointRequestCommonModel.PointRequestsListModel = getPointRequestListDBResponse.MapObjects<PointRequestsListModel>();
             objPointsManagementModel.PointRequestCommonModel.PointRequestsListModel.ForEach(x =>
@@ -285,9 +285,9 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 }).ToArray();
                 AddNotificationMessage(notificationModels);
                 var errors = ModelState.Where(x => x.Value.Errors.Count > 0).Select(x => new { x.Key }).ToList();
-                
 
-                
+
+
             }
             TempData["ManagePointsModel"] = objPointsTansferModel;
             TempData["RenderId"] = "Manage";

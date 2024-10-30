@@ -117,6 +117,26 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Account Holder Name" xml:space="preserve">
+    <value>口座名義人名</value>
+    <comment>Account Information</comment>
+  </data>
+  <data name="Account Information" xml:space="preserve">
+    <value>アカウント情報</value>
+    <comment>Account Information</comment>
+  </data>
+  <data name="Account Number" xml:space="preserve">
+    <value>口座番号</value>
+    <comment>Account Information</comment>
+  </data>
+  <data name="Account Symbol" xml:space="preserve">
+    <value>口座記号</value>
+    <comment>Account Information</comment>
+  </data>
+  <data name="Account Type" xml:space="preserve">
+    <value>アカウントの種類</value>
+    <comment>Account Information</comment>
+  </data>
   <data name="Action" xml:space="preserve">
     <value>アクション</value>
   </data>
@@ -389,6 +409,14 @@
     <value>戻る</value>
     <comment>Dashboard</comment>
   </data>
+  <data name="Bank Name" xml:space="preserve">
+    <value>銀行名</value>
+    <comment>Account Information</comment>
+  </data>
+  <data name="Bank Type" xml:space="preserve">
+    <value>銀行の種類</value>
+    <comment>Account Information</comment>
+  </data>
   <data name="Banner" xml:space="preserve">
     <value>バナー1</value>
     <comment>HostGallaryManagement</comment>
@@ -431,6 +459,10 @@
   <data name="Booked" xml:space="preserve">
     <value>予約済み</value>
     <comment>Dashboard</comment>
+  </data>
+  <data name="Branch Name" xml:space="preserve">
+    <value>支店名</value>
+    <comment>Account Information</comment>
   </data>
   <data name="Building &amp; Room No" xml:space="preserve">
     <value>建物と部屋番号</value>
@@ -1370,6 +1402,10 @@
     <value>通知を管理する</value>
     <comment>Notification</comment>
   </data>
+  <data name="Manage payment withdrawal setting" xml:space="preserve">
+    <value>支払い引き出し設定を管理します。</value>
+    <comment>Withdraw Setup</comment>
+  </data>
   <data name="Manage Points" xml:space="preserve">
     <value>ポイントを管理する</value>
     <comment>Points Management</comment>
@@ -1405,6 +1441,10 @@
   <data name="Manage user roles and their privileges" xml:space="preserve">
     <value>ロールタイプの権限と機能を管理します。</value>
     <comment>Roles &amp; Privileges</comment>
+  </data>
+  <data name="Manage Withdrawal" xml:space="preserve">
+    <value>引き出し管理</value>
+    <comment>Withdraw Setup</comment>
   </data>
   <data name="Manage your club detail information" xml:space="preserve">
     <value>クラブの詳細情報を管理します。</value>
@@ -1456,6 +1496,10 @@
   <data name="March" xml:space="preserve">
     <value>三月</value>
     <comment>Dashboard</comment>
+  </data>
+  <data name="Max Limit Amount" xml:space="preserve">
+    <value>最大限度額（¥）</value>
+    <comment>Withdraw Setup</comment>
   </data>
   <data name="Max Value" xml:space="preserve">
     <value>最大値</value>
@@ -1509,6 +1553,10 @@
   <data name="Message" xml:space="preserve">
     <value>メッセージ</value>
     <comment>SMS</comment>
+  </data>
+  <data name="Min Limit Amount" xml:space="preserve">
+    <value>最小限度額（¥）</value>
+    <comment>Withdraw Setup</comment>
   </data>
   <data name="Min Value" xml:space="preserve">
     <value>最小値</value>
@@ -2010,6 +2058,22 @@
   </data>
   <data name="RequestId" xml:space="preserve">
     <value>リクエストID</value>
+  </data>
+  <data name="Requesting Date (From)" xml:space="preserve">
+    <value>リクエスト日（開始）</value>
+    <comment>Withdraw Setup</comment>
+  </data>
+  <data name="Requesting Date (To)" xml:space="preserve">
+    <value>リクエスト日（終了）</value>
+    <comment>Withdraw Setup</comment>
+  </data>
+  <data name="Requesting Day (From)" xml:space="preserve">
+    <value>リクエスト日（開始）</value>
+    <comment>Withdraw Setup</comment>
+  </data>
+  <data name="Requesting Day (To)" xml:space="preserve">
+    <value>リクエスト日（終了）</value>
+    <comment>Withdraw Setup</comment>
   </data>
   <data name="Requests" xml:space="preserve">
     <value>リクエスト</value>
@@ -2587,6 +2651,14 @@
   <data name="Welcome back" xml:space="preserve">
     <value>おかえり</value>
     <comment>Dashboard</comment>
+  </data>
+  <data name="Withdraw Setup" xml:space="preserve">
+    <value>出金設定</value>
+    <comment>Withdraw Setup</comment>
+  </data>
+  <data name="Withdraw-able Date" xml:space="preserve">
+    <value>引き出し可能日</value>
+    <comment>Withdraw Setup</comment>
   </data>
   <data name="Working Hours (From)" xml:space="preserve">
     <value>開店時間</value>

@@ -93,6 +93,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 commonModel.ActionIP = ApplicationUtilities.GetIP();
                 if (!string.IsNullOrEmpty(roleIdSelect?.DecryptParameter())) ModelState.Remove("RoleId");
                 commonModel.RoleId = roleIdSelect?.DecryptParameter();
+                commonModel.RoleId = Model.RoleId?.DecryptParameter();
                 if (commonModel.Id != null)
                 {
                     commonModel.Id = commonModel.Id.DecryptParameter();

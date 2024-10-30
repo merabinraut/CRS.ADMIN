@@ -20,7 +20,7 @@ namespace CRS.ADMIN.REPOSITORY.CommonManagement
             SQL += "@Flag=" + _DAO.FilterString(Flag);
             SQL += ",@SearchField1=" + _DAO.FilterString(Extra1);
             SQL += ",@SearchField2=" + _DAO.FilterString(Extra2);
-            var dbResponse = _DAO.ExecuteDataTable(SQL);
+           var dbResponse = _DAO.ExecuteDataTable(SQL);
             if (dbResponse != null && dbResponse.Rows.Count > 0)
             {
                 foreach (DataRow item in dbResponse.Rows)

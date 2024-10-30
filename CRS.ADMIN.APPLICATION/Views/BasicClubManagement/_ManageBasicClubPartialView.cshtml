@@ -89,7 +89,7 @@
                                    @class = "w-full",
                                    @id= "ClubName1_basic",
                                    @placeholder = CRS.ADMIN.APPLICATION.Resources.Resource.StoreName,
-                                   @onkeypress = "return isAlphabetWithSpace(event)",
+                                   //@onkeypress = "return isAlphabetWithSpace(event)",
                                    autocomplete = "off",
                                    @maxLength = "50"
                                })
@@ -107,7 +107,7 @@
                                    @class = "w-full",
                                    @id = "ClubName2_basic",
                                    @placeholder = CRS.ADMIN.APPLICATION.Resources.Resource.Furigana,
-                                   @onkeypress = "return isAlphabetWithSpace(event)",
+                                   //@onkeypress = "return isAlphabetWithSpace(event)",
                                    autocomplete = "off",
                                    @maxLength = "50"
                                })
@@ -115,9 +115,6 @@
                                         @Html.ValidationMessageFor(m => m.ClubName2)
                                     </span>
                                 </div>
-
-
-
                             </div>
 
 

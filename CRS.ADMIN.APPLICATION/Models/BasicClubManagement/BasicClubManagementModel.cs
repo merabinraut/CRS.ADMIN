@@ -21,7 +21,7 @@ namespace CRS.ADMIN.APPLICATION.Models.BasicClubManagement
         public string Status { get; set; }
         public string ClubNameEng { get; set; }
         public string ClubNameJap { get; set; }
-        public string LandLineNumber { get; set; }
+        public string MobileNumber { get; set; }
         public string Location { get; set; }
         public string ClubLogo { get; set; }
         public string CreatedDate { get; set; }
@@ -100,7 +100,7 @@ namespace CRS.ADMIN.APPLICATION.Models.BasicClubManagement
         public string City { get; set; }
         [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Required")]
         public string Street { get; set; }
-        [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Required")]
+        //[Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Required")]
         public string BuildingRoomNo { get; set; }              
         public string Pref { get; set; }
         [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Required")]
@@ -132,6 +132,9 @@ namespace CRS.ADMIN.APPLICATION.Models.BasicClubManagement
         [DisplayName("Landline Number")]
         [RegularExpression("^[0-9]{10,11}$", ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "The_field_must_be_a_either_10_digit_or_11_digit_number")]
         public string LandlineNumber { get; set; }
+        [DisplayName("Contact Number")]
+        [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Required")]
+        [RegularExpression("^[0-9]{11}$", ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "The_field_must_be_a_11_digit_number")]
         public string MobileNumber { get; set; }
         [DisplayName("Club Name (English)")]
         [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Required")]
@@ -203,7 +206,7 @@ namespace CRS.ADMIN.APPLICATION.Models.BasicClubManagement
         public string City { get; set; }
         [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Required")]
         public string Street { get; set; }
-        [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Required")]
+        //[Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Required")]
         public string BuildingRoomNo { get; set; }
 
         [RegularExpression("^[0-9]+$", ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Invalid_amount")]

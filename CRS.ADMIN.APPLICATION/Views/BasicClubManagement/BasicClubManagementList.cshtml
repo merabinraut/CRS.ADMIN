@@ -148,7 +148,7 @@
                                 {
                                     <tr class="bg-white border-b ">
                                         <td class="p-[12px]">
-                                            @SN
+                                            @item.SNO
                                         </td>
                                         <td class="p-[12px]">
                                             <div class="round-image-text flex gap-[12px] w-max">
@@ -162,7 +162,7 @@
                                             </div>
                                         </td>
                                         <td class="p-[12px]">
-                                            @item.LandLineNumber
+                                            @item.MobileNumber
                                         </td>
                                         <td class="p-[12px]">
                                             @item.Location
@@ -184,22 +184,22 @@
                                         <td class="p-[12px]">
                                             <div class="flex gap-[7px]">
                                                 <i class="las la-edit text-[20px] cursor-pointer text-[#A6A6A6]" onclick="ManageBasicClubDetailsFunction('@item.AgentId');"></i>
-                                                @*@if (!string.IsNullOrEmpty(@item.Status) && @item.Status.ToUpper() == "A")
-                                                    {
-                                                        <div onclick="openBlockEventModal('@item.AgentId')" data-modal-target="block-basicclub-confirmation" data-modal-toggle="block-basicclub-confirmation">
-                                                            <i class="fa-solid fa-lock text-primary-100 cursor-pointer"></i>
-                                                        </div>
-                                                    }
-                                                    else if (!string.IsNullOrEmpty(@item.Status) && @item.Status.ToUpper() == "B")
-                                                    {
-                                                        <div onclick="openUnBlockEventModal('@item.AgentId')" data-modal-target="unblock-basicclub-confirmation" data-modal-toggle="unblock-basicclub-confirmation">
-                                                            <i class="fa-solid fa-unlock text-primary-100 cursor-pointer"></i>
-                                                        </div>
-                                                    }*@
+                                                @if (!string.IsNullOrEmpty(@item.Status) && @item.Status.ToUpper() == "A")
+                                                {
+                                                    <div onclick="openBlockEventModal('@item.AgentId')" data-modal-target="block-basicclub-confirmation" data-modal-toggle="block-basicclub-confirmation">
+                                                        <i class="fa-solid fa-lock text-primary-100 cursor-pointer"></i>
+                                                    </div>
+                                                }
+                                                else if (!string.IsNullOrEmpty(@item.Status) && @item.Status.ToUpper() == "B")
+                                                {
+                                                    <div onclick="openUnBlockEventModal('@item.AgentId')" data-modal-target="unblock-basicclub-confirmation" data-modal-toggle="unblock-basicclub-confirmation">
+                                                        <i class="fa-solid fa-unlock text-primary-100 cursor-pointer"></i>
+                                                    </div>
+                                                }
                                                 <i class=" las la-trash-alt text-[20px] cursor-pointer text-[#CB3F3F]" onclick="openDeleteClubModal('@item.AgentId');" data-modal-target="delete-basicclub-confirmation" data-modal-toggle="delete-basicclub-confirmation"></i>
                                                 @*<i class="las la-edit text-[20px] cursor-pointer text-[#A6A6A6]" onclick="ManageConversionBasicClub('@item.AgentId');"></i>*@
                                                 <img src="/Content/assets/images/conversion.svg" alt="notice" class="cursor-pointer h-[20px] aspect-square" onclick="ManageConversionBasicClub('@item.AgentId');" data-drawer-target="conversion-to preminum-club" data-drawer-show="conversion-to preminum-club" data-drawer-placement="right" data-drawer-backdrop="false" aria-controls="drawer-disabled-backdrop">
-
+                                                <i class="las la-user text-[20px] cursor-pointer text-[#A6A6A6]" onclick="HostRedirectFunction('@item.AgentId');"></i>
                                             </div>
                                         </td>
                                     </tr>
@@ -494,10 +494,13 @@
              }
          })
         }
+
+        function HostRedirectFunction(i) {
+            window.location.href = '/HostManagement/HostList?AgentId=' + i +'&clubCategory=BASIC';
+        }
         var commaSeparatedString = "";
         $(document).ready(function () {
             $('#submit-button-basic-id').click(function () {
-                debugger;
                 commaSeparatedString = [];
                 var items = [];
                 $('#large[name="holiday"] option:selected').each(function () {
@@ -706,8 +709,7 @@
 
     //---------------------------------------START required validation according to next button-------------------------------------////
         nextButton.addEventListener('click', () => {
-            var id = $('.content-section[style*="display: block"]').attr('id');
-
+            var id = $('.PremiumClub[style*="display: block"]').attr('id');
             if (id.toLowerCase() == "content1") {
                 var isimagevalid = true;
                 var logo = $("#file_name_logo").text().trim().toLowerCase(); //$("input[name='Logo_Certificate']").val();
@@ -797,7 +799,6 @@
 
             else if (id.toLowerCase() == "content3")
             {
-
                 var locationDDL = $('div #content3').find('#large[name="LocationDDL"]').val();
                 if (locationDDL == "")
                 {
@@ -841,14 +842,12 @@
 
 
         $('#file_input_logo').on('change', function () {
-            debugger;
             var logo = $("#file_name_logo").text().trim().toLowerCase();
             if (logo != "") {
                 $('span.field-validation-valid[data-valmsg-for="Logo"]').text('');
             }
         });
         $('#file_input_cover').on('change', function () {
-            debugger;
             var CoverPhoto = $("#file_name_cover").text().trim().toLowerCase();
             if (CoverPhoto != "") {
                 $('span.field-validation-valid[data-valmsg-for="CoverPhoto"]').text('');
@@ -899,7 +898,12 @@
             }
         });
         $(document).ready(function () {
-
+            $('#ManagePremiumClubForm').on('keypress', function (e) {
+                if (e.key === 'Enter') { // Use 'Enter' for better readability
+                    e.preventDefault(); // Prevent form submission
+                    return false; // Prevent any default action
+                }
+            });
             var validator = $('#ManagePremiumClubForm').validate({
                 errorClass: 'invalid',
                 errorElement: 'div',
@@ -963,9 +967,9 @@
                     Street: {
                         required: true
                     },
-                    BuildingRoomNo: {
-                        required: true
-                    },
+                    //BuildingRoomNo: {
+                    //    required: true
+                    //},
                     WorkingHrFrom: {
                         required: true
                     },
@@ -1031,9 +1035,9 @@
                    Street: {
                         required: '@CRS.ADMIN.APPLICATION.Resources.Resource.Required'
                    },
-                   BuildingRoomNo: {
+                   @*BuildingRoomNo: {
                         required: '@CRS.ADMIN.APPLICATION.Resources.Resource.Required'
-                    },
+                    },*@
                     WorkingHrFrom: {
                        required: '@CRS.ADMIN.APPLICATION.Resources.Resource.Required'
                     },

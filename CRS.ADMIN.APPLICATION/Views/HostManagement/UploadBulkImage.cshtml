@@ -1,0 +1,470 @@
+﻿@model CRS.ADMIN.APPLICATION.Models.HostManagement.ManageHostCommonModel
+@{
+    ViewBag.Title = "Host List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var _ManageHostModel = Model.ManageHostModel as CRS.ADMIN.APPLICATION.Models.HostManagement.ManageHostModel;
+}
+<link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+<div class="px-8 py-4">
+    @Html.AntiForgeryToken()
+    <!-- title  -->
+    <div class="flex flex-col  gap-6">
+        <div>
+            <div class="heading-title">
+                @CRS.ADMIN.APPLICATION.Resources.Resource.Host_Management
+            </div>
+            <div class="span-title-light-gray">
+                @CRS.ADMIN.APPLICATION.Resources.Resource.Host_Management_Supporting_Text
+            </div>
+        </div>
+        <div class="flex justify-between pb-[24px]">
+            <form action="/HostManagement/HostList" method="get">
+                <div class="relative input-search-wrapper">
+                    <div class="absolute inset-y-0 left-0 flex items-center pl-[16px] pointer-events-none">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21" fill="none">
+                            <path d="M17.5 18L13.875 14.375M15.8333 9.66667C15.8333 13.3486 12.8486 16.3333 9.16667 16.3333C5.48477 16.3333 2.5 13.3486 2.5 9.66667C2.5 5.98477 5.48477 3 9.16667 3C12.8486 3 15.8333 5.98477 15.8333 9.66667Z"
+                                  stroke="#667085" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                    </div>
+                    <input name="AgentId" value="@ViewBag.AgentId" hidden />
+                    <input type="search"
+                           id="default-search"
+                           class="input-search block w-full "
+                           placeholder="@CRS.ADMIN.APPLICATION.Resources.Resource.Search"
+                           value="@ViewBag.SearchFilter"
+                           name="SearchFilter">
+                    <input type="submit" value="Submit" hidden>
+                </div>
+            </form>
+            <div class="flex gap-6">
+                @*<div class="export-button h-[40px]" onclick="exportCSVExcel();">
+                        <img src="~/Content/assets_new/images/club/download-solid.svg"> @CRS.ADMIN.APPLICATION.Resources.Resource.Export
+                    </div>*@
+                <div class="btn btn-primary gap-[8px] h-[40px]" data-drawer-target="add-new-host" data-drawer-show="add-new-host"
+                     data-drawer-placement="right" data-drawer-backdrop="false" aria-controls="drawer-disabled-backdrop">
+                    <img src="~/Content/assets_new/images/plus-circle-solid.svg" />
+                    @CRS.ADMIN.APPLICATION.Resources.Resource.Add_New
+                </div>
+            </div>
+
+        </div>
+        <div class="table-tab">
+            <div class="px-[16px] py-[12px] flex justify-between entry-export-container">
+                <div class="flex items-center select-entries" id="ShowEntries-Id">
+                </div>
+                <div class="export-button h-[40px]" onclick="exportExcel('table-id', 'Host')">
+                    <img src="~/Content/assets_new/images/club/download-solid.svg"> @CRS.ADMIN.APPLICATION.Resources.Resource.Export
+                </div>
+            </div>
+
+            <div class="relative overflow-x-auto">
+                <table class="w-full  text-left club-table" id="table-id">
+                    <thead class="club-table-thead">
+                        <tr>
+                            <th scope="col" class="p-[12px]">
+                                <div class="flex  w-max">
+                                    S.N
+                                    <div class="relative pl-[5px]">
+                                        <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                        <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                    </div>
+                                </div>
+                            </th>
+                            <th scope="col" class="p-[12px]">
+                                <div class="flex  w-max">
+                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Host_Info
+                                    <div class="relative pl-[5px]">
+                                        <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                        <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                    </div>
+                                </div>
+                            </th>
+                            <th scope="col" class="p-[12px]">
+                                <div class="flex  w-max">
+                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Ratings
+                                    <div class="relative pl-[5px]">
+                                        <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                        <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                    </div>
+                                </div>
+                            </th>
+
+                            <th scope="col" class="p-[12px]">
+                                <div class="flex  w-max">
+                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Total_Visitors
+                                    <div class="relative pl-[5px]">
+                                        <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                        <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                    </div>
+                                </div>
+                            </th>
+                            <th scope="col" class="p-[12px]">
+                                <div class="flex  w-max">
+                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Created_On
+                                    <div class="relative pl-[5px]">
+                                        <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                        <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                    </div>
+                                </div>
+                            </th>
+                            <th scope="col" class="p-[12px]">
+                                <div class="flex  w-max">
+                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Updated_On
+                                    <div class="relative pl-[5px]">
+                                        <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                        <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                    </div>
+                                </div>
+                            </th>
+                            <th scope="col" class="p-[12px]">
+                                <div class="flex  w-max">
+                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Status
+                                    <div class="relative pl-[5px]">
+                                        <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                        <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                    </div>
+                                </div>
+                            </th>
+                            <th scope="col" class="p-[12px]">
+                                <div class="flex  w-max justify-center">
+                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Action
+                                    <div class="relative pl-[5px]">
+                                        <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                        <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                    </div>
+                                </div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            foreach (var item in Model.HostListModel)
+                            {
+                                <tr class="bg-white border-b ">
+                                    <td class="p-[12px]">
+                                        @item.SNO
+                                    </td>
+                                    <td class="p-[12px]">
+                                        <div class="round-image-text flex gap-[12px] w-max">
+                                            <img class="w-[32px] h-[32px] rounded-full" src="@item.HostImage" />
+
+                                            <div class="flex justify-between w-full">
+                                                <div class="text-image grid flex-none ">
+                                                    <div class="text-sm font-semibold text-[#101828] ">@item.HostName</div>
+                                                    @*<div class='text-xs  text-[#404040] '>@item.HostName</div>*@
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="p-[12px]">
+                                        @item.Ratings
+
+                                    </td>
+                                    <td class="p-[12px]">
+                                        @item.TotalVisitors
+
+                                    </td>
+                                    <td class="p-[12px]">
+                                        @item.CreatedDate
+                                    </td>
+                                    <td class="p-[12px]">
+                                        @item.UpdatedDate
+                                    </td>
+                                    <td class="p-[12px]">
+                                        @if (item.Status.Trim().ToUpper() == "B")
+                                        {
+                                            <div class="rejected"> @CRS.ADMIN.APPLICATION.Resources.Resource.Blocked</div>
+                                        }
+                                        else if (item.Status.Trim().ToUpper() == "A")
+                                        {
+                                    <div class="approved"> @CRS.ADMIN.APPLICATION.Resources.Resource.Active</div>
+                                        }
+                                    </td>
+                                    <td class="p-[12px]">
+                                        <div class="flex gap-[9px] justify-center text-[16px] ">
+                                            @if (item.Status.Trim().ToUpper() == "A")
+                                            {
+                                                <div>
+                                                    <i class="fa-regular fa-pen-to-square text-[#989898] cursor-pointer" onclick="ManageHostGetDetailsFunction('@item.AgentId', '@item.HostId');"></i>
+                                                </div>
+                                                <div>
+                                                    <a onclick="HostGalleryRedirectFunction('@item.AgentId', '@item.HostId');">
+                                                        <i class="las la-image text-[#C8B477] text-[20px] mt-[1px] cursor-pointer"></i>
+                                                    </a>
+                                                </div>
+                                            }
+                                            <div>
+                                                <i class="las la-trash-alt text-[20px] cursor-pointer text-[#CB3F3F]" title="Delete Host" onclick="LangChangeAlert('Are you sure you want to delete this host?','Confirm','@item.AgentId', '@item.HostId','D')"></i>
+                                            </div>
+                                            @if (item.Status.Trim().ToUpper() == "B")
+                                            {
+                                                <div>
+                                                    <i class="las la-unlock cursor-pointer text-[#697DBF] text-[18px]" title="Unblock Host" onclick="LangChangeAlert('Are you sure you want to unblock this host?','Confirm','@item.AgentId', '@item.HostId','U')"></i>
+                                                </div>
+                                            }
+                                            else
+                                            {
+                                                <div>
+                                                    <i class="las la-unlock cursor-pointer text-[#CB3F3F] text-[18px]" title="Block Host" onclick="LangChangeAlert('Are you sure you want to block this host?','Confirm','@item.AgentId', '@item.HostId','B')"></i>
+                                                </div>
+                                            }
+
+                                            @*}*@
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        }
+
+                    </tbody>
+                </table>
+
+            </div>
+            <div class="pagination-club">
+                <div class="show-entry" id="Entries-Id">
+                </div>
+                <div class="flex gap-[12px]">
+                    <div class="btn btn-secondary-box-shadow" id="prev-btn">
+                        @CRS.ADMIN.APPLICATION.Resources.Resource.Previous
+                    </div>
+                    <div class="flex gap-[12px]" id="pagination-id">
+                    </div>
+                    <div class="btn btn-secondary-box-shadow" id="next-btn">
+                        @CRS.ADMIN.APPLICATION.Resources.Resource.Next
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- drawer component -->
+        @Html.Partial("_ManageHostPartialView", _ManageHostModel)
+    </div>
+</div>
+@section scripts
+{
+    <script>
+     $(document).ready(function () {
+         $('select').select2({
+             minimumResultsForSearch: Infinity
+         });
+          var PopUpRenderValue = '@ViewBag.PopUpRenderValue';
+         if (PopUpRenderValue != null && PopUpRenderValue != "" && PopUpRenderValue == "ManageHost") {
+              var element = document.getElementById('add-new-host');
+              element.classList.remove('translate-x-full');
+         }
+     });
+    </script>
+    <script>
+
+        function LangChangeAlert(message, buttonText, agentId, hostId, type) {
+            toastr.options = {
+                "closeButton": true,
+                "debug": false,
+                "newestOnTop": false,
+                "progressBar": false,
+                "positionClass": "toast-top-right",
+                "preventDuplicates": true,
+                "showDuration": "300",
+                "hideDuration": "0",
+                "timeOut": 0,
+                "extendedTimeOut": 0,
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut",
+                "tapToDismiss": false
+            };
+
+            let buttonHtml;
+                buttonHtml = `
+            <button style="display: block; margin-top: 10px; background-color: #007bff; color: #fff; border: none; padding: 5px 10px; cursor: pointer;"
+                    onclick="handleLanguageSelection('${agentId}', '${hostId}', '${type}')">
+                ${buttonText}
+            </button>`;
+
+            const fullMessage = `${message} ${buttonHtml}`;
+
+            toastr.info(fullMessage);
+        }
+
+
+
+
+        function handleLanguageSelection(agentId, hostId, type) {
+            switch (type) {
+                case "B":
+                    BlockFunction(agentId, hostId);
+                    break;
+                case "U":
+                    UnBlockFunction(agentId, hostId);
+                    break;
+                default:
+                    DeleteHostFunction(agentId, hostId);
+                    break;
+            }
+        }
+
+
+        function BlockFunction(i, j) {
+    var RequestVerificationToken = $('input[name="__RequestVerificationToken"]').val();
+    $.ajax({
+        type: "POST",
+        url: '@Url.Action("BlockHost", "HostManagement")',
+        data: {
+            '__RequestVerificationToken': RequestVerificationToken,
+            'AgentId': i,
+            'HostId': j
+        },
+        success: function (response) {
+            window.location.reload();
+        },
+        error: function (error) {
+            window.location.reload();
+        }
+    });
+}
+
+        function UnBlockFunction(i, j) {
+            var RequestVerificationToken = $('input[name="__RequestVerificationToken"]').val();
+        $.ajax({
+                 type: "POST",
+                 url: '@Url.Action("UnBlockHost", "HostManagement")',
+                 data: {
+                     '__RequestVerificationToken': RequestVerificationToken, 'AgentId': i, 'HostId' : j},
+                success: function (response) {
+                    window.location.reload();
+                 },
+                error: function (error) {
+                    window.location.reload();
+                 }
+             })
+        }
+
+
+   function DeleteHostFunction(i, j) {
+    var RequestVerificationToken = $('input[name="__RequestVerificationToken"]').val();
+    $.ajax({
+        type: "POST",
+        url: '@Url.Action("DeleteHostAsync", "HostManagement")',
+        data: {
+            '__RequestVerificationToken': RequestVerificationToken,
+            'AgentId': i,
+            'HostId': j
+        },
+        success: function (response) {
+            window.location.reload();
+        },
+        error: function (error) {
+            window.location.reload();
+        }
+    });
+}
+
+
+        function HostGalleryRedirectFunction(i, j) {
+            window.location.href = '/HostManagement/GalleryManagement?AgentId=' + i + '&&HostId=' + j;
+        }
+    </script>
+
+    <script>
+        function CancelFunction() {
+            location.reload();
+        }
+        function ManageHostGetDetailsFunction(i, j) {
+            window.location.href = '/HostManagement/ManageHost?AgentId=' + i + '&&HostId=' + j;
+        }
+    </script>
+
+    <script>
+     document.addEventListener('DOMContentLoaded', function () {
+             const page_size = @ViewBag.PageSize;
+             const total_data = @ViewBag.TotalData;
+             const start_index_val = @ViewBag.StartIndex;
+             let URL = "/HostManagement/HostList";
+             let search_filter = '@ViewBag.SearchFilter';
+             let AgentId = '@ViewBag.AgentId';
+             URL = addQueryParam(URL, 'SearchFilter', search_filter);
+             URL = addQueryParam(URL, 'AgentId', AgentId);
+             LoadPagination(page_size, total_data, start_index_val, URL);
+         });
+    </script>
+
+    <script>
+                const steps = document.querySelectorAll('.profile-steps');
+        const nextButton = document.getElementById('nextBtn');
+        const saveData = document.getElementById('saveData');
+        const previousButton = document.getElementById('previousBtn');
+        const submitButton = document.getElementById('submit-button-id');
+        const contentSections = document.querySelectorAll('.content-section');
+
+        let currentStep = 0;
+        const cancelButton = document.querySelector('.resetForm');
+
+        cancelButton.addEventListener('click', () => {
+            currentStep = 0; // Reset the step to 0
+            updateStep(); // Update the UI to reflect the new step
+        });
+
+        const updateStep = () => {
+            steps.forEach((step, index) => {
+                if (index === currentStep) {
+                    step.classList.add('active');
+                    step.classList.remove('active-green');
+                } else if (index < currentStep) {
+                    step.classList.remove('active');
+                    step.classList.add('active-green');
+                } else {
+                    step.classList.remove('active', 'active-green');
+                }
+            });
+
+            contentSections.forEach((section, index) => {
+                if (index === currentStep) {
+                    section.style.display = 'block';
+                } else {
+                    section.style.display = 'none';
+                }
+            });
+
+            if (currentStep === 0) {
+                previousButton.style.display = 'none';
+                previousButton.setAttribute('type', 'button');
+            } else {
+                previousButton.style.display = 'inline';
+                previousButton.setAttribute('type', 'button');
+            }
+
+            if (currentStep === steps.length - 1) {
+                nextButton.style.display = 'none';
+                //saveData.style.display = 'block';
+                nextButton.textContent = '@CRS.ADMIN.APPLICATION.Resources.Resource.Save_Changes';
+                nextButton.setAttribute('type', 'button');
+            } else {
+                nextButton.style.display = 'block';
+                //saveData.style.display = 'none';
+                nextButton.textContent = '@CRS.ADMIN.APPLICATION.Resources.Resource.Next';
+                nextButton.setAttribute('type', 'button');
+                $('')
+            }
+        };
+
+        nextButton.addEventListener('click', () => {
+            if (currentStep < steps.length - 1) {
+                currentStep++;
+                updateStep();
+            }
+        });
+
+        previousButton.addEventListener('click', () => {
+            if (currentStep > 0) {
+                currentStep--;
+                updateStep();
+            }
+        });
+
+        // Initial state setup
+        updateStep();
+    </script>
+}
