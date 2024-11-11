@@ -203,6 +203,7 @@
         });
     </script>
     <script>
+
         function CancelFunction() {
             location.reload();
         }
@@ -211,17 +212,24 @@
             document.getElementById("ManageHostGalleryForm").submit();
         }
 
-        function ManageGalleryFunction(i, j, k,l) {
-            window.location.href = '/HostManagement/ManageGallery?AgentId=' + i + '&&HostId=' + j + '&&GalleryId=' + k + '&clubCategory=' + l;;
+        function ManageGalleryFunction(i, j, k, l) {
+            const page_size = @ViewBag.PageSizeBck;
+            const start_index_val = @ViewBag.StartIndexBck;
+            let search_filter = '@ViewBag.SearchFilterBck';
+            window.location.href = '/HostManagement/ManageGallery?AgentId=' + i + '&&HostId=' + j + '&&GalleryId=' + k + '&clubCategory=' + l + '&PageSizeBck=' + page_size + '&StartIndexBck=' + start_index_val + '&SearchFilterBck=' + search_filter;
         }
 
-        function ManageStatusFunction(i,j,k,l) {
+        function ManageStatusFunction(i, j, k, l) {
+         const page_size = @ViewBag.PageSizeBck;
+        const start_index_val = @ViewBag.StartIndexBck;
+        let search_filter = '@ViewBag.SearchFilterBck';
         var RequestVerificationToken = $('input[name="__RequestVerificationToken"]').val();
         $.ajax({
              type: "POST",
              url: '@Url.Action("ManageGalleryStatus", "HostManagement")',
              data: {
-                 '__RequestVerificationToken': RequestVerificationToken, 'AgentId': i, 'HostId': j, 'GalleryId': k, 'clubCategory' : l },
+                 '__RequestVerificationToken': RequestVerificationToken, 'AgentId': i, 'HostId': j, 'GalleryId': k, 'clubCategory': l, 'PageSizeBck': page_size, 'StartIndexBck': start_index_val, 'SearchFilterBck': search_filter
+},
             success: function (response) {
                 window.location.reload();
              },

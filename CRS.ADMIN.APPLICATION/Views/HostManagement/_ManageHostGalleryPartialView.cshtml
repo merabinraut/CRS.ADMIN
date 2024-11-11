@@ -18,13 +18,16 @@
             {
                 @Html.AntiForgeryToken()
                 @Html.HiddenFor(model => model.AgentId);
-                @Html.HiddenFor(model => model.HostId);  
+                @Html.HiddenFor(model => model.HostId);
                 @Html.HiddenFor(model => model.clubCategory);
                 if (!string.IsNullOrEmpty(Model.GalleryId))
                 {
                     @Html.HiddenFor(model => model.GalleryId);
                     @Html.HiddenFor(model => model.ImagePath);
                 }
+                <input type="hidden" name="StartIndexBck" value="@ViewBag.StartIndexBck"/>
+                <input type="hidden" name="PageSizeBck" value="@ViewBag.PageSizeBck"/>
+                <input type="hidden" name="SearchFilterBck" value="@ViewBag.SearchFilterBck" />
                 <div class="grid grid-cols-1 gap-x-[20px] gap-y-[16px]">
                     <div class="input-field-common">
                         <label for="email" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
@@ -80,13 +83,13 @@
                     <div class="flex gap-[24px]">
                         <div class="btn btn-secondary rounded-[4px] px-4" data-drawer-hide="add-new-gallery"
                              aria-controls="add-new-gallery" onclick="CancelFunction();">@CRS.ADMIN.APPLICATION.Resources.Resource.Cancel</div>
-                        <div class="btn btn-primary rounded-[4px] px-4">
-                            <button type="submit">@CRS.ADMIN.APPLICATION.Resources.Resource.Create</button>
+                            <div class="btn btn-primary rounded-[4px] px-4">
+                                <button type="submit">@CRS.ADMIN.APPLICATION.Resources.Resource.Create</button>
+                            </div>
                         </div>
-                    </div>
 
-                </div>
-            }
+                    </div>
+                }
         </div>
 
     </div>

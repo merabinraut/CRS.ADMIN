@@ -16,14 +16,52 @@ namespace CRS.ADMIN.REPOSITORY.HostManagement
         {
             _DAO = new RepositoryDao();
         }
+        //public List<HostListCommon> GetHostList(string AgentId, PaginationFilterCommon Request)
+        //{
+        //    var response = new List<HostListCommon>();
+        //    string SQL = "EXEC sproc_host_management @Flag='ghl'";
+        //    SQL += ",@AgentId=" + _DAO.FilterString(AgentId);
+        //    SQL += !string.IsNullOrEmpty(Request.SearchFilter) ? ",@SearchFilter=N" + _DAO.FilterString(Request.SearchFilter) : null;
+        //    SQL += ",@Skip=" + Request.Skip;
+        //    SQL += ",@Take=" + Request.Take;
+        //    var dbResponse = _DAO.ExecuteDataTable(SQL);
+        //    if (dbResponse != null)
+        //    {
+        //        foreach (DataRow item in dbResponse.Rows)
+        //        {
+        //            response.Add(new HostListCommon()
+        //            {
+        //                AgentId = _DAO.ParseColumnValue(item, "AgentId").ToString(),
+        //                HostId = _DAO.ParseColumnValue(item, "HostId").ToString(),
+        //                HostName = _DAO.ParseColumnValue(item, "HostName").ToString(),
+        //                Position = _DAO.ParseColumnValue(item, "Position").ToString(),
+        //                Rank = _DAO.ParseColumnValue(item, "Rank").ToString(),
+        //                Age = _DAO.ParseColumnValue(item, "Age").ToString(),
+        //                Status = _DAO.ParseColumnValue(item, "Status").ToString(),
+        //                CreatedDate = !string.IsNullOrEmpty(_DAO.ParseColumnValue(item, "CreatedDate").ToString()) ? DateTime.Parse(_DAO.ParseColumnValue(item, "CreatedDate").ToString()).ToString("yyyy'年'MM'月'dd'日' HH:mm:ss") : _DAO.ParseColumnValue(item, "CreatedDate").ToString(),
+        //                UpdatedDate = !string.IsNullOrEmpty(_DAO.ParseColumnValue(item, "UpdatedDate").ToString()) ? DateTime.Parse(_DAO.ParseColumnValue(item, "UpdatedDate").ToString()).ToString("yyyy'年'MM'月'dd'日' HH:mm:ss") : _DAO.ParseColumnValue(item, "UpdatedDate").ToString(),
+        //                ClubName = _DAO.ParseColumnValue(item, "ClubName").ToString(),
+        //                Ratings = _DAO.ParseColumnValue(item, "Ratings").ToString(),
+        //                TotalVisitors = _DAO.ParseColumnValue(item, "TotalVisitors").ToString(),
+        //                HostImage = _DAO.ParseColumnValue(item, "HostImage").ToString(),
+        //                TotalRecords = Convert.ToInt32(_DAO.ParseColumnValue(item, "TotalRecords").ToString()),
+        //                SNO = Convert.ToInt32(_DAO.ParseColumnValue(item, "SNO").ToString()),
+        //                Height = _DAO.ParseColumnValue(item, "Height").ToString(),
+        //                Address = _DAO.ParseColumnValue(item, "Address").ToString()
+        //            });
+        //        }
+        //    }
+        //    return response;
+        //}
         public List<HostListCommon> GetHostList(string AgentId, PaginationFilterCommon Request)
         {
             var response = new List<HostListCommon>();
-            string SQL = "EXEC sproc_host_management @Flag='ghl'";
+            string SQL = "EXEC sproc_host_management @Flag='ghl_rk'";
             SQL += ",@AgentId=" + _DAO.FilterString(AgentId);
             SQL += !string.IsNullOrEmpty(Request.SearchFilter) ? ",@SearchFilter=N" + _DAO.FilterString(Request.SearchFilter) : null;
             SQL += ",@Skip=" + Request.Skip;
             SQL += ",@Take=" + Request.Take;
+            var i = Request.Skip + 1;
             var dbResponse = _DAO.ExecuteDataTable(SQL);
             if (dbResponse != null)
             {
@@ -40,20 +78,21 @@ namespace CRS.ADMIN.REPOSITORY.HostManagement
                         Status = _DAO.ParseColumnValue(item, "Status").ToString(),
                         CreatedDate = !string.IsNullOrEmpty(_DAO.ParseColumnValue(item, "CreatedDate").ToString()) ? DateTime.Parse(_DAO.ParseColumnValue(item, "CreatedDate").ToString()).ToString("yyyy'年'MM'月'dd'日' HH:mm:ss") : _DAO.ParseColumnValue(item, "CreatedDate").ToString(),
                         UpdatedDate = !string.IsNullOrEmpty(_DAO.ParseColumnValue(item, "UpdatedDate").ToString()) ? DateTime.Parse(_DAO.ParseColumnValue(item, "UpdatedDate").ToString()).ToString("yyyy'年'MM'月'dd'日' HH:mm:ss") : _DAO.ParseColumnValue(item, "UpdatedDate").ToString(),
-                        ClubName = _DAO.ParseColumnValue(item, "ClubName").ToString(),
-                        Ratings = _DAO.ParseColumnValue(item, "Ratings").ToString(),
+                        //ClubName = _DAO.ParseColumnValue(item, "ClubName").ToString(),
+                        //Ratings = _DAO.ParseColumnValue(item, "Ratings").ToString(),
                         TotalVisitors = _DAO.ParseColumnValue(item, "TotalVisitors").ToString(),
-                        HostImage = _DAO.ParseColumnValue(item, "HostImage").ToString(),
-                        TotalRecords = Convert.ToInt32(_DAO.ParseColumnValue(item, "TotalRecords").ToString()),
-                        SNO = Convert.ToInt32(_DAO.ParseColumnValue(item, "SNO").ToString()),
+                        HostImage = _DAO.ParseColumnValue(item, "Thumbnail").ToString(),
+                        TotalRecords = Convert.ToInt32(_DAO.ParseColumnValue(item, "RowsTotal").ToString()),
+                        SNO = i,
                         Height = _DAO.ParseColumnValue(item, "Height").ToString(),
                         Address = _DAO.ParseColumnValue(item, "Address").ToString()
+                       
                     });
+                    i++;
                 }
             }
             return response;
         }
-
         public ManageHostCommon GetHostDetail(string AgentId, string HostId)
         {
             var Response = new ManageHostCommon();
