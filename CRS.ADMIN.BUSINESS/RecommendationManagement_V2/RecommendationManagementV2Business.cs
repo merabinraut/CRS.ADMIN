@@ -1,5 +1,6 @@
 ﻿using CRS.ADMIN.REPOSITORY.RecommendationManagement_V2;
 using CRS.ADMIN.SHARED;
+using CRS.ADMIN.SHARED.PaginationManagement;
 using CRS.ADMIN.SHARED.RecommendationManagement_V2;
 using System.Collections.Generic;
 
@@ -58,9 +59,9 @@ namespace CRS.ADMIN.BUSINESS.RecommendationManagement_V2
             return _repo.GetClubRequestListByMainPage(locationId, groupId, SearchFilter);
         }
 
-        public List<SearchPageClubRequestListModelCommon> GetClubRequestListBySearchPage(string locationId, string SearchFilter = "")
+        public List<SearchPageClubRequestListModelCommon> GetClubRequestListBySearchPage(string locationId,PaginationFilterCommon objPaginationFilterCommon )
         {
-            return _repo.GetClubRequestListBySearchPage(locationId, SearchFilter);
+            return _repo.GetClubRequestListBySearchPage(locationId, objPaginationFilterCommon);
         }
 
         public List<DisplayPageListModelCommon> GetDisplayPageList()

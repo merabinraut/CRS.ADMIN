@@ -981,11 +981,11 @@
                     $('span.field-validation-valid[data-valmsg-for="Logo"]').text('@CRS.ADMIN.APPLICATION.Resources.Resource.Required');
                     isimagevalid = false;
                 }
-                if (CoverPhoto == "no file choosen" || CoverPhoto == "ファイルが選択されていません")
+                @*if (CoverPhoto == "no file choosen" || CoverPhoto == "ファイルが選択されていません")
                 {
                     $('span.field-validation-valid[data-valmsg-for="CoverPhoto"]').text('@CRS.ADMIN.APPLICATION.Resources.Resource.Required');
                     isimagevalid = false;
-                }
+                }*@
                 if ((CorporateRegistryDocument == "no file choosen" || CorporateRegistryDocument == "ファイルが選択されていません") && (businesstype == "corporation" || businesstype == "法人"))
                 {
                     $('span.field-validation-valid[data-valmsg-for="CorporateRegistryDocument"]').text('@CRS.ADMIN.APPLICATION.Resources.Resource.Required');
@@ -1100,12 +1100,12 @@
                 $('span.field-validation-valid[data-valmsg-for="Logo"]').text('');
             }
         });
-        $('#file_input_cover').on('change', function () {
-            var CoverPhoto = $("#file_name_cover").text().trim().toLowerCase();
-            if (CoverPhoto != "") {
-                $('span.field-validation-valid[data-valmsg-for="CoverPhoto"]').text('');
-            }
-        });
+        //$('#file_input_cover').on('change', function () {
+        //    var CoverPhoto = $("#file_name_cover").text().trim().toLowerCase();
+        //    if (CoverPhoto != "") {
+        //        $('span.field-validation-valid[data-valmsg-for="CoverPhoto"]').text('');
+        //    }
+        //});
         $('#file_input_corporateregistrydocument').on('change', function () {
             var CorporateRegistryDocument = $("#file_name_corporateregistrydocument").text().trim().toLowerCase();
             if (CorporateRegistryDocument != "") {
@@ -1200,9 +1200,9 @@
                         required: $('#large[name="BusinessTypeDDL"]').find("option:selected").text().trim().toLowerCase() == "corporation" ||
                                   $('#large[name="BusinessTypeDDL"]').find("option:selected").text().trim().toLowerCase() === "法人"
                     },
-                    GoogleMap: {
-                        required: true
-                    },
+                    //GoogleMap: {
+                    //    required: true
+                    //},
                     PostalCode: {
                         required: true
                     },
@@ -1268,9 +1268,9 @@
                     Representative1_Furigana: {
                         required: '@CRS.ADMIN.APPLICATION.Resources.Resource.Required'
                     },
-                    GoogleMap: {
+                    @*GoogleMap: {
                         required: '@CRS.ADMIN.APPLICATION.Resources.Resource.Required'
-                    },
+                    },*@
                     PostalCode: {
                         required: '@CRS.ADMIN.APPLICATION.Resources.Resource.Required'
                     },

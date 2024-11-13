@@ -3,10 +3,12 @@ using CRS.ADMIN.APPLICATION.Library;
 using CRS.ADMIN.APPLICATION.Models.RecommendationManagementV2;
 using CRS.ADMIN.BUSINESS.RecommendationManagement_V2;
 using CRS.ADMIN.SHARED;
+using CRS.ADMIN.SHARED.PaginationManagement;
 using CRS.ADMIN.SHARED.RecommendationManagement_V2;
 using DocumentFormat.OpenXml.Office2010.Excel;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web;
@@ -289,18 +291,27 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             TempData["OriginalUrl"] = Request.Url.ToString();
             return View(responseinfo);
         }
-        public ActionResult ClubListForSearchPageView(string locationid = "", string SearchFilter = "")
+        public ActionResult ClubListForSearchPageView(string locationid = "", string SearchFilter = "", int StartIndex = 0, int PageSize = 10)
         {
             ViewBag.IsBackAllowed = true;
             ViewBag.BackButtonURL = "/RecommendationManagementV2/DisplayPageView?locationid=" + locationid;
             string LocationId = locationid.DecryptParameter();
             CommonRecommendationModel responseinfo = new CommonRecommendationModel();
-            var dbResponseInfo = _business.GetClubRequestListBySearchPage(LocationId, SearchFilter);
+            PaginationFilterCommon dbRequest = new PaginationFilterCommon()
+            {
+                Skip = StartIndex,
+                Take = PageSize,
+                SearchFilter = !string.IsNullOrEmpty(SearchFilter) ? SearchFilter : null
+            };
+            var dbResponseInfo = _business.GetClubRequestListBySearchPage(LocationId, dbRequest);
             responseinfo.GetClubRequestListBySearchPage = dbResponseInfo.MapObjects<SearchPageClubRequestListModel>();
             responseinfo.GetClubRequestListBySearchPage.ForEach(x => x.ClubLogo = ImageHelper.ProcessedImage(x.ClubLogo));
             ViewBag.LocationId = locationid;
             ViewBag.SearchFilter = SearchFilter;
             TempData["OriginalUrl"] = Request.Url.ToString();
+            ViewBag.StartIndex = StartIndex;
+            ViewBag.PageSize = PageSize;
+            ViewBag.TotalData = dbResponseInfo != null && dbResponseInfo.Any() ? dbResponseInfo[0].TotalRecords : 0;
             return View(responseinfo);
         }
         public ActionResult ClubListForMainPage(string locationid = "", string groupid = "", string SearchFilter = "")

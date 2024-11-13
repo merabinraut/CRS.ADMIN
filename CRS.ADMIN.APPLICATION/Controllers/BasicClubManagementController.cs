@@ -592,11 +592,11 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                             ErrorMessage = "Logo required";
                             allowRedirect = true;
                         }
-                        else if (CoverPhoto_Certificate == null && string.IsNullOrEmpty(Model.CoverPhoto))
-                        {
-                            ErrorMessage = "Cover photo required";
-                            allowRedirect = true;
-                        }
+                        //else if (CoverPhoto_Certificate == null && string.IsNullOrEmpty(Model.CoverPhoto))
+                        //{
+                        //    ErrorMessage = "Cover photo required";
+                        //    allowRedirect = true;
+                        //}
 
 
                         if (Model.BusinessTypeDDL.DecryptParameter() == "1")
