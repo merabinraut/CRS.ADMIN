@@ -13,6 +13,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using static Google.Apis.Requests.BatchRequest;
 
 namespace CRS.ADMIN.APPLICATION.Controllers
 {
@@ -108,6 +109,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             ViewBag.GroupShuffling = GroupList;
             ViewBag.SetShufflingTime = SetShufflingTime;
             ViewBag.DisplayOrderDDL = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("DISPLAYORDERDDL", "", "") as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---"); ;
+            ViewBag.DisplayOrderDDLKey= responseInfo.ManageGroup.DisplayOrderId;
             TempData["OriginalUrl"] = Request.Url.ToString();
             ViewBag.LocationId = locationid;
             ViewBag.IsBackAllowed = true;
@@ -621,6 +623,18 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             var Groupid = groupId.DecryptParameter();
             var culture = Request.Cookies["culture"]?.Value;
             culture = string.IsNullOrEmpty(culture) ? "ja" : culture;
+            ManageClubRecommendationRequest responseInfo = new ManageClubRecommendationRequest
+            {
+                GroupId = groupId,
+                LocationId = locationId,
+                DisplayId = displayId,
+            };
+            if (TempData.ContainsKey("ManageClubRecommendationRequest")) responseInfo = TempData["ManageClubRecommendationRequest"] as ManageClubRecommendationRequest;
+            else responseInfo = new ManageClubRecommendationRequest();
+            ViewBag.ClubDDL = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("CLUBLIST", LocationId, "") as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---");
+            ViewBag.DisplayOrderDDL = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("DISPLAYORDERDDL", "", "") as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---");
+            ViewBag.ClubId = responseInfo.ClubId;
+            ViewBag.DisplayOrderId = responseInfo.DisplayOrderId;
             if (string.IsNullOrEmpty(LocationId))
             {
                 AddNotificationMessage(new NotificationModel()
@@ -643,24 +657,19 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 });
                 return RedirectToAction("GroupView", "RecommendationManagementV2", new { locationid = locationId });
             }
+
             ViewBag.IsBackAllowed = true;
             ViewBag.BackButtonURL = "/RecommendationManagementV2/ClubListForMainPage?locationid=" + locationId + "&groupid=" + groupId;
             #region "Get All Required DDL"
             ViewBag.ClubLocation = ApplicationUtilities.LoadDropdownList("LOCATIONDDL", LocationId, "") as Dictionary<string, string>;
             ViewBag.GroupDDLByLocationId = ApplicationUtilities.LoadDropdownList("GROUPDDLBYLOCATIONID", Groupid, "") as Dictionary<string, string>;
-            ViewBag.ClubDDL = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("CLUBLIST", LocationId, "") as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---");
-            ViewBag.DisplayOrderDDL = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("DISPLAYORDERDDL", "", "") as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---");
+                        
             ViewBag.HostDDLBYClubId = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("HOSTDDLBYCLUBID", "", "") as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---");
             #endregion
 
             #region "Get Recommendation Detail"
             TempData["OriginalUrl"] = Request.Url.ToString();
-            ManageClubRecommendationRequest responseInfo = new ManageClubRecommendationRequest
-            {
-                GroupId = groupId,
-                LocationId = locationId,
-                DisplayId = displayId,
-            };
+            
             return View(responseInfo);
             #endregion           
         }
@@ -673,6 +682,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             var queryParams = HttpUtility.ParseQueryString(query);
             var LocationId = !string.IsNullOrEmpty(Model.LocationId) ? Model.LocationId.DecryptParameter() : null;
             var GroupId = !string.IsNullOrEmpty(Model.GroupId) ? Model.GroupId.DecryptParameter() : null;
+            TempData["ManageClubRecommendationRequest"] = Model;
             if (string.IsNullOrEmpty(LocationId))
             {
                 AddNotificationMessage(new NotificationModel()

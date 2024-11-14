@@ -62,7 +62,7 @@
                                 style="width: 100%;">
                             @foreach (var item in ViewBag.DisplayOrderDDL as IEnumerable<SelectListItem>)
                             {
-                                var selectedId = ViewBag.DisplayOrderDDL as string;
+                                var selectedId = ViewBag.DisplayOrderDDLKey as string;
                                 if (item.Value == selectedId)
                                 {
                                     <option value="@item.Value" selected>
