@@ -527,7 +527,8 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             string kycDocumentPath = "";
             string LogoPath = "";
             string coverPhotoPath = "";
-            var allowedContentType = AllowedImageContentType();
+            var allowedContentType = AllowedImageContentType();  
+            var allowedContentTypeWithPDF = AllowedImageContentTypePdf();
             string dateTime = "";
             if (Model.BusinessTypeDDL.DecryptParameter() == "1")
             {
@@ -656,7 +657,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 {
                     var contentType = Business_Certificate.ContentType;
                     var ext = Path.GetExtension(Business_Certificate.FileName);
-                    if (allowedContentType.Contains(contentType.ToLower()))
+                    if (allowedContentTypeWithPDF.Contains(contentType.ToLower()))
                     {
                         businessCertificateFileName = $"{AWSBucketFolderNameModel.CLUB}/BusinessCertificate_{DateTime.Now.ToString("yyyyMMddHHmmssffff")}{ext.ToLower()}";
                         Model.BusinessCertificate = $"/{businessCertificateFileName}";
@@ -723,7 +724,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 {
                     var contentType = CorporateRegistry_Certificate.ContentType;
                     var ext = Path.GetExtension(CorporateRegistry_Certificate.FileName);
-                    if (allowedContentType.Contains(contentType.ToLower()))
+                    if (allowedContentTypeWithPDF.Contains(contentType.ToLower()))
                     {
                         CorporateRegistryFileName = $"{AWSBucketFolderNameModel.CLUB}/CompanyRegistry_{DateTime.Now.ToString("yyyyMMddHHmmssffff")}{ext.ToLower()}";
                         Model.CorporateRegistryDocument = $"/{CorporateRegistryFileName}";
@@ -752,7 +753,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                     {
                         var contentType = PassportPhotot_Certificate.ContentType;
                         var ext = Path.GetExtension(PassportPhotot_Certificate.FileName);
-                        if (allowedContentType.Contains(contentType.ToLower()))
+                        if (allowedContentTypeWithPDF.Contains(contentType.ToLower()))
                         {
                             PassportFileName = $"{AWSBucketFolderNameModel.CLUB}/PassportPhotot_{DateTime.Now.ToString("yyyyMMddHHmmssffff")}{ext.ToLower()}";
                             Model.PassportPhoto = $"/{PassportFileName}";
@@ -774,7 +775,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                     {
                         var contentType = InsurancePhoto_Certificate.ContentType;
                         var ext = Path.GetExtension(InsurancePhoto_Certificate.FileName);
-                        if (allowedContentType.Contains(contentType.ToLower()))
+                        if (allowedContentTypeWithPDF.Contains(contentType.ToLower()))
                         {
                             InsuranceFileName = $"{AWSBucketFolderNameModel.CLUB}/InsuranceCard_{DateTime.Now.ToString("yyyyMMddHHmmssffff")}{ext.ToLower()}";
                             Model.InsurancePhoto = $"/{InsuranceFileName}";
@@ -799,7 +800,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                     {
                         var contentType = KYCDocument_Certificate.ContentType;
                         var ext = Path.GetExtension(KYCDocument_Certificate.FileName);
-                        if (allowedContentType.Contains(contentType.ToLower()))
+                        if (allowedContentTypeWithPDF.Contains(contentType.ToLower()))
                         {
                             KYCDocumentFileName = $"{AWSBucketFolderNameModel.CLUB}/KYCDocument_{DateTime.Now.ToString("yyyyMMddHHmmssffff")}{ext.ToLower()}";
                             Model.KYCDocument = $"/{KYCDocumentFileName}";
@@ -820,7 +821,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                     {
                         var contentType = KYCDocumentBack_Certificate.ContentType;
                         var ext = Path.GetExtension(KYCDocumentBack_Certificate.FileName);
-                        if (allowedContentType.Contains(contentType.ToLower()))
+                        if (allowedContentTypeWithPDF.Contains(contentType.ToLower()))
                         {
                             KYCDocumentBackFileName = $"{AWSBucketFolderNameModel.CLUB}/KYCDocumentBack_{DateTime.Now.ToString("yyyyMMddHHmmssffff")}{ext.ToLower()}";
                             Model.KYCDocumentBack = $"/{KYCDocumentBackFileName}";

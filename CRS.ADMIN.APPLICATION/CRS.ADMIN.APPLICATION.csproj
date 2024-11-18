@@ -336,6 +336,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resource.Ja.resx</DependentUpon>
     </Compile>
+    <Content Include="Content\assets\images\pdficon.svg" />
     <Content Include="Views\AccountInformation\GetAccountInformation.cshtml" />
     <None Include="Views\BasicClubManagement\_PremiumClubtPartialView.cshtml" />
     <Content Include="Content\assets\images\conversion.svg" />

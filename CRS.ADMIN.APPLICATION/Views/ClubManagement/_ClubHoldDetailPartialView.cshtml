@@ -5,6 +5,14 @@
     string kycbackimageExtension = System.IO.Path.GetExtension(Model.KYCDocumentBack);
     string passportimageExtension = System.IO.Path.GetExtension(Model.PassportPhoto);
     string insuranceimageExtension = System.IO.Path.GetExtension(Model.InsurancePhoto);
+    string CorporateRegistryExtension = System.IO.Path.GetExtension(Model.CorporateRegistryDocument);
+    var fileNameWithExtension = Path.GetFileName(Model.CorporateRegistryDocument);
+    var fileNameWithExtensionpassport = Path.GetFileName(Model.PassportPhoto);
+    var fileNameWithExtensionkycback = Path.GetFileName(Model.KYCDocumentBack);
+    var fileNameWithExtensioninsurance = Path.GetFileName(Model.InsurancePhoto);
+    var fileNameWithExtensionkycfront = Path.GetFileName(Model.KYCDocument);
+    var fileNameWithExtensionbuss = Path.GetFileName(Model.BusinessCertificate);
+
 }
 <style>
     .imagetextfield {
@@ -15,6 +23,58 @@
         font-weight: 600;
         line-height: normal;
         text-decoration-line: underline;
+    }
+    /* Style for the <p> container with class "pdfborder" */
+    p.pdfborder {
+        border-radius: 4px;
+        background: #fcfcfc;
+        box-shadow: 0px 1px 2px 1px rgba(0, 0, 0, 0.05), 2px 2px 2px 0px rgba(0, 0, 0, 0);
+        padding: 16px 16px 8px 16px;
+      
+    }
+
+    /* Style for the center box containing the image and text */
+    .center-box {
+        display: flex; /* Flex layout to arrange the image and text horizontally */
+        align-items: center; /* Center content vertically */
+        /*gap: 10px;*/ /* Space between the image and text */
+        width: 88%; /* You can adjust this width */
+        height:88%
+    }
+
+    /* Style for the image inside the box */
+    .pdf-image {
+        display: inline-block;       
+        border-radius: 6.23px;
+        opacity: 1; 
+        padding-right: 10px;
+    }
+
+    .image-style {
+        width: 40px; 
+        height: 40px; 
+        object-fit: contain; 
+    }
+
+    
+    .text-content {
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+        width: 160px;
+        font-size: 12.46px;
+    }
+        .text-content::after {
+            content: ".pdf"; 
+            position: absolute;
+            right: 99px;
+        }
+    
+    .image-style {
+        width: 100%; 
+        height: 100%; 
+        object-fit: cover;
+        border-radius: 6.23px; 
     }
 </style>
 <div id="add-new-club-hold-details"
@@ -104,7 +164,7 @@
                                 @*@Model.Prefecture*@
                                 @Model.LocationDDL
                             </p>
-                            </div>
+                        </div>
                         <div class=" grid grid-cols-2">
                             <p class="text-[#7A7A7A] text-[14px]">
                                 @CRS.ADMIN.APPLICATION.Resources.Resource.City:
@@ -211,14 +271,31 @@
                             </p>
                         </div>-->
 
-                        <div class=" grid grid-cols-2">
-                            <p class="text-[#7A7A7A] text-[14px]">
-                                @CRS.ADMIN.APPLICATION.Resources.Resource.Business_Cerfificate
-                            </p>
+                    <div class=" grid grid-cols-2">
+                        <p class="text-[#7A7A7A] text-[14px]">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Business_Cerfificate
+                        </p>
+                        @if (BussimageExtension == ".jpg" || BussimageExtension == ".jpeg" || BussimageExtension == ".png" || BussimageExtension == ".gif")
+                        {
                             <img class="text-[#3E3E3E] h-[116px] w-[230px] text-[14px] leading-[12px] font-bold"
                                  src="@Model.BusinessCertificate" />
+                        }
+                        else
+                        {
+                            <p class="text-[#3E3E3E] h-[116px] w-[230px] text-[14px] leading-[12px] font-bold pdfborder">
+                                <span class="center-box">
+                                    <span class="pdf-image">
+                                        <img src="/Content/assets/images/pdficon.svg" alt="Your Image" class="image-style">
+                                    </span>
+                                    <span class="text-content">@fileNameWithExtensionbuss</span>
+                                </span>
+                            </p>
 
-                        </div>
+
+                        }
+
+
+                    </div>
                         <div class=" grid grid-cols-2">
                             <p class="text-[#7A7A7A] text-[14px]">
 
@@ -239,6 +316,51 @@
 
                         <div class=" grid grid-cols-2">
                             <p class="text-[#7A7A7A] text-[14px]">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.CorporateRegistry
+                            </p>
+                            @if (CorporateRegistryExtension == ".jpg" || CorporateRegistryExtension == ".jpeg" || CorporateRegistryExtension == ".png" || CorporateRegistryExtension == ".gif")
+                            {
+                                <img class="text-[#3E3E3E] h-[116px] w-[230px] text-[14px] leading-[12px] font-bold"
+                                     src="@Model.CorporateRegistryDocument" />
+                            }
+                            else
+                            {
+                                <p class="text-[#3E3E3E] h-[116px] w-[230px] text-[14px] leading-[12px] font-bold pdfborder">
+                                    <span class="center-box">
+                                        <span class="pdf-image">
+                                            <img src="/Content/assets/images/pdficon.svg" alt="Your Image" class="image-style">
+                                        </span>
+                                        <span class="text-content">@fileNameWithExtension</span>                                      
+                                    </span>
+                                </p>
+
+                             
+                            }
+
+
+                        </div>
+                        <div class=" grid grid-cols-2">
+                            <p class="text-[#7A7A7A] text-[14px]">
+
+                            </p>
+                            <p>
+                                @if (CorporateRegistryExtension == ".jpg" || CorporateRegistryExtension == ".jpeg" || CorporateRegistryExtension == ".png" || CorporateRegistryExtension == ".gif")
+                                {
+                                    <a class="imagetextfield" href="@Model.CorporateRegistryDocument" target="_blank">
+                                        View
+                                    </a>
+                                }
+
+                                <a class="imagetextfield" style="padding-left: 7px;"
+                                   href="@Model.CorporateRegistryDocument" download="">
+                                    Download
+                                </a>
+                            </p>
+                        </div>
+
+
+                        <div class=" grid grid-cols-2">
+                            <p class="text-[#7A7A7A] text-[14px]">
                                 @CRS.ADMIN.APPLICATION.Resources.Resource.IdentificationType
                             </p>
                             <p class="text-[#3E3E3E] text-[14px] leading-[12px] font-bold" style="margin-top:4px;">
@@ -253,8 +375,25 @@
                                 <p class="text-[#7A7A7A] text-[14px]">
                                     @CRS.ADMIN.APPLICATION.Resources.Resource.KYCDocument
                                 </p>
-                                <img class="text-[#3E3E3E] h-[116px] w-[230px] text-[14px] leading-[12px] font-bold"
-                                     src="@Model.PassportPhoto" />
+                                @if (passportimageExtension == ".jpg" || passportimageExtension == ".jpeg" || passportimageExtension == ".png" || passportimageExtension == ".gif")
+                                {
+                                    <img class="text-[#3E3E3E] h-[116px] w-[230px] text-[14px] leading-[12px] font-bold"
+                                         src="@Model.PassportPhoto" />
+                                }
+                                else
+                                {
+                                    <p class="text-[#3E3E3E] h-[116px] w-[230px] text-[14px] leading-[12px] font-bold pdfborder">
+                                        <span class="center-box">
+                                            <span class="pdf-image">
+                                                <img src="/Content/assets/images/pdficon.svg" alt="Your Image" class="image-style">
+                                            </span>
+                                            <span class="text-content">@fileNameWithExtensionpassport</span>
+                                        </span>
+                                    </p>
+
+
+                                }
+
                             </div>
                             <div class=" grid grid-cols-2">
                                 <p class="text-[#7A7A7A] text-[14px]">
@@ -277,8 +416,25 @@
 
                             <div class=" grid grid-cols-2">
                                 <p class="text-[#7A7A7A] text-[14px]"></p>
-                                <img class="text-[#3E3E3E] h-[116px] w-[230px] text-[14px] leading-[12px] font-bold"
-                                     src="@Model.InsurancePhoto" />
+                                @if (insuranceimageExtension == ".jpg" || insuranceimageExtension == ".jpeg" || insuranceimageExtension == ".png" || insuranceimageExtension == ".gif")
+                                {
+                                    <img class="text-[#3E3E3E] h-[116px] w-[230px] text-[14px] leading-[12px] font-bold"
+                                         src="@Model.InsurancePhoto" />
+                                }
+                                else
+                                {
+                                    <p class="text-[#3E3E3E] h-[116px] w-[230px] text-[14px] leading-[12px] font-bold pdfborder">
+                                        <span class="center-box">
+                                            <span class="pdf-image">
+                                                <img src="/Content/assets/images/pdficon.svg" alt="Your Image" class="image-style">
+                                            </span>
+                                            <span class="text-content">@fileNameWithExtensioninsurance</span>
+                                        </span>
+                                    </p>
+
+
+                                }
+
                             </div>
                             <div class=" grid grid-cols-2">
                                 <p class="text-[#7A7A7A] text-[14px]">
@@ -300,13 +456,31 @@
                         }
                         else
                         {
-                            <div class=" grid grid-cols-2">
-                                <p class="text-[#7A7A7A] text-[14px]">
-                                    @CRS.ADMIN.APPLICATION.Resources.Resource.KYCDocument
-                                </p>
-                                <img class="text-[#3E3E3E] h-[116px] w-[230px] text-[14px] leading-[12px] font-bold"
-                                     src="@Model.KYCDocument" />
-                            </div>
+                    <div class=" grid grid-cols-2">
+                        <p class="text-[#7A7A7A] text-[14px]">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.KYCDocument
+                        </p>
+                        @if (kycfrontimageExtension == ".jpg" || kycfrontimageExtension == ".jpeg" || kycfrontimageExtension == ".png" || kycfrontimageExtension == ".gif")
+                        {
+                            <img class="text-[#3E3E3E] h-[116px] w-[230px] text-[14px] leading-[12px] font-bold"
+                                 src="@Model.KYCDocument" />
+                        }
+                        else
+                        {
+                            <p class="text-[#3E3E3E] h-[116px] w-[230px] text-[14px] leading-[12px] font-bold pdfborder">
+                                <span class="center-box">
+                                    <span class="pdf-image">
+                                        <img src="/Content/assets/images/pdficon.svg" alt="Your Image" class="image-style">
+                                    </span>
+                                    <span class="text-content">@fileNameWithExtensionkycfront</span>
+                                </span>
+                            </p>
+
+
+                        }
+
+
+                    </div>
                             <div class=" grid grid-cols-2">
                                 <p class="text-[#7A7A7A] text-[14px]">
 
@@ -314,8 +488,8 @@
                                 <p>
                                     @if (kycfrontimageExtension == ".jpg" || kycfrontimageExtension == ".jpeg" || kycfrontimageExtension == ".png" || kycfrontimageExtension == ".gif")
                                     {
-                                       
-                                        <a class="imagetextfield" href="#" onclick="openImage('@Model.KYCDocument'); return false;">                            
+
+                                        <a class="imagetextfield" href="#" onclick="openImage('@Model.KYCDocument'); return false;">
                                             View
                                         </a>
                                     }
@@ -329,8 +503,26 @@
                                 <p class="text-[#7A7A7A] text-[14px]">
 
                                 </p>
-                                <img class="text-[#3E3E3E] h-[116px] w-[230px] text-[14px] leading-[12px] font-bold"
-                                     src="@Model.KYCDocumentBack" />
+                                @if (kycbackimageExtension == ".jpg" || kycbackimageExtension == ".jpeg" || kycbackimageExtension == ".png" || kycbackimageExtension == ".gif")
+                                {
+                                    <img class="text-[#3E3E3E] h-[116px] w-[230px] text-[14px] leading-[12px] font-bold"
+                                         src="@Model.KYCDocumentBack" />
+                                }
+                                else
+                                {
+                                    <p class="text-[#3E3E3E] h-[116px] w-[230px] text-[14px] leading-[12px] font-bold pdfborder">
+                                        <span class="center-box">
+                                            <span class="pdf-image">
+                                                <img src="/Content/assets/images/pdficon.svg" alt="Your Image" class="image-style">
+                                            </span>
+                                            <span class="text-content">@fileNameWithExtensionkycback</span>
+                                        </span>
+                                    </p>
+
+
+                                }
+
+
 
                             </div>
                             <div class=" grid grid-cols-2">
