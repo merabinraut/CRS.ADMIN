@@ -73,6 +73,19 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             else objPointsManagementModel.ManagePointsRequest = new PointsRequestModel();
             if (TempData.ContainsKey("RenderId")) RenderId = TempData["RenderId"].ToString();
             ViewBag.PopUpRenderValue = !string.IsNullOrEmpty(RenderId) ? RenderId : null;
+
+            ViewBag.UserTypeListPT = ApplicationUtilities.SetDDLValue(DDLHelper.LoadDropdownList("USERTYPELIST", "", culture) as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---");
+
+            if (string.IsNullOrEmpty(objPointsManagementModel.ManagePointsTansfer.UserTypeId))
+            {
+                ViewBag.UserListPT = ApplicationUtilities.SetDDLValue(dictionaryempty, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---");
+            }
+            else
+            {
+                ViewBag.UserListPT = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("USERTYPENAME", objPointsManagementModel.ManagePointsTansfer.UserTypeId.DecryptParameter()) as Dictionary<string, string>, "--- Select ---");
+            }
+            ViewBag.UserTypeIdKeyPT = !string.IsNullOrEmpty(objPointsManagementModel.ManagePointsTansfer.UserTypeId) ? objPointsManagementModel.ManagePointsTansfer.UserTypeId : null;
+            ViewBag.AgentIdKeyPT = !string.IsNullOrEmpty(objPointsManagementModel.ManagePointsTansfer.UserId) ? objPointsManagementModel.ManagePointsTansfer.UserId : null;
             ViewBag.StartIndex = StartIndex;
             ViewBag.PageSize = PageSize;
             ViewBag.StartIndex2 = StartIndex2;

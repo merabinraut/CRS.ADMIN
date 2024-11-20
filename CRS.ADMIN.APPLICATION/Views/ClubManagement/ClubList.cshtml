@@ -395,6 +395,24 @@
     <script src="~/Content/assets_new/js/calendar-management.js"></script>
     <link rel="stylesheet" href="//code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
     <script>
+        // Function to check if the text is overflowing
+        function checkOverflow(element) {
+        
+            return element.scrollWidth > element.clientWidth;
+        }
+
+        // Loop through each element with the class 'text-content'
+        document.querySelectorAll('.text-content').forEach(element => {
+       
+            if (checkOverflow(element)) {
+                // Add the 'overflowing' class if the text is overflowing
+                element.classList.add('overflowing');
+            } else {
+                // Remove the 'overflowing' class if the text is not overflowing
+                element.classList.remove('overflowing');
+            }
+        });
+
     function openApproveModal(sno, type, agentid)
     {
       const modalTarget = document.querySelector("[data-modal-target='approve-confirmation']");

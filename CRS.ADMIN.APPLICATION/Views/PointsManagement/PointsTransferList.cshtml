@@ -223,9 +223,9 @@
                         </form>
 
                         @*<div class="px-[12px] py-[16px] flex justify-between entry-export-container">
-                            <div class="flex items-center select-entries" id="ShowEntries-Id">
-                            </div>
-                        </div>*@
+                                <div class="flex items-center select-entries" id="ShowEntries-Id">
+                                </div>
+                            </div>*@
                         <div class="table-tab">
                             <div class="px-[16px] py-[12px] flex justify-between entry-export-container">
                                 <div class="flex items-center select-entries" id="ShowEntries-Id">
@@ -403,7 +403,10 @@
     @* <script src="~/Content/assets_new/js/jquery.min.js"></script>*@
     <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
     <script>
-        $("input[name='TransferType'][value='Transfer']").prop("checked", true);
+
+            $("input[name='TransferType'][value='Transfer']").prop("checked", true);
+
+
         //$(".cls_trftype").click(function () {
 
         //});
@@ -496,7 +499,7 @@
         }
 
 
-          $('#large[name="UserTypeId"]').change(function () {
+        $('#large[name="UserTypeId"]').change(function () {
               var UserTypeId = $(this).find("option:selected").val().trim();
               $('#large[name="UserId"]').prop("disabled", true);
             $.ajax({
@@ -877,9 +880,13 @@ $("#To_Date1").val("@_systemTransferModel.To_Date1");
         document.getElementById('tab1Link').style.borderBottom = '#D75A8B 2px solid';
 
         var PopUpRenderValue = '@ViewBag.PopUpRenderValue';
-       if (PopUpRenderValue != null && PopUpRenderValue != "" && PopUpRenderValue == "Manage") {
+        if (PopUpRenderValue != null && PopUpRenderValue != "" && PopUpRenderValue == "Manage") {
+            if ("@_ManagePointsModel.TransferType" != "" && "@_ManagePointsModel.TransferType" == "Retrieve") {
+             $("input[name='TransferType'][value='Retrieve']").prop("checked", true);
+            }
          var element = document.getElementById('add-new-points');
-          element.classList.remove('translate-x-full');
+           element.classList.remove('translate-x-full');
+
         }
         if (PopUpRenderValue != null && PopUpRenderValue != "" && PopUpRenderValue == "ManagePoints") {
             var element = document.getElementById('add-new-points-request');
