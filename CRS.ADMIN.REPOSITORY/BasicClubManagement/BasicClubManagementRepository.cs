@@ -84,6 +84,7 @@ namespace CRS.ADMIN.REPOSITORY.BasicClubManagement
             SQL += ",@workingHourFrom=" + _DAO.FilterString(Request.WorkingHrFrom);
             SQL += ",@workingHoursTo=" + _DAO.FilterString(Request.WorkingHrTo);
             SQL += ",@holiday=" + _DAO.FilterString(Request.Holiday);
+            SQL += ",@OtherHoliday=" + _DAO.FilterString(Request.OthersHoliday);
             SQL += ",@lastOrderTime=" + _DAO.FilterString(Request.LastOrderTime);
             SQL += ",@lastEntryTime=" + _DAO.FilterString(Request.LastEntryTime);
             SQL += ",@postalcode=" + _DAO.FilterString(Request.PostalCode);
@@ -134,6 +135,7 @@ namespace CRS.ADMIN.REPOSITORY.BasicClubManagement
                     LastEntryTime = _DAO.ParseColumnValue(dbResponse, "LastEntrySyokai").ToString(),
                     LastOrderTime = _DAO.ParseColumnValue(dbResponse, "LastOrderTime").ToString(),
                     Holiday = _DAO.ParseColumnValue(dbResponse, "Holiday").ToString(),
+                    OthersHoliday = _DAO.ParseColumnValue(dbResponse, "OtherHoliday").ToString(),
                     ClosingDate = _DAO.ParseColumnValue(dbResponse, "ClosingDate").ToString(),                   
                     GoogleMap = _DAO.ParseColumnValue(dbResponse, "LocationURL").ToString(),                    
                                               
@@ -227,7 +229,8 @@ namespace CRS.ADMIN.REPOSITORY.BasicClubManagement
                     Tax = _DAO.ParseColumnValue(dbResponse, "Tax").ToString(),
                     LastEntryTime = _DAO.ParseColumnValue(dbResponse, "LastEntrySyokai").ToString(),
                     LastOrderTime = _DAO.ParseColumnValue(dbResponse, "LastOrderTime").ToString(),
-                    Holiday = _DAO.ParseColumnValue(dbResponse, "Holiday").ToString(),
+                    Holiday = _DAO.ParseColumnValue(dbResponse, "Holiday").ToString(), 
+                    OthersHoliday = _DAO.ParseColumnValue(dbResponse, "OtherHoliday").ToString(),
                     GroupName2 = _DAO.ParseColumnValue(dbResponse, "GroupNamekatakana").ToString(),
                     CompanyAddress = _DAO.ParseColumnValue(dbResponse, "CompanyAddress").ToString(),
                     BusinessLicenseNumber = _DAO.ParseColumnValue(dbResponse, "BusinessLicenseNumber").ToString(),
@@ -321,6 +324,7 @@ namespace CRS.ADMIN.REPOSITORY.BasicClubManagement
             SQL += ",@ceoNameKatakana=" + (!string.IsNullOrEmpty(Request.CeoFurigana) ? "N" + _DAO.FilterString(Request.CeoFurigana) : _DAO.FilterString(Request.CeoFurigana));
             SQL += ",@companyRegistry=" + _DAO.FilterString(Request.CorporateRegistryDocument);
             SQL += ",@documentType=" + _DAO.FilterString(Request.IdentificationType);
+            SQL += ",@OtherHoliday=" + _DAO.FilterString(Request.OthersHoliday);
             if (Request.IdentificationType == "2")
             {
                 SQL += ",@kycDocument=" + _DAO.FilterString(Request.PassportPhoto);

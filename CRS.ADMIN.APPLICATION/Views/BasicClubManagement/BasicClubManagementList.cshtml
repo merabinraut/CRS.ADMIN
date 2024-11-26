@@ -505,6 +505,14 @@
                 });
                 commaSeparatedString = items.join(', ');
                 $('input[name="HolidayStr"]').val(commaSeparatedString);
+
+                commaSeparatedStringOther = [];
+                var items = [];
+                $('#large[name="OthersHoliday"] option:selected').each(function () {
+                    items.push($(this).val());
+                });
+                commaSeparatedStringOther = items.join(', ');
+                $('input[name="OthersHolidayStr"]').val(commaSeparatedStringOther);
                 $('#ManageBasicClubForm').submit(); // Submit the form
             });
         });
@@ -616,19 +624,44 @@
                 var value = $('#large[name="holiday"]').val();
 
                 if (value === null || value.length === 0) {
-                    $('.select2-container--default .select2-search--inline .select2-search__field').css('display', 'block');
+                    $('#large[name="holiday"]').next('.select2-container').find('.select2-search--inline .select2-search__field').css('display', 'block');
                 } else {
-                    $('.select2-container--default .select2-search--inline .select2-search__field').css('display', 'none');
+                    $('#large[name="holiday"]').next('.select2-container').find('.select2-search--inline .select2-search__field').css('display', 'none');
                 }
 
              });
             var value = $('#large[name="holiday"]').val();
             if (value === null || value.length === 0) {
-                $('.select2-container--default .select2-search--inline .select2-search__field').css('display', 'block');
-            } else {
-                $('.select2-container--default .select2-search--inline .select2-search__field').css('display', 'none');
+               $('#large[name="holiday"]').next('.select2-container').find('.select2-search--inline .select2-search__field').css('display', 'block');
             }
-
+            else {
+                   $('#large[name="holiday"]').next('.select2-container').find('.select2-search--inline .select2-search__field').css('display', 'none');
+               }
+             $('#large[name="OthersHoliday"]').select2({
+             multiple: true,
+             width: '100%',
+             placeholder: "@CRS.ADMIN.APPLICATION.Resources.Resource.Select"
+            });
+            $('#large[name="OthersHoliday"]').select2({
+             multiple: true,
+             width: '100%',
+             placeholder: "@CRS.ADMIN.APPLICATION.Resources.Resource.Select"
+            }).change(function () {
+                var value = $('#large[name="OthersHoliday"]').val();
+            
+               if (value === null || value.length === 0) {
+                   $('#large[name="OthersHoliday"]').next('.select2-container').find('.select2-search--inline .select2-search__field').css('display', 'block');
+               } else {
+                   $('#large[name="OthersHoliday"]').next('.select2-container').find('.select2-search--inline .select2-search__field').css('display', 'none');
+               }
+               
+            });
+           var Othervalue = $('#large[name="OthersHoliday"]').val();
+           if (Othervalue === null || Othervalue.length === 0) {
+               $('#large[name="OthersHoliday"]').next('.select2-container').find('.select2-search--inline .select2-search__field').css('display', 'block');
+           } else {
+               $('#large[name="OthersHoliday"]').next('.select2-container').find('.select2-search--inline .select2-search__field').css('display', 'none');
+           }
 
         var PopUpRenderValue = '@ViewBag.PopUpRenderValue';
         if (PopUpRenderValue != null && PopUpRenderValue != "" && PopUpRenderValue == "Manage") {
@@ -810,6 +843,14 @@
                 });
                 commaSeparatedString = items.join(', ');
                 $('input[name="HolidayStr"]').val(commaSeparatedString);
+
+                OthercommaSeparatedString = [];
+                var otherItems = [];
+                $('#large[name="OthersHoliday"] option:selected').each(function () {
+                    otherItems.push($(this).val());
+                });
+                OthercommaSeparatedString = otherItems.join(', ');
+                $('input[name="OthersHolidayStr"]').val(OthercommaSeparatedString);
             }
 
 

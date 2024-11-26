@@ -50,6 +50,7 @@ namespace CRS.ADMIN.SHARED.BasicClubManagement
         public string WorkingHrFrom { get; set; }
         public string WorkingHrTo { get; set; }
         public string Holiday { get; set; }
+        public string OthersHoliday { get; set; }
         public string[] HolidayStr { get; set; }
         public string LastOrderTime { get; set; }
         public string LastEntryTime { get; set; }

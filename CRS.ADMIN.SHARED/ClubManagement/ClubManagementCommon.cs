@@ -101,6 +101,7 @@ namespace CRS.ADMIN.SHARED.ClubManagement
         public string KYCDocumentBack { get; set; }
         public string PassportPhoto { get; set; }
         public string InsurancePhoto { get; set; }
+        public string OthersHoliday { get; set; }
     }
 
     public class ManageClubCommon : Common
@@ -138,6 +139,7 @@ namespace CRS.ADMIN.SHARED.ClubManagement
         public string WorkingHrFrom { get; set; }
         public string WorkingHrTo { get; set; }
         public string Holiday { get; set; }
+        public string OthersHoliday { get; set; }
         public string LastOrderTime { get; set; }
         public string LastEntryTime { get; set; }
         public string Tax { get; set; }

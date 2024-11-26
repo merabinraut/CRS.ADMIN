@@ -351,7 +351,7 @@
 
 
 
-<div id="block-confirmation" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 hidden w-full 
+<div id="block-confirmation" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 hidden w-full
      p-4 overflow-x-hidden overflow-y-auto
      md:inset-0 h-[calc(100%-1rem)] max-h-full " style="align-items: flex-start; ">
     <div class="relative max-w-2xl max-h-full w-[412px] px-4 pt-[40px] pb-[46px] mt-24">
@@ -397,13 +397,13 @@
     <script>
         // Function to check if the text is overflowing
         function checkOverflow(element) {
-        
+
             return element.scrollWidth > element.clientWidth;
         }
 
         // Loop through each element with the class 'text-content'
         document.querySelectorAll('.text-content').forEach(element => {
-       
+
             if (checkOverflow(element)) {
                 // Add the 'overflowing' class if the text is overflowing
                 element.classList.add('overflowing');
@@ -831,20 +831,44 @@
                 var value = $('#large[name="holiday"]').val();
 
                 if (value === null || value.length === 0) {
-                    $('.select2-container--default .select2-search--inline .select2-search__field').css('display', 'block');
+                    $('#large[name="holiday"]').next('.select2-container').find('.select2-search--inline .select2-search__field').css('display', 'block');
                 } else {
-                    $('.select2-container--default .select2-search--inline .select2-search__field').css('display', 'none');
+                    $('#large[name="holiday"]').next('.select2-container').find('.select2-search--inline .select2-search__field').css('display', 'none');
                 }
 
              });
             var value = $('#large[name="holiday"]').val();
             if (value === null || value.length === 0) {
-                $('.select2-container--default .select2-search--inline .select2-search__field').css('display', 'block');
+                $('#large[name="holiday"]').next('.select2-container').find('.select2-search--inline .select2-search__field').css('display', 'block');
             } else {
-                $('.select2-container--default .select2-search--inline .select2-search__field').css('display', 'none');
+                $('#large[name="holiday"]').next('.select2-container').find('.select2-search--inline .select2-search__field').css('display', 'none');
             }
 
+            $('#large[name="OthersHoliday"]').select2({
+             multiple: true,
+             width: '100%',
+             placeholder: "@CRS.ADMIN.APPLICATION.Resources.Resource.Select"
+            });
+            $('#large[name="OthersHoliday"]').select2({
+             multiple: true,
+             width: '100%',
+             placeholder: "@CRS.ADMIN.APPLICATION.Resources.Resource.Select"
+            }).change(function () {
+                var value = $('#large[name="OthersHoliday"]').val();
+           
+           if (value === null || value.length === 0) {
+               $('#large[name="OthersHoliday"]').next('.select2-container').find('.select2-search--inline .select2-search__field').css('display', 'block');
+           } else {               
+               $('#large[name="OthersHoliday"]').next('.select2-container').find('.select2-search--inline .select2-search__field').css('display', 'none');
+           }
 
+            });
+            var Othervalue = $('#large[name="OthersHoliday"]').val();
+            if (Othervalue === null || Othervalue.length === 0) {
+                $('#large[name="OthersHoliday"]').next('.select2-container').find('.select2-search--inline .select2-search__field').css('display', 'block');
+            } else {
+                $('#large[name="OthersHoliday"]').next('.select2-container').find('.select2-search--inline .select2-search__field').css('display', 'none');
+            }
             var PopUpRenderValue = '@ViewBag.PopUpRenderValue';
             if (PopUpRenderValue != null && PopUpRenderValue != "" && PopUpRenderValue == "Manage") {
                  var element = document.getElementById('add-new-host-club');
@@ -1084,6 +1108,15 @@
                 });
                 commaSeparatedString = items.join(', ');
                 $('input[name="HolidayStr"]').val(commaSeparatedString);
+
+
+                OthercommaSeparatedString = [];
+                var otherItems = [];
+                $('#large[name="OthersHoliday"] option:selected').each(function () {
+                    otherItems.push($(this).val());
+                });
+                OthercommaSeparatedString = otherItems.join(', ');
+                $('input[name="OthersHolidayStr"]').val(OthercommaSeparatedString);
             }
 
 

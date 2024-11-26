@@ -3634,6 +3634,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Other Holidays.
+        /// </summary>
+        public static string other_holidays {
+            get {
+                return ResourceManager.GetString("other holidays", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Others.
         /// </summary>
         public static string Others {

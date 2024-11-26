@@ -258,7 +258,8 @@ namespace CRS.ADMIN.APPLICATION.Models.ClubManagement
         public string SearchFilter { get; set; }
         public int StartIndex { get; set; }
         public int PageSize { get; set; }
-
+        public string OthersHoliday { get; set; }
+        public string[] OthersHolidayStr { get; set; }
         // public List<planIdentityDataModel> PlanList { get; set; }
     }
 

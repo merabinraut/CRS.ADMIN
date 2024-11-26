@@ -380,6 +380,35 @@
                                             }
                                         </select>
                                     </div>
+                                    <div class="input-field-common">
+                                        <label class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                                            @CRS.ADMIN.APPLICATION.Resources.Resource.other_holidays
+                                        </label>
+                                        @Html.HiddenFor(m => m.OthersHolidayStr)
+                                        <select id="large" name="OthersHoliday" class=" default_select select-common block w-full "
+                                                style="width: 100%;" multiple="multiple" placeholder="Select">
+                                            @foreach (var item in ViewBag.OthersHoliday as IEnumerable<SelectListItem>)
+                                            {
+                                                var selectedId = ViewBag.OthersHolidayIdKey as string;
+                                                string[] selectedIds = !string.IsNullOrEmpty(selectedId) ? selectedId.Split(',') : new string[0]; ;
+                                                bool isSelected = selectedIds.Contains(item.Value);
+                                                if (isSelected == true)
+                                                {
+                                                    <option value="@item.Value" selected @(item.Disabled == true ? "selected disabled" : "")>
+                                                        @item.Text
+                                                    </option>
+                                                }
+                                                else
+                                                {
+                                                    <option value="@item.Value" @(item.Disabled == true ? "selected disabled" : "")>
+                                                        @item.Text
+                                                    </option>
+                                                }
+
+                                            }
+
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
 

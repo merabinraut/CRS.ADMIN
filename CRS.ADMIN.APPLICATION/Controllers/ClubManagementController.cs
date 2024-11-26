@@ -159,14 +159,15 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             ViewBag.HolidayIdKey = !string.IsNullOrEmpty(response.ManageClubModel.Holiday) ? response.ManageClubModel.Holiday : null;
             ViewBag.BusinessTypeKey = response.ManageClubModel.BusinessTypeDDL;
             ViewBag.ClosingDate = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("CLOSINGDATE", "", culture) as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---");
-            ViewBag.ClosingDateIdKey = response.ManageClubModel.ClosingDate;           
+            ViewBag.ClosingDateIdKey = response.ManageClubModel.ClosingDate;
+            ViewBag.OthersHoliday = ApplicationUtilities.SetDDLValue(DDLHelper.LoadDropdownList("OTHERSHOLIDAY", "", culture) as Dictionary<string, string>, null, "");
+            ViewBag.OthersHolidayIdKey = !string.IsNullOrEmpty(response.ManageClubModel.OthersHoliday) ? response.ManageClubModel.OthersHoliday : null;
             response.ListType = TabValue;
             response.TabValue = TabValue;          
             response.SearchFilter = !string.IsNullOrEmpty(SearchFilter) ? SearchFilter : null;
             return View(response);
         }
        
-
         [HttpGet]
         public ActionResult ManageClub(string AgentId = "", string SearchFilter = "", int StartIndex = 0, int PageSize = 10)
         {
@@ -219,6 +220,24 @@ namespace CRS.ADMIN.APPLICATION.Controllers
 
                 }
                 model.Holiday = !string.IsNullOrEmpty(holidays) ? holidays : null;
+                string otherHolidays = "";
+                string[] otherarray = model.OthersHoliday.Split(','); ;
+                string othercommaSeparatedString = string.Join(", ", otherarray);
+                List<string> otherholidayList = othercommaSeparatedString.Split(new[] { ", " }, StringSplitOptions.RemoveEmptyEntries).ToList();
+                foreach (var holiday in otherholidayList)
+                {
+                    var item = holiday.EncryptParameter();
+                    if (string.IsNullOrEmpty(otherHolidays))
+                    {
+                        otherHolidays = item.Trim();
+                    }
+                    else
+                    {
+                        otherHolidays = otherHolidays + "," + item.Trim();
+                    }
+
+                }
+                model.OthersHoliday = !string.IsNullOrEmpty(otherHolidays) ? otherHolidays : null;
                 model.ClosingDate = !string.IsNullOrEmpty(model.ClosingDate) ? model.ClosingDate.EncryptParameter() : null;
             }
 
@@ -409,6 +428,25 @@ namespace CRS.ADMIN.APPLICATION.Controllers
 
             }
             model.Holiday = !string.IsNullOrEmpty(holidays) ? holidays : null;
+
+            string otherHolidays = "";
+            string[] otherarray = model.OthersHoliday.Split(','); ;
+            string othercommaSeparatedString = string.Join(", ", otherarray);
+            List<string> otherholidayList = othercommaSeparatedString.Split(new[] { ", " }, StringSplitOptions.RemoveEmptyEntries).ToList();
+            foreach (var holiday in otherholidayList)
+            {
+                var item = holiday.EncryptParameter();
+                if (string.IsNullOrEmpty(otherHolidays))
+                {
+                    otherHolidays = item.Trim();
+                }
+                else
+                {
+                    otherHolidays = otherHolidays + "," + item.Trim();
+                }
+
+            }
+            model.OthersHoliday = !string.IsNullOrEmpty(otherHolidays) ? otherHolidays : null;
             //model.Holiday = !string.IsNullOrEmpty(model.Holiday) ? model.Holiday.EncryptParameter() : null;
             model.ClosingDate = !string.IsNullOrEmpty(model.ClosingDate) ? model.ClosingDate.EncryptParameter() : null;
             model.holdId = !string.IsNullOrEmpty(model.holdId) ? model.holdId.EncryptParameter() : null;
@@ -427,9 +465,13 @@ namespace CRS.ADMIN.APPLICATION.Controllers
         public async Task<ActionResult> ManageClub(ManageClubModel Model, HttpPostedFileBase Business_Certificate, HttpPostedFileBase Logo_Certificate, HttpPostedFileBase CoverPhoto_Certificate, HttpPostedFileBase KYCDocument_Certificate, HttpPostedFileBase KYCDocumentBack_Certificate, HttpPostedFileBase PassportPhotot_Certificate, HttpPostedFileBase InsurancePhoto_Certificate, HttpPostedFileBase CorporateRegistry_Certificate, string LocationDDL, string BusinessTypeDDL)
         {
             string holidays = "";
+            string othersHoliday = "";
             string[] array = Model.HolidayStr;
             string commaSeparatedString = string.Join(", ", array);
             List<string> holidayList = commaSeparatedString.Split(new[] { ", " }, StringSplitOptions.RemoveEmptyEntries).ToList();
+            string[] otherArray = Model.OthersHolidayStr;
+            string otherCommaSeparatedString = string.Join(", ", otherArray);
+            List<string> othersHolidayList = otherCommaSeparatedString.Split(new[] { ", " }, StringSplitOptions.RemoveEmptyEntries).ToList();
             ActionResult redirectresult = null;
             if(!string.IsNullOrEmpty(Model.holdId))
             {
@@ -464,7 +506,21 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 }
                
             }
-            Model.Holiday= holidays;    
+            Model.Holiday= holidays;
+            foreach (var otherholiday in othersHolidayList)
+            {
+                var item = otherholiday.DecryptParameter();
+                if (string.IsNullOrEmpty(othersHoliday))
+                {
+                    othersHoliday = item.Trim();
+                }
+                else
+                {
+                    othersHoliday = othersHoliday + "," + item.Trim();
+                }
+
+            }
+            Model.OthersHoliday = othersHoliday;
             string ErrorMessage = string.Empty;
             if (!string.IsNullOrEmpty(BusinessTypeDDL?.DecryptParameter())) ModelState.Remove("BusinessType");
 
@@ -1763,7 +1819,6 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 ClubId = agentid
             });
         }
-
 
         [HttpGet]
         public ActionResult ManageEvent(string AgentId = "", string EventId = "")

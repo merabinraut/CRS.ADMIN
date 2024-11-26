@@ -1684,6 +1684,10 @@
   <data name="Other" xml:space="preserve">
     <value />
   </data>
+  <data name="other holidays" xml:space="preserve">
+    <value>Other Holidays</value>
+    <comment>Club Management</comment>
+  </data>
   <data name="Others" xml:space="preserve">
     <value>Others</value>
     <comment>AffiliateManagement</comment>

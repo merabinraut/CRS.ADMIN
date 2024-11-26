@@ -1685,6 +1685,10 @@
     <value>予約数</value>
     <comment>Recommendation Management-&gt;Host List</comment>
   </data>
+  <data name="other holidays" xml:space="preserve">
+    <value>その他</value>
+    <comment>Club Management</comment>
+  </data>
   <data name="Others" xml:space="preserve">
     <value>その他</value>
     <comment>AffiliateManagement</comment>

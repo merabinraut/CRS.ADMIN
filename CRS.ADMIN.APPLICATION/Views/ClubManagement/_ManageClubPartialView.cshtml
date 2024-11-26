@@ -1275,43 +1275,26 @@
                                             @CRS.ADMIN.APPLICATION.Resources.Resource.Holiday
                                         </label>
                                         @Html.HiddenFor(m => m.HolidayStr)
-                                        @*@Html.ListBoxFor(
-                                model => model.Holiday, // WorkingHrTo property from the model
-                                ViewBag.Holiday as SelectList, // Binding to the ViewBag data as SelectList
-                                new { @id = "large", @class = " default_select select-common block w-full ", @style = "width: 100%;" })*@
-                                        @*@Html.DropDownListFor(model => model.Holiday, new MultiSelectList(ViewBag.Holiday, "Value", "Text"), new { id = "large" ,@class = " default_select select-common block w-full ", @style = "width: 100%;" })*@
-                                        <select id="large" name="holiday" class=" default_select select-common block w-full "
+                                            <select id="large" name="holiday" class=" default_select select-common block w-full "
                                                 style="width: 100%;" multiple="multiple" placeholder="Select">
                                             @foreach (var item in ViewBag.Holiday as IEnumerable<SelectListItem>)
                                             {
-                                                var selectedId = ViewBag.HolidayIdKey as string;
-                                                string[] selectedIds = !string.IsNullOrEmpty(selectedId) ? selectedId.Split(',') : new string[0]; ;
-                                                bool isSelected = selectedIds.Contains(item.Value);
-                                                if (isSelected == true)
-                                                {
-                                                    <option value="@item.Value" selected @(item.Disabled == true ? "selected disabled" : "")>
-                                                        @item.Text
-                                                    </option>
-                                                }
-                                                else
-                                                {
-                                                    <option value="@item.Value" @(item.Disabled == true ? "selected disabled" : "")>
-                                                        @item.Text
-                                                    </option>
-                                                }
+                                                 var selectedId = ViewBag.HolidayIdKey as string;
+                                                 string[] selectedIds = !string.IsNullOrEmpty(selectedId) ? selectedId.Split(',') : new string[0]; ;
+                                                 bool isSelected = selectedIds.Contains(item.Value);
+                                                 if (isSelected == true)
+                                                 {
+                                                     <option value="@item.Value" selected @(item.Disabled == true ? "selected disabled" : "")>
+                                                         @item.Text
+                                                     </option>
+                                                 }
+                                                 else
+                                                 {
+                                                     <option value="@item.Value" @(item.Disabled == true ? "selected disabled" : "")>
+                                                         @item.Text
+                                                     </option>
+                                                 }
 
-                                                @*if (item.Value == selectedId)
-                                        {
-                                            <option value="@item.Value" selected @(item.Disabled == true ? "selected disabled" : "")>
-                                                @item.Text
-                                            </option>
-                                        }
-                                        else
-                                        {
-                                            <option value="@item.Value" @(item.Disabled == true ? "selected disabled" : "")>
-                                                @item.Text
-                                            </option>
-                                        }*@
                                             }
 
                                         </select>
@@ -1340,86 +1323,116 @@
                             </div>
                         </div>*@
                                 <!-- for last order -->
-                                <div class="grid grid-cols-3 gap-x-4 gap-y-5">
-                                    <div class="input-field-common">
-                                        <label for="instagram" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
-                                            @CRS.ADMIN.APPLICATION.Resources.Resource.Last_Order_Time
-                                        </label>
-                                        @Html.TextBoxFor(model => model.LastOrderTime, new
-                                   {
-                                       @class = "w-full",
-                                       @placeholder = "HH:MM",
-                                       //@onkeypress = "return isNumber(event)",
-                                       autocomplete = "off",
-                                       @maxLength = "30",
-                                       @type = "time"
-                                   })
-                                        <span class="error">
-                                            @Html.ValidationMessageFor(m => m.LastOrderTime)
-                                        </span>
+                            <div class="grid grid-cols-3 gap-x-4 gap-y-5">
+                                <div class="input-field-common">
+                                    <label for="instagram" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                                        @CRS.ADMIN.APPLICATION.Resources.Resource.Last_Order_Time
+                                    </label>
+                                    @Html.TextBoxFor(model => model.LastOrderTime, new
+                               {
+                                   @class = "w-full",
+                                   @placeholder = "HH:MM",
+                                   //@onkeypress = "return isNumber(event)",
+                                   autocomplete = "off",
+                                   @maxLength = "30",
+                                   @type = "time"
+                               })
+                                    <span class="error">
+                                        @Html.ValidationMessageFor(m => m.LastOrderTime)
+                                    </span>
 
-                                    </div>
-                                    <div class="input-field-common">
-                                        <label for="instagram" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
-                                            @CRS.ADMIN.APPLICATION.Resources.Resource.LastEntryTime
-                                        </label>
-                                        @Html.TextBoxFor(model => model.LastEntryTime, new
-                                   {
-                                       @class = "w-full",
-                                       @placeholder = "HH:MM",
-                                       //@onkeypress = "return isNumber(event)",
-                                       autocomplete = "off",
-                                        @maxLength = "30",
-                                       @type = "time"
-                                   })
-                                        <span class="error">
-                                            @Html.ValidationMessageFor(m => m.LastEntryTime)
-                                        </span>
-
-                                    </div>
-                                    <div class="input-field-common">
-                                        <label for="instagram" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
-                                            @CRS.ADMIN.APPLICATION.Resources.Resource.Tax
-                                        </label>
-                                        @Html.TextBoxFor(model => model.Tax, new
-                                   {
-                                       @class = "w-full",
-                                       @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.Tax,
-                                       //@onkeypress = "return isNumber(event)",
-                                       autocomplete = "off"
-                                       //@maxLength = "30"
-                                   })
-                                        <span class="error">
-                                            @Html.ValidationMessageFor(m => m.Tax)
-                                        </span>
-
-                                    </div>
-
-                                    <div class="input-field-common">
-                                        <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
-                                            @CRS.ADMIN.APPLICATION.Resources.Resource.ClosingDate
-                                        </label>
-                                        <select id="large" name="ClosingDate" class=" default_select select-common block w-full "
-                                                style="width: 100%;">
-                                            @foreach (var item in ViewBag.ClosingDate as IEnumerable<SelectListItem>)
-                                            {
-                                                var selectedId = ViewBag.ClosingDateIdKey as string;
-                                                if (item.Value == selectedId)
-                                                {
-                                                    <option value="@item.Value" selected>
-                                                        @item.Text
-                                                    </option>
-                                                }
-                                                else
-                                                {
-                                                    <option value="@item.Value">
-                                                        @item.Text
-                                                    </option>
-                                                }
-                                            }
-                                        </select>
-                                    </div>
                                 </div>
+                                <div class="input-field-common">
+                                    <label for="instagram" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                                        @CRS.ADMIN.APPLICATION.Resources.Resource.LastEntryTime
+                                    </label>
+                                    @Html.TextBoxFor(model => model.LastEntryTime, new
+                               {
+                                   @class = "w-full",
+                                   @placeholder = "HH:MM",
+                                   //@onkeypress = "return isNumber(event)",
+                                   autocomplete = "off",
+                                    @maxLength = "30",
+                                   @type = "time"
+                               })
+                                    <span class="error">
+                                        @Html.ValidationMessageFor(m => m.LastEntryTime)
+                                    </span>
+
+                                </div>
+                                <div class="input-field-common">
+                                    <label for="instagram" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                                        @CRS.ADMIN.APPLICATION.Resources.Resource.Tax
+                                    </label>
+                                    @Html.TextBoxFor(model => model.Tax, new
+                               {
+                                   @class = "w-full",
+                                   @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.Tax,
+                                   //@onkeypress = "return isNumber(event)",
+                                   autocomplete = "off"
+                                   //@maxLength = "30"
+                               })
+                                    <span class="error">
+                                        @Html.ValidationMessageFor(m => m.Tax)
+                                    </span>
+
+                                </div>
+
+                                <div class="input-field-common">
+                                    <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
+                                        @CRS.ADMIN.APPLICATION.Resources.Resource.ClosingDate
+                                    </label>
+                                    <select id="large" name="ClosingDate" class=" default_select select-common block w-full "
+                                            style="width: 100%;">
+                                        @foreach (var item in ViewBag.ClosingDate as IEnumerable<SelectListItem>)
+                                        {
+                                            var selectedId = ViewBag.ClosingDateIdKey as string;
+                                            if (item.Value == selectedId)
+                                            {
+                                                <option value="@item.Value" selected>
+                                                    @item.Text
+                                                </option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@item.Value">
+                                                    @item.Text
+                                                </option>
+                                            }
+                                        }
+                                    </select>
+                                </div>
+
+                                <div class="input-field-common">
+                                    <label class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                                        @CRS.ADMIN.APPLICATION.Resources.Resource.other_holidays
+                                    </label>
+                                    @Html.HiddenFor(m => m.OthersHolidayStr)
+                                    <select id="large" name="OthersHoliday" class=" default_select select-common block w-full "
+                                            style="width: 100%;" multiple="multiple" placeholder="Select">
+                                        @foreach (var item in ViewBag.OthersHoliday as IEnumerable<SelectListItem>)
+                                        {
+                                            var selectedId = ViewBag.OthersHolidayIdKey as string;
+                                            string[] selectedIds = !string.IsNullOrEmpty(selectedId) ? selectedId.Split(',') : new string[0]; ;
+                                            bool isSelected = selectedIds.Contains(item.Value);
+                                            if (isSelected == true)
+                                            {
+                                                <option value="@item.Value" selected @(item.Disabled == true ? "selected disabled" : "")>
+                                                    @item.Text
+                                                </option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@item.Value" @(item.Disabled == true ? "selected disabled" : "")>
+                                                    @item.Text
+                                                </option>
+                                            }
+
+                                        }
+
+                                    </select>
+                                </div>
+                            </div>
                             </div>
 
                             <!-- for address -->
@@ -1914,11 +1927,6 @@
 
     </div>
 </div>
-
-
-
-
-
 
 <style>
     .select2-container--default .select2-selection--single {

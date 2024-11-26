@@ -83,6 +83,9 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             ViewBag.BusinessTypeKey = objBasicClubManagementModel.ManagePremiumClub.BusinessTypeDDL;
             ViewBag.ClosingDate = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("CLOSINGDATE", "", culture) as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---");
             ViewBag.ClosingDateIdKey = objBasicClubManagementModel.ManagePremiumClub.ClosingDate;
+            ViewBag.OthersHoliday = ApplicationUtilities.SetDDLValue(DDLHelper.LoadDropdownList("OTHERSHOLIDAY", "", culture) as Dictionary<string, string>, null, "");
+            ViewBag.OthersHolidayIdKey = !string.IsNullOrEmpty(objBasicClubManagementModel.ManageBasicClub.OthersHoliday) ? objBasicClubManagementModel.ManageBasicClub.OthersHoliday : null;
+            ViewBag.OthersHolidayIdConversion = !string.IsNullOrEmpty(objBasicClubManagementModel.ManagePremiumClub.OthersHoliday) ? objBasicClubManagementModel.ManagePremiumClub.OthersHoliday : null;
             ViewBag.PopUpRenderValue = !string.IsNullOrEmpty(RenderId) ? RenderId : null;
             return View(objBasicClubManagementModel);
         }
@@ -91,9 +94,13 @@ namespace CRS.ADMIN.APPLICATION.Controllers
         public async Task<ActionResult> ManageBasicClub(ManageBasicClubModel Model, HttpPostedFileBase Logo_Certificate, HttpPostedFileBase CoverPhoto_Certificate, string LocationDDL, string BusinessTypeDDL)
         {
             string holidays = "";
+            string othersHoliday = "";
             string[] array = Model.HolidayStr;
             string commaSeparatedString = string.Join(", ", array);
             List<string> holidayList = commaSeparatedString.Split(new[] { ", " }, StringSplitOptions.RemoveEmptyEntries).ToList();
+            string[] otherArray = Model.OthersHolidayStr;
+            string otherCommaSeparatedString = string.Join(", ", otherArray);
+            List<string> othersHolidayList = otherCommaSeparatedString.Split(new[] { ", " }, StringSplitOptions.RemoveEmptyEntries).ToList();
             ActionResult redirectresult = null;
             redirectresult = RedirectToAction("BasicClubManagementList", "BasicClubManagement", new
             {
@@ -116,6 +123,20 @@ namespace CRS.ADMIN.APPLICATION.Controllers
 
             }
             Model.Holiday = holidays;
+            foreach (var otherholiday in othersHolidayList)
+            {
+                var item = otherholiday.DecryptParameter();
+                if (string.IsNullOrEmpty(othersHoliday))
+                {
+                    othersHoliday = item.Trim();
+                }
+                else
+                {
+                    othersHoliday = othersHoliday + "," + item.Trim();
+                }
+
+            }
+            Model.OthersHoliday = othersHoliday;
             string ErrorMessage = string.Empty;
             string concatenateplanvalue = string.Empty;
             string LogoPath = "";
@@ -325,6 +346,24 @@ namespace CRS.ADMIN.APPLICATION.Controllers
 
                 }
                 model.Holiday = !string.IsNullOrEmpty(holidays) ? holidays : null;
+                string otherHolidays = "";
+                string[] otherarray = model.OthersHoliday.Split(','); ;
+                string othercommaSeparatedString = string.Join(", ", otherarray);
+                List<string> otherholidayList = othercommaSeparatedString.Split(new[] { ", " }, StringSplitOptions.RemoveEmptyEntries).ToList();
+                foreach (var holiday in otherholidayList)
+                {
+                    var item = holiday.EncryptParameter();
+                    if (string.IsNullOrEmpty(otherHolidays))
+                    {
+                        otherHolidays = item.Trim();
+                    }
+                    else
+                    {
+                        otherHolidays = otherHolidays + "," + item.Trim();
+                    }
+
+                }
+                model.OthersHoliday = !string.IsNullOrEmpty(otherHolidays) ? otherHolidays : null;
                 model.ClosingDate = !string.IsNullOrEmpty(model.ClosingDate) ? model.ClosingDate.EncryptParameter() : null;
             }
             TempData["RenderId"] = "Manage";
@@ -465,6 +504,24 @@ namespace CRS.ADMIN.APPLICATION.Controllers
 
                 }
                 model.Holiday = !string.IsNullOrEmpty(holidays) ? holidays : null;
+                string otherHolidays = "";
+                string[] otherarray = model.OthersHoliday.Split(','); ;
+                string othercommaSeparatedString = string.Join(", ", otherarray);
+                List<string> otherholidayList = othercommaSeparatedString.Split(new[] { ", " }, StringSplitOptions.RemoveEmptyEntries).ToList();
+                foreach (var holiday in otherholidayList)
+                {
+                    var item = holiday.EncryptParameter();
+                    if (string.IsNullOrEmpty(otherHolidays))
+                    {
+                        otherHolidays = item.Trim();
+                    }
+                    else
+                    {
+                        otherHolidays = otherHolidays + "," + item.Trim();
+                    }
+
+                }
+                model.OthersHoliday = !string.IsNullOrEmpty(otherHolidays) ? otherHolidays : null;
                 model.ClosingDate = !string.IsNullOrEmpty(model.ClosingDate) ? model.ClosingDate.EncryptParameter() : null;
             }
 
@@ -477,6 +534,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
         public async Task<ActionResult> ManageConversionBasicClub(ManagePremiumClubModel Model, HttpPostedFileBase Business_Certificate, HttpPostedFileBase Logo_Certificate, HttpPostedFileBase CoverPhoto_Certificate, HttpPostedFileBase KYCDocument_Certificate, HttpPostedFileBase KYCDocumentBack_Certificate, HttpPostedFileBase PassportPhotot_Certificate, HttpPostedFileBase InsurancePhoto_Certificate, HttpPostedFileBase CorporateRegistry_Certificate, string LocationDDL, string BusinessTypeDDL)
         {
             string holidays = "";
+            string othersHoliday = "";
             ActionResult redirectresult = null;
             if (!string.IsNullOrEmpty(Model.holdId))
             {
@@ -517,7 +575,26 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 }
                 Model.Holiday = holidays;
             }
+            string[] otherarray = Model.OthersHolidayStr;
+            if (Model.OthersHolidayStr != null && Model.OthersHolidayStr.Any(str => !string.IsNullOrEmpty(str)))
+            {
+                string othercommaSeparatedString = string.Join(", ", otherarray);
+                List<string> otherholidayList = othercommaSeparatedString.Split(new[] { ", " }, StringSplitOptions.RemoveEmptyEntries).ToList();
+                foreach (var holiday in otherholidayList)
+                {
+                    var item = holiday.DecryptParameter();
+                    if (string.IsNullOrEmpty(othersHoliday))
+                    {
+                        othersHoliday = item.Trim();
+                    }
+                    else
+                    {
+                        othersHoliday = othersHoliday + "," + item.Trim();
+                    }
 
+                }
+                Model.OthersHoliday = othersHoliday;
+            }
             string ErrorMessage = string.Empty;
             if (!string.IsNullOrEmpty(BusinessTypeDDL?.DecryptParameter())) ModelState.Remove("BusinessType");
             ViewBag.PlansList = ApplicationUtilities.LoadDropdownList("CLUBPLANS") as Dictionary<string, string>;
