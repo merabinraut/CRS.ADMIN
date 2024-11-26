@@ -30,7 +30,6 @@
         background: #fcfcfc;
         box-shadow: 0px 1px 2px 1px rgba(0, 0, 0, 0.05), 2px 2px 2px 0px rgba(0, 0, 0, 0);
         padding: 16px 16px 8px 16px;
-      
     }
 
     /* Style for the center box containing the image and text */
@@ -39,24 +38,24 @@
         align-items: center; /* Center content vertically */
         /*gap: 10px;*/ /* Space between the image and text */
         width: 88%; /* You can adjust this width */
-        height:88%
+        height: 88%
     }
 
     /* Style for the image inside the box */
     .pdf-image {
-        display: inline-block;       
+        display: inline-block;
         border-radius: 6.23px;
-        opacity: 1; 
+        opacity: 1;
         padding-right: 10px;
     }
 
     .image-style {
-        width: 40px; 
-        height: 40px; 
-        object-fit: contain; 
+        width: 40px;
+        height: 40px;
+        object-fit: contain;
     }
 
-    
+
     .text-content {
         text-overflow: ellipsis;
         white-space: nowrap;
@@ -75,7 +74,7 @@
             position: absolute;
             right: 99px;
         }
-        /*.text-content::after {
+    /*.text-content::after {
             content: "";
             position: absolute;
             right: 0px
@@ -86,10 +85,10 @@
             right: 99px;
         }*/
     .image-style {
-        width: 100%; 
-        height: 100%; 
+        width: 100%;
+        height: 100%;
         object-fit: cover;
-        border-radius: 6.23px; 
+        border-radius: 6.23px;
     }
 </style>
 <div id="add-new-club-hold-details"
@@ -242,7 +241,7 @@
                         </div>
 
                         <div class="text-[#D75A8B] font-[600] text-[16px]">
-                            @CRS.ADMIN.APPLICATION.Resources.Resource.BusinessInfo
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Contract_Information
                         </div>
                     </div>
 
@@ -285,32 +284,51 @@
                                 @Model.CompanyName
                             </p>
                         </div>-->
-
-                    <div class=" grid grid-cols-2">
-                        <p class="text-[#7A7A7A] text-[14px]">
-                            @CRS.ADMIN.APPLICATION.Resources.Resource.Business_Cerfificate
-                        </p>
-                        @if (BussimageExtension == ".jpg" || BussimageExtension == ".jpeg" || BussimageExtension == ".png" || BussimageExtension == ".gif")
+                        @if (Model.BusinessTypeDDL?.ToUpper() == "CORPORATION")
                         {
-                            <img class="text-[#3E3E3E] h-[116px] w-[230px] text-[14px] leading-[12px] font-bold"
-                                 src="@Model.BusinessCertificate" />
+                            <div class=" grid grid-cols-2">
+                                <p class="text-[#7A7A7A] text-[14px]">
+                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Company_Name:
+                                </p>
+                                <p class="text-[#3E3E3E] text-[14px] leading-[12px] font-bold" style="margin-top:4px;">
+                                    @Model.CompanyName
+                                </p>
+                            </div>
+                            <div class=" grid grid-cols-2">
+                                <p class="text-[#7A7A7A] text-[14px]">
+                                    @CRS.ADMIN.APPLICATION.Resources.Resource.CompanyNameFurigana:
+                                </p>
+                                <p class="text-[#3E3E3E] text-[14px] leading-[12px] font-bold" style="margin-top:4px;">
+                                    @Model.CompanyNameFurigana
+                                </p>
+                            </div>
                         }
-                        else if (BussimageExtension == ".pdf")
-                        {
-                            <p class="text-[#3E3E3E] h-[116px] w-[230px] text-[14px] leading-[12px] font-bold pdfborder">
-                                <span class="center-box">
-                                    <span class="pdf-image">
-                                        <img src="/Content/assets/images/pdficon.svg" alt="Your Image" class="image-style">
-                                    </span>
-                                    <span class="text-content">@fileNameWithExtensionbuss</span>
-                                </span>
+
+                        <div class=" grid grid-cols-2">
+                            <p class="text-[#7A7A7A] text-[14px]">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Business_Cerfificate
                             </p>
+                            @if (BussimageExtension == ".jpg" || BussimageExtension == ".jpeg" || BussimageExtension == ".png" || BussimageExtension == ".gif")
+                            {
+                                <img class="text-[#3E3E3E] h-[116px] w-[230px] text-[14px] leading-[12px] font-bold"
+                                     src="@Model.BusinessCertificate" />
+                            }
+                            else if (BussimageExtension == ".pdf")
+                            {
+                                <p class="text-[#3E3E3E] h-[116px] w-[230px] text-[14px] leading-[12px] font-bold pdfborder">
+                                    <span class="center-box">
+                                        <span class="pdf-image">
+                                            <img src="/Content/assets/images/pdficon.svg" alt="Your Image" class="image-style">
+                                        </span>
+                                        <span class="text-content">@fileNameWithExtensionbuss</span>
+                                    </span>
+                                </p>
 
 
-                        }
+                            }
 
 
-                    </div>
+                        </div>
                         <div class=" grid grid-cols-2">
                             <p class="text-[#7A7A7A] text-[14px]">
 
@@ -324,10 +342,10 @@
                                 }
                                 else if (!string.IsNullOrEmpty(BussimageExtension))
                                 {
-                                <a class="imagetextfield" style="padding-left: 7px;"
-                                   href="@Model.BusinessCertificate" download="">
-                                    Download
-                                </a>
+                                    <a class="imagetextfield" style="padding-left: 7px;"
+                                       href="@Model.BusinessCertificate" download="">
+                                        Download
+                                    </a>
                                 }
                             </p>
                         </div>
@@ -341,18 +359,18 @@
                                 <img class="text-[#3E3E3E] h-[116px] w-[230px] text-[14px] leading-[12px] font-bold"
                                      src="@Model.CorporateRegistryDocument" />
                             }
-                            else if(CorporateRegistryExtension == ".pdf")
+                            else if (CorporateRegistryExtension == ".pdf")
                             {
                                 <p class="text-[#3E3E3E] h-[116px] w-[230px] text-[14px] leading-[12px] font-bold pdfborder">
                                     <span class="center-box">
                                         <span class="pdf-image">
                                             <img src="/Content/assets/images/pdficon.svg" alt="Your Image" class="image-style">
                                         </span>
-                                        <span class="text-content">@fileNameWithExtension</span>                                      
+                                        <span class="text-content">@fileNameWithExtension</span>
                                     </span>
                                 </p>
 
-                             
+
                             }
 
 
@@ -370,10 +388,10 @@
                                 }
                                 else if (!string.IsNullOrEmpty(CorporateRegistryExtension))
                                 {
-                                <a class="imagetextfield" style="padding-left: 7px;"
-                                   href="@Model.CorporateRegistryDocument" download="">
-                                    Download
-                                </a>
+                                    <a class="imagetextfield" style="padding-left: 7px;"
+                                       href="@Model.CorporateRegistryDocument" download="">
+                                        Download
+                                    </a>
                                 }
                             </p>
                         </div>
@@ -428,10 +446,10 @@
                                     }
                                     else if (!string.IsNullOrEmpty(passportimageExtension))
                                     {
-                                    <a class="imagetextfield" style="padding-left: 7px;"
-                                       href="@Model.PassportPhoto" download="">
-                                        Download
-                                    </a>
+                                        <a class="imagetextfield" style="padding-left: 7px;"
+                                           href="@Model.PassportPhoto" download="">
+                                            Download
+                                        </a>
                                     }
                                 </p>
                             </div>
@@ -472,41 +490,41 @@
                                     }
                                     else if (!string.IsNullOrEmpty(insuranceimageExtension))
                                     {
-                                    <a class="imagetextfield" style="padding-left: 7px;"
-                                       href="@Model.InsurancePhoto" download="">
-                                        Download
-                                    </a>
+                                        <a class="imagetextfield" style="padding-left: 7px;"
+                                           href="@Model.InsurancePhoto" download="">
+                                            Download
+                                        </a>
                                     }
                                 </p>
                             </div>
                         }
                         else
                         {
-                    <div class=" grid grid-cols-2">
-                        <p class="text-[#7A7A7A] text-[14px]">
-                            @CRS.ADMIN.APPLICATION.Resources.Resource.KYCDocument
-                        </p>
-                        @if (kycfrontimageExtension == ".jpg" || kycfrontimageExtension == ".jpeg" || kycfrontimageExtension == ".png" || kycfrontimageExtension == ".gif")
-                        {
-                            <img class="text-[#3E3E3E] h-[116px] w-[230px] text-[14px] leading-[12px] font-bold"
-                                 src="@Model.KYCDocument" />
-                        }
-                        else if (kycfrontimageExtension == ".pdf")
-                        {
-                            <p class="text-[#3E3E3E] h-[116px] w-[230px] text-[14px] leading-[12px] font-bold pdfborder">
-                                <span class="center-box">
-                                    <span class="pdf-image">
-                                        <img src="/Content/assets/images/pdficon.svg" alt="Your Image" class="image-style">
-                                    </span>
-                                    <span class="text-content">@fileNameWithExtensionkycfront</span>
-                                </span>
-                            </p>
+                            <div class=" grid grid-cols-2">
+                                <p class="text-[#7A7A7A] text-[14px]">
+                                    @CRS.ADMIN.APPLICATION.Resources.Resource.KYCDocument
+                                </p>
+                                @if (kycfrontimageExtension == ".jpg" || kycfrontimageExtension == ".jpeg" || kycfrontimageExtension == ".png" || kycfrontimageExtension == ".gif")
+                                {
+                                    <img class="text-[#3E3E3E] h-[116px] w-[230px] text-[14px] leading-[12px] font-bold"
+                                         src="@Model.KYCDocument" />
+                                }
+                                else if (kycfrontimageExtension == ".pdf")
+                                {
+                                    <p class="text-[#3E3E3E] h-[116px] w-[230px] text-[14px] leading-[12px] font-bold pdfborder">
+                                        <span class="center-box">
+                                            <span class="pdf-image">
+                                                <img src="/Content/assets/images/pdficon.svg" alt="Your Image" class="image-style">
+                                            </span>
+                                            <span class="text-content">@fileNameWithExtensionkycfront</span>
+                                        </span>
+                                    </p>
 
 
-                        }
+                                }
 
 
-                    </div>
+                            </div>
                             <div class=" grid grid-cols-2">
                                 <p class="text-[#7A7A7A] text-[14px]">
 
@@ -521,10 +539,10 @@
                                     }
                                     else if (!string.IsNullOrEmpty(kycfrontimageExtension))
                                     {
-                                    <a class="imagetextfield" style="padding-left: 7px;"
-                                       href="@Model.KYCDocument" download="">
-                                        Download
-                                    </a>
+                                        <a class="imagetextfield" style="padding-left: 7px;"
+                                           href="@Model.KYCDocument" download="">
+                                            Download
+                                        </a>
                                     }
                                 </p>
                             </div>
@@ -565,12 +583,12 @@
                                             View
                                         </a>
                                     }
-                                    else if (!string.IsNullOrEmpty( kycbackimageExtension) )
+                                    else if (!string.IsNullOrEmpty(kycbackimageExtension))
                                     {
-                                    <a class="imagetextfield" style="padding-left: 7px;"
-                                       href="@Model.KYCDocumentBack" download="">
-                                        Download
-                                    </a>
+                                        <a class="imagetextfield" style="padding-left: 7px;"
+                                           href="@Model.KYCDocumentBack" download="">
+                                            Download
+                                        </a>
                                     }
                                 </p>
                             </div>

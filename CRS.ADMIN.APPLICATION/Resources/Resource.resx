@@ -706,6 +706,10 @@
     <value>Contact Name</value>
     <comment>ClubManagement</comment>
   </data>
+  <data name="Contract Information" xml:space="preserve">
+    <value>Contract Information</value>
+    <comment>Club Management</comment>
+  </data>
   <data name="Converted Customers" xml:space="preserve">
     <value>Converted Customers</value>
     <comment>Affiliate Management</comment>

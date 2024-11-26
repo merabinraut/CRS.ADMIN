@@ -1402,6 +1402,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Contract Information.
+        /// </summary>
+        public static string Contract_Information {
+            get {
+                return ResourceManager.GetString("Contract Information", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Converted Customers.
         /// </summary>
         public static string Converted_Customers {

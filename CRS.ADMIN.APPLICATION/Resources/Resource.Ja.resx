@@ -465,15 +465,15 @@
     <comment>Account Information</comment>
   </data>
   <data name="Building &amp; Room No" xml:space="preserve">
-    <value>建物と部屋番号</value>
+    <value>建物名・部屋番号</value>
     <comment>ClubManagement</comment>
   </data>
   <data name="Business Cerfificate" xml:space="preserve">
-    <value>会社番号証明書</value>
+    <value>社交飲食店の営業許可（風営法)</value>
     <comment>Club Management</comment>
   </data>
   <data name="Business Type" xml:space="preserve">
-    <value>事業の種類</value>
+    <value>法人・個人</value>
     <comment>Club Management</comment>
   </data>
   <data name="BusinessInfo" xml:space="preserve">
@@ -507,7 +507,7 @@
     <comment>CommissionManagement</comment>
   </data>
   <data name="CEO Full Name" xml:space="preserve">
-    <value>CEOフルネーム</value>
+    <value>代表者名</value>
     <comment>ClubManagement</comment>
   </data>
   <data name="CEOFurigana" xml:space="preserve">
@@ -527,7 +527,7 @@
     <comment>Gallery Management</comment>
   </data>
   <data name="City" xml:space="preserve">
-    <value>市</value>
+    <value>市区町村</value>
     <comment>ClubManagement</comment>
   </data>
   <data name="Clear All" xml:space="preserve">
@@ -543,7 +543,7 @@
     <comment>Dashboard</comment>
   </data>
   <data name="Club Info" xml:space="preserve">
-    <value>クラブ情報</value>
+    <value>店舗情報</value>
     <comment>ClubManagement</comment>
   </data>
   <data name="Club List" xml:space="preserve">
@@ -706,6 +706,10 @@
     <value>担当者名</value>
     <comment>ClubManagement</comment>
   </data>
+  <data name="Contract Information" xml:space="preserve">
+    <value>契約者情報</value>
+    <comment>Club Management</comment>
+  </data>
   <data name="Converted Customers" xml:space="preserve">
     <value>リファーラル</value>
     <comment>Affiliate Management</comment>
@@ -715,7 +719,7 @@
     <comment>Affiliate Management</comment>
   </data>
   <data name="CorporateRegistry" xml:space="preserve">
-    <value>法人登記簿</value>
+    <value>登記簿謄本（履歴事項全部証明書)</value>
     <comment>ClubManagement</comment>
   </data>
   <data name="Cover Photo" xml:space="preserve">
@@ -1058,7 +1062,7 @@
     <comment>Recommendation Management</comment>
   </data>
   <data name="Group Name" xml:space="preserve">
-    <value>グループ名</value>
+    <value>所属グループ名</value>
     <comment>Club Management</comment>
   </data>
   <data name="Group Name Placeholder" xml:space="preserve">
@@ -1221,7 +1225,7 @@
     <comment>ClubManagement</comment>
   </data>
   <data name="KYCDocument" xml:space="preserve">
-    <value>アップロード (本人確認種類)</value>
+    <value>代表者の身分証明書</value>
     <comment>ClubManagement</comment>
   </data>
   <data name="KYCFront" xml:space="preserve">
@@ -1229,7 +1233,7 @@
     <comment>ClubManagement</comment>
   </data>
   <data name="LandlineNumber" xml:space="preserve">
-    <value>固定電話番号</value>
+    <value>電話番号</value>
     <comment>ClubManagement</comment>
   </data>
   <data name="Language" xml:space="preserve">
@@ -1571,7 +1575,7 @@
     <comment>Club Management</comment>
   </data>
   <data name="Mobile Number (Easily reachable)" xml:space="preserve">
-    <value>電話番号（連絡の繋がりやすい）</value>
+    <value>電話番号</value>
     <comment>Club Management</comment>
   </data>
   <data name="MobileNumber" xml:space="preserve">
@@ -1917,7 +1921,7 @@
     <comment>Inquries</comment>
   </data>
   <data name="Prefecture" xml:space="preserve">
-    <value>県</value>
+    <value>都道府県</value>
     <comment>ClubManagement</comment>
   </data>
   <data name="Premium" xml:space="preserve">
@@ -2341,7 +2345,7 @@
     <comment>ClubManagement</comment>
   </data>
   <data name="Street" xml:space="preserve">
-    <value>町</value>
+    <value>町名・番地</value>
     <comment>ClubManagement</comment>
   </data>
   <data name="Strike Out" xml:space="preserve">
