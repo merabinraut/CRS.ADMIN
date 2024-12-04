@@ -49,6 +49,7 @@ namespace CRS.ADMIN.REPOSITORY.PointsManagement
                         ToUser = Convert.ToString(_DAO.ParseColumnValue(item, "toUser")),
                         Points = Convert.ToString(_DAO.ParseColumnValue(item, "points")),
                         Remarks = Convert.ToString(_DAO.ParseColumnValue(item, "remark")),
+
                         Id = Convert.ToString(_DAO.ParseColumnValue(item, "id"))
 
                     });
