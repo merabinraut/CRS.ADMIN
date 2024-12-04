@@ -34,7 +34,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             _httpClient = httpClient;
         }
         [HttpGet]
-        public ActionResult ClubList( string TabValue = "",string SearchFilter = "", int StartIndex = 0, int PageSize = 10, int StartIndex2 = 0, int PageSize2 = 10, int StartIndex3 = 0, int PageSize3 = 10)
+        public ActionResult ClubList(string TabValue = "", string SearchFilter = "", int StartIndex = 0, int PageSize = 10, int StartIndex2 = 0, int PageSize2 = 10, int StartIndex3 = 0, int PageSize3 = 10)
         {
             ViewBag.SearchFilter = SearchFilter;
             Session["CurrentURL"] = "/ClubManagement/ClubList";
@@ -55,10 +55,10 @@ namespace CRS.ADMIN.APPLICATION.Controllers
 
             if (TempData.ContainsKey("AvailabilityModel")) response.GetAvailabilityList = TempData["AvailabilityModel"] as List<AvailabilityTagModel>;
             else response.ManageTag.GetAvailabilityTagModel = new List<AvailabilityTagModel>();
-            
+
             //****************************  Start Approved List  **************************************//
 
-            if(TabValue == "")
+            if (TabValue == "")
             {
                 PaginationFilterCommon dbRequestall = new PaginationFilterCommon()
                 {
@@ -73,11 +73,11 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                     item.AgentId = item.AgentId?.EncryptParameter();
                     item.ClubLogo = ImageHelper.ProcessedImage(item.ClubLogo);
                 }
-              ViewBag.TotalData = dbResponse != null && dbResponse.Any() ? dbResponse[0].TotalRecords : 0;
+                ViewBag.TotalData = dbResponse != null && dbResponse.Any() ? dbResponse[0].TotalRecords : 0;
             }
             else
             {
-                ViewBag.TotalData =  0;
+                ViewBag.TotalData = 0;
             }
 
 
@@ -129,7 +129,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             }
             else
             {
-                ViewBag.TotalData3 =  0;
+                ViewBag.TotalData3 = 0;
             }
             //*************************************   END Rejected List  **************************************//
 
@@ -138,8 +138,8 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             ViewBag.StartIndex = StartIndex;
             ViewBag.PageSize = PageSize;
             ViewBag.StartIndex3 = StartIndex3;
-            ViewBag.PageSize3 = PageSize3;                                
-            ViewBag.Pref = DDLHelper.LoadDropdownList("PREF") as Dictionary<string, string>;          
+            ViewBag.PageSize3 = PageSize3;
+            ViewBag.Pref = DDLHelper.LoadDropdownList("PREF") as Dictionary<string, string>;
             ViewBag.Holiday = ApplicationUtilities.SetDDLValue(DDLHelper.LoadDropdownList("Holiday", "", culture) as Dictionary<string, string>, null, "");
             ViewBag.IdentificationType = DDLHelper.LoadDropdownList("DOCUMENTTYPE") as Dictionary<string, string>;
             ViewBag.IdentificationTypeIdKey = response.ManageClubModel.IdentificationType;
@@ -163,11 +163,11 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             ViewBag.OthersHoliday = ApplicationUtilities.SetDDLValue(DDLHelper.LoadDropdownList("OTHERSHOLIDAY", "", culture) as Dictionary<string, string>, null, "");
             ViewBag.OthersHolidayIdKey = !string.IsNullOrEmpty(response.ManageClubModel.OthersHoliday) ? response.ManageClubModel.OthersHoliday : null;
             response.ListType = TabValue;
-            response.TabValue = TabValue;          
+            response.TabValue = TabValue;
             response.SearchFilter = !string.IsNullOrEmpty(SearchFilter) ? SearchFilter : null;
             return View(response);
         }
-       
+
         [HttpGet]
         public ActionResult ManageClub(string AgentId = "", string SearchFilter = "", int StartIndex = 0, int PageSize = 10)
         {
@@ -175,7 +175,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             culture = string.IsNullOrEmpty(culture) ? "ja" : culture;
             ManageClubModel model = new ManageClubModel();
             //ViewBag.CountryCodeDDL = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("COUNTRYCODE") as Dictionary<string, string>, null);
-           
+
             if (!string.IsNullOrEmpty(AgentId))
             {
                 var id = AgentId.DecryptParameter();
@@ -268,7 +268,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
         }
 
         [HttpPost, ValidateAntiForgeryToken]
-        public JsonResult DeleteClub(string AgentId )
+        public JsonResult DeleteClub(string AgentId)
         {
             var response = new CommonDbResponse();
             var aId = !string.IsNullOrEmpty(AgentId) ? AgentId.DecryptParameter() : null;
@@ -328,7 +328,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             return Json(dbResponse.Message, JsonRequestBehavior.AllowGet);
         }
         [HttpPost, ValidateAntiForgeryToken]
-        public ActionResult UnBlockClub(string AgentId,string status)
+        public ActionResult UnBlockClub(string AgentId, string status)
         {
             var response = new CommonDbResponse();
             var aId = !string.IsNullOrEmpty(AgentId) ? AgentId.DecryptParameter() : null;
@@ -337,7 +337,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             {
                 ActionIP = ApplicationUtilities.GetIP(),
                 ActionUser = ApplicationUtilities.GetSessionValue("Username").ToString()
-            };            
+            };
             var dbResponse = _BUSS.ManageClubStatus(aId, status, commonRequest);
             response = dbResponse;
             this.AddNotificationMessage(new NotificationModel()
@@ -458,7 +458,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             TempData["RenderId"] = "Manage";
             TempData["EditPlan"] = model;
 
-            return RedirectToAction("ClubList", "ClubManagement",new { TabValue = "02", SearchFilter = SearchFilter, StartIndex2 = StartIndex, PageSize2 = PageSize });
+            return RedirectToAction("ClubList", "ClubManagement", new { TabValue = "02", SearchFilter = SearchFilter, StartIndex2 = StartIndex, PageSize2 = PageSize });
         }
 
         [HttpPost, ValidateAntiForgeryToken]
@@ -473,15 +473,15 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             string otherCommaSeparatedString = string.Join(", ", otherArray);
             List<string> othersHolidayList = otherCommaSeparatedString.Split(new[] { ", " }, StringSplitOptions.RemoveEmptyEntries).ToList();
             ActionResult redirectresult = null;
-            if(!string.IsNullOrEmpty(Model.holdId))
+            if (!string.IsNullOrEmpty(Model.holdId))
             {
                 redirectresult = RedirectToAction("ClubList", "ClubManagement", new
                 {
-                    TabValue="02",
+                    TabValue = "02",
                     SearchFilter = Model.SearchFilter,
                     StartIndex2 = Model.StartIndex,
                     PageSize2 = Model.PageSize == 0 ? 10 : Model.PageSize,
-                     
+
                 });
             }
             else
@@ -489,24 +489,24 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 redirectresult = RedirectToAction("ClubList", "ClubManagement", new
                 {
                     SearchFilter = Model.SearchFilter,
-                    StartIndex = Model.StartIndex ,
+                    StartIndex = Model.StartIndex,
                     PageSize = Model.PageSize == 0 ? 10 : Model.PageSize,
                 });
             }
             foreach (var holiday in holidayList)
             {
-               var item = holiday.DecryptParameter();
+                var item = holiday.DecryptParameter();
                 if (string.IsNullOrEmpty(holidays))
                 {
                     holidays = item.Trim();
                 }
                 else
                 {
-                    holidays = holidays+"," + item.Trim();
+                    holidays = holidays + "," + item.Trim();
                 }
-               
+
             }
-            Model.Holiday= holidays;
+            Model.Holiday = holidays;
             foreach (var otherholiday in othersHolidayList)
             {
                 var item = otherholiday.DecryptParameter();
@@ -1095,7 +1095,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 ResponseModel.IdentificationTypeName = (ResponseModel.IdentificationType != null && ViewBag.IdentificationType?.TryGetValue(ResponseModel.IdentificationType, out value)) ? value : "";
                 TempData["ClubHoldDetails"] = ResponseModel;
                 TempData["RenderId"] = "ClubHoldDetails";
-                return RedirectToAction("ClubList", "ClubManagement", new { TabValue = "02", SearchFilter = SearchFilter, StartIndex2 = StartIndex, PageSize2 = PageSize});
+                return RedirectToAction("ClubList", "ClubManagement", new { TabValue = "02", SearchFilter = SearchFilter, StartIndex2 = StartIndex, PageSize2 = PageSize });
             }
         }
         #region Manage Manager
