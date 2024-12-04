@@ -38,6 +38,7 @@ namespace CRS.ADMIN.REPOSITORY.PointsManagement
                 {
                     response.Add(new PointsTansferReportCommon()
                     {
+<<<<<<< HEAD
                         SNO = Convert.ToInt32(_DAO.ParseColumnValue(item, "SNO").ToString()),
                         TotalRecords = Convert.ToInt32(_DAO.ParseColumnValue(item, "TotalRecords").ToString()),
                         TransactionId = Convert.ToString(_DAO.ParseColumnValue(item, "TransactionId")),
@@ -48,6 +49,20 @@ namespace CRS.ADMIN.REPOSITORY.PointsManagement
                         ToUser = Convert.ToString(_DAO.ParseColumnValue(item, "ToUser")),
                         Points = Convert.ToString(_DAO.ParseColumnValue(item, "Amount")),
                         Remarks = Convert.ToString(_DAO.ParseColumnValue(item, "Remark"))
+=======
+                        SNO = Convert.ToInt32(_DAO.ParseColumnValue(item, "sNo").ToString()),
+                        TotalRecords = Convert.ToInt32(_DAO.ParseColumnValue(item, "totalRecords").ToString()),
+                        TransactionId = Convert.ToString(_DAO.ParseColumnValue(item, "transactionId")),
+                        TransactionType = Convert.ToString(_DAO.ParseColumnValue(item, "transactionTypeName")),
+                        TransactionDate = !string.IsNullOrEmpty(_DAO.ParseColumnValue(item, "transactionDate").ToString()) ? DateTime.Parse(_DAO.ParseColumnValue(item, "transactionDate").ToString()).ToString("yyyy'年'MM'月'dd'日' HH:mm:ss") : _DAO.ParseColumnValue(item, "transactionDate").ToString(),
+                        UserType = Convert.ToString(_DAO.ParseColumnValue(item, "userType")),
+                        FromUser = Convert.ToString(_DAO.ParseColumnValue(item, "fromUser")),
+                        ToUser = Convert.ToString(_DAO.ParseColumnValue(item, "toUser")),
+                        Points = Convert.ToString(_DAO.ParseColumnValue(item, "points")),
+                        Remarks = Convert.ToString(_DAO.ParseColumnValue(item, "remark")),
+
+                        Id = Convert.ToString(_DAO.ParseColumnValue(item, "id"))
+>>>>>>> 1dfb5be6a8888b991b5089b682173e0f4d4ac193
 
                     });
                 }
