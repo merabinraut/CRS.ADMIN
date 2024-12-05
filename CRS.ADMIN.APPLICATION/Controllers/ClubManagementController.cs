@@ -25,6 +25,8 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using static Google.Apis.Requests.BatchRequest;
+using CRS.ADMIN.SHARED.Middleware.AmazonCognitoModel.Password;
+using Amazon.CognitoIdentityProvider.Model;
 
 namespace CRS.ADMIN.APPLICATION.Controllers
 {
@@ -357,7 +359,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
         }
 
         [HttpPost, ValidateAntiForgeryToken]
-        public ActionResult ResetClubPassword(string AgentId)
+        public async Task<ActionResult> ResetClubPassword(string AgentId)
         {
             var response = new CommonDbResponse();
             var aId = !string.IsNullOrEmpty(AgentId) ? AgentId.DecryptParameter() : null;
@@ -367,16 +369,65 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 ActionIP = ApplicationUtilities.GetIP(),
                 ActionUser = ApplicationUtilities.GetSessionValue("Username").ToString()
             };
-            var dbResponse = _BUSS.ResetClubUserPassword(aId, "", commonRequest);
-            response = dbResponse;
-            this.AddNotificationMessage(new NotificationModel()
+            var _sqlTransactionHandler = new RepositoryDaoWithTransaction(null, null);
+            _sqlTransactionHandler.BeginTransaction();
+            try
             {
-                NotificationType = response.Code == CRS.ADMIN.SHARED.ResponseCode.Success ? NotificationMessage.SUCCESS : NotificationMessage.INFORMATION,
-                Message = response.Message ?? "Something went wrong. Please try again later",
-                Title = response.Code == CRS.ADMIN.SHARED.ResponseCode.Success ? NotificationMessage.SUCCESS.ToString() : NotificationMessage.INFORMATION.ToString()
-            });
-            return Json(JsonRequestBehavior.AllowGet);
-            //return Json(response.SetMessageInTempData(this));
+                var dbResponse = _BUSS.ResetClubUserPassword(aId, "", commonRequest, _sqlTransactionHandler.GetCurrentConnection(), _sqlTransactionHandler.GetCurrentTransaction());
+                response = dbResponse.MapObject<CommonDbResponse>();
+
+                if (response?.Code != CRS.ADMIN.SHARED.ResponseCode.Success || string.IsNullOrEmpty(response.Extra1) || string.IsNullOrEmpty(response.Extra2))
+                {
+                    this.AddNotificationMessage(new NotificationModel()
+                    {
+                        NotificationType = response.Code == CRS.ADMIN.SHARED.ResponseCode.Success ? NotificationMessage.SUCCESS : NotificationMessage.INFORMATION,
+                        Message = response.Message ?? "Something went wrong. Please try again later",
+                        Title = response.Code == CRS.ADMIN.SHARED.ResponseCode.Success ? NotificationMessage.SUCCESS.ToString() : NotificationMessage.INFORMATION.ToString()
+                    });
+                    _sqlTransactionHandler.RollbackTransaction();
+                    return Json(JsonRequestBehavior.AllowGet);
+                }
+
+                var setPasswordResponse = await _amazonCognitoMiddleware.SetPasswordAsync(new CRS.ADMIN.SHARED.Middleware.AmazonCognitoModel.Password.SetPasswordModel.Request
+                {
+                    Username = response.Extra1,
+                    Password = response.Extra2,
+                    IsPermanent = true
+                });
+
+                if (setPasswordResponse?.Code != CRS.ADMIN.SHARED.Middleware.AmazonCognitoModel.ResponseCode.Success)
+                {
+                    this.AddNotificationMessage(new NotificationModel()
+                    {
+                        NotificationType = NotificationMessage.INFORMATION,
+                        Message = "Something went wrong. Please try again later",
+                        Title = NotificationMessage.INFORMATION.ToString()
+                    });
+                    _sqlTransactionHandler.RollbackTransaction();
+                    return Json(JsonRequestBehavior.AllowGet);
+                }
+
+                this.AddNotificationMessage(new NotificationModel()
+                {
+                    NotificationType = response.Code == CRS.ADMIN.SHARED.ResponseCode.Success ? NotificationMessage.SUCCESS : NotificationMessage.INFORMATION,
+                    Message = response.Message ?? "Something went wrong. Please try again later",
+                    Title = response.Code == CRS.ADMIN.SHARED.ResponseCode.Success ? NotificationMessage.SUCCESS.ToString() : NotificationMessage.INFORMATION.ToString()
+                });
+                _sqlTransactionHandler.CommitTransaction();
+                return Json(JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                this.AddNotificationMessage(new NotificationModel()
+                {
+                    NotificationType = NotificationMessage.WARNING,
+                    Message = $"Something went wrong. Please try again later {ex.Message}",
+                    Title = "EXCEPTION"
+                });
+                _sqlTransactionHandler.RollbackTransaction();
+                return Json(JsonRequestBehavior.AllowGet);
+            }
+
         }
 
         [HttpGet]

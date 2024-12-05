@@ -64,9 +64,9 @@ namespace CRS.ADMIN.BUSINESS.ClubManagement
             return _REPO.ManageClubStatus(AgentId, Status, Request);
         }
 
-        public CommonDbResponse ResetClubUserPassword(string AgentId, string UserId, Common Request)
+        public CommonDbResponse ResetClubUserPassword(string AgentId, string UserId, Common Request, SqlConnection connection = null, SqlTransaction transaction = null)
         {
-            return _REPO.ResetClubUserPassword(AgentId, UserId, Request);
+            return _REPO.ResetClubUserPassword(AgentId, UserId, Request, connection, transaction);
         }
 
         #region "Manage Tag

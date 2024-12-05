@@ -18,7 +18,7 @@ namespace CRS.ADMIN.REPOSITORY.ClubManagement
         ClubDetailCommon GetClubDetails(string AgentId, String culture = "");
         CommonDbResponse ManageClub(ManageClubCommon Request);
         CommonDbResponse ManageClubStatus(string AgentId, string Status, Common Request);
-        CommonDbResponse ResetClubUserPassword(string AgentId, string UserId, Common Request);
+        CommonDbResponse ResetClubUserPassword(string AgentId, string UserId, Common Request, SqlConnection connection = null, SqlTransaction transaction = null);
         List<PlanListCommon> GetClubPlanIdentityList(string culture);
         List<planIdentityDataCommon> GetClubPlanIdentityListAddable(string culture);
 
