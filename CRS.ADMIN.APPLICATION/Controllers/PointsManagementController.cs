@@ -68,6 +68,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             ViewBag.UsernameIdKey = !string.IsNullOrEmpty(UserName) ? UserName : null;
             ViewBag.TransferTypeIdKey = !string.IsNullOrEmpty(TransferTypeId) ? TransferTypeId : null;
             var dbResponse = _BUSS.GetPointTransferList(Commonmodel, dbRequest);
+
             objPointsManagementModel.PointsTansferReportList = dbResponse.MapObjects<PointsTansferReportModel>();
             objPointsManagementModel.PointsTansferReportList.ForEach(x =>
             {
