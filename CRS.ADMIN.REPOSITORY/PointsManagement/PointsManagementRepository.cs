@@ -25,10 +25,8 @@ namespace CRS.ADMIN.REPOSITORY.PointsManagement
             SQL += !string.IsNullOrEmpty(objPointsTansferReportCommon.UserType) ? " ,@UserTypeId=" + _DAO.FilterString(objPointsTansferReportCommon.UserType) : " ,@UserTypeId=null ";
             SQL += !string.IsNullOrEmpty(objPointsTansferReportCommon.UserName) ? ",@UserId=" + _DAO.FilterString(objPointsTansferReportCommon.UserName) : ",@UserId=null";
             SQL += !string.IsNullOrEmpty(objPointsTansferReportCommon.TransferTypeId) ? " ,@TransactionType=" + _DAO.FilterString(objPointsTansferReportCommon.TransferTypeId) : " ,@TransactionType =null";
-
             SQL += !string.IsNullOrEmpty(objPointsTansferReportCommon.FromDate) ? ",@FromDate=" + _DAO.FilterString(objPointsTansferReportCommon.FromDate) : ",@FromDate=null";
             SQL += !string.IsNullOrEmpty(objPointsTansferReportCommon.ToDate) ? " ,@ToDate=" + _DAO.FilterString(objPointsTansferReportCommon.ToDate) : " ,@ToDate =null";
-
             SQL += " ,@Skip=" + objPaginationFilterCommon.Skip;
             SQL += ",@Take=" + objPaginationFilterCommon.Take;
             var dbResponse = _DAO.ExecuteDataTable(SQL);
@@ -47,10 +45,9 @@ namespace CRS.ADMIN.REPOSITORY.PointsManagement
                         UserType = Convert.ToString(_DAO.ParseColumnValue(item, "userType")),
                         FromUser = Convert.ToString(_DAO.ParseColumnValue(item, "fromUser")),
                         ToUser = Convert.ToString(_DAO.ParseColumnValue(item, "toUser")),
-
                         Points = Convert.ToString(_DAO.ParseColumnValue(item, "points")),
-                        Remarks = Convert.ToString(_DAO.ParseColumnValue(item, "remark"))
-
+                        Remarks = Convert.ToString(_DAO.ParseColumnValue(item, "remark")),
+                        Id = Convert.ToString(_DAO.ParseColumnValue(item, "id"))
 
                     });
                 }
@@ -59,7 +56,6 @@ namespace CRS.ADMIN.REPOSITORY.PointsManagement
         }
         public CommonDbResponse ManagePoints(PointsTansferCommon objPointsTansferCommon)
         {
-
             var Sp = objPointsTansferCommon.SpName;
             string SQL = $"EXEC {Sp}"; 
             SQL += " @roleType=" + _DAO.FilterString(objPointsTansferCommon.UserTypeId);
@@ -68,7 +64,6 @@ namespace CRS.ADMIN.REPOSITORY.PointsManagement
             SQL += ",@points=" + _DAO.FilterString(objPointsTansferCommon.Points);
             SQL += ",@remark=N" + _DAO.FilterString(objPointsTansferCommon.Remarks);
             SQL += ",@receiptPhoto=" + _DAO.FilterString(objPointsTansferCommon.Image);
-
             SQL += ",@actionUser=" + _DAO.FilterString(objPointsTansferCommon.ActionUser);
             SQL += ",@actionIP=" + _DAO.FilterString(objPointsTansferCommon.ActionIP);
             return _DAO.ParseCommonDbResponse(SQL);
@@ -79,14 +74,12 @@ namespace CRS.ADMIN.REPOSITORY.PointsManagement
             string SQL = "EXEC sproc_admin_point_request ";
             SQL += " @Point=" + _DAO.FilterString(objPointsRequestCommon.Points);
             SQL += ",@Remarks=" + _DAO.FilterString(objPointsRequestCommon.Remarks);
-
             SQL += ",@ActionUser=" + _DAO.FilterString(objPointsRequestCommon.ActionUser);
             return _DAO.ParseCommonDbResponse(SQL);
         }
         #region Point transfer List
         public List<PointRequestListCommon> GetPointRequestList(PointRequestListFilterCommon request)
         {
-
             var response = new List<PointRequestListCommon>();
             //string SQL = "EXEC sproc_club_to_admin_payment_transaction_list";
             string SQL = "EXEC sproc_admin_payment_transaction_list";
@@ -97,13 +90,11 @@ namespace CRS.ADMIN.REPOSITORY.PointsManagement
             SQL += !string.IsNullOrEmpty(request.ToDate) ? ",@ToDate=" + _DAO.FilterString(request.ToDate) : string.Empty;
             SQL += ",@Skip=" + request.Skip;           
             SQL += !string.IsNullOrEmpty(request.LocationId) ? ",@LocationId=" + _DAO.FilterString(request.LocationId) : string.Empty;
-
             SQL += ",@Take=" + request.Take;
             var dbResponse = _DAO.ExecuteDataTable(SQL);
             if (dbResponse != null)
                 response = _DAO.DataTableToListObject<PointRequestListCommon>(dbResponse).ToList();
             return response;
-
         }
 
         public CommonDbResponse ManageClubPointRequest(ManageClubPointRequestCommon request)
@@ -117,16 +108,13 @@ namespace CRS.ADMIN.REPOSITORY.PointsManagement
             SQL += ",@remark=N" + _DAO.FilterString(request.AdminRemark);
             SQL += ",@image=" + _DAO.FilterString(request.ImageURL);
             SQL += ",@actionUser=" + _DAO.FilterString(request.ActionUser);
-
             SQL += ",@actionIP=" + _DAO.FilterString(request.ActionIP);
             return _DAO.ParseCommonDbResponse(SQL);
-
         }
 
         public List<PointBalanceStatementResponseCommon> GetPointBalanceStatementDetailsAsync(PointBalanceStatementRequestCommon request)
         {
-
-            var response = new List<PointBalanceStatementResponseCommon>();
+           var response = new List<PointBalanceStatementResponseCommon>();
             string SQL = "EXEC sproc_club_GetPoint_Balance_StatementDetails ";
             SQL += !string.IsNullOrEmpty(request.SearchFilter) ? " @search=N" + _DAO.FilterString(request.SearchFilter) : " @search=null ";
             //SQL += !string.IsNullOrEmpty(request.UserTypeList) ? " ,@UserTypeId=" + _DAO.FilterString(request.UserTypeList) : " ,@UserTypeId=null ";
@@ -139,7 +127,6 @@ namespace CRS.ADMIN.REPOSITORY.PointsManagement
             var dbResponse = _DAO.ExecuteDataTable(SQL);
             if (dbResponse != null)
             {
-
                 foreach (DataRow item in dbResponse.Rows)
                 {
                     response.Add(new PointBalanceStatementResponseCommon()
@@ -153,7 +140,6 @@ namespace CRS.ADMIN.REPOSITORY.PointsManagement
                         TotalPrice = Convert.ToInt64(_DAO.ParseColumnValue(item, "TotalAmount")).ToString("N0"),
                         TotalCommission = Convert.ToInt64(_DAO.ParseColumnValue(item, "TotalCommissionAmount")).ToString("N0"),
                         Remarks = Convert.ToString(_DAO.ParseColumnValue(item, "Remark")),
-
                         Credit = Convert.ToInt64(_DAO.ParseColumnValue(item, "Credit")).ToString("N0"),
                         Debit = Convert.ToInt64(_DAO.ParseColumnValue(item, "Debit")).ToString("N0")
                     });

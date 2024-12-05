@@ -16,6 +16,7 @@ namespace CRS.ADMIN.SHARED.PointsManagement
     }
     public class PointRequestListCommon
     {
+        public string Id { get; set; }
         public string AgentId { get; set; }
         public string UserId { get; set; }
         public string RequestId { get; set; }
@@ -38,6 +39,7 @@ namespace CRS.ADMIN.SHARED.PointsManagement
         public string UserId { get; set; }
         public string TxnId { get; set; }
         public string Status { get; set; }
+        public string Id { get; set; }
         public string AdminRemark { get; set; }
 
         public string ImageURL { get; set; }

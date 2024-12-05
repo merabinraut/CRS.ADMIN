@@ -17,5 +17,6 @@ namespace CRS.ADMIN.BUSINESS.PointsManagement
         List<PointBalanceStatementResponseCommon> GetPointBalanceStatementDetailsAsync(PointBalanceStatementRequestCommon requestModel=null);
         List<SystemTransferReponseCommon> GetSystemTransferDetailsAsync(SystemTransferRequestCommon mappedObject);
         #endregion
+        PointsTansferRetriveDetailsCommon GetPointTransferDetails(string id);
     }
 }

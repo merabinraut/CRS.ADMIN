@@ -47,6 +47,10 @@ namespace CRS.ADMIN.BUSINESS.PointsManagement
         {
             return _REPO.GetSystemTransferDetailsAsync(mappedObject);
         }
+        public PointsTansferRetriveDetailsCommon GetPointTransferDetails(string id)
+        {
+            return _REPO.GetPointTransferDetails(id);
+        }
 
         #endregion
     }

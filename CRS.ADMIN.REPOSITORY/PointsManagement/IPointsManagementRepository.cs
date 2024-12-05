@@ -18,5 +18,6 @@ namespace CRS.ADMIN.REPOSITORY.PointsManagement
         List<SystemTransferReponseCommon> GetSystemTransferDetailsAsync(SystemTransferRequestCommon mappedObject);
 
         #endregion
+        PointsTansferRetriveDetailsCommon GetPointTransferDetails(string id);
     }
 }
