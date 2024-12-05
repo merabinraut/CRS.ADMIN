@@ -135,5 +135,9 @@ namespace CRS.ADMIN.BUSINESS.ClubManagement
             return _REPO.ManageManager(request);
         }
         #endregion
+        public CommonDbResponse ManageClubCognitoDetail(string clubId, string loginId, string cognitoUserId, SqlConnection connection = null, SqlTransaction transaction = null)
+        {
+            return _REPO.ManageClubCognitoDetail(clubId, loginId, cognitoUserId, connection, transaction);
+        }
     }
 }

@@ -2,6 +2,7 @@
 using CRS.ADMIN.APPLICATION.Services;
 using CRS.ADMIN.SHARED.Middleware.AmazonCognitoModel;
 using CRS.ADMIN.SHARED.Middleware.AmazonCognitoModel.SignUp;
+using System.Linq;
 using System.Threading.Tasks;
 using SharedCognitoModel = CRS.ADMIN.SHARED.Middleware.AmazonCognitoModel;
 
@@ -61,7 +62,7 @@ namespace CRS.ADMIN.APPLICATION.Middleware
             try
             {
                 var signUpResponse = await _cognitoService.AdminCreateUser(signUpRequest);
-                if (signUpResponse?.UserSub == null)
+                if (signUpResponse.Count() <= 0 || string.IsNullOrEmpty(signUpResponse.FirstOrDefault(x => x.Name == SharedCognitoModel.AttributeTypeName.Sub)?.Value))
                     return new SharedCognitoModel.CommonResponse
                     {
                         Code = SharedCognitoModel.ResponseCode.Warning,
@@ -71,7 +72,7 @@ namespace CRS.ADMIN.APPLICATION.Middleware
                 {
                     Code = ResponseCode.Success,
                     Message = ResponseCode.Success.ToString(),
-                    Data = signUpResponse.MapObject<SignUpModel.Response>()
+                    Data = signUpResponse.MapObjects<SignUpModel.AdminCreateUserResponse>()
                 };
             }
             catch (System.Exception ex)

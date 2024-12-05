@@ -21,5 +21,11 @@ namespace CRS.ADMIN.SHARED.Middleware.AmazonCognitoModel.SignUp
         {
             public string UserSub { get; set; }
         }
+
+        public class AdminCreateUserResponse
+        {
+            public string Name { get; set; }
+            public string Value { get; set; }
+        }
     }
 }

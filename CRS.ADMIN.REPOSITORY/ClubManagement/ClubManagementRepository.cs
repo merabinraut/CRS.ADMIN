@@ -437,8 +437,8 @@ namespace CRS.ADMIN.REPOSITORY.ClubManagement
             sp_name += ",@holdId =" + _DAO.FilterString(holdId);
             sp_name += ",@AgentId =" + _DAO.FilterString(AgentId);
 
-            var _daoWithTransaction = new RepositoryDaoWithTransaction(connection, transaction);
-            Response = _daoWithTransaction.ParseCommonDbResponse(sp_name);
+            var _sqlTransactionHandler = new RepositoryDaoWithTransaction(connection, transaction);
+            Response = _sqlTransactionHandler.ParseCommonDbResponse(sp_name);
             return Response;
         }
 
@@ -1145,5 +1145,15 @@ namespace CRS.ADMIN.REPOSITORY.ClubManagement
 
         }
         #endregion
+
+        public CommonDbResponse ManageClubCognitoDetail(string clubId, string loginId, string cognitoUserId, SqlConnection connection = null, SqlTransaction transaction = null)
+        {
+            string sp_name = "sproc_admin_update_club_cognito_detail ";
+            sp_name += "@agentId=" + _DAO.FilterString(clubId);
+            sp_name += ",@loginId=N" + _DAO.FilterString(loginId);
+            sp_name += ",@cognitoUserId=" + _DAO.FilterString(cognitoUserId);
+            var _sqlTransactionHandler = new RepositoryDaoWithTransaction(connection, transaction);
+            return _sqlTransactionHandler.ParseCommonDbResponse(sp_name);
+        }
     }
 }

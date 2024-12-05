@@ -48,5 +48,6 @@ namespace CRS.ADMIN.REPOSITORY.ClubManagement
         ManageManagerCommon GetManagerDetails(string AgentId);
         CommonDbResponse ManageManager(ManageManagerCommon request);
         #endregion
+        CommonDbResponse ManageClubCognitoDetail(string clubId, string loginId, string cognitoUserId, SqlConnection connection = null, SqlTransaction transaction = null);
     }
 }

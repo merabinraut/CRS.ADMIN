@@ -27,5 +27,6 @@ namespace CRS.ADMIN.SHARED.Middleware.AmazonCognitoModel
     {
         public const string Email = "email";
         public const string PhoneNumber = "phone_number";
+        public const string Sub = "sub";
     }
 }

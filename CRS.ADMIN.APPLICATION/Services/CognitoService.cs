@@ -32,7 +32,7 @@ namespace CRS.ADMIN.APPLICATION.Services
         private readonly string _issuer;
         public CognitoService()
         {
-            var jsonPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "AmazonConfigruation.json");
+            var jsonPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory + "App_Data", "AmazonConfigruation.json");
             var jsonData = JObject.Parse(File.ReadAllText(jsonPath));
 
             _clientId = jsonData["CognitoClub"]["Cognito"]["ClientId"].ToString();
@@ -111,12 +111,12 @@ namespace CRS.ADMIN.APPLICATION.Services
             return true;
         }
 
-        public async Task<SharedCognitoModel.SignUp.SignUpModel.Response> AdminCreateUser(SharedCognitoModel.SignUp.SignUpModel.Request request)
+        public async Task<List<SharedCognitoModel.SignUp.SignUpModel.AdminCreateUserResponse>> AdminCreateUser(SharedCognitoModel.SignUp.SignUpModel.Request request)
         {
             var attributes = request.AttributeType.MapObjects<AttributeType>();
 
             if (!attributes.Any())
-                return new SharedCognitoModel.SignUp.SignUpModel.Response();
+                return new List<SharedCognitoModel.SignUp.SignUpModel.AdminCreateUserResponse>();
 
             foreach (var attribute in request.AttributeType)
             {
@@ -124,7 +124,7 @@ namespace CRS.ADMIN.APPLICATION.Services
                     (!attribute.Name.Equals(AttributeTypeName.Email, StringComparison.OrdinalIgnoreCase) &&
                      !attribute.Name.Equals(AttributeTypeName.PhoneNumber, StringComparison.OrdinalIgnoreCase)))
                 {
-                    return new SharedCognitoModel.SignUp.SignUpModel.Response();
+                    return new List<SharedCognitoModel.SignUp.SignUpModel.AdminCreateUserResponse>();
                 }
             }
 
@@ -137,7 +137,7 @@ namespace CRS.ADMIN.APPLICATION.Services
             };
 
             var adminCreateUserResponse = await _provider.AdminCreateUserAsync(adminCreateUserRequest);
-            return adminCreateUserResponse.MapObject<SharedCognitoModel.SignUp.SignUpModel.Response>();
+            return adminCreateUserResponse.User.Attributes.MapObjects<SharedCognitoModel.SignUp.SignUpModel.AdminCreateUserResponse>();
         }
         #endregion
 
