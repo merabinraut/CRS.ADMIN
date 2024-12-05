@@ -7,6 +7,7 @@
     var _PointRequestCommonModel = Model.PointRequestCommonModel as CRS.ADMIN.APPLICATION.Models.PointsManagement.PointRequestCommonModel;
     var _PointStatementModel = Model.PointBalanceStatementRequest as CRS.ADMIN.APPLICATION.Models.PointsManagement.PointBalanceStatementRequestModel;
     var _systemTransferModel = Model.SystemTransferModel as CRS.ADMIN.APPLICATION.Models.PointsManagement.SystemTransferRequestModel;
+    var _pointTransferDetails = Model.PointsTransferRetriveDetails as CRS.ADMIN.APPLICATION.Models.PointsManagement.PointsTansferRetriveDetailsModel;
 
 }
 <style>
@@ -315,7 +316,15 @@
                                                     </div>
                                                 </div>
                                             </th>
-
+                                            <th scope="col" class="p-[12px]">
+                                                <div class="flex w-max">
+                                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Action
+                                                    <div class="relative pl-[5px]">
+                                                        <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                                        <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                                    </div>
+                                                </div>
+                                            </th>
 
                                         </tr>
                                     </thead>
@@ -352,7 +361,9 @@
                                                             @item.Points
                                                         </td>
 
-
+                                                        <td class="p-[12px]">
+                                                            <i class="las la-eye text-[20px] cursor-pointer text-[#A6A6A6]" onclick="ViewPointTransferRetriveDetail('@item.Id');"></i>
+                                                        </td>
                                                     </tr>
                                                     SN++;
                                                 }
@@ -395,7 +406,7 @@
 </div>
 @Html.Partial("_ManagePointsTransferPartialView", _ManagePointsModel)
 @Html.Partial("_ManagePointsRequestPartialView", _ManagePointsRequestModel)
-
+@Html.Partial("_PointTransferRetrivePartialView", _pointTransferDetails)
 
 @section scripts
 {
@@ -892,76 +903,84 @@ $("#To_Date1").val("@_systemTransferModel.To_Date1");
             var element = document.getElementById('add-new-points-request');
             element.classList.remove('translate-x-full');
         }
+        else if (PopUpRenderValue != null && PopUpRenderValue != "" && PopUpRenderValue == "PointTransferRetriveDetails") {
+            var element = document.getElementById('add-points-transfer-details');
+            element.classList.remove('translate-x-full');
+        }
     </script>
     <script>
-        function InitateRejectRequest(AgentId, UserId, RequestId) {
-            $('#RejectAgentId').val(AgentId);
-            $('#RejectUserId').val(UserId);
-            $('#RejectTxnId').val(RequestId);
+        function InitateRejectRequest(Id) {
+            $('#RejectId').val(Id);
         }
 
-        function InitateApproveRequest(AgentId, UserId, RequestId) {
-            $('#ConfirmationAgentId').val(AgentId);
-            $('#ConfirmationUserId').val(UserId);
-            $('#ConfirmationTxnId').val(RequestId);
+        function InitateApproveRequest(Id) {
+            $('#ConfirmationId').val(Id);
         }
 
-        function ApproveClubPointRequestFunction() {
-            var fileInput = document.getElementById('file_input_cover');
-            var file = fileInput.files[0];
-            var formData = new FormData();
-            formData.append('Image', file);
-            let { AgentId, UserId, TxnId, AdminRemark } = {
-                AgentId: $('#ConfirmationAgentId').val(),
-                UserId: $('#ConfirmationUserId').val(),
-                TxnId: $('#ConfirmationTxnId').val(),
-                AdminRemark: $('#ConfirmationAdminRemark').val()
-            };
-            formData.append('__RequestVerificationToken', $('input[name="__RequestVerificationToken"]').val());
-            formData.append('AgentId', AgentId);
-            formData.append('UserId', UserId);
-            formData.append('TxnId', TxnId);
-            formData.append('AdminRemark', AdminRemark);
-            formData.append('Status', 'S');
-            $.ajax({
-                type: 'POST',
-                async: true,
-                url: "/PointsManagement/ManageClubPointRequest",
-                data: formData,
-                processData: false,
-                contentType: false,
-                success: function (responseData) {
-                    window.location.reload();
-                },
-                error: function (ex) {
-                    window.location.reload();
-                }
-            });
-        }
+    function ApproveClubPointRequestFunction() {
+    var fileInput = document.getElementById('file_input_cover');
+    var file = fileInput.files[0];
+    var formData = new FormData();
+    formData.append('Image', file);
+    let {  Id, AdminRemark } = {
 
-        function RejectClubPointRequestFunction() {
-            let { AgentId, UserId, TxnId, AdminRemark } = {
-                AgentId: $('#RejectAgentId').val(),
-                UserId: $('#RejectUserId').val(),
-                TxnId: $('#RejectTxnId').val(),
-                AdminRemark: $('#RejectAdminRemark').val(),
-            };
-
-            $.ajax({
-                type: 'POST',
-                async: true,
-                url: "/PointsManagement/ManageClubPointRequest",
-                dataType: 'json',
-                data: {
-                    __RequestVerificationToken: $('input[name="__RequestVerificationToken"]').val(), AgentId, UserId, TxnId, AdminRemark, Status: 'R'
-                },
-                success: function (responseData) {
-                    window.location.reload();
-                },
-                error: function (ex) {
-                    window.location.reload();
-                }
-            });
+        Id: $('#ConfirmationId').val(),
+        AdminRemark: $('#ConfirmationAdminRemark').val()
+    };
+    formData.append('__RequestVerificationToken', $('input[name="__RequestVerificationToken"]').val());
+    formData.append('Id', Id);
+    formData.append('AdminRemark', AdminRemark);
+    formData.append('Status', 'Approve');
+    $.ajax({
+        type: 'POST',
+        async: true,
+        url: "/PointsManagement/ManageClubPointRequest",
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function (responseData) {
+            window.location.reload();
+        },
+        error: function (ex) {
+            window.location.reload();
         }
+    });
+}
+
+function RejectClubPointRequestFunction() {
+    let { Id,AdminRemark } = {
+        Id: $('#RejectId').val(),
+        AdminRemark: $('#RejectAdminRemark').val(),
+    };
+
+    $.ajax({
+        type: 'POST',
+        async: true,
+        url: "/PointsManagement/ManageClubPointRequest",
+        dataType: 'json',
+        data: {
+            __RequestVerificationToken: $('input[name="__RequestVerificationToken"]').val(), Id,  AdminRemark, Status: 'Reject'
+        },
+        success: function (responseData) {
+            window.location.reload();
+        },
+        error: function (ex) {
+            window.location.reload();
+        }
+    });
+}
+
+function ViewPointTransferRetriveDetail(i) {
+ let search_filter = $('#default-search').val();
+ const start_index_val = @ViewBag.StartIndex;
+    const page_size = @ViewBag.PageSize;
+
+    const roletype = $('#large[name="UserType"]').val();
+    const userId = $('#large[name="UserName"]').val();
+    const transferType = $('#large[name="TransferTypeId"]').val();
+    const fromDate = $('#FromDate').val();
+    const toDate = $('#ToDate').val();
+    window.location.href = '/PointsManagement/PointsTransferListDetails?Id=' + i + '&SearchFilter=' + search_filter + '&StartIndex=' + start_index_val + '&PageSize=' + page_size + '&Roletype=' + roletype + '&UserId=' + userId + '&TransferType=' + transferType + '&FromDate=' + fromDate + '&ToDate=' + toDate;
+}
     </script>
 }

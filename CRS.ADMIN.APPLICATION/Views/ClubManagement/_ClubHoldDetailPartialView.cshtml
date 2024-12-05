@@ -110,8 +110,8 @@
 
             <div class="my-5">
                 @*<div class="font-bold text-[20px] pb-5 px-8 pt-8">
-                        Club Profile
-                    </div>*@
+            Club Profile
+        </div>*@
 
 
                 <div class="pt-4 px-8">
@@ -152,15 +152,15 @@
                             </p>
                         </div>
 
-                        <div class=" grid grid-cols-2">
-                            <p class="text-[#7A7A7A] text-[14px]">
-                                @CRS.ADMIN.APPLICATION.Resources.Resource.Location:
-                            </p>
-                            <p class="text-[#3E3E3E] text-[14px] leading-[12px] font-bold" style="margin-top:4px;">
+                        @*<div class=" grid grid-cols-2">
+                <p class="text-[#7A7A7A] text-[14px]">
+                    @CRS.ADMIN.APPLICATION.Resources.Resource.Location:
+                </p>
+                <p class="text-[#3E3E3E] text-[14px] leading-[12px] font-bold" style="margin-top:4px;">
 
-                                @Model.LocationDDL
-                            </p>
-                        </div>
+                    @Model.LocationDDL
+                </p>
+            </div>*@
                         <div class=" grid grid-cols-2">
                             <p class="text-[#7A7A7A] text-[14px]">
                                 @CRS.ADMIN.APPLICATION.Resources.Resource.Postal_Code:
@@ -225,14 +225,14 @@
                             </p>
                         </div>
                         @*<div class=" grid grid-cols-2">
-                                <p class="text-[#7A7A7A] text-[14px]">
-                                    Group Name (Katakana):
-                                </p>
-                                <p class="text-[#3E3E3E] text-[14px] leading-[12px] font-bold" style="margin-top:4px;">
+                <p class="text-[#7A7A7A] text-[14px]">
+                    Group Name (Katakana):
+                </p>
+                <p class="text-[#3E3E3E] text-[14px] leading-[12px] font-bold" style="margin-top:4px;">
 
-                                    @Model.GroupName2
-                                </p>
-                            </div>*@
+                    @Model.GroupName2
+                </p>
+            </div>*@
 
                     </div>
 
@@ -276,14 +276,14 @@
                         <!--<div class=" grid grid-cols-2">-->
                         @*if corporate then only this field shown*@
                         <!--<p class="text-[#7A7A7A] text-[14px]">
-                                Company Name:
-                            </p>
-                            <p class="text-[#3E3E3E] text-[14px] leading-[12px] font-bold" style="margin-top:4px;">
+                Company Name:
+            </p>
+            <p class="text-[#3E3E3E] text-[14px] leading-[12px] font-bold" style="margin-top:4px;">
 
 
-                                @Model.CompanyName
-                            </p>
-                        </div>-->
+                @Model.CompanyName
+            </p>
+        </div>-->
                         @if (Model.BusinessTypeDDL?.ToUpper() == "CORPORATION")
                         {
                             <div class=" grid grid-cols-2">
@@ -596,48 +596,50 @@
 
 
                     </div>
+                    <div class="flex gap-1 mt-[20px]">
+                        <div class="border border-[#D75A8B] w-[1px] ">
+                        </div>
+
+                        <div class="text-[#D75A8B] font-[600] text-[16px]">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.User_Info
+                        </div>
+                    </div>
+                    <div class="grid  gap-2 mt-2">
+                        <div class=" grid grid-cols-2">
+                            <p class="text-[#7A7A7A] text-[14px] max-w-[183px] w-full">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Mobile_Number__Easily_reachable_:
+                            </p>
+                            <p class="text-[#3E3E3E] text-[14px] leading-[12px] font-bold" style="margin-top:4px;">
+
+                                +81
+                                @Model.MobileNumber
+                            </p>
+                        </div>
+                        <div class=" grid grid-cols-2">
+                            <p class="text-[#7A7A7A] text-[14px]">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.EmailAddress:
+                            </p>
+                            <p class="text-[#3E3E3E] text-[14px] leading-[12px] font-bold" style="margin-top:4px;">
+
+                                @Model.Email
+                            </p>
+                        </div>
+                        <div class=" grid grid-cols-2">
+                            <p class="text-[#7A7A7A] text-[14px]">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Club_Username:
+                            </p>
+                            <p class="text-[#3E3E3E] text-[14px] leading-[12px] font-bold" style="margin-top:4px;">
+
+                                @Model.LoginId
+                            </p>
+                        </div>
+                    </div>
                 </div>
+               
 
 
                 <!-- third section -->
-                <div class="flex gap-1 mt-[20px]">
-                    <div class="border border-[#D75A8B] w-[1px] ">
-                    </div>
 
-                    <div class="text-[#D75A8B] font-[600] text-[16px]">
-                        @CRS.ADMIN.APPLICATION.Resources.Resource.User_Info
-                    </div>
-                </div>
-                <div class="grid  gap-2 mt-2">
-                    <div class=" grid grid-cols-2">
-                        <p class="text-[#7A7A7A] text-[14px] max-w-[183px] w-full">
-                            @CRS.ADMIN.APPLICATION.Resources.Resource.Mobile_Number__Easily_reachable_:
-                        </p>
-                        <p class="text-[#3E3E3E] text-[14px] leading-[12px] font-bold" style="margin-top:4px;">
-
-                            +81
-                            @Model.MobileNumber
-                        </p>
-                    </div>
-                    <div class=" grid grid-cols-2">
-                        <p class="text-[#7A7A7A] text-[14px]">
-                            @CRS.ADMIN.APPLICATION.Resources.Resource.EmailAddress:
-                        </p>
-                        <p class="text-[#3E3E3E] text-[14px] leading-[12px] font-bold" style="margin-top:4px;">
-
-                            @Model.Email
-                        </p>
-                    </div>
-                    <div class=" grid grid-cols-2">
-                        <p class="text-[#7A7A7A] text-[14px]">
-                            @CRS.ADMIN.APPLICATION.Resources.Resource.Club_Username:
-                        </p>
-                        <p class="text-[#3E3E3E] text-[14px] leading-[12px] font-bold" style="margin-top:4px;">
-
-                            @Model.LoginId
-                        </p>
-                    </div>
-                </div>
             </div>
 
         </div>

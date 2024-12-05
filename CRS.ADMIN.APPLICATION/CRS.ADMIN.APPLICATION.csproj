@@ -390,6 +390,8 @@
     <Content Include="Views\BasicClubManagement\_ManageBasicClubPartialView.cshtml" />
     <None Include="Views\ClubManagement\_RejectedClubListPartialView.cshtml" />
     <Content Include="Views\AffiliateManagement\_ConvertedCustomerPointsReport.cshtml" />
+    <Content Include="Views\PointsManagement\_PointTransferRetrivePartialView.cshtml" />
+    <Content Include="Views\PointsManagement\_PointRequestListPartialView.cshtml" />
     <None Include="Views\PromotionManagement\_ManageAdvertisementPartialView.cshtml" />
     <None Include="Views\PromotionManagement\_AdvertisementList.cshtml" />
     <Content Include="Content\assets\images\TickIcon.svg" />

@@ -10,20 +10,24 @@ namespace CRS.ADMIN.SHARED.PointsManagement
         public string PaymentMethodId { get; set; }
         public string FromDate { get; set; }
         public string ToDate { get; set; }
+
         public int Skip { get; set; } = 0;
         public int Take { get; set; } = 10;
     }
     public class PointRequestListCommon
     {
+        public string Id { get; set; }
         public string AgentId { get; set; }
         public string UserId { get; set; }
         public string RequestId { get; set; }
         public string RequestedDate { get; set; }
         public string ClubName { get; set; }
         public string PaymentMethod { get; set; }
+
         public string AmountTransferred { get; set; }
         public string Status { get; set; }
         public string Remarks { get; set; }
+
         public string UpdatedBy { get; set; }
         public string UpdatedDate { get; set; }
         public string RowsTotal { get; set; }
@@ -35,7 +39,9 @@ namespace CRS.ADMIN.SHARED.PointsManagement
         public string UserId { get; set; }
         public string TxnId { get; set; }
         public string Status { get; set; }
+        public string Id { get; set; }
         public string AdminRemark { get; set; }
+
         public string ImageURL { get; set; }
     }
 
@@ -45,6 +51,7 @@ namespace CRS.ADMIN.SHARED.PointsManagement
         public string SearchFilter { get; set; }
         public string UserType { get; set; }
         public string User { get; set; }
+
         public string FromDate { get; set; }
         public string ToDate { get; set; }
     }
@@ -57,7 +64,9 @@ namespace CRS.ADMIN.SHARED.PointsManagement
         public string From_Date { get; set; }
         public string To_Date { get; set; }
         public string userid { get; set; }
+
         public int Skip { get; set; } = 0;
+
         public int Take { get; set; } = 10;
     }
     public class PointBalanceStatementResponseCommon : Common
@@ -71,7 +80,9 @@ namespace CRS.ADMIN.SHARED.PointsManagement
         public string TotalCommission { get; set; }
         public string Remarks { get; set; }
         public string Debit { get; set; }
+
         public string Credit { get; set; }
+
         public string RowTotal { get; set; }
 
     }
@@ -85,6 +96,7 @@ namespace CRS.ADMIN.SHARED.PointsManagement
         public string From_Date1 { get; set; }
         public string To_Date1 { get; set; }
         public int Skip { get; set; } = 0;
+
         public int Take { get; set; } = 10;
     }
     public class SystemTransferReponseCommon
@@ -97,6 +109,7 @@ namespace CRS.ADMIN.SHARED.PointsManagement
         public string UserName { get; set; }
         public string Points { get; set; }
         public string Remarks { get; set; }
+
         public string RowTotal { get; set; }
     }
 
