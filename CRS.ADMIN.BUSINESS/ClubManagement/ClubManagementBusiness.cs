@@ -4,6 +4,7 @@ using CRS.ADMIN.SHARED.ClubManagement;
 using CRS.ADMIN.SHARED.PaginationManagement;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 
 namespace CRS.ADMIN.BUSINESS.ClubManagement
 {
@@ -17,7 +18,7 @@ namespace CRS.ADMIN.BUSINESS.ClubManagement
 
         public ClubDetailCommon GetClubDetails(string AgentId, String culture = "")
         {
-            return _REPO.GetClubDetails(AgentId,culture);
+            return _REPO.GetClubDetails(AgentId, culture);
         }
 
         public List<ClubListCommon> GetClubList(PaginationFilterCommon Request)
@@ -40,9 +41,9 @@ namespace CRS.ADMIN.BUSINESS.ClubManagement
         {
             return _REPO.GetplanPendingDetails(AgentId, holdId, culture);
         }
-        public CommonDbResponse ManageApproveReject(string holdId, string flag, string AgentId, String culture = "", ManageClubCommon Request = null)
+        public CommonDbResponse ManageApproveReject(string holdId, string flag, string AgentId, String culture = "", ManageClubCommon Request = null, SqlConnection connection = null, SqlTransaction transaction = null)
         {
-            return _REPO.ManageApproveReject(holdId, flag, AgentId, culture,Request);
+            return _REPO.ManageApproveReject(holdId, flag, AgentId, culture, Request, connection, transaction);
         }
         public List<PlanListCommon> GetClubPlanIdentityList(string culture)
         {
@@ -83,11 +84,11 @@ namespace CRS.ADMIN.BUSINESS.ClubManagement
         }
         public List<AvailabilityTagModelCommon> GetAvailabilityList(string cId, string culture)
         {
-            return _REPO.GetAvailabilityList(cId,culture);
+            return _REPO.GetAvailabilityList(cId, culture);
         }
-        public CommonDbResponse ManageClubAvailability(AvailabilityTagModelCommon request, ManageTagCommon dbRequest,string[] updatedValues)
+        public CommonDbResponse ManageClubAvailability(AvailabilityTagModelCommon request, ManageTagCommon dbRequest, string[] updatedValues)
         {
-            return _REPO.ManageClubAvailability(request, dbRequest,updatedValues);
+            return _REPO.ManageClubAvailability(request, dbRequest, updatedValues);
         }
         #endregion
 
@@ -105,23 +106,23 @@ namespace CRS.ADMIN.BUSINESS.ClubManagement
             return _REPO.ManageGalleryImageStatus(AgentId, GalleryId, Request);
         }
 
-        
+
 
 
         #endregion
         #region Event Management
 
-        public List<EventListCommon> GetEventList(PaginationFilterCommon Request, string AgentId) 
-        { 
-          return _REPO.GetEventList(Request,AgentId);
+        public List<EventListCommon> GetEventList(PaginationFilterCommon Request, string AgentId)
+        {
+            return _REPO.GetEventList(Request, AgentId);
         }
         public CommonDbResponse ManageEvent(EventCommon Request)
-        { 
-          return _REPO.ManageEvent(Request);
+        {
+            return _REPO.ManageEvent(Request);
         }
         public EventCommon GetEventDetails(string AgentId, string EventId)
-        { 
-          return _REPO.GetEventDetails(AgentId, EventId);
+        {
+            return _REPO.GetEventDetails(AgentId, EventId);
         }
         #endregion
         #region club Manager

@@ -1003,7 +1003,9 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             {
                 type = "rc_r";
             }
-            var dbResponse = _BUSS.ManageApproveReject(id, type, AgentId, culture, model);
+            var _daoWithTransaction = new RepositoryDaoWithTransaction(null, null);
+            _daoWithTransaction.BeginTransaction();
+            var dbResponse = _BUSS.ManageApproveReject(id, type, AgentId, culture, model, _daoWithTransaction.GetCurrentConnection(), _daoWithTransaction.GetCurrentTransaction());
             response.AgentId = null;
             response.UserId = null;
             this.AddNotificationMessage(new NotificationModel()
@@ -1012,6 +1014,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 Message = dbResponse.Message ?? "Something went wrong. Please try again later",
                 Title = dbResponse.Code == ResponseCode.Success ? NotificationMessage.SUCCESS.ToString() : NotificationMessage.INFORMATION.ToString()
             });
+            _daoWithTransaction.RollbackTransaction();
             return RedirectToAction("ClubList", "ClubManagement", new { TabValue = "02", SearchFilter = SearchFilter, StartIndex2 = StartIndex, PageSize2 = PageSize });
         }
 
