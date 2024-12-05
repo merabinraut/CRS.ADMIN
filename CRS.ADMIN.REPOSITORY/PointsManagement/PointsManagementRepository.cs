@@ -21,6 +21,7 @@ namespace CRS.ADMIN.REPOSITORY.PointsManagement
         {
             var response = new List<PointsTansferReportCommon>();
             string SQL = "EXEC sproc_admin_point_transfer_retrieve_report ";
+
             SQL += !string.IsNullOrEmpty(objPaginationFilterCommon.SearchFilter) ? " @SearchFilter=N" + _DAO.FilterString(objPaginationFilterCommon.SearchFilter) : " @SearchFilter=null ";
             SQL += !string.IsNullOrEmpty(objPointsTansferReportCommon.UserType) ? " ,@UserTypeId=" + _DAO.FilterString(objPointsTansferReportCommon.UserType) : " ,@UserTypeId=null ";
             SQL += !string.IsNullOrEmpty(objPointsTansferReportCommon.UserName) ? ",@UserId=" + _DAO.FilterString(objPointsTansferReportCommon.UserName) : ",@UserId=null";
@@ -50,6 +51,7 @@ namespace CRS.ADMIN.REPOSITORY.PointsManagement
 
                         Points = Convert.ToString(_DAO.ParseColumnValue(item, "points")),
                         Remarks = Convert.ToString(_DAO.ParseColumnValue(item, "remark")),
+
                         Id = Convert.ToString(_DAO.ParseColumnValue(item, "id"))
 
                     });
