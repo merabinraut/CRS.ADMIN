@@ -9,6 +9,7 @@ namespace CRS.ADMIN.BUSINESS.PointsManagement
     {
         List<PointsTansferReportCommon> GetPointTransferList(PointsManagementCommon objPointsTansferReportCommon = null, PaginationFilterCommon objPaginationFilterCommon = null);
         CommonDbResponse ManagePoints(PointsTansferCommon objPointsTansferCommon);
+
         CommonDbResponse ManagePointsRequest(PointsRequestCommon objPointsRequestCommon);
         #region Point transfer List
         List<PointRequestListCommon> GetPointRequestList(PointRequestListFilterCommon request);
