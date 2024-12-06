@@ -265,6 +265,14 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 commonModel.ActionIP = ApplicationUtilities.GetIP();
                 commonModel.UserTypeId = objPointsTansferModel.UserTypeId.DecryptParameter();
                 commonModel.UserId = objPointsTansferModel.UserId.DecryptParameter();
+                if (commonModel.TransferType.ToUpper() == "TRANSFER")
+                {
+                    commonModel.SpName = "sproc_point_transfer";
+                }
+                else
+                {
+                    commonModel.SpName = "sproc_point_retrive";
+                }
                 var dbResponse = _BUSS.ManagePoints(commonModel);
                 if (dbResponse != null && dbResponse.Code == 0)
                 {
