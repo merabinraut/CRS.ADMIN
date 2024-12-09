@@ -97,7 +97,7 @@
                                             style="width: 100%;">
                                         @foreach (var item in ViewBag.UserTypeList as IEnumerable<SelectListItem>)
                                         {
-                                            var selectedId = ViewBag.UserTypeIdKey as string;
+                                            var selectedId = ViewBag.UserTypeIdKeyPT1 as string;
                                             if (item.Value == selectedId)
                                             {
                                                 <option value="@item.Value" selected>
@@ -124,7 +124,7 @@
                                             style="width: 100%;">
                                         @foreach (var item in ViewBag.FilterUserList as IEnumerable<SelectListItem>)
                                         {
-                                            var selectedId = ViewBag.UsernameIdKey as string;
+                                            var selectedId = ViewBag.UsernameIdKeyPT1 as string;
                                             if (item.Value == selectedId)
                                             {
                                                 <option value="@item.Value" selected>
@@ -207,9 +207,9 @@
                                         </span>
                                     </div>
                                 </div>
-
+                                <br />
                                 <div>
-                                    <div class="py-4 flex justify-end">
+                                    <div class="py-4 flex justify-start mx-[18px]">
                                         <div class="flex gap-6">
                                             <button class="btn btn-secondary rounded-[4px]" type="button" data-drawer-hide="add-new-points-request"
                                                     aria-controls="add-new-points-request" onclick="CancelFunction();">
