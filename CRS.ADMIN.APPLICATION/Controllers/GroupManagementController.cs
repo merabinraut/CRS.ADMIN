@@ -1,4 +1,5 @@
-﻿using CRS.ADMIN.APPLICATION.Library;
+﻿using CRS.ADMIN.APPLICATION.Helper;
+using CRS.ADMIN.APPLICATION.Library;
 using CRS.ADMIN.APPLICATION.Models.GroupManagement;
 using CRS.ADMIN.BUSINESS.GroupManagement;
 using CRS.ADMIN.SHARED.PaginationManagement;
@@ -27,8 +28,13 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             var dbGroupResponse = _business.GetGroupList(paginationFilter);
             var dbGroupAnalyticResponse = _business.GetGroupAnalytic();
             commonResponse.GetGroupList = dbGroupResponse.MapObjects<GroupInfoModel>();
+            foreach (var item in commonResponse.GetGroupList)
+            {
+                item.groupId = ApplicationUtilities.EncryptParameter(item.groupId);
+                item.groupImage = ImageHelper.ProcessedImage(item.groupImage);
+            }
             commonResponse.GetGroupAnalytic = dbGroupAnalyticResponse.MapObject<GroupAnalyticModel>();
             return View(commonResponse);
         }
-    }         
+    }
 }

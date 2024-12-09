@@ -15,7 +15,7 @@ namespace CRS.ADMIN.REPOSITORY.GroupManagement
 
         public GroupAnalyticModelCommon GetGroupAnalytic()
         {
-            string sp_name = "";
+            string sp_name = "[dbo].[sproc_admin_group_analytic_overview]";
             var dbResponse = _dao.ExecuteDataRow(sp_name);
             if (dbResponse != null)
             {
