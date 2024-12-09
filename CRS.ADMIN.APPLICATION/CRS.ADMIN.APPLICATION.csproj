@@ -242,6 +242,7 @@
     <Compile Include="Controllers\EmailLogController.cs" />
     <Compile Include="Controllers\ErrorLogController.cs" />
     <Compile Include="Controllers\ErrorManagementController.cs" />
+    <Compile Include="Controllers\GroupManagementController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\HostManagementController.cs" />
     <Compile Include="Controllers\InquiriesController.cs" />
@@ -384,6 +385,7 @@
     <Folder Include="Content\userupload\PointsManagement\" />
     <Folder Include="Content\userupload\PromotionalImages\" />
     <Folder Include="Properties\PublishProfiles\" />
+    <Folder Include="Views\GroupManagement\" />
     <Folder Include="Views\LogManagement\" />
   </ItemGroup>
   <ItemGroup>
