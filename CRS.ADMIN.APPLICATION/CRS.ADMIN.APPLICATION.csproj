@@ -298,6 +298,7 @@
     <Compile Include="Models\CustomerManagement\CustomerManagementModel.cs" />
     <Compile Include="Models\EmailLog\EmailLogModel.cs" />
     <Compile Include="Models\ErrorLog\ErrorLogModel.cs" />
+    <Compile Include="Models\GroupManagement\GroupInfoModel.cs" />
     <Compile Include="Models\Home\DashboardInfoModel.cs" />
     <Compile Include="Models\Home\LoginManagementModel.cs" />
     <Compile Include="Models\HostManagement\HostGalleryManagementModel.cs" />
@@ -352,6 +353,7 @@
     <Content Include="Views\AffiliateManagement\_ConvertedCustomerPointsReport.cshtml" />
     <Content Include="Views\PointsManagement\_PointTransferRetrivePartialView.cshtml" />
     <Content Include="Views\PointsManagement\_PointRequestListPartialView.cshtml" />
+    <Content Include="Views\GroupManagement\Index.cshtml" />
     <None Include="Views\PromotionManagement\_ManageAdvertisementPartialView.cshtml" />
     <None Include="Views\PromotionManagement\_AdvertisementList.cshtml" />
     <Content Include="Content\assets\images\TickIcon.svg" />
@@ -385,7 +387,6 @@
     <Folder Include="Content\userupload\PointsManagement\" />
     <Folder Include="Content\userupload\PromotionalImages\" />
     <Folder Include="Properties\PublishProfiles\" />
-    <Folder Include="Views\GroupManagement\" />
     <Folder Include="Views\LogManagement\" />
   </ItemGroup>
   <ItemGroup>

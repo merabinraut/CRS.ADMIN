@@ -9,6 +9,7 @@ using CRS.ADMIN.BUSINESS.CommonManagement;
 using CRS.ADMIN.BUSINESS.CustomerManagement;
 using CRS.ADMIN.BUSINESS.EmailLog;
 using CRS.ADMIN.BUSINESS.ErrorLog;
+using CRS.ADMIN.BUSINESS.GroupManagement;
 using CRS.ADMIN.BUSINESS.Home;
 using CRS.ADMIN.BUSINESS.HostManagement;
 using CRS.ADMIN.BUSINESS.Inquries;
@@ -85,6 +86,7 @@ namespace CRS.ADMIN.APPLICATION
             container.RegisterType<IBasicClubManagementBusiness, BasicClubManagementBusiness>();
             container.RegisterType<IWithdrawSetupBusiness, WithdrawSetupBusiness>();
             container.RegisterType<IAccountInformationBusiness, AccountInformationBusiness>();
+            container.RegisterType<IGroupManagementBusiness, GroupManagementBusiness>();
             return container;
         }
     }
