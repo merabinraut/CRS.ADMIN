@@ -25,7 +25,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
         }
 
         [HttpGet]
-        public ActionResult PointsTransferList(PointBalanceStatementRequestModel modelRequest, string UserType = "", string UserName = "", string TransferTypeId = "", string FromDate = "", string ToDate = "", string SearchFilter = "", string value = "", int StartIndex = 0, int PageSize = 10, int StartIndex2 = 0, int PageSize2 = 10, int StartIndex3 = 0, int PageSize3 = 10, int StartIndex4 = 0, int PageSize4 = 10, string SearchFilter4 = "", string LocationId4 = "", string ClubName4 = "", string PaymentMethodId4 = "", string FromDate4 = "", string ToDate4 = "", int TotalData3 = 0)
+        public ActionResult PointsTransferList(PointBalanceStatementRequestModel modelRequest, string UserType = "", string UserName = "", string TransferTypeId = "", string FromDate = "", string ToDate = "", string SearchFilter = "", string value = "", int StartIndex = 0, int PageSize = 10, int StartIndex2 = 0, int PageSize2 = 10, int StartIndex3 = 0, int PageSize3 = 10, int StartIndex4 = 0, int PageSize4 = 10, string SearchFilter4 = "", string LocationId4 = "", string ClubName4 = "", string PaymentMethodId4 = "", string FromDate4 = "", string ToDate4 = "", int TotalData3 = 0, int TotalData2 = 0)
         {
             Session["CurrentURL"] = "/PointsManagement/PointsTransferList";
             ViewBag.SearchFilter = SearchFilter;
@@ -103,7 +103,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             ViewBag.PageSize4 = PageSize4;
             objPointsManagementModel.ListType = value;
             ViewBag.TotalData = dbResponse != null && dbResponse.Any() ? dbResponse[0].TotalRecords : 0;
-            ViewBag.TotalData2 = 0;
+           
             ViewBag.TotalData3 = TotalData3;
            
             objPointsManagementModel.PointRequestCommonModel = new PointRequestCommonModel()
@@ -195,12 +195,13 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 };
             }
 
-            ViewBag.UserTypeIdKeyST = !string.IsNullOrEmpty(objPointsManagementModel.SystemTransferModel.User_type) ? objPointsManagementModel.SystemTransferModel.User_type : null;
-            ViewBag.UsernameIdKeyST = !string.IsNullOrEmpty(objPointsManagementModel.SystemTransferModel.User_name) ? objPointsManagementModel.SystemTransferModel.User_name : null;
+            ViewBag.UserTypeIdKeyST = value.ToUpper() == "ST"?!string.IsNullOrEmpty(UserType) ? UserType : null:null;
+            ViewBag.UsernameIdKeyST = value.ToUpper() == "ST" ? !string.IsNullOrEmpty(UserName) ? UserName : null:null;
             ViewBag.UserTypeIdKeyPT1 = value == "" ? !string.IsNullOrEmpty(UserType) ? UserType : null:null;
             ViewBag.UsernameIdKeyPT1 = value == "" ? !string.IsNullOrEmpty(UserName) ? UserName : null:null;
             objPointsManagementModel.FromDate = value == "" ? !string.IsNullOrEmpty(FromDate) ? FromDate : null : null;
             objPointsManagementModel.ToDate = value == "" ? !string.IsNullOrEmpty(ToDate) ? ToDate : null : null;
+             ViewBag.TotalData2 = TotalData2;
             objPointsManagementModel.PointRequestCommonModel.PointRequestsListModel = getPointRequestListDBResponse.MapObjects<PointRequestsListModel>();
             objPointsManagementModel.PointRequestCommonModel.PointRequestsListModel.ForEach(x =>
             {

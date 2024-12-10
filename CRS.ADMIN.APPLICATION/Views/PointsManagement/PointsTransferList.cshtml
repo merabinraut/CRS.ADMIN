@@ -592,12 +592,12 @@
                 const page_size3 = @ViewBag.PageSize3;
                 const total_data3 = @ViewBag.TotalData3;
                 const start_index_val3 = @ViewBag.StartIndex3;
-                var usertypeid = $("#Usertype1").val();
-                var username = $("#Username1").val();
+                var usertypeid = $("#User_type").val();
+                var username = $("#User_name").val();
                 var transfertype = $("#TransferType1").val();
                 var FromDate = $("#From_Date1").val();
                 var ToDate = $("#To_Date1").val();
-                let URL3 = "/PointsManagement/GetSystemTransferReportAsync?UserType=" + usertypeid + "&UserName=" + username + "&TransferType=" + transfertype + "&From_Date1=" + FromDate + "&To_Date1=" + ToDate ;
+                let URL3 = "/PointsManagement/GetSystemTransferReportAsync?User_type=" + usertypeid + "&User_name=" + username + "&TransferType=" + transfertype + "&From_Date1=" + FromDate + "&To_Date1=" + ToDate ;
                 let search_filter3 = $('#default-search').val();
                 URL3 = addQueryParam2(URL3, 'SearchFilter', search_filter3, 'value', 'st');
                 dynamicStartIndexLabel = "StartIndex3";
