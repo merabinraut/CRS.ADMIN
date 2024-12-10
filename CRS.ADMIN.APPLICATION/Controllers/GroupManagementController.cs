@@ -3,6 +3,7 @@ using CRS.ADMIN.APPLICATION.Library;
 using CRS.ADMIN.APPLICATION.Models.GroupManagement;
 using CRS.ADMIN.BUSINESS.GroupManagement;
 using CRS.ADMIN.SHARED.PaginationManagement;
+using System.Web;
 using System.Web.Mvc;
 
 namespace CRS.ADMIN.APPLICATION.Controllers
@@ -35,6 +36,11 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             }
             commonResponse.GetGroupAnalytic = dbGroupAnalyticResponse.MapObject<GroupAnalyticModel>();
             return View(commonResponse);
+        }
+        [HttpPost, ValidateAntiForgeryToken]
+        public ActionResult ManageGroup(ManageGroupModel model, HttpPostedFile groupImage)
+        {
+            return View();
         }
     }
 }

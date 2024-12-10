@@ -221,50 +221,52 @@
                                 </thead>
                                 <tbody>
                                     @{
-                                        foreach (var item in Model.GetGroupList)
+                                        if (Model.GetGroupList.Count() == 0)
                                         {
-                                            <tr class="bg-white border-b ">
-                                                <td class="p-[12px]">@item.sno</td>
-                                                <td class="p-[12px]">
-                                                    <div class="round-image-text flex gap-[12px] w-max">
-                                                        <img class="w-[32px] h-[32px] rounded-full" src="@item.groupImage" />
-
-                                                        <div class="flex justify-between w-full">
-                                                            <div class="text-image grid flex-none ">
-                                                                <div class="text-sm font-semibold text-[#101828] ">@item.groupName</div>
-                                                                <div class="platinum ">@item.groupNameKatakana</div>
+                                            foreach (var item in Model.GetGroupList)
+                                            {
+                                                <tr class="bg-white border-b ">
+                                                    <td class="p-[12px]">@item.sno</td>
+                                                    <td class="p-[12px]">
+                                                        <div class="round-image-text flex gap-[12px] w-max">
+                                                            <img class="w-[32px] h-[32px] rounded-full" src="@item.groupImage" />
+                                                            <div class="flex justify-between w-full">
+                                                                <div class="text-image grid flex-none ">
+                                                                    <div class="text-sm font-semibold text-[#101828] ">@item.groupName</div>
+                                                                    <div class="platinum ">@item.groupNameKatakana</div>
+                                                                </div>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                </td>
-                                                <td class="p-[12px]">@item.subGroupCount</td>
-                                                <td class="p-[12px]">@item.clubCount</td>
-                                                <td class="p-[12px]">@item.status</td>
+                                                    </td>
+                                                    <td class="p-[12px]">@item.subGroupCount</td>
+                                                    <td class="p-[12px]">@item.clubCount</td>
+                                                    <td class="p-[12px]">@item.status</td>
 
-                                                <td class="p-[12px]">
-                                                    <div class="w-max">
-                                                        @item.createdDate
-                                                    </div>
-                                                </td>
-                                                <td class="p-[12px]">
-                                                    <div class="flex gap-[7px]">
-                                                        <i class="las la-edit text-[20px] cursor-pointer text-[#A6A6A6]" onclick=""></i>
-
-                                                        <div onclick="" data-modal-target="block-basicclub-confirmation" data-modal-toggle="block-basicclub-confirmation">
-                                                            <i class="fa-solid fa-lock text-primary-100 cursor-pointer"></i>
+                                                    <td class="p-[12px]">
+                                                        <div class="w-max">
+                                                            @item.createdDate
                                                         </div>
-
-                                                        <div onclick="" data-modal-target="unblock-basicclub-confirmation" data-modal-toggle="unblock-basicclub-confirmation">
-                                                            <i class="fa-solid fa-unlock text-primary-100 cursor-pointer"></i>
+                                                    </td>
+                                                    <td class="p-[12px]">
+                                                        <div class="flex gap-[7px]">
+                                                            <i class="las la-edit text-[20px] cursor-pointer text-[#A6A6A6]" onclick=""></i>
+                                                            <div onclick="" data-modal-target="block-basicclub-confirmation" data-modal-toggle="block-basicclub-confirmation">
+                                                                <i class="fa-solid fa-eye text-primary-100 cursor-pointer"></i>
+                                                            </div>
+                                                            <div onclick="" data-modal-target="unblock-basicclub-confirmation" data-modal-toggle="unblock-basicclub-confirmation">
+                                                                <i class="fa-solid fa-edit text-primary-100 cursor-pointer"></i>
+                                                            </div>
+                                                            <div onclick="" data-modal-target="unblock-basicclub-confirmation" data-modal-toggle="unblock-basicclub-confirmation">
+                                                                <i class="fa-solid fa-image text-primary-100 cursor-pointer"></i>
+                                                            </div>
+                                                            <div onclick="" data-modal-target="unblock-basicclub-confirmation" data-modal-toggle="unblock-basicclub-confirmation">
+                                                                <i class="fa-solid fa-lock text-primary-100 cursor-pointer"></i>
+                                                            </div>
+                                                            <i class=" las la-trash-alt text-[20px] cursor-pointer text-[#CB3F3F]" onclick="" data-modal-target="delete-basicclub-confirmation" data-modal-toggle="delete-basicclub-confirmation"></i>
                                                         </div>
-
-                                                        <i class=" las la-trash-alt text-[20px] cursor-pointer text-[#CB3F3F]" onclick="" data-modal-target="delete-basicclub-confirmation" data-modal-toggle="delete-basicclub-confirmation"></i>
-
-                                                        <img src="/Content/assets/images/conversion.svg" alt="notice" class="cursor-pointer h-[20px] aspect-square" onclick="" data-drawer-target="conversion-to preminum-club" data-drawer-show="conversion-to preminum-club" data-drawer-placement="right" data-drawer-backdrop="false" aria-controls="drawer-disabled-backdrop">
-                                                        <i class="las la-user text-[20px] cursor-pointer text-[#A6A6A6]" onclick=""></i>
-                                                    </div>
-                                                </td>
-                                            </tr>
+                                                    </td>
+                                                </tr>
+                                            }
                                         }
 
                                     }

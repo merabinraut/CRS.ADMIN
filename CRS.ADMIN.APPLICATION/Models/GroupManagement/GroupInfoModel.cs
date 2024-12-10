@@ -30,4 +30,12 @@ namespace CRS.ADMIN.APPLICATION.Models.GroupManagement
         public string AssignedClub { get; set; }
         public string UnAssignedClub { get; set; }
     }
+    public class ManageGroupModel
+    {
+        public string GroupName { get; set; }
+        public string GroupNameKatakana { get; set; }
+        public string GroupCoverPhoto { get; set; }
+        public string GroupDescription { get; set; }
+    }
+
 }
