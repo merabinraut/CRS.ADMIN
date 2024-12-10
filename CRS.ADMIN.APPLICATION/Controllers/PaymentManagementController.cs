@@ -56,7 +56,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             return View(paymentManagementModel);
         }
 
-        public ActionResult GetPaymentLedger(string clubId, string LocationId,string searchText = "", string Date = "", int StartIndex = 0, int PageSize = 10, string FromDate = "", string ToDate = "")
+        public ActionResult GetPaymentLedger(string clubId, string clubIdFilter, string LocationId,string searchText = "", string Date = "", int StartIndex = 0, int PageSize = 10, string FromDate = "", string ToDate = "")
         {
             var cId = !string.IsNullOrEmpty(clubId) ? clubId.DecryptParameter() : null;
             if (string.IsNullOrWhiteSpace(cId))
@@ -83,7 +83,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 x.CustomerImage = ImageHelper.ProcessedImage(x.CustomerImage);
             });
             ViewBag.IsBackAllowed = true;
-            ViewBag.BackButtonURL = "/PaymentManagement/Index?Value=PL&searchText="+ searchText + "&ClubId=" + clubId + "&LocationId=" + LocationId + "&StartIndex=" + StartIndex  + "&PageSize=" + PageSize + "&FromDate=" + FromDate+ "&ToDate=" + ToDate;
+            ViewBag.BackButtonURL = "/PaymentManagement/Index?Value=PL&searchText="+ searchText + "&ClubId=" + clubIdFilter + "&LocationId=" + LocationId + "&StartIndex=" + StartIndex  + "&PageSize=" + PageSize + "&FromDate=" + FromDate+ "&ToDate=" + ToDate;
             ViewBag.StartIndex = StartIndex;
             ViewBag.PageSize = PageSize;
             ViewBag.FromDate = FromDate;

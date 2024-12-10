@@ -97,7 +97,7 @@
                                             style="width: 100%;">
                                         @foreach (var item in ViewBag.UserTypeList as IEnumerable<SelectListItem>)
                                         {
-                                            var selectedId = ViewBag.UserTypeIdKey as string;
+                                            var selectedId = ViewBag.UserTypeIdKeyPT1 as string;
                                             if (item.Value == selectedId)
                                             {
                                                 <option value="@item.Value" selected>
@@ -124,7 +124,7 @@
                                             style="width: 100%;">
                                         @foreach (var item in ViewBag.FilterUserList as IEnumerable<SelectListItem>)
                                         {
-                                            var selectedId = ViewBag.UsernameIdKey as string;
+                                            var selectedId = ViewBag.UsernameIdKeyPT1 as string;
                                             if (item.Value == selectedId)
                                             {
                                                 <option value="@item.Value" selected>
@@ -207,9 +207,9 @@
                                         </span>
                                     </div>
                                 </div>
-
+                                <br />
                                 <div>
-                                    <div class="py-4 flex justify-end">
+                                    <div class="py-4 flex justify-start mx-[18px]">
                                         <div class="flex gap-6">
                                             <button class="btn btn-secondary rounded-[4px]" type="button" data-drawer-hide="add-new-points-request"
                                                     aria-controls="add-new-points-request" onclick="CancelFunction();">
@@ -592,12 +592,12 @@
                 const page_size3 = @ViewBag.PageSize3;
                 const total_data3 = @ViewBag.TotalData3;
                 const start_index_val3 = @ViewBag.StartIndex3;
-                var usertypeid = $("#Usertype1").val();
-                var username = $("#Username1").val();
+                var usertypeid = $("#User_type").val();
+                var username = $("#User_name").val();
                 var transfertype = $("#TransferType1").val();
                 var FromDate = $("#From_Date1").val();
                 var ToDate = $("#To_Date1").val();
-                let URL3 = "/PointsManagement/GetSystemTransferReportAsync?UserType=" + usertypeid + "&UserName=" + username + "&TransferType=" + transfertype + "&From_Date1=" + FromDate + "&To_Date1=" + ToDate ;
+                let URL3 = "/PointsManagement/GetSystemTransferReportAsync?User_type=" + usertypeid + "&User_name=" + username + "&TransferType=" + transfertype + "&From_Date1=" + FromDate + "&To_Date1=" + ToDate ;
                 let search_filter3 = $('#default-search').val();
                 URL3 = addQueryParam2(URL3, 'SearchFilter', search_filter3, 'value', 'st');
                 dynamicStartIndexLabel = "StartIndex3";

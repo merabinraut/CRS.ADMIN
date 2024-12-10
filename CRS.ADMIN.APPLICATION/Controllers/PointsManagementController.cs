@@ -25,7 +25,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
         }
 
         [HttpGet]
-        public ActionResult PointsTransferList(PointBalanceStatementRequestModel modelRequest, string UserType = "", string UserName = "", string TransferTypeId = "", string FromDate = "", string ToDate = "", string SearchFilter = "", string value = "", int StartIndex = 0, int PageSize = 10, int StartIndex2 = 0, int PageSize2 = 10, int StartIndex3 = 0, int PageSize3 = 10, int StartIndex4 = 0, int PageSize4 = 10, string SearchFilter4 = "", string LocationId4 = "", string ClubName4 = "", string PaymentMethodId4 = "", string FromDate4 = "", string ToDate4 = "", int TotalData3 = 0)
+        public ActionResult PointsTransferList(PointBalanceStatementRequestModel modelRequest, string UserType = "", string UserName = "", string TransferTypeId = "", string FromDate = "", string ToDate = "", string SearchFilter = "", string value = "", int StartIndex = 0, int PageSize = 10, int StartIndex2 = 0, int PageSize2 = 10, int StartIndex3 = 0, int PageSize3 = 10, int StartIndex4 = 0, int PageSize4 = 10, string SearchFilter4 = "", string LocationId4 = "", string ClubName4 = "", string PaymentMethodId4 = "", string FromDate4 = "", string ToDate4 = "", int TotalData3 = 0, int TotalData2 = 0)
         {
             Session["CurrentURL"] = "/PointsManagement/PointsTransferList";
             ViewBag.SearchFilter = SearchFilter;
@@ -60,10 +60,10 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             Commonmodel.UserType = !string.IsNullOrEmpty(UserType) ? UserType.DecryptParameter() : null;
             Commonmodel.UserName = !string.IsNullOrEmpty(UserName) ? UserName.DecryptParameter() : null;
             Commonmodel.TransferTypeId = !string.IsNullOrEmpty(TransferTypeId) ? TransferTypeId.DecryptParameter() : null;
-            Commonmodel.FromDate = !string.IsNullOrEmpty(FromDate) ? FromDate : null;
-            Commonmodel.ToDate = !string.IsNullOrEmpty(ToDate) ? ToDate : null;
-            ViewBag.UserTypeIdKey = !string.IsNullOrEmpty(UserType) ? UserType : null;
-            ViewBag.UsernameIdKey = !string.IsNullOrEmpty(UserName) ? UserName : null;
+            Commonmodel.FromDate =value==""?!string.IsNullOrEmpty(FromDate) ? FromDate : null:null;
+            Commonmodel.ToDate = value == "" ? !string.IsNullOrEmpty(ToDate) ? ToDate : null:null;
+            ViewBag.UserTypeIdKey =value.ToUpper()== "PBS"?!string.IsNullOrEmpty(UserType) ? UserType : null:null;
+            ViewBag.UsernameIdKey = value.ToUpper() == "PBS" ? !string.IsNullOrEmpty(UserName) ? UserName : null:null;
             ViewBag.TransferTypeIdKey = !string.IsNullOrEmpty(TransferTypeId) ? TransferTypeId : null;
             var dbResponse = _BUSS.GetPointTransferList(Commonmodel, dbRequest);
 
@@ -103,10 +103,9 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             ViewBag.PageSize4 = PageSize4;
             objPointsManagementModel.ListType = value;
             ViewBag.TotalData = dbResponse != null && dbResponse.Any() ? dbResponse[0].TotalRecords : 0;
-            ViewBag.TotalData2 = 0;
+           
             ViewBag.TotalData3 = TotalData3;
-            objPointsManagementModel.FromDate = FromDate;
-            objPointsManagementModel.ToDate = ToDate;
+           
             objPointsManagementModel.PointRequestCommonModel = new PointRequestCommonModel()
             {
                 LocationId = LocationId4,
@@ -124,12 +123,12 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 From_Date = FromDate,
                 To_Date = ToDate
             };
-            if (!string.IsNullOrEmpty(TransferTypeId))
-                ViewBag.TransferTypeIdKey = TransferTypeId;
-            if (!string.IsNullOrEmpty(UserName))
-                ViewBag.UsernameIdKey = UserName;
-            if (!string.IsNullOrEmpty(UserType))
-                ViewBag.UserTypeIdKey = UserType;
+            //if (!string.IsNullOrEmpty(TransferTypeId))
+            //    ViewBag.TransferTypeIdKey = TransferTypeId;
+            //if (!string.IsNullOrEmpty(UserName))
+            //    ViewBag.UsernameIdKey =value== UserName;
+            //if (!string.IsNullOrEmpty(UserType))
+            //    ViewBag.UserTypeIdKey = UserType;
 
 
             objPointsManagementModel.SystemTransferModel = new SystemTransferRequestModel()
@@ -142,10 +141,10 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             };
             if (!string.IsNullOrEmpty(TransferTypeId))
                 ViewBag.TransferTypeIdKey = TransferTypeId;
-            if (!string.IsNullOrEmpty(UserName))
-                ViewBag.UsernameIdKey = UserName;
-            if (!string.IsNullOrEmpty(UserType))
-                ViewBag.UserTypeIdKey = UserType;
+            //if (!string.IsNullOrEmpty(UserName))
+            //    ViewBag.UsernameIdKey = UserName;
+            //if (!string.IsNullOrEmpty(UserType))
+            //    ViewBag.UserTypeIdKey = UserType;
 
 
 
@@ -196,7 +195,13 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 };
             }
 
-
+            ViewBag.UserTypeIdKeyST = value.ToUpper() == "ST"?!string.IsNullOrEmpty(UserType) ? UserType : null:null;
+            ViewBag.UsernameIdKeyST = value.ToUpper() == "ST" ? !string.IsNullOrEmpty(UserName) ? UserName : null:null;
+            ViewBag.UserTypeIdKeyPT1 = value == "" ? !string.IsNullOrEmpty(UserType) ? UserType : null:null;
+            ViewBag.UsernameIdKeyPT1 = value == "" ? !string.IsNullOrEmpty(UserName) ? UserName : null:null;
+            objPointsManagementModel.FromDate = value == "" ? !string.IsNullOrEmpty(FromDate) ? FromDate : null : null;
+            objPointsManagementModel.ToDate = value == "" ? !string.IsNullOrEmpty(ToDate) ? ToDate : null : null;
+             ViewBag.TotalData2 = TotalData2;
             objPointsManagementModel.PointRequestCommonModel.PointRequestsListModel = getPointRequestListDBResponse.MapObjects<PointRequestsListModel>();
             objPointsManagementModel.PointRequestCommonModel.PointRequestsListModel.ForEach(x =>
             {
@@ -265,6 +270,14 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 commonModel.ActionIP = ApplicationUtilities.GetIP();
                 commonModel.UserTypeId = objPointsTansferModel.UserTypeId.DecryptParameter();
                 commonModel.UserId = objPointsTansferModel.UserId.DecryptParameter();
+                if (commonModel.TransferType.ToUpper() == "TRANSFER")
+                {
+                    commonModel.SpName = "sproc_point_transfer";
+                }
+                else
+                {
+                    commonModel.SpName = "sproc_point_retrive";
+                }
                 var dbResponse = _BUSS.ManagePoints(commonModel);
                 if (dbResponse != null && dbResponse.Code == 0)
                 {

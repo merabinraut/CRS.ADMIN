@@ -276,7 +276,7 @@
                                             </td>
                                             <td class="p-[12px] w-max">
                                                 <div class="flex justify-center items-center gap-3 w-full">
-                                                    <a href="@Url.Action("/GetPaymentLedger", new { clubId = ViewBag.ClubIdKey,LocationId=ViewBag.LocationId,StartIndex=ViewBag.StartIndex,PageSize= ViewBag.PageSize, FromDate = ViewBag.FromDate, ToDate = ViewBag.ToDate})">
+                                                    <a href="@Url.Action("/GetPaymentLedger", new { clubId = @paymentLogModel.ClubId,clubIdFilter = ViewBag.ClubIdKey,LocationId=ViewBag.LocationIdKey,StartIndex=ViewBag.StartIndex,PageSize= ViewBag.PageSize, FromDate = ViewBag.FromDate, ToDate = ViewBag.ToDate})">
                                                         <i class="las la-eye text-[20px] cursor-pointer text-[#A6A6A6]"></i>
                                                     </a>
                                                 </div>
