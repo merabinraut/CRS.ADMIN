@@ -354,6 +354,7 @@
     <Content Include="Views\PointsManagement\_PointTransferRetrivePartialView.cshtml" />
     <Content Include="Views\PointsManagement\_PointRequestListPartialView.cshtml" />
     <Content Include="Views\GroupManagement\Index.cshtml" />
+    <Content Include="Views\GroupManagement\_ManageGroup.cshtml" />
     <None Include="Views\PromotionManagement\_ManageAdvertisementPartialView.cshtml" />
     <None Include="Views\PromotionManagement\_AdvertisementList.cshtml" />
     <Content Include="Content\assets\images\TickIcon.svg" />

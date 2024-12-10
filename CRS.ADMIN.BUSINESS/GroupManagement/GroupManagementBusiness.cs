@@ -1,4 +1,5 @@
 ﻿using CRS.ADMIN.REPOSITORY.GroupManagement;
+using CRS.ADMIN.SHARED;
 using CRS.ADMIN.SHARED.GroupManagement;
 using CRS.ADMIN.SHARED.PaginationManagement;
 using System.Collections.Generic;
@@ -13,14 +14,39 @@ namespace CRS.ADMIN.BUSINESS.GroupManagement
             _repo = repo;
         }
 
+        public CommonDbResponse BlockGroup(string groupId, Common request)
+        {
+            return _repo.BlockGroup(groupId, request);
+        }
+
+        public CommonDbResponse DeleteGroup(string groupId, Common request)
+        {
+            return _repo.DeleteGroup(groupId, request);
+        }
+
         public GroupAnalyticModelCommon GetGroupAnalytic()
         {
             return _repo.GetGroupAnalytic();
         }
 
+        public ManageGroupModelCommon GetGroupDetail(string groupId)
+        {
+            return _repo.GetGroupDetail(groupId);
+        }
+
         public List<GroupInfoModelCommon> GetGroupList(PaginationFilterCommon paginationFilter)
         {
             return _repo.GetGroupList(paginationFilter);
+        }
+
+        public CommonDbResponse ManageGroup(ManageGroupModelCommon commonModel)
+        {
+            return _repo.ManageGroup(commonModel);
+        }
+
+        public CommonDbResponse UnblockGroup(string groupId, Common request)
+        {
+            return _repo.UnblockGroup(groupId, request);
         }
     }
 }

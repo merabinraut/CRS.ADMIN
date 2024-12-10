@@ -1,12 +1,12 @@
-﻿using System;
+﻿using CRS.ADMIN.SHARED.PaginationManagement;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace CRS.ADMIN.APPLICATION.Models.GroupManagement
 {
     public class GroupOverviewModel
     {
+        public string SearchFilter { get; set; }
+        public ManageGroupModel ManageGroup { get; set; }
         public GroupAnalyticModel GetGroupAnalytic { get; set; } = new GroupAnalyticModel();
         public List<GroupInfoModel> GetGroupList { get; set; } = new List<GroupInfoModel>();
     }
@@ -30,8 +30,9 @@ namespace CRS.ADMIN.APPLICATION.Models.GroupManagement
         public string AssignedClub { get; set; }
         public string UnAssignedClub { get; set; }
     }
-    public class ManageGroupModel
+    public class ManageGroupModel : PaginationFilterCommon
     {
+        public string GroupId { get; set; }
         public string GroupName { get; set; }
         public string GroupNameKatakana { get; set; }
         public string GroupCoverPhoto { get; set; }
