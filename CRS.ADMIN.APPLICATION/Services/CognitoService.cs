@@ -133,10 +133,20 @@ namespace CRS.ADMIN.APPLICATION.Services
                 UserPoolId = _userPoolId,
                 Username = request.Username,
                 UserAttributes = attributes,
-                MessageAction = "SUPPRESS"
+                MessageAction = "SUPPRESS",
+                TemporaryPassword = request.Password
             };
 
             var adminCreateUserResponse = await _provider.AdminCreateUserAsync(adminCreateUserRequest);
+
+            await _provider.AdminSetUserPasswordAsync(new AdminSetUserPasswordRequest
+            {
+                UserPoolId = _userPoolId,
+                Username = request.Username,
+                Password = request.Password,
+                Permanent = true
+            });
+
             return adminCreateUserResponse.User.Attributes.MapObjects<SharedCognitoModel.SignUp.SignUpModel.AdminCreateUserResponse>();
         }
         #endregion
