@@ -260,10 +260,21 @@
                                                             <div onclick="" data-modal-target="" data-modal-toggle="">
                                                                 <i class="fa-solid fa-image text-primary-100 cursor-pointer"></i>
                                                             </div>
-                                                            <div onclick="" data-modal-target="" data-modal-toggle="">
-                                                                <i class="fa-solid fa-lock text-primary-100 cursor-pointer"></i>
-                                                            </div>
-                                                            <i class=" las la-trash-alt text-[20px] cursor-pointer text-[#CB3F3F]" onclick="" data-modal-target="delete-basicclub-confirmation" data-modal-toggle="delete-basicclub-confirmation"></i>
+                                                            @if (item.status.Trim().ToUpper() == "ACTIVE")
+                                                            {
+
+
+                                                                <div onclick="OpenBlockModal('@item.groupId')" data-modal-target="block-confirmation" data-modal-toggle="block-confirmation">
+                                                                    <i class="fa-solid fa-lock text-primary-100 cursor-pointer"></i>
+                                                                </div>
+                                                            }
+                                                            else
+                                                            {
+                                                                <div onclick="OpenUnblockModal('@item.groupId')" data-modal-target="unblock-confirmation" data-modal-toggle="unblock-confirmation">
+                                                                    <i class="fa-solid fa-unlock text-primary-100 cursor-pointer"></i>
+                                                                </div>
+                                                            }
+                                                            <i class=" las la-trash-alt text-[20px] cursor-pointer text-[#CB3F3F]" onclick="OpenDeleteModal('@item.groupId')" data-modal-target="delete-confirmation" data-modal-toggle="delete-confirmation"></i>
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -294,6 +305,117 @@
         </div>
     </div>
 </div>
+<!--block confirmation modal start-->
+<div id="block-confirmation" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 hidden w-full
+     p-4 overflow-x-hidden overflow-y-auto
+     md:inset-0 h-[calc(100%-1rem)] max-h-full " style="align-items: flex-start; ">
+    <div class="relative max-w-2xl max-h-full w-[412px] px-4 pt-[40px] pb-[46px] mt-24">
+        <!-- Modal content -->
+        <div class="relative bg-white rounded-lg shadow">
+            <!-- Modal header -->
+            <button type="button"
+                    class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center absolute top-[24px] right-[20px] "
+                    data-modal-hide="block-confirmation">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="25" viewBox="0 0 24 25" fill="none">
+                    <rect y="0.621094" width="24" height="24" rx="12" fill="#FAFAFA" />
+                    <path d="M5.41406 4.95703L4.33594 6.03516L10.9219 12.6211L4.33594 19.207L5.41406 20.2852L12 13.6992L18.5859 20.2852L19.6641 19.207L13.0781 12.6211L19.6641 6.03516L18.5859 4.95703L12 11.543L5.41406 4.95703Z"
+                          fill="#7A7A7A" />
+                </svg>
+            </button>
+            <!-- Modal body -->
+            <div class="grid gap-6 px-[20px] py-8">
+                <div class="text-[#333] font-semibold pb-[11px] border-b border-[#eeeeee]">@CRS.ADMIN.APPLICATION.Resources.Resource.Confirmation</div>
+                <div class="grid gap-[20px] text-[#062937] mb-[45px]">
+                    <div class="text-[14px] text-secondary-text-2 text-start" id="confirmationMessage">
+                        Are you sure you want to block this GROUP?
+                    </div>
+                </div>
+                <div class="flex justify-end">
+                    <div class="flex gap-2 justify-end mt-[45px]">
+                        <input id="request_id" value="" hidden />
+                        <div class="btn btn-secondary w-[110px]" data-modal-hide="block-confirmation">@CRS.ADMIN.APPLICATION.Resources.Resource.clubNo</div>
+                        <div class="btn btn-primary w-[110px]" onclick="BlockGroup()" data-val1="" data-val2="" id="block_id">@CRS.ADMIN.APPLICATION.Resources.Resource.clubYes</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--block confirmation modal end-->
+<!--unblock confirmation modal start-->
+<div id="unblock-confirmation" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 hidden w-full
+     p-4 overflow-x-hidden overflow-y-auto
+     md:inset-0 h-[calc(100%-1rem)] max-h-full " style="align-items: flex-start;">
+    <div class="relative max-w-2xl max-h-full w-[412px] px-4 pt-[40px] pb-[46px] mt-24">
+        <!-- Modal content -->
+        <div class="relative bg-white rounded-lg shadow">
+            <!-- Modal header -->
+            <button type="button"
+                    class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center absolute top-[24px] right-[20px] "
+                    data-modal-hide="unblock-confirmation">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="25" viewBox="0 0 24 25" fill="none">
+                    <rect y="0.621094" width="24" height="24" rx="12" fill="#FAFAFA" />
+                    <path d="M5.41406 4.95703L4.33594 6.03516L10.9219 12.6211L4.33594 19.207L5.41406 20.2852L12 13.6992L18.5859 20.2852L19.6641 19.207L13.0781 12.6211L19.6641 6.03516L18.5859 4.95703L12 11.543L5.41406 4.95703Z"
+                          fill="#7A7A7A" />
+                </svg>
+            </button>
+            <!-- Modal body -->
+            <div class="grid gap-6 px-[20px] py-8">
+                <div class="text-[#333] font-semibold pb-[11px] border-b border-[#eeeeee]">@CRS.ADMIN.APPLICATION.Resources.Resource.Confirmation</div>
+                <div class="grid gap-[20px] text-[#062937] mb-[45px]">
+                    <div class="text-[14px] text-secondary-text-2 text-start" id="confirmationMessage">
+                        Are you sure you want to un-block this GROUP?
+                    </div>
+                </div>
+                <div class="flex justify-end">
+                    <div class="flex gap-2 justify-end mt-[45px]">
+                        <input id="request_id" value="" hidden />
+                        <div class="btn btn-secondary w-[110px]" data-modal-hide="unblock-confirmation">@CRS.ADMIN.APPLICATION.Resources.Resource.clubNo</div>
+                        <div class="btn btn-primary w-[110px]" onclick="UnblockGroup()" data-val1="" data-val2="" id="unblock_id">@CRS.ADMIN.APPLICATION.Resources.Resource.clubYes</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--unblock confirmation modal end-->
+<!--delete confirmation modal start-->
+<div id="delete-confirmation" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 hidden w-full
+     p-4 overflow-x-hidden overflow-y-auto
+     md:inset-0 h-[calc(100%-1rem)] max-h-full " style="align-items: flex-start;">
+    <div class="relative max-w-2xl max-h-full w-[412px] px-4 pt-[40px] pb-[46px] mt-24">
+        <!-- Modal content -->
+        <div class="relative bg-white rounded-lg shadow">
+            <!-- Modal header -->
+            <button type="button"
+                    class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center absolute top-[24px] right-[20px] "
+                    data-modal-hide="delete-confirmation">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="25" viewBox="0 0 24 25" fill="none">
+                    <rect y="0.621094" width="24" height="24" rx="12" fill="#FAFAFA" />
+                    <path d="M5.41406 4.95703L4.33594 6.03516L10.9219 12.6211L4.33594 19.207L5.41406 20.2852L12 13.6992L18.5859 20.2852L19.6641 19.207L13.0781 12.6211L19.6641 6.03516L18.5859 4.95703L12 11.543L5.41406 4.95703Z"
+                          fill="#7A7A7A" />
+                </svg>
+            </button>
+            <!-- Modal body -->
+            <div class="grid gap-6 px-[20px] py-8">
+                <div class="text-[#333] font-semibold pb-[11px] border-b border-[#eeeeee]">@CRS.ADMIN.APPLICATION.Resources.Resource.Confirmation</div>
+                <div class="grid gap-[20px] text-[#062937] mb-[45px]">
+                    <div class="text-[14px] text-secondary-text-2 text-start">
+                        Are you sure you want to delete this GROUP?
+                    </div>
+                </div>
+                <div class="flex justify-end">
+                    <div class="flex gap-2 justify-end mt-[45px]">
+                        <input id="request_id" value="" hidden />
+                        <div class="btn btn-secondary w-[110px]" data-modal-hide="delete-confirmation">@CRS.ADMIN.APPLICATION.Resources.Resource.No</div>
+                        <div class="btn btn-primary w-[110px]" onclick="DeleteGroup()" data-val="" id="delete_id">@CRS.ADMIN.APPLICATION.Resources.Resource.Yes</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--delete confirmation modal end-->
 @Html.Partial("_ManageGroup", _ManageGroup)
 @section scripts{
     <script>
@@ -319,6 +441,92 @@
             const pageSize =@ViewBag.PageSize;
             window.location.href = "/GroupManagement/ManageGroup?GroupId=" + groupid + '&SearchFilter=' + searchFilter + '&StartIndex=' + startIndex + '&PageSize=' + pageSize;
 
+        }
+        function BlockGroup() {
+            const groupId = $('#block_id').attr('data-val1');
+            var requestVerificationToken = $('input[name="__RequestVerificationToken"]').val();
+            let search_filter = $('#default-search').val();
+            const start_index_val = @ViewBag.StartIndex;
+            const page_size = @ViewBag.PageSize;
+
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("BlockGroup","GroupManagement")',
+                data: {
+                    '__RequestVerificationToken': RequestVerificationToken, 'GroupId': groupId},
+                success: function (response) {
+                    window.location.href = '/GroupManagement/Index?SearchFilter=' + search_filter + '&StartIndex=' + start_index_val + '&PageSize=' + page_size;
+                },
+                error: function (error) {
+                    window.location.href = '/GroupManagement/Index?SearchFilter=' + search_filter + '&StartIndex=' + start_index_val + '&PageSize=' + page_size;
+                }
+            })
+        }
+        function UnblockGroup() {
+            const groupId = $('#unblock_id').attr('data-val1');
+            var requestVerificationToken = $('input[name="__RequestVerificationToken"]').val();
+            let search_filter = $('#default-search').val();
+            const start_index_val = @ViewBag.StartIndex;
+            const page_size = @ViewBag.PageSize;
+
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("UnblockGroup", "GroupManagement")',
+                data: {
+                    '__RequestVerificationToken': RequestVerificationToken, 'GroupId': groupId
+                },
+                success: function (response) {
+                    window.location.href = '/GroupManagement/Index?SearchFilter=' + search_filter + '&StartIndex=' + start_index_val + '&PageSize=' + page_size;
+                },
+                error: function (error) {
+                    window.location.href = '/GroupManagement/Index?SearchFilter=' + search_filter + '&StartIndex=' + start_index_val + '&PageSize=' + page_size;
+                }
+            })
+        }
+        function DeleteGroup() {
+            const groupId = $('#delete_id').attr('data-val');
+            var requestVerificationToken = $('input[name="__RequestVerificationToken"]').val();
+            let search_filter = $('#default-search').val();
+            const start_index_val = @ViewBag.StartIndex;
+            const page_size = @ViewBag.PageSize;
+
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("DeleteGroup", "GroupManagement")',
+                data: {
+                    '__RequestVerificationToken': RequestVerificationToken, 'GroupId': groupId
+                },
+                success: function (response) {
+                    window.location.href = '/GroupManagement/Index?SearchFilter=' + search_filter + '&StartIndex=' + start_index_val + '&PageSize=' + page_size;
+                },
+                error: function (error) {
+                    window.location.href = '/GroupManagement/Index?SearchFilter=' + search_filter + '&StartIndex=' + start_index_val + '&PageSize=' + page_size;
+                }
+            })
+        }
+        function OpenBlockModal(groupId) {
+            const modalTarget = document.querySelector("[data-modal-target='block-basicclub-confirmation']");
+            const modal = document.getElementById("block-confirmation");
+            modal.classList.remove("hidden");
+            $('#block_id').attr('data-val1', groupId);
+            $('#block_id').attr('data-val2', 'B');
+            modal.setAttribute("aria-hidden", "false");
+        }
+        function OpenUnblockModal(groupId) {
+            const modalTarget = document.querySelector("[data-modal-target='block-basicclub-confirmation']");
+            const modal = document.getElementById("unblock-confirmation");
+            modal.classList.remove("hidden");
+            $('#unblock_id').attr('data-val1', groupId);
+            $('#unblock_id').attr('data-val2', 'A');
+            modal.setAttribute("aria-hidden", "false");
+        }
+        function OpenDeleteModal(groupId) {
+            const modalTarget = document.querySelector("[data-modal-target='block-basicclub-confirmation']");
+            const modal = document.getElementById("delete-confirmation");
+            modal.classList.remove("hidden");
+            $('#delete_id').attr('data-val1', groupId);
+            $('#delete_id').attr('data-val2', 'A');
+            modal.setAttribute("aria-hidden", "false");
         }
     </script>
 }
