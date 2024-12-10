@@ -453,7 +453,7 @@
                 type: "POST",
                 url: '@Url.Action("BlockGroup","GroupManagement")',
                 data: {
-                    '__RequestVerificationToken': RequestVerificationToken, 'GroupId': groupId},
+                    '__RequestVerificationToken': requestVerificationToken, 'GroupId': groupId},
                 success: function (response) {
                     window.location.href = '/GroupManagement/Index?SearchFilter=' + search_filter + '&StartIndex=' + start_index_val + '&PageSize=' + page_size;
                 },
@@ -473,7 +473,7 @@
                 type: "POST",
                 url: '@Url.Action("UnblockGroup", "GroupManagement")',
                 data: {
-                    '__RequestVerificationToken': RequestVerificationToken, 'GroupId': groupId
+                    '__RequestVerificationToken': requestVerificationToken, 'GroupId': groupId
                 },
                 success: function (response) {
                     window.location.href = '/GroupManagement/Index?SearchFilter=' + search_filter + '&StartIndex=' + start_index_val + '&PageSize=' + page_size;
@@ -494,7 +494,7 @@
                 type: "POST",
                 url: '@Url.Action("DeleteGroup", "GroupManagement")',
                 data: {
-                    '__RequestVerificationToken': RequestVerificationToken, 'GroupId': groupId
+                    '__RequestVerificationToken': requestVerificationToken, 'GroupId': groupId
                 },
                 success: function (response) {
                     window.location.href = '/GroupManagement/Index?SearchFilter=' + search_filter + '&StartIndex=' + start_index_val + '&PageSize=' + page_size;
