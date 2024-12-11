@@ -230,13 +230,28 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             };
             var dbResponse = _business.DeleteGroup(groupId, request);
             response = dbResponse;
-            this.AddNotificationMessage(new NotificationModel()
+            if (dbResponse.Code == ResponseCode.Success && dbResponse.Code == 0)
             {
-                NotificationType = response.Code == ResponseCode.Success ? NotificationMessage.SUCCESS : NotificationMessage.INFORMATION,
-                Message = response.Message ?? "something went wrong. Please try again later",
-                Title = response.Code == ResponseCode.Success ? NotificationMessage.SUCCESS.ToString() : NotificationMessage.INFORMATION.ToString(),
-            });
-            return Json(response.Message, JsonRequestBehavior.AllowGet);
+                this.AddNotificationMessage(new NotificationModel()
+                {
+                    NotificationType = response.Code == ResponseCode.Success ? NotificationMessage.SUCCESS : NotificationMessage.INFORMATION,
+                    Message = response.Message ?? "Something went wrong while deleting the group. Please try again later.!!",
+                    Title = response.Code == ResponseCode.Success ? NotificationMessage.SUCCESS.ToString() : NotificationMessage.INFORMATION.ToString(),
+                });
+                return Json(response.Message, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                this.AddNotificationMessage(new NotificationModel()
+                {
+                    NotificationType = response.Code == ResponseCode.Warning ? NotificationMessage.WARNING : NotificationMessage.ERROR,
+                    Message = response.Message ?? "Something went wrong while deleting the group. Please try again later.!!",
+                    Title = response.Code == ResponseCode.Warning ? NotificationMessage.WARNING.ToString() : NotificationMessage.ERROR.ToString(),
+                });
+                return Json(response.Message, JsonRequestBehavior.AllowGet);
+            }
+
+
         }
         [HttpPost, ValidateAntiForgeryToken]
         public JsonResult BlockGroup(string GroupId = "", string SearchFilter = "", int StartIndex = 0, int PageSize = 10)
@@ -259,13 +274,27 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             };
             var dbResponse = _business.BlockGroup(groupId, request);
             response = dbResponse;
-            this.AddNotificationMessage(new NotificationModel()
+            if (dbResponse.Code == 0 && dbResponse.Code == ResponseCode.Success)
             {
-                NotificationType = response.Code == ResponseCode.Success ? NotificationMessage.SUCCESS : NotificationMessage.INFORMATION,
-                Message = response.Message ?? "something went wrong. Please try again later",
-                Title = response.Code == ResponseCode.Success ? NotificationMessage.SUCCESS.ToString() : NotificationMessage.INFORMATION.ToString(),
-            });
-            return Json(response.Message, JsonRequestBehavior.AllowGet);
+                this.AddNotificationMessage(new NotificationModel()
+                {
+                    NotificationType = response.Code == ResponseCode.Success ? NotificationMessage.SUCCESS : NotificationMessage.INFORMATION,
+                    Message = response.Message ?? "something went wrong. Please try again later",
+                    Title = response.Code == ResponseCode.Success ? NotificationMessage.SUCCESS.ToString() : NotificationMessage.INFORMATION.ToString(),
+                });
+                return Json(response.Message, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                this.AddNotificationMessage(new NotificationModel()
+                {
+                    NotificationType = response.Code == ResponseCode.Warning ? NotificationMessage.WARNING : NotificationMessage.INFORMATION,
+                    Message = response.Message ?? "something went wrong. Please try again later",
+                    Title = response.Code == ResponseCode.Warning ? NotificationMessage.WARNING.ToString() : NotificationMessage.INFORMATION.ToString(),
+                });
+                return Json(response.Message, JsonRequestBehavior.AllowGet);
+            }
+
         }
         [HttpPost, ValidateAntiForgeryToken]
         public JsonResult UnblockGroup(string GroupId = "", string SearchFilter = "", int StartIndex = 0, int PageSize = 10)
@@ -289,13 +318,26 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             var dbResponse = _business.UnblockGroup(groupId, request);
 
             response = dbResponse;
-            this.AddNotificationMessage(new NotificationModel()
+            if (dbResponse.Code == 0 && dbResponse.Code == ResponseCode.Success)
             {
-                NotificationType = response.Code == ResponseCode.Success ? NotificationMessage.SUCCESS : NotificationMessage.INFORMATION,
-                Message = response.Message ?? "something went wrong. Please try again later",
-                Title = response.Code == ResponseCode.Success ? NotificationMessage.SUCCESS.ToString() : NotificationMessage.INFORMATION.ToString(),
-            });
-            return Json(response.Message, JsonRequestBehavior.AllowGet);
+                this.AddNotificationMessage(new NotificationModel()
+                {
+                    NotificationType = response.Code == ResponseCode.Success ? NotificationMessage.SUCCESS : NotificationMessage.INFORMATION,
+                    Message = response.Message ?? "something went wrong. Please try again later",
+                    Title = response.Code == ResponseCode.Success ? NotificationMessage.SUCCESS.ToString() : NotificationMessage.INFORMATION.ToString(),
+                });
+                return Json(response.Message, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                this.AddNotificationMessage(new NotificationModel()
+                {
+                    NotificationType = response.Code == ResponseCode.Warning ? NotificationMessage.WARNING : NotificationMessage.INFORMATION,
+                    Message = response.Message ?? "something went wrong. Please try again later",
+                    Title = response.Code == ResponseCode.Warning ? NotificationMessage.WARNING.ToString() : NotificationMessage.INFORMATION.ToString(),
+                });
+                return Json(response.Message, JsonRequestBehavior.AllowGet);
+            }
         }
     }
 }
