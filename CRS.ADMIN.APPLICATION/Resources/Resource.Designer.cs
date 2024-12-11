@@ -322,6 +322,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Affiliate Withdraw Logs.
+        /// </summary>
+        public static string Affiliate_Withdraw_Logs {
+            get {
+                return ResourceManager.GetString("Affiliate Withdraw Logs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Auto Filled Address.
         /// </summary>
         public static string AffiliateAutoFilledAddress {

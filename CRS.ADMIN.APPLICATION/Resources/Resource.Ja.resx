@@ -231,6 +231,10 @@
     <value>アフィリエイト支払い済</value>
     <comment>Payment Management</comment>
   </data>
+  <data name="Affiliate Withdraw Logs" xml:space="preserve">
+    <value>引き出しリクエスト</value>
+    <comment>Withdrawal Request</comment>
+  </data>
   <data name="AffiliateAutoFilledAddress" xml:space="preserve">
     <value>住所自動入力</value>
     <comment>AffiliateManagement</comment>

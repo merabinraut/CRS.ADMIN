@@ -26,7 +26,7 @@
     <div class="flex flex-col  gap-6">
         <div>
             <div class="heading-title">
-                @CRS.ADMIN.APPLICATION.Resources.Resource.WithdrawalRequests
+                @CRS.ADMIN.APPLICATION.Resources.Resource.WithdrawalRequests [@Model.id]
             </div>
             <div class="span-title-light-gray">
                 @CRS.ADMIN.APPLICATION.Resources.Resource.Manage_payment_withdrawal_request_
@@ -40,7 +40,7 @@
                 <div id="pointstransfer" class="pane active">
                     <form action="/WithdrawalRequest/WithdrawalRequestDetailList" method="get">
                         <div class="flex justify-between pb-[24px]">
-                            @Html.HiddenFor(model => model.id)
+                            @Html.HiddenFor(model => model.id, new { id = "idreq" })
 
                             <div class="relative input-search-wrapper">
                                 <div class="absolute inset-y-0 left-0 flex items-center pl-[16px] pointer-events-none">
@@ -59,12 +59,12 @@
                             </div>
 
                             <div class="flex gap-6">
-                                <div class="btn btn-primary gap-[8px] h-[40px]" data-drawer-target="add-new-points"
-                                     data-drawer-show="add-new-points" data-drawer-placement="right" data-drawer-backdrop="false"
-                                     aria-controls="drawer-disabled-backdrop" id="add-new-id">
-                                    <img src="~/Content/assets_new/images/plus-circle-solid.svg" />
-                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Add_New
-                                </div>
+                                @*<div class="btn btn-primary gap-[8px] h-[40px]" data-drawer-target="add-new-points"
+                         data-drawer-show="add-new-points" data-drawer-placement="right" data-drawer-backdrop="false"
+                         aria-controls="drawer-disabled-backdrop" id="add-new-id">
+                        <img src="~/Content/assets_new/images/plus-circle-solid.svg" />
+                        @CRS.ADMIN.APPLICATION.Resources.Resource.Add_New
+                    </div>*@
                             </div>
                         </div>
                         <div class="grid grid-cols-3 gap-x-12 table-tab filteroutlinepadding">
@@ -122,9 +122,9 @@
                     </form>
                     <br />
                     @*<div class="px-[12px] py-[16px] flex justify-between entry-export-container">
-                            <div class="flex items-center select-entries" id="ShowEntries-Id">
-                            </div>
-                        </div>*@
+            <div class="flex items-center select-entries" id="ShowEntries-Id">
+            </div>
+        </div>*@
                     <div class="table-tab">
                         <div class="px-[16px] py-[12px] flex justify-between entry-export-container">
                             <div class="flex items-center select-entries" id="ShowEntries-Id">
@@ -290,7 +290,7 @@
                                     @{
                                         if (Model.WithdrawalMonthlyList.Count > 0)
                                         {
-                                        
+
                                             foreach (var item in Model.WithdrawalMonthlyList)
                                             {
                                                 <tr class="bg-white border-b ">
@@ -355,7 +355,7 @@
                                                         }
                                                     </td>
                                                 </tr>
-                                              
+
                                             }
                                         }
                                     }
@@ -363,6 +363,27 @@
                             </table>
                         </div>
                     </div>
+                    @*<br><hr>
+                    <div class="total-column">
+                        <div class="pagination-club">
+                            <div class="show-entry" ></div>
+                            <div class="flex gap-[12px]">
+                                <div class="" style="cursor: not-allowed;">
+                                    Total
+                                </div>
+                                <div class="" style="cursor: not-allowed;">
+                                    10000
+                                </div>
+                                <div class="" style="cursor: not-allowed;">
+                                    5000
+                                </div>
+                                <div class="">
+                                    20000
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                   <hr>*@
                     <div class="pagination-club">
                         <div class="show-entry" id="Entries-Id">
                         </div>
@@ -381,7 +402,7 @@
 
 
 
-            </div>
+                </div>
         </div>
     </div>
 </div>
@@ -488,7 +509,6 @@
         }
 
         function ApproveWithdrawalRequestFunction() {
-            debugger;
             let id = $('#ConfirmationId').val();
             
             $.ajax({
@@ -533,9 +553,10 @@
          const page_size = @ViewBag.PageSize;
          const total_data = @ViewBag.TotalData;
          const start_index_val = @ViewBag.StartIndex;
+         var id = $("#idreq").val();
          var FromDate = $("#FromDate").val();
          var ToDate = $("#ToDate").val();
-         let URL2 = "/WithdrawalRequest/WithdrawalRequestDetailList?FromDate=" + FromDate + "&ToDate=" + ToDate ;
+            let URL2 = "/WithdrawalRequest/WithdrawalRequestDetailList?id=" + id + "&FromDate=" + FromDate + "&ToDate=" + ToDate;
          dynamicStartIndexLabel = "StartIndex";
          dynamicPageSizeLabel = "PageSize";
          LoadPagination(page_size, total_data, start_index_val, URL2, 'pagination-id', 'prev-btn', 'next-btn', 'ShowEntries-Id', 'Entries-Id');

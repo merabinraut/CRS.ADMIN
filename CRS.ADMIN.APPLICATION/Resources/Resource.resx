@@ -231,6 +231,10 @@
     <value>Affiliate Payments</value>
     <comment>Payment Management</comment>
   </data>
+  <data name="Affiliate Withdraw Logs" xml:space="preserve">
+    <value>Affiliate Withdraw Logs</value>
+    <comment>Withdrawal Request</comment>
+  </data>
   <data name="AffiliateAutoFilledAddress" xml:space="preserve">
     <value>Auto Filled Address</value>
     <comment>AffiliateManagement</comment>
