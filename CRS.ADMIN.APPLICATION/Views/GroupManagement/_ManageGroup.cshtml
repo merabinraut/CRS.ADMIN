@@ -70,7 +70,7 @@
                                 <div class="bg-[#F4F4F4] h-[1px] w-full">
                                 </div>
                             </div>
-                            <div class="grid grid-cols-3 gap-x-5 gap-y-4">
+                            <div class="grid grid-cols-2 gap-x-5 gap-y-4">
                                 <div class="input-field-common">
                                     <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
                                         @CRS.ADMIN.APPLICATION.Resources.Resource.Group_Name
@@ -104,7 +104,7 @@
                                 </div>
                             </div>
                             <!--group cover photo page start -->
-                            <div class="grid grid-cols-2 gap-x-5 gap-y-4">
+                            <div class="grid grid-cols-1 gap-x-5 gap-y-4">
                                 <div>
                                     <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
                                         @CRS.ADMIN.APPLICATION.Resources.Resource.Cover_Photo
@@ -138,23 +138,25 @@
                                 </div>
                             </div>
                             <!-- description start -->
-                            <div class="input-field-common">
-                                <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
-                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Description
-                                </label>
-                                @Html.TextAreaFor(model => model.GroupDescription, new
-                           {
-                               @class = "w-full",
-                               @placeholder = "Enter group descriptions",
-                               autocomplete = "off",
-                               @maxLength = "500"
-                           })
+                            <div class="grid grid-cols-1 gap-x-5 gap-y-4">
+                                <div class="input-field-common">
+                                    <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
+                                        @CRS.ADMIN.APPLICATION.Resources.Resource.Description
+                                    </label>
+                                    @Html.TextAreaFor(model => model.GroupDescription, new
+                               {
+                                   @class = "w-full",
+                                   @placeholder = "Enter group descriptions",
+                                   autocomplete = "off",
+                                   @maxLength = "500"
+                               })
 
-                                <span class="error">
-                                    @Html.ValidationMessageFor(m => m.GroupDescription)
-                                </span>
+                                    <span class="error">
+                                        @Html.ValidationMessageFor(m => m.GroupDescription)
+                                    </span>
+                                </div>
+                                <!-- description end -->
                             </div>
-                            <!-- description end -->
                         </div>
                     </div>
                     <div class="py-4 flex justify-end">
