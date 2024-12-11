@@ -456,10 +456,13 @@
             const page_size = @ViewBag.PageSize;
 
             $.ajax({
-                type: "POST",
-                url: '@Url.Action("BlockGroup","GroupManagement")',
+                type: 'POST',
+                async: true,
+                url: '/GroupManagement/BlockGroup?GroupId=' + groupId,
+                dataType: 'json',
                 data: {
-                    '__RequestVerificationToken': requestVerificationToken, 'GroupId': groupId},
+                    '__RequestVerificationToken': requestVerificationToken
+                },
                 success: function (response) {
                     window.location.href = '/GroupManagement/Index?SearchFilter=' + search_filter + '&StartIndex=' + start_index_val + '&PageSize=' + page_size;
                 },
@@ -476,8 +479,10 @@
             const page_size = @ViewBag.PageSize;
 
             $.ajax({
-                type: "POST",
+                type: 'POST',
+                async: true,
                 url: '@Url.Action("UnblockGroup", "GroupManagement")',
+                dataType: 'json',
                 data: {
                     '__RequestVerificationToken': requestVerificationToken, 'GroupId': groupId
                 },
@@ -497,11 +502,13 @@
             const page_size = @ViewBag.PageSize;
 
             $.ajax({
-                type: "POST",
+                type: 'POST',
+                async: true,
                 url: '@Url.Action("DeleteGroup", "GroupManagement")',
                 data: {
                     '__RequestVerificationToken': requestVerificationToken, 'GroupId': groupId
                 },
+                dataType: 'json',
                 success: function (response) {
                     window.location.href = '/GroupManagement/Index?SearchFilter=' + search_filter + '&StartIndex=' + start_index_val + '&PageSize=' + page_size;
                 },
@@ -540,7 +547,6 @@
     <script>
         //START SUB GROUP MODULE JS
         function GotoSubgroupPage(groupId) {
-
             window.location.href = "/GroupManagement/SubGroup?GroupId=" + groupId;
         }
 
