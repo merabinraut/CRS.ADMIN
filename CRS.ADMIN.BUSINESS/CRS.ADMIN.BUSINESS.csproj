@@ -144,6 +144,8 @@
     <Compile Include="StaffManagement\StaffManagementBusiness.cs" />
     <Compile Include="StaticDataManagement\IStaticDataManagementBusiness.cs" />
     <Compile Include="StaticDataManagement\StaticDataManagementBusiness.cs" />
+    <Compile Include="WithdrawalRequest\IWithdrawalRequestBusiness.cs" />
+    <Compile Include="WithdrawalRequest\WithdrawalRequestBusiness.cs" />
     <Compile Include="WithdrawSetup\IWithdrawSetupBusiness.cs" />
     <Compile Include="WithdrawSetup\WithdrawSetupBusiness.cs" />
   </ItemGroup>
