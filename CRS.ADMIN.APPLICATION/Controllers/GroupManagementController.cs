@@ -23,6 +23,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             _business = business;
         }
         [HttpGet]
+        #region MANAGE GROUP
         public ActionResult Index(string SearchFilter = "", int StartIndex = 0, int PageSize = 10)
         {
             Session["CurrentURL"] = "GroupManagement/Index";
@@ -339,5 +340,47 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 return Json(response.Message, JsonRequestBehavior.AllowGet);
             }
         }
+        #endregion
+
+        #region MANAGE SUB-GROUP
+        [HttpGet]
+        public ActionResult SubGroup(string GroupId = "", int StartIndex = 0, int PageSize = 10, string SearchFilter = "")
+        {
+            Session["CurrentURL"] = "GroupManagement/SubGroup";
+            PaginationFilterCommon paginationFilter = new PaginationFilterCommon()
+            {
+                Skip = StartIndex,
+                Take = PageSize,
+                SearchFilter = SearchFilter
+            };
+            string groupId = string.Empty;
+            if (!string.IsNullOrEmpty(GroupId))
+                groupId = GroupId.DecryptParameter();
+
+            var dbResponse = _business.GetSubGroupByGroupId(groupId, paginationFilter);
+            ViewBag.GroupId = GroupId;
+            return View();
+        }
+        [HttpPost, ValidateAntiForgeryToken]
+        public ActionResult ManageSubGroup()
+        {
+            return View();
+        }
+        [HttpGet]
+        public ActionResult ManageSubGroup(string GroupId = "")
+        {
+            return View();
+        }
+        [HttpPost, ValidateAntiForgeryToken]
+        public ActionResult ManageSubGroupClub()
+        {
+            return View();
+        }
+        [HttpGet]
+        public ActionResult ManageSubGroupClub(string GroupId = "", string SubGroupId = "")
+        {
+            return View();
+        }
+        #endregion
     }
 }

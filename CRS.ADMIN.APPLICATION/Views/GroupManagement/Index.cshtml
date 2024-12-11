@@ -254,7 +254,7 @@
                                                     <td class="p-[12px]">
                                                         <div class="flex gap-[7px]">
                                                             <i class="las la-edit text-[20px] cursor-pointer text-[#A6A6A6]" onclick="ManageGroupDetailsFunction('@item.groupId');"></i>
-                                                            <div onclick="" data-modal-target="" data-modal-toggle="">
+                                                            <div onclick="GotoSubgroupPage('@item.groupId')">
                                                                 <i class="fa-solid fa-eye text-primary-100 cursor-pointer"></i>
                                                             </div>
                                                             <div onclick="" data-modal-target="" data-modal-toggle="">
@@ -305,6 +305,8 @@
         </div>
     </div>
 </div>
+
+
 <!--block confirmation modal start-->
 <div id="block-confirmation" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 hidden w-full
      p-4 overflow-x-hidden overflow-y-auto
@@ -416,9 +418,13 @@
     </div>
 </div>
 <!--delete confirmation modal end-->
+
+
 @Html.Partial("_ManageGroup", _ManageGroup)
 @section scripts{
     <script>
+
+        //START GROUP MODULE JS
         function CancelFunction() {
             location.reload();
         }
@@ -528,6 +534,17 @@
             $('#delete_id').attr('data-val2', 'A');
             modal.setAttribute("aria-hidden", "false");
         }
+        //END GROUP MODULE JS
+    </script>
+
+    <script>
+        //START SUB GROUP MODULE JS
+        function GotoSubgroupPage(groupId) {
+
+            window.location.href = "/GroupManagement/SubGroup?GroupId=" + groupId;
+        }
+
+        //END SUB GROUP MODULE JS
     </script>
 }
 

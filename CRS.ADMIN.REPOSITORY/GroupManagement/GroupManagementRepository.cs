@@ -13,7 +13,7 @@ namespace CRS.ADMIN.REPOSITORY.GroupManagement
         {
             _dao = new RepositoryDao();
         }
-
+        #region GROUP SECTION
         public CommonDbResponse BlockGroup(string groupId, Common request)
         {
             string sp_name = "EXEC [dbo].[sproc_admin_block_group]";
@@ -94,6 +94,7 @@ namespace CRS.ADMIN.REPOSITORY.GroupManagement
             return new List<GroupInfoModelCommon>();
         }
 
+
         public CommonDbResponse ManageGroup(ManageGroupModelCommon commonModel)
         {
             string sp_name = "EXEC [dbo].[sproc_admin_add_update_group]";
@@ -121,5 +122,22 @@ namespace CRS.ADMIN.REPOSITORY.GroupManagement
             var dbResponse = _dao.ParseCommonDbResponse(sp_name);
             return dbResponse;
         }
+        #endregion
+
+        #region SUB GROUP SECTION
+        public List<SubGroupInfoModelCommon> GetSubGroupByGroupId(string groupId, PaginationFilterCommon paginationFilter)
+        {
+            string sp_name = "EXEC [dbo].[sproc_admin_get_subgroup]";
+            sp_name += "@GroupId=" + _dao.FilterString(groupId);
+            sp_name += ",@SearchFilter=" + _dao.FilterString(paginationFilter.SearchFilter);
+            sp_name += ",@Skip=" + paginationFilter.Skip;
+            sp_name += ",@Take=" + paginationFilter.Take;
+
+            var dbResponse = _dao.ExecuteDataTable(sp_name);
+            if (dbResponse.Rows.Count > 0 && dbResponse != null)
+                return _dao.DataTableToListObject<SubGroupInfoModelCommon>(dbResponse).ToList();
+            else return new List<SubGroupInfoModelCommon>();
+        }
+        #endregion
     }
 }

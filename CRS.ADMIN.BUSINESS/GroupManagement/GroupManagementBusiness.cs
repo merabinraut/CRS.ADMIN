@@ -13,7 +13,7 @@ namespace CRS.ADMIN.BUSINESS.GroupManagement
         {
             _repo = repo;
         }
-
+        #region GROUP SECTION
         public CommonDbResponse BlockGroup(string groupId, Common request)
         {
             return _repo.BlockGroup(groupId, request);
@@ -48,5 +48,13 @@ namespace CRS.ADMIN.BUSINESS.GroupManagement
         {
             return _repo.UnblockGroup(groupId, request);
         }
+        #endregion
+
+        #region Sub Group Section
+        public List<SubGroupInfoModelCommon> GetSubGroupByGroupId(string groupId, PaginationFilterCommon paginationFilter)
+        {
+            return _repo.GetSubGroupByGroupId(groupId, paginationFilter);
+        }
+        #endregion
     }
 }

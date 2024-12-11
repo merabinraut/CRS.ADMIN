@@ -1,0 +1,386 @@
+﻿
+@{
+    ViewBag.Title = "SubGroup";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link rel="stylesheet" href="//code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
+<div class="px-8 py-4">
+    <!-- title  -->
+    <div class="flex flex-col  gap-8">
+        <div class="flex justify-between items-center">
+            <div>
+                <div class="heading-title">
+                    Group View: Earth
+                </div>
+                <div class="span-title-light-gray">
+                    Manage club under Group
+                </div>
+            </div>
+            <div class="flex gap-4">
+                <div class="btn btn-primary flex items-center gap-[8px] h-[40px]" data-drawer-target="add-sub-group"
+                     data-drawer-show="add-sub-group" data-drawer-placement="right" data-drawer-backdrop="false"
+                     aria-controls="drawer-disabled-backdrop" id="add-new-id">
+                    <img src="~/Content/assets_new/images/plus-circle-solid.svg" />
+                    Add Sub Group
+                </div>
+                <div class="btn btn-primary flex items-center gap-[8px] h-[40px]" data-drawer-target="add-sub-group-club"
+                     data-drawer-show="add-sub-group-club" data-drawer-placement="right" data-drawer-backdrop="false"
+                     aria-controls="drawer-disabled-backdrop" id="manage-club-id">
+                    <img src="~/Content/assets_new/images/plus-circle-solid.svg" />
+                    Manage Club
+                </div>
+            </div>
+        </div>
+
+        <div class="flex flex-col  gap-4">
+            <form action="/ReservationLedger/ReservationLedgerList" method="get">
+                <div class="flex justify-between items-center w-full">
+                    <!-- Input Search Wrapper -->
+                    <div class="relative input-search-wrapper flex-grow">
+                        <div class="absolute inset-y-0 left-0 flex items-center pl-[16px] pointer-events-none">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21" fill="none">
+                                <path d="M17.5 18L13.875 14.375M15.8333 9.66667C15.8333 13.3486 12.8486 16.3333 9.16667 16.3333C5.48477 16.3333 2.5 13.3486 2.5 9.66667C2.5 5.98477 5.48477 3 9.16667 3C12.8486 3 15.8333 5.98477 15.8333 9.66667Z" stroke="#667085" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"></path>
+                            </svg>
+                        </div>
+                        <input type="search" id="default-search" class="input-search block w-full" placeholder="@CRS.ADMIN.APPLICATION.Resources.Resource.Search" value="@ViewBag.SearchText" name="SearchText">
+                    </div>
+
+                    <!-- Export Button -->
+                    <div class="export-button h-[40px] flex items-center justify-end ml-[16px]" onclick="exportExcel('table-id', 'Customer');">
+                        <img src="~/Content/assets_new/images/club/download-solid.svg" alt="Download Icon" class="mr-[8px]">
+                        @CRS.ADMIN.APPLICATION.Resources.Resource.Export
+                    </div>
+                </div>
+
+                <br />
+                <!-- filter  -->
+                <div class="mb-4">
+                    <div id="filter" class="export-button h-[40px] text-[#3E3E3E] w-max" onclick="showFilterContainer()">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21" fill="none">
+                            <path d="M5 10.5H15M2.5 5.5H17.5M7.5 15.5H12.5" stroke="#3E3E3E" stroke-width="1.67"
+                                  stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                        @CRS.ADMIN.APPLICATION.Resources.Resource.Filter_By
+                    </div>
+                    <div id="filter-container" class="px-6 py-5 rounded-[5px] border border-[#D0D5DD]"
+                         style="display: none;">
+                        <div class="flex flex-col gap-4">
+                            <div class="flex text-[#3E3E3E] gap-1 items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg"
+                                     width="20" height="21" viewBox="0 0 20 21" fill="none">
+                                    <path d="M5 10.5H15M2.5 5.5H17.5M7.5 15.5H12.5" stroke="#3E3E3E" stroke-width="1.67"
+                                          stroke-linecap="round" stroke-linejoin="round" />
+                                </svg>
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Filter_By
+                            </div>
+                            <div class="grid grid-cols-3 gap-[27px]">
+                                <div class="input-field-common">
+                                    <label class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                                        Club Name
+                                    </label>
+                                    <input type="text" class="w-full" placeholder="Enter club name" name="ClubName" id="clubname" value="">
+                                </div>
+                                <div class="input-field-common">
+                                    <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
+                                        Location
+                                    </label>
+                                    <select id="large" name="LocationId" class=" default_select select-common block w-full "
+                                            style="width: 100%;">
+                                        @*@foreach (var item in ViewBag.ClubDDL as IEnumerable<SelectListItem>)
+                                            {
+                                                var selectedId = ViewBag.ClubIdKey as string;
+                                                if (item.Value == selectedId)
+                                                {
+                                                    <option value="@item.Value" selected>@item.Text</option>
+                                                }
+                                                else
+                                                {
+                                                    <option value="@item.Value">
+                                                        @item.Text
+                                                    </option>
+                                                }
+                                            }*@
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class=" flex gap-4 mt-4">
+                            <button id="cancelFilter" class="btn btn-primary-normal gap-1 rounded-[4px]"
+                                    onclick="window.location.href='@Url.Action("GroupManagement", "SubGroup")';" type="button">
+                                <i class="las la-times"></i>@CRS.ADMIN.APPLICATION.Resources.Resource.Cancel
+                            </button>
+
+                            <button id="cancelFilter" class="btn btn-primary-default gap-1 rounded-[4px]" type="submit">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18"
+                                     height="19" viewBox="0 0 18 19" fill="none">
+                                    <path d="M5.25 14.75V10.25H12.75V14.75H14.25V6.371L12.129 4.25H3.75V14.75H5.25ZM3 2.75H12.75L15.75 5.75V15.5C15.75 15.6989 15.671 15.8897 15.5303 16.0303C15.3897 16.171 15.1989 16.25 15 16.25H3C2.80109 16.25 2.61032 16.171 2.46967 16.0303C2.32902 15.8897 2.25 15.6989 2.25 15.5V3.5C2.25 3.30109 2.32902 3.11032 2.46967 2.96967C2.61032 2.82902 2.80109 2.75 3 2.75ZM6.75 11.75V14.75H11.25V11.75H6.75Z"
+                                          fill="white" />
+                                </svg>@CRS.ADMIN.APPLICATION.Resources.Resource.Apply
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <!-- table  -->
+            <div class="table-tab">
+                <div class="relative overflow-x-auto">
+                    <table class="w-full  text-left club-table" id="table-id">
+                        <thead class="club-table-thead">
+                            <tr>
+                                <th scope="col" class="p-[12px]">
+                                    <div class="flex">
+                                        S.N
+                                        <div class="relative pl-[5px]">
+                                            <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                            <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                        </div>
+                                    </div>
+                                </th>
+                                <th scope="col" class="p-[12px]">
+                                    <div class="flex">
+                                        Sub Group
+                                        <div class="relative pl-[5px]">
+                                            <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                            <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                        </div>
+                                    </div>
+                                </th>
+                                <th scope="col" class="p-[12px]">
+                                    <div class="flex">
+                                        Total Clubs
+                                        <div class="relative pl-[5px]">
+                                            <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                            <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                        </div>
+                                    </div>
+                                </th>
+                                <th scope="col" class="p-[12px]">
+                                    <div class="flex">
+                                        Club Profile
+                                        <div class="relative pl-[5px]">
+                                            <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                            <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                        </div>
+                                    </div>
+                                </th>
+                                <th scope="col" class="p-[12px]">
+                                    <div class="flex">
+                                        Location
+                                        <div class="relative pl-[5px]">
+                                            <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                            <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                        </div>
+                                    </div>
+                                </th>
+                                <th scope="col" class="p-[12px]">
+                                    <div class="flex justify-center">
+                                        Added On
+                                        <div class="relative pl-[5px]">
+                                            <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                            <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                        </div>
+                                    </div>
+                                </th>
+                                <th scope="col" class="p-[12px]">
+                                    <div class="flex justify-center">
+                                        @CRS.ADMIN.APPLICATION.Resources.Resource.Action
+                                        <div class="relative pl-[5px]">
+                                            <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                            <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                        </div>
+                                    </div>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                <tr class="bg-white border-b accordion-header" data-target="details-row-1">
+                                    <td class="p-[12px]">
+                                        1
+                                        <i class="fa-solid fa-chevron-down cursor-pointer toggle-arrow"></i>
+                                    </td>
+                                    <td class="p-[12px] w-max">
+                                        <div class="round-image-text w-max flex gap-[12px]">
+                                            <img class="w-[32px] h-[32px] rounded-full"
+                                                 src="">
+
+                                            <div class="flex justify-between w-full">
+                                                <div class="text-image grid flex-none ">
+                                                    <div class="text-sm font-semibold text-[#101828] "></div>
+                                                    <div class="platinum "></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="p-[12px]">
+                                    </td>
+                                    <td class="p-[12px]">
+                                        <div class="text-[#245EDC]">
+
+                                        </div>
+                                    </td>
+                                    <td class="p-[12px]">
+                                    </td>
+                                    <td class="p-[12px]">
+                                    </td>
+                                    <td class="p-[12px]">
+                                        <div class="text-[#BBBBBB] text-center text-[20px]"
+                                             onclick="window.location.href=''">
+                                            <i class="las la-trash-alt text-[20px] cursor-pointer "></i>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <!-- Hidden Row -->
+                                <tr class="bg-gray-100 hidden accordion-content details-row-1">
+                                    <td class="p-[12px]">
+                                    </td>
+                                    <td class="p-[12px]">
+                                    </td>
+                                    <td class="p-[12px]">
+                                    </td>
+                                    <td class="p-[12px] w-max">
+                                        <div class="round-image-text w-max flex gap-[12px]">
+                                            <img class="w-[32px] h-[32px] rounded-full"
+                                                 src="">
+
+                                            <div class="flex justify-between w-full">
+                                                <div class="text-image grid flex-none ">
+                                                    <div class="text-sm font-semibold text-[#101828] "></div>
+                                                    <div class="platinum "></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="p-[12px]">
+                                        Location
+                                    </td>
+                                    <td class="p-[12px]">
+                                        Added On
+                                    </td>
+                                    <td class="p-[12px]">
+                                        <div class="text-[#CB3F3F] text-center text-[20px]"
+                                             onclick="window.location.href=''">
+                                            <i class="las la-trash-alt text-[20px] cursor-pointer "></i>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="bg-white border-b accordion-header" data-target="details-row-2">
+                                    <td class="p-[12px]">
+                                        2
+                                        <i class="fa-solid fa-chevron-down cursor-pointer toggle-arrow"></i>
+                                    </td>
+                                    <td class="p-[12px] w-max">
+                                        <div class="round-image-text w-max flex gap-[12px]">
+                                            <img class="w-[32px] h-[32px] rounded-full"
+                                                 src="">
+
+                                            <div class="flex justify-between w-full">
+                                                <div class="text-image grid flex-none ">
+                                                    <div class="text-sm font-semibold text-[#101828] "></div>
+                                                    <div class="platinum "></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="p-[12px]">
+                                    </td>
+                                    <td class="p-[12px]">
+                                        <div class="text-[#245EDC]">
+
+                                        </div>
+                                    </td>
+                                    <td class="p-[12px]">
+                                    </td>
+                                    <td class="p-[12px]">
+                                    </td>
+                                    <td class="p-[12px]">
+                                        <div class="text-[#BBBBBB] text-center text-[20px]"
+                                             onclick="window.location.href=''">
+                                            <i class="las la-trash-alt text-[20px] cursor-pointer"></i>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <!-- Hidden Row -->
+                                <tr class="bg-gray-100 hidden accordion-content details-row-2">
+                                    <td class="p-[12px]">
+                                    </td>
+                                    <td class="p-[12px]">
+                                    </td>
+                                    <td class="p-[12px]">
+                                    </td>
+                                    <td class="p-[12px] w-max">
+                                        <div class="round-image-text w-max flex gap-[12px]">
+                                            <img class="w-[32px] h-[32px] rounded-full"
+                                                 src="">
+
+                                            <div class="flex justify-between w-full">
+                                                <div class="text-image grid flex-none ">
+                                                    <div class="text-sm font-semibold text-[#101828] "></div>
+                                                    <div class="platinum "></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="p-[12px]">
+                                        Location
+                                    </td>
+                                    <td class="p-[12px]">
+                                        Added On
+                                    </td>
+                                    <td class="p-[12px]">
+                                        <div class="text-[#CB3F3F] text-center text-[20px]"
+                                             onclick="window.location.href=''">
+                                            <i class="las la-trash-alt text-[20px] cursor-pointer "></i>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                    </table>
+                </div>
+                <div class="pagination-club">
+                    <div class="show-entry" id="Entries-Id">
+                    </div>
+                    <div class="flex gap-[12px]">
+                        <div class="btn btn-secondary-box-shadow" id="prev-btn">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Previous
+                        </div>
+                        <div class="flex gap-[12px]" id="pagination-id">
+                        </div>
+                        <div class="btn btn-secondary-box-shadow" id="next-btn">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Next
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@Html.Partial("_ManageSubGroup")
+@Html.Partial("_ManageSubGroupClub")
+@section scripts{
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const headers = document.querySelectorAll('.accordion-header');
+
+            headers.forEach(header => {
+                header.addEventListener('click', () => {
+                    const targetClass = header.dataset.target;
+                    const content = document.querySelector(`.accordion-content.${targetClass}`);
+                    const icon = header.querySelector('.toggle-arrow');
+
+                    if (content.classList.contains('hidden')) {
+                        content.classList.remove('hidden');
+                        icon.classList.replace('fa-chevron-down', 'fa-chevron-up');
+                    } else {
+                        content.classList.add('hidden');
+                        icon.classList.replace('fa-chevron-up', 'fa-chevron-down');
+                    }
+                });
+            });
+        });
+    </script>
+
+}
+
+
+

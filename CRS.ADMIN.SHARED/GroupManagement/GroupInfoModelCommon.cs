@@ -1,7 +1,9 @@
 ﻿using CRS.ADMIN.SHARED.PaginationManagement;
+using System.Collections.Generic;
 
 namespace CRS.ADMIN.SHARED.GroupManagement
 {
+    #region GROUP MODEL
     public class GroupInfoModelCommon
     {
         public string sno { get; set; }
@@ -33,4 +35,28 @@ namespace CRS.ADMIN.SHARED.GroupManagement
         public string ActionPlatform { get; set; } = "ADMIN";
         public string ActionIP { get; set; }
     }
+    #endregion
+
+    #region SUB GROUP MODEL
+
+    public class SubGroupInfoModelCommon
+    {
+        public string SubGroupName { get; set; }
+        public string GroupName { get; set; }
+        public string SubGroupId { get; set; }
+        public string GroupId { get; set; }
+        public string Status { get; set; }
+        public string CreatedOn { get; set; }
+        public string TotalClubCount { get; set; }
+        public List<SubGroupClubInfoCommon> ClubShortInfo { get; set; }
+    }
+    public class SubGroupClubInfoCommon
+    {
+        public string ClubId { get; set; }
+        public string ClubName { get; set; }
+        public string ClubNameJp { get; set; }
+        public string ClubLogo { get; set; }
+        public string LocationName { get; set; }
+    }
+    #endregion
 }

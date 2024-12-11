@@ -355,6 +355,9 @@
     <Content Include="Views\PointsManagement\_PointRequestListPartialView.cshtml" />
     <Content Include="Views\GroupManagement\Index.cshtml" />
     <Content Include="Views\GroupManagement\_ManageGroup.cshtml" />
+    <Content Include="Views\GroupManagement\SubGroup.cshtml" />
+    <Content Include="Views\GroupManagement\_ManageSubGroup.cshtml" />
+    <Content Include="Views\GroupManagement\_ManageSubGroupClub.cshtml" />
     <None Include="Views\PromotionManagement\_ManageAdvertisementPartialView.cshtml" />
     <None Include="Views\PromotionManagement\_AdvertisementList.cshtml" />
     <Content Include="Content\assets\images\TickIcon.svg" />

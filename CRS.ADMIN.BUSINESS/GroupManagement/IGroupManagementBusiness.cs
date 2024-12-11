@@ -7,6 +7,7 @@ namespace CRS.ADMIN.BUSINESS.GroupManagement
 {
     public interface IGroupManagementBusiness
     {
+        #region GROUP SECTION
         CommonDbResponse BlockGroup(string groupId, Common request);
         CommonDbResponse DeleteGroup(string groupId, Common request);
         GroupAnalyticModelCommon GetGroupAnalytic();
@@ -14,5 +15,10 @@ namespace CRS.ADMIN.BUSINESS.GroupManagement
         List<GroupInfoModelCommon> GetGroupList(PaginationFilterCommon paginationFilter);
         CommonDbResponse ManageGroup(ManageGroupModelCommon commonModel);
         CommonDbResponse UnblockGroup(string groupId, Common request);
+        #endregion
+
+        #region Sub Group Section
+        List<SubGroupInfoModelCommon> GetSubGroupByGroupId(string groupId, PaginationFilterCommon paginationFilter);
+        #endregion
     }
 }
