@@ -39,7 +39,7 @@
     <div class="bg-white w-[863px] drawer-container relative">
         <div class="drawer-form-container sticky top-0 z-[5] ">
             <div class="drawer-form flex justify-between bg-secondary-color-pink py-[16px] px-[24px] h-[56px]">
-                <div>  @CRS.ADMIN.APPLICATION.Resources.Resource.Manage_Club_Profile</div>
+                <div>  Manage Group</div>
                 <button type="button" data-drawer-hide="add-group" aria-controls="add-group" onclick="CancelFunction()"
                         class="text-[20px]">
                     <i class="las la-window-close text-white"></i>
@@ -65,11 +65,6 @@
                     @Html.HiddenFor(model => model.Take)
                     <div id="contentBasic" class="content-section " style="display:block">
                         <div class="grid gap-4 py-[10px]">
-                            <div class="flex gap-2 text-primary-300 text-sm font-semibold items-center mt-[10px]">
-                                <div class="flex-none uppercase">@CRS.ADMIN.APPLICATION.Resources.Resource.Basic_Info</div>
-                                <div class="bg-[#F4F4F4] h-[1px] w-full">
-                                </div>
-                            </div>
                             <div class="grid grid-cols-2 gap-x-5 gap-y-4">
                                 <div class="input-field-common">
                                     <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
@@ -159,10 +154,12 @@
                             </div>
                         </div>
                     </div>
+                    <div class="bg-[#F4F4F4] h-[1px] w-full">
+                    </div>
                     <div class="py-4 flex justify-end">
                         <div class="flex gap-6">
-                            <button class="btn btn-secondary rounded-[4px]" type="button" data-drawer-hide="add-new-host-tag"
-                                    aria-controls="add-new-host-tag" onclick="CancelFunction();">
+                            <button class="btn btn-secondary rounded-[4px]" type="button" data-drawer-hide="add-group"
+                                    aria-controls="add-group" onclick="CancelFunction();">
                                 @CRS.ADMIN.APPLICATION.Resources.Resource.Cancel
                             </button>
                             <button class="btn btn-primary-default rounded-[4px]" id="submit-button-id"> @CRS.ADMIN.APPLICATION.Resources.Resource.Submit</button>
