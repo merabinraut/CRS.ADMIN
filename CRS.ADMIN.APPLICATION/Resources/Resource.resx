@@ -137,6 +137,10 @@
     <value>Account Type</value>
     <comment>Account Information</comment>
   </data>
+  <data name="AccountSymbol" xml:space="preserve">
+    <value>Account Symbol</value>
+    <comment>Withdrawal Request</comment>
+  </data>
   <data name="Action" xml:space="preserve">
     <value>Action</value>
   </data>

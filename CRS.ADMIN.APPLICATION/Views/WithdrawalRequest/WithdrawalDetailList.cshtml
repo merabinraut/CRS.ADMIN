@@ -75,13 +75,13 @@
                                         @CRS.ADMIN.APPLICATION.Resources.Resource.From_Date
                                     </label>
                                     @Html.TextBoxFor(model => model.FromDate, new
-                                   {
+                               {
                                    @class = "w-full",
                                    @placeholder = "YYYY/MM/DD",
                                    @autocomplete = "off",
                                    @type = "text",
-                                     @readonly = "readonly"
-                                      })
+                                   @readonly = "readonly"
+                               })
                                     <span class="error">
                                         @Html.ValidationMessageFor(m => m.FromDate)
                                     </span>
@@ -98,8 +98,8 @@
                                    @placeholder = "YYYY/MM/DD",
                                    @autocomplete = "off",
                                    @type = "text",
-                                    @readonly = "readonly"
-                                      })
+                                   @readonly = "readonly"
+                               })
                                     <span class="error">
                                         @Html.ValidationMessageFor(m => m.ToDate)
                                     </span>
@@ -221,6 +221,15 @@
                                         </th>
                                         <th scope="col" class="p-[12px]">
                                             <div class="flex w-max">
+                                                @CRS.ADMIN.APPLICATION.Resources.Resource.AccountSymbol
+                                                <div class="relative pl-[5px]">
+                                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                                </div>
+                                            </div>
+                                        </th>
+                                        <th scope="col" class="p-[12px]">
+                                            <div class="flex w-max">
                                                 @CRS.ADMIN.APPLICATION.Resources.Resource.BankAccountName
                                                 <div class="relative pl-[5px]">
                                                     <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
@@ -288,74 +297,80 @@
                                 </thead>
                                 <tbody>
                                     @{
-                                        if (Model.WithdrawalMonthlyList.Count > 0)
+                                        if (Model.WithdrawalMonthlyList != null)
                                         {
-
-                                            foreach (var item in Model.WithdrawalMonthlyList)
+                                            if (Model.WithdrawalMonthlyList.Count > 0)
                                             {
-                                                <tr class="bg-white border-b ">
-                                                    <td class="p-[12px]">
-                                                        @item.SNO
-                                                    </td>
-                                                    <td class="p-[12px]">
-                                                        @item.requestId
-                                                    </td>
-                                                    <td class="p-[12px]">
-                                                        @item.requestedDate
-                                                    </td>
-                                                    <td class="p-[12px]">
-                                                        @item.affiliateInfo
-                                                    </td>
-                                                    <td class="p-[12px]">
-                                                        @item.emailAddress
-                                                    </td>
-                                                    <td class="p-[12px]">
-                                                        @item.phoneNumber
-                                                    </td>
-                                                    <td class="p-[12px]">
-                                                        @item.bankType
-                                                    </td>
-                                                    <td class="p-[12px]">
-                                                        @item.bankName
-                                                    </td>
-                                                    <td class="p-[12px]">
-                                                        @item.branchName
-                                                    </td>
-                                                    <td class="p-[12px]">
-                                                        @item.bankAccountNumber
-                                                    </td>
-                                                    <td class="p-[12px]">
-                                                        @item.bankAccountName
-                                                    </td>
-                                                    <td class="p-[12px]">
-                                                        @item.requestedAmount
-                                                    </td>
-                                                    <td class="p-[12px]">
-                                                        @item.chargeAmount
-                                                    </td>
-                                                    <td class="p-[12px]">
-                                                        @item.transferAmount
-                                                    </td>
-                                                    <td class="p-[12px]">
-                                                        @item.status
-                                                    </td>
-                                                    <td class="p-[12px]">
-                                                        @if (!string.IsNullOrEmpty(item.status) && item.status.Trim().ToUpper() == "PENDING")
-                                                        {
-                                                            <i class="las la-window-close text-[24px] text-[#CB3F3F] cursor-pointer " data-modal-target="popup-modal-reject" data-modal-toggle="popup-modal-reject" alt=""
-                                                               onclick="RejectWithdrawalRequest( '@item.id')"> </i>
+
+                                                foreach (var item in Model.WithdrawalMonthlyList)
+                                                {
+                                                                        <tr class="bg-white border-b ">
+                                                                            <td class="p-[12px]">
+                                                                                @item.SNO
+                                                                            </td>
+                                                                            <td class="p-[12px]">
+                                                                                @item.requestId
+                                                                            </td>
+                                                                            <td class="p-[12px]">
+                                                                                @item.requestedDate
+                                                                            </td>
+                                                                            <td class="p-[12px]">
+                                                                                @item.affiliateInfo
+                                                                            </td>
+                                                                            <td class="p-[12px]">
+                                                                                @item.emailAddress
+                                                                            </td>
+                                                                            <td class="p-[12px]">
+                                                                                @item.phoneNumber
+                                                                            </td>
+                                                                            <td class="p-[12px]">
+                                                                                @item.bankType
+                                                                            </td>
+                                                                            <td class="p-[12px]">
+                                                                                @item.bankName
+                                                                            </td>
+                                                                            <td class="p-[12px]">
+                                                                                @item.branchName
+                                                                            </td>
+                                                                            <td class="p-[12px]">
+                                                                                @item.accountSymbol
+                                                                            </td>
+                                                                            <td class="p-[12px]">
+                                                                                @item.bankAccountNumber
+                                                                            </td>
+                                                                            <td class="p-[12px]">
+                                                                                @item.bankAccountName
+                                                                            </td>
+                                                                            <td class="p-[12px]">
+                                                                                @item.requestedAmount
+                                                                            </td>
+                                                                            <td class="p-[12px]">
+                                                                                @item.chargeAmount
+                                                                            </td>
+                                                                            <td class="p-[12px]">
+                                                                                @item.transferAmount
+                                                                            </td>
+                                                                            <td class="p-[12px]">
+                                                                                @item.status
+                                                                            </td>
+                                                                            <td class="p-[12px]">
+                                                                                @if (!string.IsNullOrEmpty(item.status) && item.status.Trim().ToUpper() == "PENDING")
+                                                                                {
+                                                                                    <i class="las la-window-close text-[24px] text-[#CB3F3F] cursor-pointer " data-modal-target="popup-modal-reject" data-modal-toggle="popup-modal-reject" alt=""
+                                                                                       onclick="RejectWithdrawalRequest( '@item.id')"> </i>
 
 
 
-                                                            <img src="/Content/assets_new/images/check-square.svg"
-                                                                 data-modal-target="popup-modal-accept"
-                                                                 data-modal-toggle="popup-modal-accept" alt="" class="cursor-pointer" onclick="ApproveWithdrawalRequest( '@item.id')" />
+                                                                                    <img src="/Content/assets_new/images/check-square.svg"
+                                                                                         data-modal-target="popup-modal-accept"
+                                                                                         data-modal-toggle="popup-modal-accept" alt="" class="cursor-pointer" onclick="ApproveWithdrawalRequest( '@item.id')" />
 
 
-                                                        }
-                                                    </td>
-                                                </tr>
+                                                                                }
+                                                                            </td>
+                                                                        </tr>
 
+                                                }
                                             }
                                         }
                                     }

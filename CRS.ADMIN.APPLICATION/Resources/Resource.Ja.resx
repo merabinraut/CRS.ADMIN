@@ -137,6 +137,10 @@
     <value>アカウントの種類</value>
     <comment>Account Information</comment>
   </data>
+  <data name="AccountSymbol" xml:space="preserve">
+    <value>記号番号</value>
+    <comment>Withdrawal Request</comment>
+  </data>
   <data name="Action" xml:space="preserve">
     <value>アクション</value>
   </data>

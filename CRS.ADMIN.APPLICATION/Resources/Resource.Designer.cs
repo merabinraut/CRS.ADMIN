@@ -106,6 +106,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Account Symbol.
+        /// </summary>
+        public static string AccountSymbol {
+            get {
+                return ResourceManager.GetString("AccountSymbol", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Action.
         /// </summary>
         public static string Action {
