@@ -1,7 +1,12 @@
-﻿
+﻿@model CRS.ADMIN.APPLICATION.Models.GroupManagement.CommonSubGroupModel
 @{
     ViewBag.Title = "SubGroup";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var _SubGroupModel = Model.ManageSubGroup as CRS.ADMIN.APPLICATION.Models.GroupManagement.ManageSubGroupModel;
+    var _SubGroupClubModel = Model.ManageSubGroupClub as CRS.ADMIN.APPLICATION.Models.GroupManagement.ManageSubGroupClubModel;
+    _SubGroupModel.GroupName = ViewBag.GroupName;
+    _SubGroupModel.GroupNameKatakana = ViewBag.GroupNameKatakana;
+    _SubGroupModel.GroupId = ViewBag.GroupId;
 }
 <link rel="stylesheet" href="//code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
 <div class="px-8 py-4">
@@ -10,7 +15,7 @@
         <div class="flex justify-between items-center">
             <div>
                 <div class="heading-title">
-                    Group View: Earth
+                    Group View: @Model.SubGroupInfoList[0].GroupName (@Model.SubGroupInfoList[0].GroupNameKatakana)
                 </div>
                 <div class="span-title-light-gray">
                     Manage club under Group
@@ -194,146 +199,70 @@
                         </thead>
                         <tbody>
                             @{
-                                <tr class="bg-white border-b accordion-header" data-target="details-row-1">
-                                    <td class="p-[12px]">
-                                        1
-                                        <i class="fa-solid fa-chevron-down cursor-pointer toggle-arrow"></i>
-                                    </td>
-                                    <td class="p-[12px] w-max">
-                                        <div class="round-image-text w-max flex gap-[12px]">
-                                            <img class="w-[32px] h-[32px] rounded-full"
-                                                 src="">
+                                int sno = 1;
+                                foreach (var item in Model.SubGroupInfoList)
+                                {
+                                    <tr class="bg-white border-b accordion-header" data-target="details-row-1">
+                                        <td class="p-[12px]">
+                                            @sno
+                                            <i class="fa-solid fa-chevron-down cursor-pointer toggle-arrow"></i>
+                                        </td>
+                                        <td class="p-[12px]">
+                                            @item.SubGroupName
+                                        </td>
+                                        <td class="p-[12px]">
+                                            @item.TotalClubCount
+                                        </td>
+                                        <td class="p-[12px]">
+                                        </td>
+                                        <td class="p-[12px]">
+                                        </td>
+                                        <td class="p-[12px]">
+                                        </td>
+                                        <td class="p-[12px]">
+                                            <div class="text-[#BBBBBB] text-center text-[20px]"
+                                                 onclick="window.location.href=''">
+                                                <i class="las la-trash-alt text-[20px] cursor-pointer "></i>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <!-- Hidden Row -->
+                                    <tr class="bg-gray-100 hidden accordion-content details-row-1">
+                                        <td class="p-[12px]">
+                                        </td>
+                                        <td class="p-[12px]">
+                                        </td>
+                                        <td class="p-[12px]">
+                                        </td>
+                                        <td class="p-[12px] w-max">
+                                            <div class="round-image-text w-max flex gap-[12px]">
+                                                <img class="w-[32px] h-[32px] rounded-full"
+                                                     src="">
 
-                                            <div class="flex justify-between w-full">
-                                                <div class="text-image grid flex-none ">
-                                                    <div class="text-sm font-semibold text-[#101828] "></div>
-                                                    <div class="platinum "></div>
+                                                <div class="flex justify-between w-full">
+                                                    <div class="text-image grid flex-none ">
+                                                        <div class="text-sm font-semibold text-[#101828] "></div>
+                                                        <div class="platinum "></div>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </td>
-                                    <td class="p-[12px]">
-                                    </td>
-                                    <td class="p-[12px]">
-                                        <div class="text-[#245EDC]">
-
-                                        </div>
-                                    </td>
-                                    <td class="p-[12px]">
-                                    </td>
-                                    <td class="p-[12px]">
-                                    </td>
-                                    <td class="p-[12px]">
-                                        <div class="text-[#BBBBBB] text-center text-[20px]"
-                                             onclick="window.location.href=''">
-                                            <i class="las la-trash-alt text-[20px] cursor-pointer "></i>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <!-- Hidden Row -->
-                                <tr class="bg-gray-100 hidden accordion-content details-row-1">
-                                    <td class="p-[12px]">
-                                    </td>
-                                    <td class="p-[12px]">
-                                    </td>
-                                    <td class="p-[12px]">
-                                    </td>
-                                    <td class="p-[12px] w-max">
-                                        <div class="round-image-text w-max flex gap-[12px]">
-                                            <img class="w-[32px] h-[32px] rounded-full"
-                                                 src="">
-
-                                            <div class="flex justify-between w-full">
-                                                <div class="text-image grid flex-none ">
-                                                    <div class="text-sm font-semibold text-[#101828] "></div>
-                                                    <div class="platinum "></div>
-                                                </div>
+                                        </td>
+                                        <td class="p-[12px]">
+                                            Location
+                                        </td>
+                                        <td class="p-[12px]">
+                                            Added On
+                                        </td>
+                                        <td class="p-[12px]">
+                                            <div class="text-[#CB3F3F] text-center text-[20px]"
+                                                 onclick="window.location.href=''">
+                                                <i class="las la-trash-alt text-[20px] cursor-pointer "></i>
                                             </div>
-                                        </div>
-                                    </td>
-                                    <td class="p-[12px]">
-                                        Location
-                                    </td>
-                                    <td class="p-[12px]">
-                                        Added On
-                                    </td>
-                                    <td class="p-[12px]">
-                                        <div class="text-[#CB3F3F] text-center text-[20px]"
-                                             onclick="window.location.href=''">
-                                            <i class="las la-trash-alt text-[20px] cursor-pointer "></i>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr class="bg-white border-b accordion-header" data-target="details-row-2">
-                                    <td class="p-[12px]">
-                                        2
-                                        <i class="fa-solid fa-chevron-down cursor-pointer toggle-arrow"></i>
-                                    </td>
-                                    <td class="p-[12px] w-max">
-                                        <div class="round-image-text w-max flex gap-[12px]">
-                                            <img class="w-[32px] h-[32px] rounded-full"
-                                                 src="">
+                                        </td>
+                                    </tr>
+                                    sno++;
+                                }
 
-                                            <div class="flex justify-between w-full">
-                                                <div class="text-image grid flex-none ">
-                                                    <div class="text-sm font-semibold text-[#101828] "></div>
-                                                    <div class="platinum "></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="p-[12px]">
-                                    </td>
-                                    <td class="p-[12px]">
-                                        <div class="text-[#245EDC]">
-
-                                        </div>
-                                    </td>
-                                    <td class="p-[12px]">
-                                    </td>
-                                    <td class="p-[12px]">
-                                    </td>
-                                    <td class="p-[12px]">
-                                        <div class="text-[#BBBBBB] text-center text-[20px]"
-                                             onclick="window.location.href=''">
-                                            <i class="las la-trash-alt text-[20px] cursor-pointer"></i>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <!-- Hidden Row -->
-                                <tr class="bg-gray-100 hidden accordion-content details-row-2">
-                                    <td class="p-[12px]">
-                                    </td>
-                                    <td class="p-[12px]">
-                                    </td>
-                                    <td class="p-[12px]">
-                                    </td>
-                                    <td class="p-[12px] w-max">
-                                        <div class="round-image-text w-max flex gap-[12px]">
-                                            <img class="w-[32px] h-[32px] rounded-full"
-                                                 src="">
-
-                                            <div class="flex justify-between w-full">
-                                                <div class="text-image grid flex-none ">
-                                                    <div class="text-sm font-semibold text-[#101828] "></div>
-                                                    <div class="platinum "></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="p-[12px]">
-                                        Location
-                                    </td>
-                                    <td class="p-[12px]">
-                                        Added On
-                                    </td>
-                                    <td class="p-[12px]">
-                                        <div class="text-[#CB3F3F] text-center text-[20px]"
-                                             onclick="window.location.href=''">
-                                            <i class="las la-trash-alt text-[20px] cursor-pointer "></i>
-                                        </div>
-                                    </td>
-                                </tr>
                             }
                     </table>
                 </div>
@@ -355,10 +284,13 @@
         </div>
     </div>
 </div>
-@Html.Partial("_ManageSubGroup")
-@Html.Partial("_ManageSubGroupClub")
+@Html.Partial("_ManageSubGroup", _SubGroupModel)
+@*@Html.Partial("_ManageSubGroupClub", _SubGroupClubModel)*@
 @section scripts{
     <script>
+        $('#submit-button-id').click(function () {
+            $('#ManageSubGroupForm').submit();
+        })
         document.addEventListener('DOMContentLoaded', () => {
             const headers = document.querySelectorAll('.accordion-header');
 
@@ -378,6 +310,24 @@
                 });
             });
         });
+         var popUprenderValue = '@ViewBag.PopUpRenderValue';
+        if (popUprenderValue != null && popUprenderValue != '' && popUprenderValue == "ManageSG") {
+            var element = document.getElementById('add-sub-group');
+            element.classList.remove('translate-x-full');
+        }
+        else {
+            var element = document.getElementById('add-sub-group');
+            element.classList.add('translate-x-full');
+        }
+
+         function ManageGroupDetailsFunction(groupid) {
+                 let searchFilter = $('#default-search').val();
+                 const startIndex =@ViewBag.StartIndex;
+                 const pageSize =@ViewBag.PageSize;
+             window.location.href = "/GroupManagement/ManageSubGroup?GroupId=" + groupid + '&SearchFilter=' + searchFilter + '&StartIndex=' + startIndex + '&PageSize=' + pageSize;
+
+             }
+
     </script>
 
 }

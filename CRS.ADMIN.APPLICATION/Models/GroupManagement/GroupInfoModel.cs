@@ -43,7 +43,9 @@ namespace CRS.ADMIN.APPLICATION.Models.GroupManagement
     #region SUB-GROUP MODEL
     public class CommonSubGroupModel
     {
-
+        public ManageSubGroupModel ManageSubGroup { get; set; }
+        public ManageSubGroupClubModel ManageSubGroupClub { get; set; }
+        public List<SubGroupInfoModel> SubGroupInfoList { get; set; }
     }
 
     public class SubGroupInfoModel
@@ -54,6 +56,8 @@ namespace CRS.ADMIN.APPLICATION.Models.GroupManagement
         public string Status { get; set; }
         public string CreatedOn { get; set; }
         public string TotalClubCount { get; set; }
+        public string GroupName { get; set; }
+        public string GroupNameKatakana { get; set; }
         public List<SubGroupClubInfo> ClubShortInfo { get; set; }
     }
     public class SubGroupClubInfo
@@ -64,7 +68,7 @@ namespace CRS.ADMIN.APPLICATION.Models.GroupManagement
         public string ClubLogo { get; set; }
         public string LocationName { get; set; }
     }
-    public class ManageSubGroupModel
+    public class ManageSubGroupModel : PaginationFilterCommon
     {
         public string SubGroupName { get; set; }
         public string GroupName { get; set; }

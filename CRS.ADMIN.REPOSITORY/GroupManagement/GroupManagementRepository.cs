@@ -138,6 +138,44 @@ namespace CRS.ADMIN.REPOSITORY.GroupManagement
                 return _dao.DataTableToListObject<SubGroupInfoModelCommon>(dbResponse).ToList();
             else return new List<SubGroupInfoModelCommon>();
         }
+
+        public CommonDbResponse ManageSubGroup(ManageSubGroupModelCommon commonRequest)
+        {
+            string sp_name = "EXEC [dbo].[sproc_admin_subgroup_addupdated]";
+            sp_name += "@GroupId=" + _dao.FilterString(commonRequest.GroupId);
+            sp_name += ",@SubGroupId=" + _dao.FilterString(commonRequest.SubGroupId);
+            sp_name += ",@SubGroupName=" + (!string.IsNullOrEmpty(commonRequest.SubGroupName) ? "N" + _dao.FilterString(commonRequest.SubGroupName) : _dao.FilterString(commonRequest.SubGroupName));
+            sp_name += ",@SubGroupNameKatakana=" + (!string.IsNullOrEmpty(commonRequest.SubGroupNameKatakana) ? "N" + _dao.FilterString(commonRequest.SubGroupNameKatakana) : _dao.FilterString(commonRequest.SubGroupNameKatakana));
+            sp_name += ",@ActionUser=" + _dao.FilterString(commonRequest.ActionUser);
+            sp_name += ",@ActionPlatform=" + _dao.FilterString(commonRequest.ActionPlatform);
+            sp_name += ",@ActionIP=" + _dao.FilterString(commonRequest.ActionIP);
+
+            var dbResponse = _dao.ParseCommonDbResponse(sp_name);
+            return dbResponse;
+        }
+
+        public ManageSubGroupModelCommon GetSubGroupDetail(string subGroupId)
+        {
+            string sp_name = "EXEC [dbo].[sproc_admin_subgroup_detail]";
+            sp_name += "@SubGroupId=" + _dao.FilterString(subGroupId);
+            var dbResponse = _dao.ExecuteDataRow(sp_name);
+
+            if (dbResponse != null)
+            {
+                return new ManageSubGroupModelCommon()
+                {
+                    GroupId = _dao.ParseColumnValue(dbResponse, "GroupId").ToString(),
+                    SubGroupId = _dao.ParseColumnValue(dbResponse, "SubGroupId").ToString(),
+                    SubGroupName = _dao.ParseColumnValue(dbResponse, "SubGroupName").ToString(),
+                    GroupName = _dao.ParseColumnValue(dbResponse, "GroupName").ToString(),
+                    GroupNameKatakana = _dao.ParseColumnValue(dbResponse, "GroupNameKatakana").ToString()
+                };
+            }
+            else
+            {
+                return new ManageSubGroupModelCommon();
+            }
+        }
         #endregion
     }
 }

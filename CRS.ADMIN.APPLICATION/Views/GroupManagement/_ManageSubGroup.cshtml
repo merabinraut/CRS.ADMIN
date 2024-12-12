@@ -51,23 +51,23 @@
                 @using (Html.BeginForm("ManageSubGroup", "GroupManagement", FormMethod.Post, new { @id = "ManageSubGroupForm", enctype = "multipart/form-data" }))
                 {
                     @Html.AntiForgeryToken()
-                    @*if (!string.IsNullOrEmpty(Model.GroupId))
-                        {
-                            @Html.HiddenFor(model => model.GroupId)
-                        }
-                        if (!string.IsNullOrEmpty(Model.SubGroupId))
-                        {
-                            @Html.HiddenFor(model => model.SubGroupId)
-                        }
+                    if (!string.IsNullOrEmpty(Model.GroupId))
+                    {
+                        @Html.HiddenFor(model => model.GroupId)
+                    }
+                    if (!string.IsNullOrEmpty(Model.SubGroupId))
+                    {
+                        @Html.HiddenFor(model => model.SubGroupId)
+                    }
 
-                        if (!string.IsNullOrEmpty(Model.GroupName))
-                        {
-                            @Html.HiddenFor(model => model.GroupName)
-                        }
-                        if (!string.IsNullOrEmpty(Model.GroupNameKatakana))
-                        {
-                            @Html.HiddenFor(model => model.GroupNameKatakana)
-                        }*@
+                    if (!string.IsNullOrEmpty(Model.GroupName))
+                    {
+                        @Html.HiddenFor(model => model.GroupName)
+                    }
+                    if (!string.IsNullOrEmpty(Model.GroupNameKatakana))
+                    {
+                        @Html.HiddenFor(model => model.GroupNameKatakana)
+                    }
                     <div id="contentBasic" class="content-section " style="display:block">
                         <div class="grid gap-4 py-[10px]">
                             <div class="grid grid-cols-2 gap-x-5 gap-y-4">
@@ -80,7 +80,9 @@
                                    @class = "w-full",
                                    @id = "group_name_id",
                                    autocomplete = "off",
-                                   @maxLength = "50"
+                                   @maxLength = "200",
+                                   value = Model.GroupName,
+                                   disabled = "disabled"
                                })
                                     <span class="error">
                                         @Html.ValidationMessageFor(m => m.GroupName)
@@ -95,7 +97,9 @@
                                    @class = "w-full",
                                    @id = "group_name_katakana_id",
                                    autocomplete = "off",
-                                   @maxLength = "50"
+                                   @maxLength = "200",
+                                   value = Model.GroupNameKatakana,
+                                   disabled = "disabled"
                                })
                                     <span class="error">
                                         @Html.ValidationMessageFor(m => m.GroupNameKatakana)
@@ -112,7 +116,7 @@
                                    @class = "w-full",
                                    @id = "sub_group_name_id",
                                    autocomplete = "off",
-                                   @maxLength = "50"
+                                   @maxLength = "500"
                                })
                                     <span class="error">
                                         @Html.ValidationMessageFor(m => m.SubGroupName)

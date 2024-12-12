@@ -20,6 +20,8 @@ namespace CRS.ADMIN.REPOSITORY.GroupManagement
 
         #region SUB GROUP SECTION
         List<SubGroupInfoModelCommon> GetSubGroupByGroupId(string groupId, PaginationFilterCommon paginationFilter);
+        CommonDbResponse ManageSubGroup(ManageSubGroupModelCommon commonRequest);
+        ManageSubGroupModelCommon GetSubGroupDetail(string subGroupId);
         #endregion
 
     }

@@ -55,6 +55,16 @@ namespace CRS.ADMIN.BUSINESS.GroupManagement
         {
             return _repo.GetSubGroupByGroupId(groupId, paginationFilter);
         }
+
+        public CommonDbResponse ManageSubGroup(ManageSubGroupModelCommon commonRequest)
+        {
+            return _repo.ManageSubGroup(commonRequest);
+        }
+
+        public ManageSubGroupModelCommon GetSubGroupDetail(string subGroupId)
+        {
+            return _repo.GetSubGroupDetail(subGroupId);
+        }
         #endregion
     }
 }

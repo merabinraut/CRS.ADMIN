@@ -43,6 +43,7 @@ namespace CRS.ADMIN.SHARED.GroupManagement
     {
         public string SubGroupName { get; set; }
         public string GroupName { get; set; }
+        public string GroupNameKatakana { get; set; }
         public string SubGroupId { get; set; }
         public string GroupId { get; set; }
         public string Status { get; set; }
@@ -58,5 +59,32 @@ namespace CRS.ADMIN.SHARED.GroupManagement
         public string ClubLogo { get; set; }
         public string LocationName { get; set; }
     }
-    #endregion
+    public class ManageSubGroupModelCommon : PaginationFilterCommon
+    {
+        public string SubGroupName { get; set; }
+        public string SubGroupNameKatakana { get; set; }
+        public string GroupName { get; set; }
+        public string GroupNameKatakana { get; set; }
+        public string SubGroupId { get; set; }
+        public string GroupId { get; set; }
+        public string ActionUser { get; set; }
+        public string ActionPlatform { get; set; } = "ADMIN";
+        public string ActionIP { get; set; }
+    }
+
+    public class ManageSubGroupClubModelCommon
+    {
+        public string GroupName { get; set; }
+        public string GroupNameKatakana { get; set; }
+        public string SubGroupId { get; set; }
+        public string LocationId { get; set; }
+        public string ClubId { get; set; }
+        public string TotalClubCount { get; set; }
+        public string ActionUser { get; set; }
+        public string ActionPlatform { get; set; } = "ADMIN";
+        public string ActionIP { get; set; }
+    }
+
 }
+#endregion
+
