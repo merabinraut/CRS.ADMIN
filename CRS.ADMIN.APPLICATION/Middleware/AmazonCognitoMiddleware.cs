@@ -378,6 +378,33 @@ namespace CRS.ADMIN.APPLICATION.Middleware
         #endregion
 
         #region User management
+        public async Task<SharedCognitoModel.CommonResponse> SetUserStatusAsync(SharedCognitoModel.UserManagement.SetUserStatusModel.Request request)
+        {
+            var setUserStatusRequest = request.MapObject<SharedCognitoModel.UserManagement.SetUserStatusModel.Request>();
+            try
+            {
+                var setUserStatusResponse = await _cognitoService.SetUserStatus(setUserStatusRequest);
+                if (!setUserStatusResponse)
+                    return new SharedCognitoModel.CommonResponse
+                    {
+                        Code = SharedCognitoModel.ResponseCode.Warning,
+                        Message = "Something went wrong. Please try again later."
+                    };
+                return new SharedCognitoModel.CommonResponse
+                {
+                    Code = ResponseCode.Success,
+                    Message = ResponseCode.Success.ToString()
+                };
+            }
+            catch (System.Exception ex)
+            {
+                return new SharedCognitoModel.CommonResponse
+                {
+                    Code = SharedCognitoModel.ResponseCode.Exception,
+                    Message = $"Something went wrong. Please try again later. Message: {ex.Message}"
+                };
+            }
+        }
         public async Task<SharedCognitoModel.CommonResponse> DeleteAccountAsync(SharedCognitoModel.UserManagement.DeleteAccountModel.Request request)
         {
             var deleteAccountRequest = request.MapObject<SharedCognitoModel.UserManagement.DeleteAccountModel.Request>();
@@ -385,6 +412,34 @@ namespace CRS.ADMIN.APPLICATION.Middleware
             {
                 var deleteAccountResponse = await _cognitoService.DeleteAccount(deleteAccountRequest);
                 if (!deleteAccountResponse)
+                    return new SharedCognitoModel.CommonResponse
+                    {
+                        Code = SharedCognitoModel.ResponseCode.Warning,
+                        Message = "Something went wrong. Please try again later."
+                    };
+                return new SharedCognitoModel.CommonResponse
+                {
+                    Code = ResponseCode.Success,
+                    Message = ResponseCode.Success.ToString()
+                };
+            }
+            catch (System.Exception ex)
+            {
+                return new SharedCognitoModel.CommonResponse
+                {
+                    Code = SharedCognitoModel.ResponseCode.Exception,
+                    Message = $"Something went wrong. Please try again later. Message: {ex.Message}"
+                };
+            }
+        }
+
+        public async Task<SharedCognitoModel.CommonResponse> AdminDeleteAccountAsync(SharedCognitoModel.UserManagement.AdminDeleteAccountModel.Request request)
+        {
+            var adminDeleteAccountRequest = request.MapObject<SharedCognitoModel.UserManagement.AdminDeleteAccountModel.Request>();
+            try
+            {
+                var adminDeleteAccountResponse = await _cognitoService.AdminDeleteAccount(adminDeleteAccountRequest);
+                if (!adminDeleteAccountResponse)
                     return new SharedCognitoModel.CommonResponse
                     {
                         Code = SharedCognitoModel.ResponseCode.Warning,

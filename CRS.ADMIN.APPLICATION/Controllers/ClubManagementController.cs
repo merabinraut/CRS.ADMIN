@@ -277,7 +277,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
         }
 
         [HttpPost, ValidateAntiForgeryToken]
-        public JsonResult DeleteClub(string AgentId)
+        public async Task<JsonResult> DeleteClub(string AgentId)
         {
             var response = new CommonDbResponse();
             var aId = !string.IsNullOrEmpty(AgentId) ? AgentId.DecryptParameter() : null;
@@ -296,15 +296,62 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 ActionUser = ApplicationUtilities.GetSessionValue("Username").ToString()
             };
             string status = "D";
-            var dbResponse = _BUSS.ManageClubStatus(aId, status, commonRequest);
-            response = dbResponse;
-            this.AddNotificationMessage(new NotificationModel()
+            var _sqlTransactionHandler = new RepositoryDaoWithTransaction(null, null);
+            _sqlTransactionHandler.BeginTransaction();
+            try
             {
-                NotificationType = response.Code == CRS.ADMIN.SHARED.ResponseCode.Success ? NotificationMessage.SUCCESS : NotificationMessage.INFORMATION,
-                Message = response.Message ?? "Something went wrong. Please try again later",
-                Title = response.Code == CRS.ADMIN.SHARED.ResponseCode.Success ? NotificationMessage.SUCCESS.ToString() : NotificationMessage.INFORMATION.ToString()
-            });
-            return Json(dbResponse.Message, JsonRequestBehavior.AllowGet);
+                var dbResponse = _BUSS.ManageClubStatus(aId, status, commonRequest, _sqlTransactionHandler.GetCurrentConnection(), _sqlTransactionHandler.GetCurrentTransaction());
+                response = dbResponse;
+                if (response.Code != CRS.ADMIN.SHARED.ResponseCode.Success || string.IsNullOrEmpty(response.Extra1))
+                {
+                    this.AddNotificationMessage(new NotificationModel()
+                    {
+                        NotificationType = NotificationMessage.INFORMATION,
+                        Message = response.Message ?? "Something went wrong. Please try again later",
+                        Title = NotificationMessage.INFORMATION.ToString()
+                    });
+                    _sqlTransactionHandler.RollbackTransaction();
+                    return Json(dbResponse.Message, JsonRequestBehavior.AllowGet);
+                }
+
+                var adminDeleteAccountResponse = await _amazonCognitoMiddleware.AdminDeleteAccountAsync(new CRS.ADMIN.SHARED.Middleware.AmazonCognitoModel.UserManagement.AdminDeleteAccountModel.Request
+                {
+                    userName = response.Extra1
+                });
+
+                if (adminDeleteAccountResponse?.Code != CRS.ADMIN.SHARED.Middleware.AmazonCognitoModel.ResponseCode.Success)
+                {
+                    this.AddNotificationMessage(new NotificationModel()
+                    {
+                        NotificationType = NotificationMessage.INFORMATION,
+                        Message = "Something went wrong. Please try again later",
+                        Title = NotificationMessage.INFORMATION.ToString()
+                    });
+                    _sqlTransactionHandler.RollbackTransaction();
+                    return Json(JsonRequestBehavior.AllowGet);
+                }
+
+                this.AddNotificationMessage(new NotificationModel()
+                {
+                    NotificationType = NotificationMessage.SUCCESS,
+                    Message = response.Message ?? "Something went wrong. Please try again later",
+                    Title = NotificationMessage.SUCCESS.ToString()
+                });
+                _sqlTransactionHandler.CommitTransaction();
+                return Json(dbResponse.Message, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                this.AddNotificationMessage(new NotificationModel()
+                {
+                    NotificationType = NotificationMessage.WARNING,
+                    Message = $"Something went wrong. Please try again later {ex.Message}",
+                    Title = "EXCEPTION"
+                });
+
+                _sqlTransactionHandler.RollbackTransaction();
+                return Json(JsonRequestBehavior.AllowGet);
+            }
         }
         [HttpPost, ValidateAntiForgeryToken]
         public JsonResult BlockClub(string AgentId)

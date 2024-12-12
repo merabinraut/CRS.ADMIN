@@ -133,6 +133,7 @@
     <Compile Include="Middleware\AmazonCognitoModel\SignUp\ResendSignUpConfirmationCodeModel.cs" />
     <Compile Include="Middleware\AmazonCognitoModel\SignUp\SignUpModel.cs" />
     <Compile Include="Middleware\AmazonCognitoModel\UserManagement\DeleteAccountModel.cs" />
+    <Compile Include="Middleware\AmazonCognitoModel\UserManagement\SetUserStatusModel.cs" />
     <Compile Include="Middleware\AmazonCognitoModel\UserManagement\UpdateUserAttributesModel.cs" />
     <Compile Include="Middleware\AmazonCognitoModel\UserManagement\UserDetailModel.cs" />
     <Compile Include="NotificationManagement\NotificationManagementCommon.cs" />

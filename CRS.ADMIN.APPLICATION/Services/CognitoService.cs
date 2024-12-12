@@ -308,6 +308,29 @@ namespace CRS.ADMIN.APPLICATION.Services
         #endregion
 
         #region User management
+        public async Task<bool> SetUserStatus(SharedCognitoModel.UserManagement.SetUserStatusModel.Request request)
+        {
+            if (request.enable)
+            {
+                var enableRequest = new AdminEnableUserRequest
+                {
+                    Username = request.userName,
+                    UserPoolId = _userPoolId
+                };
+                await _provider.AdminEnableUserAsync(enableRequest);
+            }
+            else
+            {
+                var disableRequest = new AdminDisableUserRequest
+                {
+                    Username = request.userName,
+                    UserPoolId = _userPoolId
+                };
+                await _provider.AdminDisableUserAsync(disableRequest);
+            }
+            return true;
+        }
+
         public async Task<bool> DeleteAccount(SharedCognitoModel.UserManagement.DeleteAccountModel.Request request)
         {
             var deleteRequest = new DeleteUserRequest
@@ -316,6 +339,17 @@ namespace CRS.ADMIN.APPLICATION.Services
             };
 
             await _provider.DeleteUserAsync(deleteRequest);
+            return true;
+        }
+
+        public async Task<bool> AdminDeleteAccount(SharedCognitoModel.UserManagement.AdminDeleteAccountModel.Request request)
+        {
+            var deleteRequest = new AdminDeleteUserRequest
+            {
+                UserPoolId = _userPoolId,
+                Username = request.userName
+            };
+            await _provider.AdminDeleteUserAsync(deleteRequest);
             return true;
         }
 

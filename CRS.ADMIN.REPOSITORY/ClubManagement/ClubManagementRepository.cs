@@ -815,7 +815,7 @@ namespace CRS.ADMIN.REPOSITORY.ClubManagement
         //}
 
 
-        public CommonDbResponse ManageClubStatus(string AgentId, string Status, Common Request)
+        public CommonDbResponse ManageClubStatus(string AgentId, string Status, Common Request, SqlConnection connection = null, SqlTransaction transaction = null)
         {
             string SQL = "EXEC sproc_club_management @Flag='ucs'";
             SQL += ",@AgentId=" + _DAO.FilterString(AgentId);
@@ -823,7 +823,13 @@ namespace CRS.ADMIN.REPOSITORY.ClubManagement
             SQL += ",@ActionUser=" + _DAO.FilterString(Request.ActionUser);
             SQL += ",@ActionIP=" + _DAO.FilterString(Request.ActionIP);
             SQL += ",@ActionPlatform =" + _DAO.FilterString(Request.ActionPlatform);
-            return _DAO.ParseCommonDbResponse(SQL);
+            if (connection == null && transaction == null)
+                return _DAO.ParseCommonDbResponse(SQL);
+            else
+            {
+                var _sqlTransactionHandler = new RepositoryDaoWithTransaction(connection, transaction);
+                return _sqlTransactionHandler.ParseCommonDbResponse(SQL);
+            }
         }
         #endregion
         #region Club User Management
