@@ -137,6 +137,10 @@
     <value>アカウントの種類</value>
     <comment>Account Information</comment>
   </data>
+  <data name="AccountSymbol" xml:space="preserve">
+    <value>記号番号</value>
+    <comment>Withdrawal Request</comment>
+  </data>
   <data name="Action" xml:space="preserve">
     <value>アクション</value>
   </data>
@@ -231,6 +235,10 @@
     <value>アフィリエイト支払い済</value>
     <comment>Payment Management</comment>
   </data>
+  <data name="Affiliate Withdraw Logs" xml:space="preserve">
+    <value>引き出しリクエスト</value>
+    <comment>Withdrawal Request</comment>
+  </data>
   <data name="AffiliateAutoFilledAddress" xml:space="preserve">
     <value>住所自動入力</value>
     <comment>AffiliateManagement</comment>
@@ -278,6 +286,10 @@
   <data name="AffiliateGender" xml:space="preserve">
     <value>性別</value>
     <comment>AffiliateManagement</comment>
+  </data>
+  <data name="AffiliateInfo" xml:space="preserve">
+    <value>アフィリエイト名</value>
+    <comment>Withdrawal Request</comment>
   </data>
   <data name="AffiliateManagementSupportMsg" xml:space="preserve">
     <value>アフィリエイトの情報、転換された顧客、およびそれらの支払いを管理する</value>
@@ -417,6 +429,22 @@
     <value>銀行の種類</value>
     <comment>Account Information</comment>
   </data>
+  <data name="BankAccountName" xml:space="preserve">
+    <value>口座名義人</value>
+    <comment>Withdrawal Request</comment>
+  </data>
+  <data name="BankAccountNumber" xml:space="preserve">
+    <value>口座番号</value>
+    <comment>Withdrawal Request</comment>
+  </data>
+  <data name="BankName" xml:space="preserve">
+    <value>銀行名</value>
+    <comment>Withdrawal Request</comment>
+  </data>
+  <data name="BankType" xml:space="preserve">
+    <value>金融機関の種類</value>
+    <comment>Withdrawal Request</comment>
+  </data>
   <data name="Banner" xml:space="preserve">
     <value>バナー1</value>
     <comment>HostGallaryManagement</comment>
@@ -463,6 +491,10 @@
   <data name="Branch Name" xml:space="preserve">
     <value>支店名</value>
     <comment>Account Information</comment>
+  </data>
+  <data name="BranchName" xml:space="preserve">
+    <value>支店名</value>
+    <comment>Withdrawal Request</comment>
   </data>
   <data name="Building &amp; Room No" xml:space="preserve">
     <value>建物名・部屋番号</value>
@@ -513,6 +545,10 @@
   <data name="CEOFurigana" xml:space="preserve">
     <value>フリガナ</value>
     <comment>ClubManagement</comment>
+  </data>
+  <data name="ChargeAmount" xml:space="preserve">
+    <value>手数料 (¥)</value>
+    <comment>Withdrawal Request</comment>
   </data>
   <data name="Choose Icons" xml:space="preserve">
     <value>アイコン</value>
@@ -1358,6 +1394,10 @@
     <value>広告管理</value>
     <comment>Promotional Management</comment>
   </data>
+  <data name="Manage affiliate withdraw logs." xml:space="preserve">
+    <value>支払い引き出し設定を管理します。</value>
+    <comment>Withdrawal Request</comment>
+  </data>
   <data name="Manage Club Events" xml:space="preserve">
     <value>クラブイベント管理</value>
     <comment>Club Management</comment>
@@ -1405,6 +1445,10 @@
   <data name="Manage Notification" xml:space="preserve">
     <value>通知を管理する</value>
     <comment>Notification</comment>
+  </data>
+  <data name="Manage payment withdrawal request." xml:space="preserve">
+    <value>支払い引き出しリクエストを管理します。</value>
+    <comment>Withdrawal Request</comment>
   </data>
   <data name="Manage payment withdrawal setting" xml:space="preserve">
     <value>支払い引き出し設定を管理します。</value>
@@ -1589,6 +1633,10 @@
   <data name="Month" xml:space="preserve">
     <value>月</value>
     <comment>Host Management</comment>
+  </data>
+  <data name="MonthAndYear" xml:space="preserve">
+    <value>年月</value>
+    <comment>Withdrawal Request</comment>
   </data>
   <data name="Months" xml:space="preserve">
     <value>月</value>
@@ -1813,6 +1861,10 @@
   <data name="Phone Number" xml:space="preserve">
     <value>電話番号</value>
     <comment>Customer Management</comment>
+  </data>
+  <data name="PhoneNumber" xml:space="preserve">
+    <value>電話番号</value>
+    <comment>Withdrawal Request</comment>
   </data>
   <data name="Plan" xml:space="preserve">
     <value>プラン</value>
@@ -2063,6 +2115,14 @@
   <data name="Requested Date" xml:space="preserve">
     <value>登録日</value>
     <comment>Affiliate Management</comment>
+  </data>
+  <data name="RequestedAmount" xml:space="preserve">
+    <value>引き出し金額 (¥)</value>
+    <comment>Withdrawal Request</comment>
+  </data>
+  <data name="RequestedDate" xml:space="preserve">
+    <value>引き出し依頼日</value>
+    <comment>Withdrawal Request</comment>
   </data>
   <data name="RequestId" xml:space="preserve">
     <value>リクエストID</value>
@@ -2531,6 +2591,10 @@
     <value>合計プラン金額</value>
     <comment>Payment Management</comment>
   </data>
+  <data name="TotalRequestedAmount" xml:space="preserve">
+    <value>総引き出し金額 (¥)</value>
+    <comment>Withdrawal Request</comment>
+  </data>
   <data name="Transaction Date" xml:space="preserve">
     <value>取引日時</value>
     <comment>Points Management</comment>
@@ -2554,6 +2618,10 @@
   <data name="Transfer Type" xml:space="preserve">
     <value>転送タイプ</value>
     <comment>Points Management</comment>
+  </data>
+  <data name="TransferAmount" xml:space="preserve">
+    <value>振込金額 (¥)</value>
+    <comment>Withdrawal Request</comment>
   </data>
   <data name="Tuesday" xml:space="preserve">
     <value>火</value>
@@ -2667,6 +2735,18 @@
   <data name="Withdraw-able Date" xml:space="preserve">
     <value>引き出し可能日</value>
     <comment>Withdraw Setup</comment>
+  </data>
+  <data name="Withdrawal Request" xml:space="preserve">
+    <value>引き出しリクエスト</value>
+    <comment>Withdrawal Request</comment>
+  </data>
+  <data name="WithdrawalRequests" xml:space="preserve">
+    <value>引き出しリクエスト</value>
+    <comment>Withdrawal Request</comment>
+  </data>
+  <data name="WithdrawDay" xml:space="preserve">
+    <value>引き出し日</value>
+    <comment>Withdrawal Request</comment>
   </data>
   <data name="Working Hours (From)" xml:space="preserve">
     <value>開店時間</value>

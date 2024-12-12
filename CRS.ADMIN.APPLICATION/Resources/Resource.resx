@@ -137,6 +137,10 @@
     <value>Account Type</value>
     <comment>Account Information</comment>
   </data>
+  <data name="AccountSymbol" xml:space="preserve">
+    <value>Account Symbol</value>
+    <comment>Withdrawal Request</comment>
+  </data>
   <data name="Action" xml:space="preserve">
     <value>Action</value>
   </data>
@@ -231,6 +235,10 @@
     <value>Affiliate Payments</value>
     <comment>Payment Management</comment>
   </data>
+  <data name="Affiliate Withdraw Logs" xml:space="preserve">
+    <value>Affiliate Withdraw Logs</value>
+    <comment>Withdrawal Request</comment>
+  </data>
   <data name="AffiliateAutoFilledAddress" xml:space="preserve">
     <value>Auto Filled Address</value>
     <comment>AffiliateManagement</comment>
@@ -278,6 +286,10 @@
   <data name="AffiliateGender" xml:space="preserve">
     <value>Gender</value>
     <comment>AffiliateManagement</comment>
+  </data>
+  <data name="AffiliateInfo" xml:space="preserve">
+    <value>Affiliate Info</value>
+    <comment>Withdrawal Request</comment>
   </data>
   <data name="AffiliateManagementSupportMsg" xml:space="preserve">
     <value>Manage affiliate’s information, converted customers and their payments.</value>
@@ -417,6 +429,22 @@
     <value>Bank Type</value>
     <comment>Account Information</comment>
   </data>
+  <data name="BankAccountName" xml:space="preserve">
+    <value>Bank Account Name</value>
+    <comment>Withdrawal Request</comment>
+  </data>
+  <data name="BankAccountNumber" xml:space="preserve">
+    <value>Bank Account Number</value>
+    <comment>Withdrawal Request</comment>
+  </data>
+  <data name="BankName" xml:space="preserve">
+    <value>Bank Name</value>
+    <comment>Withdrawal Request</comment>
+  </data>
+  <data name="BankType" xml:space="preserve">
+    <value>Bank Type</value>
+    <comment>Withdrawal Request</comment>
+  </data>
   <data name="Banner" xml:space="preserve">
     <value>Banner</value>
     <comment>HostGallaryManagement</comment>
@@ -463,6 +491,10 @@
   <data name="Branch Name" xml:space="preserve">
     <value>Branch Name</value>
     <comment>Account Information</comment>
+  </data>
+  <data name="BranchName" xml:space="preserve">
+    <value>Branch Name</value>
+    <comment>Withdrawal Request</comment>
   </data>
   <data name="Building &amp; Room No" xml:space="preserve">
     <value>Building &amp; Room No</value>
@@ -513,6 +545,10 @@
   <data name="CEOFurigana" xml:space="preserve">
     <value>CEO Furigana</value>
     <comment>Club Management</comment>
+  </data>
+  <data name="ChargeAmount" xml:space="preserve">
+    <value>Charge Amount</value>
+    <comment>Withdrawal Request</comment>
   </data>
   <data name="Choose Icons" xml:space="preserve">
     <value>Choose Icon</value>
@@ -1357,6 +1393,10 @@
     <value>Manage Advertisement</value>
     <comment>Promotional Management</comment>
   </data>
+  <data name="Manage affiliate withdraw logs." xml:space="preserve">
+    <value>Manage affiliate withdraw logs.</value>
+    <comment>Withdrawal Request</comment>
+  </data>
   <data name="Manage Club Events" xml:space="preserve">
     <value>Manage Club Events</value>
     <comment>Club Management</comment>
@@ -1404,6 +1444,10 @@
   <data name="Manage Notification" xml:space="preserve">
     <value>Manage Notification</value>
     <comment>Notification</comment>
+  </data>
+  <data name="Manage payment withdrawal request." xml:space="preserve">
+    <value>Manage payment withdrawal request.</value>
+    <comment>Withdrawal Request</comment>
   </data>
   <data name="Manage payment withdrawal setting" xml:space="preserve">
     <value>Manage payment withdrawal setting.</value>
@@ -1585,6 +1629,10 @@
   <data name="Month" xml:space="preserve">
     <value>Month</value>
     <comment>Host Management</comment>
+  </data>
+  <data name="MonthAndYear" xml:space="preserve">
+    <value>Month &amp; Year</value>
+    <comment>Withdrawal Request</comment>
   </data>
   <data name="Months" xml:space="preserve">
     <value>Months</value>
@@ -1812,6 +1860,10 @@
   <data name="Phone Number" xml:space="preserve">
     <value>Phone Number</value>
     <comment>Customer Management</comment>
+  </data>
+  <data name="PhoneNumber" xml:space="preserve">
+    <value>Phone Number</value>
+    <comment>Withdrawal Request</comment>
   </data>
   <data name="Plan" xml:space="preserve">
     <value>Plan</value>
@@ -2059,6 +2111,14 @@
   <data name="Requested Date" xml:space="preserve">
     <value>Requested Date</value>
     <comment>Affiliate Management</comment>
+  </data>
+  <data name="RequestedAmount" xml:space="preserve">
+    <value>Requested Amount</value>
+    <comment>Withdrawal Request</comment>
+  </data>
+  <data name="RequestedDate" xml:space="preserve">
+    <value>Requested Date</value>
+    <comment>Withdrawal Request</comment>
   </data>
   <data name="RequestId" xml:space="preserve">
     <value>Request Id</value>
@@ -2533,6 +2593,10 @@
     <value>Total Plan Amount</value>
     <comment>Payment Management</comment>
   </data>
+  <data name="TotalRequestedAmount" xml:space="preserve">
+    <value>Total Requested Amount</value>
+    <comment>Withdrawal Request</comment>
+  </data>
   <data name="Transaction Date" xml:space="preserve">
     <value>Transaction Date</value>
     <comment>Points Management</comment>
@@ -2556,6 +2620,10 @@
   <data name="Transfer Type" xml:space="preserve">
     <value>Transfer Type</value>
     <comment>Points Management</comment>
+  </data>
+  <data name="TransferAmount" xml:space="preserve">
+    <value>Transfer Amount</value>
+    <comment>Withdrawal Request</comment>
   </data>
   <data name="Tuesday" xml:space="preserve">
     <value>Tue</value>
@@ -2669,6 +2737,14 @@
   <data name="Withdraw-able Date" xml:space="preserve">
     <value>Withdraw-able Date</value>
     <comment>Withdraw Setup</comment>
+  </data>
+  <data name="WithdrawalRequests" xml:space="preserve">
+    <value>Withdrawal Requests</value>
+    <comment>Withdrawal Request</comment>
+  </data>
+  <data name="WithdrawDay" xml:space="preserve">
+    <value>Withdraw Day</value>
+    <comment>Withdrawal Request</comment>
   </data>
   <data name="Working Hours (From)" xml:space="preserve">
     <value>Working Hours (From)</value>
