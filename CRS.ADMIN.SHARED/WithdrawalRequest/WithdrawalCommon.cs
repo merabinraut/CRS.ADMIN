@@ -27,6 +27,7 @@ namespace CRS.ADMIN.SHARED.WithdrawalRequest
     {
         public string id { get; set; }
         public string requestId { get; set; }
+        public string name { get; set; }
         public string requestedDate { get; set; }
         public string affiliateInfo { get; set; }
         public string users { get; set; }

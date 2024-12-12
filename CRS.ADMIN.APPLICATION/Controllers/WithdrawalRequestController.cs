@@ -76,7 +76,8 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 item.requestedAmount = Convert.ToInt64(item.requestedAmount).ToString("N0");
                 item.chargeAmount = Convert.ToInt64(item.chargeAmount).ToString("N0");
                 item.transferAmount = Convert.ToInt64(item.transferAmount).ToString("N0");
-                });
+            });
+            objWithdrawalDetailsModel.name = objWithdrawalDetailsModel.WithdrawalMonthlyList.FirstOrDefault().name;
             ViewBag.StartIndex = StartIndex;
             ViewBag.PageSize = PageSize;           
             ViewBag.TotalData = DBResponse.Count > 0 ? DBResponse.FirstOrDefault().TotalRecords : 0;

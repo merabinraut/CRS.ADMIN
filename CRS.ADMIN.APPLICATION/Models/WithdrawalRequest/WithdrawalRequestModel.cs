@@ -31,6 +31,7 @@ namespace CRS.ADMIN.APPLICATION.Models.WithdrawalRequest
         public string bankType { get; set; }
         public string branchName { get; set; }
         public string affiliateInfo { get; set; }
+        public string name { get; set; }
         public string id { get; set; }      
         public List<WithdrawalMonthlyDetailsModel> WithdrawalMonthlyList { get; set; } = new List<WithdrawalMonthlyDetailsModel>();
 
@@ -38,6 +39,7 @@ namespace CRS.ADMIN.APPLICATION.Models.WithdrawalRequest
     public class WithdrawalMonthlyDetailsModel: PaginationResponseCommon
     {
         public string id { get; set; }
+        public string name { get; set; }
         public string requestId { get; set; }
         public string requestedDate { get; set; }
         public string affiliateInfo { get; set; }
