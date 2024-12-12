@@ -475,7 +475,6 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 _sqlTransactionHandler.RollbackTransaction();
                 return Json(JsonRequestBehavior.AllowGet);
             }
-
         }
 
         [HttpGet]
