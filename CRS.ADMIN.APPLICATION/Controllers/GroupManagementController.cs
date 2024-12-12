@@ -366,6 +366,11 @@ namespace CRS.ADMIN.APPLICATION.Controllers
 
             var dbResponse = _business.GetSubGroupByGroupId(groupId, paginationFilter);
             commonModel.SubGroupInfoList = dbResponse.MapObjects<SubGroupInfoModel>();
+            foreach (var item in commonModel.SubGroupInfoList)
+            {
+                item.GroupId = item.GroupId.EncryptParameter();
+                item.SubGroupId = item.SubGroupId.EncryptParameter();
+            }
             ViewBag.StartIndex = StartIndex;
             ViewBag.PageSize = PageSize;
             ViewBag.GroupId = GroupId;
@@ -379,9 +384,9 @@ namespace CRS.ADMIN.APPLICATION.Controllers
         {
             ActionResult redirectUrl = null;
             bool allowRedirect = false;
-            ActionResult redirectResult = null;
             redirectUrl = RedirectToAction("SubGroup", "GroupManagement", new
             {
+                GroupId = model.GroupId,
                 SearchFilter = model.SearchFilter,
                 StartIndex = model.Skip,
                 PageSize = model.Take == 0 ? 10 : model.Take
@@ -394,7 +399,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 commonRequest.ActionIP = ApplicationUtilities.GetIP();
                 if (!string.IsNullOrEmpty(commonRequest.SubGroupId))
                 {
-                    commonRequest.GroupId = commonRequest.SubGroupId.DecryptParameter();
+                    commonRequest.SubGroupId = commonRequest.SubGroupId.DecryptParameter();
                     if (string.IsNullOrEmpty(commonRequest.SubGroupId))
                     {
                         this.AddNotificationMessage(new NotificationModel()
@@ -437,6 +442,18 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                     TempData["RenderId"] = "ManageSG";
                     return redirectUrl;
                 }
+                else
+                {
+                    this.AddNotificationMessage(new NotificationModel()
+                    {
+                        NotificationType = dbResponse.Code == ResponseCode.Failed ? SHARED.NotificationMessage.WARNING : NotificationMessage.WARNING,
+                        Message = dbResponse.Message ?? "Failed",
+                        Title = dbResponse.Code == ResponseCode.Success ? NotificationMessage.WARNING.ToString() : NotificationMessage.WARNING.ToString()
+                    });
+                    TempData["ManageSubGroup"] = model;
+                    TempData["RenderId"] = "ManageSG";
+                    return redirectUrl;
+                }
             }
             var errorMessage = ModelState.Where(x => x.Value.Errors.Count > 0).SelectMany(x => x.Value.Errors.Select(e => $"{x.Key}:{e.ErrorMessage}")).ToList();
             TempData["ManageSubGroup"] = model;
@@ -444,7 +461,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             return redirectUrl;
         }
         [HttpGet]
-        public ActionResult ManageSubGroup(string SubGroupId = "")
+        public ActionResult ManageSubGroup(string SubGroupId = "", string GroupId = "")
         {
             var culture = Request.Cookies["culture"]?.Value;
             culture = string.IsNullOrEmpty(culture) ? "ja" : culture;
@@ -462,6 +479,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                     });
                     return RedirectToAction("SubGroup", "GroupManagement", new
                     {
+                        GroupId = GroupId,
                         SearchFilter = model.SearchFilter,
                         StartIndex = model.Skip,
                         PageSize = model.Take == 0 ? 10 : model.Take,
@@ -476,6 +494,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             TempData["ManageSubGroup"] = model;
             return RedirectToAction("SubGroup", "GroupManagement", new
             {
+                GroupId = GroupId,
                 SearchFilter = model.SearchFilter,
                 StartIndex = model.Skip,
                 PageSize = model.Take == 0 ? 10 : model.Take,

@@ -202,10 +202,10 @@
                                 int sno = 1;
                                 foreach (var item in Model.SubGroupInfoList)
                                 {
-                                    <tr class="bg-white border-b accordion-header" data-target="details-row-1">
+                                    <tr class="bg-white border-b " data-target="details-row-1">
                                         <td class="p-[12px]">
                                             @sno
-                                            <i class="fa-solid fa-chevron-down cursor-pointer toggle-arrow"></i>
+                                            <i class="fa-solid fa-chevron-down cursor-pointer toggle-arrow accordion-header"></i>
                                         </td>
                                         <td class="p-[12px]">
                                             @item.SubGroupName
@@ -220,9 +220,12 @@
                                         <td class="p-[12px]">
                                         </td>
                                         <td class="p-[12px]">
-                                            <div class="text-[#BBBBBB] text-center text-[20px]"
-                                                 onclick="window.location.href=''">
-                                                <i class="las la-trash-alt text-[20px] cursor-pointer "></i>
+                                            <div class="flex gap-[7px]">
+                                                <i class="las la-edit text-[20px] cursor-pointer text-[#A6A6A6]" onclick="ManageSubGroupDetailsFunction('@item.SubGroupId','@item.GroupId');"></i>
+                                                <div class="text-[#BBBBBB] text-center text-[20px]"
+                                                     onclick="">
+                                                    <i class="las la-trash-alt text-[20px] cursor-pointer "></i>
+                                                </div>
                                             </div>
                                         </td>
                                     </tr>
@@ -262,7 +265,6 @@
                                     </tr>
                                     sno++;
                                 }
-
                             }
                     </table>
                 </div>
@@ -320,14 +322,12 @@
             element.classList.add('translate-x-full');
         }
 
-         function ManageGroupDetailsFunction(groupid) {
-                 let searchFilter = $('#default-search').val();
-                 const startIndex =@ViewBag.StartIndex;
-                 const pageSize =@ViewBag.PageSize;
-             window.location.href = "/GroupManagement/ManageSubGroup?GroupId=" + groupid + '&SearchFilter=' + searchFilter + '&StartIndex=' + startIndex + '&PageSize=' + pageSize;
-
-             }
-
+        function ManageSubGroupDetailsFunction(subgroupId,groupId) {
+             let searchFilter = $('#default-search').val();
+             const startIndex =@ViewBag.StartIndex;
+            const pageSize =@ViewBag.PageSize;
+            window.location.href = "/GroupManagement/ManageSubGroup?SubGroupId=" + subgroupId + '&GroupId=' + groupId + '&SearchFilter=' + searchFilter + '&StartIndex=' + startIndex + '&PageSize=' + pageSize;
+        }
     </script>
 
 }
