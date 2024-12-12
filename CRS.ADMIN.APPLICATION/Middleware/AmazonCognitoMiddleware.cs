@@ -1,7 +1,10 @@
-﻿using CRS.ADMIN.APPLICATION.Library;
+﻿using Amazon.CognitoIdentityProvider.Model;
+using CRS.ADMIN.APPLICATION.Library;
 using CRS.ADMIN.APPLICATION.Services;
 using CRS.ADMIN.SHARED.Middleware.AmazonCognitoModel;
 using CRS.ADMIN.SHARED.Middleware.AmazonCognitoModel.SignUp;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using SharedCognitoModel = CRS.ADMIN.SHARED.Middleware.AmazonCognitoModel;
@@ -11,9 +14,26 @@ namespace CRS.ADMIN.APPLICATION.Middleware
     public class AmazonCognitoMiddleware
     {
         private readonly CognitoService _cognitoService;
+
         public AmazonCognitoMiddleware(CognitoService cognitoService)
         {
             _cognitoService = cognitoService;
+        }
+
+        public void SetConfigNameViaUserType(string userType)
+        {
+            var configMapping = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
+            {
+                { "club", "CognitoClub" },
+                { "customer", "CustomerClub" },
+                { "affiliate", "AffiliateClub" }
+            };
+            var configName = configMapping.TryGetValue(userType, out var result) ? result : string.Empty;
+
+            if (!string.IsNullOrEmpty(configName))
+                _cognitoService.SetConfigName(configName);
+            else
+                throw new ArgumentException($"Invalid user type: {userType}");
         }
 
         #region Sign Up

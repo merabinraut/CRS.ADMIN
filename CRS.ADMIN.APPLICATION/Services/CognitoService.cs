@@ -23,33 +23,41 @@ namespace CRS.ADMIN.APPLICATION.Services
 {
     public class CognitoService
     {
-        private readonly AmazonCognitoIdentityProviderClient _provider;
-        private readonly CognitoUserPool _userPool;
-        private readonly string _clientId;
-        private readonly string _clientSecret;
-        private readonly string _userPoolId;
-        private readonly string _jwkUrl;
-        private readonly string _issuer;
-        public CognitoService()
+        public string _configName { get; private set; }
+        private AmazonCognitoIdentityProviderClient _provider;
+        private CognitoUserPool _userPool;
+        private string _clientId;
+        private string _clientSecret;
+        private string _userPoolId;
+        private string _jwkUrl;
+        private string _issuer;
+        public void SetConfigName(string configName)
+        {
+            _configName = configName;
+            LoadConfiguration();
+        }
+
+        private void LoadConfiguration()
         {
             var jsonPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory + "App_Data", "AmazonConfigruation.json");
             var jsonData = JObject.Parse(File.ReadAllText(jsonPath));
 
-            _clientId = jsonData["CognitoClub"]["Cognito"]["ClientId"].ToString();
-            _clientSecret = jsonData["CognitoClub"]["Cognito"]["ClientSecret"].ToString();
-            _userPoolId = jsonData["CognitoClub"]["Cognito"]["UserPoolId"].ToString();
-            _jwkUrl = jsonData["CognitoClub"]["Cognito"]["JwkUrl"].ToString();
-            _issuer = jsonData["CognitoClub"]["Cognito"]["Issuer"].ToString();
+            _clientId = jsonData[_configName]["Cognito"]["ClientId"].ToString();
+            _clientSecret = jsonData[_configName]["Cognito"]["ClientSecret"].ToString();
+            _userPoolId = jsonData[_configName]["Cognito"]["UserPoolId"].ToString();
+            _jwkUrl = jsonData[_configName]["Cognito"]["JwkUrl"].ToString();
+            _issuer = jsonData[_configName]["Cognito"]["Issuer"].ToString();
 
-            var accessKey = jsonData["CognitoClub"]["Credentials"]["AccessKey"].ToString();
-            var secretKey = jsonData["CognitoClub"]["Credentials"]["SecretKey"].ToString();
-            var region = jsonData["CognitoClub"]["Cognito"]["Region"].ToString();
+            var accessKey = jsonData[_configName]["Credentials"]["AccessKey"].ToString();
+            var secretKey = jsonData[_configName]["Credentials"]["SecretKey"].ToString();
+            var region = jsonData[_configName]["Cognito"]["Region"].ToString();
 
             var credentials = new BasicAWSCredentials(accessKey, secretKey);
             var awsRegion = RegionEndpoint.GetBySystemName(region);
             _provider = new AmazonCognitoIdentityProviderClient(credentials, awsRegion);
             _userPool = new CognitoUserPool(_userPoolId, _clientId, _provider);
         }
+
         private string GenerateSecretHash(string userName) =>
             !string.IsNullOrEmpty(_clientSecret) ? GenerateSecretHash(userName, _clientId, _clientSecret) : null;
 

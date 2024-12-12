@@ -40,6 +40,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             _BUSS = BUSS;
             _httpClient = httpClient;
             _amazonCognitoMiddleware = amazonCognitoMiddleware;
+            _amazonCognitoMiddleware.SetConfigNameViaUserType("club");
         }
 
         [HttpGet]
