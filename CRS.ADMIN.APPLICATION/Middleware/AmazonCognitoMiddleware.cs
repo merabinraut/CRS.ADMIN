@@ -25,8 +25,8 @@ namespace CRS.ADMIN.APPLICATION.Middleware
             var configMapping = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
             {
                 { "club", "CognitoClub" },
-                { "customer", "CustomerClub" },
-                { "affiliate", "AffiliateClub" }
+                { "customer", "CognitoCustomer" },
+                { "affiliate", "CognitoAffiliate" }
             };
             var configName = configMapping.TryGetValue(userType, out var result) ? result : string.Empty;
 
