@@ -332,6 +332,29 @@
         }
     </script>
 
+
+    <script>
+
+        document.addEventListener("DOMContentLoaded", function () {
+            // Get the buttons and container
+            const addNewRowBtn = document.getElementById("addNewRow");
+            const removeContainerBtn = document.getElementById("removeContainerBtn");
+            const newContainer = document.getElementById("newContainer");
+
+            // Show the container when "Add New Row" button is clicked
+            addNewRowBtn.addEventListener("click", function () {
+                newContainer.style.display = "block"; // Show the container
+                console.log("hello")
+            });
+
+            // Remove the container when "削除" button is clicked
+            removeContainerBtn.addEventListener("click", function () {
+                newContainer.style.display = "none"; // Hide the container
+            });
+        });
+
+    </script>
+
 }
 
 
