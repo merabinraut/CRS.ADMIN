@@ -173,7 +173,6 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                     From_Date1 = null,
                     To_Date1 = null
                 };
-
             }
             if (value.ToUpper() != "PBS")
             {
@@ -201,7 +200,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             ViewBag.UsernameIdKeyPT1 = value == "" ? !string.IsNullOrEmpty(UserName) ? UserName : null:null;
             objPointsManagementModel.FromDate = value == "" ? !string.IsNullOrEmpty(FromDate) ? FromDate : null : null;
             objPointsManagementModel.ToDate = value == "" ? !string.IsNullOrEmpty(ToDate) ? ToDate : null : null;
-             ViewBag.TotalData2 = TotalData2;
+            ViewBag.TotalData2 = TotalData2;
             objPointsManagementModel.PointRequestCommonModel.PointRequestsListModel = getPointRequestListDBResponse.MapObjects<PointRequestsListModel>();
             objPointsManagementModel.PointRequestCommonModel.PointRequestsListModel.ForEach(x =>
             {
