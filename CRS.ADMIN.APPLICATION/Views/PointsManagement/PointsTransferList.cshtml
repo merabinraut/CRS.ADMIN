@@ -917,70 +917,100 @@ $("#To_Date1").val("@_systemTransferModel.To_Date1");
             $('#ConfirmationId').val(Id);
         }
 
-    function ApproveClubPointRequestFunction() {
-    var fileInput = document.getElementById('file_input_cover');
-    var file = fileInput.files[0];
-    var formData = new FormData();
-    formData.append('Image', file);
-    let {  Id, AdminRemark } = {
+        $('#ConfirmationAdminRemark').on('change', function (event) {
+            if ($('#ConfirmationAdminRemark').val() != "") {
+                $("span#remarksrequired").text('');
+            }
+            else {
+                $("span#remarksrequired").text('@CRS.ADMIN.APPLICATION.Resources.Resource.Required');
+            }
+        });
 
-        Id: $('#ConfirmationId').val(),
-        AdminRemark: $('#ConfirmationAdminRemark').val()
-    };
-    formData.append('__RequestVerificationToken', $('input[name="__RequestVerificationToken"]').val());
-    formData.append('Id', Id);
-    formData.append('AdminRemark', AdminRemark);
-    formData.append('Status', 'Approve');
-    $.ajax({
-        type: 'POST',
-        async: true,
-        url: "/PointsManagement/ManageClubPointRequest",
-        data: formData,
-        processData: false,
-        contentType: false,
-        success: function (responseData) {
-            window.location.reload();
-        },
-        error: function (ex) {
-            window.location.reload();
-        }
-    });
-}
+        $('#RejectAdminRemark').on('change', function (event) {
+          if ($('#RejectAdminRemark').val() != "") {
+              $("span#rejectremarksrequired").text('');
+          }
+          else {
+              $("span#rejectremarksrequired").text('@CRS.ADMIN.APPLICATION.Resources.Resource.Required');
+          }
+       });
+      function ApproveClubPointRequestFunction() {
+          var fileInput = document.getElementById('file_input_cover');
+          var file = fileInput.files[0];
+          var formData = new FormData();
+          formData.append('Image', file);
+          if ($('#ConfirmationAdminRemark').val() == "") {
+              $("span#remarksrequired").text('@CRS.ADMIN.APPLICATION.Resources.Resource.Required');
+              return false;
+          }
+          if ($("#file_name_logo").text().toLowerCase().trim() == "no file choosen") {
+              $("span#imagerequired").text('@CRS.ADMIN.APPLICATION.Resources.Resource.Required');
+              return false;
+          }
+          else {
+              $("span#imagerequired").text('');
 
-function RejectClubPointRequestFunction() {
-    let { Id,AdminRemark } = {
-        Id: $('#RejectId').val(),
-        AdminRemark: $('#RejectAdminRemark').val(),
-    };
+          }
+          let {  Id, AdminRemark } = {
+               Id: $('#ConfirmationId').val(),
+               AdminRemark: $('#ConfirmationAdminRemark').val()
+               };
+          formData.append('__RequestVerificationToken', $('input[name="__RequestVerificationToken"]').val());
+          formData.append('Id', Id);
+          formData.append('AdminRemark', AdminRemark);
+          formData.append('Status', 'Approve');
+          $.ajax({
+              type: 'POST',
+              async: true,
+              url: "/PointsManagement/ManageClubPointRequest",
+              data: formData,
+              processData: false,
+              contentType: false,
+              success: function (responseData) {
+                  window.location.reload();
+              },
+              error: function (ex) {
+                  window.location.reload();
+              }
+          });
+    }
 
-    $.ajax({
-        type: 'POST',
-        async: true,
-        url: "/PointsManagement/ManageClubPointRequest",
-        dataType: 'json',
-        data: {
-            __RequestVerificationToken: $('input[name="__RequestVerificationToken"]').val(), Id,  AdminRemark, Status: 'Reject'
-        },
-        success: function (responseData) {
-            window.location.reload();
-        },
-        error: function (ex) {
-            window.location.reload();
-        }
-    });
-}
+   function RejectClubPointRequestFunction() {
+      let { Id,AdminRemark } = {
+          Id: $('#RejectId').val(),
+          AdminRemark: $('#RejectAdminRemark').val(),
+          };
+      if($('#RejectAdminRemark').val() == "") {
+          $("span#rejectremarksrequired").text('@CRS.ADMIN.APPLICATION.Resources.Resource.Required');
+          return false;
+       }
+      $.ajax({
+          type: 'POST',
+          async: true,
+          url: "/PointsManagement/ManageClubPointRequest",
+          dataType: 'json',
+          data: {
+              __RequestVerificationToken: $('input[name="__RequestVerificationToken"]').val(), Id,  AdminRemark, Status: 'Reject'
+          },
+          success: function (responseData) {
+              window.location.reload();
+          },
+          error: function (ex) {
+              window.location.reload();
+          }
+      });
+    }
 
 function ViewPointTransferRetriveDetail(i) {
- let search_filter = $('#default-search').val();
- const start_index_val = @ViewBag.StartIndex;
+    let search_filter = $('#default-search').val();
+    const start_index_val = @ViewBag.StartIndex;
     const page_size = @ViewBag.PageSize;
-
     const roletype = $('#large[name="UserType"]').val();
     const userId = $('#large[name="UserName"]').val();
     const transferType = $('#large[name="TransferTypeId"]').val();
     const fromDate = $('#FromDate').val();
     const toDate = $('#ToDate').val();
     window.location.href = '/PointsManagement/PointsTransferListDetails?Id=' + i + '&SearchFilter=' + search_filter + '&StartIndex=' + start_index_val + '&PageSize=' + page_size + '&Roletype=' + roletype + '&UserId=' + userId + '&TransferType=' + transferType + '&FromDate=' + fromDate + '&ToDate=' + toDate;
-}
+   }
     </script>
 }

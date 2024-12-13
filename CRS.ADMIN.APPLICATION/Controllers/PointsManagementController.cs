@@ -173,7 +173,6 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                     From_Date1 = null,
                     To_Date1 = null
                 };
-
             }
             if (value.ToUpper() != "PBS")
             {
@@ -201,7 +200,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             ViewBag.UsernameIdKeyPT1 = value == "" ? !string.IsNullOrEmpty(UserName) ? UserName : null:null;
             objPointsManagementModel.FromDate = value == "" ? !string.IsNullOrEmpty(FromDate) ? FromDate : null : null;
             objPointsManagementModel.ToDate = value == "" ? !string.IsNullOrEmpty(ToDate) ? ToDate : null : null;
-             ViewBag.TotalData2 = TotalData2;
+            ViewBag.TotalData2 = TotalData2;
             objPointsManagementModel.PointRequestCommonModel.PointRequestsListModel = getPointRequestListDBResponse.MapObjects<PointRequestsListModel>();
             objPointsManagementModel.PointRequestCommonModel.PointRequestsListModel.ForEach(x =>
             {
@@ -416,6 +415,29 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                     Title = NotificationMessage.INFORMATION.ToString(),
                 });
                 return Json("Invalid request", JsonRequestBehavior.AllowGet);
+            }
+            if (request.Status.ToLower()=="approve" )              
+            {
+                if(string.IsNullOrEmpty( Image.FileName)){
+                    this.AddNotificationMessage(new NotificationModel()
+                    {
+                        NotificationType = NotificationMessage.INFORMATION,
+                        Message = "Image is required",
+                        Title = NotificationMessage.INFORMATION.ToString(),
+                    });
+                    return Json("Image is required", JsonRequestBehavior.AllowGet);
+                }
+                
+            }
+            if (string.IsNullOrEmpty(request.AdminRemark))
+            {
+                this.AddNotificationMessage(new NotificationModel()
+                {
+                    NotificationType = NotificationMessage.INFORMATION,
+                    Message = "Remark is required",
+                    Title = NotificationMessage.INFORMATION.ToString(),
+                });
+                return Json("Remark is required", JsonRequestBehavior.AllowGet);
             }
             if (dbRequest.Status.Trim().ToUpper() == "S" && Image == null)
             {
