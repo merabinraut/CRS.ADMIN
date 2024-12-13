@@ -1,4 +1,6 @@
-﻿using CRS.ADMIN.SHARED;
+﻿using CRS.ADMIN.APPLICATION.Resources;
+using CRS.ADMIN.SHARED;
+using System.ComponentModel.DataAnnotations;
 
 namespace CRS.ADMIN.APPLICATION.Models.PointsManagement
 {
