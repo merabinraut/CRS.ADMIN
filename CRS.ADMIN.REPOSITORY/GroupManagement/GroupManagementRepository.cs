@@ -176,6 +176,54 @@ namespace CRS.ADMIN.REPOSITORY.GroupManagement
                 return new ManageSubGroupModelCommon();
             }
         }
+
+        public CommonDbResponse DeleteSubGroup(string subGroupId, Common request)
+        {
+            string sp_name = "";
+            sp_name += "@SubGroupId" + _dao.FilterString(subGroupId);
+            sp_name += ",@ActionIP=" + _dao.FilterString(request.ActionIP);
+            sp_name += ",@ActionUser=" + _dao.FilterString(request.ActionUser);
+            sp_name += ",@ActionPlatform=" + _dao.FilterString(request.ActionPlatform);
+
+            var dbResponse = _dao.ParseCommonDbResponse(sp_name);
+            return dbResponse;
+        }
+
+        public CommonDbResponse ManageSubGroupClub(ManageSubGroupClubModelCommon commonModel)
+        {
+            string sp_name = "";
+            sp_name += "@SubGroupId=" + _dao.FilterString(commonModel.SubGroupId);
+            sp_name += ",@ClubId=" + _dao.FilterString(commonModel.ClubId);
+            sp_name += ",@LocationId=" + _dao.FilterString(commonModel.LocationId);
+            sp_name += ",@ActionUser=" + _dao.FilterString(commonModel.ActionUser);
+            sp_name += ",@ActionIP=" + _dao.FilterString(commonModel.ActionIP);
+            sp_name += ",@ActionPlatform=" + _dao.FilterString(commonModel.ActionPlatform);
+
+            var dbResponse = _dao.ParseCommonDbResponse(sp_name);
+            return dbResponse;
+        }
+
+        public ManageSubGroupClubModelCommon GetSubGroupClubDetailById(string subGroupId)
+        {
+            string sp_name = "EXEC [dbo].[sproc_admin_subgroup_club_detail]";
+            sp_name += "@SubGroupId=" + _dao.FilterString(subGroupId);
+
+            var dbResponse = _dao.ExecuteDataRow(sp_name);
+            if (dbResponse != null)
+            {
+                return new ManageSubGroupClubModelCommon()
+                {
+                    SubGroupId = _dao.ParseColumnValue(dbResponse, "SubGroupId").ToString(),
+                    ClubId = _dao.ParseColumnValue(dbResponse, "ClubId").ToString(),
+                    LocationId = _dao.ParseColumnValue(dbResponse, "LocationId").ToString(),
+                    TotalClubCount = _dao.ParseColumnValue(dbResponse, "TotalClubCount").ToString()
+                };
+            }
+            else
+            {
+                return new ManageSubGroupClubModelCommon();
+            }
+        }
         #endregion
     }
 }

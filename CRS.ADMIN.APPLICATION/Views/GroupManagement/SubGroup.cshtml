@@ -38,7 +38,7 @@
         </div>
 
         <div class="flex flex-col  gap-4">
-            <form action="/ReservationLedger/ReservationLedgerList" method="get">
+            <form action="/GroupManagement/SubGroup" method="get">
                 <div class="flex justify-between items-center w-full">
                     <!-- Input Search Wrapper -->
                     <div class="relative input-search-wrapper flex-grow">
@@ -47,7 +47,7 @@
                                 <path d="M17.5 18L13.875 14.375M15.8333 9.66667C15.8333 13.3486 12.8486 16.3333 9.16667 16.3333C5.48477 16.3333 2.5 13.3486 2.5 9.66667C2.5 5.98477 5.48477 3 9.16667 3C12.8486 3 15.8333 5.98477 15.8333 9.66667Z" stroke="#667085" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"></path>
                             </svg>
                         </div>
-                        <input type="search" id="default-search" class="input-search block w-full" placeholder="@CRS.ADMIN.APPLICATION.Resources.Resource.Search" value="@ViewBag.SearchText" name="SearchText">
+                        <input type="search" id="default-search" class="input-search block w-full" placeholder="@CRS.ADMIN.APPLICATION.Resources.Resource.Search" value="@ViewBag.SearchFilter" name="SearchFilter">
                     </div>
 
                     <!-- Export Button -->
@@ -287,9 +287,12 @@
     </div>
 </div>
 @Html.Partial("_ManageSubGroup", _SubGroupModel)
-@*@Html.Partial("_ManageSubGroupClub", _SubGroupClubModel)*@
+@Html.Partial("_ManageSubGroupClub", _SubGroupClubModel)
 @section scripts{
     <script>
+        function CancelFunction() {
+            location.reload();
+        }
         $('#submit-button-id').click(function () {
             $('#ManageSubGroupForm').submit();
         })
@@ -319,6 +322,14 @@
         }
         else {
             var element = document.getElementById('add-sub-group');
+            element.classList.add('translate-x-full');
+        }
+        if (popUprenderValue != null && popUprenderValue != '' && popUprenderValue == "ManageSGC") {
+            var element = document.getElementById('add-sub-group-club');
+            element.classList.remove('translate-x-full');
+        }
+        else {
+            var element = document.getElementById('add-sub-group-club');
             element.classList.add('translate-x-full');
         }
 

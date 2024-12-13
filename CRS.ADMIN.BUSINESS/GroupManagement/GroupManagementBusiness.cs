@@ -65,6 +65,21 @@ namespace CRS.ADMIN.BUSINESS.GroupManagement
         {
             return _repo.GetSubGroupDetail(subGroupId);
         }
+
+        public CommonDbResponse DeleteSubGroup(string subGroupId, Common request)
+        {
+            return _repo.DeleteSubGroup(subGroupId, request);
+        }
+
+        public CommonDbResponse ManageSubGroupClub(ManageSubGroupClubModelCommon commonModel)
+        {
+            return _repo.ManageSubGroupClub(commonModel);
+        }
+
+        public ManageSubGroupClubModelCommon GetSubGroupClubDetailById(string subGroupId)
+        {
+            return _repo.GetSubGroupClubDetailById(subGroupId);
+        }
         #endregion
     }
 }

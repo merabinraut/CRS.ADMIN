@@ -364,6 +364,11 @@ namespace CRS.ADMIN.APPLICATION.Controllers
 
             if (TempData.ContainsKey("RenderId")) RenderId = TempData["RenderId"].ToString();
 
+            if (TempData.ContainsKey("ManageSubGroupClub")) commonModel.ManageSubGroupClub = TempData["ManageSubGroupClub"] as ManageSubGroupClubModel;
+            else commonModel.ManageSubGroupClub = new ManageSubGroupClubModel();
+
+            if (TempData.ContainsKey("RenderId")) RenderId = TempData["RenderId"].ToString();
+
             var dbResponse = _business.GetSubGroupByGroupId(groupId, paginationFilter);
             commonModel.SubGroupInfoList = dbResponse.MapObjects<SubGroupInfoModel>();
             foreach (var item in commonModel.SubGroupInfoList)
@@ -377,6 +382,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             ViewBag.GroupName = commonModel.SubGroupInfoList[0].GroupName;
             ViewBag.GroupNameKatakana = commonModel.SubGroupInfoList[0].GroupNameKatakana;
             ViewBag.PopUpRenderValue = !string.IsNullOrEmpty(RenderId) ? RenderId : null;
+            ViewBag.SearchFilter = SearchFilter;
             return View(commonModel);
         }
         [HttpPost, ValidateAntiForgeryToken]
@@ -457,7 +463,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             }
             var errorMessage = ModelState.Where(x => x.Value.Errors.Count > 0).SelectMany(x => x.Value.Errors.Select(e => $"{x.Key}:{e.ErrorMessage}")).ToList();
             TempData["ManageSubGroup"] = model;
-            TempData["RenderId"] = "Manage";
+            TempData["RenderId"] = "ManageSG";
             return redirectUrl;
         }
         [HttpGet]
@@ -501,14 +507,162 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             });
         }
         [HttpPost, ValidateAntiForgeryToken]
+        public JsonResult DeleteSubGroup(string SubGroupId = "")
+        {
+            var response = new CommonDbResponse();
+            var subGroupId = !string.IsNullOrEmpty(SubGroupId) ? SubGroupId.DecryptParameter() : string.Empty;
+            if (string.IsNullOrEmpty(subGroupId))
+            {
+                this.AddNotificationMessage(new NotificationModel()
+                {
+                    NotificationType = NotificationMessage.INFORMATION,
+                    Message = "Invalid Sub Group Details",
+                    Title = NotificationMessage.INFORMATION.ToString()
+                });
+            }
+            var request = new Common()
+            {
+                ActionIP = ApplicationUtilities.GetIP(),
+                ActionUser = ApplicationUtilities.GetSessionValue("Username").ToString()
+            };
+            var dbResponse = _business.DeleteSubGroup(subGroupId, request);
+            response = dbResponse;
+            if (dbResponse.Code == ResponseCode.Success && dbResponse.Code == 0)
+            {
+                this.AddNotificationMessage(new NotificationModel()
+                {
+                    NotificationType = response.Code == ResponseCode.Success ? NotificationMessage.SUCCESS : NotificationMessage.INFORMATION,
+                    Message = response.Message ?? "Something went wrong while deleting the sub group. Please try again later",
+                    Title = response.Code == ResponseCode.Success ? NotificationMessage.SUCCESS.ToString() : NotificationMessage.INFORMATION.ToString()
+                });
+            }
+            else
+            {
+                this.AddNotificationMessage(new NotificationModel()
+                {
+                    NotificationType = response.Code == ResponseCode.Failed ? NotificationMessage.ERROR : NotificationMessage.ERROR,
+                    Message = response.Message ?? "Something went wrong while deleting sub group. Please try again later",
+                    Title = response.Code == ResponseCode.Failed ? NotificationMessage.ERROR.ToString() : NotificationMessage.ERROR.ToString()
+                });
+            }
+            return Json(response.Message, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost, ValidateAntiForgeryToken]
         public ActionResult ManageSubGroupClub(ManageSubGroupClubModel model)
         {
-            return View();
+            ActionResult redirectUrl = null;
+            bool allowRedirect = false;
+            redirectUrl = RedirectToAction("SubGroup", "GroupManagement", new
+            {
+                GroupId = model.GroupId,
+                SearchFilter = model.SearchFilter,
+                StartIndex = model.Skip,
+                PageSize = model.Take == 0 ? 10 : model.Take,
+            });
+            string ErrorMessage = string.Empty;
+            if (ModelState.IsValid)
+            {
+                ManageSubGroupClubModelCommon commonModel = model.MapObject<ManageSubGroupClubModelCommon>();
+                commonModel.ActionUser = ApplicationUtilities.GetSessionValue("Username").ToString();
+                commonModel.ActionIP = ApplicationUtilities.GetIP();
+                if (!string.IsNullOrEmpty(commonModel.SubGroupId))
+                {
+                    commonModel.SubGroupId = commonModel.SubGroupId.DecryptParameter();
+                    if (string.IsNullOrEmpty(commonModel.SubGroupId))
+                    {
+                        this.AddNotificationMessage(new NotificationModel()
+                        {
+                            NotificationType = NotificationMessage.INFORMATION,
+                            Message = "Invalid sub group detail",
+                            Title = NotificationMessage.INFORMATION.ToString()
+                        });
+                        TempData["ManageSubGroupClub"] = model;
+                        TempData["RenderId"] = "ManageSGC";
+                        return redirectUrl;
+                    }
+                }
+                var dbResponse = _business.ManageSubGroupClub(commonModel);
+                if (dbResponse.Code == ResponseCode.Success && dbResponse.Code == 0)
+                {
+                    this.AddNotificationMessage(new NotificationModel()
+                    {
+                        NotificationType = dbResponse.Code == ResponseCode.Success ? NotificationMessage.SUCCESS : NotificationMessage.INFORMATION,
+                        Message = dbResponse.Message ?? "Failed",
+                        Title = dbResponse.Code == ResponseCode.Success ? NotificationMessage.SUCCESS.ToString() : NotificationMessage.INFORMATION.ToString()
+                    });
+                    TempData["ManageSubGroupClub"] = model;
+                    TempData["RenderId"] = "ManageSGC";
+                    return redirectUrl;
+                }
+                else
+                {
+                    this.AddNotificationMessage(new NotificationModel()
+                    {
+                        NotificationType = dbResponse.Code == ResponseCode.Failed ? SHARED.NotificationMessage.WARNING : NotificationMessage.WARNING,
+                        Message = dbResponse.Message ?? "Failed",
+                        Title = dbResponse.Code == ResponseCode.Success ? NotificationMessage.WARNING.ToString() : NotificationMessage.WARNING.ToString()
+                    });
+                    TempData["ManageSubGroupClub"] = model;
+                    TempData["RenderId"] = "ManageSGC";
+                    return redirectUrl;
+                }
+            }
+            var errorMessage = ModelState.Where(x => x.Value.Errors.Count > 0).SelectMany(x => x.Value.Errors.Select(e => $"{x.Key}:{e.ErrorMessage}")).ToList();
+            TempData["ManageSubGroupClub"] = model;
+            TempData["RenderId"] = "ManageSGC";
+            return redirectUrl;
         }
         [HttpGet]
         public ActionResult ManageSubGroupClub(string GroupId = "", string SubGroupId = "")
         {
-            return View();
+            var culture = Request.Cookies["culture"]?.Value;
+            culture = string.IsNullOrEmpty(culture) ? "ja" : culture;
+            ManageSubGroupClubModel model = new ManageSubGroupClubModel();
+            if (!string.IsNullOrEmpty(SubGroupId))
+            {
+                string subGroupId = SubGroupId.DecryptParameter();
+                if (string.IsNullOrEmpty(subGroupId))
+                {
+                    this.AddNotificationMessage(new NotificationModel()
+                    {
+                        NotificationType = NotificationMessage.INFORMATION,
+                        Message = "invalid sub group club detail",
+                        Title = NotificationMessage.INFORMATION.ToString()
+                    });
+                    return RedirectToAction("SubGroup", "GroupManagement", new
+                    {
+                        GroupId = GroupId,
+                        SearchFilter = model.SearchFilter,
+                        StartIndex = model.Skip,
+                        PageSize = model.Take == 0 ? 10 : model.Take,
+                    });
+                }
+                var dbResponse = _business.GetSubGroupClubDetailById(subGroupId);
+                model = dbResponse.MapObject<ManageSubGroupClubModel>();
+                model.GroupId = model.GroupId.EncryptParameter();
+                model.SubGroupId = model.SubGroupId.EncryptParameter();
+                model.ClubId = model.ClubId.EncryptParameter();
+                model.LocationId = model.LocationId.EncryptParameter();
+                TempData["RenderId"] = "ManageSG";
+                TempData["ManageSubGroup"] = model;
+                return RedirectToAction("SubGroup", "GroupManagement", new
+                {
+                    GroupId = GroupId,
+                    SearchFilter = model.SearchFilter,
+                    StartIndex = model.Skip,
+                    PageSize = model.Take == 0 ? 10 : model.Take,
+                });
+            }
+            TempData["RenderId"] = "ManageSGC";
+            TempData["ManageSubGroupClub"] = model;
+            return RedirectToAction("SubGroup", "GroupManagement", new
+            {
+                GroupId = GroupId,
+                SearchFilter = model.SearchFilter,
+                StartIndex = model.Skip,
+                PageSize = model.Take == 0 ? 10 : model.Take,
+            });
         }
         #endregion
     }

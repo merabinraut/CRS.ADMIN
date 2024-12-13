@@ -21,6 +21,9 @@ namespace CRS.ADMIN.BUSINESS.GroupManagement
         List<SubGroupInfoModelCommon> GetSubGroupByGroupId(string groupId, PaginationFilterCommon paginationFilter);
         CommonDbResponse ManageSubGroup(ManageSubGroupModelCommon commonRequest);
         ManageSubGroupModelCommon GetSubGroupDetail(string subGroupId);
+        CommonDbResponse DeleteSubGroup(string subGroupId, Common request);
+        CommonDbResponse ManageSubGroupClub(ManageSubGroupClubModelCommon commonModel);
+        ManageSubGroupClubModelCommon GetSubGroupClubDetailById(string subGroupId);
         #endregion
     }
 }

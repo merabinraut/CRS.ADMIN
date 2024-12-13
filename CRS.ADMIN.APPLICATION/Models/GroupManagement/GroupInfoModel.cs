@@ -76,8 +76,9 @@ namespace CRS.ADMIN.APPLICATION.Models.GroupManagement
         public string SubGroupId { get; set; }
         public string GroupId { get; set; }
     }
-    public class ManageSubGroupClubModel
+    public class ManageSubGroupClubModel: PaginationFilterCommon
     {
+        public string GroupId { get; set; }
         public string GroupName { get; set; }
         public string GroupNameKatakana { get; set; }
         public string SubGroupId { get; set; }
