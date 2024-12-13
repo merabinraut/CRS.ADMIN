@@ -24,8 +24,9 @@ namespace CRS.ADMIN.APPLICATION.Controllers
         {
             _business = business;
         }
-        [HttpGet]
+        
         #region MANAGE GROUP
+        [HttpGet]       
         public ActionResult Index(string SearchFilter = "", int StartIndex = 0, int PageSize = 10)
         {
             Session["CurrentURL"] = "GroupManagement/Index";
