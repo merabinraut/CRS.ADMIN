@@ -60,11 +60,11 @@
 
                             <div class="flex gap-6">
                                 @*<div class="btn btn-primary gap-[8px] h-[40px]" data-drawer-target="add-new-points"
-                         data-drawer-show="add-new-points" data-drawer-placement="right" data-drawer-backdrop="false"
-                         aria-controls="drawer-disabled-backdrop" id="add-new-id">
-                        <img src="~/Content/assets_new/images/plus-circle-solid.svg" />
-                        @CRS.ADMIN.APPLICATION.Resources.Resource.Add_New
-                    </div>*@
+                                         data-drawer-show="add-new-points" data-drawer-placement="right" data-drawer-backdrop="false"
+                                         aria-controls="drawer-disabled-backdrop" id="add-new-id">
+                                        <img src="~/Content/assets_new/images/plus-circle-solid.svg" />
+                                        @CRS.ADMIN.APPLICATION.Resources.Resource.Add_New
+                                    </div>*@
                             </div>
                         </div>
                         <div class="grid grid-cols-3 gap-x-12 table-tab filteroutlinepadding">
@@ -122,19 +122,19 @@
                     </form>
                     <br />
                     @*<div class="px-[12px] py-[16px] flex justify-between entry-export-container">
-            <div class="flex items-center select-entries" id="ShowEntries-Id">
-            </div>
-        </div>*@
+                            <div class="flex items-center select-entries" id="ShowEntries-Id">
+                            </div>
+                        </div>*@
                     <div class="table-tab">
                         <div class="px-[16px] py-[12px] flex justify-between entry-export-container">
                             <div class="flex items-center select-entries" id="ShowEntries-Id">
                             </div>
-                            <div class="export-button h-[40px]" onclick="exportExcel('table-id_PointTransfer', 'PointTransfer')">
+                            <div class="export-button h-[40px]" onclick="exportExcel('id_withdrawsdetailreport', 'WithdrawRequestReport')">
                                 <img src="~/Content/assets_new/images/club/download-solid.svg"> @CRS.ADMIN.APPLICATION.Resources.Resource.Export
                             </div>
                         </div>
                         <div class="relative overflow-x-auto">
-                            <table class="w-full text-left club-table" id="id_PointTransfer">
+                            <table class="w-full text-left club-table" id="id_withdrawsdetailreport">
                                 <thead class="club-table-thead">
                                     <tr>
                                         <th scope="col" class="p-[12px]">
@@ -304,71 +304,71 @@
 
                                                 foreach (var item in Model.WithdrawalMonthlyList)
                                                 {
-                                                                        <tr class="bg-white border-b ">
-                                                                            <td class="p-[12px]">
-                                                                                @item.SNO
-                                                                            </td>
-                                                                            <td class="p-[12px]">
-                                                                                @item.requestId
-                                                                            </td>
-                                                                            <td class="p-[12px]">
-                                                                                @item.requestedDate
-                                                                            </td>
-                                                                            <td class="p-[12px]">
-                                                                                @item.affiliateInfo
-                                                                            </td>
-                                                                            <td class="p-[12px]">
-                                                                                @item.emailAddress
-                                                                            </td>
-                                                                            <td class="p-[12px]">
-                                                                                @item.phoneNumber
-                                                                            </td>
-                                                                            <td class="p-[12px]">
-                                                                                @item.bankType
-                                                                            </td>
-                                                                            <td class="p-[12px]">
-                                                                                @item.bankName
-                                                                            </td>
-                                                                            <td class="p-[12px]">
-                                                                                @item.branchName
-                                                                            </td>
-                                                                            <td class="p-[12px]">
-                                                                                @item.accountSymbol
-                                                                            </td>
-                                                                            <td class="p-[12px]">
-                                                                                @item.bankAccountNumber
-                                                                            </td>
-                                                                            <td class="p-[12px]">
-                                                                                @item.bankAccountName
-                                                                            </td>
-                                                                            <td class="p-[12px]">
-                                                                                @item.requestedAmount
-                                                                            </td>
-                                                                            <td class="p-[12px]">
-                                                                                @item.chargeAmount
-                                                                            </td>
-                                                                            <td class="p-[12px]">
-                                                                                @item.transferAmount
-                                                                            </td>
-                                                                            <td class="p-[12px]">
-                                                                                @item.status
-                                                                            </td>
-                                                                            <td class="p-[12px]">
-                                                                                @if (!string.IsNullOrEmpty(item.status) && item.status.Trim().ToUpper() == "PENDING")
-                                                                                {
-                                                                                    <i class="las la-window-close text-[24px] text-[#CB3F3F] cursor-pointer " data-modal-target="popup-modal-reject" data-modal-toggle="popup-modal-reject" alt=""
-                                                                                       onclick="RejectWithdrawalRequest( '@item.id')"> </i>
+                                                    <tr class="bg-white border-b ">
+                                                        <td class="p-[12px]">
+                                                            @item.SNO
+                                                        </td>
+                                                        <td class="p-[12px]">
+                                                            @item.requestId
+                                                        </td>
+                                                        <td class="p-[12px]">
+                                                            @item.requestedDate
+                                                        </td>
+                                                        <td class="p-[12px]">
+                                                            @item.affiliateInfo
+                                                        </td>
+                                                        <td class="p-[12px]">
+                                                            @item.emailAddress
+                                                        </td>
+                                                        <td class="p-[12px]">
+                                                            @item.phoneNumber
+                                                        </td>
+                                                        <td class="p-[12px]">
+                                                            @item.bankType
+                                                        </td>
+                                                        <td class="p-[12px]">
+                                                            @item.bankName
+                                                        </td>
+                                                        <td class="p-[12px]">
+                                                            @item.branchName
+                                                        </td>
+                                                        <td class="p-[12px]">
+                                                            @item.accountSymbol
+                                                        </td>
+                                                        <td class="p-[12px]">
+                                                            @item.bankAccountNumber
+                                                        </td>
+                                                        <td class="p-[12px]">
+                                                            @item.bankAccountName
+                                                        </td>
+                                                        <td class="p-[12px]">
+                                                            @item.requestedAmount
+                                                        </td>
+                                                        <td class="p-[12px]">
+                                                            @item.chargeAmount
+                                                        </td>
+                                                        <td class="p-[12px]">
+                                                            @item.transferAmount
+                                                        </td>
+                                                        <td class="p-[12px]">
+                                                            @item.status
+                                                        </td>
+                                                        <td class="p-[12px]">
+                                                            @if (!string.IsNullOrEmpty(item.status) && item.status.Trim().ToUpper() == "PENDING")
+                                                            {
+                                                                <i class="las la-window-close text-[24px] text-[#CB3F3F] cursor-pointer " data-modal-target="popup-modal-reject" data-modal-toggle="popup-modal-reject" alt=""
+                                                                   onclick="RejectWithdrawalRequest( '@item.id')"> </i>
 
 
 
-                                                                                    <img src="/Content/assets_new/images/check-square.svg"
-                                                                                         data-modal-target="popup-modal-accept"
-                                                                                         data-modal-toggle="popup-modal-accept" alt="" class="cursor-pointer" onclick="ApproveWithdrawalRequest( '@item.id')" />
+                                                                <img src="/Content/assets_new/images/check-square.svg"
+                                                                     data-modal-target="popup-modal-accept"
+                                                                     data-modal-toggle="popup-modal-accept" alt="" class="cursor-pointer" onclick="ApproveWithdrawalRequest( '@item.id')" />
 
 
-                                                                                }
-                                                                            </td>
-                                                                        </tr>
+                                                            }
+                                                        </td>
+                                                    </tr>
 
                                                 }
                                             }
@@ -379,26 +379,26 @@
                         </div>
                     </div>
                     @*<br><hr>
-                    <div class="total-column">
-                        <div class="pagination-club">
-                            <div class="show-entry" ></div>
-                            <div class="flex gap-[12px]">
-                                <div class="" style="cursor: not-allowed;">
-                                    Total
-                                </div>
-                                <div class="" style="cursor: not-allowed;">
-                                    10000
-                                </div>
-                                <div class="" style="cursor: not-allowed;">
-                                    5000
-                                </div>
-                                <div class="">
-                                    20000
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                   <hr>*@
+                         <div class="total-column">
+                             <div class="pagination-club">
+                                 <div class="show-entry" ></div>
+                                 <div class="flex gap-[12px]">
+                                     <div class="" style="cursor: not-allowed;">
+                                         Total
+                                     </div>
+                                     <div class="" style="cursor: not-allowed;">
+                                         10000
+                                     </div>
+                                     <div class="" style="cursor: not-allowed;">
+                                         5000
+                                     </div>
+                                     <div class="">
+                                         20000
+                                     </div>
+                                 </div>
+                             </div>
+                         </div>
+                        <hr>*@
                     <div class="pagination-club">
                         <div class="show-entry" id="Entries-Id">
                         </div>
@@ -417,7 +417,7 @@
 
 
 
-                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -483,10 +483,10 @@
                     <div class="flex flex-col  gap-[20px] mt-[28px]">
                         <input id="RejectId" value="" hidden />
                         @*<div>
-            <p style="font-size: 14px; color: #333 ">@CRS.ADMIN.APPLICATION.Resources.Resource.Remarks</p>
-            <textarea placeholder="@CRS.ADMIN.APPLICATION.Resources.Resource.Remarks" class="modalstyle" id="RejectAdminRemark" name="RejectAdminRemark"></textarea>
-            <p class="downlabel">Less than 200 words</p>
-        </div>*@
+                                <p style="font-size: 14px; color: #333 ">@CRS.ADMIN.APPLICATION.Resources.Resource.Remarks</p>
+                                <textarea placeholder="@CRS.ADMIN.APPLICATION.Resources.Resource.Remarks" class="modalstyle" id="RejectAdminRemark" name="RejectAdminRemark"></textarea>
+                                <p class="downlabel">Less than 200 words</p>
+                            </div>*@
                     </div>
                     <div class="flex flex-row  justify-end">
 
@@ -525,15 +525,15 @@
 
         function ApproveWithdrawalRequestFunction() {
             let id = $('#ConfirmationId').val();
-            
+
             $.ajax({
-                type: "POST",                
+                type: "POST",
                 url: "/WithdrawalRequest/ApproveWithdrawalRequest ",
                 dataType: 'json',
                 data: {
                     __RequestVerificationToken: $('input[name="__RequestVerificationToken"]').val(), 'id': id
-                }, 
-                
+                },
+
                 success: function (responseData) {
                     window.location.reload();
                 },

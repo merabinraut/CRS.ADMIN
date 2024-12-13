@@ -84,7 +84,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             ViewBag.UserTypeListPT = ApplicationUtilities.SetDDLValue(DDLHelper.LoadDropdownList("USERTYPELIST", "", culture) as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---");
 
             if (string.IsNullOrEmpty(objPointsManagementModel.ManagePointsTansfer.UserTypeId))
-            {
+            {                                                                 
                 ViewBag.UserListPT = ApplicationUtilities.SetDDLValue(dictionaryempty, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---");
             }
             else
