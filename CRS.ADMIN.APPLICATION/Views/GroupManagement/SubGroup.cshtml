@@ -91,27 +91,17 @@
                                     </label>
                                     <select id="large" name="LocationId" class=" default_select select-common block w-full "
                                             style="width: 100%;">
-                                        @*@foreach (var item in ViewBag.ClubDDL as IEnumerable<SelectListItem>)
-                                            {
-                                                var selectedId = ViewBag.ClubIdKey as string;
-                                                if (item.Value == selectedId)
-                                                {
-                                                    <option value="@item.Value" selected>@item.Text</option>
-                                                }
-                                                else
-                                                {
-                                                    <option value="@item.Value">
-                                                        @item.Text
-                                                    </option>
-                                                }
-                                            }*@
+                                        @foreach (var item in ViewBag.LocationDDL as IEnumerable<SelectListItem>)
+                                        {
+                                            <option value="@item.Value" selected>@item.Text</option>
+                                        }
                                     </select>
                                 </div>
                             </div>
                         </div>
                         <div class=" flex gap-4 mt-4">
                             <button id="cancelFilter" class="btn btn-primary-normal gap-1 rounded-[4px]"
-                                    onclick="window.location.href='@Url.Action("GroupManagement", "SubGroup")';" type="button">
+                                    onclick="window.location.reload()" type="button">
                                 <i class="las la-times"></i>@CRS.ADMIN.APPLICATION.Resources.Resource.Cancel
                             </button>
 
@@ -202,10 +192,10 @@
                                 int sno = 1;
                                 foreach (var item in Model.SubGroupInfoList)
                                 {
-                                    <tr class="bg-white border-b " data-target="details-row-1">
+                                    <tr class="bg-white border-b accordion-header" data-target="details-row-@sno">
                                         <td class="p-[12px]">
                                             @sno
-                                            <i class="fa-solid fa-chevron-down cursor-pointer toggle-arrow accordion-header"></i>
+                                            <i class="fa-solid fa-chevron-down cursor-pointer toggle-arrow"></i>
                                         </td>
                                         <td class="p-[12px]">
                                             @item.SubGroupName
@@ -230,7 +220,7 @@
                                         </td>
                                     </tr>
                                     <!-- Hidden Row -->
-                                    <tr class="bg-gray-100 hidden accordion-content details-row-1">
+                                    <tr class="bg-gray-100 hidden accordion-content details-row-@sno">
                                         <td class="p-[12px]">
                                         </td>
                                         <td class="p-[12px]">
@@ -266,6 +256,7 @@
                                     sno++;
                                 }
                             }
+                        </tbody>
                     </table>
                 </div>
                 <div class="pagination-club">
@@ -298,7 +289,7 @@
         })
         document.addEventListener('DOMContentLoaded', () => {
             const headers = document.querySelectorAll('.accordion-header');
-
+            debugger
             headers.forEach(header => {
                 header.addEventListener('click', () => {
                     const targetClass = header.dataset.target;

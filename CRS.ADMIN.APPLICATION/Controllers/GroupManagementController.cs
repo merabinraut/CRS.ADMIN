@@ -7,8 +7,10 @@ using CRS.ADMIN.SHARED;
 using CRS.ADMIN.SHARED.GroupManagement;
 using CRS.ADMIN.SHARED.PaginationManagement;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -347,6 +349,8 @@ namespace CRS.ADMIN.APPLICATION.Controllers
         public ActionResult SubGroup(string GroupId = "", int StartIndex = 0, int PageSize = 10, string SearchFilter = "")
         {
             Session["CurrentURL"] = "GroupManagement/SubGroup";
+            var culture = Request.Cookies["culture"]?.Value;
+            culture = string.IsNullOrEmpty(culture) ? "ja" : culture;
             string RenderId = string.Empty;
             PaginationFilterCommon paginationFilter = new PaginationFilterCommon()
             {
@@ -383,6 +387,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             ViewBag.GroupNameKatakana = commonModel.SubGroupInfoList[0].GroupNameKatakana;
             ViewBag.PopUpRenderValue = !string.IsNullOrEmpty(RenderId) ? RenderId : null;
             ViewBag.SearchFilter = SearchFilter;
+            ViewBag.LocationDDL=ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("LOCATIONDDL", "", culture)as Dictionary<string,string>,null,culture.ToLower()=="ja"? "--- 選択 ---" : "--- Select ---");
             return View(commonModel);
         }
         [HttpPost, ValidateAntiForgeryToken]
