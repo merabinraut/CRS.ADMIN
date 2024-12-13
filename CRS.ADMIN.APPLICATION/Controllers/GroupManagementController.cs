@@ -173,7 +173,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             var errorMessage = ModelState.Where(x => x.Value.Errors.Count > 0).SelectMany(x => x.Value.Errors.Select(e => $"{x.Key}:{e.ErrorMessage}")).ToList();
             TempData["ManageGroup"] = model;
             TempData["RenderId"] = "Manage";
-            return RedirectToAction("Index");
+            return redirectUrl;
         }
         [HttpGet]
         public ActionResult ManageGroup(string GroupId = "", string SearchFilter = "", int StartIndex = 0, int PageSize = 10)
