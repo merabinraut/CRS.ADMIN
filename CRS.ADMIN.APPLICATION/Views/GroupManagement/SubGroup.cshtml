@@ -13,6 +13,16 @@
     _SubGroupClubModel.GroupId = ViewBag.GroupId;
 }
 <link rel="stylesheet" href="//code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
+
+<style>
+    .even-row {
+        background-color: #f7f7f7; /* Light grey background */
+    }
+
+    .odd-row {
+        background-color: #ffffff; /* White background */
+    }
+</style>
 <div class="px-8 py-4">
     <!-- title  -->
     <div class="flex flex-col  gap-8">
@@ -26,16 +36,20 @@
                 </div>
             </div>
             <div class="flex gap-4">
-                <div class="btn btn-primary flex items-center gap-[8px] h-[40px]" data-drawer-target="add-sub-group"
+                <div class="btn btn-secondary text-[#D75A8B] border-[#D75A8B] flex items-center gap-[8px] h-[40px]" data-drawer-target="add-sub-group"
                      data-drawer-show="add-sub-group" data-drawer-placement="right" data-drawer-backdrop="false"
                      aria-controls="drawer-disabled-backdrop" id="add-new-id">
-                    <img src="~/Content/assets_new/images/plus-circle-solid.svg" />
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21" fill="none">
+                        <path d="M10 2.375C5.52002 2.375 1.875 6.02002 1.875 10.5C1.875 14.98 5.52002 18.625 10 18.625C14.48 18.625 18.125 14.98 18.125 10.5C18.125 6.02002 14.48 2.375 10 2.375ZM10 3.625C13.8037 3.625 16.875 6.69629 16.875 10.5C16.875 14.3037 13.8037 17.375 10 17.375C6.19629 17.375 3.125 14.3037 3.125 10.5C3.125 6.69629 6.19629 3.625 10 3.625ZM9.375 6.75V9.875H6.25V11.125H9.375V14.25H10.625V11.125H13.75V9.875H10.625V6.75H9.375Z" fill="#D75A8B" />
+                    </svg>
                     Add Sub Group
                 </div>
                 <div class="btn btn-primary flex items-center gap-[8px] h-[40px]" data-drawer-target="add-sub-group-club"
                      data-drawer-show="add-sub-group-club" data-drawer-placement="right" data-drawer-backdrop="false"
                      aria-controls="drawer-disabled-backdrop" id="manage-club-id">
-                    <img src="~/Content/assets_new/images/plus-circle-solid.svg" />
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21" fill="none">
+                        <path d="M2.5 3V5.28516L0.625 7.78516V8C0.625 9.02783 1.47217 9.875 2.5 9.875V18H12.5V12.375H13.75V18H17.5V9.875C18.5278 9.875 19.375 9.02783 19.375 8V7.78516L17.5 5.28516V3H2.5ZM3.75 4.25H16.25V4.875H3.75V4.25ZM3.4375 6.125H16.5625L18.0664 8.13672C17.998 8.40771 17.793 8.625 17.5 8.625C17.1533 8.625 16.875 8.34668 16.875 8H15.625C15.625 8.34668 15.3467 8.625 15 8.625C14.6533 8.625 14.375 8.34668 14.375 8H13.125C13.125 8.34668 12.8467 8.625 12.5 8.625C12.1533 8.625 11.875 8.34668 11.875 8H10.625C10.625 8.34668 10.3467 8.625 10 8.625C9.65332 8.625 9.375 8.34668 9.375 8H8.125C8.125 8.34668 7.84668 8.625 7.5 8.625C7.15332 8.625 6.875 8.34668 6.875 8H5.625C5.625 8.34668 5.34668 8.625 5 8.625C4.65332 8.625 4.375 8.34668 4.375 8H3.125C3.125 8.34668 2.84668 8.625 2.5 8.625C2.20703 8.625 2.00195 8.40771 1.93359 8.13672L3.4375 6.125ZM3.75 9.38672C4.08203 9.68701 4.52148 9.875 5 9.875C5.47852 9.875 5.91797 9.68701 6.25 9.38672C6.58203 9.68701 7.02148 9.875 7.5 9.875C7.97852 9.875 8.41797 9.68701 8.75 9.38672C9.08203 9.68701 9.52148 9.875 10 9.875C10.4785 9.875 10.918 9.68701 11.25 9.38672C11.582 9.68701 12.0215 9.875 12.5 9.875C12.9785 9.875 13.418 9.68701 13.75 9.38672C14.082 9.68701 14.5215 9.875 15 9.875C15.4785 9.875 15.918 9.68701 16.25 9.38672V16.75H15V11.125H11.25V16.75H3.75V9.38672ZM5 11.125V15.5H10V11.125H5ZM6.25 12.375H8.75V14.25H6.25V12.375Z" fill="white" />
+                    </svg>
                     Manage Club
                 </div>
             </div>
@@ -196,25 +210,27 @@
                                 int sno = 1;
                                 foreach (var item in Model.SubGroupInfoList)
                                 {
-                                    <tr class="bg-white border-b accordion-header" data-target="details-row-@sno">
-                                        <td class="p-[12px]">
+                                    // Determine the row class for alternating backgrounds
+
+                                    <tr class=" border-b bg-[#EAEAEA] accordion-header" data-target="details-row-@sno">
+                                        <td class="py-[28px] px-[16px]">
                                             @sno
-                                            <i class="fa-solid fa-chevron-down cursor-pointer toggle-arrow"></i>
+                                            <i class="fa-solid fa-chevron-up cursor-pointer toggle-arrow"></i>
                                         </td>
-                                        <td class="p-[12px]">
+                                        <td class="py-[28px] px-[16px]">
                                             @item.SubGroupName
                                         </td>
-                                        <td class="p-[12px]">
+                                        <td class="py-[28px] px-[16px]">
                                             @item.TotalClubCount
                                         </td>
-                                        <td class="p-[12px]">
+                                        <td class="py-[28px] px-[16px]">
                                         </td>
-                                        <td class="p-[12px]">
+                                        <td class="py-[28px] px-[16px]">
                                         </td>
-                                        <td class="p-[12px]">
+                                        <td class="py-[28px] px-[16px]">
                                         </td>
-                                        <td class="p-[12px]">
-                                            <div class="flex gap-[7px]">
+                                        <td class="py-[28px] px-[16px]">
+                                            <div class="flex justify-center gap-[7px]">
                                                 <i class="las la-edit text-[20px] cursor-pointer text-[#A6A6A6]" onclick="ManageSubGroupDetailsFunction('@item.SubGroupId','@item.GroupId');"></i>
                                                 <div class="text-[#BBBBBB] text-center text-[20px]"
                                                      onclick="">
@@ -224,39 +240,49 @@
                                         </td>
                                     </tr>
                                     <!-- Hidden Row -->
-                                    <tr class="bg-gray-100 hidden accordion-content details-row-@sno">
-                                        <td class="p-[12px]">
-                                        </td>
-                                        <td class="p-[12px]">
-                                        </td>
-                                        <td class="p-[12px]">
-                                        </td>
-                                        <td class="p-[12px] w-max">
-                                            <div class="round-image-text w-max flex gap-[12px]">
-                                                <img class="w-[32px] h-[32px] rounded-full"
-                                                     src="">
 
-                                                <div class="flex justify-between w-full">
-                                                    <div class="text-image grid flex-none ">
-                                                        <div class="text-sm font-semibold text-[#101828] "></div>
-                                                        <div class="platinum "></div>
+                                    string rowClass;
+                                    for (int i = 1; i <= 4; i++)
+                                    {
+                                        rowClass = i % 2 == 0 ? "bg-[#f6f6f6]" : "bg-white";
+                                        <tr class="@rowClass accordion-content details-row-@sno">
+                                            <td class="p-[12px]">
+                                            </td>
+                                            <td class="p-[12px]">
+                                            </td>
+                                            <td class="p-[12px]">
+                                            </td>
+                                            <td class="p-[12px] w-max">
+                                                <div class="round-image-text w-max flex justify-center items-center gap-[12px]">
+                                                    <img class="w-[36px] h-[36px] rounded-full"
+                                                         src="">
+
+                                                    <div class="flex flex-col gap-1 justify-between w-full">
+
+                                                        <div class="text-[14px] font-[600] text-[#101828] ">hello</div>
+                                                        <div class="text-[12px] font-[400]">hello</div>
+
                                                     </div>
                                                 </div>
-                                            </div>
-                                        </td>
-                                        <td class="p-[12px]">
-                                            Location
-                                        </td>
-                                        <td class="p-[12px]">
-                                            Added On
-                                        </td>
-                                        <td class="p-[12px]">
-                                            <div class="text-[#CB3F3F] text-center text-[20px]"
-                                                 onclick="window.location.href=''">
-                                                <i class="las la-trash-alt text-[20px] cursor-pointer "></i>
-                                            </div>
-                                        </td>
-                                    </tr>
+                                            </td>
+                                            <td class="p-[12px]">
+                                                Location
+                                            </td>
+                                            <td class="p-[12px]">
+                                                Added On
+                                            </td>
+                                            <td class="p-[12px]">
+                                                <div class="flex justify-center gap-[7px]">
+                                                    
+
+                                                    <div class="text-[#CB3F3F] text-center text-[20px]"
+                                                         onclick="window.location.href=''">
+                                                        <i class="las la-trash-alt text-[20px] cursor-pointer "></i>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    }
                                     sno++;
                                 }
                             }
@@ -293,23 +319,37 @@
         })
         document.addEventListener('DOMContentLoaded', () => {
             const headers = document.querySelectorAll('.accordion-header');
-            debugger
             headers.forEach(header => {
                 header.addEventListener('click', () => {
                     const targetClass = header.dataset.target;
-                    const content = document.querySelector(`.accordion-content.${targetClass}`);
+                    console.log("target:", targetClass);
+                    const contentRows = document.querySelectorAll(`.accordion-content.${targetClass}`);
                     const icon = header.querySelector('.toggle-arrow');
+                    let allHidden = true;
 
-                    if (content.classList.contains('hidden')) {
-                        content.classList.remove('hidden');
+                    contentRows.forEach(content => {
+                        if (!content.classList.contains('hidden')) {
+                            allHidden = false; 
+                        }
+                    });
+                    contentRows.forEach(content => {
+                        if (allHidden) {
+                            content.classList.remove('hidden');
+                        } else {
+                            content.classList.add('hidden');
+                        }
+                    });
+                    if (allHidden) {
                         icon.classList.replace('fa-chevron-down', 'fa-chevron-up');
+                        header.classList.add('bg-[#EAEAEA]'); 
                     } else {
-                        content.classList.add('hidden');
                         icon.classList.replace('fa-chevron-up', 'fa-chevron-down');
+                        header.classList.remove('bg-[#EAEAEA]'); 
                     }
                 });
             });
         });
+
          var popUprenderValue = '@ViewBag.PopUpRenderValue';
         if (popUprenderValue != null && popUprenderValue != '' && popUprenderValue == "ManageSG") {
             var element = document.getElementById('add-sub-group');
