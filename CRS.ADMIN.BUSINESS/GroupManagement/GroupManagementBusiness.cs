@@ -51,7 +51,7 @@ namespace CRS.ADMIN.BUSINESS.GroupManagement
         #endregion
 
         #region Sub Group Section
-        public List<SubGroupInfoModelCommon> GetSubGroupByGroupId(string groupId, PaginationFilterCommon paginationFilter)
+        public SubGroupModelCommon GetSubGroupByGroupId(string groupId, PaginationFilterCommon paginationFilter)
         {
             return _repo.GetSubGroupByGroupId(groupId, paginationFilter);
         }

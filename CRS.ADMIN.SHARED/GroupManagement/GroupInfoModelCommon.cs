@@ -39,6 +39,11 @@ namespace CRS.ADMIN.SHARED.GroupManagement
 
     #region SUB GROUP MODEL
 
+    public class SubGroupModelCommon
+    {
+        public List<SubGroupInfoModelCommon> SubGroupInfoList { get; set; }
+        public List<SubGroupClubInfoCommon> ClubShortInfo { get; set; }
+    }
     public class SubGroupInfoModelCommon
     {
         public string SubGroupName { get; set; }
@@ -49,7 +54,6 @@ namespace CRS.ADMIN.SHARED.GroupManagement
         public string Status { get; set; }
         public string CreatedOn { get; set; }
         public string TotalClubCount { get; set; }
-        public List<SubGroupClubInfoCommon> ClubShortInfo { get; set; }
     }
     public class SubGroupClubInfoCommon
     {
@@ -58,6 +62,7 @@ namespace CRS.ADMIN.SHARED.GroupManagement
         public string ClubNameJp { get; set; }
         public string ClubLogo { get; set; }
         public string LocationName { get; set; }
+        public string CreatedOn { get; set; }
     }
     public class ManageSubGroupModelCommon : PaginationFilterCommon
     {

@@ -77,7 +77,16 @@
                                         style="width: 100%;" name="SubGroupDDL">
                                     @foreach (var item in ViewBag.SubGroupList as IEnumerable<SelectListItem>)
                                     {
-                                        <option value="@item.Value" selected>@item.Text</option>
+                                        var selectedId = Model.SubGroupId as string;
+
+                                        if (selectedId == item.Value)
+                                        {
+                                            <option value="@item.Value" selected disabled>@item.Text</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@item.Value">@item.Text</option>
+                                        }
                                     }
                                 </select>
                             </div>
@@ -136,10 +145,7 @@
                             </div>
                         </div>
                     </div>
-                    @*add new F4F4F4 *@
-
                     <div class="flex flex-col gap-4" id="newContainer" style="display:none">
-
                         <div class="border border-[2px] border-dashed border-[#EBEBEB] w-full my-4">
                         </div>
                         <div class="flex justify-end">
@@ -163,9 +169,6 @@
                                         <option value="" selected>
                                         </option>
                                     </select>
-                                    @*<span class="error">
-                                            @Html.ValidationMessageFor(m => m.LocationDDL)
-                                        </span>*@
                                 </div>
                                 <div class="input-field-common">
                                     <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
@@ -176,9 +179,6 @@
                                         <option value="" selected>
                                         </option>
                                     </select>
-                                    @*<span class="error">
-                                            @Html.ValidationMessageFor(m => m.LocationDDL)
-                                        </span>*@
                                 </div>
                             </div>
                             <div class="flex justify-between items-center">
@@ -207,7 +207,6 @@
                         </span>
                     </button>
                     <div class="flex justify-between items-center mt-4">
-
                         <label class="block text-sm font-medium text-secondary-text-2 ">
                             合計店舗数
                         </label>

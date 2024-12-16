@@ -18,7 +18,7 @@ namespace CRS.ADMIN.BUSINESS.GroupManagement
         #endregion
 
         #region Sub Group Section
-        List<SubGroupInfoModelCommon> GetSubGroupByGroupId(string groupId, PaginationFilterCommon paginationFilter);
+        SubGroupModelCommon GetSubGroupByGroupId(string groupId, PaginationFilterCommon paginationFilter);
         CommonDbResponse ManageSubGroup(ManageSubGroupModelCommon commonRequest);
         ManageSubGroupModelCommon GetSubGroupDetail(string subGroupId);
         CommonDbResponse DeleteSubGroup(string subGroupId, Common request);
