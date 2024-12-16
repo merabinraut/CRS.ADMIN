@@ -36,7 +36,7 @@
 </style>
 <div id="add-group" class="drawer-close-disable  flex justify-end fixed top-0 right-0 z-40 h-screen overflow-y-auto transition-transform translate-x-full"
      tabindex="-1" aria-labelledby="drawer-right-label">
-    <div class="bg-white w-[863px] drawer-container relative">
+    <div class="bg-white w-[574px] drawer-container relative">
         <div class="drawer-form-container sticky top-0 z-[5] ">
             <div class="drawer-form flex justify-between bg-secondary-color-pink py-[16px] px-[24px] h-[56px]">
                 <div>  Manage Group</div>
@@ -72,7 +72,7 @@
                                     </label>
                                     @Html.TextBoxFor(model => model.GroupName, new
                                {
-                                   @class = "w-full",
+                                   @class = "w-full border-[#A09E91]",
                                    @id = "group_name_id",
                                    @placeholder = CRS.ADMIN.APPLICATION.Resources.Resource.Group_Name_Placeholder,
                                    autocomplete = "off",
@@ -88,7 +88,7 @@
                                     </label>
                                     @Html.TextBoxFor(model => model.GroupNameKatakana, new
                                {
-                                   @class = "w-full",
+                                   @class = "w-full border-[#A09E91]",
                                    @id = "group_name_katakana_id",
                                    autocomplete = "off",
                                    @maxLength = "50"
@@ -104,16 +104,21 @@
                                     <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
                                         @CRS.ADMIN.APPLICATION.Resources.Resource.Cover_Photo
                                     </label>
-                                    <div class="file-upload-common">
+                                    <div class="file-upload-common bg-[#F5F5F5]">
                                         <label for="file_input_cover1" class="custom-file-upload bg-[#CC527A] w-[123px] flex-none ">
                                             <span>  @CRS.ADMIN.APPLICATION.Resources.Resource.Choose_Images</span>
                                         </label>
                                         <input id="file_input_cover1" class="file-input" name="groupCoverImage" type="file" value="@Model.GroupCoverPhoto" style="display:none;">
                                         <p id="file_name_cover1"
-                                           class="file-name w-max h-[23px] overflow-hidden pl-2 text-xs text-[#686868] leading-[25px]">
+                                           class="file-name w-max h-[23px] overflow-hidden pl-2 text-xs text-[#686868] leading-[25px] flex items-center gap-1" >
+                                            <img src="~/Content/assets_new/images/images-solid.svg" />
+
                                             @if (string.IsNullOrEmpty(Model.GroupCoverPhoto))
                                             {
-                                                @CRS.ADMIN.APPLICATION.Resources.Resource.No_File_Choosen
+                                                <span>
+
+                                                    @CRS.ADMIN.APPLICATION.Resources.Resource.No_File_Choosen
+                                                </span>
                                             }
                                             else
                                             {
@@ -154,7 +159,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="bg-[#F4F4F4] h-[1px] w-full">
+                    <div class="bg-[#EBEBEB] h-[2px] w-full">
                     </div>
                     <div class="py-4 flex justify-end">
                         <div class="flex gap-6">
