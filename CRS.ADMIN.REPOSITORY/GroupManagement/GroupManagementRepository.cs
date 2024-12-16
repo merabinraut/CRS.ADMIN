@@ -125,8 +125,14 @@ namespace CRS.ADMIN.REPOSITORY.GroupManagement
         #endregion
 
         #region SUB GROUP SECTION
-        public List<SubGroupInfoModelCommon> GetSubGroupByGroupId(string groupId, PaginationFilterCommon paginationFilter)
+        public SubGroupModelCommon GetSubGroupByGroupId(string groupId, PaginationFilterCommon paginationFilter)
         {
+            var response = new SubGroupModelCommon
+            {
+                SubGroupInfoList = new List<SubGroupInfoModelCommon>(),
+                ClubShortInfo = new List<SubGroupClubInfoCommon>()
+            };
+
             string sp_name = "EXEC [dbo].[sproc_admin_get_subgroup]";
             sp_name += "@GroupId=" + _dao.FilterString(groupId);
             sp_name += ",@SearchFilter=" + _dao.FilterString(paginationFilter.SearchFilter);
@@ -135,9 +141,28 @@ namespace CRS.ADMIN.REPOSITORY.GroupManagement
 
             var dbResponse = _dao.ExecuteDataTable(sp_name);
             if (dbResponse.Rows.Count > 0 && dbResponse != null)
-                return _dao.DataTableToListObject<SubGroupInfoModelCommon>(dbResponse).ToList();
-            else return new List<SubGroupInfoModelCommon>();
+            {
+                response.SubGroupInfoList = _dao.DataTableToListObject<SubGroupInfoModelCommon>(dbResponse).ToList();
+                foreach (var item in response.SubGroupInfoList)
+                {
+                    string sp_name_1 = "EXEC [dbo].[sproc_admin_subgroup_club_info]";
+                    sp_name_1 += "@SubGroupId=" + _dao.FilterString(item.SubGroupId);
+                    var dbResponse1 = _dao.ExecuteDataTable(sp_name_1);
+
+                    response.ClubShortInfo.AddRange(_dao.DataTableToListObject<SubGroupClubInfoCommon>(dbResponse1));
+                }
+                return response;
+            }
+            else
+            {
+                return new SubGroupModelCommon
+                {
+                    SubGroupInfoList = new List<SubGroupInfoModelCommon>(),
+                    ClubShortInfo = new List<SubGroupClubInfoCommon>()
+                };
+            }
         }
+
 
         public CommonDbResponse ManageSubGroup(ManageSubGroupModelCommon commonRequest)
         {

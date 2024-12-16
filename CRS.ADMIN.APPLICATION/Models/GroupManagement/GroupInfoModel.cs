@@ -46,19 +46,20 @@ namespace CRS.ADMIN.APPLICATION.Models.GroupManagement
         public ManageSubGroupModel ManageSubGroup { get; set; }
         public ManageSubGroupClubModel ManageSubGroupClub { get; set; }
         public List<SubGroupInfoModel> SubGroupInfoList { get; set; }
+
+        public List<SubGroupClubInfo> ClubShortInfo { get; set; }
     }
 
     public class SubGroupInfoModel
     {
         public string SubGroupName { get; set; }
+        public string GroupName { get; set; }
+        public string GroupNameKatakana { get; set; }
         public string SubGroupId { get; set; }
         public string GroupId { get; set; }
         public string Status { get; set; }
         public string CreatedOn { get; set; }
         public string TotalClubCount { get; set; }
-        public string GroupName { get; set; }
-        public string GroupNameKatakana { get; set; }
-        public List<SubGroupClubInfo> ClubShortInfo { get; set; }
     }
     public class SubGroupClubInfo
     {
@@ -67,6 +68,7 @@ namespace CRS.ADMIN.APPLICATION.Models.GroupManagement
         public string ClubNameJp { get; set; }
         public string ClubLogo { get; set; }
         public string LocationName { get; set; }
+        public string CreatedOn { get; set; }
     }
     public class ManageSubGroupModel : PaginationFilterCommon
     {
@@ -76,7 +78,7 @@ namespace CRS.ADMIN.APPLICATION.Models.GroupManagement
         public string SubGroupId { get; set; }
         public string GroupId { get; set; }
     }
-    public class ManageSubGroupClubModel: PaginationFilterCommon
+    public class ManageSubGroupClubModel : PaginationFilterCommon
     {
         public string GroupId { get; set; }
         public string GroupName { get; set; }

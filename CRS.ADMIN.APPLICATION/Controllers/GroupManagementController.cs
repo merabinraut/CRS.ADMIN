@@ -376,11 +376,16 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             if (TempData.ContainsKey("RenderId")) RenderId = TempData["RenderId"].ToString();
 
             var dbResponse = _business.GetSubGroupByGroupId(groupId, paginationFilter);
-            commonModel.SubGroupInfoList = dbResponse.MapObjects<SubGroupInfoModel>();
+            commonModel.SubGroupInfoList = dbResponse.SubGroupInfoList.MapObjects<SubGroupInfoModel>();
+            commonModel.ClubShortInfo = dbResponse.ClubShortInfo.MapObjects<SubGroupClubInfo>();
             foreach (var item in commonModel.SubGroupInfoList)
             {
                 item.GroupId = item.GroupId.EncryptParameter();
                 item.SubGroupId = item.SubGroupId.EncryptParameter();
+            }
+            foreach (var item in commonModel.ClubShortInfo)
+            {
+                item.ClubId = item.ClubId.EncryptParameter();
             }
             ViewBag.StartIndex = StartIndex;
             ViewBag.PageSize = PageSize;
@@ -627,7 +632,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
         {
             var culture = Request.Cookies["culture"]?.Value;
             culture = string.IsNullOrEmpty(culture) ? "ja" : culture;
-            ManageSubGroupClubModel model = new ManageSubGroupClubModel();            
+            ManageSubGroupClubModel model = new ManageSubGroupClubModel();
             if (!string.IsNullOrEmpty(SubGroupId))
             {
                 string subGroupId = SubGroupId.DecryptParameter();
@@ -672,6 +677,13 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 StartIndex = model.Skip,
                 PageSize = model.Take == 0 ? 10 : model.Take,
             });
+        }
+        #endregion
+
+        #region GROUP GALLERY
+        public ActionResult GroupGallery()
+        {
+            return View();
         }
         #endregion
     }

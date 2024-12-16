@@ -358,6 +358,7 @@
     <Content Include="Views\GroupManagement\SubGroup.cshtml" />
     <Content Include="Views\GroupManagement\_ManageSubGroup.cshtml" />
     <Content Include="Views\GroupManagement\_ManageSubGroupClub.cshtml" />
+    <Content Include="Views\GroupManagement\GroupGallery.cshtml" />
     <None Include="Views\PromotionManagement\_ManageAdvertisementPartialView.cshtml" />
     <None Include="Views\PromotionManagement\_AdvertisementList.cshtml" />
     <Content Include="Content\assets\images\TickIcon.svg" />

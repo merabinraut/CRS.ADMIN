@@ -12,14 +12,14 @@ namespace CRS.ADMIN.REPOSITORY.GroupManagement
         CommonDbResponse DeleteGroup(string groupId, Common request);
         GroupAnalyticModelCommon GetGroupAnalytic();
         ManageGroupModelCommon GetGroupDetail(string groupId);
-        List<GroupInfoModelCommon> GetGroupList(PaginationFilterCommon paginationFilter);       
+        List<GroupInfoModelCommon> GetGroupList(PaginationFilterCommon paginationFilter);
         CommonDbResponse ManageGroup(ManageGroupModelCommon commonModel);
         CommonDbResponse UnblockGroup(string groupId, Common request);
 
         #endregion
 
         #region SUB GROUP SECTION
-        List<SubGroupInfoModelCommon> GetSubGroupByGroupId(string groupId, PaginationFilterCommon paginationFilter);
+        SubGroupModelCommon GetSubGroupByGroupId(string groupId, PaginationFilterCommon paginationFilter);
         CommonDbResponse ManageSubGroup(ManageSubGroupModelCommon commonRequest);
         ManageSubGroupModelCommon GetSubGroupDetail(string subGroupId);
         CommonDbResponse DeleteSubGroup(string subGroupId, Common request);
