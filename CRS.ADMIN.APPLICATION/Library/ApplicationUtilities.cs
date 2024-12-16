@@ -997,7 +997,7 @@ namespace CRS.ADMIN.APPLICATION.Library
             {
                 case "COMMISSIONTYPELIST":
                     return new List<SelectListItem> {
-                         
+
                         new SelectListItem { Text = "--- Select ---", Value = "" },
                         new SelectListItem { Text = "Percentage", Value = "P" },
                         new SelectListItem { Text = "Flat", Value = "F" }
@@ -1100,7 +1100,7 @@ namespace CRS.ADMIN.APPLICATION.Library
                     return response;
                 case "USERSTATUSDDL":
                     response = new Dictionary<string, string>();
-                    if (search2.ToLower()=="ja")
+                    if (search2.ToLower() == "ja")
                     {
                         response.Add("A".EncryptParameter(), "アクティブ");
                         response.Add("B".EncryptParameter(), "ブロック");
@@ -1110,7 +1110,7 @@ namespace CRS.ADMIN.APPLICATION.Library
                         response.Add("A".EncryptParameter(), "Active");
                         response.Add("B".EncryptParameter(), "Blocked");
                     }
-                  
+
                     return response;
                 case "CLUBPLANS":
                     dbResponse = _CommonBuss.GetDropDown("040", search1, search2);
@@ -1176,12 +1176,20 @@ namespace CRS.ADMIN.APPLICATION.Library
                         (item.Key.EncryptParameter(), item.Value);
                     });
                     return response;
-                 case "WITHDRAWDAY":
+                case "WITHDRAWDAY":
                     dbResponse = _CommonBuss.GetDropDown("054", search1, search2);
                     dbResponse.ForEach(item =>
                     {
                         response.Add
                         (item.Key.EncryptParameter(), item.Value);
+                    });
+                    return response;
+
+                case "SUBGROUPDDL":
+                    dbResponse = _CommonBuss.GetDropDown("059", search1, search2);
+                    dbResponse.ForEach(item =>
+                    {
+                        response.Add(item.Key.EncryptParameter(), item.Value);
                     });
                     return response;
                 default: return response;

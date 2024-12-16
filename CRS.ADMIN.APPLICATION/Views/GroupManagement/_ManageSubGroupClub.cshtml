@@ -1,4 +1,24 @@
 ﻿@model CRS.ADMIN.APPLICATION.Models.GroupManagement.ManageSubGroupClubModel
+
+<style>
+    .select2-container--default .select2-selection--single {
+        height: 44px !important;
+    }
+
+    .select2-container--default .select2-selection--multiple {
+        height: 80px !important;
+        overflow-y: auto;
+    }
+
+    .select2-container--default .select2-search--inline .select2-search__field {
+        width: 259px !important;
+        padding-left: 20px;
+        padding-top: 6px;
+        display: flex;
+        justify-content: flex-start;
+    }
+</style>
+
 <div id="add-sub-group-club" class="drawer-close-disable  flex justify-end fixed top-0 right-0 z-40 h-screen overflow-y-auto transition-transform translate-x-full "
      tabindex="-1" aria-labelledby="drawer-right-label">
     <div class="bg-white w-[574px] drawer-container relative">
@@ -53,71 +73,17 @@
                                 <label class="block mb-[12px] text-[14px] font-[500] text-secondary-100 ">
                                     サブグループ
                                 </label>
-                                <select id="large" class=" default_select select-common block w-full "
-                                        style="width: 100%;" name="LocationDDL"
-                                                 <option value="" selected>
-                                                 </option>
-                                     </select>
-                                @*@Html.HiddenFor(m => m.HolidayStr)
-                                    <select id="large" name="holiday" class=" default_select select-common block w-full "
-                                            style="width: 100%;" multiple="multiple" placeholder="Select">
-                                        @foreach (var item in ViewBag.Holiday as IEnumerable<SelectListItem>)
-                                        {
-                                            var selectedId = ViewBag.HolidayIdKey as string;
-                                            string[] selectedIds = !string.IsNullOrEmpty(selectedId) ? selectedId.Split(',') : new string[0]; ;
-                                            bool isSelected = selectedIds.Contains(item.Value);
-                                            if (isSelected == true)
-                                            {
-                                                <option value="@item.Value" selected @(item.Disabled == true ? "selected disabled" : "")>
-                                                    @item.Text
-                                                </option>
-                                            }
-                                            else
-                                            {
-                                                <option value="@item.Value" @(item.Disabled == true ? "selected disabled" : "")>
-                                                    @item.Text
-                                                </option>
-                                            }
-                                        }
-                                    </select>*@
+                                <select id="large" class="default_select select-common block w-full "
+                                        style="width: 100%;" name="SubGroupDDL">
+                                    @foreach (var item in ViewBag.SubGroupList as IEnumerable<SelectListItem>)
+                                    {
+                                        <option value="@item.Value" selected>@item.Text</option>
+                                    }
+                                </select>
                             </div>
                         </div>
-                        <!-- for last order -->
-                        @*<div class="grid grid-cols-2 gap-x-4 gap-y-5">
-                                <div class="input-field-common">
-                                    <label class="block mb-[12px] text-sm font-medium text-secondary-100 ">
-                                        @CRS.ADMIN.APPLICATION.Resources.Resource.other_holidays
-                                    </label>
-                                    @Html.HiddenFor(m => m.OthersHolidayStr)
-                                    <select id="large" name="OthersHoliday" class=" default_select select-common block w-full "
-                                            style="width: 100%;" multiple="multiple" placeholder="Select">
-                                        @foreach (var item in ViewBag.OthersHoliday as IEnumerable<SelectListItem>)
-                                        {
-                                            var selectedId = ViewBag.OthersHolidayIdKey as string;
-                                            string[] selectedIds = !string.IsNullOrEmpty(selectedId) ? selectedId.Split(',') : new string[0]; ;
-                                            bool isSelected = selectedIds.Contains(item.Value);
-                                            if (isSelected == true)
-                                            {
-                                                <option value="@item.Value" selected @(item.Disabled == true ? "selected disabled" : "")>
-                                                    @item.Text
-                                                </option>
-                                            }
-                                            else
-                                            {
-                                                <option value="@item.Value" @(item.Disabled == true ? "selected disabled" : "")>
-                                                    @item.Text
-                                                </option>
-                                            }
-
-                                        }
-
-                                    </select>
-                                </div>
-                            </div>*@
                     </div>
-
                     <div class="flex flex-col gap-4">
-
                         <div class="flex gap-2 text-primary-300 text-[14px] font-[600] items-center mt-[10px]">
                             <div class="flex-none uppercase">店舗をサブグループに追加</div>
                             <div class="bg-[#F4F4F4] h-[1px] w-full">
@@ -130,34 +96,33 @@
                                         エリア
                                     </label>
                                     <select id="large" class=" default_select select-common block w-full "
-                                            style="width: 100%;" name="LocationDDL"
-                                                <option value="" selected>
-                                                </option>
+                                            style="width: 100%;" name="LocationDDL">
+                                        @foreach (var item in ViewBag.LocationDDL as IEnumerable<SelectListItem>)
+                                        {
+                                            <option value="@item.Value" selected>@item.Text</option>
+                                        }
                                     </select>
-                                    @*<span class="error">
-                                            @Html.ValidationMessageFor(m => m.LocationDDL)
-                                        </span>*@
                                 </div>
                                 <div class="input-field-common">
                                     <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
                                         店舗
                                     </label>
-                                    <select id="large" class=" default_select select-common block w-full "
-                                            style="width: 100%;" name="LocationDDL"
-                                                 <option value="" selected>
-                                                 </option>
-                                     </select>
-                                    @*<span class="error">
-                                            @Html.ValidationMessageFor(m => m.LocationDDL)
-                                        </span>*@
+                                    @Html.HiddenFor(m => m.ClubId)
+                                    <select id="large" class="default_select select-common block w-full" multiple="multiple"
+                                            style="width: 100%;" name="ClubDDL" placeholder="Select">
+                                        @foreach (var item in ViewBag.ClubStoreDDL as IEnumerable<SelectListItem>)
+                                        {
+                                            <option value="@item.Value" selected>
+                                                @item.Text
+                                            </option>
+                                        }
+                                    </select>
                                 </div>
                             </div>
                             <div class="flex justify-between items-center">
-
                                 <label class="block text-sm font-medium text-secondary-text-2 ">
                                     店舗の合計数
                                 </label>
-
                                 <div class="input-field-common max-w-[116px]">
                                     @Html.TextBoxFor(model => model.TotalClubCount, new
                                                 {
@@ -169,94 +134,83 @@
                                                 })
                                 </div>
                             </div>
-
                         </div>
-
                     </div>
-
-                    
                     @*add new F4F4F4 *@
 
-                <div class="flex flex-col gap-4" id="newContainer" style="display:none">
+                    <div class="flex flex-col gap-4" id="newContainer" style="display:none">
 
-                    <div class="border border-[2px] border-dashed border-[#EBEBEB] w-full my-4">
-                    </div>
-                    <div class="flex justify-end">
-                        <button class="flex gap-1 items-center remove-container-btn" id="removeContainerBtn">
-
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="17" viewBox="0 0 16 17" fill="none">
-                                <path d="M2.5 3V14H13.5V3H2.5ZM3.5 4H12.5V13H3.5V4ZM5.5 8V9H10.5V8H5.5Z" fill="#D75A8B" />
-                            </svg>
-                            <span>
-                                削除
-                            </span>
-                        </button>
-                    </div>
-                    <div class="grid  gap-4">
-                        <div class="grid grid-cols-2 gap-x-4 gap-y-5">
-                            <div class="input-field-common">
-                                <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
-                                    エリア
+                        <div class="border border-[2px] border-dashed border-[#EBEBEB] w-full my-4">
+                        </div>
+                        <div class="flex justify-end">
+                            <button class="flex gap-1 items-center remove-container-btn" id="removeContainerBtn">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="17" viewBox="0 0 16 17" fill="none">
+                                    <path d="M2.5 3V14H13.5V3H2.5ZM3.5 4H12.5V13H3.5V4ZM5.5 8V9H10.5V8H5.5Z" fill="#D75A8B" />
+                                </svg>
+                                <span>
+                                    削除
+                                </span>
+                            </button>
+                        </div>
+                        <div class="grid  gap-4">
+                            <div class="grid grid-cols-2 gap-x-4 gap-y-5">
+                                <div class="input-field-common">
+                                    <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
+                                        エリア
+                                    </label>
+                                    <select id="large" class=" default_select select-common block w-full "
+                                            style="width: 100%;" name="LocationDDL">
+                                        <option value="" selected>
+                                        </option>
+                                    </select>
+                                    @*<span class="error">
+                                            @Html.ValidationMessageFor(m => m.LocationDDL)
+                                        </span>*@
+                                </div>
+                                <div class="input-field-common">
+                                    <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
+                                        店舗
+                                    </label>
+                                    <select id="large" class=" default_select select-common block w-full "
+                                            style="width: 100%;" name="LocationDDL">
+                                        <option value="" selected>
+                                        </option>
+                                    </select>
+                                    @*<span class="error">
+                                            @Html.ValidationMessageFor(m => m.LocationDDL)
+                                        </span>*@
+                                </div>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <label class="block text-sm font-medium text-secondary-text-2 ">
+                                    店舗の合計数
                                 </label>
-                                <select id="large" class=" default_select select-common block w-full "
-                                        style="width: 100%;" name="LocationDDL"
-                            <option value="" selected>
-                            </option>
-                </select>
-                                @*<span class="error">
-                        @Html.ValidationMessageFor(m => m.LocationDDL)
-                    </span>*@
-                            </div>
-                            <div class="input-field-common">
-                                <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
-                                    店舗
-                                </label>
-                                <select id="large" class=" default_select select-common block w-full "
-                                        style="width: 100%;" name="LocationDDL">
-                                    <option value="" selected>
-                                    </option>
-                                </select>
-                                @*<span class="error">
-                        @Html.ValidationMessageFor(m => m.LocationDDL)
-                    </span>*@
-                            </div>
-                        </div>
-                        <div class="flex justify-between items-center">
+                                <div class="input-field-common max-w-[116px]">
+                                    @Html.TextBoxFor(model => model.TotalClubCount, new
+                                                {
+                                                    @class = "w-full text-[#B7B7B7]",
+                                                    @placeholder = "",
+                                                    autocomplete = "off",
+                                                    disabled = "disabled",
 
-                            <label class="block text-sm font-medium text-secondary-text-2 ">
-                                店舗の合計数
-                            </label>
-
-                            <div class="input-field-common max-w-[116px]">
-                                @Html.TextBoxFor(model => model.TotalClubCount, new
-                                            {
-                                                @class = "w-full text-[#B7B7B7]",
-                                                @placeholder = "",
-                                                autocomplete = "off",
-                                                disabled = "disabled",
-
-                                })
+                                    })
+                                </div>
                             </div>
-                        </div>
-                        <div class="bg-[#F4F4F4] h-[2px] w-full">
+                            <div class="bg-[#F4F4F4] h-[2px] w-full">
+                            </div>
                         </div>
                     </div>
-
-                </div>
-
-
-                <button class="border border-dashed border-[#D75A8B] text-[#D75A8B] rounded-[4px] border-[1px] px-4 py-[6px] gap-1 mt-[24px]" id="addNewRow">
-                    <i class="las la-plus-circle"></i>
-                    <span>
-                        新規追加
-                    </span>
-                </button>
+                    <button class="border border-dashed border-[#D75A8B] text-[#D75A8B] rounded-[4px] border-[1px] px-4 py-[6px] gap-1 mt-[24px]" id="addNewRow">
+                        <i class="las la-plus-circle"></i>
+                        <span>
+                            新規追加
+                        </span>
+                    </button>
                     <div class="flex justify-between items-center mt-4">
 
                         <label class="block text-sm font-medium text-secondary-text-2 ">
                             合計店舗数
                         </label>
-
                         <div class="input-field-common max-w-[116px]">
                             @Html.TextBoxFor(model => model.TotalClubCount, new
                                        {
@@ -280,5 +234,4 @@
             </div>
         </div>
     </div>
-</div>
 </div>

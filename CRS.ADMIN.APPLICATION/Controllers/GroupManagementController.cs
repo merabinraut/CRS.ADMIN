@@ -6,6 +6,7 @@ using CRS.ADMIN.BUSINESS.GroupManagement;
 using CRS.ADMIN.SHARED;
 using CRS.ADMIN.SHARED.GroupManagement;
 using CRS.ADMIN.SHARED.PaginationManagement;
+using Syncfusion.XlsIO.Implementation.PivotAnalysis;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -24,9 +25,9 @@ namespace CRS.ADMIN.APPLICATION.Controllers
         {
             _business = business;
         }
-        
+
         #region MANAGE GROUP
-        [HttpGet]       
+        [HttpGet]
         public ActionResult Index(string SearchFilter = "", int StartIndex = 0, int PageSize = 10)
         {
             Session["CurrentURL"] = "GroupManagement/Index";
@@ -388,7 +389,9 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             ViewBag.GroupNameKatakana = commonModel.SubGroupInfoList[0].GroupNameKatakana;
             ViewBag.PopUpRenderValue = !string.IsNullOrEmpty(RenderId) ? RenderId : null;
             ViewBag.SearchFilter = SearchFilter;
-            ViewBag.LocationDDL=ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("LOCATIONDDL", "", culture)as Dictionary<string,string>,null,culture.ToLower()=="ja"? "--- 選択 ---" : "--- Select ---");
+            ViewBag.LocationDDL = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("LOCATIONDDL", "", culture) as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---");
+            ViewBag.ClubStoreDDL = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("CLUBLIST", "", culture) as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---");
+            ViewBag.SubGroupList = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("SUBGROUPDDL", groupId, culture) as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---");
             return View(commonModel);
         }
         [HttpPost, ValidateAntiForgeryToken]
@@ -624,7 +627,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
         {
             var culture = Request.Cookies["culture"]?.Value;
             culture = string.IsNullOrEmpty(culture) ? "ja" : culture;
-            ManageSubGroupClubModel model = new ManageSubGroupClubModel();
+            ManageSubGroupClubModel model = new ManageSubGroupClubModel();            
             if (!string.IsNullOrEmpty(SubGroupId))
             {
                 string subGroupId = SubGroupId.DecryptParameter();
