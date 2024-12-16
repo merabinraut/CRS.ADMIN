@@ -4,5 +4,230 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>GroupGallery</h2>
+<div class="px-[32px] py-[15.5px]" style="font-family:Noto sans">
 
+    <div class="flex justify-between items-center">
+        <div>
+            <div class="heading-title">
+                ギャラリー
+            </div>
+            <div class="span-title-light-gray">
+                グループギャラリーを管理する。
+            </div>
+        </div>
+        <div class="flex gap-4">
+
+            <div class="btn btn-primary flex items-center gap-[8px] h-[40px]" data-drawer-target="add-sub-group-club"
+                 data-drawer-show="add-sub-group-club" data-drawer-placement="right" data-drawer-backdrop="false"
+                 aria-controls="drawer-disabled-backdrop" id="manage-club-id">
+
+                <img src="~/Content/assets_new/images/plus.svg" />
+                新規追加
+            </div>
+        </div>
+    </div>
+
+
+    <div class="flex justify-between items-center w-full mt-[32px] mb-4">
+        <!-- Input Search Wrapper -->
+        <div class="relative input-search-wrapper flex-grow">
+            <div class="absolute inset-y-0 left-0 flex items-center pl-[16px] pointer-events-none">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21" fill="none">
+                    <path d="M17.5 18L13.875 14.375M15.8333 9.66667C15.8333 13.3486 12.8486 16.3333 9.16667 16.3333C5.48477 16.3333 2.5 13.3486 2.5 9.66667C2.5 5.98477 5.48477 3 9.16667 3C12.8486 3 15.8333 5.98477 15.8333 9.66667Z" stroke="#667085" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"></path>
+                </svg>
+            </div>
+            <input type="search" id="default-search" class="input-search block w-full" placeholder="@CRS.ADMIN.APPLICATION.Resources.Resource.Search" value="@ViewBag.SearchFilter" name="SearchFilter">
+        </div>
+
+
+    </div>
+
+
+    <div class="table-tab">
+        <div class="relative overflow-x-auto">
+            <table class="w-full  text-left club-table" id="table-id">
+                <thead class="club-table-thead">
+                    <tr>
+                        <th scope="col" class="p-[12px]">
+                            <div class="flex">
+                                S.N
+                                <div class="relative pl-[5px]">
+                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                </div>
+                            </div>
+                        </th>
+                        <th scope="col" class="p-[12px]">
+                            <div class="flex">
+                                タイトル
+                                <div class="relative pl-[5px]">
+                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                </div>
+                            </div>
+                        </th>
+                        <th scope="col" class="p-[12px]">
+                            <div class="flex">
+                                画像
+                                <div class="relative pl-[5px]">
+                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                </div>
+                            </div>
+                        </th>
+                        <th scope="col" class="p-[12px]">
+                            <div class="flex">
+                                更新日
+                                <div class="relative pl-[5px]">
+                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                </div>
+                            </div>
+                        </th>
+                        <th scope="col" class="p-[12px]">
+                            <div class="flex">
+                                アクション
+                                <div class="relative pl-[5px]">
+                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                </div>
+                            </div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+
+
+                    <tr class=" border-b">
+                        <td class="py-[26px] px-[24px]">
+                            1
+                        </td>
+                        <td class="py-[26px] px-[24px]">
+                            画像タイトルABC
+                        </td>
+                        <td class="py-[26px] px-[24px]">
+                            <img src="" alt="gallerygrp" class="w-[88px] h-[36px]" />
+                        </td>
+                        <td class="py-[26px] px-[24px]">
+                            2023年10月17日
+                        </td>
+                        <td class="py-[26px] px-[24px] text-center">
+                            <div class="flex gap-[7px]">
+                                <i class="las la-edit text-[20px] cursor-pointer text-[#A6A6A6]"></i>
+                                <div class="text-[#CB3F3F] text-center text-[20px]"
+                                     onclick="">
+                                    <i class="las la-trash-alt text-[20px] cursor-pointer "></i>
+                                </div>
+                            </div>
+                        </td>
+
+                    </tr>
+
+
+                </tbody>
+            </table>
+        </div>
+        <div class="pagination-club">
+            <div class="show-entry" id="Entries-Id">
+            </div>
+            <div class="flex gap-[12px]">
+                <div class="btn btn-secondary-box-shadow" id="prev-btn">
+                    @CRS.ADMIN.APPLICATION.Resources.Resource.Previous
+                </div>
+                <div class="flex gap-[12px]" id="pagination-id">
+                </div>
+                <div class="btn btn-secondary-box-shadow" id="next-btn">
+                    @CRS.ADMIN.APPLICATION.Resources.Resource.Next
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<div id="add-sub-group" class="drawer-close-disable  flex justify-end fixed top-0 right-0  z-40 h-screen overflow-y-auto transition-transform translate-x-full"
+     tabindex="-1" aria-labelledby="drawer-right-label">
+    <div class="bg-white w-[574px] drawer-container relative">
+        <div class="drawer-form-container sticky top-0 z-[5] ">
+            <div class="drawer-form flex justify-between bg-secondary-color-pink py-[16px] px-[24px] h-[56px]">
+                <div> グループギャラリーを管理</div>
+                <button type="button" data-drawer-hide="add-sub-group" aria-controls="add-sub-group"
+                        class="text-[20px]">
+                    <i class="las la-window-close text-white"></i>
+                </button>
+            </div>
+        </div>
+
+        <div class="pl-[24px] pt-[24px] pr-[26px]">
+            <div class="input-field-common">
+                <label class="block mb-[12px] text-sm font-[500] text-secondary-text-2 ">
+                    タイトル
+                </label>
+                <input placeholder="タイトル" type="text" class="w-full" />
+            </div>
+
+            <div class="mt-4">
+
+                <label class="block mb-[12px] text-sm font-[500] text-secondary-text-2 ">
+                    グループカバー写真
+                </label>
+                <div class="file-upload-common border-none bg-[#F5F5F5]">
+                    <label for="file_input_cover1" class="custom-file-upload bg-[#CC527A] w-[123px] flex-none ">
+                        <span>  @CRS.ADMIN.APPLICATION.Resources.Resource.Choose_Images</span>
+                    </label>
+                    <input id="file_input_cover1" class="file-input" name="groupCoverImage" type="file" style="display:none;">
+                    <p id="file_name_cover1"
+                       class="file-name w-max h-[23px] overflow-hidden pl-2 text-xs text-[#686868] leading-[25px] flex items-center gap-1">
+                        <img src="~/Content/assets_new/images/images-solid.svg" />
+
+                        <span>
+
+                            No_File_Choosen
+                        </span>
+                    </p>
+                </div>
+
+                <div class="text-xs text-error mt-[8px]">
+                    注意：画像はHEIF形式で、最大ファイルサイズは5MBです。
+
+                </div>
+            </div>
+
+            <div class="bg-[#EBEBEB] my-4 h-[2px] w-full">
+            </div>
+
+            <div class="py-4 flex justify-end">
+                <div class="flex gap-6">
+                    <button class="btn btn-secondary text-[16px] font-[500] rounded-[4px] px-[32px] py-[12px]" type="button" data-drawer-hide="add-sub-group" aria-controls="add-sub-group">
+                        キャンセル
+                    </button>
+                    <button class="btn btn-primary-default text-[16px] font-[500] rounded-[4px]" id="submit-button-id"> 追加する</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const drawer = document.getElementById("add-sub-group");
+            const openButton = document.getElementById("manage-club-id");
+            const closeButtons = drawer.querySelectorAll("[data-drawer-hide]");
+
+            // Show drawer
+            openButton.addEventListener("click", () => {
+                drawer.classList.remove("translate-x-full"); // Slide in
+            });
+
+            // Hide drawer (for all close buttons with data-drawer-hide)
+            closeButtons.forEach(button => {
+                button.addEventListener("click", () => {
+                    drawer.classList.add("translate-x-full"); // Slide out
+                });
+            });
+        });
+
+
+    </script>
+}
