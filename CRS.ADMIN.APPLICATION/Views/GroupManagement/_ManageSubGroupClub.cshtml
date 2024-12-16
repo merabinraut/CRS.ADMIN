@@ -166,18 +166,25 @@
                                     </label>
                                     <select id="large" class=" default_select select-common block w-full "
                                             style="width: 100%;" name="LocationDDL">
-                                        <option value="" selected>
-                                        </option>
+                                        @foreach (var item in ViewBag.LocationDDL as IEnumerable<SelectListItem>)
+                                        {
+                                            <option value="@item.Value" selected>@item.Text</option>
+                                        }
                                     </select>
                                 </div>
                                 <div class="input-field-common">
                                     <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
                                         店舗
                                     </label>
-                                    <select id="large" class=" default_select select-common block w-full "
-                                            style="width: 100%;" name="LocationDDL">
-                                        <option value="" selected>
-                                        </option>
+                                    @Html.HiddenFor(m => m.ClubId)
+                                    <select id="large" class="default_select select-common block w-full" multiple="multiple"
+                                            style="width: 100%;" name="ClubDDL" placeholder="Select">
+                                        @foreach (var item in ViewBag.ClubStoreDDL as IEnumerable<SelectListItem>)
+                                        {
+                                            <option value="@item.Value" selected>
+                                                @item.Text
+                                            </option>
+                                        }
                                     </select>
                                 </div>
                             </div>

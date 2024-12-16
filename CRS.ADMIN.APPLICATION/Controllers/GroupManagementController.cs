@@ -679,5 +679,12 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             });
         }
         #endregion
+
+        #region GROUP GALLERY
+        public ActionResult GroupGallery()
+        {
+            return View();
+        }
+        #endregion
     }
 }
