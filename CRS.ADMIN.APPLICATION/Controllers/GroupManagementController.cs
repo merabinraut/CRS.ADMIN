@@ -678,6 +678,16 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 PageSize = model.Take == 0 ? 10 : model.Take,
             });
         }
+
+        [HttpPost, ValidateAntiForgeryToken, OverrideActionFilters]
+        public JsonResult GetClubListByLocationId(string LocationId = "")
+        {
+            var locationId = !string.IsNullOrEmpty(LocationId) ? LocationId.DecryptParameter() : string.Empty;
+            List<SelectListItem> clubDDL = new List<SelectListItem>();
+            if (string.IsNullOrEmpty(locationId)) return null;
+            clubDDL = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("CLUBDDLBYLOCATIONID", locationId, "") as Dictionary<string, string>, null);
+            return Json(new { clubDDL }, JsonRequestBehavior.AllowGet);
+        }
         #endregion
 
         #region GROUP GALLERY

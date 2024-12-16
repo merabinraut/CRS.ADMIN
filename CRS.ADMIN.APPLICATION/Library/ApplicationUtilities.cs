@@ -1192,6 +1192,13 @@ namespace CRS.ADMIN.APPLICATION.Library
                         response.Add(item.Key.EncryptParameter(), item.Value);
                     });
                     return response;
+                case "CLUBDDLBYLOCATIONID":
+                    dbResponse = _CommonBuss.GetDropDown("060", search1, search2);
+                    dbResponse.ForEach(item =>
+                    {
+                        response.Add(item.Key.EncryptParameter(), item.Value);
+                    });
+                    return response;
                 default: return response;
             }
         }

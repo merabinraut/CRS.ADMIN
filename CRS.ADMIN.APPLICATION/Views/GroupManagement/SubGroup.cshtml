@@ -23,6 +23,7 @@
         background-color: #ffffff; /* White background */
     }
 </style>
+@Html.AntiForgeryToken()
 <div class="px-8 py-4">
     <!-- title  -->
     <div class="flex flex-col  gap-8">
@@ -374,24 +375,91 @@
 
 
     <script>
+        //$(document).ready(function () {
+        //    $('select[name="LocationDDL"]').on('change', function () {
+        //        const selectedValue = $(this).val();
+        //        debugger
+        //        if (selectedValue) {
+        //            $('select[name="LocationDDL"]').each(function () {
+        //                $(this)
+        //                    .val(selectedValue)
+        //                    .prop('disabled', false);
+        //            });
+        //        } else {
+        //            alert('Please select a valid location.');
+        //        }
+        //    });
 
-        document.addEventListener("DOMContentLoaded", function () {
-            // Get the buttons and container
-            const addNewRowBtn = document.getElementById("addNewRow");
-            const removeContainerBtn = document.getElementById("removeContainerBtn");
-            const newContainer = document.getElementById("newContainer");
+        //    $('#addNewRow').on('click', function () {
+        //        const selectedValue = $('select[name="LocationDDL"]').val();
+        //        debugger
+        //        if (selectedValue) {
+        //            $('#newContainer').show();
+        //        } else {
+        //            alert('Please select a location before adding a new row.');
+        //        }
+        //    });
 
-            // Show the container when "Add New Row" button is clicked
-            addNewRowBtn.addEventListener("click", function () {
-                newContainer.style.display = "block"; // Show the container
-                console.log("hello")
+        //    $(document).on('click', '.remove-container-btn', function () {
+        //        const newContainer = document.getElementById("newContainer");
+        //        newContainer.style.display = "none";
+        //    });
+        //});
+
+        $(document).ready(function () {
+            function updateDropdownOptions() {
+                const selectedValues = [];
+                $('select[name="LocationDDL"]').each(function () {
+                    const value = $(this).val();
+                    if (value) selectedValues.push(value);
+                });
+                $('select[name="LocationDDL"]').each(function () {
+                    const currentDropdown = $(this);
+                    currentDropdown.find('option').each(function () {
+                        if (selectedValues.includes($(this).val()) && $(this).val() !== currentDropdown.val()) {
+                            $(this).prop('disabled', true);
+                        } else {
+                            $(this).prop('disabled', false);
+                        }
+                    });
+                });
+            }
+            $(document).on('change', 'select[name="LocationDDL"]', function () {
+                var RequestVerificationToken = $('input[name="__RequestVerificationToken"]').val();
+                $(".ClubDDL").empty().prepend("<option value='' selected></option>");
+                const locationId = $(this).val();
+                $.ajax({
+                    type: 'POST',
+                    async: true,
+                     url: '@Url.Action("GetClubListByLocationId")',
+                    dataType: 'json',
+                    data: { '__RequestVerificationToken': RequestVerificationToken, LocationId: locationId },
+                    success: function (data) {
+                        $.each(data.clubDDL, function (i, clubDDL) {
+                            $(".ClubDDL").append('<option value="' + clubDDL.Value + '">' + clubDDL.Text + '</option>');
+                        });
+
+                    },
+                    error: function (ex) {
+                        toastr.info('Failed to retrive details.');
+                    }
+                });
+                updateDropdownOptions();
             });
 
-            // Remove the container when "削除" button is clicked
-            removeContainerBtn.addEventListener("click", function () {
-                newContainer.style.display = "none"; // Hide the container
+            $('#addNewRow').on('click', function () {
+                $('#newContainer').show();
+                updateDropdownOptions();
             });
+
+            $(document).on('click', '.remove-container-btn', function () {
+                const newContainer = document.getElementById("newContainer");
+                newContainer.style.display = "none";
+                updateDropdownOptions();
+            });
+            updateDropdownOptions();
         });
+
 
     </script>
 
