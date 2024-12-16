@@ -426,7 +426,7 @@
             }
             $(document).on('change', 'select[name="LocationDDL"]', function () {
                 var RequestVerificationToken = $('input[name="__RequestVerificationToken"]').val();
-                $(".ClubDDL").empty().prepend("<option value='' selected></option>");
+                $(".ClubDDL").empty().prepend("<option value=''></option>");
                 const locationId = $(this).val();
                 $.ajax({
                     type: 'POST',
