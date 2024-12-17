@@ -23,6 +23,24 @@
         background-color: #ffffff; /* White background */
     }
 </style>
+<style>
+    .select2-container--default .select2-selection--single {
+        height: 44px !important;
+    }
+
+    .select2-container--default .select2-selection--multiple {
+        height: 80px !important;
+        overflow-y: auto;
+    }
+
+    .select2-container--default .select2-search--inline .select2-search__field {
+        width: 259px !important;
+        padding-left: 20px;
+        padding-top: 6px;
+        display: flex;
+        justify-content: flex-start;
+    }
+</style>
 @Html.AntiForgeryToken()
 <div class="px-8 py-4">
     <!-- title  -->
@@ -406,61 +424,117 @@
         //    });
         //});
 
-        $(document).ready(function () {
-            function updateDropdownOptions() {
-                const selectedValues = [];
-                $('select[name="LocationDDL"]').each(function () {
-                    const value = $(this).val();
-                    if (value) selectedValues.push(value);
-                });
-                $('select[name="LocationDDL"]').each(function () {
-                    const currentDropdown = $(this);
-                    currentDropdown.find('option').each(function () {
-                        if (selectedValues.includes($(this).val()) && $(this).val() !== currentDropdown.val()) {
-                            $(this).prop('disabled', true);
-                        } else {
-                            $(this).prop('disabled', false);
-                        }
-                    });
-                });
-            }
-            $(document).on('change', 'select[name="LocationDDL"]', function () {
-                var RequestVerificationToken = $('input[name="__RequestVerificationToken"]').val();
-                $(".ClubDDL").empty().prepend("<option value=''></option>");
-                const locationId = $(this).val();
-                $.ajax({
-                    type: 'POST',
-                    async: true,
-                     url: '@Url.Action("GetClubListByLocationId")',
-                    dataType: 'json',
-                    data: { '__RequestVerificationToken': RequestVerificationToken, LocationId: locationId },
-                    success: function (data) {
-                        $.each(data.clubDDL, function (i, clubDDL) {
-                            $(".ClubDDL").append('<option value="' + clubDDL.Value + '">' + clubDDL.Text + '</option>');
-                        });
+       $(document).ready(function () {
+    let containerCounter = 1;
 
-                    },
-                    error: function (ex) {
-                        toastr.info('Failed to retrive details.');
-                    }
-                });
-                updateDropdownOptions();
-            });
 
-            $('#addNewRow').on('click', function () {
-                $('#newContainer').show();
-                updateDropdownOptions();
-            });
-
-            $(document).on('click', '.remove-container-btn', function () {
-                const newContainer = document.getElementById("newContainer");
-                newContainer.style.display = "none";
-                updateDropdownOptions();
-            });
-            updateDropdownOptions();
+    function updateDropdownOptions() {
+        const selectedValues = [];
+        $('select[name="LocationDDL"]').each(function () {
+            const value = $(this).val();
+            if (value) selectedValues.push(value);
         });
 
+        $('select[name="LocationDDL"]').each(function () {
+            const currentDropdown = $(this);
+            currentDropdown.find('option').each(function () {
+                if (selectedValues.includes($(this).val()) && $(this).val() !== currentDropdown.val()) {
+                    $(this).prop('disabled', true);
+                } else {
+                    $(this).prop('disabled', false);
+                }
+            });
+        });
+    }
+    $(document).on('change', 'select[name="LocationDDL"]', function () {
+        const containerId = $(this).data('container-id');
+        const clubDDL = $(`#clubddl_id-${containerId}`);
+        const locationId = $(this).val();
+        const RequestVerificationToken = $('input[name="__RequestVerificationToken"]').val();
+        if (clubDDL == "") {
+            $(".ClubDDL").empty().prepend("<option value=''></option>");
+        }
+        clubDDL.empty().append('<option value="">Loading...</option>');
 
+        if (locationId) {
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("GetClubListByLocationId")',
+                dataType: 'json',
+                data: { '__RequestVerificationToken': RequestVerificationToken, LocationId: locationId },
+                success: function (data) {
+                    clubDDL.empty().append('<option value="">Select Club</option>');
+                    $.each(data.clubDDL, function (i, club) {
+                        clubDDL.append('<option value="' + club.Value + '">' + club.Text + '</option>');
+                        $(".ClubDDL").append('<option value="' + club.Value + '">' + club.Text + '</option>');
+                    });
+                },
+                error: function () {
+                    alert('Failed to retrieve club details.');
+                }
+            });
+        } else {
+            clubDDL.empty().append('<option value="">Select Club</option>');
+        }
+        updateDropdownOptions();
+    });
+    function addNewContainer() {
+        const newContainerHtml = `
+            <div id="container-${containerCounter}" class="dynamic-container">
+             <div class="border border-[2px] border-dashed border-[#EBEBEB] w-full my-4">
+                        </div>
+                <div class="flex justify-end">
+                    <button class="flex gap-1 items-center remove-container-btn" data-container-id="${containerCounter}">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="17" viewBox="0 0 16 17" fill="none">
+                            <path d="M2.5 3V14H13.5V3H2.5ZM3.5 4H12.5V13H3.5V4ZM5.5 8V9H10.5V8H5.5Z" fill="#D75A8B" />
+                        </svg>
+                        <span>削除</span>
+                    </button>
+                </div>
+                <div class="grid grid-cols-2 gap-x-4 gap-y-5">
+                    <div class="input-field-common">
+                        <label class="block mb-[12px] text-sm font-medium text-secondary-text-2">エリア</label>
+                        <select id="locationddl-${containerCounter}" class="default_select select-common block w-full"
+                                name="LocationDDL" data-container-id="${containerCounter}" style="width: 100%;">
+                            <option value="">Select Location</option>
+                            @foreach (var item in ViewBag.LocationDDL)
+                            {
+                                <option value="@item.Value">@item.Text</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="input-field-common">
+                        <label class="block mb-[12px] text-sm font-medium text-secondary-text-2">店舗</label>
+                        <select id="clubddl_id-${containerCounter}" class="default_select select-common block w-full"
+                                name="ClubDDL" multiple="multiple" style="width: 100%;" placeholder="Select"></select>
+                    </div>
+                </div>
+                 <div class="flex justify-between items-center">
+                                <label class="block text-sm font-medium text-secondary-text-2 ">
+                                    店舗の合計数
+                                </label>
+                                <div class="input-field-common max-w-[116px]">
+                                   
+                                </div>
+                            </div>
+                            <div class="bg-[#F4F4F4] h-[2px] w-full">
+                            </div>
+            </div>
+        `;
+        $('#dynamicContainerWrapper').append(newContainerHtml);
+        containerCounter++;
+        updateDropdownOptions();
+    }
+    $('#addNewRow').on('click', function () {
+        addNewContainer();
+    });
+    $(document).on('click', '.remove-container-btn', function () {
+        const containerId = $(this).data('container-id');
+        $(`#container-${containerId}`).remove();
+        updateDropdownOptions();
+    });
+    updateDropdownOptions();
+});
     </script>
 
 }

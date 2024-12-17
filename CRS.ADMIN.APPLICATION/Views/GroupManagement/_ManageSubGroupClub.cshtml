@@ -112,13 +112,7 @@
                                     </label>
                                     @Html.HiddenFor(m => m.ClubId)
                                     <select id="large" class="default_select select-common block w-full ClubDDL" multiple="multiple"
-                                            style="width: 100%;" name="ClubDDL" placeholder="Select">
-                                        @*@foreach (var item in ViewBag.ClubStoreDDL as IEnumerable<SelectListItem>)
-                                        {
-                                            <option value="@item.Value" selected>
-                                                @item.Text
-                                            </option>
-                                        }*@
+                                            style="width: 100%;" name="ClubDDL" placeholder="Select">                                        
                                     </select>
                                 </div>
                             </div>
@@ -139,67 +133,9 @@
                             </div>
                         </div>
                     </div>
-                    <div class="flex flex-col gap-4" id="newContainer" style="display:none">
-                        <div class="border border-[2px] border-dashed border-[#EBEBEB] w-full my-4">
-                        </div>
-                        <div class="flex justify-end">
-                            <button class="flex gap-1 items-center remove-container-btn" id="removeContainerBtn">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="17" viewBox="0 0 16 17" fill="none">
-                                    <path d="M2.5 3V14H13.5V3H2.5ZM3.5 4H12.5V13H3.5V4ZM5.5 8V9H10.5V8H5.5Z" fill="#D75A8B" />
-                                </svg>
-                                <span>
-                                    削除
-                                </span>
-                            </button>
-                        </div>
-                        <div class="grid  gap-4">
-                            <div class="grid grid-cols-2 gap-x-4 gap-y-5">
-                                <div class="input-field-common">
-                                    <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
-                                        エリア
-                                    </label>
-                                    <select id="large" class=" default_select select-common block w-full "
-                                            style="width: 100%;" name="LocationDDL">
-                                        @foreach (var item in ViewBag.LocationDDL as IEnumerable<SelectListItem>)
-                                        {
-                                            <option value="@item.Value" selected>@item.Text</option>
-                                        }
-                                    </select>
-                                </div>
-                                <div class="input-field-common">
-                                    <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
-                                        店舗
-                                    </label>
-                                    @Html.HiddenFor(m => m.ClubId)
-                                    <select id="large" class="default_select select-common block w-full ClubDDL" multiple="multiple"
-                                            style="width: 100%;" name="ClubDDL" placeholder="Select">
-                                        @*@foreach (var item in ViewBag.ClubStoreDDL as IEnumerable<SelectListItem>)
-                                        {
-                                            <option value="@item.Value" selected>
-                                                @item.Text
-                                            </option>
-                                        }*@
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="flex justify-between items-center">
-                                <label class="block text-sm font-medium text-secondary-text-2 ">
-                                    店舗の合計数
-                                </label>
-                                <div class="input-field-common max-w-[116px]">
-                                    @Html.TextBoxFor(model => model.TotalClubCount, new
-                                                {
-                                                    @class = "w-full text-[#B7B7B7]",
-                                                    @placeholder = "",
-                                                    autocomplete = "off",
-                                                    disabled = "disabled",
-
-                                    })
-                                </div>
-                            </div>
-                            <div class="bg-[#F4F4F4] h-[2px] w-full">
-                            </div>
-                        </div>
+                    <div class="flex flex-col gap-4" id="dynamicContainerWrapper">
+                       
+                       
                     </div>
                     <button class="border border-dashed border-[#D75A8B] text-[#D75A8B] rounded-[4px] border-[1px] px-4 py-[6px] gap-1 mt-[24px]" id="addNewRow">
                         <i class="las la-plus-circle"></i>
