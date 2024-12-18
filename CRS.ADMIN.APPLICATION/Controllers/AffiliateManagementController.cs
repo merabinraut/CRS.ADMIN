@@ -1,5 +1,6 @@
 ﻿using CRS.ADMIN.APPLICATION.Helper;
 using CRS.ADMIN.APPLICATION.Library;
+using CRS.ADMIN.APPLICATION.Middleware;
 using CRS.ADMIN.APPLICATION.Models.AffiliateManagement;
 using CRS.ADMIN.APPLICATION.Models.ClubManagement;
 using CRS.ADMIN.BUSINESS.AffiliateManagement;
@@ -7,8 +8,12 @@ using CRS.ADMIN.SHARED;
 using CRS.ADMIN.SHARED.AffiliateManagement;
 using CRS.ADMIN.SHARED.ClubManagement;
 using CRS.ADMIN.SHARED.PaginationManagement;
+using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 using static Google.Apis.Requests.BatchRequest;
 
@@ -17,9 +22,12 @@ namespace CRS.ADMIN.APPLICATION.Controllers
     public class AffiliateManagementController : BaseController
     {
         private readonly IAffiliateManagementBusiness _affiliateBuss;
-        public AffiliateManagementController(IAffiliateManagementBusiness affiliateBuss)
+        private readonly AmazonCognitoMiddleware _amazonCognitoMiddleware;
+        public AffiliateManagementController(IAffiliateManagementBusiness affiliateBuss, AmazonCognitoMiddleware amazonCognitoMiddleware)
         {
             _affiliateBuss = affiliateBuss;
+            _amazonCognitoMiddleware = amazonCognitoMiddleware;
+            _amazonCognitoMiddleware.SetConfigNameViaUserType("affiliate");
         }
         public ActionResult Index(string SearchFilter1 = "", string SearchFilter2 = "", string value="" ,int StartIndex = 0, int PageSize = 10, int StartIndex2 = 0, int PageSize2 = 10)
         {
@@ -255,7 +263,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
         }
 
         [HttpGet,OverrideActionFilters]
-        public ActionResult ResetAffiliatePassword(string AgentId)
+        public async Task<ActionResult> ResetAffiliatePassword(string AgentId)
         {
             var response = new CommonDbResponse();
             var aId = !string.IsNullOrEmpty(AgentId) ? AgentId.DecryptParameter() : null;
@@ -266,14 +274,47 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 ActionIP = ApplicationUtilities.GetIP(),
                 ActionUser = ApplicationUtilities.GetSessionValue("Username").ToString()
             };
-            var dbResponse = _affiliateBuss.ResetPassword(commonRequest);
+            var _sqlTransactionHandler = new RepositoryDaoWithTransaction(null, null);
+            _sqlTransactionHandler.BeginTransaction();
+            var dbResponse = _affiliateBuss.ResetPassword(commonRequest, _sqlTransactionHandler.GetCurrentConnection(), _sqlTransactionHandler.GetCurrentTransaction());
             response = dbResponse;
+            if (response?.Code != CRS.ADMIN.SHARED.ResponseCode.Success || string.IsNullOrEmpty(response.Extra1) || string.IsNullOrEmpty(response.Extra2))
+            {
+                this.AddNotificationMessage(new NotificationModel()
+                {
+                    NotificationType = response.Code == CRS.ADMIN.SHARED.ResponseCode.Success ? NotificationMessage.SUCCESS : NotificationMessage.INFORMATION,
+                    Message = response.Message ?? "Something went wrong. Please try again later",
+                    Title = response.Code == CRS.ADMIN.SHARED.ResponseCode.Success ? NotificationMessage.SUCCESS.ToString() : NotificationMessage.INFORMATION.ToString()
+                });
+                _sqlTransactionHandler.RollbackTransaction();
+                return RedirectToAction("Index", "AffiliateManagement");
+            }
+            var resetPasswordResponse = await _amazonCognitoMiddleware.SetPasswordAsync(new CRS.ADMIN.SHARED.Middleware.AmazonCognitoModel.Password.SetPasswordModel.Request
+            {
+                Username = response.Extra1,
+                Password = response.Extra2,
+                IsPermanent = true
+            });
+
+            if (resetPasswordResponse?.Code != CRS.ADMIN.SHARED.Middleware.AmazonCognitoModel.ResponseCode.Success)
+            {
+                this.AddNotificationMessage(new NotificationModel()
+                {
+                    NotificationType = NotificationMessage.INFORMATION,
+                    Message = "Something went wrong. Please try again later",
+                    Title = NotificationMessage.INFORMATION.ToString()
+                });
+                _sqlTransactionHandler.RollbackTransaction();
+                return RedirectToAction("Index", "AffiliateManagement");
+            }
+            
             this.AddNotificationMessage(new NotificationModel()
             {
                 NotificationType = response.Code == ResponseCode.Success ? NotificationMessage.SUCCESS : NotificationMessage.INFORMATION,
                 Message = response.Message ?? "Something went wrong. Please try again later",
                 Title = response.Code == ResponseCode.Success ? NotificationMessage.SUCCESS.ToString() : NotificationMessage.INFORMATION.ToString()
             });
+            _sqlTransactionHandler.CommitTransaction();
             return RedirectToAction("Index", "AffiliateManagement");
         }
     }

@@ -1,5 +1,6 @@
 ﻿using CRS.ADMIN.APPLICATION.Helper;
 using CRS.ADMIN.APPLICATION.Library;
+using CRS.ADMIN.APPLICATION.Middleware;
 using CRS.ADMIN.APPLICATION.Models;
 using CRS.ADMIN.APPLICATION.Models.ClubManagement;
 using CRS.ADMIN.APPLICATION.Models.ClubManagerModel;
@@ -7,11 +8,14 @@ using CRS.ADMIN.APPLICATION.Models.TagManagement;
 using CRS.ADMIN.BUSINESS.ClubManagement;
 using CRS.ADMIN.SHARED;
 using CRS.ADMIN.SHARED.ClubManagement;
+using CRS.ADMIN.SHARED.Middleware.AmazonCognitoModel.SignUp;
+using CRS.ADMIN.SHARED.Middleware.AmazonCognitoModel;
 using CRS.ADMIN.SHARED.PaginationManagement;
 using DocumentFormat.OpenXml.Office2019.Excel.RichData2;
 using DocumentFormat.OpenXml.Wordprocessing;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -21,6 +25,8 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using static Google.Apis.Requests.BatchRequest;
+using CRS.ADMIN.SHARED.Middleware.AmazonCognitoModel.Password;
+using Amazon.CognitoIdentityProvider.Model;
 
 namespace CRS.ADMIN.APPLICATION.Controllers
 {
@@ -28,13 +34,17 @@ namespace CRS.ADMIN.APPLICATION.Controllers
     {
         private readonly IClubManagementBusiness _BUSS;
         private readonly HttpClient _httpClient;
-        public ClubManagementController(IClubManagementBusiness BUSS, HttpClient httpClient)
+        private readonly AmazonCognitoMiddleware _amazonCognitoMiddleware;
+        public ClubManagementController(IClubManagementBusiness BUSS, HttpClient httpClient, AmazonCognitoMiddleware amazonCognitoMiddleware)
         {
             _BUSS = BUSS;
             _httpClient = httpClient;
+            _amazonCognitoMiddleware = amazonCognitoMiddleware;
+            _amazonCognitoMiddleware.SetConfigNameViaUserType("club");
         }
+
         [HttpGet]
-        public ActionResult ClubList( string TabValue = "",string SearchFilter = "", int StartIndex = 0, int PageSize = 10, int StartIndex2 = 0, int PageSize2 = 10, int StartIndex3 = 0, int PageSize3 = 10)
+        public ActionResult ClubList(string TabValue = "", string SearchFilter = "", int StartIndex = 0, int PageSize = 10, int StartIndex2 = 0, int PageSize2 = 10, int StartIndex3 = 0, int PageSize3 = 10)
         {
             ViewBag.SearchFilter = SearchFilter;
             Session["CurrentURL"] = "/ClubManagement/ClubList";
@@ -55,10 +65,10 @@ namespace CRS.ADMIN.APPLICATION.Controllers
 
             if (TempData.ContainsKey("AvailabilityModel")) response.GetAvailabilityList = TempData["AvailabilityModel"] as List<AvailabilityTagModel>;
             else response.ManageTag.GetAvailabilityTagModel = new List<AvailabilityTagModel>();
-            
+
             //****************************  Start Approved List  **************************************//
 
-            if(TabValue == "")
+            if (TabValue == "")
             {
                 PaginationFilterCommon dbRequestall = new PaginationFilterCommon()
                 {
@@ -73,11 +83,11 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                     item.AgentId = item.AgentId?.EncryptParameter();
                     item.ClubLogo = ImageHelper.ProcessedImage(item.ClubLogo);
                 }
-              ViewBag.TotalData = dbResponse != null && dbResponse.Any() ? dbResponse[0].TotalRecords : 0;
+                ViewBag.TotalData = dbResponse != null && dbResponse.Any() ? dbResponse[0].TotalRecords : 0;
             }
             else
             {
-                ViewBag.TotalData =  0;
+                ViewBag.TotalData = 0;
             }
 
 
@@ -129,7 +139,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             }
             else
             {
-                ViewBag.TotalData3 =  0;
+                ViewBag.TotalData3 = 0;
             }
             //*************************************   END Rejected List  **************************************//
 
@@ -138,8 +148,8 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             ViewBag.StartIndex = StartIndex;
             ViewBag.PageSize = PageSize;
             ViewBag.StartIndex3 = StartIndex3;
-            ViewBag.PageSize3 = PageSize3;                                
-            ViewBag.Pref = DDLHelper.LoadDropdownList("PREF") as Dictionary<string, string>;          
+            ViewBag.PageSize3 = PageSize3;
+            ViewBag.Pref = DDLHelper.LoadDropdownList("PREF") as Dictionary<string, string>;
             ViewBag.Holiday = ApplicationUtilities.SetDDLValue(DDLHelper.LoadDropdownList("Holiday", "", culture) as Dictionary<string, string>, null, "");
             ViewBag.IdentificationType = DDLHelper.LoadDropdownList("DOCUMENTTYPE") as Dictionary<string, string>;
             ViewBag.IdentificationTypeIdKey = response.ManageClubModel.IdentificationType;
@@ -163,11 +173,11 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             ViewBag.OthersHoliday = ApplicationUtilities.SetDDLValue(DDLHelper.LoadDropdownList("OTHERSHOLIDAY", "", culture) as Dictionary<string, string>, null, "");
             ViewBag.OthersHolidayIdKey = !string.IsNullOrEmpty(response.ManageClubModel.OthersHoliday) ? response.ManageClubModel.OthersHoliday : null;
             response.ListType = TabValue;
-            response.TabValue = TabValue;          
+            response.TabValue = TabValue;
             response.SearchFilter = !string.IsNullOrEmpty(SearchFilter) ? SearchFilter : null;
             return View(response);
         }
-       
+
         [HttpGet]
         public ActionResult ManageClub(string AgentId = "", string SearchFilter = "", int StartIndex = 0, int PageSize = 10)
         {
@@ -175,7 +185,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             culture = string.IsNullOrEmpty(culture) ? "ja" : culture;
             ManageClubModel model = new ManageClubModel();
             //ViewBag.CountryCodeDDL = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("COUNTRYCODE") as Dictionary<string, string>, null);
-           
+
             if (!string.IsNullOrEmpty(AgentId))
             {
                 var id = AgentId.DecryptParameter();
@@ -268,7 +278,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
         }
 
         [HttpPost, ValidateAntiForgeryToken]
-        public JsonResult DeleteClub(string AgentId )
+        public async Task<JsonResult> DeleteClub(string AgentId)
         {
             var response = new CommonDbResponse();
             var aId = !string.IsNullOrEmpty(AgentId) ? AgentId.DecryptParameter() : null;
@@ -287,15 +297,62 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 ActionUser = ApplicationUtilities.GetSessionValue("Username").ToString()
             };
             string status = "D";
-            var dbResponse = _BUSS.ManageClubStatus(aId, status, commonRequest);
-            response = dbResponse;
-            this.AddNotificationMessage(new NotificationModel()
+            var _sqlTransactionHandler = new RepositoryDaoWithTransaction(null, null);
+            _sqlTransactionHandler.BeginTransaction();
+            try
             {
-                NotificationType = response.Code == ResponseCode.Success ? NotificationMessage.SUCCESS : NotificationMessage.INFORMATION,
-                Message = response.Message ?? "Something went wrong. Please try again later",
-                Title = response.Code == ResponseCode.Success ? NotificationMessage.SUCCESS.ToString() : NotificationMessage.INFORMATION.ToString()
-            });
-            return Json(dbResponse.Message, JsonRequestBehavior.AllowGet);
+                var dbResponse = _BUSS.ManageClubStatus(aId, status, commonRequest, _sqlTransactionHandler.GetCurrentConnection(), _sqlTransactionHandler.GetCurrentTransaction());
+                response = dbResponse;
+                if (response.Code != CRS.ADMIN.SHARED.ResponseCode.Success || string.IsNullOrEmpty(response.Extra1))
+                {
+                    this.AddNotificationMessage(new NotificationModel()
+                    {
+                        NotificationType = NotificationMessage.INFORMATION,
+                        Message = response.Message ?? "Something went wrong. Please try again later",
+                        Title = NotificationMessage.INFORMATION.ToString()
+                    });
+                    _sqlTransactionHandler.RollbackTransaction();
+                    return Json(dbResponse.Message, JsonRequestBehavior.AllowGet);
+                }
+
+                var adminDeleteAccountResponse = await _amazonCognitoMiddleware.AdminDeleteAccountAsync(new CRS.ADMIN.SHARED.Middleware.AmazonCognitoModel.UserManagement.AdminDeleteAccountModel.Request
+                {
+                    userName = response.Extra1
+                });
+
+                if (adminDeleteAccountResponse?.Code != CRS.ADMIN.SHARED.Middleware.AmazonCognitoModel.ResponseCode.Success)
+                {
+                    this.AddNotificationMessage(new NotificationModel()
+                    {
+                        NotificationType = NotificationMessage.INFORMATION,
+                        Message = "Something went wrong. Please try again later",
+                        Title = NotificationMessage.INFORMATION.ToString()
+                    });
+                    _sqlTransactionHandler.RollbackTransaction();
+                    return Json(JsonRequestBehavior.AllowGet);
+                }
+
+                this.AddNotificationMessage(new NotificationModel()
+                {
+                    NotificationType = NotificationMessage.SUCCESS,
+                    Message = response.Message ?? "Something went wrong. Please try again later",
+                    Title = NotificationMessage.SUCCESS.ToString()
+                });
+                _sqlTransactionHandler.CommitTransaction();
+                return Json(dbResponse.Message, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                this.AddNotificationMessage(new NotificationModel()
+                {
+                    NotificationType = NotificationMessage.WARNING,
+                    Message = $"Something went wrong. Please try again later {ex.Message}",
+                    Title = "EXCEPTION"
+                });
+
+                _sqlTransactionHandler.RollbackTransaction();
+                return Json(JsonRequestBehavior.AllowGet);
+            }
         }
         [HttpPost, ValidateAntiForgeryToken]
         public JsonResult BlockClub(string AgentId)
@@ -321,36 +378,14 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             response = dbResponse;
             this.AddNotificationMessage(new NotificationModel()
             {
-                NotificationType = response.Code == ResponseCode.Success ? NotificationMessage.SUCCESS : NotificationMessage.INFORMATION,
+                NotificationType = response.Code == CRS.ADMIN.SHARED.ResponseCode.Success ? NotificationMessage.SUCCESS : NotificationMessage.INFORMATION,
                 Message = response.Message ?? "Something went wrong. Please try again later",
-                Title = response.Code == ResponseCode.Success ? NotificationMessage.SUCCESS.ToString() : NotificationMessage.INFORMATION.ToString()
+                Title = response.Code == CRS.ADMIN.SHARED.ResponseCode.Success ? NotificationMessage.SUCCESS.ToString() : NotificationMessage.INFORMATION.ToString()
             });
             return Json(dbResponse.Message, JsonRequestBehavior.AllowGet);
         }
         [HttpPost, ValidateAntiForgeryToken]
-        public ActionResult UnBlockClub(string AgentId,string status)
-        {
-            var response = new CommonDbResponse();
-            var aId = !string.IsNullOrEmpty(AgentId) ? AgentId.DecryptParameter() : null;
-            if (string.IsNullOrEmpty(aId)) response = new CommonDbResponse { ErrorCode = 1, Message = "Invalid details" };
-            var commonRequest = new Common()
-            {
-                ActionIP = ApplicationUtilities.GetIP(),
-                ActionUser = ApplicationUtilities.GetSessionValue("Username").ToString()
-            };            
-            var dbResponse = _BUSS.ManageClubStatus(aId, status, commonRequest);
-            response = dbResponse;
-            this.AddNotificationMessage(new NotificationModel()
-            {
-                NotificationType = response.Code == ResponseCode.Success ? NotificationMessage.SUCCESS : NotificationMessage.INFORMATION,
-                Message = response.Message ?? "Something went wrong. Please try again later",
-                Title = response.Code == ResponseCode.Success ? NotificationMessage.SUCCESS.ToString() : NotificationMessage.INFORMATION.ToString()
-            });
-            return Json(response.SetMessageInTempData(this));
-        }
-
-        [HttpPost, ValidateAntiForgeryToken]
-        public ActionResult ResetClubPassword(string AgentId)
+        public ActionResult UnBlockClub(string AgentId, string status)
         {
             var response = new CommonDbResponse();
             var aId = !string.IsNullOrEmpty(AgentId) ? AgentId.DecryptParameter() : null;
@@ -360,16 +395,86 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 ActionIP = ApplicationUtilities.GetIP(),
                 ActionUser = ApplicationUtilities.GetSessionValue("Username").ToString()
             };
-            var dbResponse = _BUSS.ResetClubUserPassword(aId, "", commonRequest);
+            var dbResponse = _BUSS.ManageClubStatus(aId, status, commonRequest);
             response = dbResponse;
             this.AddNotificationMessage(new NotificationModel()
             {
-                NotificationType = response.Code == ResponseCode.Success ? NotificationMessage.SUCCESS : NotificationMessage.INFORMATION,
+                NotificationType = response.Code == CRS.ADMIN.SHARED.ResponseCode.Success ? NotificationMessage.SUCCESS : NotificationMessage.INFORMATION,
                 Message = response.Message ?? "Something went wrong. Please try again later",
-                Title = response.Code == ResponseCode.Success ? NotificationMessage.SUCCESS.ToString() : NotificationMessage.INFORMATION.ToString()
+                Title = response.Code == CRS.ADMIN.SHARED.ResponseCode.Success ? NotificationMessage.SUCCESS.ToString() : NotificationMessage.INFORMATION.ToString()
             });
-            return Json(JsonRequestBehavior.AllowGet);
-            //return Json(response.SetMessageInTempData(this));
+            return Json(response.SetMessageInTempData(this));
+        }
+
+        [HttpPost, ValidateAntiForgeryToken]
+        public async Task<ActionResult> ResetClubPassword(string AgentId)
+        {
+            var response = new CommonDbResponse();
+            var aId = !string.IsNullOrEmpty(AgentId) ? AgentId.DecryptParameter() : null;
+            if (string.IsNullOrEmpty(aId)) response = new CommonDbResponse { ErrorCode = 1, Message = "Invalid details" };
+            var commonRequest = new Common()
+            {
+                ActionIP = ApplicationUtilities.GetIP(),
+                ActionUser = ApplicationUtilities.GetSessionValue("Username").ToString()
+            };
+            var _sqlTransactionHandler = new RepositoryDaoWithTransaction(null, null);
+            _sqlTransactionHandler.BeginTransaction();
+            try
+            {
+                var dbResponse = _BUSS.ResetClubUserPassword(aId, "", commonRequest, _sqlTransactionHandler.GetCurrentConnection(), _sqlTransactionHandler.GetCurrentTransaction());
+                response = dbResponse.MapObject<CommonDbResponse>();
+
+                if (response?.Code != CRS.ADMIN.SHARED.ResponseCode.Success || string.IsNullOrEmpty(response.Extra1) || string.IsNullOrEmpty(response.Extra2))
+                {
+                    this.AddNotificationMessage(new NotificationModel()
+                    {
+                        NotificationType = response.Code == CRS.ADMIN.SHARED.ResponseCode.Success ? NotificationMessage.SUCCESS : NotificationMessage.INFORMATION,
+                        Message = response.Message ?? "Something went wrong. Please try again later",
+                        Title = response.Code == CRS.ADMIN.SHARED.ResponseCode.Success ? NotificationMessage.SUCCESS.ToString() : NotificationMessage.INFORMATION.ToString()
+                    });
+                    _sqlTransactionHandler.RollbackTransaction();
+                    return Json(JsonRequestBehavior.AllowGet);
+                }
+
+                var setPasswordResponse = await _amazonCognitoMiddleware.SetPasswordAsync(new CRS.ADMIN.SHARED.Middleware.AmazonCognitoModel.Password.SetPasswordModel.Request
+                {
+                    Username = response.Extra1,
+                    Password = response.Extra2,
+                    IsPermanent = true
+                });
+
+                if (setPasswordResponse?.Code != CRS.ADMIN.SHARED.Middleware.AmazonCognitoModel.ResponseCode.Success)
+                {
+                    this.AddNotificationMessage(new NotificationModel()
+                    {
+                        NotificationType = NotificationMessage.INFORMATION,
+                        Message = "Something went wrong. Please try again later",
+                        Title = NotificationMessage.INFORMATION.ToString()
+                    });
+                    _sqlTransactionHandler.RollbackTransaction();
+                    return Json(JsonRequestBehavior.AllowGet);
+                }
+
+                this.AddNotificationMessage(new NotificationModel()
+                {
+                    NotificationType = response.Code == CRS.ADMIN.SHARED.ResponseCode.Success ? NotificationMessage.SUCCESS : NotificationMessage.INFORMATION,
+                    Message = response.Message ?? "Something went wrong. Please try again later",
+                    Title = response.Code == CRS.ADMIN.SHARED.ResponseCode.Success ? NotificationMessage.SUCCESS.ToString() : NotificationMessage.INFORMATION.ToString()
+                });
+                _sqlTransactionHandler.CommitTransaction();
+                return Json(JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                this.AddNotificationMessage(new NotificationModel()
+                {
+                    NotificationType = NotificationMessage.WARNING,
+                    Message = $"Something went wrong. Please try again later {ex.Message}",
+                    Title = "EXCEPTION"
+                });
+                _sqlTransactionHandler.RollbackTransaction();
+                return Json(JsonRequestBehavior.AllowGet);
+            }
         }
 
         [HttpGet]
@@ -458,7 +563,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             TempData["RenderId"] = "Manage";
             TempData["EditPlan"] = model;
 
-            return RedirectToAction("ClubList", "ClubManagement",new { TabValue = "02", SearchFilter = SearchFilter, StartIndex2 = StartIndex, PageSize2 = PageSize });
+            return RedirectToAction("ClubList", "ClubManagement", new { TabValue = "02", SearchFilter = SearchFilter, StartIndex2 = StartIndex, PageSize2 = PageSize });
         }
 
         [HttpPost, ValidateAntiForgeryToken]
@@ -473,15 +578,15 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             string otherCommaSeparatedString = string.Join(", ", otherArray);
             List<string> othersHolidayList = otherCommaSeparatedString.Split(new[] { ", " }, StringSplitOptions.RemoveEmptyEntries).ToList();
             ActionResult redirectresult = null;
-            if(!string.IsNullOrEmpty(Model.holdId))
+            if (!string.IsNullOrEmpty(Model.holdId))
             {
                 redirectresult = RedirectToAction("ClubList", "ClubManagement", new
                 {
-                    TabValue="02",
+                    TabValue = "02",
                     SearchFilter = Model.SearchFilter,
                     StartIndex2 = Model.StartIndex,
                     PageSize2 = Model.PageSize == 0 ? 10 : Model.PageSize,
-                     
+
                 });
             }
             else
@@ -489,24 +594,24 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 redirectresult = RedirectToAction("ClubList", "ClubManagement", new
                 {
                     SearchFilter = Model.SearchFilter,
-                    StartIndex = Model.StartIndex ,
+                    StartIndex = Model.StartIndex,
                     PageSize = Model.PageSize == 0 ? 10 : Model.PageSize,
                 });
             }
             foreach (var holiday in holidayList)
             {
-               var item = holiday.DecryptParameter();
+                var item = holiday.DecryptParameter();
                 if (string.IsNullOrEmpty(holidays))
                 {
                     holidays = item.Trim();
                 }
                 else
                 {
-                    holidays = holidays+"," + item.Trim();
+                    holidays = holidays + "," + item.Trim();
                 }
-               
+
             }
-            Model.Holiday= holidays;
+            Model.Holiday = holidays;
             foreach (var otherholiday in othersHolidayList)
             {
                 var item = otherholiday.DecryptParameter();
@@ -927,9 +1032,9 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                     }
                     this.AddNotificationMessage(new NotificationModel()
                     {
-                        NotificationType = dbResponse.Code == ResponseCode.Success ? NotificationMessage.SUCCESS : NotificationMessage.INFORMATION,
+                        NotificationType = dbResponse.Code == CRS.ADMIN.SHARED.ResponseCode.Success ? NotificationMessage.SUCCESS : NotificationMessage.INFORMATION,
                         Message = dbResponse.Message ?? "Failed",
-                        Title = dbResponse.Code == ResponseCode.Success ? NotificationMessage.SUCCESS.ToString() : NotificationMessage.INFORMATION.ToString()
+                        Title = dbResponse.Code == CRS.ADMIN.SHARED.ResponseCode.Success ? NotificationMessage.SUCCESS.ToString() : NotificationMessage.INFORMATION.ToString()
                     });
                     return redirectresult;
                 }
@@ -967,7 +1072,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
 
 
         [HttpGet]
-        public ActionResult ApproveRejectClub(string holdid, string type, string AgentId, string SearchFilter = "", int StartIndex = 0, int PageSize = 10)
+        public async Task<ActionResult> ApproveRejectClub(string holdid, string type, string AgentId, string SearchFilter = "", int StartIndex = 0, int PageSize = 10)
         {
             ClubDetailModel response = new ClubDetailModel();
             var id = holdid.DecryptParameter();
@@ -1003,16 +1108,111 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             {
                 type = "rc_r";
             }
-            var dbResponse = _BUSS.ManageApproveReject(id, type, AgentId, culture, model);
-            response.AgentId = null;
-            response.UserId = null;
-            this.AddNotificationMessage(new NotificationModel()
+            var _sqlTransactionHandler = new RepositoryDaoWithTransaction(null, null);
+            _sqlTransactionHandler.BeginTransaction();
+            try
             {
-                NotificationType = dbResponse.Code == ResponseCode.Success ? NotificationMessage.SUCCESS : NotificationMessage.INFORMATION,
-                Message = dbResponse.Message ?? "Something went wrong. Please try again later",
-                Title = dbResponse.Code == ResponseCode.Success ? NotificationMessage.SUCCESS.ToString() : NotificationMessage.INFORMATION.ToString()
-            });
-            return RedirectToAction("ClubList", "ClubManagement", new { TabValue = "02", SearchFilter = SearchFilter, StartIndex2 = StartIndex, PageSize2 = PageSize });
+                var dbResponse = _BUSS.ManageApproveReject(id, type, AgentId, culture, model, _sqlTransactionHandler.GetCurrentConnection(), _sqlTransactionHandler.GetCurrentTransaction());
+                response.AgentId = null;
+                response.UserId = null;
+                if (dbResponse == null || dbResponse?.Code != CRS.ADMIN.SHARED.ResponseCode.Success || (string.IsNullOrEmpty(dbResponse.Extra3) && type == "r_cha"))
+                {
+                    this.AddNotificationMessage(new NotificationModel()
+                    {
+                        NotificationType = dbResponse.Code == CRS.ADMIN.SHARED.ResponseCode.Success ? NotificationMessage.SUCCESS : NotificationMessage.INFORMATION,
+                        Message = dbResponse.Message ?? "Something went wrong. Please try again later",
+                        Title = dbResponse.Code == CRS.ADMIN.SHARED.ResponseCode.Success ? NotificationMessage.SUCCESS.ToString() : NotificationMessage.INFORMATION.ToString()
+                    });
+                    _sqlTransactionHandler.RollbackTransaction();
+                    return RedirectToAction("ClubList", "ClubManagement", new { TabValue = "02", SearchFilter = SearchFilter, StartIndex2 = StartIndex, PageSize2 = PageSize });
+                }
+
+                if (dbResponse?.Code == CRS.ADMIN.SHARED.ResponseCode.Success && type == "r_cha")
+                {
+                    var getClubDetailsResponse = _BUSS.GetClubDetails(dbResponse.Extra1, culture);
+
+                    if (string.IsNullOrEmpty(getClubDetailsResponse.LoginId) ||
+                        string.IsNullOrEmpty(getClubDetailsResponse.MobileNumber) ||
+                        string.IsNullOrEmpty(getClubDetailsResponse.Email))
+                    {
+                        this.AddNotificationMessage(new NotificationModel()
+                        {
+                            NotificationType = NotificationMessage.INFORMATION,
+                            Message = "Something went wrong. Please try again later",
+                            Title = NotificationMessage.INFORMATION.ToString()
+                        });
+                        _sqlTransactionHandler.RollbackTransaction();
+                        return RedirectToAction("ClubList", "ClubManagement", new { TabValue = "02", SearchFilter = SearchFilter, StartIndex2 = StartIndex, PageSize2 = PageSize });
+                    }
+                    var countryCode = ConfigurationManager.AppSettings["CountryCode"];
+                    var signUpResponse = await _amazonCognitoMiddleware.AdminCreateUserAsync(new CRS.ADMIN.SHARED.Middleware.AmazonCognitoModel.SignUp.SignUpModel.Request
+                    {
+                        Username = getClubDetailsResponse?.LoginId,
+                        Password = dbResponse.Extra3,
+                        AttributeType = new List<CRS.ADMIN.SHARED.Middleware.AmazonCognitoModel.SignUp.SignUpModel.AttributeType>
+                        {
+                            new CRS.ADMIN.SHARED.Middleware.AmazonCognitoModel.SignUp.SignUpModel.AttributeType
+                            {
+                                Name = AttributeTypeName.PhoneNumber,
+                                Value = ApplicationUtilities.FormatPhoneNumber(getClubDetailsResponse?.MobileNumber, countryCode)
+                            },
+                            new CRS.ADMIN.SHARED.Middleware.AmazonCognitoModel.SignUp.SignUpModel.AttributeType
+                            {
+                                Name = AttributeTypeName.Email,
+                                Value =getClubDetailsResponse?.Email
+                            }
+                        }
+                    });
+
+                    if (signUpResponse?.Code != CRS.ADMIN.SHARED.Middleware.AmazonCognitoModel.ResponseCode.Success)
+                    {
+                        this.AddNotificationMessage(new NotificationModel()
+                        {
+                            NotificationType = NotificationMessage.INFORMATION,
+                            Message = "Something went wrong. Please try again later",
+                            Title = NotificationMessage.INFORMATION.ToString()
+                        });
+                        _sqlTransactionHandler.RollbackTransaction();
+                        return RedirectToAction("ClubList", "ClubManagement", new { TabValue = "02", SearchFilter = SearchFilter, StartIndex2 = StartIndex, PageSize2 = PageSize });
+                    }
+
+                    var cognitoUserId = signUpResponse.Data.MapObjects<CRS.ADMIN.SHARED.Middleware.AmazonCognitoModel.SignUp.SignUpModel.AdminCreateUserResponse>().FirstOrDefault(x => x.Name == CRS.ADMIN.SHARED.Middleware.AmazonCognitoModel.AttributeTypeName.Sub)?.Value;
+                    var manageClubCognitoDetailResponse = _BUSS.ManageClubCognitoDetail(dbResponse.Extra1, getClubDetailsResponse.LoginId, cognitoUserId, _sqlTransactionHandler.GetCurrentConnection(), _sqlTransactionHandler.GetCurrentTransaction());
+                    if (manageClubCognitoDetailResponse?.Code != CRS.ADMIN.SHARED.ResponseCode.Success)
+                    {
+                        this.AddNotificationMessage(new NotificationModel()
+                        {
+                            NotificationType = NotificationMessage.INFORMATION,
+                            Message = "Something went wrong. Please try again later",
+                            Title = NotificationMessage.INFORMATION.ToString()
+                        });
+                        _sqlTransactionHandler.RollbackTransaction();
+                        return RedirectToAction("ClubList", "ClubManagement", new { TabValue = "02", SearchFilter = SearchFilter, StartIndex2 = StartIndex, PageSize2 = PageSize });
+                    }
+                }
+
+                this.AddNotificationMessage(new NotificationModel()
+                {
+                    NotificationType = dbResponse.Code == CRS.ADMIN.SHARED.ResponseCode.Success ? NotificationMessage.SUCCESS : NotificationMessage.INFORMATION,
+                    Message = dbResponse.Message ?? "Something went wrong. Please try again later",
+                    Title = dbResponse.Code == CRS.ADMIN.SHARED.ResponseCode.Success ? NotificationMessage.SUCCESS.ToString() : NotificationMessage.INFORMATION.ToString()
+                });
+
+                _sqlTransactionHandler.CommitTransaction();
+                return RedirectToAction("ClubList", "ClubManagement", new { TabValue = "02", SearchFilter = SearchFilter, StartIndex2 = StartIndex, PageSize2 = PageSize });
+            }
+            catch (Exception ex)
+            {
+                this.AddNotificationMessage(new NotificationModel()
+                {
+                    NotificationType = NotificationMessage.WARNING,
+                    Message = $"Something went wrong. Please try again later {ex.Message}",
+                    Title = "EXCEPTION"
+                });
+
+                _sqlTransactionHandler.RollbackTransaction();
+                return RedirectToAction("ClubList", "ClubManagement", new { TabValue = "02", SearchFilter = SearchFilter, StartIndex2 = StartIndex, PageSize2 = PageSize });
+            }
         }
 
         [HttpGet]
@@ -1095,7 +1295,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 ResponseModel.IdentificationTypeName = (ResponseModel.IdentificationType != null && ViewBag.IdentificationType?.TryGetValue(ResponseModel.IdentificationType, out value)) ? value : "";
                 TempData["ClubHoldDetails"] = ResponseModel;
                 TempData["RenderId"] = "ClubHoldDetails";
-                return RedirectToAction("ClubList", "ClubManagement", new { TabValue = "02", SearchFilter = SearchFilter, StartIndex2 = StartIndex, PageSize2 = PageSize});
+                return RedirectToAction("ClubList", "ClubManagement", new { TabValue = "02", SearchFilter = SearchFilter, StartIndex2 = StartIndex, PageSize2 = PageSize });
             }
         }
         #region Manage Manager
@@ -1523,9 +1723,9 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 if (Image_Path != null) await ImageHelper.ImageUpload(fileName, Image_Path);
                 this.AddNotificationMessage(new NotificationModel()
                 {
-                    NotificationType = dbResponse.Code == ResponseCode.Success ? NotificationMessage.SUCCESS : NotificationMessage.INFORMATION,
+                    NotificationType = dbResponse.Code == CRS.ADMIN.SHARED.ResponseCode.Success ? NotificationMessage.SUCCESS : NotificationMessage.INFORMATION,
                     Message = dbResponse.Message ?? "Failed",
-                    Title = dbResponse.Code == ResponseCode.Success ? NotificationMessage.SUCCESS.ToString() : NotificationMessage.INFORMATION.ToString()
+                    Title = dbResponse.Code == CRS.ADMIN.SHARED.ResponseCode.Success ? NotificationMessage.SUCCESS.ToString() : NotificationMessage.INFORMATION.ToString()
                 });
                 return RedirectToAction("GalleryManagement", "ClubManagement", new { ClubId = Model.AgentId });
             }
@@ -1568,9 +1768,9 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             response = dbResponse;
             this.AddNotificationMessage(new NotificationModel()
             {
-                NotificationType = response.Code == ResponseCode.Success ? NotificationMessage.SUCCESS : NotificationMessage.INFORMATION,
+                NotificationType = response.Code == CRS.ADMIN.SHARED.ResponseCode.Success ? NotificationMessage.SUCCESS : NotificationMessage.INFORMATION,
                 Message = response.Message ?? "Something went wrong. Please try again later",
-                Title = response.Code == ResponseCode.Success ? NotificationMessage.SUCCESS.ToString() : NotificationMessage.INFORMATION.ToString()
+                Title = response.Code == CRS.ADMIN.SHARED.ResponseCode.Success ? NotificationMessage.SUCCESS.ToString() : NotificationMessage.INFORMATION.ToString()
             });
             return Json(response.Message, JsonRequestBehavior.AllowGet);
         }
@@ -1775,9 +1975,9 @@ namespace CRS.ADMIN.APPLICATION.Controllers
 
                     this.AddNotificationMessage(new NotificationModel()
                     {
-                        NotificationType = dbResponse.Code == ResponseCode.Success ? NotificationMessage.SUCCESS : NotificationMessage.INFORMATION,
+                        NotificationType = dbResponse.Code == CRS.ADMIN.SHARED.ResponseCode.Success ? NotificationMessage.SUCCESS : NotificationMessage.INFORMATION,
                         Message = dbResponse.Message ?? "Failed",
-                        Title = dbResponse.Code == ResponseCode.Success ? NotificationMessage.SUCCESS.ToString() : NotificationMessage.INFORMATION.ToString()
+                        Title = dbResponse.Code == CRS.ADMIN.SHARED.ResponseCode.Success ? NotificationMessage.SUCCESS.ToString() : NotificationMessage.INFORMATION.ToString()
                     });
                     return RedirectToAction("EventList", "ClubManagement", new
                     {
@@ -1901,9 +2101,9 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             response = dbResponse;
             this.AddNotificationMessage(new NotificationModel()
             {
-                NotificationType = response.Code == ResponseCode.Success ? NotificationMessage.SUCCESS : NotificationMessage.INFORMATION,
+                NotificationType = response.Code == CRS.ADMIN.SHARED.ResponseCode.Success ? NotificationMessage.SUCCESS : NotificationMessage.INFORMATION,
                 Message = response.Message ?? "Something went wrong. Please try again later",
-                Title = response.Code == ResponseCode.Success ? NotificationMessage.SUCCESS.ToString() : NotificationMessage.INFORMATION.ToString()
+                Title = response.Code == CRS.ADMIN.SHARED.ResponseCode.Success ? NotificationMessage.SUCCESS.ToString() : NotificationMessage.INFORMATION.ToString()
             });
 
             return RedirectToAction("EventList", "ClubManagement", new
