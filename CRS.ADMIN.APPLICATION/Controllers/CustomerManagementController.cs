@@ -1,12 +1,14 @@
 ﻿using CRS.ADMIN.APPLICATION.Helper;
 using CRS.ADMIN.APPLICATION.Library;
+using CRS.ADMIN.APPLICATION.Middleware;
 using CRS.ADMIN.APPLICATION.Models.CustomerManagement;
 using CRS.ADMIN.BUSINESS.CustomerManagement;
 using CRS.ADMIN.SHARED;
 using CRS.ADMIN.SHARED.CustomerManagement;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 
 namespace CRS.ADMIN.APPLICATION.Controllers
@@ -14,9 +16,12 @@ namespace CRS.ADMIN.APPLICATION.Controllers
     public class CustomerManagementController : BaseController
     {
         private readonly ICustomerManagementBusiness _BUSS;
-        public CustomerManagementController(ICustomerManagementBusiness BUSS)
+        private readonly AmazonCognitoMiddleware _amazonCognitoMiddleware;
+        public CustomerManagementController(ICustomerManagementBusiness BUSS, AmazonCognitoMiddleware amazonCognitoMiddleware)
         {
             _BUSS = BUSS;
+            _amazonCognitoMiddleware = amazonCognitoMiddleware;
+            _amazonCognitoMiddleware.SetConfigNameViaUserType("customer");
         }
         [HttpGet]
         public ActionResult CustomerList(CustomerListCommonModel Requests, int StartIndex = 0, int PageSize = 10)
@@ -25,7 +30,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             ViewBag.UserStatusKey = Requests.Status;
             var culture = Request.Cookies["culture"]?.Value;
             culture = string.IsNullOrEmpty(culture) ? "ja" : culture;
-            ViewBag.UserStatusDDL = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("USERSTATUSDDL","",culture) as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---");
+            ViewBag.UserStatusDDL = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("USERSTATUSDDL", "", culture) as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---");
             var Response = Requests.MapObject<CustomerListCommonModel>();
             var dbRequest = Requests.MapObject<CustomerSearchFilterCommon>();
             dbRequest.Status = !string.IsNullOrEmpty(dbRequest.Status) ? dbRequest.Status.DecryptParameter() : null;
@@ -184,7 +189,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
         }
 
         [HttpPost, ValidateAntiForgeryToken]
-        public ActionResult ResetCustomerPassword(string AgentId)
+        public async Task<ActionResult> ResetCustomerPassword(string AgentId)
         {
             var response = new CommonDbResponse();
             var aId = !string.IsNullOrEmpty(AgentId) ? AgentId.DecryptParameter() : null;
@@ -194,17 +199,64 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 ActionIP = ApplicationUtilities.GetIP(),
                 ActionUser = ApplicationUtilities.GetSessionValue("Username").ToString()
             };
-            var dbResponse = _BUSS.ResetCustomerPassword(aId, commonRequest);
-            response = dbResponse;
-            this.AddNotificationMessage(new NotificationModel()
+
+            var _sqlTransactionHandler = new RepositoryDaoWithTransaction(null, null);
+            _sqlTransactionHandler.BeginTransaction();
+            try
             {
-                NotificationType = response.Code == ResponseCode.Success ? NotificationMessage.SUCCESS : NotificationMessage.INFORMATION,
-                Message = response.Message ?? "Something went wrong. Please try again later",
-                Title = response.Code == ResponseCode.Success ? NotificationMessage.SUCCESS.ToString() : NotificationMessage.INFORMATION.ToString()
-            });
-            return Json(JsonRequestBehavior.AllowGet);
+                var dbResponse = _BUSS.ResetCustomerPassword(aId, commonRequest, _sqlTransactionHandler.GetCurrentConnection(), _sqlTransactionHandler.GetCurrentTransaction());
+                response = dbResponse;
+                if (response.Code != CRS.ADMIN.SHARED.ResponseCode.Success || string.IsNullOrEmpty(response.Extra1) || string.IsNullOrEmpty(response.Extra2))
+                {
+                    this.AddNotificationMessage(new NotificationModel()
+                    {
+                        NotificationType = NotificationMessage.INFORMATION,
+                        Message = response.Message ?? "Something went wrong. Please try again later",
+                        Title = NotificationMessage.INFORMATION.ToString()
+                    });
+                    _sqlTransactionHandler.RollbackTransaction();
+                    return Json(dbResponse.Message, JsonRequestBehavior.AllowGet);
+                }
+
+                var setPasswordResponse = await _amazonCognitoMiddleware.SetPasswordAsync(new CRS.ADMIN.SHARED.Middleware.AmazonCognitoModel.Password.SetPasswordModel.Request
+                {
+                    Username = response.Extra1,
+                    Password = response.Extra2,
+                    IsPermanent = true
+                });
+
+                if (setPasswordResponse?.Code != CRS.ADMIN.SHARED.Middleware.AmazonCognitoModel.ResponseCode.Success)
+                {
+                    this.AddNotificationMessage(new NotificationModel()
+                    {
+                        NotificationType = NotificationMessage.INFORMATION,
+                        Message = "Something went wrong. Please try again later",
+                        Title = NotificationMessage.INFORMATION.ToString()
+                    });
+                    _sqlTransactionHandler.RollbackTransaction();
+                    return Json(JsonRequestBehavior.AllowGet);
+                }
+
+                this.AddNotificationMessage(new NotificationModel()
+                {
+                    NotificationType = response.Code == ResponseCode.Success ? NotificationMessage.SUCCESS : NotificationMessage.INFORMATION,
+                    Message = response.Message ?? "Something went wrong. Please try again later",
+                    Title = response.Code == ResponseCode.Success ? NotificationMessage.SUCCESS.ToString() : NotificationMessage.INFORMATION.ToString()
+                });
+                _sqlTransactionHandler.CommitTransaction();
+                return Json(JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                this.AddNotificationMessage(new NotificationModel()
+                {
+                    NotificationType = NotificationMessage.WARNING,
+                    Message = $"Something went wrong. Please try again later {ex.Message}",
+                    Title = "EXCEPTION"
+                });
+                _sqlTransactionHandler.RollbackTransaction();
+                return Json(JsonRequestBehavior.AllowGet);
+            }
         }
-
-
     }
 }

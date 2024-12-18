@@ -30,6 +30,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
         [HttpGet]
         public ActionResult WithdrawalRequestMonthlyList(string SearchFilter = "", int StartIndex = 0, int PageSize = 10,string FromDate="", string ToDate = "")
         {
+            Session["CurrentURL"] = "/WithdrawalRequest/WithdrawalRequestMonthlyList";
             PaginationFilterCommon dbRequest = new PaginationFilterCommon()
             {
                 Skip = StartIndex,

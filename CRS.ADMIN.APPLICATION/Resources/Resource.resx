@@ -191,6 +191,10 @@
     <value>Admin Plan Commission Amount</value>
     <comment>Reservation Ledger</comment>
   </data>
+  <data name="Admin Point Management" xml:space="preserve">
+    <value>Admin Point Management</value>
+    <comment>Admin Point Management</comment>
+  </data>
   <data name="Admin Remarks" xml:space="preserve">
     <value>Admin Remarks</value>
     <comment>Reservation Ledger</comment>

@@ -1,31 +1,36 @@
 ﻿using CRS.ADMIN.APPLICATION.Helper;
 using CRS.ADMIN.APPLICATION.Library;
+using CRS.ADMIN.APPLICATION.Middleware;
 using CRS.ADMIN.APPLICATION.Models;
 using CRS.ADMIN.APPLICATION.Models.BasicClubManagement;
-using CRS.ADMIN.APPLICATION.Models.ClubManagement;
 using CRS.ADMIN.BUSINESS.BasicClubManagement;
-using CRS.ADMIN.SHARED.ClubManagement;
+using CRS.ADMIN.BUSINESS.ClubManagement;
 using CRS.ADMIN.SHARED;
+using CRS.ADMIN.SHARED.BasicClubManagement;
+using CRS.ADMIN.SHARED.ClubManagement;
+using CRS.ADMIN.SHARED.Middleware.AmazonCognitoModel;
 using CRS.ADMIN.SHARED.PaginationManagement;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.IO;
 using System.Linq;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
-using static Google.Apis.Requests.BatchRequest;
-using System.IO;
-using CRS.ADMIN.SHARED.BasicClubManagement;
 
 namespace CRS.ADMIN.APPLICATION.Controllers
 {
     public class BasicClubManagementController : BaseController
     {
         private readonly IBasicClubManagementBusiness _buss;
-        public BasicClubManagementController(IBasicClubManagementBusiness buss)
+        private readonly AmazonCognitoMiddleware _amazonCognitoMiddleware;
+        private readonly IClubManagementBusiness _clubManagementBusiness;
+        public BasicClubManagementController(IBasicClubManagementBusiness buss, AmazonCognitoMiddleware amazonCognitoMiddleware, IClubManagementBusiness clubManagementBusiness)
         {
             _buss = buss;
+            _amazonCognitoMiddleware = amazonCognitoMiddleware;
+            _clubManagementBusiness = clubManagementBusiness;
         }
         [HttpGet]
         public ActionResult BasicClubManagementList(string AgentId, string SearchFilter = "", int StartIndex = 0, int PageSize = 10)
@@ -261,9 +266,9 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                     if (CoverPhoto_Certificate != null) await ImageHelper.ImageUpload(CoverPhotoFileName, CoverPhoto_Certificate);
                     this.AddNotificationMessage(new NotificationModel()
                     {
-                        NotificationType = dbResponse.Code == ResponseCode.Success ? NotificationMessage.SUCCESS : NotificationMessage.INFORMATION,
+                        NotificationType = dbResponse.Code == CRS.ADMIN.SHARED.ResponseCode.Success ? NotificationMessage.SUCCESS : NotificationMessage.INFORMATION,
                         Message = dbResponse.Message ?? "Failed",
-                        Title = dbResponse.Code == ResponseCode.Success ? NotificationMessage.SUCCESS.ToString() : NotificationMessage.INFORMATION.ToString()
+                        Title = dbResponse.Code == CRS.ADMIN.SHARED.ResponseCode.Success ? NotificationMessage.SUCCESS.ToString() : NotificationMessage.INFORMATION.ToString()
                     });
                     return redirectresult;
                 }
@@ -371,9 +376,9 @@ namespace CRS.ADMIN.APPLICATION.Controllers
 
             return RedirectToAction("BasicClubManagementList", "BasicClubManagement", new
             {
-                SearchFilter= SearchFilter,
-                StartIndex= StartIndex,
-                PageSize= PageSize
+                SearchFilter = SearchFilter,
+                StartIndex = StartIndex,
+                PageSize = PageSize
             });
         }
 
@@ -400,9 +405,9 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             response = dbResponse;
             this.AddNotificationMessage(new NotificationModel()
             {
-                NotificationType = response.Code == ResponseCode.Success ? NotificationMessage.SUCCESS : NotificationMessage.INFORMATION,
+                NotificationType = response.Code == CRS.ADMIN.SHARED.ResponseCode.Success ? NotificationMessage.SUCCESS : NotificationMessage.INFORMATION,
                 Message = response.Message ?? "Something went wrong. Please try again later",
-                Title = response.Code == ResponseCode.Success ? NotificationMessage.SUCCESS.ToString() : NotificationMessage.INFORMATION.ToString()
+                Title = response.Code == CRS.ADMIN.SHARED.ResponseCode.Success ? NotificationMessage.SUCCESS.ToString() : NotificationMessage.INFORMATION.ToString()
             });
             return Json(dbResponse.Message, JsonRequestBehavior.AllowGet);
         }
@@ -429,9 +434,9 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             response = dbResponse;
             this.AddNotificationMessage(new NotificationModel()
             {
-                NotificationType = response.Code == ResponseCode.Success ? NotificationMessage.SUCCESS : NotificationMessage.INFORMATION,
+                NotificationType = response.Code == CRS.ADMIN.SHARED.ResponseCode.Success ? NotificationMessage.SUCCESS : NotificationMessage.INFORMATION,
                 Message = response.Message ?? "Something went wrong. Please try again later",
-                Title = response.Code == ResponseCode.Success ? NotificationMessage.SUCCESS.ToString() : NotificationMessage.INFORMATION.ToString()
+                Title = response.Code == CRS.ADMIN.SHARED.ResponseCode.Success ? NotificationMessage.SUCCESS.ToString() : NotificationMessage.INFORMATION.ToString()
             });
             return Json(dbResponse.Message, JsonRequestBehavior.AllowGet);
         }
@@ -450,9 +455,9 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             response = dbResponse;
             this.AddNotificationMessage(new NotificationModel()
             {
-                NotificationType = response.Code == ResponseCode.Success ? NotificationMessage.SUCCESS : NotificationMessage.INFORMATION,
+                NotificationType = response.Code == CRS.ADMIN.SHARED.ResponseCode.Success ? NotificationMessage.SUCCESS : NotificationMessage.INFORMATION,
                 Message = response.Message ?? "Something went wrong. Please try again later",
-                Title = response.Code == ResponseCode.Success ? NotificationMessage.SUCCESS.ToString() : NotificationMessage.INFORMATION.ToString()
+                Title = response.Code == CRS.ADMIN.SHARED.ResponseCode.Success ? NotificationMessage.SUCCESS.ToString() : NotificationMessage.INFORMATION.ToString()
             });
             return Json(response.SetMessageInTempData(this));
         }
@@ -604,7 +609,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             string kycDocumentPath = "";
             string LogoPath = "";
             string coverPhotoPath = "";
-            var allowedContentType = AllowedImageContentType();  
+            var allowedContentType = AllowedImageContentType();
             var allowedContentTypeWithPDF = AllowedImageContentTypePdf();
             string dateTime = "";
             if (Model.BusinessTypeDDL.DecryptParameter() == "1")
@@ -967,9 +972,81 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 commonModel.IdentificationType = commonModel.IdentificationType?.DecryptParameter();
                 Model.BusinessType = BusinessTypeDDL;
                 var returntype = string.Empty;
-                var dbResponse = _buss.ManageConversionClub(commonModel);
-                if (dbResponse != null && dbResponse.Code == 0)
+                var _sqlTransactionHandler = new RepositoryDaoWithTransaction(null, null);
+                _sqlTransactionHandler.BeginTransaction();
+                try
                 {
+                    var dbResponse = _buss.ManageConversionClub(commonModel, _sqlTransactionHandler.GetCurrentConnection(), _sqlTransactionHandler.GetCurrentTransaction());
+                    if (dbResponse == null || dbResponse.Code != 0
+                        || string.IsNullOrEmpty(dbResponse?.Extra1)
+                        || string.IsNullOrEmpty(dbResponse?.Extra2)
+                        || string.IsNullOrEmpty(dbResponse?.Extra3)
+                        || string.IsNullOrEmpty(dbResponse?.Extra4)
+                        || string.IsNullOrEmpty(dbResponse?.Extra5)
+                    )
+                    {
+                        this.AddNotificationMessage(new NotificationModel()
+                        {
+                            NotificationType = NotificationMessage.INFORMATION,
+                            Message = dbResponse.Message ?? "Failed",
+                            Title = NotificationMessage.INFORMATION.ToString()
+                        });
+                        TempData["ManageClubModel"] = Model;
+                        TempData["RenderId"] = "Manage";
+                        _sqlTransactionHandler.RollbackTransaction();
+                        return redirectresult;
+                    }
+
+                    var countryCode = ConfigurationManager.AppSettings["CountryCode"];
+                    var signUpResponse = await _amazonCognitoMiddleware.AdminCreateUserAsync(new CRS.ADMIN.SHARED.Middleware.AmazonCognitoModel.SignUp.SignUpModel.Request
+                    {
+                        Username = dbResponse?.Extra5,
+                        Password = dbResponse.Extra2,
+                        AttributeType = new List<CRS.ADMIN.SHARED.Middleware.AmazonCognitoModel.SignUp.SignUpModel.AttributeType>
+                        {
+                            new CRS.ADMIN.SHARED.Middleware.AmazonCognitoModel.SignUp.SignUpModel.AttributeType
+                            {
+                                Name = AttributeTypeName.PhoneNumber,
+                                Value = ApplicationUtilities.FormatPhoneNumber(dbResponse?.Extra3, countryCode)
+                            },
+                            new CRS.ADMIN.SHARED.Middleware.AmazonCognitoModel.SignUp.SignUpModel.AttributeType
+                            {
+                                Name = AttributeTypeName.Email,
+                                Value =dbResponse?.Extra4
+                            }
+                        }
+                    });
+
+                    if (signUpResponse?.Code != CRS.ADMIN.SHARED.Middleware.AmazonCognitoModel.ResponseCode.Success)
+                    {
+                        this.AddNotificationMessage(new NotificationModel()
+                        {
+                            NotificationType = NotificationMessage.INFORMATION,
+                            Message = "Something went wrong. Please try again later",
+                            Title = NotificationMessage.INFORMATION.ToString()
+                        });
+                        TempData["ManageClubModel"] = Model;
+                        TempData["RenderId"] = "Manage";
+                        _sqlTransactionHandler.RollbackTransaction();
+                        return redirectresult;
+                    }
+
+                    var cognitoUserId = signUpResponse.Data.MapObjects<CRS.ADMIN.SHARED.Middleware.AmazonCognitoModel.SignUp.SignUpModel.AdminCreateUserResponse>().FirstOrDefault(x => x.Name == CRS.ADMIN.SHARED.Middleware.AmazonCognitoModel.AttributeTypeName.Sub)?.Value;
+                    var manageClubCognitoDetailResponse = _clubManagementBusiness.ManageClubCognitoDetail(dbResponse.Extra1, dbResponse.Extra5, cognitoUserId, _sqlTransactionHandler.GetCurrentConnection(), _sqlTransactionHandler.GetCurrentTransaction());
+                    if (manageClubCognitoDetailResponse?.Code != CRS.ADMIN.SHARED.ResponseCode.Success)
+                    {
+                        this.AddNotificationMessage(new NotificationModel()
+                        {
+                            NotificationType = NotificationMessage.INFORMATION,
+                            Message = "Something went wrong. Please try again later",
+                            Title = NotificationMessage.INFORMATION.ToString()
+                        });
+                        TempData["ManageClubModel"] = Model;
+                        TempData["RenderId"] = "Manage";
+                        _sqlTransactionHandler.RollbackTransaction();
+                        return redirectresult;
+                    }
+
                     if (Business_Certificate != null) await ImageHelper.ImageUpload(businessCertificateFileName, Business_Certificate);
                     if (Logo_Certificate != null) await ImageHelper.ImageUpload(LogoFileName, Logo_Certificate);
                     if (CoverPhoto_Certificate != null) await ImageHelper.ImageUpload(CoverPhotoFileName, CoverPhoto_Certificate);
@@ -990,21 +1067,22 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                     }
                     this.AddNotificationMessage(new NotificationModel()
                     {
-                        NotificationType = dbResponse.Code == ResponseCode.Success ? NotificationMessage.SUCCESS : NotificationMessage.INFORMATION,
+                        NotificationType = dbResponse.Code == CRS.ADMIN.SHARED.ResponseCode.Success ? NotificationMessage.SUCCESS : NotificationMessage.INFORMATION,
                         Message = dbResponse.Message ?? "Failed",
-                        Title = dbResponse.Code == ResponseCode.Success ? NotificationMessage.SUCCESS.ToString() : NotificationMessage.INFORMATION.ToString()
+                        Title = dbResponse.Code == CRS.ADMIN.SHARED.ResponseCode.Success ? NotificationMessage.SUCCESS.ToString() : NotificationMessage.INFORMATION.ToString()
                     });
+                    _sqlTransactionHandler.CommitTransaction();
                     return redirectresult;
                 }
-                else
+                catch (Exception ex)
                 {
                     this.AddNotificationMessage(new NotificationModel()
                     {
-                        NotificationType = NotificationMessage.INFORMATION,
-                        Message = dbResponse.Message ?? "Failed",
-                        Title = NotificationMessage.INFORMATION.ToString()
+                        NotificationType = NotificationMessage.WARNING,
+                        Message = $"Something went wrong. Please try again later {ex.Message}",
+                        Title = "Exception"
                     });
-
+                    _sqlTransactionHandler.RollbackTransaction();
                     TempData["ManageClubModel"] = Model;
                     TempData["RenderId"] = "Manage";
                     return redirectresult;
