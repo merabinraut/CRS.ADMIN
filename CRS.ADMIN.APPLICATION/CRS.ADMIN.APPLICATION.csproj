@@ -287,6 +287,8 @@
     <Compile Include="Models\AffiliateManagement\AffiliateManagementModel.cs" />
     <Compile Include="Models\AmazonConfigruationModel.cs" />
     <Compile Include="Models\BasicClubManagement\BasicClubManagementModel.cs" />
+    <Compile Include="Models\ChargeManagement\ChargeCategoryModel.cs" />
+    <Compile Include="Models\ChargeManagement\ChargeDetailModel.cs" />
     <Compile Include="Models\ClubManagement\ClubManagementModel.cs" />
     <Compile Include="Models\ClubManagement\ClubManagerModel.cs" />
     <Compile Include="Models\ClubManagement\EventModel.cs" />

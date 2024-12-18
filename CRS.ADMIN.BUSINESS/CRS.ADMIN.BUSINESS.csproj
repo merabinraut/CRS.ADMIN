@@ -84,6 +84,8 @@
     <Compile Include="AffiliateManagement\IAffiliateManagementBusiness.cs" />
     <Compile Include="BasicClubManagement\BasicClubManagementBusiness.cs" />
     <Compile Include="BasicClubManagement\IBasicClubManagementBusiness.cs" />
+    <Compile Include="ChargeManagement\ChargeManagementBusiness.cs" />
+    <Compile Include="ChargeManagement\IChargeManagementBusiness.cs" />
     <Compile Include="ClubManagement\ClubManagementBusiness.cs" />
     <Compile Include="ClubManagement\IClubManagementBusiness.cs" />
     <Compile Include="ClubPlanManagement\ClubPlanManagementBusiness.cs" />
