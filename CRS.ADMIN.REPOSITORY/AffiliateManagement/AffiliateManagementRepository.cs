@@ -115,9 +115,10 @@ namespace CRS.ADMIN.REPOSITORY.AffiliateManagement
                 {
                     AffiliateId = _dao.ParseColumnValue(dbResponse, "AgentId").ToString(),
                     LoginId = _dao.ParseColumnValue(dbResponse, "LoginId").ToString(),
+                    UserName = _dao.ParseColumnValue(dbResponse, "AffiliateCode").ToString(),
                     FullName = _dao.ParseColumnValue(dbResponse, "FullName").ToString(),
                     MobileNumber = _dao.ParseColumnValue(dbResponse, "MobileNumber").ToString(),
-                   EmailAddress = _dao.ParseColumnValue(dbResponse, "EmailAddress").ToString(),
+                    EmailAddress = _dao.ParseColumnValue(dbResponse, "EmailAddress").ToString(),
                     BirthDateYear = _dao.ParseColumnValue(dbResponse, "BirthDateYear").ToString(),
                     BirthDateMonth = _dao.ParseColumnValue(dbResponse, "BirthDateMonth").ToString(),
                     BirthDateDay = _dao.ParseColumnValue(dbResponse, "BirthDateDay").ToString(),
