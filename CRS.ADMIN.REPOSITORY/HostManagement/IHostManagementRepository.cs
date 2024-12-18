@@ -1,6 +1,8 @@
 ﻿using CRS.ADMIN.SHARED;
 using CRS.ADMIN.SHARED.HostManagement;
 using CRS.ADMIN.SHARED.PaginationManagement;
+using DocumentFormat.OpenXml.Spreadsheet;
+using Syncfusion.XlsIO.Implementation.PivotAnalysis;
 using System.Collections.Generic;
 
 namespace CRS.ADMIN.REPOSITORY.HostManagement
@@ -21,5 +23,9 @@ namespace CRS.ADMIN.REPOSITORY.HostManagement
         List<StaticDataCommon> GetSkillsDLL();
         List<InquiryListCommon> GetInquiryListAsync(string SearchFilter, int StartIndex, int PageSize);
         #endregion
+
+        CommonDbResponse UploadHostImage(string ClubName, string LocationId, string HostName, string ImagePath);
+
+
     }
 }

@@ -6,6 +6,7 @@ using CRS.ADMIN.BUSINESS.HostManagement;
 using CRS.ADMIN.SHARED;
 using CRS.ADMIN.SHARED.HostManagement;
 using CRS.ADMIN.SHARED.PaginationManagement;
+using CsvHelper;
 using DocumentFormat.OpenXml.Bibliography;
 using Microsoft.Ajax.Utilities;
 using System;
@@ -13,9 +14,12 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using static CRS.ADMIN.APPLICATION.Controllers.HostManagementController;
 using static Google.Apis.Requests.BatchRequest;
 
 namespace CRS.ADMIN.APPLICATION.Controllers
@@ -23,6 +27,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
     public class HostManagementController : BaseController
     {
         private readonly IHostManagementBusiness _buss;
+        private readonly CsvService _csvService = new CsvService();
         public HostManagementController(IHostManagementBusiness buss)
         {
             _buss = buss;
@@ -178,7 +183,10 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                         Title = NotificationMessage.INFORMATION.ToString(),
                     });
                     TempData["RenderId"] = "ManageHost";
-                    return RedirectToAction("HostList", "HostManagement", new { AgentId, clubCategory = clubCategory,
+                    return RedirectToAction("HostList", "HostManagement", new
+                    {
+                        AgentId,
+                        clubCategory = clubCategory,
                         SearchFilter = SearchFilter,
                         StartIndex = StartIndex,
                         PageSize = PageSize
@@ -211,68 +219,69 @@ namespace CRS.ADMIN.APPLICATION.Controllers
 
                 if (!string.IsNullOrEmpty(model.DOB))
                 {
-                 if( model.DOB != "--") { 
-                    var Dateparts1 = model.DOB.Split('-');
-                    if (model.DOB.Count(c => c == '-') == 2)
+                    if (model.DOB != "--")
                     {
-                        // Case: 1995--10 => year and day
-                        var parts = model.DOB.Split('-');
-                        if (parts.Length == 3 && !string.IsNullOrEmpty(parts[0]) && string.IsNullOrEmpty(parts[1]) && !string.IsNullOrEmpty(parts[2]))
+                        var Dateparts1 = model.DOB.Split('-');
+                        if (model.DOB.Count(c => c == '-') == 2)
                         {
-                            model.BirthYear = parts[0]; // Extract year
-                            model.BirthDate = parts[2]; // Extract day
-
-                        }
-                        else
-                        {
-                            // Case: 1995-09-11 => yyyy-mm-dd
-                            DateTime dob;
-                            if (DateTime.TryParseExact(model.DOB, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out dob))
+                            // Case: 1995--10 => year and day
+                            var parts = model.DOB.Split('-');
+                            if (parts.Length == 3 && !string.IsNullOrEmpty(parts[0]) && string.IsNullOrEmpty(parts[1]) && !string.IsNullOrEmpty(parts[2]))
                             {
-                                model.BirthYear = dob.Year.ToString();
-                                model.BirthMonth = dob.Month.ToString("00");
-                                model.BirthDate = dob.Day.ToString("00");
+                                model.BirthYear = parts[0]; // Extract year
+                                model.BirthDate = parts[2]; // Extract day
 
                             }
+                            else
+                            {
+                                // Case: 1995-09-11 => yyyy-mm-dd
+                                DateTime dob;
+                                if (DateTime.TryParseExact(model.DOB, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out dob))
+                                {
+                                    model.BirthYear = dob.Year.ToString();
+                                    model.BirthMonth = dob.Month.ToString("00");
+                                    model.BirthDate = dob.Day.ToString("00");
+
+                                }
+                            }
                         }
-                    }
-                    if (model.DOB.StartsWith("--"))
-                    {
-                        // Case: --11 => day
-                        model.BirthDate = model.DOB.Substring(2, 2); // Extract day
+                        if (model.DOB.StartsWith("--"))
+                        {
+                            // Case: --11 => day
+                            model.BirthDate = model.DOB.Substring(2, 2); // Extract day
+
+                        }
+                        else if (model.DOB.EndsWith("--") && model.DOB.Count(c => c == '-') == 2)
+                        {
+                            // Case: 1995-- => year
+                            model.BirthYear = model.DOB.Substring(0, 4); // Extract year
+
+                        }
+                        else if (model.DOB.StartsWith("-") && model.DOB.Count(c => c == '-') == 2 && string.IsNullOrEmpty(Dateparts1[2]))
+                        {
+                            // Case: -12- => month
+                            model.BirthMonth = model.DOB.Substring(1, 2); // Extract month
+
+                        }
+                        else if (model.DOB.StartsWith("-") && model.DOB.Count(c => c == '-') == 2)
+                        {
+                            // Case: -12-10 => mm-dd
+                            model.BirthMonth = model.DOB.Substring(1, 2); // Extract month
+                            model.BirthDate = model.DOB.Substring(4, 2);  // Extract day
+
+                        }
+
+
+
+                        else if (model.DOB.EndsWith("-") && model.DOB.Count(c => c == '-') == 2)
+                        {
+                            // Case: 1995-09- => year and month
+                            var parts = model.DOB.Split('-');
+                            model.BirthYear = parts[0]; // Extract year
+                            model.BirthMonth = parts[1]; // Extract month                       
+                        }
 
                     }
-                    else if (model.DOB.EndsWith("--") && model.DOB.Count(c => c == '-') == 2)
-                    {
-                        // Case: 1995-- => year
-                        model.BirthYear = model.DOB.Substring(0, 4); // Extract year
-
-                    }
-                    else if (model.DOB.StartsWith("-") && model.DOB.Count(c => c == '-') == 2 && string.IsNullOrEmpty(Dateparts1[2]))
-                    {
-                        // Case: -12- => month
-                        model.BirthMonth = model.DOB.Substring(1, 2); // Extract month
-
-                    }
-                    else if (model.DOB.StartsWith("-") && model.DOB.Count(c => c == '-') == 2)
-                    {
-                        // Case: -12-10 => mm-dd
-                        model.BirthMonth = model.DOB.Substring(1, 2); // Extract month
-                        model.BirthDate = model.DOB.Substring(4, 2);  // Extract day
-
-                    }
-
-
-
-                    else if (model.DOB.EndsWith("-") && model.DOB.Count(c => c == '-') == 2)
-                    {
-                        // Case: 1995-09- => year and month
-                        var parts = model.DOB.Split('-');
-                        model.BirthYear = parts[0]; // Extract year
-                        model.BirthMonth = parts[1]; // Extract month                       
-                    }
-
-                }
                 }
 
                 model.ConstellationGroup = model.ConstellationGroup?.EncryptParameter();
@@ -291,7 +300,10 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 model.HostIdentityDataModel.ForEach(x => x.IdentityDDLType = !string.IsNullOrEmpty(x.IdentityDDLType) ? x.IdentityDDLType.EncryptParameter() : null);
                 TempData["RenderId"] = "ManageHost";
                 TempData["ManageHostModel"] = model;
-                return RedirectToAction("HostList", "HostManagement", new { AgentId, clubCategory = clubCategory,
+                return RedirectToAction("HostList", "HostManagement", new
+                {
+                    AgentId,
+                    clubCategory = clubCategory,
                     SearchFilter = SearchFilter,
                     StartIndex = StartIndex,
                     PageSize = PageSize
@@ -460,8 +472,8 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 //if (!string.IsNullOrEmpty(requestCommon.Height))
                 //    requestCommon.Height = Model.Height?.DecryptParameter();
                 if (!string.IsNullOrEmpty(requestCommon.Position))
-                requestCommon.Position = Model.Position?.DecryptParameter();               
-                requestCommon.DOB =  Model.DOB;               
+                    requestCommon.Position = Model.Position?.DecryptParameter();
+                requestCommon.DOB = Model.DOB;
                 requestCommon.ActionUser = ApplicationUtilities.GetSessionValue("Username").ToString();
                 requestCommon.ActionIP = ApplicationUtilities.GetIP();
                 requestCommon.ImagePath = Model.HostLogo;
@@ -636,7 +648,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
 
         #region Gallery Management
         [HttpGet]
-        public ActionResult GalleryManagement(string AgentId, string HostId, string SearchFilter = "",string clubCategory="")
+        public ActionResult GalleryManagement(string AgentId, string HostId, string SearchFilter = "", string clubCategory = "")
         {
             ViewBag.AgentId = AgentId;
             ViewBag.HostId = HostId;
@@ -687,7 +699,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             ViewBag.IsBackAllowed = true;
             if (!string.IsNullOrEmpty(clubCategory) && clubCategory.ToUpper() == "BASIC")
             {
-                ViewBag.BackButtonURL = "/HostManagement/HostList?AgentId=" + AgentId + "&clubCategory=" +clubCategory;
+                ViewBag.BackButtonURL = "/HostManagement/HostList?AgentId=" + AgentId + "&clubCategory=" + clubCategory;
             }
             else
             {
@@ -698,7 +710,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
         }
 
         [HttpGet]
-        public ActionResult ManageGallery(string AgentId, string HostId, string GalleryId,string clubCategory)
+        public ActionResult ManageGallery(string AgentId, string HostId, string GalleryId, string clubCategory)
         {
             HostManageGalleryImageModel model = new HostManageGalleryImageModel();
             var aId = AgentId?.DecryptParameter();
@@ -782,7 +794,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                     });
                     TempData["GalleryManagementModel"] = Model;
                     TempData["RenderId"] = "ManageHostGallery";
-                    return RedirectToAction("GalleryManagement", "HostManagement", new { AgentId = Model.AgentId, HostId = Model.HostId, clubCategory =Model.clubCategory});
+                    return RedirectToAction("GalleryManagement", "HostManagement", new { AgentId = Model.AgentId, HostId = Model.HostId, clubCategory = Model.clubCategory });
                 }
             }
             if (string.IsNullOrEmpty(Model.ImagePath))
@@ -867,7 +879,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
         }
 
         [HttpPost, ValidateAntiForgeryToken]
-        public JsonResult ManageGalleryStatus(string AgentId, string HostId, string GalleryId,string clubCategory)
+        public JsonResult ManageGalleryStatus(string AgentId, string HostId, string GalleryId, string clubCategory)
         {
             var response = new CommonDbResponse();
             var aId = !string.IsNullOrEmpty(AgentId) ? AgentId.DecryptParameter() : null;
@@ -917,5 +929,163 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             }
         }
         #endregion
+
+        [HttpGet, AllowAnonymous, OverrideActionFilters]
+        public ActionResult UploadBulkImage()
+        {
+            return View();
+        }
+
+        [HttpPost, AllowAnonymous, OverrideActionFilters, ValidateAntiForgeryToken]
+        public async Task<ActionResult> UploadBulkImage(HttpPostedFileBase CSVFileUpload)
+        {
+            if (CSVFileUpload == null || CSVFileUpload.ContentLength == 0)
+            {
+                //ViewBag.Message = "Please select a valid CSV file.";
+
+
+                this.AddNotificationMessage(new NotificationModel()
+                {
+                    NotificationType = NotificationMessage.ERROR,
+                    Message = "Please select a valid CSV file",
+                    Title = NotificationMessage.ERROR.ToString()
+                });
+                return View();
+            }
+
+            var tempFilePath = Path.GetTempFileName();
+
+            var filePath = Path.Combine(Server.MapPath("~/App_Data/"), CSVFileUpload.FileName);
+            CSVFileUpload.SaveAs(filePath);
+
+            var people = _csvService.ReadCsv(filePath);
+            var allowedContentType = AllowedImageContentType();
+            foreach (var item in people)
+            {
+                HttpPostedFileBase imageFile = GetLocalImageAsPostedFile(item.host_image_path);
+                if (imageFile != null || imageFile.ContentLength != 0)
+                {
+
+                    var contentType = imageFile.ContentType;
+                    var ext = Path.GetExtension(imageFile.FileName);
+                    var HostIconImageFileName = "";
+                    var HostIconImage = "";
+                    if (allowedContentType.Contains(contentType.ToLower()))
+                    {
+                        HostIconImageFileName = $"{AWSBucketFolderNameModel.HOST}/IconImage_{DateTime.Now.ToString("yyyyMMddHHmmssffff")}{ext.ToLower()}";
+                        HostIconImage = $"/{HostIconImageFileName}";
+
+                    }
+                    await ImageHelper.ImageUpload(HostIconImageFileName, imageFile);
+
+                    _buss.UploadHostImage(item.Club_name, item.LOCATION_ID, item.Host_name, HostIconImage);
+
+                }
+
+            }
+            //ProcessCsvAndUploadImagesToS3(tempFilePath);
+            //CSVFileUpload.SaveAs(tempFilePath);
+
+            System.IO.File.Delete(tempFilePath);
+            System.IO.File.Delete(filePath);
+
+            return View();
+        }
+
+        public class HostRecord
+        {
+            public string Club_name { get; set; }
+            public string LOCATION_ID { get; set; }
+            public string Host_name { get; set; }
+            public string host_image_path { get; set; }
+            //public string ClubName { get; set; }
+            //public string HostName { get; set; }
+            //public string ImagePath { get; set; }
+
+        }
+
+        //private async Task<List<HostRecord>> ProcessCsvAndUploadImagesToS3(string csvFilePath)
+        //{
+        //    var hosts = new List<HostRecord>();
+
+        //    using (var reader = new StreamReader(csvFilePath))
+        //    using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
+        //    {
+        //        var records = csv.GetRecords<HostRecord>().ToList();
+
+        //        foreach (var record in records)
+        //        {
+        //            var localImagePath = record.host_image_path; // Path from the CSV file
+
+        //            // Create a unique S3 key (organized by club and host name)
+        //            //var s3Key = $"{record.ClubName}/{record.HostName}/host_photo.jpg";
+
+        //            // Upload the image to S3 and get the S3 URL
+        //            //var s3Url = await UploadImageToS3(localImagePath, s3Key);
+
+        //            // Set the S3 URL in the record
+        //            //record.HostImageUrl = s3Url;
+
+
+
+        //            hosts.Add(record);
+        //        }
+        //    }
+
+        //    return hosts;
+        //}
+
+        public HttpPostedFileBase GetLocalImageAsPostedFile(string filePath)
+        {
+            if (!System.IO.File.Exists(filePath))
+            {
+                throw new FileNotFoundException("File not found", filePath);
+            }
+
+            // Get the file stream
+            var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read);
+            // Infer the content type (e.g., "image/jpeg" or "image/png") based on the file extension
+            string contentType = MimeMapping.GetMimeMapping(filePath);
+            string fileName = Path.GetFileName(filePath);
+
+            // Create and return the custom HttpPostedFileBase object
+            return new CustomPostedFile(fileStream, fileName, contentType);
+        }
+
+    }
+
+    public class CsvService
+    {
+        public List<HostRecord> ReadCsv(string filePath)
+        {
+            List<HostRecord> records = new List<HostRecord>();
+
+            using (var reader = new StreamReader(filePath))
+            using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
+            {
+                records = csv.GetRecords<HostRecord>().ToList();
+            }
+
+            return records;
+        }
+    }
+
+    public class CustomPostedFile : HttpPostedFileBase
+    {
+        private Stream _fileStream;
+        private string _fileName;
+        private string _contentType;
+
+        public CustomPostedFile(Stream fileStream, string fileName, string contentType)
+        {
+            _fileStream = fileStream;
+            _fileName = fileName;
+            _contentType = contentType;
+        }
+
+        public override int ContentLength => (int)_fileStream.Length;
+        public override string FileName => _fileName;
+        public override string ContentType => _contentType;
+        public override Stream InputStream => _fileStream;
     }
 }
