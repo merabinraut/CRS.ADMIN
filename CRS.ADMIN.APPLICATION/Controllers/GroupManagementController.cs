@@ -711,7 +711,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 string groupId = GroupId.DecryptParameter();
                 var dbResponse = _business.GetGalleryListById(groupId);
                 commonResponse.GroupGalleryList = dbResponse.MapObjects<GroupGalleryInfoModel>();
-                foreach(var item in commonResponse.GroupGalleryList)
+                foreach (var item in commonResponse.GroupGalleryList)
                 {
                     item.GroupId = item.GroupId.EncryptParameter();
                     item.ImageId = item.ImageId.EncryptParameter();
@@ -896,6 +896,13 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 GroupId = GroupId
             });
         }
+
+        [HttpPost, ValidateAntiForgeryToken]
+        public JsonResult DeleteGalleryImage(string ImageId = "")
+        {
+            return Json(null);
+        }
+
         #endregion
     }
 }
