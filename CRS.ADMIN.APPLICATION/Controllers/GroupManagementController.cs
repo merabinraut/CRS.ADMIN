@@ -691,14 +691,15 @@ namespace CRS.ADMIN.APPLICATION.Controllers
         #endregion
 
         #region GROUP GALLERY
+        [HttpGet]
         public ActionResult GroupGallery(string GroupId = "", string SearchFilter = "", int StartIndex = 0, int PageSize = 10)
         {
-            Session["CurrentURL"] = "GroupManagement/Index";
+            Session["CurrentURL"] = "GroupManagement/GroupGallery";
             string RenderId = string.Empty;
 
             CommonGroupGalleryModel commonResponse = new CommonGroupGalleryModel();
 
-            if (TempData.ContainsKey("ManageGroupGallery")) commonResponse.ManageGroupGallery = TempData["ManageGroupGallery"] as ManageGroupGalleryModel;
+            if (TempData.ContainsKey("ManageGroupImage")) commonResponse.ManageGroupGallery = TempData["ManageGroupImage"] as ManageGroupGalleryModel;
             else commonResponse.ManageGroupGallery = new ManageGroupGalleryModel();
 
             if (TempData.ContainsKey("RenderId")) RenderId = TempData["RenderId"].ToString();
@@ -710,6 +711,14 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 string groupId = GroupId.DecryptParameter();
                 var dbResponse = _business.GetGalleryListById(groupId);
                 commonResponse.GroupGalleryList = dbResponse.MapObjects<GroupGalleryInfoModel>();
+                foreach(var item in commonResponse.GroupGalleryList)
+                {
+                    item.GroupId = item.GroupId.EncryptParameter();
+                    item.ImageId = item.ImageId.EncryptParameter();
+                    item.ImagePath = ImageHelper.ProcessedImage(item.ImagePath);
+                }
+                ViewBag.GroupId = GroupId;
+                ViewBag.PopUpRenderValue = !string.IsNullOrEmpty(RenderId) ? RenderId : null;
                 return View(commonResponse);
             }
             else
@@ -727,8 +736,6 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                     PageSize = PageSize
                 });
             }
-
-
         }
 
         [HttpPost, ValidateAntiForgeryToken]
@@ -755,9 +762,9 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                             Message = ErrorMessage ?? "Something went wrong. Please try again later",
                             Title = SHARED.NotificationMessage.INFORMATION.ToString(),
                         });
-                        TempData["ManageGroupGallery"] = model;
+                        TempData["ManageGroupImage"] = model;
                         TempData["RenderId"] = "ManageGG";
-                        return RedirectToAction("GroupGallery", "GalleryManagement", new
+                        return RedirectToAction("GroupGallery", "GroupManagement", new
                         {
                             GroupId = model.GroupId
                         });
@@ -781,7 +788,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                             Message = "Invalid Image Formate",
                             Title = NotificationMessage.INFORMATION.ToString(),
                         });
-                        return RedirectToAction("GroupGallery", "GalleryManagement", new
+                        return RedirectToAction("GroupGallery", "GroupManagement", new
                         {
                             GroupId = model.GroupId
                         });
@@ -803,12 +810,13 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                         });
                         TempData["ManageGroupImage"] = model;
                         TempData["RenderId"] = "ManageGG";
-                        return RedirectToAction("GroupGallery", "GalleryManagement", new
+                        return RedirectToAction("GroupGallery", "GroupManagement", new
                         {
                             GroupId = model.GroupId
                         });
                     }
                 }
+                commonModel.GroupId = commonModel.GroupId.DecryptParameter();
                 var dbresponse = _business.ManageGroupGallery(commonModel);
                 if (dbresponse != null && dbresponse.Code == 0)
                 {
@@ -821,7 +829,9 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                             Message = dbresponse.Message ?? "Failed",
                             Title = dbresponse.Code == ResponseCode.Success ? NotificationMessage.SUCCESS.ToString() : NotificationMessage.INFORMATION.ToString()
                         });
-                        return RedirectToAction("GroupGallery", "GalleryManagement", new
+                        TempData["ManageGroupImage"] = model;
+                        TempData["RenderId"] = "ManageGG";
+                        return RedirectToAction("GroupGallery", "GroupManagement", new
                         {
                             GroupId = model.GroupId
                         });
@@ -838,7 +848,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                     });
                     TempData["ManageGroupImage"] = model;
                     TempData["RenderId"] = "ManageGG";
-                    return RedirectToAction("GroupGallery", "GalleryManagement", new
+                    return RedirectToAction("GroupGallery", "GroupManagement", new
                     {
                         GroupId = model.GroupId
                     });
@@ -847,7 +857,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             var errorMessage = ModelState.Where(x => x.Value.Errors.Count > 0).SelectMany(x => x.Value.Errors.Select(e => $"{x.Key}:{e.ErrorMessage}")).ToList();
             TempData["ManageGroupImage"] = model;
             TempData["RenderId"] = "ManageGG";
-            return RedirectToAction("GroupGallery", "GalleryManagement", new
+            return RedirectToAction("GroupGallery", "GroupManagement", new
             {
                 GroupId = model.GroupId
             });
@@ -870,7 +880,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                         Message = "Invalid image detail",
                         Title = NotificationMessage.INFORMATION.ToString(),
                     });
-                    return RedirectToAction("GroupGallery", "GalleryManagement", new
+                    return RedirectToAction("GroupGallery", "GroupManagement", new
                     {
                         GroupId = GroupId
                     });
@@ -881,7 +891,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             }
             TempData["RenderId"] = "ManageGG";
             TempData["ManageGroupImage"] = model;
-            return RedirectToAction("GroupGallery", "GalleryManagement", new
+            return RedirectToAction("GroupGallery", "GroupManagement", new
             {
                 GroupId = GroupId
             });

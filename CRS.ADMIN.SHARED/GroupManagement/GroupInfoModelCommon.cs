@@ -95,6 +95,7 @@ namespace CRS.ADMIN.SHARED.GroupManagement
     public class GroupGalleryInfoModelCommon
     {
         public string ImageId { get; set; }
+        public string GroupId { get; set; }
         public string ImageTitle { get; set; }
         public string ImagePath { get; set; }
         public string UpdatedDate { get; set; }
@@ -102,6 +103,7 @@ namespace CRS.ADMIN.SHARED.GroupManagement
     public class ManageGroupGalleryModelCommon
     {
         public string ImageId { get; set; }
+        public string GroupId { get; set; }
         public string ImageTitle { get; set; }
         public string GalleryImage { get; set; }
         public string ActionUser { get; set; }

@@ -272,6 +272,7 @@ namespace CRS.ADMIN.REPOSITORY.GroupManagement
         {
             string sp_name = "EXEC [dbo].[sproc_admin_group_gallery_addupdate]";
             sp_name += "@ImageId=" + _dao.FilterString(commonModel.ImageId);
+            sp_name += ",@GroupId=" + _dao.FilterString(commonModel.GroupId);
             sp_name += ",@ImageTitle=" + _dao.FilterString(commonModel.ImageTitle);
             sp_name += ",@GalleryImage=" + _dao.FilterString(commonModel.GalleryImage);
             sp_name += ",@ActionUser=" + _dao.FilterString(commonModel.ActionUser);
