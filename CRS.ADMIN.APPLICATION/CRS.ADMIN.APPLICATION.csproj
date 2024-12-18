@@ -235,6 +235,7 @@
     <Compile Include="Controllers\AffiliateManagementController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\BasicClubManagementController.cs" />
+    <Compile Include="Controllers\ChargeManagementController.cs" />
     <Compile Include="Controllers\ClubManagementController.cs" />
     <Compile Include="Controllers\ClubPlanManagementController.cs" />
     <Compile Include="Controllers\CommissionManagementController.cs" />
@@ -386,6 +387,7 @@
     <Folder Include="Content\userupload\PointsManagement\" />
     <Folder Include="Content\userupload\PromotionalImages\" />
     <Folder Include="Properties\PublishProfiles\" />
+    <Folder Include="Views\ChargeManagement\" />
     <Folder Include="Views\LogManagement\" />
   </ItemGroup>
   <ItemGroup>

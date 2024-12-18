@@ -2,6 +2,7 @@ using CRS.ADMIN.BUSINESS.AccountInformation;
 using CRS.ADMIN.BUSINESS.AdminPointManagement;
 using CRS.ADMIN.BUSINESS.AffiliateManagement;
 using CRS.ADMIN.BUSINESS.BasicClubManagement;
+using CRS.ADMIN.BUSINESS.ChargeManagement;
 using CRS.ADMIN.BUSINESS.ClubManagement;
 using CRS.ADMIN.BUSINESS.ClubPlanManagement;
 using CRS.ADMIN.BUSINESS.CommissionManagement;
@@ -87,6 +88,7 @@ namespace CRS.ADMIN.APPLICATION
             container.RegisterType<IWithdrawSetupBusiness, WithdrawSetupBusiness>();
             container.RegisterType<IAccountInformationBusiness, AccountInformationBusiness>();
             container.RegisterType<IWithdrawalRequestBusiness, WithdrawalRequestBusiness>();
+            container.RegisterType<IChargeManagementBusiness, ChargeManagementBusiness>();
             return container;
         }
     }
