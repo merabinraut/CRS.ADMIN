@@ -232,6 +232,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Admin Point Management.
+        /// </summary>
+        public static string Admin_Point_Management {
+            get {
+                return ResourceManager.GetString("Admin Point Management", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Admin Remarks.
         /// </summary>
         public static string Admin_Remarks {

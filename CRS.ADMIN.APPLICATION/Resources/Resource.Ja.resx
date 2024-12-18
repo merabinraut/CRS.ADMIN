@@ -191,6 +191,10 @@
     <value>アドミンプランコミッション額</value>
     <comment>Reservation Ledger</comment>
   </data>
+  <data name="Admin Point Management" xml:space="preserve">
+    <value>アドミン自己ポイント管理</value>
+    <comment>Admin Point Management</comment>
+  </data>
   <data name="Admin Remarks" xml:space="preserve">
     <value>アドミン備考</value>
     <comment>Reservation Ledger</comment>
