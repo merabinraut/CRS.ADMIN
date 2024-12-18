@@ -264,11 +264,9 @@
                                                             {
                                                                 <div onclick="ManageGroupDetailsFunction('@item.groupId');">
                                                                     <img src="~/Content/assets_new/images/edit-solid.svg" />
-                                                                    @* <i class="las la-edit text-[20px] cursor-pointer text-[#A6A6A6]" "></i>*@
 
                                                                 </div>
                                                                 <div onclick="GotoSubgroupPage('@item.groupId')">
-                                                                    @* <i class="fa-solid fa-eye text-primary-100 cursor-pointer"></i>*@
                                                                     <img src="~/Content/assets_new/images/eye.svg" />
                                                                 </div>
                                                                 <div onclick="OpenBlockModal('@item.groupId')" data-modal-target="block-confirmation" data-modal-toggle="block-confirmation">
@@ -281,17 +279,11 @@
                                                                     <i class="fa-solid fa-unlock text-primary-100 cursor-pointer"></i>
                                                                 </div>
                                                             }
-                                                            <div onclick="" data-modal-target="" data-modal-toggle="">
-                                                                @* <i class="fa-solid fa-image text-primary-100 cursor-pointer"></i>*@
+                                                            <div onclick="GotoGroupGallery('@item.groupId')" data-modal-target="" data-modal-toggle="">
                                                                 <img src="~/Content/assets_new/images/image.svg" />
-
                                                             </div>
                                                             <div onclick="OpenDeleteModal('@item.groupId')" data-modal-target="delete-confirmation" data-modal-toggle="delete-confirmation">
-
-                                                                @*<i class=" las la-trash-alt text-[20px] cursor-pointer text-[#CB3F3F]" ></i>*@
                                                                 <img src="~/Content/assets_new/images/trash-alt-solid.svg" />
-
-
                                                             </div>
                                                         </div>
                                                     </td>
@@ -575,6 +567,15 @@
         }
 
         //END SUB GROUP MODULE JS
+    </script>
+
+    <script>
+        //START GROUP GALLERY MODULE JS
+        function GotoGroupGallery(groupid) {
+            window.location.href = "/GroupManagement/GroupGallery?GroupId=" + groupid;
+        }
+
+        //END GROUP GALLERY MODULE JS
     </script>
 }
 

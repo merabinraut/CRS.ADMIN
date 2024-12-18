@@ -81,5 +81,23 @@ namespace CRS.ADMIN.BUSINESS.GroupManagement
             return _repo.GetSubGroupClubDetailById(subGroupId);
         }
         #endregion
+
+        #region GROUP GALLERY
+        public List<GroupGalleryInfoModelCommon> GetGalleryListById(string groupId)
+        {
+            return _repo.GetGalleryListById(groupId);
+        }
+
+        public CommonDbResponse ManageGroupGallery(ManageGroupGalleryModelCommon commonModel)
+        {
+            return _repo.ManageGroupGallery(commonModel);
+        }
+
+        public ManageGroupGalleryModelCommon GetGroupGalleryDetail(string imageid)
+        {
+            return _repo.GetGroupGalleryDetail(imageid);
+        }
+        #endregion
+
     }
 }

@@ -89,7 +89,27 @@ namespace CRS.ADMIN.SHARED.GroupManagement
         public string ActionPlatform { get; set; } = "ADMIN";
         public string ActionIP { get; set; }
     }
+    #endregion
 
+    #region GROUP GALLERY
+    public class GroupGalleryInfoModelCommon
+    {
+        public string ImageId { get; set; }
+        public string ImageTitle { get; set; }
+        public string ImagePath { get; set; }
+        public string UpdatedDate { get; set; }
+    }
+    public class ManageGroupGalleryModelCommon
+    {
+        public string ImageId { get; set; }
+        public string ImageTitle { get; set; }
+        public string GalleryImage { get; set; }
+        public string ActionUser { get; set; }
+        public string ActionPlatform { get; set; } = "ADMIN";
+        public string ActionIP { get; set; }
+    }
+
+    #endregion
 }
-#endregion
+
 

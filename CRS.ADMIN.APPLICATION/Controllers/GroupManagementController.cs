@@ -691,9 +691,200 @@ namespace CRS.ADMIN.APPLICATION.Controllers
         #endregion
 
         #region GROUP GALLERY
-        public ActionResult GroupGallery()
+        public ActionResult GroupGallery(string GroupId = "", string SearchFilter = "", int StartIndex = 0, int PageSize = 10)
         {
-            return View();
+            Session["CurrentURL"] = "GroupManagement/Index";
+            string RenderId = string.Empty;
+
+            CommonGroupGalleryModel commonResponse = new CommonGroupGalleryModel();
+
+            if (TempData.ContainsKey("ManageGroupGallery")) commonResponse.ManageGroupGallery = TempData["ManageGroupGallery"] as ManageGroupGalleryModel;
+            else commonResponse.ManageGroupGallery = new ManageGroupGalleryModel();
+
+            if (TempData.ContainsKey("RenderId")) RenderId = TempData["RenderId"].ToString();
+
+            commonResponse.SearchFilter = !string.IsNullOrEmpty(SearchFilter) ? SearchFilter : string.Empty;
+
+            if (!string.IsNullOrEmpty(GroupId))
+            {
+                string groupId = GroupId.DecryptParameter();
+                var dbResponse = _business.GetGalleryListById(groupId);
+                commonResponse.GroupGalleryList = dbResponse.MapObjects<GroupGalleryInfoModel>();
+                return View(commonResponse);
+            }
+            else
+            {
+                this.AddNotificationMessage(new NotificationModel()
+                {
+                    NotificationType = NotificationMessage.WARNING,
+                    Title = NotificationMessage.WARNING.ToString(),
+                    Message = "Invalid Group Id"
+                });
+                return RedirectToAction("Index", "GroupManagement", new
+                {
+                    SearchFilter = SearchFilter,
+                    StartIndex = StartIndex,
+                    PageSize = PageSize
+                });
+            }
+
+
+        }
+
+        [HttpPost, ValidateAntiForgeryToken]
+        public async Task<ActionResult> ManageGroupGallery(ManageGroupGalleryModel model, HttpPostedFileBase Cover_Image_Path)
+        {
+            bool allowRedirect = false;
+            string ErrorMessage = string.Empty;
+            string coverPhotoPath = string.Empty;
+            var allowedContentType = AllowedImageContentType();
+            if (ModelState.IsValid)
+            {
+                if (string.IsNullOrEmpty(model.GalleryImage))
+                {
+                    if (Cover_Image_Path == null && string.IsNullOrEmpty(model.GalleryImage))
+                    {
+                        ErrorMessage = "Cover Image Required";
+                        allowRedirect = true;
+                    }
+                    if (allowRedirect)
+                    {
+                        this.AddNotificationMessage(new NotificationModel()
+                        {
+                            NotificationType = SHARED.NotificationMessage.INFORMATION,
+                            Message = ErrorMessage ?? "Something went wrong. Please try again later",
+                            Title = SHARED.NotificationMessage.INFORMATION.ToString(),
+                        });
+                        TempData["ManageGroupGallery"] = model;
+                        TempData["RenderId"] = "ManageGG";
+                        return RedirectToAction("GroupGallery", "GalleryManagement", new
+                        {
+                            GroupId = model.GroupId
+                        });
+                    }
+                }
+                string CoverFileName = string.Empty;
+                if (Cover_Image_Path != null)
+                {
+                    var contentType = Cover_Image_Path.ContentType;
+                    var extension = Path.GetExtension(Cover_Image_Path.FileName);
+                    if (allowedContentType.Contains(contentType.ToLower()))
+                    {
+                        CoverFileName = $"{AWSBucketFolderNameModel.ADMIN}/Cover_{DateTime.Now.ToString("yyyyMMddHHmmssffff")}{extension}";
+                        model.GalleryImage = $"/{CoverFileName}";
+                    }
+                    else
+                    {
+                        this.AddNotificationMessage(new NotificationModel()
+                        {
+                            NotificationType = NotificationMessage.INFORMATION,
+                            Message = "Invalid Image Formate",
+                            Title = NotificationMessage.INFORMATION.ToString(),
+                        });
+                        return RedirectToAction("GroupGallery", "GalleryManagement", new
+                        {
+                            GroupId = model.GroupId
+                        });
+                    }
+                }
+                ManageGroupGalleryModelCommon commonModel = model.MapObject<ManageGroupGalleryModelCommon>();
+                commonModel.ActionUser = ApplicationUtilities.GetSessionValue("Username").ToString();
+                commonModel.ActionIP = ApplicationUtilities.GetIP();
+                if (!string.IsNullOrEmpty(commonModel.ImageId))
+                {
+                    commonModel.ImageId = commonModel.ImageId.DecryptParameter();
+                    if (string.IsNullOrEmpty(commonModel.ImageId))
+                    {
+                        this.AddNotificationMessage(new NotificationModel()
+                        {
+                            NotificationType = NotificationMessage.INFORMATION,
+                            Message = "Invalid image details",
+                            Title = NotificationMessage.INFORMATION.ToString(),
+                        });
+                        TempData["ManageGroupImage"] = model;
+                        TempData["RenderId"] = "ManageGG";
+                        return RedirectToAction("GroupGallery", "GalleryManagement", new
+                        {
+                            GroupId = model.GroupId
+                        });
+                    }
+                }
+                var dbresponse = _business.ManageGroupGallery(commonModel);
+                if (dbresponse != null && dbresponse.Code == 0)
+                {
+                    if (Cover_Image_Path != null)
+                    {
+                        await ImageHelper.ImageUpload(CoverFileName, Cover_Image_Path);
+                        this.AddNotificationMessage(new NotificationModel()
+                        {
+                            NotificationType = dbresponse.Code == ResponseCode.Success ? NotificationMessage.SUCCESS : NotificationMessage.INFORMATION,
+                            Message = dbresponse.Message ?? "Failed",
+                            Title = dbresponse.Code == ResponseCode.Success ? NotificationMessage.SUCCESS.ToString() : NotificationMessage.INFORMATION.ToString()
+                        });
+                        return RedirectToAction("GroupGallery", "GalleryManagement", new
+                        {
+                            GroupId = model.GroupId
+                        });
+                    }
+
+                }
+                else
+                {
+                    this.AddNotificationMessage(new NotificationModel()
+                    {
+                        NotificationType = NotificationMessage.INFORMATION,
+                        Message = dbresponse.Message ?? "Failed",
+                        Title = NotificationMessage.INFORMATION.ToString(),
+                    });
+                    TempData["ManageGroupImage"] = model;
+                    TempData["RenderId"] = "ManageGG";
+                    return RedirectToAction("GroupGallery", "GalleryManagement", new
+                    {
+                        GroupId = model.GroupId
+                    });
+                }
+            }
+            var errorMessage = ModelState.Where(x => x.Value.Errors.Count > 0).SelectMany(x => x.Value.Errors.Select(e => $"{x.Key}:{e.ErrorMessage}")).ToList();
+            TempData["ManageGroupImage"] = model;
+            TempData["RenderId"] = "ManageGG";
+            return RedirectToAction("GroupGallery", "GalleryManagement", new
+            {
+                GroupId = model.GroupId
+            });
+        }
+        [HttpGet]
+        public ActionResult ManageGroupGallery(string ImageId = "", string GroupId = "")
+        {
+            var culture = Request.Cookies["culture"]?.Value;
+            culture = string.IsNullOrEmpty(culture) ? "ja" : culture;
+
+            ManageGroupGalleryModel model = new ManageGroupGalleryModel();
+            if (!string.IsNullOrEmpty(ImageId))
+            {
+                string imageid = ImageId.DecryptParameter();
+                if (string.IsNullOrEmpty(imageid))
+                {
+                    this.AddNotificationMessage(new NotificationModel()
+                    {
+                        NotificationType = NotificationMessage.INFORMATION,
+                        Message = "Invalid image detail",
+                        Title = NotificationMessage.INFORMATION.ToString(),
+                    });
+                    return RedirectToAction("GroupGallery", "GalleryManagement", new
+                    {
+                        GroupId = GroupId
+                    });
+                }
+                var dbResponse = _business.GetGroupGalleryDetail(imageid);
+                model = dbResponse.MapObject<ManageGroupGalleryModel>();
+                model.ImageId = model.ImageId.EncryptParameter();
+            }
+            TempData["RenderId"] = "ManageGG";
+            TempData["ManageGroupImage"] = model;
+            return RedirectToAction("GroupGallery", "GalleryManagement", new
+            {
+                GroupId = GroupId
+            });
         }
         #endregion
     }

@@ -1,11 +1,10 @@
-﻿
+﻿@model CRS.ADMIN.APPLICATION.Models.GroupManagement.CommonGroupGalleryModel
 @{
     ViewBag.Title = "GroupGallery";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <div class="px-[32px] py-[15.5px]" style="font-family:Noto sans">
-
     <div class="flex justify-between items-center">
         <div>
             <div class="heading-title">
@@ -38,11 +37,7 @@
             </div>
             <input type="search" id="default-search" class="input-search block w-full" placeholder="@CRS.ADMIN.APPLICATION.Resources.Resource.Search" value="@ViewBag.SearchFilter" name="SearchFilter">
         </div>
-
-
     </div>
-
-
     <div class="table-tab">
         <div class="relative overflow-x-auto">
             <table class="w-full  text-left club-table" id="table-id">
@@ -96,53 +91,40 @@
                     </tr>
                 </thead>
                 <tbody>
+                    @{
+                        int sno = 1;
+                        foreach (var item in Model.GroupGalleryList)
+                        {
+                            <tr class=" border-b">
+                                <td class="py-[26px] px-[24px]">
+                                    @sno
+                                </td>
+                                <td class="py-[26px] px-[24px]">
+                                    @item.ImageTitle
+                                </td>
+                                <td class="py-[26px] px-[24px]">
+                                    <img src="@item.ImagePath" alt="gallerygrp" class="w-[88px] h-[36px]" />
+                                </td>
+                                <td class="py-[26px] px-[24px]">
+                                    @item.UpdatedDate
+                                </td>
+                                <td class="py-[26px] px-[24px] text-center">
+                                    <div class="flex gap-[7px]">
+                                        <i class="las la-edit text-[20px] cursor-pointer text-[#A6A6A6]"></i>
+                                        <div class="text-[#CB3F3F] text-center text-[20px]"
+                                             onclick="">
+                                            <i class="las la-trash-alt text-[20px] cursor-pointer "></i>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
 
-
-                    <tr class=" border-b">
-                        <td class="py-[26px] px-[24px]">
-                            1
-                        </td>
-                        <td class="py-[26px] px-[24px]">
-                            画像タイトルABC
-                        </td>
-                        <td class="py-[26px] px-[24px]">
-                            <img src="" alt="gallerygrp" class="w-[88px] h-[36px]" />
-                        </td>
-                        <td class="py-[26px] px-[24px]">
-                            2023年10月17日
-                        </td>
-                        <td class="py-[26px] px-[24px] text-center">
-                            <div class="flex gap-[7px]">
-                                <i class="las la-edit text-[20px] cursor-pointer text-[#A6A6A6]"></i>
-                                <div class="text-[#CB3F3F] text-center text-[20px]"
-                                     onclick="">
-                                    <i class="las la-trash-alt text-[20px] cursor-pointer "></i>
-                                </div>
-                            </div>
-                        </td>
-
-                    </tr>
-
-
+                    }
                 </tbody>
             </table>
-        </div>
-        <div class="pagination-club">
-            <div class="show-entry" id="Entries-Id">
-            </div>
-            <div class="flex gap-[12px]">
-                <div class="btn btn-secondary-box-shadow" id="prev-btn">
-                    @CRS.ADMIN.APPLICATION.Resources.Resource.Previous
-                </div>
-                <div class="flex gap-[12px]" id="pagination-id">
-                </div>
-                <div class="btn btn-secondary-box-shadow" id="next-btn">
-                    @CRS.ADMIN.APPLICATION.Resources.Resource.Next
-                </div>
-            </div>
-        </div>
+        </div>       
     </div>
-
 </div>
 <div id="add-sub-group" class="drawer-close-disable  flex justify-end fixed top-0 right-0  z-40 h-screen overflow-y-auto transition-transform translate-x-full"
      tabindex="-1" aria-labelledby="drawer-right-label">
@@ -156,7 +138,6 @@
                 </button>
             </div>
         </div>
-
         <div class="pl-[24px] pt-[24px] pr-[26px]">
             <div class="input-field-common">
                 <label class="block mb-[12px] text-sm font-[500] text-secondary-text-2 ">
@@ -164,9 +145,7 @@
                 </label>
                 <input placeholder="タイトル" type="text" class="w-full" />
             </div>
-
             <div class="mt-4">
-
                 <label class="block mb-[12px] text-sm font-[500] text-secondary-text-2 ">
                     グループカバー写真
                 </label>
@@ -178,36 +157,28 @@
                     <p id="file_name_cover1"
                        class="file-name w-max h-[23px] overflow-hidden pl-2 text-xs text-[#686868] leading-[25px] flex items-center gap-1">
                         <img src="~/Content/assets_new/images/images-solid.svg" />
-
                         <span>
-
                             No_File_Choosen
                         </span>
                     </p>
                 </div>
-
                 <div class="text-xs text-error mt-[8px]">
                     注意：画像はHEIF形式で、最大ファイルサイズは5MBです。
-
                 </div>
             </div>
-
             <div class="bg-[#EBEBEB] my-4 h-[2px] w-full">
             </div>
-
             <div class="py-4 flex justify-end">
                 <div class="flex gap-6">
                     <button class="btn btn-secondary text-[16px] font-[500] rounded-[4px] px-[32px] py-[12px]" type="button" data-drawer-hide="add-sub-group" aria-controls="add-sub-group">
                         キャンセル
                     </button>
                     <button class="btn btn-primary-default text-[16px] font-[500] rounded-[4px]" id="submit-button-id"> 追加する</button>
-
                 </div>
             </div>
         </div>
     </div>
 </div>
-
 @section Scripts{
     <script>
         document.addEventListener("DOMContentLoaded", () => {

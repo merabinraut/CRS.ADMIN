@@ -89,4 +89,28 @@ namespace CRS.ADMIN.APPLICATION.Models.GroupManagement
         public string TotalClubCount { get; set; }
     }
     #endregion
+
+    #region GROUP GALLERY 
+    public class CommonGroupGalleryModel
+    {
+        public string SearchFilter { get; set; }
+        public List<GroupGalleryInfoModel> GroupGalleryList { get; set; }
+        public ManageGroupGalleryModel ManageGroupGallery { get; set; }
+    }
+    public class GroupGalleryInfoModel
+    {
+        public string ImageId { get; set; }       
+        public string GroupId { get; set; }       
+        public string ImageTitle { get; set; }
+        public string ImagePath { get; set; }
+        public string UpdatedDate { get; set; }
+    }
+    public class ManageGroupGalleryModel: PaginationFilterCommon
+    {
+        public string ImageId { get; set; }
+        public string GroupId { get; set; }
+        public string ImageTitle { get; set; }
+        public string GalleryImage { get; set; }
+    }
+    #endregion
 }

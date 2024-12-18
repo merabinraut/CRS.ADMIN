@@ -25,5 +25,11 @@ namespace CRS.ADMIN.BUSINESS.GroupManagement
         CommonDbResponse ManageSubGroupClub(ManageSubGroupClubModelCommon commonModel);
         ManageSubGroupClubModelCommon GetSubGroupClubDetailById(string subGroupId);
         #endregion
+
+        #region GROUP GALLERY
+        List<GroupGalleryInfoModelCommon> GetGalleryListById(string groupId);
+        CommonDbResponse ManageGroupGallery(ManageGroupGalleryModelCommon commonModel);
+        ManageGroupGalleryModelCommon GetGroupGalleryDetail(string imageid);
+        #endregion
     }
 }

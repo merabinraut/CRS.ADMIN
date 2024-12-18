@@ -249,6 +249,57 @@ namespace CRS.ADMIN.REPOSITORY.GroupManagement
                 return new ManageSubGroupClubModelCommon();
             }
         }
+
+
+        #endregion
+
+        #region GROUP GALLERY
+        public List<GroupGalleryInfoModelCommon> GetGalleryListById(string groupId)
+        {
+
+            string sp_name = "EXEC [dbo].[sproc_admin_group_gallery_list]";
+            sp_name += "@GroupId=" + _dao.FilterString(groupId);
+
+
+            var dbResponse = _dao.ExecuteDataTable(sp_name);
+            if (dbResponse != null && dbResponse.Rows.Count > 0)
+                return _dao.DataTableToListObject<GroupGalleryInfoModelCommon>(dbResponse).ToList();
+            else
+                return new List<GroupGalleryInfoModelCommon>();
+        }
+
+        public CommonDbResponse ManageGroupGallery(ManageGroupGalleryModelCommon commonModel)
+        {
+            string sp_name = "EXEC [dbo].[sproc_admin_group_gallery_addupdate]";
+            sp_name += "@ImageId=" + _dao.FilterString(commonModel.ImageId);
+            sp_name += ",@ImageTitle=" + _dao.FilterString(commonModel.ImageTitle);
+            sp_name += ",@GalleryImage=" + _dao.FilterString(commonModel.GalleryImage);
+            sp_name += ",@ActionUser=" + _dao.FilterString(commonModel.ActionUser);
+            sp_name += ",@ActionIP=" + _dao.FilterString(commonModel.ActionIP);
+            sp_name += ",@ActionPlatform=" + _dao.FilterString(commonModel.ActionPlatform);
+
+            var dbResponse = _dao.ParseCommonDbResponse(sp_name);
+            return dbResponse;
+        }
+
+        public ManageGroupGalleryModelCommon GetGroupGalleryDetail(string imageid)
+        {
+            string sp_name = "[dbo].[sproc_admin_group_gallery_detail]";
+            sp_name += "@ImageId=" + _dao.FilterString(imageid);
+
+            var dbResponse = _dao.ExecuteDataRow(sp_name);
+            if (dbResponse != null)
+            {
+                return new ManageGroupGalleryModelCommon()
+                {
+                    ImageId = _dao.ParseColumnValue(dbResponse, "ImageId").ToString(),
+                    GalleryImage = _dao.ParseColumnValue(dbResponse, "GalleryImage").ToString(),
+                    ImageTitle = _dao.ParseColumnValue(dbResponse, "ImageTitle").ToString(),
+                };
+            }
+            else
+                return new ManageGroupGalleryModelCommon();
+        }
         #endregion
     }
 }
