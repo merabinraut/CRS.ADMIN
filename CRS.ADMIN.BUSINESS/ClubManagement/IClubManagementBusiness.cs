@@ -3,6 +3,7 @@ using CRS.ADMIN.SHARED.ClubManagement;
 using CRS.ADMIN.SHARED.PaginationManagement;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 
 namespace CRS.ADMIN.BUSINESS.ClubManagement
 {
@@ -13,11 +14,11 @@ namespace CRS.ADMIN.BUSINESS.ClubManagement
         List<ClubListCommon> GetClubRejectedList(PaginationFilterCommon Request);
         ClubDetailCommon GetClubPendingDetails(string AgentId, String holdId = "", String culture = "");
         ClubDetailCommon GetplanPendingDetails(string AgentId, String holdId = "", String culture = "");
-        CommonDbResponse ManageApproveReject(string holdId, string flag, string AgentId, String culture = "", ManageClubCommon Request=null);
+        CommonDbResponse ManageApproveReject(string holdId, string flag, string AgentId, String culture = "", ManageClubCommon Request = null, SqlConnection connection = null, SqlTransaction transaction = null);
         ClubDetailCommon GetClubDetails(string AgentId, String culture = "");
         CommonDbResponse ManageClub(ManageClubCommon Request);
-        CommonDbResponse ManageClubStatus(string AgentId, string Status, Common Request);
-        CommonDbResponse ResetClubUserPassword(string AgentId, string UserId, Common Request);
+        CommonDbResponse ManageClubStatus(string AgentId, string Status, Common Request, SqlConnection connection = null, SqlTransaction transaction = null);
+        CommonDbResponse ResetClubUserPassword(string AgentId, string UserId, Common Request, SqlConnection connection = null, SqlTransaction transaction = null);
         List<PlanListCommon> GetClubPlanIdentityList(string culture);
         List<planIdentityDataCommon> GetClubPlanIdentityListAddable(string culture);
 
@@ -45,5 +46,6 @@ namespace CRS.ADMIN.BUSINESS.ClubManagement
         ManageManagerCommon GetManagerDetails(string AgentId);
         CommonDbResponse ManageManager(ManageManagerCommon request);
         #endregion
+        CommonDbResponse ManageClubCognitoDetail(string clubId, string loginId, string cognitoUserId, SqlConnection connection = null, SqlTransaction transaction = null);
     }
 }
