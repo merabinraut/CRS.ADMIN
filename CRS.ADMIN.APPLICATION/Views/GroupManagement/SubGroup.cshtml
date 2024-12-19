@@ -398,8 +398,10 @@
        $(document).ready(function () {
            let containerCounter = 2;
            let locationClubMapping = {};
-           let subgroupid = $(`#subgroupid`).val();
-
+           let subgroupid ;
+           $(document).on('change', 'select[name="SubGroupDDL"]', function () {
+               subgroupid = $(`#subgroupid`).val();
+           });
     // Update dropdown options to avoid duplicate selection of locations
     function updateDropdownOptions() {
         const selectedValues = [];
