@@ -301,6 +301,17 @@ namespace CRS.ADMIN.REPOSITORY.GroupManagement
             else
                 return new ManageGroupGalleryModelCommon();
         }
+
+        public CommonDbResponse DeleteImage(string imageid, Common request)
+        {
+            string sp_name = "EXEC [dbo].[sproc_admin_group_delete_image]";
+            sp_name += "@ImageId=" + _dao.FilterString(imageid);
+            sp_name += ",@ActionUser=" + _dao.FilterString(request.ActionUser);
+            sp_name += ",@ActionIP=" + _dao.FilterString(request.ActionIP);
+            sp_name += ",@ActionPlatform=" + _dao.FilterString(request.ActionPlatform);
+
+            return _dao.ParseCommonDbResponse(sp_name);
+        }
         #endregion
     }
 }

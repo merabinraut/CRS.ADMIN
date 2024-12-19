@@ -900,7 +900,43 @@ namespace CRS.ADMIN.APPLICATION.Controllers
         [HttpPost, ValidateAntiForgeryToken]
         public JsonResult DeleteGalleryImage(string ImageId = "")
         {
-            return Json(null);
+            var response = new CommonDbResponse();
+            string imageid = !string.IsNullOrEmpty(ImageId) ? ImageId.DecryptParameter() : string.Empty;
+            if (string.IsNullOrEmpty(imageid))
+            {
+                this.AddNotificationMessage(new NotificationModel()
+                {
+                    NotificationType = NotificationMessage.INFORMATION,
+                    Message = "Invalid Sub Group Details",
+                    Title = NotificationMessage.INFORMATION.ToString()
+                });
+            }
+            var request = new Common()
+            {
+                ActionIP = ApplicationUtilities.GetIP(),
+                ActionUser = ApplicationUtilities.GetSessionValue("Username").ToString()
+            };
+            var dbResponse = _business.DeleteImage(imageid, request);
+            response = dbResponse;
+            if (dbResponse.Code == ResponseCode.Success && dbResponse.Code == 0)
+            {
+                this.AddNotificationMessage(new NotificationModel()
+                {
+                    NotificationType = response.Code == ResponseCode.Success ? NotificationMessage.SUCCESS : NotificationMessage.INFORMATION,
+                    Message = response.Message ?? "Something went wrong while deleting the sub group. Please try again later",
+                    Title = response.Code == ResponseCode.Success ? NotificationMessage.SUCCESS.ToString() : NotificationMessage.INFORMATION.ToString()
+                });
+            }
+            else
+            {
+                this.AddNotificationMessage(new NotificationModel()
+                {
+                    NotificationType = response.Code == ResponseCode.Failed ? NotificationMessage.ERROR : NotificationMessage.ERROR,
+                    Message = response.Message ?? "Something went wrong while deleting sub group. Please try again later",
+                    Title = response.Code == ResponseCode.Failed ? NotificationMessage.ERROR.ToString() : NotificationMessage.ERROR.ToString()
+                });
+            }
+            return Json(response.Message, JsonRequestBehavior.AllowGet);
         }
 
         #endregion

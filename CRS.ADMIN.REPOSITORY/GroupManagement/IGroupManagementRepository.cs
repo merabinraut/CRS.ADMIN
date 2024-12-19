@@ -28,6 +28,7 @@ namespace CRS.ADMIN.REPOSITORY.GroupManagement
         List<GroupGalleryInfoModelCommon> GetGalleryListById(string groupId);
         CommonDbResponse ManageGroupGallery(ManageGroupGalleryModelCommon commonModel);
         ManageGroupGalleryModelCommon GetGroupGalleryDetail(string imageid);
+        CommonDbResponse DeleteImage(string imageid,Common request);
         #endregion
 
     }
