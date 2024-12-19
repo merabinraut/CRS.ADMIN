@@ -18,18 +18,27 @@
                 グループギャラリーを管理する。
             </div>
         </div>
-        <div class="flex gap-4">
-
-            <div class="btn btn-primary flex items-center gap-[8px] h-[40px]" data-drawer-target="add-group-gallery"
-                 data-drawer-show="add-group-gallery" data-drawer-placement="right" data-drawer-backdrop="false"
-                 aria-controls="drawer-disabled-backdrop" id="manage-club-id">
-
-                <img src="~/Content/assets_new/images/plus.svg" />
-                新規追加
+        @if (Model.GroupGalleryList[0].ImageCount == "5")
+        {
+            <div class="flex gap-4">
+                <div class="btn btn-primary flex items-center gap-[8px] h-[40px]" data-drawer-placement="right" data-drawer-backdrop="false" aria-controls="drawer-disabled-backdrop" id="manage-club-id">
+                    <img src="~/Content/assets_new/images/plus.svg" />
+                    新規追加
+                </div>
             </div>
-        </div>
+        }
+        else
+        {
+            <div class="flex gap-4">
+                <div class="btn btn-primary flex items-center gap-[8px] h-[40px]" data-drawer-target="add-group-gallery"
+                     data-drawer-show="add-group-gallery" data-drawer-placement="right" data-drawer-backdrop="false"
+                     aria-controls="drawer-disabled-backdrop" id="manage-club-id">
+                    <img src="~/Content/assets_new/images/plus.svg" />
+                    新規追加
+                </div>
+            </div>
+        }
     </div>
-
 
     <div class="flex justify-between items-center w-full mt-[32px] mb-4">
         <!-- Input Search Wrapper -->
@@ -117,7 +126,7 @@
                                         <i class="las la-edit text-[20px] cursor-pointer text-[#A6A6A6]" onclick="ManageGroupGalleryDetail('@item.ImageId','@item.GroupId')"></i>
                                         <div class="text-[#CB3F3F] text-center text-[20px]"
                                              onclick="">
-                                            <i class="las la-trash-alt text-[20px] cursor-pointer" data-modal-target="delete-confirmation" data-modal-toggle="delete-confirmation" onclick="OpenDeleteModal('@item.ImageId')"></i>
+                                            <i class="las la-trash-alt text-[20px] cursor-pointer" data-modal-target="delete-confirmation" data-modal-toggle="delete-confirmation" onclick="OpenDeleteModal('@item.ImageId','@item.GroupId')"></i>
                                         </div>
                                     </div>
                                 </td>
@@ -209,13 +218,14 @@
 
         function DeleteImage() {
             const imageid = $('#delete_id').attr('data-val1');
+            const groupid = $('#delete_id').attr('data-val2');
             var requestVerificationToken = $('input[name="__RequestVerificationToken"]').val();
             let search_filter = $('#default-search').val();
 
             $.ajax({
                 type: 'POST',
                 async: true,
-                url: '/GroupManagement/DeleteGalleryImage?ImageId=' + imageid,
+                url: '/GroupManagement/DeleteGalleryImage?ImageId=' + imageid + '&GroupId=' + groupid,
                 dataType: 'json',
                 data: {
                     '__RequestVerificationToken': requestVerificationToken
@@ -228,12 +238,12 @@
                 }
             });
         }
-        function OpenDeleteModal(imageid) {                                                     
+        function OpenDeleteModal(imageid,groupid) {
             const modalTarget = document.querySelector("[data-modal-target='block-basicclub-confirmation']");
             const modal = document.getElementById("delete-confirmation");
             modal.classList.remove("hidden");
             $('#delete_id').attr('data-val1', imageid);
-            $('#delete_id').attr('data-val2', 'A');
+            $('#delete_id').attr('data-val2', groupid);
             modal.setAttribute("aria-hidden", "false");
         }
     </script>

@@ -98,9 +98,9 @@ namespace CRS.ADMIN.BUSINESS.GroupManagement
             return _repo.GetGroupGalleryDetail(imageid);
         }
 
-        public CommonDbResponse DeleteImage(string imageid, Common request)
+        public CommonDbResponse DeleteImage(string imageid, string groupid, Common request)
         {
-            return _repo.DeleteImage(imageid, request);
+            return _repo.DeleteImage(imageid, groupid, request);
         }
         #endregion
 

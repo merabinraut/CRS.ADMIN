@@ -104,6 +104,7 @@ namespace CRS.ADMIN.APPLICATION.Models.GroupManagement
         public string ImageTitle { get; set; }
         public string ImagePath { get; set; }
         public string UpdatedDate { get; set; }
+        public string ImageCount { get; set; }
     }
     public class ManageGroupGalleryModel: PaginationFilterCommon
     {

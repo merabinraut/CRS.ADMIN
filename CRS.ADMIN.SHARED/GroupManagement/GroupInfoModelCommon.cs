@@ -99,6 +99,7 @@ namespace CRS.ADMIN.SHARED.GroupManagement
         public string ImageTitle { get; set; }
         public string ImagePath { get; set; }
         public string UpdatedDate { get; set; }
+        public string ImageCount { get; set; }
     }
     public class ManageGroupGalleryModelCommon
     {

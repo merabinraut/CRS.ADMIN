@@ -898,10 +898,11 @@ namespace CRS.ADMIN.APPLICATION.Controllers
         }
 
         [HttpPost, ValidateAntiForgeryToken]
-        public JsonResult DeleteGalleryImage(string ImageId = "")
+        public JsonResult DeleteGalleryImage(string ImageId = "", string GroupId = "")
         {
             var response = new CommonDbResponse();
             string imageid = !string.IsNullOrEmpty(ImageId) ? ImageId.DecryptParameter() : string.Empty;
+            string groupid = !string.IsNullOrEmpty(GroupId) ? GroupId.DecryptParameter() : string.Empty;
             if (string.IsNullOrEmpty(imageid))
             {
                 this.AddNotificationMessage(new NotificationModel()
@@ -916,7 +917,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 ActionIP = ApplicationUtilities.GetIP(),
                 ActionUser = ApplicationUtilities.GetSessionValue("Username").ToString()
             };
-            var dbResponse = _business.DeleteImage(imageid, request);
+            var dbResponse = _business.DeleteImage(imageid, groupid, request);
             response = dbResponse;
             if (dbResponse.Code == ResponseCode.Success && dbResponse.Code == 0)
             {

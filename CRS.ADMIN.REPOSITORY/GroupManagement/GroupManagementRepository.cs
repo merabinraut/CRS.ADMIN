@@ -302,10 +302,11 @@ namespace CRS.ADMIN.REPOSITORY.GroupManagement
                 return new ManageGroupGalleryModelCommon();
         }
 
-        public CommonDbResponse DeleteImage(string imageid, Common request)
+        public CommonDbResponse DeleteImage(string imageid, string groupid, Common request)
         {
             string sp_name = "EXEC [dbo].[sproc_admin_group_delete_image]";
             sp_name += "@ImageId=" + _dao.FilterString(imageid);
+            sp_name += ",@GroupId=" + _dao.FilterString(groupid);
             sp_name += ",@ActionUser=" + _dao.FilterString(request.ActionUser);
             sp_name += ",@ActionIP=" + _dao.FilterString(request.ActionIP);
             sp_name += ",@ActionPlatform=" + _dao.FilterString(request.ActionPlatform);
