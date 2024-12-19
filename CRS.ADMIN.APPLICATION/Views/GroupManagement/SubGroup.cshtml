@@ -495,8 +495,7 @@
                     <div class="input-field-common">
                         <label class="block mb-[12px] text-sm font-medium text-secondary-text-2">エリア</label>
                         <select id="locationddl-${containerCounter}" class="default_select select-common block w-full"
-                                name="LocationDDL" data-container-id="${containerCounter}" style="width: 100%;">
-                            <option value="">Select Location</option>
+                                name="LocationDDL" data-container-id="${containerCounter}" style="width: 100%;">                           
                             @foreach (var item in ViewBag.LocationDDL)
                             {
                                 <option value="@item.Value">@item.Text</option>
@@ -514,7 +513,7 @@
                                     店舗の合計数
                                 </label>
                                 <div class="input-field-common max-w-[116px]">
-                                   
+
                                 </div>
                             </div>
                             <div class="bg-[#F4F4F4] h-[2px] w-full">
@@ -524,6 +523,7 @@
         $('#dynamicContainerWrapper').append(newContainerHtml);
         containerCounter++;
         updateDropdownOptions();
+        initializeDynamicDropdowns();
     }
     $('#addNewRow').on('click', function () {
         addNewContainer();
@@ -533,6 +533,11 @@
         $(`#container-${containerId}`).remove();
         updateDropdownOptions();
     });
+           function initializeDynamicDropdowns() {
+               $('.default_select').select2({
+                   minimumResultsForSearch: Infinity,
+               }); // Re-initialize Select2 for new elements
+           }
     updateDropdownOptions();
 });
     </script>
