@@ -88,6 +88,7 @@ namespace CRS.ADMIN.SHARED.GroupManagement
         public string ActionUser { get; set; }
         public string ActionPlatform { get; set; } = "ADMIN";
         public string ActionIP { get; set; }
+        public string xmlInput { get; set; }
     }
     #endregion
 

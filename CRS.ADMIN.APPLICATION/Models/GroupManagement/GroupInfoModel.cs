@@ -87,7 +87,14 @@ namespace CRS.ADMIN.APPLICATION.Models.GroupManagement
         public string LocationId { get; set; }
         public string ClubId { get; set; }
         public string TotalClubCount { get; set; }
+        public string xmlInput { get; set; }
     }
+
+    public class LocationClubMapping
+    {
+        public string locationId { get; set; }
+        public List<string> clubs { get; set; }
+    }   
     #endregion
 
     #region GROUP GALLERY 

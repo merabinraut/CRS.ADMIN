@@ -329,9 +329,6 @@
         function CancelFunction() {
             location.reload();
         }
-        $('#submit-button-id').click(function () {
-            $('#ManageSubGroupForm').submit();
-        })
         document.addEventListener('DOMContentLoaded', () => {
             const headers = document.querySelectorAll('.accordion-header');
             headers.forEach(header => {
@@ -393,12 +390,11 @@
 
 
     <script>
-
-
+        let locationClubMapping = {};
+        let subgroupid;
        $(document).ready(function () {
-           let containerCounter = 2;
-           let locationClubMapping = {};
-           let subgroupid ;
+           let containerCounter = 2;         
+           
            $(document).on('change', 'select[name="SubGroupDDL"]', function () {
                subgroupid = $(`#subgroupid`).val();
            });
@@ -542,7 +538,7 @@
             const selectedClubs = $(`#staticClubDDL`).val();
 
             if (selectedLocation) {
-                locationClubMapping[containerId] = {
+                locationClubMapping[1] = {
                     locationId: selectedLocation,
                     clubs: selectedClubs || []
                 };
@@ -562,7 +558,24 @@
 
 });
 
-
+        function submit() {
+            var requestVerificationToken = $('input[name="__RequestVerificationToken"]').val();
+            var mappedData = JSON.stringify(locationClubMapping);
+            var sGroupId = subgroupid;
+            debugger
+               $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("ManageSubGroupClub")',
+                    dataType: 'json',
+                   data: { '__RequestVerificationToken': requestVerificationToken, mapping: mappedData, SubGroupId: sGroupId },
+                    success: function (data) {
+                        console.log('Mapping updated successfully');
+                    },
+                    error: function () {
+                        alert('Failed to update location club mapping.');
+                    }
+               });
+        }
     </script>
 
 }

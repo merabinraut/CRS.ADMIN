@@ -6,6 +6,7 @@ using CRS.ADMIN.BUSINESS.GroupManagement;
 using CRS.ADMIN.SHARED;
 using CRS.ADMIN.SHARED.GroupManagement;
 using CRS.ADMIN.SHARED.PaginationManagement;
+using Newtonsoft.Json;
 using Syncfusion.XlsIO.Implementation.PivotAnalysis;
 using System;
 using System.Collections.Generic;
@@ -15,6 +16,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using System.Xml.Linq;
 
 namespace CRS.ADMIN.APPLICATION.Controllers
 {
@@ -563,69 +565,57 @@ namespace CRS.ADMIN.APPLICATION.Controllers
         }
 
         [HttpPost, ValidateAntiForgeryToken]
-        public ActionResult ManageSubGroupClub(ManageSubGroupClubModel model)
+        public JsonResult ManageSubGroupClub(string mapping = "", string SubGroupId = "", string locationId = "")
         {
-            ActionResult redirectUrl = null;
-            bool allowRedirect = false;
-            redirectUrl = RedirectToAction("SubGroup", "GroupManagement", new
+            var locationClubMappingContainer = JsonConvert.DeserializeObject<Dictionary<int, LocationClubMapping>>(mapping);
+            var rootElement = new XElement("root",
+                                new XElement("subgroupid", SubGroupId.DecryptParameter()));
+
+            if (locationClubMappingContainer != null)
             {
-                GroupId = model.GroupId,
-                SearchFilter = model.SearchFilter,
-                StartIndex = model.Skip,
-                PageSize = model.Take == 0 ? 10 : model.Take,
-            });
-            string ErrorMessage = string.Empty;
-            if (ModelState.IsValid)
-            {
-                ManageSubGroupClubModelCommon commonModel = model.MapObject<ManageSubGroupClubModelCommon>();
-                commonModel.ActionUser = ApplicationUtilities.GetSessionValue("Username").ToString();
-                commonModel.ActionIP = ApplicationUtilities.GetIP();
-                if (!string.IsNullOrEmpty(commonModel.SubGroupId))
+                foreach (var kvp in locationClubMappingContainer)
                 {
-                    commonModel.SubGroupId = commonModel.SubGroupId.DecryptParameter();
-                    if (string.IsNullOrEmpty(commonModel.SubGroupId))
-                    {
-                        this.AddNotificationMessage(new NotificationModel()
-                        {
-                            NotificationType = NotificationMessage.INFORMATION,
-                            Message = "Invalid sub group detail",
-                            Title = NotificationMessage.INFORMATION.ToString()
-                        });
-                        TempData["ManageSubGroupClub"] = model;
-                        TempData["RenderId"] = "ManageSGC";
-                        return redirectUrl;
-                    }
-                }
-                var dbResponse = _business.ManageSubGroupClub(commonModel);
-                if (dbResponse.Code == ResponseCode.Success && dbResponse.Code == 0)
-                {
-                    this.AddNotificationMessage(new NotificationModel()
-                    {
-                        NotificationType = dbResponse.Code == ResponseCode.Success ? NotificationMessage.SUCCESS : NotificationMessage.INFORMATION,
-                        Message = dbResponse.Message ?? "Failed",
-                        Title = dbResponse.Code == ResponseCode.Success ? NotificationMessage.SUCCESS.ToString() : NotificationMessage.INFORMATION.ToString()
-                    });
-                    TempData["ManageSubGroupClub"] = model;
-                    TempData["RenderId"] = "ManageSGC";
-                    return redirectUrl;
-                }
-                else
-                {
-                    this.AddNotificationMessage(new NotificationModel()
-                    {
-                        NotificationType = dbResponse.Code == ResponseCode.Failed ? SHARED.NotificationMessage.WARNING : NotificationMessage.WARNING,
-                        Message = dbResponse.Message ?? "Failed",
-                        Title = dbResponse.Code == ResponseCode.Success ? NotificationMessage.WARNING.ToString() : NotificationMessage.WARNING.ToString()
-                    });
-                    TempData["ManageSubGroupClub"] = model;
-                    TempData["RenderId"] = "ManageSGC";
-                    return redirectUrl;
+                    var itemElement = new XElement("item",
+                        new XElement("locationid", kvp.Value.locationId.DecryptParameter()),
+                        new XElement("clubs", kvp.Value.clubs.Select(clubId => new XElement("clubid", clubId.DecryptParameter())))
+                    );
+
+                    rootElement.Add(itemElement);
                 }
             }
-            var errorMessage = ModelState.Where(x => x.Value.Errors.Count > 0).SelectMany(x => x.Value.Errors.Select(e => $"{x.Key}:{e.ErrorMessage}")).ToList();
-            TempData["ManageSubGroupClub"] = model;
-            TempData["RenderId"] = "ManageSGC";
-            return redirectUrl;
+            string xmlOutput = rootElement.ToString();
+            ManageSubGroupClubModel model = new ManageSubGroupClubModel();
+            model.xmlInput = xmlOutput;
+
+            ManageSubGroupClubModelCommon commonModel = model.MapObject<ManageSubGroupClubModelCommon>();
+            commonModel.ActionUser = ApplicationUtilities.GetSessionValue("Username").ToString();
+            commonModel.ActionIP = ApplicationUtilities.GetIP();
+
+            var dbResponse = _business.ManageSubGroupClub(commonModel);
+            if (dbResponse.Code == ResponseCode.Success && dbResponse.Code == 0)
+            {
+                this.AddNotificationMessage(new NotificationModel()
+                {
+                    NotificationType = dbResponse.Code == ResponseCode.Success ? NotificationMessage.SUCCESS : NotificationMessage.INFORMATION,
+                    Message = dbResponse.Message ?? "Failed",
+                    Title = dbResponse.Code == ResponseCode.Success ? NotificationMessage.SUCCESS.ToString() : NotificationMessage.INFORMATION.ToString()
+                });
+                TempData["ManageSubGroupClub"] = model;
+                TempData["RenderId"] = "ManageSGC";
+                return Json(new { success = true, message = "Location and club mapping updated successfully." });
+            }
+            else
+            {
+                this.AddNotificationMessage(new NotificationModel()
+                {
+                    NotificationType = dbResponse.Code == ResponseCode.Failed ? SHARED.NotificationMessage.WARNING : NotificationMessage.WARNING,
+                    Message = dbResponse.Message ?? "Failed",
+                    Title = dbResponse.Code == ResponseCode.Success ? NotificationMessage.WARNING.ToString() : NotificationMessage.WARNING.ToString()
+                });
+                TempData["ManageSubGroupClub"] = model;
+                TempData["RenderId"] = "";
+                return Json(new { success = true, message = "Location and club mapping updated successfully." });
+            }
         }
         [HttpGet]
         public ActionResult ManageSubGroupClub(string GroupId = "", string SubGroupId = "")
@@ -822,7 +812,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 {
                     if (Cover_Image_Path != null)
                     {
-                        await ImageHelper.ImageUpload(CoverFileName, Cover_Image_Path);                        
+                        await ImageHelper.ImageUpload(CoverFileName, Cover_Image_Path);
                     }
                     this.AddNotificationMessage(new NotificationModel()
                     {

@@ -217,9 +217,7 @@ namespace CRS.ADMIN.REPOSITORY.GroupManagement
         public CommonDbResponse ManageSubGroupClub(ManageSubGroupClubModelCommon commonModel)
         {
             string sp_name = "EXEC [dbo].[sproc_admin_subgroup_club_addupdate]";
-            sp_name += "@SubGroupId=" + _dao.FilterString(commonModel.SubGroupId);
-            sp_name += ",@ClubId=" + _dao.FilterString(commonModel.ClubId);
-            sp_name += ",@LocationId=" + _dao.FilterString(commonModel.LocationId);
+            sp_name += "@XMLInput=" + _dao.FilterString(commonModel.xmlInput);           
             sp_name += ",@ActionUser=" + _dao.FilterString(commonModel.ActionUser);
             sp_name += ",@ActionIP=" + _dao.FilterString(commonModel.ActionIP);
             sp_name += ",@ActionPlatform=" + _dao.FilterString(commonModel.ActionPlatform);
