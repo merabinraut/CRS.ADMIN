@@ -173,7 +173,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             }
             var errorMessage = ModelState.Where(x => x.Value.Errors.Count > 0).SelectMany(x => x.Value.Errors.Select(e => $"{x.Key}:{e.ErrorMessage}")).ToList();
             TempData["ManageGroup"] = model;
-            TempData["RenderId"] = "Manage";
+            TempData["RenderId"] = "";
             return redirectUrl;
         }
         [HttpGet]
@@ -459,7 +459,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                         Title = dbResponse.Code == ResponseCode.Success ? NotificationMessage.SUCCESS.ToString() : NotificationMessage.INFORMATION.ToString()
                     });
                     TempData["ManageSubGroup"] = model;
-                    TempData["RenderId"] = "ManageSG";
+                    TempData["RenderId"] = "";
                     return redirectUrl;
                 }
                 else
@@ -477,7 +477,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             }
             var errorMessage = ModelState.Where(x => x.Value.Errors.Count > 0).SelectMany(x => x.Value.Errors.Select(e => $"{x.Key}:{e.ErrorMessage}")).ToList();
             TempData["ManageSubGroup"] = model;
-            TempData["RenderId"] = "ManageSG";
+            TempData["RenderId"] = "";
             return redirectUrl;
         }
         [HttpGet]
@@ -822,20 +822,19 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 {
                     if (Cover_Image_Path != null)
                     {
-                        await ImageHelper.ImageUpload(CoverFileName, Cover_Image_Path);
-                        this.AddNotificationMessage(new NotificationModel()
-                        {
-                            NotificationType = dbresponse.Code == ResponseCode.Success ? NotificationMessage.SUCCESS : NotificationMessage.INFORMATION,
-                            Message = dbresponse.Message ?? "Failed",
-                            Title = dbresponse.Code == ResponseCode.Success ? NotificationMessage.SUCCESS.ToString() : NotificationMessage.INFORMATION.ToString()
-                        });
-                        TempData["ManageGroupImage"] = model;
-                        TempData["RenderId"] = "ManageGG";
-                        return RedirectToAction("GroupGallery", "GroupManagement", new
-                        {
-                            GroupId = model.GroupId
-                        });
+                        await ImageHelper.ImageUpload(CoverFileName, Cover_Image_Path);                        
                     }
+                    this.AddNotificationMessage(new NotificationModel()
+                    {
+                        NotificationType = dbresponse.Code == ResponseCode.Success ? NotificationMessage.SUCCESS : NotificationMessage.INFORMATION,
+                        Message = dbresponse.Message ?? "Failed",
+                        Title = dbresponse.Code == ResponseCode.Success ? NotificationMessage.SUCCESS.ToString() : NotificationMessage.INFORMATION.ToString()
+                    });
+                    TempData["ManageGroupImage"] = model;
+                    return RedirectToAction("GroupGallery", "GroupManagement", new
+                    {
+                        GroupId = model.GroupId
+                    });
 
                 }
                 else
@@ -856,7 +855,6 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             }
             var errorMessage = ModelState.Where(x => x.Value.Errors.Count > 0).SelectMany(x => x.Value.Errors.Select(e => $"{x.Key}:{e.ErrorMessage}")).ToList();
             TempData["ManageGroupImage"] = model;
-            TempData["RenderId"] = "ManageGG";
             return RedirectToAction("GroupGallery", "GroupManagement", new
             {
                 GroupId = model.GroupId
