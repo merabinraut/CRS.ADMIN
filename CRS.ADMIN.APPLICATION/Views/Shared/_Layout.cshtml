@@ -515,6 +515,22 @@
                     </div>
                 </a>
             }
+            @if (ApplicationUtilities.HasMenuRight("/ChargeManagement/Index"))
+            {
+                if (!string.IsNullOrEmpty(CurrentURL) && CurrentURL.Trim().ToUpper() == "/CHARGEMANAGEMENT/INDEX") { MenuActiveClass = "menuActive"; }
+                else { MenuActiveClass = string.Empty; }
+                <a href="@Url.Action("Index", "ChargeManagement")">
+                    <div class="menuContainer @MenuActiveClass">
+                        <div class="menu-icon w-max">
+                            <img src="~/Content/assets_new/images/payment.svg" class="image" />
+                            <img src="~/Content/assets_new/images/payment-active.svg" class="active-image" />
+                        </div>
+                        <div class="label">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Charge_Management
+                        </div>
+                    </div>
+                </a>
+            }
             @if (ApplicationUtilities.HasMenuRight("/WithdrawalRequest/WithdrawalRequestMonthlyList"))
             {
                 if (!string.IsNullOrEmpty(CurrentURL) && CurrentURL.Trim().ToUpper() == "/WITHDRAWALREQUEST/WITHDRAWALREQUESTMONTHLYLIST") { MenuActiveClass = "menuActive"; }

@@ -382,6 +382,7 @@
       <DependentUpon>Resource.Ja.resx</DependentUpon>
     </Compile>
     <Compile Include="Services\CognitoService.cs" />
+    <None Include="Views\ChargeManagement\_ManageChargeCategoryPartialView.cshtml" />
     <Content Include="Content\assets\images\pdficon.svg" />
     <Content Include="Views\AccountInformation\GetAccountInformation.cshtml" />
     <Content Include="App_Data\AmazonConfigruation.json" />
@@ -394,6 +395,8 @@
     <Content Include="Views\AdminPointManagement\_ManageAdminPointPartialView.cshtml" />
     <Content Include="Views\BasicClubManagement\BasicClubManagementList.cshtml" />
     <Content Include="Views\BasicClubManagement\_ManageBasicClubPartialView.cshtml" />
+    <Content Include="Views\ChargeManagement\Index.cshtml" />
+    <Content Include="Views\ChargeManagement\ChargeCategoryType.cshtml" />
     <None Include="Views\ClubManagement\_RejectedClubListPartialView.cshtml" />
     <Content Include="Views\AffiliateManagement\_ConvertedCustomerPointsReport.cshtml" />
     <Content Include="Views\PointsManagement\_PointTransferRetrivePartialView.cshtml" />
@@ -430,7 +433,6 @@
     <Folder Include="Content\userupload\PointsManagement\" />
     <Folder Include="Content\userupload\PromotionalImages\" />
     <Folder Include="Properties\PublishProfiles\" />
-    <Folder Include="Views\ChargeManagement\" />
     <Folder Include="Views\LogManagement\" />
   </ItemGroup>
   <ItemGroup>

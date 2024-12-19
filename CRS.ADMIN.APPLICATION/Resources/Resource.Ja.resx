@@ -385,6 +385,10 @@
     <value>割当</value>
     <comment>Roles &amp; Privileges</comment>
   </data>
+  <data name="Assign Charge" xml:space="preserve">
+    <value>チャージを割り当てる</value>
+    <comment>Charge Management</comment>
+  </data>
   <data name="Assign Commission" xml:space="preserve">
     <value>コミッションの割り当て</value>
     <comment>Commission Management</comment>
@@ -549,6 +553,18 @@
   <data name="CEOFurigana" xml:space="preserve">
     <value>フリガナ</value>
     <comment>ClubManagement</comment>
+  </data>
+  <data name="Charge" xml:space="preserve">
+    <value>チャージ</value>
+    <comment>Charge Management</comment>
+  </data>
+  <data name="Charge Management" xml:space="preserve">
+    <value>チャージ管理</value>
+    <comment>Charge Management</comment>
+  </data>
+  <data name="Charge Type" xml:space="preserve">
+    <value>チャージタイプ</value>
+    <comment>Charge Management</comment>
   </data>
   <data name="ChargeAmount" xml:space="preserve">
     <value>手数料 (¥)</value>
@@ -1401,6 +1417,14 @@
   <data name="Manage affiliate withdraw logs." xml:space="preserve">
     <value>支払い引き出し設定を管理します。</value>
     <comment>Withdrawal Request</comment>
+  </data>
+  <data name="Manage Charge Category" xml:space="preserve">
+    <value>チャージカテゴリを管理する</value>
+    <comment>Charge Management</comment>
+  </data>
+  <data name="Manage charge setting" xml:space="preserve">
+    <value>チャージ設定を管理する。</value>
+    <comment>Charge Management</comment>
   </data>
   <data name="Manage Club Events" xml:space="preserve">
     <value>クラブイベント管理</value>

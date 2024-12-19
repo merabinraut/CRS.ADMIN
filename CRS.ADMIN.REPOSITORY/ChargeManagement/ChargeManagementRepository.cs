@@ -1,5 +1,7 @@
 ﻿using CRS.ADMIN.SHARED;
 using CRS.ADMIN.SHARED.ChargeManagement;
+using CRS.ADMIN.SHARED.PaginationManagement;
+using CRS.ADMIN.SHARED.PointSetup;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -17,14 +19,15 @@ namespace CRS.ADMIN.REPOSITORY.ChargeManagement
         #region Charge Category Management
         public CommonDbResponse CreateChargeCategory(ChargeCategoryManagementCommon request)
         {
-            var sql = $"EXEC dbo.sproc_admin_create_charge_category "
+            var sql = $"EXEC  {request.sp} "
                     + $"@categoryName =N{_dao.FilterString(request.categoryName)}"
                     + $",@description= N{_dao.FilterString(request.description)}"
                     + $",@isDefault={_dao.FilterString(request.isDefault)}"
                     + $",@agentType={_dao.FilterString(request.agentType)}"
                     + $",@actionUser=N{_dao.FilterString(request.ActionUser)}"
                     + $",@actionPlatform={_dao.FilterString(request.ActionPlatform)}"
-                    + $",@actionIP={_dao.FilterString(request.ActionIP)}";
+                    + $",@actionIP={_dao.FilterString(request.ActionIP)}"
+                    + $",@categoryId={_dao.FilterString(request.categoryId)}";
             return _dao.ParseCommonDbResponse(sql);
         }
 
@@ -39,12 +42,15 @@ namespace CRS.ADMIN.REPOSITORY.ChargeManagement
             return _dao.ParseCommonDbResponse(sql);
         }
 
-        public List<ChargeCategoryDetailCommon> GetChargeCategory(string agentType, string freeText)
+        public List<ChargeCategoryDetailCommon> GetChargeCategory(string agentType,string categoryId, PaginationFilterCommon dbRequest)
         {
             var response = new List<ChargeCategoryDetailCommon>();
             var sql = $"EXEC dbo.sproc_admin_get_charge_category "
                    + $"@agentType ={_dao.FilterString(agentType)}"
-                   + $",@freeText= N{_dao.FilterString(freeText)}";
+                   + ($", @freeText = {(string.IsNullOrEmpty(dbRequest.SearchFilter) ? "NULL" : $"N{_dao.FilterString(dbRequest.SearchFilter)}")}")
+                   + $", @Skip = {(dbRequest.Skip == 0 ? 0 : dbRequest.Skip)}"
+                  + $", @Take = {(dbRequest.Take == 0 ? 0 : dbRequest.Take)}" 
+                  + $", @categoryId = {_dao.FilterString(categoryId)}";
             var dbResponse = _dao.ExecuteDataTable(sql);
             if (dbResponse != null)
             {
@@ -55,6 +61,9 @@ namespace CRS.ADMIN.REPOSITORY.ChargeManagement
                         categoryId = _dao.ParseColumnValue(item, "categoryId").ToString(),
                         categoryName = _dao.ParseColumnValue(item, "categoryName").ToString(),
                         description = _dao.ParseColumnValue(item, "description").ToString(),
+                        SNO = Convert.ToInt32(_dao.ParseColumnValue(item, "sNo").ToString()),
+                        agentTypeValue = _dao.ParseColumnValue(item, "agentTypeValue").ToString(),
+                        TotalRecords = Convert.ToInt32(_dao.ParseColumnValue(item, "totalRecords").ToString()),
                         isDefault = _dao.ParseColumnValue(item, "isDefault").ToString(),
                         agentType = _dao.ParseColumnValue(item, "agentType").ToString(),
                         status = _dao.ParseColumnValue(item, "status").ToString(),
@@ -64,10 +73,48 @@ namespace CRS.ADMIN.REPOSITORY.ChargeManagement
                         createdDate = _dao.ParseColumnValue(item, "createdDate").ToString(),
                         createdDateUTC = _dao.ParseColumnValue(item, "createdDateUTC").ToString(),
                         createdPlatform = _dao.ParseColumnValue(item, "createdPlatform").ToString(),
-                        createdIP = _dao.ParseColumnValue(item, "createdIP").ToString()
+                        createdIP = _dao.ParseColumnValue(item, "createdIP").ToString(),
+                        isUserCandeleteCategory = _dao.ParseColumnValue(item, "isUserCandeleteCategory").ToString()
                     });
                 }
             }
+            return response;
+        }
+        public ChargeCategoryDetailCommon GetChargeCategoryDetails(string agentType,string categoryId, PaginationFilterCommon dbRequest)
+        {
+            var response = new ChargeCategoryDetailCommon();
+            var sql = $"EXEC dbo.sproc_admin_get_charge_category "
+                   + $"@agentType ={_dao.FilterString(agentType)}"
+                   + ($", @freeText = {(string.IsNullOrEmpty(dbRequest.SearchFilter) ? "NULL" : $"N{_dao.FilterString(dbRequest.SearchFilter)}")}")
+                   + $", @Skip = {(dbRequest.Skip == 0 ? 0 : dbRequest.Skip)}"
+                  + $", @Take = {(dbRequest.Take == 0 ? 0 : dbRequest.Take)}" 
+                  + $", @categoryId = {_dao.FilterString(categoryId)}";
+
+            var dbResponse = _dao.ExecuteDataRow(sql);
+            if (dbResponse != null)
+            {
+                return new ChargeCategoryDetailCommon()
+                {
+                    categoryId = _dao.ParseColumnValue(dbResponse, "categoryId").ToString(),
+                    categoryName = _dao.ParseColumnValue(dbResponse, "categoryName").ToString(),
+                    description = _dao.ParseColumnValue(dbResponse, "description").ToString(),
+                    SNO = Convert.ToInt32(_dao.ParseColumnValue(dbResponse, "sNo").ToString()),
+                    agentTypeValue = _dao.ParseColumnValue(dbResponse, "agentTypeValue").ToString(),
+                    TotalRecords = Convert.ToInt32(_dao.ParseColumnValue(dbResponse, "totalRecords").ToString()),
+                    isDefault = _dao.ParseColumnValue(dbResponse, "isDefault").ToString(),
+                    agentType = _dao.ParseColumnValue(dbResponse, "agentType").ToString(),
+                    status = _dao.ParseColumnValue(dbResponse, "status").ToString(),
+                    creatorUsername = _dao.ParseColumnValue(dbResponse, "creatorUsername").ToString(),
+                    creatorFullname = _dao.ParseColumnValue(dbResponse, "creatorFullname").ToString(),
+                    creatorProfileImage = _dao.ParseColumnValue(dbResponse, "creatorProfileImage").ToString(),
+                    createdDate = _dao.ParseColumnValue(dbResponse, "createdDate").ToString(),
+                    createdDateUTC = _dao.ParseColumnValue(dbResponse, "createdDateUTC").ToString(),
+                    createdPlatform = _dao.ParseColumnValue(dbResponse, "createdPlatform").ToString(),
+                    createdIP = _dao.ParseColumnValue(dbResponse, "createdIP").ToString()
+
+                };
+            }
+                   
             return response;
         }
         #endregion

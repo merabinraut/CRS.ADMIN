@@ -385,6 +385,10 @@
     <value>Assign</value>
     <comment>Roles &amp; Privileges</comment>
   </data>
+  <data name="Assign Charge" xml:space="preserve">
+    <value>Assign Charge</value>
+    <comment>Charge Management</comment>
+  </data>
   <data name="Assign Commission" xml:space="preserve">
     <value>Assign Commission</value>
     <comment>Commission Management</comment>
@@ -549,6 +553,18 @@
   <data name="CEOFurigana" xml:space="preserve">
     <value>CEO Furigana</value>
     <comment>Club Management</comment>
+  </data>
+  <data name="Charge" xml:space="preserve">
+    <value>Charge</value>
+    <comment>Charge Management</comment>
+  </data>
+  <data name="Charge Management" xml:space="preserve">
+    <value>Charge Management</value>
+    <comment>Charge Management</comment>
+  </data>
+  <data name="Charge Type" xml:space="preserve">
+    <value>Charge Type</value>
+    <comment>Charge Management</comment>
   </data>
   <data name="ChargeAmount" xml:space="preserve">
     <value>Charge Amount</value>
@@ -1400,6 +1416,14 @@
   <data name="Manage affiliate withdraw logs." xml:space="preserve">
     <value>Manage affiliate withdraw logs.</value>
     <comment>Withdrawal Request</comment>
+  </data>
+  <data name="Manage Charge Category" xml:space="preserve">
+    <value>Manage Charge Category</value>
+    <comment>Charge Management</comment>
+  </data>
+  <data name="Manage charge setting" xml:space="preserve">
+    <value>Manage charge setting.</value>
+    <comment>Charge Management</comment>
   </data>
   <data name="Manage Club Events" xml:space="preserve">
     <value>Manage Club Events</value>

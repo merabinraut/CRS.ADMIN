@@ -673,6 +673,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Assign Charge.
+        /// </summary>
+        public static string Assign_Charge {
+            get {
+                return ResourceManager.GetString("Assign Charge", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Assign Commission.
         /// </summary>
         public static string Assign_Commission {
@@ -1047,6 +1056,33 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         public static string CEOFurigana {
             get {
                 return ResourceManager.GetString("CEOFurigana", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Charge.
+        /// </summary>
+        public static string Charge {
+            get {
+                return ResourceManager.GetString("Charge", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Charge Management.
+        /// </summary>
+        public static string Charge_Management {
+            get {
+                return ResourceManager.GetString("Charge Management", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Charge Type.
+        /// </summary>
+        public static string Charge_Type {
+            get {
+                return ResourceManager.GetString("Charge Type", resourceCulture);
             }
         }
         
@@ -2982,6 +3018,24 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         public static string Manage_affiliate_withdraw_logs_ {
             get {
                 return ResourceManager.GetString("Manage affiliate withdraw logs.", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Manage Charge Category.
+        /// </summary>
+        public static string Manage_Charge_Category {
+            get {
+                return ResourceManager.GetString("Manage Charge Category", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Manage charge setting..
+        /// </summary>
+        public static string Manage_charge_setting {
+            get {
+                return ResourceManager.GetString("Manage charge setting", resourceCulture);
             }
         }
         

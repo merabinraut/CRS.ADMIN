@@ -1,0 +1,178 @@
+@model CRS.ADMIN.APPLICATION.Models.ChargeManagement.ChargeTypeModel
+@{
+    ViewBag.Title = "Charge Type List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="px-8 py-4">
+    @Html.AntiForgeryToken()
+    <!-- title  -->
+    <div class="flex flex-col  gap-6">
+        <div>
+            <div class="heading-title">
+                @CRS.ADMIN.APPLICATION.Resources.Resource.Charge_Management
+            </div>
+            <div class="span-title-light-gray">
+                @CRS.ADMIN.APPLICATION.Resources.Resource.Manage_charge_setting
+            </div>
+        </div>
+        <!-- container  -->
+        <div id="tab1" class="tab-content-plane">
+            <div class="flex flex-col gap-8">
+                <div id="tab1" class="tab-content">
+                    <div class="flex gap-4 mb-8 border-b ">
+                        <div id="tab1Link" class="styleCss active px-1 pb-4 cursor-pointer active" onclick="changeTab('points', 'tab1Link')">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Charge
+                        </div>
+                        <div id="tab2Link" class="styleCss px-1 pb-4 cursor-pointer" onclick="changeTab('assignpoint', 'tab2Link')">
+                            Assign Charge
+                        </div>
+                    </div>
+                    <div class="flex justify-between pb-[24px]">
+
+
+                    </div>
+
+                    <div id="points" class="pane active table-tab">
+                        <div class="px-[12px] py-[16px] flex justify-between entry-export-container">
+                            <div class="flex items-center select-entries" id="ShowEntries-Id">
+                            </div>
+                        </div>
+                        <div class="relative overflow-x-auto">
+                            <table class="w-full text-left club-table" id="table-id">
+                                <thead class="club-table-thead">
+                                    <tr>
+                                        <th scope="col" class="p-[12px]">
+                                            <div class="flex w-max">
+                                                S.N
+                                                <div class="relative pl-[5px]">
+                                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                                </div>
+                                            </div>
+                                        </th>
+                                        <th scope="col" class="p-[12px]">
+                                            <div class="flex w-max">
+                                                @CRS.ADMIN.APPLICATION.Resources.Resource.Charge_Type
+                                                <div class="relative pl-[5px]">
+                                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                                </div>
+                                            </div>
+                                        </th>
+
+                                        <th scope="col" class="p-[12px]">
+                                            <div class="flex w-max">
+                                                @CRS.ADMIN.APPLICATION.Resources.Resource.Action
+                                                <div class="relative pl-[5px]">
+                                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                                </div>
+                                            </div>
+                                        </th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @{
+                                        if (Model.ChargeTypeList.Count > 0)
+                                        {
+                                            int SN = 1;
+                                            foreach (var item in Model.ChargeTypeList)
+                                            {
+                                                <tr class="bg-white border-b ">
+                                                    <td class="p-[12px]">
+                                                        @SN
+                                                    </td>
+                                                    <td class="p-[12px]">
+                                                        @item.agentType
+                                                    </td>
+
+                                                    <td class="p-[12px]">
+                                                        <div class="flex gap-[7px]">
+
+                                                            <i class="las la-eye text-[20px] cursor-pointer text-[#A6A6A6]" onclick="ViewChargeCategory('@item.agentTypeValue','@item.agentType')"></i>
+
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                SN++;
+                                            }
+                                        }
+
+                                    }
+                                </tbody>
+                            </table>
+
+                        </div>
+                        <div class="pagination-club">
+                            <div class="show-entry" id="Entries-Id">
+                            </div>
+                            <div class="flex gap-[12px]">
+                                <div class="btn btn-secondary-box-shadow" id="prev-btn">
+                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Previous
+                                </div>
+                                <div class="flex gap-[12px]" id="pagination-id">
+                                </div>
+                                <div class="btn btn-secondary-box-shadow" id="next-btn">
+                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Next
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div id="assignpoint" class="pane" style="display: none;">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts
+{
+
+    <script>
+        function ViewChargeCategory(i,j) {
+            window.location.href = '/ChargeManagement/ChargeCategoryType?agentTypeValue=' + i +'&agentType=' + j;
+        }
+    </script>
+    <script>
+        document.getElementById('tab1Link').style.color = '#D75A8B';
+        document.getElementById('tab1Link').style.borderBottom = '#D75A8B 2px solid';
+
+        function changeTab(selectedTabId, selectedLinkId) {
+            var tabLinks = document.querySelectorAll('.styleCss');
+            var tabContents = document.querySelectorAll('.pane');
+
+            tabLinks.forEach(function (link) {
+                if (link.id === selectedLinkId) {
+                    link.classList.add('active');
+                } else {
+                    link.classList.remove('active');
+                }
+            });
+            tabContents.forEach(function (content) {
+                if (content.id === selectedTabId) {
+                    content.style.display = 'block';
+                } else {
+                    content.style.display = 'none';
+                }
+            });        
+            if (selectedLinkId === 'tab1Link') {
+                document.getElementById('tab1Link').style.color = '#D75A8B';
+                document.getElementById('tab1Link').style.borderBottom = '#D75A8B 2px solid';
+                document.getElementById('tab2Link').style.borderBottom = '';
+                document.getElementById('tab2Link').style.color = '';
+            } else if (selectedLinkId === 'tab2Link') {
+                document.getElementById('tab1Link').style = ''; // Reset color for other link
+                document.getElementById('tab1Link').style.borderBottom = '';
+                document.getElementById('tab2Link').style.color = '#D75A8B';
+                document.getElementById('tab2Link').style.borderBottom = '#D75A8B 2px solid';
+
+
+            }
+        }
+
+    </script>
+}

@@ -1,6 +1,7 @@
 ﻿using CRS.ADMIN.REPOSITORY.ChargeManagement;
 using CRS.ADMIN.SHARED;
 using CRS.ADMIN.SHARED.ChargeManagement;
+using CRS.ADMIN.SHARED.PaginationManagement;
 using System.Collections.Generic;
 
 namespace CRS.ADMIN.BUSINESS.ChargeManagement
@@ -17,9 +18,13 @@ namespace CRS.ADMIN.BUSINESS.ChargeManagement
         {
             return _repo.CreateChargeCategory(request);
         }
-        public List<ChargeCategoryDetailCommon> GetChargeCategory(string agentType, string freeText)
+        public List<ChargeCategoryDetailCommon> GetChargeCategory(string  agentType , string categoryId, PaginationFilterCommon dbRequest )
         {
-            return _repo.GetChargeCategory(agentType, freeText);
+            return _repo.GetChargeCategory(agentType, categoryId, dbRequest);
+        }
+        public ChargeCategoryDetailCommon GetChargeCategoryDetails(string agentTypestring, string categoryId, PaginationFilterCommon dbRequest)
+        {
+            return _repo.GetChargeCategoryDetails(agentTypestring, categoryId, dbRequest);
         }
         public CommonDbResponse ManageChargeCategoryStatus(ChargeCategoryStatusManagementCommon request)
         {
