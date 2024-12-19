@@ -393,41 +393,14 @@
 
 
     <script>
-        //$(document).ready(function () {
-        //    $('select[name="LocationDDL"]').on('change', function () {
-        //        const selectedValue = $(this).val();
-        //        debugger
-        //        if (selectedValue) {
-        //            $('select[name="LocationDDL"]').each(function () {
-        //                $(this)
-        //                    .val(selectedValue)
-        //                    .prop('disabled', false);
-        //            });
-        //        } else {
-        //            alert('Please select a valid location.');
-        //        }
-        //    });
 
-        //    $('#addNewRow').on('click', function () {
-        //        const selectedValue = $('select[name="LocationDDL"]').val();
-        //        debugger
-        //        if (selectedValue) {
-        //            $('#newContainer').show();
-        //        } else {
-        //            alert('Please select a location before adding a new row.');
-        //        }
-        //    });
-
-        //    $(document).on('click', '.remove-container-btn', function () {
-        //        const newContainer = document.getElementById("newContainer");
-        //        newContainer.style.display = "none";
-        //    });
-        //});
 
        $(document).ready(function () {
-    let containerCounter = 1;
+           let containerCounter = 2;
+           let locationClubMapping = {};
+           let subgroupid = $(`#subgroupid`).val();
 
-
+    // Update dropdown options to avoid duplicate selection of locations
     function updateDropdownOptions() {
         const selectedValues = [];
         $('select[name="LocationDDL"]').each(function () {
@@ -446,14 +419,15 @@
             });
         });
     }
+
+    // Event handler for Location selection
     $(document).on('change', 'select[name="LocationDDL"]', function () {
-        const containerId = $(this).data('container-id');
-        const clubDDL = $(`#clubddl_id-${containerId}`);
+        const isStatic = $(this).attr('id') === 'staticLocationDDL';
+        const containerId = isStatic ? 'static' : $(this).data('container-id');
+        const clubDDL = isStatic ? $('#staticClubDDL') : $(`#clubddl_id-${containerId}`);
         const locationId = $(this).val();
         const RequestVerificationToken = $('input[name="__RequestVerificationToken"]').val();
-        if (clubDDL == "") {
-            $(".ClubDDL").empty().prepend("<option value=''></option>");
-        }
+
         clubDDL.empty().append('<option value="">Loading...</option>');
 
         if (locationId) {
@@ -465,8 +439,7 @@
                 success: function (data) {
                     clubDDL.empty().append('<option value="">Select Club</option>');
                     $.each(data.clubDDL, function (i, club) {
-                        clubDDL.append('<option value="' + club.Value + '">' + club.Text + '</option>');
-                        $(".ClubDDL").append('<option value="' + club.Value + '">' + club.Text + '</option>');
+                        clubDDL.append(`<option value="${club.Value}">${club.Text}</option>`);
                     });
                 },
                 error: function () {
@@ -476,13 +449,15 @@
         } else {
             clubDDL.empty().append('<option value="">Select Club</option>');
         }
+
         updateDropdownOptions();
     });
+
+    // Add a new container for Location and Club selection
     function addNewContainer() {
         const newContainerHtml = `
             <div id="container-${containerCounter}" class="dynamic-container">
-             <div class="border border-[2px] border-dashed border-[#EBEBEB] w-full my-4">
-                        </div>
+                <div class="border border-[2px] border-dashed border-[#EBEBEB] w-full my-4"></div>
                 <div class="flex justify-end">
                     <button class="flex gap-1 items-center remove-container-btn" data-container-id="${containerCounter}">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="17" viewBox="0 0 16 17" fill="none">
@@ -491,11 +466,11 @@
                         <span>削除</span>
                     </button>
                 </div>
-                <div class="grid grid-cols-2 gap-x-4 gap-y-5">
+                <div class="grid gap-4 grid-cols-2 gap-x-4 gap-y-5">
                     <div class="input-field-common">
                         <label class="block mb-[12px] text-sm font-medium text-secondary-text-2">エリア</label>
                         <select id="locationddl-${containerCounter}" class="default_select select-common block w-full"
-                                name="LocationDDL" data-container-id="${containerCounter}" style="width: 100%;">                           
+                                name="LocationDDL" data-container-id="${containerCounter}" style="width: 100%;">
                             @foreach (var item in ViewBag.LocationDDL)
                             {
                                 <option value="@item.Value">@item.Text</option>
@@ -505,19 +480,19 @@
                     <div class="input-field-common">
                         <label class="block mb-[12px] text-sm font-medium text-secondary-text-2">店舗</label>
                         <select id="clubddl_id-${containerCounter}" class="default_select select-common block w-full"
-                                name="ClubDDL" multiple="multiple" style="width: 100%;" placeholder="Select"></select>
+                                name="ClubDDL" data-container-id="${containerCounter}" multiple="multiple" style="width: 100%;" placeholder="Select"></select>
                     </div>
                 </div>
-                 <div class="flex justify-between items-center">
-                                <label class="block text-sm font-medium text-secondary-text-2 ">
-                                    店舗の合計数
-                                </label>
-                                <div class="input-field-common max-w-[116px]">
-
-                                </div>
-                            </div>
-                            <div class="bg-[#F4F4F4] h-[2px] w-full">
-                            </div>
+                <div class="flex justify-between items-center">
+                    <label class="block text-sm font-medium text-secondary-text-2">
+                        店舗の合計数
+                    </label>
+                    <div class="input-field-common max-w-[116px]">
+                        <input type="text" id="TotalClubCount" name="TotalClubCount" class="w-full text-[#B7B7B7]"
+                               placeholder="" autocomplete="off" disabled="disabled" />
+                    </div>
+                </div>
+                <div class="bg-[#F4F4F4] h-[2px] w-full"></div>
             </div>
         `;
         $('#dynamicContainerWrapper').append(newContainerHtml);
@@ -525,21 +500,67 @@
         updateDropdownOptions();
         initializeDynamicDropdowns();
     }
-    $('#addNewRow').on('click', function () {
-        addNewContainer();
-    });
+
+    // Remove a container
     $(document).on('click', '.remove-container-btn', function () {
         const containerId = $(this).data('container-id');
+        delete locationClubMapping[containerId];
+        console.log("Current Mapping: ", locationClubMapping);
         $(`#container-${containerId}`).remove();
         updateDropdownOptions();
     });
-           function initializeDynamicDropdowns() {
-               $('.default_select').select2({
-                   minimumResultsForSearch: Infinity,
-               }); // Re-initialize Select2 for new elements
-           }
+
+    // Initialize select2 for dropdowns
+    function initializeDynamicDropdowns() {
+        $('.default_select').select2({
+            minimumResultsForSearch: Infinity,
+        });
+    }
+
+    // Update the locationClubMapping on selection changes
+    $(document).on('change', '.select-common', function () {
+        const containerId = $(this).data('container-id');
+        if (containerId != null) {
+            const selectedLocation = $(`#locationddl-${containerId}`).val();
+            const selectedClubs = $(`#clubddl_id-${containerId}`).val();
+
+            if (selectedLocation) {
+                locationClubMapping[containerId] = {
+                    locationId: selectedLocation,
+                    clubs: selectedClubs || []
+                };
+            } else {
+                delete locationClubMapping[containerId];
+            }
+
+            console.log("Current Mapping: ", locationClubMapping);
+            console.log("subgroupid", subgroupid);
+        } else {
+            const selectedLocation = $(`#staticLocationDDL`).val();
+            const selectedClubs = $(`#staticClubDDL`).val();
+
+            if (selectedLocation) {
+                locationClubMapping[containerId] = {
+                    locationId: selectedLocation,
+                    clubs: selectedClubs || []
+                };
+            } else {
+                delete locationClubMapping[containerId];
+            }
+
+            console.log("Current Mapping: ", locationClubMapping);
+            console.log("subgroupid", subgroupid);
+        }
+    });
+    $('#addNewRow').on('click', function () {
+        addNewContainer();
+    });
     updateDropdownOptions();
+           initializeDynamicDropdowns();
+
 });
+
+
     </script>
 
 }

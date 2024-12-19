@@ -67,7 +67,7 @@
                                 <label class="block mb-[12px] text-[14px] font-[500] text-secondary-100 ">
                                     サブグループ
                                 </label>
-                                <select id="large" class="default_select select-common block w-full "
+                                <select id="subgroupid" class="default_select block w-full "
                                         style="width: 100%;" name="SubGroupDDL">
                                     @foreach (var item in ViewBag.SubGroupList as IEnumerable<SelectListItem>)
                                     {
@@ -98,7 +98,7 @@
                                     <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
                                         エリア
                                     </label>
-                                    <select id="large" class=" default_select select-common block w-full "
+                                    <select id="staticLocationDDL" class=" default_select select-common block w-full "
                                             style="width: 100%;" name="LocationDDL">
                                         @foreach (var item in ViewBag.LocationDDL as IEnumerable<SelectListItem>)
                                         {
@@ -111,7 +111,7 @@
                                         店舗
                                     </label>
                                     @Html.HiddenFor(m => m.ClubId)
-                                    <select id="large" class="default_select select-common block w-full ClubDDL" multiple="multiple"
+                                    <select id="staticClubDDL" class="default_select select-common block w-full ClubDDL" multiple="multiple"
                                             style="width: 100%;" name="ClubDDL" placeholder="Select">                                        
                                     </select>
                                 </div>
