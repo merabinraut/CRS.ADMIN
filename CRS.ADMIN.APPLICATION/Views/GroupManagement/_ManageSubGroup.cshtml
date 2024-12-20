@@ -35,11 +35,11 @@
         }
 </style>
 <div id="add-sub-group" class="drawer-close-disable  flex justify-end fixed top-0 right-0 z-40 h-screen overflow-y-auto transition-transform translate-x-full"
-     tabindex="-1" aria-labelledby="drawer-right-label">
+     tabindex="-1" aria-labelledby="drawer-right-label" style="font-family: Noto Sans">
     <div class="bg-white w-[574px] drawer-container relative">
         <div class="drawer-form-container sticky top-0 z-[5] ">
             <div class="drawer-form flex justify-between bg-secondary-color-pink py-[16px] px-[24px] h-[56px]">
-                <div> Manage Sub Group</div>
+                <div> サブグループを管理</div>
                 <button type="button" data-drawer-hide="add-sub-group" aria-controls="add-sub-group" onclick="CancelFunction()"
                         class="text-[20px]">
                     <i class="las la-window-close text-white"></i>
@@ -73,7 +73,7 @@
                             <div class="grid grid-cols-2 gap-x-5 gap-y-4">
                                 <div class="input-field-common">
                                     <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
-                                        Group Name
+                                        グループ名
                                     </label>
                                     @Html.TextBoxFor(model => model.GroupName, new
                                {
@@ -90,7 +90,7 @@
                                 </div>
                                 <div class="input-field-common">
                                     <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
-                                        Group Name Katakana
+                                        グループ名（カタカナ）
                                     </label>
                                     @Html.TextBoxFor(model => model.GroupNameKatakana, new
                                {
@@ -109,7 +109,7 @@
                             <div class="grid grid-cols-1 gap-x-5 gap-y-4">
                                 <div class="input-field-common">
                                     <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
-                                        Sub Group
+                                        サブグループ
                                     </label>
                                     @Html.TextBoxFor(model => model.SubGroupName, new
                                {
@@ -129,9 +129,9 @@
                         <div class="flex gap-6">
                             <button class="btn btn-secondary rounded-[4px]" type="button" data-drawer-hide="add-sub-group"
                                     aria-controls="add-sub-group" onclick="CancelFunction();">
-                                @CRS.ADMIN.APPLICATION.Resources.Resource.Cancel
+                                キャンセル
                             </button>
-                            <button class="btn btn-primary-default rounded-[4px]" id="submit-button-id"> @CRS.ADMIN.APPLICATION.Resources.Resource.Submit</button>
+                            <button class="btn btn-primary-default rounded-[4px]" id="submit-button-id"> 追加する</button>
 
                         </div>
                     </div>
