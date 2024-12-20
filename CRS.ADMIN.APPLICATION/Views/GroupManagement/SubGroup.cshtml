@@ -250,16 +250,32 @@
                                         </td>
                                         <td class="py-[28px] px-[16px]">
                                             <div class="flex justify-center gap-[7px]">
-                                                <i class="las la-edit text-[20px] cursor-pointer text-[#A6A6A6]" onclick="ManageSubGroupDetailsFunction('@item.SubGroupId','@item.GroupId');"></i>
-                                                <div class="text-[#BBBBBB] text-center text-[20px]"
-                                                     onclick="">
-                                                    <i class="las la-trash-alt text-[20px] cursor-pointer "></i>
-                                                </div>
+                                                @if (item.SubGroupName.Trim().ToUpper() == "DEFAULT")
+                                                {
+
+                                                }
+                                                else
+                                                {
+                                                    <i class="las la-edit text-[20px] cursor-pointer text-[#A6A6A6]" onclick="ManageSubGroupDetailsFunction('@item.SubGroupId','@item.GroupId');"></i>
+                                                }
+                                                @if (item.ClubShortInfo.Count > 0)
+                                                {
+                                                    <div class="text-[#BBBBBB] text-center text-[20px]"
+                                                         onclick="">
+                                                        <i class="las la-trash-alt text-[20px] cursor-pointer "></i>
+                                                    </div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="text-[#CB3F3F] text-center text-[20px]"
+                                                         onclick="">
+                                                        <i class="las la-trash-alt text-[20px] cursor-pointer "></i>
+                                                    </div>
+                                                }
                                             </div>
                                         </td>
                                     </tr>
                                     <!-- Hidden Row -->
-
                                     string rowClass;
                                     if (item.ClubShortInfo != null && item.ClubShortInfo.Count > 0)
                                     {
@@ -459,7 +475,7 @@
     function addNewContainer() {
         const newContainerHtml = `
             <div id="container-${containerCounter}" class="dynamic-container">
-              
+
                 <div class="flex justify-end">
                     <button class="flex gap-1 items-center remove-container-btn" data-container-id="${containerCounter}">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="17" viewBox="0 0 16 17" fill="none">
