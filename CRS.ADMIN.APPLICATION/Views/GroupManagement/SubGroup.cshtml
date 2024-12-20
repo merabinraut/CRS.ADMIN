@@ -205,7 +205,7 @@
                                     </div>
                                 </th>
                                 <th scope="col" class="p-[12px]">
-                                    <div class="flex justify-center">
+                                    <div class="flex">
                                         Added On
                                         <div class="relative pl-[5px]">
                                             <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
@@ -303,7 +303,7 @@
                                                 <td class="p-[12px]">
                                                     @item.ClubShortInfo[i].LocationName
                                                 </td>
-                                                <td class="p-[12px] flex justify-center">
+                                                <td class="p-[12px] ">
                                                     @item.ClubShortInfo[i].CreatedOn
                                                 </td>
                                                 <td class="p-[12px]">
@@ -342,15 +342,15 @@
     </div>
 </div>
 
-<div id="delete-confirmation" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 hidden w-full
+<div id="delete-confirmation" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 hidden w-full flex justify-center
      p-4 overflow-x-hidden overflow-y-auto
      md:inset-0 h-[calc(100%-1rem)] max-h-full " style="align-items: flex-start;">
     <div class="relative max-w-2xl max-h-full w-[412px] px-4 pt-[40px] pb-[46px] mt-24">
         <!-- Modal content -->
         <div class="relative bg-white rounded-lg shadow">
             <!-- Modal header -->
-            <button type="button"
-                    class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center absolute top-[24px] right-[20px] "
+            <button type="button" onclick="CancelFunction()" 
+                    class="text-gray-400 bg-transparent rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center absolute top-[24px] right-[20px] "
                     data-modal-hide="delete-confirmation">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="25" viewBox="0 0 24 25" fill="none">
                     <rect y="0.621094" width="24" height="24" rx="12" fill="#FAFAFA" />
@@ -359,17 +359,17 @@
                 </svg>
             </button>
             <!-- Modal body -->
-            <div class="grid gap-6 px-[20px] py-8">
+            <div class="grid pt-[24px] px-[23px] pb-[45px]">
                 <div class="text-[#333] font-semibold pb-[11px] border-b border-[#eeeeee]">@CRS.ADMIN.APPLICATION.Resources.Resource.Confirmation</div>
-                <div class="grid gap-[20px] text-[#062937] mb-[45px]">
+                <div class="grid gap-[20px] text-[#062937] mt-[20px] mb-[40px]">
                     <div class="text-[14px] text-secondary-text-2 text-start">
                         Are you sure you want to delete this SUB GROUP?
                     </div>
                 </div>
                 <div class="flex justify-end">
-                    <div class="flex gap-2 justify-end mt-[45px]">
+                    <div class="flex gap-2 justify-end ">
                         <input id="request_id" value="" hidden />
-                        <div class="btn btn-secondary w-[110px]" onclick="CancelFunction()" data-modal-hide="delete-confirmation">@CRS.ADMIN.APPLICATION.Resources.Resource.No</div>
+                        <div class="btn btn-secondary rounded-[4px] w-[110px]" onclick="CancelFunction()" data-modal-hide="delete-confirmation">@CRS.ADMIN.APPLICATION.Resources.Resource.No</div>
                         <div class="btn btn-primary w-[110px]" onclick="DeleteSubGroup()" data-val="" id="delete_id">@CRS.ADMIN.APPLICATION.Resources.Resource.Yes</div>
                     </div>
                 </div>
@@ -382,7 +382,12 @@
 @section scripts{
     <script>
         function CancelFunction() {
-            location.reload();
+            const modal = document.getElementById("delete-confirmation");
+
+            // Hide the modal
+            modal.classList.add("hidden");
+            modal.setAttribute("aria-hidden", "true");
+           /* location.reload();*/
         }
         document.addEventListener('DOMContentLoaded', () => {
             const headers = document.querySelectorAll('.accordion-header');
