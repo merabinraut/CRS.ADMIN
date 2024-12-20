@@ -456,7 +456,7 @@
     function addNewContainer() {
         const newContainerHtml = `
             <div id="container-${containerCounter}" class="dynamic-container">
-                <div class="border border-[2px] border-dashed border-[#EBEBEB] w-full my-4"></div>
+              
                 <div class="flex justify-end">
                     <button class="flex gap-1 items-center remove-container-btn" data-container-id="${containerCounter}">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="17" viewBox="0 0 16 17" fill="none">
@@ -482,7 +482,7 @@
                                 name="ClubDDL" data-container-id="${containerCounter}" multiple="multiple" style="width: 100%;" placeholder="Select"></select>
                     </div>
                 </div>
-                <div class="flex justify-between items-center">
+                <div class="flex justify-between mt-4 items-center">
                     <label class="block text-sm font-medium text-secondary-text-2">
                         店舗の合計数
                     </label>
@@ -491,7 +491,7 @@
                                placeholder="" autocomplete="off" disabled="disabled" />
                     </div>
                 </div>
-                <div class="bg-[#F4F4F4] h-[2px] w-full"></div>
+                  <div class="border border-[2px] border-dashed border-[#EBEBEB] w-full my-4"></div>
             </div>
         `;
         $('#dynamicContainerWrapper').append(newContainerHtml);
