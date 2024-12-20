@@ -43,11 +43,9 @@ namespace CRS.ADMIN.APPLICATION.Models.GroupManagement
     #region SUB-GROUP MODEL
     public class CommonSubGroupModel
     {
-        public ManageSubGroupModel ManageSubGroup { get; set; }
-        public ManageSubGroupClubModel ManageSubGroupClub { get; set; }
-        public List<SubGroupInfoModel> SubGroupInfoList { get; set; }
-
-        public List<SubGroupClubInfo> ClubShortInfo { get; set; }
+        public ManageSubGroupModel ManageSubGroup { get; set; } = new ManageSubGroupModel();
+        public ManageSubGroupClubModel ManageSubGroupClub { get; set; } = new ManageSubGroupClubModel();
+        public List<SubGroupInfoModel> SubGroupInfoList { get; set; } = new List<SubGroupInfoModel>();
     }
 
     public class SubGroupInfoModel
@@ -60,6 +58,7 @@ namespace CRS.ADMIN.APPLICATION.Models.GroupManagement
         public string Status { get; set; }
         public string CreatedOn { get; set; }
         public string TotalClubCount { get; set; }
+        public List<SubGroupClubInfo> ClubShortInfo { get; set; } = new List<SubGroupClubInfo>();
     }
     public class SubGroupClubInfo
     {
@@ -95,7 +94,7 @@ namespace CRS.ADMIN.APPLICATION.Models.GroupManagement
         public string locationId { get; set; }
         public int clubCount { get; set; } = 0;
         public List<string> clubs { get; set; }
-    }   
+    }
     #endregion
 
     #region GROUP GALLERY 
@@ -107,14 +106,14 @@ namespace CRS.ADMIN.APPLICATION.Models.GroupManagement
     }
     public class GroupGalleryInfoModel
     {
-        public string ImageId { get; set; }       
-        public string GroupId { get; set; }       
+        public string ImageId { get; set; }
+        public string GroupId { get; set; }
         public string ImageTitle { get; set; }
         public string ImagePath { get; set; }
         public string UpdatedDate { get; set; }
         public string ImageCount { get; set; }
     }
-    public class ManageGroupGalleryModel: PaginationFilterCommon
+    public class ManageGroupGalleryModel : PaginationFilterCommon
     {
         public string ImageId { get; set; }
         public string GroupId { get; set; }

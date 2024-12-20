@@ -261,42 +261,45 @@
                                     <!-- Hidden Row -->
 
                                     string rowClass;
-                                    for (int i = 1; i <= Model.ClubShortInfo.Count; i++)
+                                    if (item.ClubShortInfo != null && item.ClubShortInfo.Count > 0)
                                     {
-                                        rowClass = i % 2 == 0 ? "bg-[#f6f6f6]" : "bg-white";
-                                        <tr class="@rowClass accordion-content details-row-@sno">
-                                            <td class="p-[12px]">
-                                            </td>
-                                            <td class="p-[12px]">
-                                            </td>
-                                            <td class="p-[12px]">
-                                            </td>
-                                            <td class="p-[12px] w-max">
-                                                <div class="round-image-text w-max flex justify-center items-center gap-[12px]">
-                                                    <img class="w-[36px] h-[36px] rounded-full"
-                                                         src="">
-                                                    <div class="flex flex-col gap-1 justify-between w-full">
-                                                        <div class="text-[14px] font-[600] text-[#101828] ">hello</div>
-                                                        <div class="text-[12px] font-[400]">hello</div>
+                                        for (int i = 0; i < item.ClubShortInfo.Count(); i++)
+                                        {
+                                            rowClass = i % 2 == 0 ? "bg-[#f6f6f6]" : "bg-white";
+                                            <tr class="@rowClass accordion-content details-row-@sno">
+                                                <td class="p-[12px]">
+                                                </td>
+                                                <td class="p-[12px]">
+                                                </td>
+                                                <td class="p-[12px]">
+                                                </td>
+                                                <td class="p-[12px] w-max">
+                                                    <div class="round-image-text w-max flex justify-center items-center gap-[12px]">
+                                                        <img class="w-[36px] h-[36px] rounded-full"
+                                                             src="@item.ClubShortInfo[i].ClubLogo">
+                                                        <div class="flex flex-col gap-1 justify-between w-full">
+                                                            <div class="text-[14px] font-[600] text-[#101828] ">@item.ClubShortInfo[i].ClubName</div>
+                                                            <div class="text-[12px] font-[400]">@item.ClubShortInfo[i].ClubNameJp</div>
 
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            </td>
-                                            <td class="p-[12px]">
-                                                Location
-                                            </td>
-                                            <td class="p-[12px]">
-                                                Added On
-                                            </td>
-                                            <td class="p-[12px]">
-                                                <div class="flex justify-center gap-[7px]">
-                                                    <div class="text-[#CB3F3F] text-center text-[20px]"
-                                                         onclick="window.location.href=''">
-                                                        <i class="las la-trash-alt text-[20px] cursor-pointer "></i>
+                                                </td>
+                                                <td class="p-[12px]">
+                                                    @item.ClubShortInfo[i].LocationName
+                                                </td>
+                                                <td class="p-[12px]">
+                                                    @item.ClubShortInfo[i].CreatedOn
+                                                </td>
+                                                <td class="p-[12px]">
+                                                    <div class="flex justify-center gap-[7px]">
+                                                        <div class="text-[#CB3F3F] text-center text-[20px]"
+                                                             onclick="window.location.href=''">
+                                                            <i class="las la-trash-alt text-[20px] cursor-pointer "></i>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            </td>
-                                        </tr>
+                                                </td>
+                                            </tr>
+                                        }
                                     }
                                     sno++;
                                 }
