@@ -59,6 +59,7 @@ namespace CRS.ADMIN.SHARED.GroupManagement
     public class SubGroupClubInfoCommon
     {
         public string ClubId { get; set; }
+        public string Id { get; set; }
         public string ClubName { get; set; }
         public string ClubNameJp { get; set; }
         public string ClubLogo { get; set; }

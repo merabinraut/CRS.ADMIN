@@ -63,6 +63,7 @@ namespace CRS.ADMIN.APPLICATION.Models.GroupManagement
     public class SubGroupClubInfo
     {
         public string ClubId { get; set; }
+        public string Id { get; set; }
         public string ClubName { get; set; }
         public string ClubNameJp { get; set; }
         public string ClubLogo { get; set; }

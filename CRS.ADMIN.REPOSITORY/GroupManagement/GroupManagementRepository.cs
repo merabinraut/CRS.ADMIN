@@ -204,8 +204,8 @@ namespace CRS.ADMIN.REPOSITORY.GroupManagement
 
         public CommonDbResponse DeleteSubGroup(string subGroupId, Common request)
         {
-            string sp_name = "";
-            sp_name += "@SubGroupId" + _dao.FilterString(subGroupId);
+            string sp_name = "EXEC [dbo].[sproc_admin_subgroup_delete]";
+            sp_name += "@SubGroupId=" + _dao.FilterString(subGroupId);
             sp_name += ",@ActionIP=" + _dao.FilterString(request.ActionIP);
             sp_name += ",@ActionUser=" + _dao.FilterString(request.ActionUser);
             sp_name += ",@ActionPlatform=" + _dao.FilterString(request.ActionPlatform);
