@@ -80,6 +80,10 @@ namespace CRS.ADMIN.BUSINESS.GroupManagement
         {
             return _repo.GetSubGroupClubDetailById(subGroupId);
         }
+        public CommonDbResponse DeleteSubGroupClub(string id, string subgroupid, string clubid, Common request)
+        {
+            return _repo.DeleteSubGroupClub(id, subgroupid, clubid, request);
+        }
         #endregion
 
         #region GROUP GALLERY
@@ -102,6 +106,7 @@ namespace CRS.ADMIN.BUSINESS.GroupManagement
         {
             return _repo.DeleteImage(imageid, groupid, request);
         }
+
         #endregion
 
     }

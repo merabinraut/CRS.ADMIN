@@ -31,6 +31,7 @@ namespace CRS.ADMIN.BUSINESS.GroupManagement
         CommonDbResponse ManageGroupGallery(ManageGroupGalleryModelCommon commonModel);
         ManageGroupGalleryModelCommon GetGroupGalleryDetail(string imageid);
         CommonDbResponse DeleteImage(string imageid,string groupid, Common request);
+        CommonDbResponse DeleteSubGroupClub(string id, string subgroupid, string clubid, Common request);
         #endregion
     }
 }

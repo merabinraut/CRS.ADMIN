@@ -681,6 +681,51 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             clubDDL = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("CLUBDDLBYLOCATIONID", locationId, "") as Dictionary<string, string>, null);
             return Json(new { clubDDL }, JsonRequestBehavior.AllowGet);
         }
+
+        [HttpPost, ValidateAntiForgeryToken]
+        public JsonResult DeleteSubGroupClub(string Id = "", string SubGroupId = "", string ClubId = "")
+        {
+            var response = new CommonDbResponse();
+            string id = !string.IsNullOrEmpty(Id) ? Id.DecryptParameter() : string.Empty;
+            string subgroupid = !string.IsNullOrEmpty(SubGroupId) ? SubGroupId.DecryptParameter() : string.Empty;
+            string clubid = !string.IsNullOrEmpty(ClubId) ? ClubId.DecryptParameter() : string.Empty;
+
+            if (string.IsNullOrEmpty(id) && string.IsNullOrEmpty(subgroupid) && string.IsNullOrEmpty(clubid))
+            {
+                this.AddNotificationMessage(new NotificationModel()
+                {
+                    NotificationType = NotificationMessage.INFORMATION,
+                    Message = "Invalid Sub Group Details",
+                    Title = NotificationMessage.INFORMATION.ToString()
+                });
+            }
+            var request = new Common()
+            {
+                ActionIP = ApplicationUtilities.GetIP(),
+                ActionUser = ApplicationUtilities.GetSessionValue("Username").ToString()
+            };
+            var dbResponse = _business.DeleteSubGroupClub(id, subgroupid, clubid, request);
+            response = dbResponse;
+            if (dbResponse.Code == ResponseCode.Success && dbResponse.Code == 0)
+            {
+                this.AddNotificationMessage(new NotificationModel()
+                {
+                    NotificationType = response.Code == ResponseCode.Success ? NotificationMessage.SUCCESS : NotificationMessage.INFORMATION,
+                    Message = response.Message ?? "Something went wrong while deleting the sub group. Please try again later",
+                    Title = response.Code == ResponseCode.Success ? NotificationMessage.SUCCESS.ToString() : NotificationMessage.INFORMATION.ToString()
+                });
+            }
+            else
+            {
+                this.AddNotificationMessage(new NotificationModel()
+                {
+                    NotificationType = response.Code == ResponseCode.Failed ? NotificationMessage.ERROR : NotificationMessage.ERROR,
+                    Message = response.Message ?? "Something went wrong while deleting sub group. Please try again later",
+                    Title = response.Code == ResponseCode.Failed ? NotificationMessage.ERROR.ToString() : NotificationMessage.ERROR.ToString()
+                });
+            }
+            return Json(response.Message, JsonRequestBehavior.AllowGet);
+        }
         #endregion
 
         #region GROUP GALLERY
