@@ -628,6 +628,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to block this charge category?.
+        /// </summary>
+        public static string Are_you_sure_you_want_to_block_this_charge_category_ {
+            get {
+                return ResourceManager.GetString("Are you sure you want to block this charge category?", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Are you sure you want to block this club?.
         /// </summary>
         public static string Are_you_sure_you_want_to_block_this_club {
@@ -646,11 +655,29 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to delete this charge category?.
+        /// </summary>
+        public static string Are_you_sure_you_want_to_delete_this_charge_category_ {
+            get {
+                return ResourceManager.GetString("Are you sure you want to delete this charge category?", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Are you sure you want to delete this club?.
         /// </summary>
         public static string Are_you_sure_you_want_to_delete_this_club {
             get {
                 return ResourceManager.GetString("Are you sure you want to delete this club", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to unblock this charge category?.
+        /// </summary>
+        public static string Are_you_sure_you_want_to_unblock_this_charge_category_ {
+            get {
+                return ResourceManager.GetString("Are you sure you want to unblock this charge category?", resourceCulture);
             }
         }
         
@@ -2581,6 +2608,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Informations regarding charges..
+        /// </summary>
+        public static string Informations_regarding_charges_ {
+            get {
+                return ResourceManager.GetString("Informations regarding charges.", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Informations regarding commissions type.
         /// </summary>
         public static string Informations_regarding_commissions_type {
@@ -3018,6 +3054,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         public static string Manage_affiliate_withdraw_logs_ {
             get {
                 return ResourceManager.GetString("Manage affiliate withdraw logs.", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Manage Charge.
+        /// </summary>
+        public static string Manage_Charge {
+            get {
+                return ResourceManager.GetString("Manage Charge", resourceCulture);
             }
         }
         

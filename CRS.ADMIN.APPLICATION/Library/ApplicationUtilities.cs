@@ -1184,6 +1184,15 @@ namespace CRS.ADMIN.APPLICATION.Library
                         (item.Key.EncryptParameter(), item.Value);
                     });
                     return response;
+                case "CHARGECATEGORY":
+                    dbResponse = _CommonBuss.GetDropDown("061", search1, search2);
+                    dbResponse.ForEach(item =>
+                    {
+                        response.Add
+                        //(item.Key.EncryptParameter(), culture == "en-US" ? item.Value.Text: item.Value.JapaneseValue);
+                        (item.Key.EncryptParameter(), item.Value);
+                    });
+                    return response;
                 default: return response;
             }
         }

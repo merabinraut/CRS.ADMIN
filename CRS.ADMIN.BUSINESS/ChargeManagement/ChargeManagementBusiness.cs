@@ -36,17 +36,31 @@ namespace CRS.ADMIN.BUSINESS.ChargeManagement
         {
             return _repo.CreateCharge(request);
         }
-        public List<ChargeDetailCommon> GetCharge(string categoryId, string categoryDetailId)
+        public List<ChargeDetailCommon> GetCharge(string categoryId, string categoryDetailId, PaginationFilterCommon dbRequest)
         {
-            return _repo.GetCharge(categoryId, categoryDetailId);
+            return _repo.GetCharge(categoryId, categoryDetailId,dbRequest);
         }
         public CommonDbResponse ManageChargeStatus(ChargeStatusManagementCommon request)
         {
             return _repo.ManageChargeStatus(request);
         }
-        public CommonDbResponse UpdateCharge(ChargeManagementCommon request)
+        //public CommonDbResponse UpdateCharge(ChargeManagementCommon request)
+        //{
+        //    return _repo.UpdateCharge(request);
+        //}
+        public ChargeDetailCommon GetChargeDetails(string categoryId, string categoryDetailId)
         {
-            return _repo.UpdateCharge(request);
+            return _repo.GetChargeDetails(categoryId, categoryDetailId);
+        }
+        #endregion
+        #region Assign Category
+        public CommonDbResponse GetCurrentCategory(string agentTypeValue, string agentType)
+        {
+            return _repo.GetCurrentCategory(agentTypeValue, agentType);
+        }
+        public CommonDbResponse AssignCategory(string agentTypeValue, string agentType, string categoryId)
+        {
+            return _repo.AssignCategory(agentTypeValue, agentType, categoryId);
         }
         #endregion
     }

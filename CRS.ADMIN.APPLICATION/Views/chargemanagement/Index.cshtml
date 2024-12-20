@@ -122,7 +122,124 @@
 
 
                     <div id="assignpoint" class="pane" style="display: none;">
+                        @using (Html.BeginForm("AssingChargeCategory", "ChargeManagement", new { }, FormMethod.Post, new { @id = "form" }))
+                        {
+                            @Html.AntiForgeryToken();
+                            <div class="grid grid-cols-3 gap-x-12">
+                                <div class="input-field-common">
+                                    <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
+                                        @CRS.ADMIN.APPLICATION.Resources.Resource.User_Type
+                                    </label>
+                                    <select id="large" name="agentTypeValue" class=" default_select select-common block w-full "
+                                            style="width: 100%;">
+                                        @foreach (var item in ViewBag.RoleTypeList as IEnumerable<SelectListItem>)
+                                        {
+                                            var selectedId = ViewBag.agentTypeValueIdKey as string;
+                                            if (item.Value == selectedId)
+                                            {
+                                                <option value="@item.Value" selected>
+                                                    @item.Text
+                                                </option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@item.Value">
+                                                    @item.Text
+                                                </option>
+                                            }
+                                        }
+                                    </select>
+                                    <span class="error">
+                                        @Html.ValidationMessageFor(m => m.agentTypeValue)
+                                    </span>
+                                </div>
+                                <div class="input-field-common">
+                                    <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
+                                        @CRS.ADMIN.APPLICATION.Resources.Resource.User_Name
+                                    </label>
+                                    <select id="large" name="AgentId" class=" default_select select-common block w-full "
+                                            style="width: 100%;">
+                                        @foreach (var item in ViewBag.UserList as IEnumerable<SelectListItem>)
+                                        {
+                                            var selectedId = ViewBag.AgentIdKey as string;
+                                            if (item.Value == selectedId)
+                                            {
+                                                <option value="@item.Value" selected>
+                                                    @item.Text
+                                                </option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@item.Value">
+                                                    @item.Text
+                                                </option>
+                                            }
+                                        }
+                                    </select>
+                                    <span class="error">
+                                        @Html.ValidationMessageFor(m => m.AgentId)
+                                    </span>
+                                </div>
 
+                                <div class="input-field-common">
+                                    <label for="date" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                                        @CRS.ADMIN.APPLICATION.Resources.Resource.Current_Category
+                                    </label>
+                                    @Html.TextBoxFor(model => model.currentChargeCategoryId, new
+                               {
+                                   @class = "w-full",
+                                   @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.Current_Category,
+                                   @autocomplete = "off",
+                                   @type = "text"
+                               })
+                                    <span class="error">
+                                        @Html.ValidationMessageFor(m => m.currentChargeCategoryId)
+                                    </span>
+                                </div>
+
+
+
+                                <div class="input-field-common">
+                                    <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
+                                        @CRS.ADMIN.APPLICATION.Resources.Resource.New_Category
+                                    </label>
+                                    <select id="large" name="newChargeCategoryId" class=" default_select select-common block w-full "
+                                            style="width: 100%;">
+                                        @foreach (var item in ViewBag.ChargeCategory as IEnumerable<SelectListItem>)
+                                        {
+                                            var selectedId = ViewBag.NewCategoryIdKey as string;
+                                            if (item.Value == selectedId)
+                                            {
+                                                <option value="@item.Value" selected>
+                                                    @item.Text
+                                                </option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@item.Value">
+                                                    @item.Text
+                                                </option>
+                                            }
+                                        }
+                                    </select>
+                                    <span class="error">
+                                        @Html.ValidationMessageFor(m => m.newChargeCategoryId)
+                                    </span>
+                                </div>
+
+
+
+                            </div>
+
+                            <br />
+                            <div class="row">
+                                <div class="col-md-12">
+                                    @*<button type="button" class=" btn-sm bg-primary mr-2 text-[#D75A8B]  border-dashed bg-[#D75A8B] text-white rounded-[4px] px-2 py-1"  onclick="window.history.back();"><i class="fa fa-arrow-left mr-2"></i>Back</button>*@
+                                    <button type="button" class=" btn-sm bg-primary mr-2 text-[#D75A8B]  border-dashed bg-[#D75A8B] text-white rounded-[4px] px-2 py-1" onclick="SubmitFunction()"> @CRS.ADMIN.APPLICATION.Resources.Resource.Submit </button>
+                                </div>
+                            </div>
+                            @*</div>*@
+                        }
                     </div>
                 </div>
             </div>
@@ -136,6 +253,51 @@
         function ViewChargeCategory(i,j) {
             window.location.href = '/ChargeManagement/ChargeCategoryType?agentTypeValue=' + i +'&agentType=' + j;
         }
+        $('#large[name="AgentId"]').change(function () {
+            debugger;
+            var agentTypeValue = $('#large[name="agentTypeValue"]').find("option:selected").val().trim();
+            var agentId = $(this).find("option:selected").val().trim();
+            var valid = true;
+            if (agentTypeValue === null || agentTypeValue === "") {
+                $('#form [data-valmsg-for="agentTypeValue"]').html("Required");
+                valid = false;
+
+            }
+            if (agentId === null || agentId === "") {
+                $('#form [data-valmsg-for="AgentId"]').html("Required");
+                valid = false;
+            }
+            if (valid==false) {
+                return false;
+            }
+            $("#currentChargeCategoryId").prop("disabled", false);
+          $.ajax({
+           type: 'GET',
+           async: true,
+           url: '@Url.Action("GetcategoryByUserId")',
+           dataType: 'json',
+              data: { agentTypeValue: agentTypeValue, agentId: agentId },
+              success: function (response) {
+                  $("#currentChargeCategoryId").val(response.currentChargeCategory);
+                  $("#currentChargeCategoryId").prop("disabled", true);
+                  $('#large[name="newChargeCategoryId"]').empty();
+                  if (response.categoryNamelist.length > 0) {
+                      $('#large[name="newChargeCategoryId"]').append($("<option>").val("").text("--- @CRS.ADMIN.APPLICATION.Resources.Resource.Select ---"));
+                      $.each(response.categoryNamelist, function (i, value) {
+                          $('#large[name="newChargeCategoryId"]').append($("<option>").val(value.Value).text(value.Text));
+                      });
+                      $('#large[name="newChargeCategoryId"]').prop("disabled", false);
+                  }
+                  else {
+                      $('#large[name="newChargeCategoryId"]').empty();
+                  }
+           },
+           error: function (ex) {
+               alert('Failed to retrive details.' + ex);
+           }
+       });
+       return false;
+  });
     </script>
     <script>
         document.getElementById('tab1Link').style.color = '#D75A8B';
@@ -173,6 +335,37 @@
 
             }
         }
+        function SubmitFunction(e) {
+            $("#ConfirmButton").attr('disabled', true);
+            const AgentId = $('#large[name="AgentId"]').val();
+            const agentTypeValue = $('#large[name="agentTypeValue"]').val()
+            const NewCategoryId = $('#large[name="newChargeCategoryId"]').val();
+            var valid = true;
+            if (agentTypeValue === null || agentTypeValue === "") {
+                $('#form [data-valmsg-for="UserTypeId"]').html("Required");
+                valid = false;
+            }
 
+            if (AgentId === null || AgentId === "") {
+                $('#form [data-valmsg-for="AgentId"]').html("Required");
+                valid = false;
+
+            }
+            if (NewCategoryId === null || NewCategoryId === "") {
+                $('#form [data-valmsg-for="NewCategoryId"]').html("Required");
+                valid = false;
+
+            }
+            if (valid) {
+                $("#form").submit();
+            }
+            else {
+                $("#ConfirmButton").attr('disabled', false);
+                $("#points").addcss("display", "none");
+                $("#assignpoint").addcss("display", "block");
+            }
+
+
+        }
     </script>
 }

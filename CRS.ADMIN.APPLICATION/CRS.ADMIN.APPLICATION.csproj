@@ -382,6 +382,8 @@
       <DependentUpon>Resource.Ja.resx</DependentUpon>
     </Compile>
     <Compile Include="Services\CognitoService.cs" />
+    <None Include="Views\ChargeManagement\_ManageChargeCategoryDetails.cshtml" />
+    <Content Include="Views\ChargeManagement\ChargeCategoryDetails.cshtml" />
     <None Include="Views\ChargeManagement\_ManageChargeCategoryPartialView.cshtml" />
     <Content Include="Content\assets\images\pdficon.svg" />
     <Content Include="Views\AccountInformation\GetAccountInformation.cshtml" />

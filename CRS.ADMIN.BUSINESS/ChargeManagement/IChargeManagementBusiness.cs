@@ -15,9 +15,14 @@ namespace CRS.ADMIN.BUSINESS.ChargeManagement
         #endregion
         #region Charge Management
         CommonDbResponse CreateCharge(ChargeManagementCommon request);
-        CommonDbResponse UpdateCharge(ChargeManagementCommon request);
+        //CommonDbResponse UpdateCharge(ChargeManagementCommon request);
         CommonDbResponse ManageChargeStatus(ChargeStatusManagementCommon request);
-        List<ChargeDetailCommon> GetCharge(string categoryId, string categoryDetailId);
+        List<ChargeDetailCommon> GetCharge(string categoryId, string categoryDetailId, PaginationFilterCommon dbRequest);
+        ChargeDetailCommon GetChargeDetails(string categoryId, string categoryDetailId);
+        #endregion
+        #region Assign Category
+        CommonDbResponse GetCurrentCategory(string agentTypeValue, string agentType);
+        CommonDbResponse AssignCategory(string agentTypeValue, string agentType, string categoryId);
         #endregion
     }
 }

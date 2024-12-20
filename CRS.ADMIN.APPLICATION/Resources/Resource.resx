@@ -365,6 +365,10 @@
     <value>Apr</value>
     <comment>Dashboard</comment>
   </data>
+  <data name="Are you sure you want to block this charge category?" xml:space="preserve">
+    <value>Are you sure you want to block this charge category?</value>
+    <comment>Charge Management</comment>
+  </data>
   <data name="Are you sure you want to block this club" xml:space="preserve">
     <value>Are you sure you want to block this club?</value>
     <comment>Club Management</comment>
@@ -373,9 +377,17 @@
     <value>Are you sure you want to change the language</value>
     <comment>Language Preference</comment>
   </data>
+  <data name="Are you sure you want to delete this charge category?" xml:space="preserve">
+    <value>Are you sure you want to delete this charge category?</value>
+    <comment>Charge Management</comment>
+  </data>
   <data name="Are you sure you want to delete this club" xml:space="preserve">
     <value>Are you sure you want to delete this club?</value>
     <comment>Club Management</comment>
+  </data>
+  <data name="Are you sure you want to unblock this charge category?" xml:space="preserve">
+    <value>Are you sure you want to unblock this charge category?</value>
+    <comment>Charge Management</comment>
   </data>
   <data name="Are you sure you want to unblock this club" xml:space="preserve">
     <value>Are you sure you want to unblock this club?</value>
@@ -1225,6 +1237,10 @@
     <value>Info</value>
     <comment>Dashboard</comment>
   </data>
+  <data name="Informations regarding charges." xml:space="preserve">
+    <value>Informations regarding charges.</value>
+    <comment>Charge Management</comment>
+  </data>
   <data name="Informations regarding commissions type" xml:space="preserve">
     <value>Informations regarding commissions type</value>
     <comment>CommissionManagement</comment>
@@ -1416,6 +1432,10 @@
   <data name="Manage affiliate withdraw logs." xml:space="preserve">
     <value>Manage affiliate withdraw logs.</value>
     <comment>Withdrawal Request</comment>
+  </data>
+  <data name="Manage Charge" xml:space="preserve">
+    <value>Manage Charge</value>
+    <comment>Charge Management</comment>
   </data>
   <data name="Manage Charge Category" xml:space="preserve">
     <value>Manage Charge Category</value>

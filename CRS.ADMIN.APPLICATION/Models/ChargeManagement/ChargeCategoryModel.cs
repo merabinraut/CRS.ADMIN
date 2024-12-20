@@ -9,8 +9,12 @@ namespace CRS.ADMIN.APPLICATION.Models.ChargeManagement
     {
         public string agentTypeValue { get; set; }
         public string SearchFilter { get; set; }
+        public string AgentId { get; set; } 
+        public string currentChargeCategoryId { get; set; }
+        public string newChargeCategoryId { get; set; }
         public ManageChargeCategoryModel ManageCategory { get; set; }
         public List<ChargeCategoryManagementModel> CategoryTypeList { get; set; }
+        public List<ChargeCategoryDetailModel> ChargeCategoryDetailList { get; set; }
         public List<ChargeCategoryManagementModel> ChargeTypeList { get; set; }
     }
     public class ChargeCategoryManagementModel
@@ -37,7 +41,7 @@ namespace CRS.ADMIN.APPLICATION.Models.ChargeManagement
         public string agentTypeValue { get; set; }
   
     }
-
+    
     public class ChargeCategoryStatusManagementModel
     {
         public string categoryId { get; set; }
