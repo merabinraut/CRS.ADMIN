@@ -386,6 +386,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 item.ClubShortInfo = item.ClubShortInfo.MapObjects<SubGroupClubInfo>();
                 foreach (var clubItem in item.ClubShortInfo)
                 {
+                    clubItem.Id = clubItem.Id.EncryptParameter();
                     clubItem.ClubId = clubItem.ClubId.EncryptParameter();
                     clubItem.ClubLogo = ImageHelper.ProcessedImage(clubItem.ClubLogo);
                 }

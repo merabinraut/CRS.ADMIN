@@ -251,8 +251,8 @@ namespace CRS.ADMIN.REPOSITORY.GroupManagement
         {
             string sp_name = "EXEC [dbo].[sproc_admin_subgroup_club_delete]";
             sp_name += "@Id=" + _dao.FilterString(id);
-            sp_name += "@SubGroupId=" + _dao.FilterString(subgroupid);
-            sp_name += "@ClubId=" + _dao.FilterString(clubid);
+            sp_name += ",@SubGroupId=" + _dao.FilterString(subgroupid);
+            sp_name += ",@ClubId=" + _dao.FilterString(clubid);
 
             var dbResponse = _dao.ParseCommonDbResponse(sp_name);
             return dbResponse;
