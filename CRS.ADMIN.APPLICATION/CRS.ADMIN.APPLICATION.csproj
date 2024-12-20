@@ -272,6 +272,7 @@
     <Compile Include="Controllers\AccountInformationController.cs" />
     <Compile Include="Controllers\AdminPointManagementController.cs" />
     <Compile Include="Controllers\AffiliateManagementController.cs" />
+    <Compile Include="Controllers\ApiResponseMessageController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\BasicClubManagementController.cs" />
     <Compile Include="Controllers\ClubManagementController.cs" />
@@ -325,6 +326,7 @@
     <Compile Include="Models\AdminPointManagement\AdminPointManagementModel.cs" />
     <Compile Include="Models\AffiliateManagement\AffiliateManagementModel.cs" />
     <Compile Include="Models\AmazonConfigruationModel.cs" />
+    <Compile Include="Models\ApiResponseMessage\ApiResponseMessageModel.cs" />
     <Compile Include="Models\BasicClubManagement\BasicClubManagementModel.cs" />
     <Compile Include="Models\ClubManagement\ClubManagementModel.cs" />
     <Compile Include="Models\ClubManagement\ClubManagerModel.cs" />
@@ -382,6 +384,10 @@
     <Content Include="Content\assets\images\pdficon.svg" />
     <Content Include="Views\AccountInformation\GetAccountInformation.cshtml" />
     <Content Include="App_Data\AmazonConfigruation.json" />
+    <Content Include="Views\ApiResponseMessage\ApiResponseMessageList.cshtml" />
+    <Content Include="Views\ApiResponseMessage\_AddResponseMessage.cshtml" />
+    <Content Include="Views\ApiResponseMessage\_EditResponseMessage.cshtml" />
+    <None Include="Views\ApiResponseMessage\_DisplayResponseMessage.cshtml" />
     <None Include="Views\BasicClubManagement\_PremiumClubtPartialView.cshtml" />
     <Content Include="Content\assets\images\conversion.svg" />
     <Content Include="Content\assets_new\images\hoslog-balance.svg" />

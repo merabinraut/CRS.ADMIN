@@ -338,6 +338,10 @@
     <value>and Maximum file size is 5 MB</value>
     <comment>Location Management</comment>
   </data>
+  <data name="Api Response Message" xml:space="preserve">
+    <value>Api Response Message</value>
+    <comment>Api Response Message</comment>
+  </data>
   <data name="Apply" xml:space="preserve">
     <value>Apply</value>
     <comment>Reservation Ledger</comment>

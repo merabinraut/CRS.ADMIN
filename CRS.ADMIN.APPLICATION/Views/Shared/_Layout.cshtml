@@ -614,6 +614,26 @@
                     </div>
                 </a>
             }
+
+            @if (ApplicationUtilities.HasMenuRight("/ApiResponseMessage/ApiResponseMessageList"))
+            {
+                if (!string.IsNullOrEmpty(CurrentURL) && CurrentURL.Trim().ToUpper() == "/APIRESPONSEMESSAGE/APIRESPONSEMESSAGELIST") { MenuActiveClass = "menuActive"; }
+                else { MenuActiveClass = string.Empty; }
+                <a href="@Url.Action("ApiResponseMessageList", "ApiResponseMessage")">
+                    <div class="menuContainer @MenuActiveClass">
+                        <div class="menu-icon w-max">
+                            <img src="~/Content/assets_new/images/review.svg" class="image" />
+                            <img src="~/Content/assets_new/images/review-active.svg" class="active-image" />
+
+                        </div>
+                        <div class="label">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Api_Response_Message
+                        </div>
+                    </div>
+                </a>
+            }
+
+
         </div>
             <div>
                 <div class="main-menu-title text-secondary-300 pb-[16px]">Setting</div>

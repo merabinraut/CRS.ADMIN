@@ -565,6 +565,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Api Response Message.
+        /// </summary>
+        public static string Api_Response_Message {
+            get {
+                return ResourceManager.GetString("Api Response Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Apply.
         /// </summary>
         public static string Apply {

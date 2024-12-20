@@ -338,6 +338,10 @@
     <value>最大ファイルサイズは5MBです</value>
     <comment>Location Management</comment>
   </data>
+  <data name="Api Response Message" xml:space="preserve">
+    <value>API 応答メッセージ</value>
+    <comment>Api Response Message</comment>
+  </data>
   <data name="Apply" xml:space="preserve">
     <value>適用する</value>
     <comment>Reservation Ledger</comment>
