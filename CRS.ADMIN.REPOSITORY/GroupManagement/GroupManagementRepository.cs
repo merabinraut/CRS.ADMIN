@@ -2,6 +2,8 @@
 using CRS.ADMIN.SHARED.GroupManagement;
 using CRS.ADMIN.SHARED.PaginationManagement;
 using System.Collections.Generic;
+using System.Data;
+using System.Diagnostics.Contracts;
 using System.Linq;
 
 namespace CRS.ADMIN.REPOSITORY.GroupManagement
@@ -258,7 +260,23 @@ namespace CRS.ADMIN.REPOSITORY.GroupManagement
             var dbResponse = _dao.ParseCommonDbResponse(sp_name);
             return dbResponse;
         }
+        public List<AssignedClubInfoCommon> GetAssignedClubList()
+        {
+            List<AssignedClubInfoCommon> response = new List<AssignedClubInfoCommon>();
+            string sp_name = "EXEC [dbo].[sproc_admin_get_assignedclub_list]";
 
+            var dbResponse = _dao.ExecuteDataTable(sp_name);
+            if (dbResponse != null && dbResponse.Rows.Count > 0)
+            {
+                foreach (DataRow item in dbResponse.Rows)
+                {
+                    string value = item["Value"].ToString();
+                    string text = item["Text"].ToString();
+                    response.Add(new AssignedClubInfoCommon(value, text)); // Assuming the constructor exists
+                }
+            }
+            return response;
+        }
         #endregion
 
         #region GROUP GALLERY
@@ -321,6 +339,8 @@ namespace CRS.ADMIN.REPOSITORY.GroupManagement
 
             return _dao.ParseCommonDbResponse(sp_name);
         }
+
+
         #endregion
     }
 }

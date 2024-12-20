@@ -78,6 +78,16 @@ namespace CRS.ADMIN.APPLICATION.Models.GroupManagement
         public string SubGroupId { get; set; }
         public string GroupId { get; set; }
     }
+    public class AssignedClubInfo
+    {
+        public string  Text { get; set; }
+        public string  Value { get; set; }
+        public AssignedClubInfo(string value, string text)
+        {
+            Value = value;
+            Text = text;
+        }
+    }
     public class ManageSubGroupClubModel : PaginationFilterCommon
     {
         public string GroupId { get; set; }

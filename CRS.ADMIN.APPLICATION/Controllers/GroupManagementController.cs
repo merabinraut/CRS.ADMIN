@@ -679,9 +679,24 @@ namespace CRS.ADMIN.APPLICATION.Controllers
         public JsonResult GetClubListByLocationId(string LocationId = "")
         {
             var locationId = !string.IsNullOrEmpty(LocationId) ? LocationId.DecryptParameter() : string.Empty;
-            List<SelectListItem> clubDDL = new List<SelectListItem>();
-            if (string.IsNullOrEmpty(locationId)) return null;
-            clubDDL = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("CLUBDDLBYLOCATIONID", locationId, "") as Dictionary<string, string>, null);
+
+            if (string.IsNullOrEmpty(locationId))
+                return Json(new { clubDDL = new List<SelectListItem>() }, JsonRequestBehavior.AllowGet);
+
+            var ddlDictionary = ApplicationUtilities.LoadDropdownList("CLUBDDLBYLOCATIONID", locationId, "");
+            List<SelectListItem> clubDDL = ApplicationUtilities.SetDDLValue(ddlDictionary as Dictionary<string, string>, null);
+            // Get assigned clubs
+            var assignedClubDict = _business.GetAssignedClubList();
+            List<AssignedClubInfo> mappedAssignedDDL = assignedClubDict.MapObjects<AssignedClubInfo>();
+            foreach(var item in mappedAssignedDDL)
+            {
+                item.Value = item.Value.EncryptParameter();
+            }
+            // Filter the original dictionary
+            clubDDL = clubDDL
+                .Where(kvp => !mappedAssignedDDL.Any(m => m.Value == kvp.Value)) 
+                .ToList(); 
+
             return Json(new { clubDDL }, JsonRequestBehavior.AllowGet);
         }
 

@@ -30,6 +30,7 @@ namespace CRS.ADMIN.REPOSITORY.GroupManagement
         ManageGroupGalleryModelCommon GetGroupGalleryDetail(string imageid);
         CommonDbResponse DeleteImage(string imageid, string groupid, Common request);
         CommonDbResponse DeleteSubGroupClub(string id, string subgroupid, string clubid, Common request);
+       List<AssignedClubInfoCommon> GetAssignedClubList();
         #endregion
 
     }

@@ -78,7 +78,16 @@ namespace CRS.ADMIN.SHARED.GroupManagement
         public string ActionPlatform { get; set; } = "ADMIN";
         public string ActionIP { get; set; }
     }
-
+    public class AssignedClubInfoCommon
+    {
+        public string Text { get; set; }
+        public string Value { get; set; }
+        public AssignedClubInfoCommon(string value, string text)
+        {
+            Value = value;
+            Text = text;
+        }
+    }
     public class ManageSubGroupClubModelCommon
     {
         public string GroupName { get; set; }
