@@ -422,7 +422,7 @@
             modal.classList.add("hidden");
             modal.setAttribute("aria-hidden", "true");
         }
-        function CancelFunction() {            
+        function CancelFunction() {
             location.reload();
         }
         document.addEventListener('DOMContentLoaded', () => {
@@ -543,6 +543,9 @@
         let locationClubMapping = {};
         let subgroupid;
         let selectedCount;
+        var GrandTotal = 0;
+        var clubCountStatic = 0;
+        var clubCountdynamic = 0;
        $(document).ready(function () {
            let containerCounter = 2;
 
@@ -669,6 +672,10 @@
                const isStatic = $(this).attr('id') === 'staticClubDDL';
                selectedCount = $(this).find('option:selected').length;
                isStatic ? $('#TotalClubCount').val(selectedCount) : $(`#TotalClubCount-${containerCounter - 1}`).val(selectedCount);
+               clubCountStatic = parseInt($('#TotalClubCount').val());
+               clubCountdynamic = isStatic ? 0 : parseInt( $(`#TotalClubCount-${containerCounter - 1}`).val());
+               GrandTotal = clubCountStatic + clubCountdynamic;
+               $("#GrandTotalClubCount").val(parseInt(GrandTotal));
                console.log($(this).val());
                console.log(selectedCount);
            });
