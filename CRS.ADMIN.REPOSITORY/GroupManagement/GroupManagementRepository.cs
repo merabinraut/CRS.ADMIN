@@ -218,6 +218,7 @@ namespace CRS.ADMIN.REPOSITORY.GroupManagement
         {
             string sp_name = "EXEC [dbo].[sproc_admin_subgroup_club_addupdate]";
             sp_name += "@XMLInput=" + _dao.FilterString(commonModel.xmlInput);
+            sp_name += ",@GroupId=" + _dao.FilterString(commonModel.GroupId);
             sp_name += ",@ActionUser=" + _dao.FilterString(commonModel.ActionUser);
             sp_name += ",@ActionIP=" + _dao.FilterString(commonModel.ActionIP);
             sp_name += ",@ActionPlatform=" + _dao.FilterString(commonModel.ActionPlatform);
@@ -237,7 +238,7 @@ namespace CRS.ADMIN.REPOSITORY.GroupManagement
                 return new ManageSubGroupClubModelCommon()
                 {
                     SubGroupId = _dao.ParseColumnValue(dbResponse, "SubGroupId").ToString(),
-                    ClubId = _dao.ParseColumnValue(dbResponse, "ClubId").ToString(),
+                    GroupId = _dao.ParseColumnValue(dbResponse, "ClubId").ToString(),
                     LocationId = _dao.ParseColumnValue(dbResponse, "LocationId").ToString(),
                     TotalClubCount = _dao.ParseColumnValue(dbResponse, "TotalClubCount").ToString()
                 };

@@ -567,7 +567,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
         }
 
         [HttpPost, ValidateAntiForgeryToken]
-        public JsonResult ManageSubGroupClub(string mapping = "", string SubGroupId = "", string locationId = "")
+        public JsonResult ManageSubGroupClub(string mapping = "", string SubGroupId = "", string GroupId = "")
         {
             var locationClubMappingContainer = JsonConvert.DeserializeObject<Dictionary<int, LocationClubMapping>>(mapping);
             var rootElement = new XElement("root",
@@ -588,6 +588,8 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             }
             string xmlOutput = rootElement.ToString();
             ManageSubGroupClubModel model = new ManageSubGroupClubModel();
+            if (!string.IsNullOrEmpty(GroupId))
+                model.GroupId = GroupId.DecryptParameter();
             model.xmlInput = xmlOutput;
             var response = new CommonDbResponse();
             ManageSubGroupClubModelCommon commonModel = model.MapObject<ManageSubGroupClubModelCommon>();

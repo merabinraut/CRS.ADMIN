@@ -721,12 +721,12 @@
             var requestVerificationToken = $('input[name="__RequestVerificationToken"]').val();
             var mappedData = JSON.stringify(locationClubMapping);
             var sGroupId = subgroupid;
-            debugger
+            var groupId = '@ViewBag.GroupId';
                $.ajax({
                     type: 'POST',
                     url: '@Url.Action("ManageSubGroupClub")',
                     dataType: 'json',
-                   data: { '__RequestVerificationToken': requestVerificationToken, mapping: mappedData, SubGroupId: sGroupId },
+                   data: { '__RequestVerificationToken': requestVerificationToken, mapping: mappedData, SubGroupId: sGroupId, GroupId: groupId },
                    success: function (data) {
                        location.reload();
                     },

@@ -85,7 +85,7 @@ namespace CRS.ADMIN.SHARED.GroupManagement
         public string GroupNameKatakana { get; set; }
         public string SubGroupId { get; set; }
         public string LocationId { get; set; }
-        public string ClubId { get; set; }
+        public string GroupId { get; set; }
         public string TotalClubCount { get; set; }
         public string ActionUser { get; set; }
         public string ActionPlatform { get; set; } = "ADMIN";
