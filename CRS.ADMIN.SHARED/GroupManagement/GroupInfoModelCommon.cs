@@ -41,8 +41,8 @@ namespace CRS.ADMIN.SHARED.GroupManagement
 
     public class SubGroupModelCommon
     {
-        public List<SubGroupInfoModelCommon> SubGroupInfoList { get; set; }
-        public List<SubGroupClubInfoCommon> ClubShortInfo { get; set; }
+        public List<SubGroupInfoModelCommon> SubGroupInfoList { get; set; } = new List<SubGroupInfoModelCommon>();
+
     }
     public class SubGroupInfoModelCommon
     {
@@ -54,6 +54,7 @@ namespace CRS.ADMIN.SHARED.GroupManagement
         public string Status { get; set; }
         public string CreatedOn { get; set; }
         public string TotalClubCount { get; set; }
+        public List<SubGroupClubInfoCommon> ClubShortInfo { get; set; } = new List<SubGroupClubInfoCommon>();
     }
     public class SubGroupClubInfoCommon
     {

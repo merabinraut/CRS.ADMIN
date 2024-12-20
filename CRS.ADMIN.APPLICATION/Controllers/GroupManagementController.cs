@@ -379,15 +379,16 @@ namespace CRS.ADMIN.APPLICATION.Controllers
 
             var dbResponse = _business.GetSubGroupByGroupId(groupId, paginationFilter);
             commonModel.SubGroupInfoList = dbResponse.SubGroupInfoList.MapObjects<SubGroupInfoModel>();
-            commonModel.ClubShortInfo = dbResponse.ClubShortInfo.MapObjects<SubGroupClubInfo>();
             foreach (var item in commonModel.SubGroupInfoList)
             {
                 item.GroupId = item.GroupId.EncryptParameter();
                 item.SubGroupId = item.SubGroupId.EncryptParameter();
-            }
-            foreach (var item in commonModel.ClubShortInfo)
-            {
-                item.ClubId = item.ClubId.EncryptParameter();
+                item.ClubShortInfo = item.ClubShortInfo.MapObjects<SubGroupClubInfo>();
+                foreach (var clubItem in item.ClubShortInfo)
+                {
+                    clubItem.ClubId = clubItem.ClubId.EncryptParameter();
+                    clubItem.ClubLogo = ImageHelper.ProcessedImage(clubItem.ClubLogo);
+                }
             }
             ViewBag.StartIndex = StartIndex;
             ViewBag.PageSize = PageSize;

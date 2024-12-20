@@ -129,8 +129,7 @@ namespace CRS.ADMIN.REPOSITORY.GroupManagement
         {
             var response = new SubGroupModelCommon
             {
-                SubGroupInfoList = new List<SubGroupInfoModelCommon>(),
-                ClubShortInfo = new List<SubGroupClubInfoCommon>()
+                SubGroupInfoList = new List<SubGroupInfoModelCommon>()
             };
 
             string sp_name = "EXEC [dbo].[sproc_admin_get_subgroup]";
@@ -148,8 +147,10 @@ namespace CRS.ADMIN.REPOSITORY.GroupManagement
                     string sp_name_1 = "EXEC [dbo].[sproc_admin_subgroup_club_info]";
                     sp_name_1 += "@SubGroupId=" + _dao.FilterString(item.SubGroupId);
                     var dbResponse1 = _dao.ExecuteDataTable(sp_name_1);
-
-                    response.ClubShortInfo.AddRange(_dao.DataTableToListObject<SubGroupClubInfoCommon>(dbResponse1));
+                    if (dbResponse1 != null)
+                    {
+                        item.ClubShortInfo.AddRange(_dao.DataTableToListObject<SubGroupClubInfoCommon>(dbResponse1));
+                    }
                 }
                 return response;
             }
@@ -157,8 +158,7 @@ namespace CRS.ADMIN.REPOSITORY.GroupManagement
             {
                 return new SubGroupModelCommon
                 {
-                    SubGroupInfoList = new List<SubGroupInfoModelCommon>(),
-                    ClubShortInfo = new List<SubGroupClubInfoCommon>()
+                    SubGroupInfoList = new List<SubGroupInfoModelCommon>()
                 };
             }
         }
@@ -217,7 +217,7 @@ namespace CRS.ADMIN.REPOSITORY.GroupManagement
         public CommonDbResponse ManageSubGroupClub(ManageSubGroupClubModelCommon commonModel)
         {
             string sp_name = "EXEC [dbo].[sproc_admin_subgroup_club_addupdate]";
-            sp_name += "@XMLInput=" + _dao.FilterString(commonModel.xmlInput);           
+            sp_name += "@XMLInput=" + _dao.FilterString(commonModel.xmlInput);
             sp_name += ",@ActionUser=" + _dao.FilterString(commonModel.ActionUser);
             sp_name += ",@ActionIP=" + _dao.FilterString(commonModel.ActionIP);
             sp_name += ",@ActionPlatform=" + _dao.FilterString(commonModel.ActionPlatform);
