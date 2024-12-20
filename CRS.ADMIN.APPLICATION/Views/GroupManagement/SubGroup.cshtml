@@ -392,9 +392,10 @@
     <script>
         let locationClubMapping = {};
         let subgroupid;
+        let selectedCount;
        $(document).ready(function () {
-           let containerCounter = 2;         
-           
+           let containerCounter = 2;
+
            $(document).on('change', 'select[name="SubGroupDDL"]', function () {
                subgroupid = $(`#subgroupid`).val();
            });
@@ -486,7 +487,7 @@
                         店舗の合計数
                     </label>
                     <div class="input-field-common max-w-[116px]">
-                        <input type="text" id="TotalClubCount" name="TotalClubCount" class="w-full text-[#B7B7B7]"
+                        <input type="text" id="TotalClubCount-${containerCounter}" name="TotalClubCount" class="w-full text-[#B7B7B7]"
                                placeholder="" autocomplete="off" disabled="disabled" />
                     </div>
                 </div>
@@ -514,7 +515,13 @@
             minimumResultsForSearch: Infinity,
         });
     }
-
+           $(document).on('change', 'select[name="ClubDDL"]', function () {
+               const isStatic = $(this).attr('id') === 'staticClubDDL';
+               selectedCount = $(this).find('option:selected').length;
+               isStatic ? $('#TotalClubCount').val(selectedCount) : $(`#TotalClubCount-${containerCounter - 1}`).val(selectedCount);
+               console.log($(this).val());
+               console.log(selectedCount);
+           });
     // Update the locationClubMapping on selection changes
     $(document).on('change', '.select-common', function () {
         const containerId = $(this).data('container-id');
@@ -525,7 +532,8 @@
             if (selectedLocation) {
                 locationClubMapping[containerId] = {
                     locationId: selectedLocation,
-                    clubs: selectedClubs || []
+                    clubs: selectedClubs || [],
+                    clubCount: selectedCount
                 };
             } else {
                 delete locationClubMapping[containerId];
@@ -540,7 +548,8 @@
             if (selectedLocation) {
                 locationClubMapping[1] = {
                     locationId: selectedLocation,
-                    clubs: selectedClubs || []
+                    clubs: selectedClubs || [],
+                    clubCount: selectedCount
                 };
             } else {
                 delete locationClubMapping[containerId];
@@ -550,10 +559,10 @@
             console.log("subgroupid", subgroupid);
         }
     });
-    $('#addNewRow').on('click', function () {
-        addNewContainer();
-    });
-    updateDropdownOptions();
+            $('#addNewRow').on('click', function () {
+                addNewContainer();
+            });
+           updateDropdownOptions();
            initializeDynamicDropdowns();
 
 });
@@ -568,11 +577,11 @@
                     url: '@Url.Action("ManageSubGroupClub")',
                     dataType: 'json',
                    data: { '__RequestVerificationToken': requestVerificationToken, mapping: mappedData, SubGroupId: sGroupId },
-                    success: function (data) {
-                        console.log('Mapping updated successfully');
+                   success: function (data) {
+                       location.reload();
                     },
-                    error: function () {
-                        alert('Failed to update location club mapping.');
+                   error: function () {
+                       location.reload();
                     }
                });
         }

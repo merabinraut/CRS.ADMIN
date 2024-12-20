@@ -121,14 +121,8 @@
                                     店舗の合計数
                                 </label>
                                 <div class="input-field-common max-w-[116px]">
-                                    @Html.TextBoxFor(model => model.TotalClubCount, new
-                                                {
-                                                    @class = "w-full text-[#B7B7B7]",
-                                                    @placeholder = "",
-                                                    autocomplete = "off",
-                                                    disabled = "disabled",
-
-                                                })
+                                    <input type="text" id="TotalClubCount" name="TotalClubCount" class="w-full text-[#B7B7B7]"
+                                           placeholder="" autocomplete="off" disabled="disabled" />
                                 </div>
                             </div>
                         </div>
@@ -148,13 +142,8 @@
                             合計店舗数
                         </label>
                         <div class="input-field-common max-w-[116px]">
-                            @Html.TextBoxFor(model => model.TotalClubCount, new
-                                       {
-                                           @class = "w-full text-[#B7B7B7]",
-                                           @placeholder = "",
-                                           autocomplete = "off",
-                                           disabled = "disabled"
-                                       })
+                            <input type="text" id="GrandTotalClubCount" name="GrandTotalClubCount" class="w-full text-[#B7B7B7]"
+                                   placeholder="" autocomplete="off" disabled="disabled" />
                         </div>
                     </div>
                 </div>

@@ -93,6 +93,7 @@ namespace CRS.ADMIN.APPLICATION.Models.GroupManagement
     public class LocationClubMapping
     {
         public string locationId { get; set; }
+        public int clubCount { get; set; } = 0;
         public List<string> clubs { get; set; }
     }   
     #endregion

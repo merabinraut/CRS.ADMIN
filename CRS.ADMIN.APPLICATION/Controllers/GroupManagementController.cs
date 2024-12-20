@@ -577,8 +577,9 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 {
                     var itemElement = new XElement("item",
                         new XElement("locationid", kvp.Value.locationId.DecryptParameter()),
-                        new XElement("clubs", kvp.Value.clubs.Select(clubId => new XElement("clubid", clubId.DecryptParameter())))
-                    );
+                        new XElement("clubs", kvp.Value.clubs.Select(clubId => new XElement("clubid", clubId.DecryptParameter()))),
+                        new XElement("clubcount", kvp.Value.clubCount)
+                        );
 
                     rootElement.Add(itemElement);
                 }
@@ -586,12 +587,13 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             string xmlOutput = rootElement.ToString();
             ManageSubGroupClubModel model = new ManageSubGroupClubModel();
             model.xmlInput = xmlOutput;
-
+            var response = new CommonDbResponse();
             ManageSubGroupClubModelCommon commonModel = model.MapObject<ManageSubGroupClubModelCommon>();
             commonModel.ActionUser = ApplicationUtilities.GetSessionValue("Username").ToString();
             commonModel.ActionIP = ApplicationUtilities.GetIP();
 
             var dbResponse = _business.ManageSubGroupClub(commonModel);
+            response = dbResponse;
             if (dbResponse.Code == ResponseCode.Success && dbResponse.Code == 0)
             {
                 this.AddNotificationMessage(new NotificationModel()
@@ -601,8 +603,8 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                     Title = dbResponse.Code == ResponseCode.Success ? NotificationMessage.SUCCESS.ToString() : NotificationMessage.INFORMATION.ToString()
                 });
                 TempData["ManageSubGroupClub"] = model;
-                TempData["RenderId"] = "ManageSGC";
-                return Json(new { success = true, message = "Location and club mapping updated successfully." });
+                TempData["RenderId"] = "";
+                return Json(response.Message, JsonRequestBehavior.AllowGet);
             }
             else
             {
@@ -613,8 +615,8 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                     Title = dbResponse.Code == ResponseCode.Success ? NotificationMessage.WARNING.ToString() : NotificationMessage.WARNING.ToString()
                 });
                 TempData["ManageSubGroupClub"] = model;
-                TempData["RenderId"] = "";
-                return Json(new { success = true, message = "Location and club mapping updated successfully." });
+                TempData["RenderId"] = "ManageSGC";
+                return Json(response.Message, JsonRequestBehavior.AllowGet);
             }
         }
         [HttpGet]
