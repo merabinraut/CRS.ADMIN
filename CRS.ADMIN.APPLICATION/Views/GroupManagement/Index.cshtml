@@ -269,19 +269,26 @@
                                                                 <div onclick="GotoSubgroupPage('@item.groupId')">
                                                                     <img src="~/Content/assets_new/images/eye.svg" />
                                                                 </div>
+
+                                                                <div onclick="GotoGroupGallery('@item.groupId')" data-modal-target="" data-modal-toggle="">
+                                                                    <img src="~/Content/assets_new/images/image.svg" />
+                                                                </div>
+
                                                                 <div onclick="OpenBlockModal('@item.groupId')" data-modal-target="block-confirmation" data-modal-toggle="block-confirmation">
                                                                     <img src="~/Content/assets_new/images/lock-solid.svg" />
                                                                 </div>
+
                                                             }
                                                             else
                                                             {
+                                                                <div onclick="GotoGroupGallery('@item.groupId')" data-modal-target="" data-modal-toggle="">
+                                                                    <img src="~/Content/assets_new/images/image.svg" />
+                                                                </div>
                                                                 <div onclick="OpenUnblockModal('@item.groupId')" data-modal-target="unblock-confirmation" data-modal-toggle="unblock-confirmation">
-                                                                    <i class="fa-solid fa-unlock text-primary-100 cursor-pointer"></i>
+                                                                    <img src="~/Content/assets_new/images/unlock.svg" />
                                                                 </div>
                                                             }
-                                                            <div onclick="GotoGroupGallery('@item.groupId')" data-modal-target="" data-modal-toggle="">
-                                                                <img src="~/Content/assets_new/images/image.svg" />
-                                                            </div>
+
                                                             <div onclick="OpenDeleteModal('@item.groupId')" data-modal-target="delete-confirmation" data-modal-toggle="delete-confirmation">
                                                                 <img src="~/Content/assets_new/images/trash-alt-solid.svg" />
                                                             </div>
