@@ -248,9 +248,19 @@
                                                     <td class="p-[12px]">@item.subGroupCount</td>
                                                     <td class="p-[12px]">@item.clubCount</td>
                                                     <td class="p-[12px] ">
-                                                        <span class="bg-[#ECFDF3] text-[#027A48] px-2 py-[2px] rounded-[16px]">
-                                                            @item.status
-                                                        </span>
+                                                        @if (item.status.Trim().ToUpper() == "ACTIVE")
+                                                        {
+                                                            <span class="bg-[#ECFDF3] text-[#027A48] px-2 py-[2px] rounded-[16px]">
+                                                                @item.status
+                                                            </span>
+                                                        }
+                                                        else
+                                                        {
+                                                            <span class="bg-[#FEF3F2] text-[#B42318] px-2 py-[2px] rounded-[16px]">
+                                                                @item.status
+                                                            </span>
+                                                        }
+
                                                     </td>
 
                                                     <td class="p-[12px]">
@@ -263,34 +273,34 @@
                                                             @if (item.status.Trim().ToUpper() == "ACTIVE")
                                                             {
                                                                 <div onclick="ManageGroupDetailsFunction('@item.groupId');">
-                                                                    <img src="~/Content/assets_new/images/edit-solid.svg" />
+                                                                    <img class="cursor-pointer" src="~/Content/assets_new/images/edit-solid.svg" />
 
                                                                 </div>
                                                                 <div onclick="GotoSubgroupPage('@item.groupId')">
-                                                                    <img src="~/Content/assets_new/images/eye.svg" />
+                                                                    <img class="cursor-pointer" src="~/Content/assets_new/images/eye.svg" />
                                                                 </div>
 
                                                                 <div onclick="GotoGroupGallery('@item.groupId')" data-modal-target="" data-modal-toggle="">
-                                                                    <img src="~/Content/assets_new/images/image.svg" />
+                                                                    <img class="cursor-pointer" src="~/Content/assets_new/images/image.svg" />
                                                                 </div>
 
                                                                 <div onclick="OpenBlockModal('@item.groupId')" data-modal-target="block-confirmation" data-modal-toggle="block-confirmation">
-                                                                    <img src="~/Content/assets_new/images/lock-solid.svg" />
+                                                                    <img class="cursor-pointer" src="~/Content/assets_new/images/lock-solid.svg" />
                                                                 </div>
 
                                                             }
                                                             else
                                                             {
                                                                 <div onclick="GotoGroupGallery('@item.groupId')" data-modal-target="" data-modal-toggle="">
-                                                                    <img src="~/Content/assets_new/images/image.svg" />
+                                                                    <img class="cursor-pointer" src="~/Content/assets_new/images/image.svg" />
                                                                 </div>
                                                                 <div onclick="OpenUnblockModal('@item.groupId')" data-modal-target="unblock-confirmation" data-modal-toggle="unblock-confirmation">
-                                                                    <img src="~/Content/assets_new/images/unlock.svg" />
+                                                                    <img class="cursor-pointer" src="~/Content/assets_new/images/unlock.svg" />
                                                                 </div>
                                                             }
 
                                                             <div onclick="OpenDeleteModal('@item.groupId')" data-modal-target="delete-confirmation" data-modal-toggle="delete-confirmation">
-                                                                <img src="~/Content/assets_new/images/trash-alt-solid.svg" />
+                                                                <img class="cursor-pointer" src="~/Content/assets_new/images/trash-alt-solid.svg" />
                                                             </div>
                                                         </div>
                                                     </td>
@@ -413,7 +423,7 @@
         <div class="relative bg-white rounded-lg shadow">
             <!-- Modal header -->
             <button type="button"
-                    class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center absolute top-[24px] right-[20px] "
+                    class="text-gray-400 bg-transparent rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center absolute top-[24px] right-[20px] "
                     data-modal-hide="delete-confirmation">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="25" viewBox="0 0 24 25" fill="none">
                     <rect y="0.621094" width="24" height="24" rx="12" fill="#FAFAFA" />
@@ -422,18 +432,18 @@
                 </svg>
             </button>
             <!-- Modal body -->
-            <div class="grid gap-6 px-[20px] py-8">
+            <div class="grid pt-[24px] px-[23px] pb-[45px] ">
                 <div class="text-[#333] font-semibold pb-[11px] border-b border-[#eeeeee]">@CRS.ADMIN.APPLICATION.Resources.Resource.Confirmation</div>
-                <div class="grid gap-[20px] text-[#062937] mb-[45px]">
+                <div class="grid gap-[20px] text-[#062937] mt-[20px] mb-[40px]">
                     <div class="text-[14px] text-secondary-text-2 text-start">
                         Are you sure you want to delete this GROUP?
                     </div>
                 </div>
                 <div class="flex justify-end">
-                    <div class="flex gap-2 justify-end mt-[45px]">
+                    <div class="flex gap-2 justify-end">
                         <input id="request_id" value="" hidden />
-                        <div class="btn btn-secondary w-[110px]" data-modal-hide="delete-confirmation">@CRS.ADMIN.APPLICATION.Resources.Resource.No</div>
-                        <div class="btn btn-primary w-[110px]" onclick="DeleteGroup()" data-val="" id="delete_id">@CRS.ADMIN.APPLICATION.Resources.Resource.Yes</div>
+                        <div class="btn btn-secondary rounded-[4px] w-[110px]" data-modal-hide="delete-confirmation">@CRS.ADMIN.APPLICATION.Resources.Resource.No</div>
+                        <div class="btn btn-primary w-[110px] rounded-[4px]" onclick="DeleteGroup()" data-val="" id="delete_id">@CRS.ADMIN.APPLICATION.Resources.Resource.Yes</div>
                     </div>
                 </div>
             </div>
