@@ -2392,6 +2392,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Group Management.
+        /// </summary>
+        public static string Group_Management {
+            get {
+                return ResourceManager.GetString("Group Management", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Group Name.
         /// </summary>
         public static string Group_Name {
