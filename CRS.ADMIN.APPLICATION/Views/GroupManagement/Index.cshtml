@@ -275,7 +275,7 @@
                                                                     <img class="cursor-pointer" src="~/Content/assets_new/images/edit-solid.svg" />
 
                                                                 </div>
-                                                                <div onclick="GotoSubgroupPage('@item.groupId')">
+                                                                <div onclick="GotoSubgroupPage('@item.groupId','@item.groupName','@item.groupNameKatakana')">
                                                                     <img class="cursor-pointer" src="~/Content/assets_new/images/eye.svg" />
                                                                 </div>
 
@@ -596,8 +596,8 @@
 
     <script>
         //START SUB GROUP MODULE JS
-        function GotoSubgroupPage(groupId) {
-            window.location.href = "/GroupManagement/SubGroup?GroupId=" + groupId;
+        function GotoSubgroupPage(groupId, groupName,groupNameKatakana) {
+            window.location.href = "/GroupManagement/SubGroup?GroupId=" + groupId + "&GroupName=" + groupName + "&GroupNameKatakana=" + groupNameKatakana;
         }
 
         //END SUB GROUP MODULE JS

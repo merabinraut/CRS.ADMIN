@@ -127,7 +127,7 @@ namespace CRS.ADMIN.REPOSITORY.GroupManagement
         #endregion
 
         #region SUB GROUP SECTION
-        public SubGroupModelCommon GetSubGroupByGroupId(string groupId, PaginationFilterCommon paginationFilter)
+        public SubGroupModelCommon GetSubGroupByGroupId(string groupId, PaginationFilterCommon paginationFilter, string locationid, string ClubName = "")
         {
             var response = new SubGroupModelCommon
             {
@@ -136,18 +136,21 @@ namespace CRS.ADMIN.REPOSITORY.GroupManagement
 
             string sp_name = "EXEC [dbo].[sproc_admin_get_subgroup]";
             sp_name += "@GroupId=" + _dao.FilterString(groupId);
-            sp_name += ",@SearchFilter=" + _dao.FilterString(paginationFilter.SearchFilter);
+            sp_name += !string.IsNullOrEmpty(paginationFilter.SearchFilter) ? ", @SearchFilter =N" + _dao.FilterString(paginationFilter.SearchFilter) : "";
+           
             sp_name += ",@Skip=" + paginationFilter.Skip;
             sp_name += ",@Take=" + paginationFilter.Take;
 
             var dbResponse = _dao.ExecuteDataTable(sp_name);
-            if (dbResponse.Rows.Count > 0 && dbResponse != null)
+            if (dbResponse != null && dbResponse.Rows.Count > 0)
             {
                 response.SubGroupInfoList = _dao.DataTableToListObject<SubGroupInfoModelCommon>(dbResponse).ToList();
                 foreach (var item in response.SubGroupInfoList)
                 {
                     string sp_name_1 = "EXEC [dbo].[sproc_admin_subgroup_club_info]";
                     sp_name_1 += "@SubGroupId=" + _dao.FilterString(item.SubGroupId);
+                    sp_name_1 += ",@LocationId=" + _dao.FilterString(locationid);
+                    sp_name_1 += !string.IsNullOrEmpty(ClubName) ? ",@ClubName=N" + _dao.FilterString(ClubName) : "";
                     var dbResponse1 = _dao.ExecuteDataTable(sp_name_1);
                     if (dbResponse1 != null)
                     {

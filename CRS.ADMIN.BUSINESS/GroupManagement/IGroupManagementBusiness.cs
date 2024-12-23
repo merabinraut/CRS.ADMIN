@@ -18,7 +18,7 @@ namespace CRS.ADMIN.BUSINESS.GroupManagement
         #endregion
 
         #region Sub Group Section
-        SubGroupModelCommon GetSubGroupByGroupId(string groupId, PaginationFilterCommon paginationFilter);
+        SubGroupModelCommon GetSubGroupByGroupId(string groupId, PaginationFilterCommon paginationFilter, string locationid, string ClubName);
         CommonDbResponse ManageSubGroup(ManageSubGroupModelCommon commonRequest);
         ManageSubGroupModelCommon GetSubGroupDetail(string subGroupId);
         CommonDbResponse DeleteSubGroup(string subGroupId, Common request);
@@ -27,12 +27,12 @@ namespace CRS.ADMIN.BUSINESS.GroupManagement
         #endregion
 
         #region GROUP GALLERY
-        List<GroupGalleryInfoModelCommon> GetGalleryListById(string groupId,string SearchFilter);
+        List<GroupGalleryInfoModelCommon> GetGalleryListById(string groupId, string SearchFilter);
         CommonDbResponse ManageGroupGallery(ManageGroupGalleryModelCommon commonModel);
         ManageGroupGalleryModelCommon GetGroupGalleryDetail(string imageid);
         CommonDbResponse DeleteImage(string imageid, string groupid, Common request);
         CommonDbResponse DeleteSubGroupClub(string id, string subgroupid, string clubid, Common request);
-       List<AssignedClubInfoCommon> GetAssignedClubList();
+        List<AssignedClubInfoCommon> GetAssignedClubList();
         #endregion
     }
 }

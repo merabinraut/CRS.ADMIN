@@ -48,7 +48,7 @@
         <div class="flex justify-between items-center">
             <div>
                 <div class="heading-title">
-                    Group View: @Model.SubGroupInfoList[0].GroupName (@Model.SubGroupInfoList[0].GroupNameKatakana)
+                    Group View: @ViewBag.GroupName (@ViewBag.GroupNameKatakana)
                 </div>
                 <div class="span-title-light-gray">
                     Manage club under Group
@@ -86,6 +86,8 @@
                         </div>
                         <input type="search" id="default-search" class="input-search block w-full" placeholder="@CRS.ADMIN.APPLICATION.Resources.Resource.Search" value="@ViewBag.SearchFilter" name="SearchFilter">
                         <input type="hidden" name="GroupId" value="@ViewBag.GroupId" />
+                        <input type="hidden" name="GroupName" value="@ViewBag.GroupName" />
+                        <input type="hidden" name="GroupNameKatakana" value="@ViewBag.GroupNameKatakana" />
                     </div>
 
                     <!-- Export Button -->
@@ -121,7 +123,7 @@
                                     <label class="block mb-[12px] text-sm font-medium text-secondary-100 ">
                                         Club Name
                                     </label>
-                                    <input type="text" class="w-full" placeholder="Enter club name" name="ClubName" id="clubname" value="">
+                                    <input type="text" class="w-full" placeholder="Enter club name" name="ClubName" id="clubname" value="@ViewBag.ClubName">
                                 </div>
                                 <div class="input-field-common">
                                     <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
@@ -131,7 +133,16 @@
                                             style="width: 100%;">
                                         @foreach (var item in ViewBag.LocationDDL as IEnumerable<SelectListItem>)
                                         {
-                                            <option value="@item.Value" selected>@item.Text</option>
+                                            var selectedValue = ViewBag.LocationId;
+                                            if (item.Value == selectedValue)
+                                            {
+                                                <option value="@item.Value" selected>@item.Text</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@item.Value">@item.Text</option>
+                                            }
+
                                         }
                                     </select>
                                 </div>

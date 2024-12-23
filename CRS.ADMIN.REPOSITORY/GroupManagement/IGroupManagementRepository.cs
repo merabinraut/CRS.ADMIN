@@ -19,7 +19,7 @@ namespace CRS.ADMIN.REPOSITORY.GroupManagement
         #endregion
 
         #region SUB GROUP SECTION
-        SubGroupModelCommon GetSubGroupByGroupId(string groupId, PaginationFilterCommon paginationFilter);
+        SubGroupModelCommon GetSubGroupByGroupId(string groupId, PaginationFilterCommon paginationFilter, string locationid,string ClubName);
         CommonDbResponse ManageSubGroup(ManageSubGroupModelCommon commonRequest);
         ManageSubGroupModelCommon GetSubGroupDetail(string subGroupId);
         CommonDbResponse DeleteSubGroup(string subGroupId, Common request);

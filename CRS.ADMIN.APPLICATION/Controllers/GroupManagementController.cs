@@ -351,7 +351,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
 
         #region MANAGE SUB-GROUP
         [HttpGet]
-        public ActionResult SubGroup(string GroupId = "", int StartIndex = 0, int PageSize = 10, string SearchFilter = "")
+        public ActionResult SubGroup(string GroupId = "", int StartIndex = 0, int PageSize = 10, string SearchFilter = "", string ClubName = "", string LocationId = "", string GroupName = "", string GroupNameKatakana = "")
         {
             Session["CurrentURL"] = "GroupManagement/SubGroup";
             var culture = Request.Cookies["culture"]?.Value;
@@ -364,8 +364,11 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 SearchFilter = SearchFilter
             };
             string groupId = string.Empty;
+            string locationid = string.Empty;
             if (!string.IsNullOrEmpty(GroupId))
                 groupId = GroupId.DecryptParameter();
+            if (!string.IsNullOrEmpty(LocationId))
+                locationid = LocationId.DecryptParameter();
             CommonSubGroupModel commonModel = new CommonSubGroupModel();
 
             if (TempData.ContainsKey("ManageSubGroup")) commonModel.ManageSubGroup = TempData["ManageSubGroup"] as ManageSubGroupModel;
@@ -378,7 +381,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
 
             if (TempData.ContainsKey("RenderId")) RenderId = TempData["RenderId"].ToString();
 
-            var dbResponse = _business.GetSubGroupByGroupId(groupId, paginationFilter);
+            var dbResponse = _business.GetSubGroupByGroupId(groupId, paginationFilter, locationid,ClubName);
             commonModel.SubGroupInfoList = dbResponse.SubGroupInfoList.MapObjects<SubGroupInfoModel>();
             foreach (var item in commonModel.SubGroupInfoList)
             {
@@ -395,10 +398,12 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             ViewBag.StartIndex = StartIndex;
             ViewBag.PageSize = PageSize;
             ViewBag.GroupId = GroupId;
-            ViewBag.GroupName = commonModel.SubGroupInfoList[0].GroupName;
-            ViewBag.GroupNameKatakana = commonModel.SubGroupInfoList[0].GroupNameKatakana;
+            ViewBag.GroupName = GroupName;
+            ViewBag.GroupNameKatakana = GroupNameKatakana;
             ViewBag.PopUpRenderValue = !string.IsNullOrEmpty(RenderId) ? RenderId : null;
             ViewBag.SearchFilter = SearchFilter;
+            ViewBag.LocationId = LocationId;
+            ViewBag.ClubName = ClubName;
             ViewBag.TotalRecords = commonModel.SubGroupInfoList != null && commonModel.SubGroupInfoList.Any() ? commonModel.SubGroupInfoList[0].TotalRecords : 0;
             ViewBag.LocationDDL = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("LOCATIONDDL", "", culture) as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---");
             ViewBag.ClubStoreDDL = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("CLUBLIST", "", culture) as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---");

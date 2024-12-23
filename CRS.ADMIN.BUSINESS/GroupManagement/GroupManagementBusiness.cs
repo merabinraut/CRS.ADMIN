@@ -51,9 +51,9 @@ namespace CRS.ADMIN.BUSINESS.GroupManagement
         #endregion
 
         #region Sub Group Section
-        public SubGroupModelCommon GetSubGroupByGroupId(string groupId, PaginationFilterCommon paginationFilter)
+        public SubGroupModelCommon GetSubGroupByGroupId(string groupId, PaginationFilterCommon paginationFilter, string locationid, string clubName)
         {
-            return _repo.GetSubGroupByGroupId(groupId, paginationFilter);
+            return _repo.GetSubGroupByGroupId(groupId, paginationFilter, locationid, clubName);
         }
 
         public CommonDbResponse ManageSubGroup(ManageSubGroupModelCommon commonRequest)
@@ -111,7 +111,7 @@ namespace CRS.ADMIN.BUSINESS.GroupManagement
             return _repo.DeleteImage(imageid, groupid, request);
         }
 
-      
+
 
         #endregion
 
