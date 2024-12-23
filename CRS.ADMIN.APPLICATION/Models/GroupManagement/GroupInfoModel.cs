@@ -58,6 +58,7 @@ namespace CRS.ADMIN.APPLICATION.Models.GroupManagement
         public string Status { get; set; }
         public string CreatedOn { get; set; }
         public string TotalClubCount { get; set; }
+        public int TotalRecords { get; set; }
         public List<SubGroupClubInfo> ClubShortInfo { get; set; } = new List<SubGroupClubInfo>();
     }
     public class SubGroupClubInfo

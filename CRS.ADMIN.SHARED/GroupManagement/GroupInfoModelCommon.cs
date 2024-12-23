@@ -7,7 +7,7 @@ namespace CRS.ADMIN.SHARED.GroupManagement
     public class GroupInfoModelCommon
     {
         public string sno { get; set; }
-        public string totalRecords { get; set; }
+        public int totalRecords { get; set; }
         public string groupId { get; set; }
         public string groupName { get; set; }
         public string groupNameKatakana { get; set; }
@@ -54,6 +54,7 @@ namespace CRS.ADMIN.SHARED.GroupManagement
         public string Status { get; set; }
         public string CreatedOn { get; set; }
         public string TotalClubCount { get; set; }
+        public int TotalRecords { get; set; }
         public List<SubGroupClubInfoCommon> ClubShortInfo { get; set; } = new List<SubGroupClubInfoCommon>();
     }
     public class SubGroupClubInfoCommon

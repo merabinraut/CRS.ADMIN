@@ -140,8 +140,7 @@
                                         </path>
                                     </svg>
                                 </div>
-                                <input type="search" id="default-search" class="input-search block w-full " placeholder="Search" value="@Model.SearchFilter" name="SearchFilter"
-                                       required="">
+                                <input type="search" id="default-search" class="input-search block w-full " placeholder="Search" value="@Model.SearchFilter" name="SearchFilter">
                             </div>
                         </form>
                         <div class="btn btn-primary gap-[8px] h-[40px]" data-drawer-target="add-group"
@@ -461,7 +460,19 @@
 
 @Html.Partial("_ManageGroup", _ManageGroup)
 @section scripts{
+    <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
     <script>
+        //PAGINATION START
+       document.addEventListener('DOMContentLoaded', function () {
+        const page_size = @ViewBag.PageSize;
+        const total_data = @ViewBag.TotalRecords;
+        const start_index_val = @ViewBag.StartIndex;
+        let URL = "/GroupManagement/Index";
+        let search_filter = $('#default-search').val();
+        URL = addQueryParam(URL, 'SearchFilter', search_filter);
+        LoadPagination(page_size, total_data, start_index_val, URL);
+       });
+       //PAGINATION END
 
         //START GROUP MODULE JS
         function CancelFunction() {

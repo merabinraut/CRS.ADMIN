@@ -32,7 +32,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
         [HttpGet]
         public ActionResult Index(string SearchFilter = "", int StartIndex = 0, int PageSize = 10)
         {
-            Session["CurrentURL"] = "GroupManagement/Index";
+            Session["CurrentURL"] = "/GroupManagement/Index";
             string RenderId = string.Empty;
             ViewBag.SearchFilter = null;
             PaginationFilterCommon paginationFilter = new PaginationFilterCommon()
@@ -58,6 +58,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             ViewBag.PopUpRenderValue = !string.IsNullOrEmpty(RenderId) ? RenderId : null;
             ViewBag.StartIndex = StartIndex;
             ViewBag.PageSize = PageSize;
+            ViewBag.TotalRecords = dbGroupResponse != null && dbGroupResponse.Any() ? dbGroupResponse[0].totalRecords : 0;
             return View(commonResponse);
         }
         [HttpPost, ValidateAntiForgeryToken]
@@ -398,6 +399,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             ViewBag.GroupNameKatakana = commonModel.SubGroupInfoList[0].GroupNameKatakana;
             ViewBag.PopUpRenderValue = !string.IsNullOrEmpty(RenderId) ? RenderId : null;
             ViewBag.SearchFilter = SearchFilter;
+            ViewBag.TotalRecords = commonModel.SubGroupInfoList != null && commonModel.SubGroupInfoList.Any() ? commonModel.SubGroupInfoList[0].TotalRecords : 0;
             ViewBag.LocationDDL = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("LOCATIONDDL", "", culture) as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---");
             ViewBag.ClubStoreDDL = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("CLUBLIST", "", culture) as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---");
             ViewBag.SubGroupList = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("SUBGROUPDDL", groupId, culture) as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---");
@@ -688,14 +690,14 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             // Get assigned clubs
             var assignedClubDict = _business.GetAssignedClubList();
             List<AssignedClubInfo> mappedAssignedDDL = assignedClubDict.MapObjects<AssignedClubInfo>();
-            foreach(var item in mappedAssignedDDL)
+            foreach (var item in mappedAssignedDDL)
             {
                 item.Value = item.Value.EncryptParameter();
             }
             // Filter the original dictionary
             clubDDL = clubDDL
-                .Where(kvp => !mappedAssignedDDL.Any(m => m.Value == kvp.Value)) 
-                .ToList(); 
+                .Where(kvp => !mappedAssignedDDL.Any(m => m.Value == kvp.Value))
+                .ToList();
 
             return Json(new { clubDDL }, JsonRequestBehavior.AllowGet);
         }
