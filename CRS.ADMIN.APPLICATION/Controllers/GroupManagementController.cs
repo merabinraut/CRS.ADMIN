@@ -381,7 +381,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
 
             if (TempData.ContainsKey("RenderId")) RenderId = TempData["RenderId"].ToString();
 
-            var dbResponse = _business.GetSubGroupByGroupId(groupId, paginationFilter, locationid,ClubName);
+            var dbResponse = _business.GetSubGroupByGroupId(groupId, paginationFilter, locationid, ClubName);
             commonModel.SubGroupInfoList = dbResponse.SubGroupInfoList.MapObjects<SubGroupInfoModel>();
             foreach (var item in commonModel.SubGroupInfoList)
             {
@@ -602,7 +602,18 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             ManageSubGroupClubModelCommon commonModel = model.MapObject<ManageSubGroupClubModelCommon>();
             commonModel.ActionUser = ApplicationUtilities.GetSessionValue("Username").ToString();
             commonModel.ActionIP = ApplicationUtilities.GetIP();
-
+            if (string.IsNullOrEmpty(SubGroupId) && locationClubMappingContainer.Count == 0)
+            {
+                this.AddNotificationMessage(new NotificationModel()
+                {
+                    NotificationType = NotificationMessage.INFORMATION,
+                    Message = "Please select subgroup, location and club",
+                    Title = NotificationMessage.INFORMATION.ToString()
+                });
+                TempData["ManageSubGroupClub"] = model;
+                TempData["RenderId"] = "ManageSGC";
+                return Json("Please select subgroup, location and club", JsonRequestBehavior.AllowGet);
+            }
             var dbResponse = _business.ManageSubGroupClub(commonModel);
             response = dbResponse;
             if (dbResponse.Code == ResponseCode.Success && dbResponse.Code == 0)

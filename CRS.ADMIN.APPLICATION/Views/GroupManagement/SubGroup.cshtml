@@ -761,18 +761,27 @@
             var mappedData = JSON.stringify(locationClubMapping);
             var sGroupId = subgroupid;
             var groupId = '@ViewBag.GroupId';
-               $.ajax({
+            if (mappedData) {
+                $.ajax({
                     type: 'POST',
                     url: '@Url.Action("ManageSubGroupClub")',
                     dataType: 'json',
-                   data: { '__RequestVerificationToken': requestVerificationToken, mapping: mappedData, SubGroupId: sGroupId, GroupId: groupId },
-                   success: function (data) {
-                       location.reload();
+                    data: { '__RequestVerificationToken': requestVerificationToken, mapping: mappedData, SubGroupId: sGroupId, GroupId: groupId },
+                    success: function (data) {
+                        location.reload();
                     },
-                   error: function () {
-                       location.reload();
+                    error: function () {
+                        location.reload();
                     }
-               });
+                });
+            } else if (sGroupId) {
+                showNotification("Please select sub group", 'INFORMATION', 'INFORMATION');
+                window.location.reload();
+            } else {
+                showNotification("Please select location and club", 'INFORMATION', 'INFORMATION');
+                window.location.reload();
+            }
+
         }
         </script>
 
