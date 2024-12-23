@@ -1,0 +1,163 @@
+@model CRS.ADMIN.APPLICATION.Models.ChargeManagement.ManageChargeDetailsModel
+<div id="add-new-charge-category-slab"
+     class="drawer-close-disable  flex justify-end fixed top-0 right-0 z-40 h-screen overflow-y-auto transition-transform translate-x-full"
+     tabindex="-1" aria-labelledby="add-new-charge-category-slab" aria-modal="true" role="dialog">
+    <div class="bg-white w-[616px] drawer-container relative">
+        <div class="drawer-form-container sticky top-0 z-[5] ">
+            <div class="drawer-form flex justify-between bg-secondary-color-pink py-[16px] px-[24px] h-[56px]">
+                <div>
+                    @CRS.ADMIN.APPLICATION.Resources.Resource.Manage_Points_Setup
+                </div>
+                <button type="button" data-drawer-hide="add-new-charge-category-slab" aria-controls="add-new-category-slab"
+                        class="text-[20px]">
+                    <i class="las la-window-close text-white" onclick="CancelFunction()"></i>
+                </button>
+            </div>
+        </div>
+        <div class="p-[24px]">
+            @using (Html.BeginForm("ManageChargeCategoryDetails", "ChargeManagement", FormMethod.Post, new { @id = "ManageCategorychargeSlabForm" }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.HiddenFor(model => model.categoryId);
+                @Html.HiddenFor(model => model.categoryDetailId);
+                @Html.HiddenFor(model => model.agentTypeValue);
+                <div class="grid gap-4">
+                    <div class="grid grid-cols-2 gap-x-4 gap-y-5">
+                        <div class="input-field-common mb-[20px]" id="">
+                            <div class="input-field-common">
+                                <label for="date" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                                    @CRS.ADMIN.APPLICATION.Resources.Resource.FromAmount
+                                </label>
+                                @Html.TextBoxFor(model => model.fromAmount, new
+                             {
+                               @class = "w-full",
+                               @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.FromAmount,
+                               @autocomplete = "off"
+                       
+                           })
+                                <span class="error">
+                                    @Html.ValidationMessageFor(m => m.fromAmount)
+                                </span>
+                            </div>
+                        </div>
+                        <div class="input-field-common mb-[20px]" id="">
+                            <div class="input-field-common">
+                                <label for="date" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                                    @CRS.ADMIN.APPLICATION.Resources.Resource.ToAmount
+                                </label>
+                                @Html.TextBoxFor(model => model.toAmount, new
+                           {
+                               @class = "w-full",
+                               @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.ToAmount,
+                               autocomplete = "off"
+                          
+                           })
+                                <span class="error">
+                                    @Html.ValidationMessageFor(m => m.toAmount)
+                                </span>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="input-field-common">
+                        <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Charge_Type
+                        </label>
+                        <select id="large" name="chargeType" class=" default_select select-common block w-full "
+                                style="width: 100%;">
+                            @foreach (var item in ViewBag.ChargeTypeDDLList as IEnumerable<SelectListItem>)
+                            {
+                                var selectedId = ViewBag.ChargeTypeIdKey as string;
+                                if (item.Value == selectedId)
+                                {
+                                    <option value="@item.Value" selected>
+                                        @item.Text
+                                    </option>
+                                }
+                                else
+                                {
+                                    <option value="@item.Value">
+                                        @item.Text
+                                    </option>
+                                }
+                            }
+                        </select>
+                    </div>
+                    <div class="input-field-common mb-[20px]" id="">
+                        <div class="input-field-common">
+                            <label for="date" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Value
+                            </label>
+                            @Html.TextBoxFor(model => model.chargeValue, new
+                          {
+                              @class = "w-full",
+                              @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.PointValue,
+                              autocomplete = "off"
+                             
+                          })
+                            <span class="error">
+                                @Html.ValidationMessageFor(m => m.chargeValue)
+                            </span>
+
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-x-4 gap-y-5">
+                        <div class="input-field-common mb-[20px]" id="">
+                            <div class="input-field-common">
+                                <label for="date" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Min_Value
+                                </label>
+                                @Html.TextBoxFor(model => model.minChargeValue, new
+                             {
+                               @class = "w-full",
+                               @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.Min_Value,
+                               @autocomplete = "off"
+                            
+                           })
+                                <span class="error">
+                                    @Html.ValidationMessageFor(m => m.minChargeValue)
+                                </span>
+                            </div>
+                        </div>
+                        <div class="input-field-common mb-[20px]" id="">
+                            <div class="input-field-common">
+                                <label for="date" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Max_Value
+                                </label>
+                                @Html.TextBoxFor(model => model.maxChargeValue, new
+                                    {
+                                    @class = "w-full",
+                                    @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.Max_Value,
+                                    autocomplete = "off"
+                                    })
+                                <span class="error">
+                                    @Html.ValidationMessageFor(m => m.maxChargeValue)
+                                </span>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+
+                <!-- for submit button -->
+                <div class="py-4 flex justify-end">
+                    <div class="flex gap-6">
+                        <button class="btn btn-secondary rounded-[4px]" type="button" data-drawer-hide="add-new-host-tag"
+                                aria-controls="add-new-host-tag" onclick="CancelFunction();">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Cancel
+                        </button>
+                        <button class="btn btn-primary-default rounded-[4px]" type="submit" onclick="SubmitFunction()" id="submitbtn"> @CRS.ADMIN.APPLICATION.Resources.Resource.Submit</button>
+
+
+                    </div>
+
+                </div>
+
+            }
+        </div>
+    </div>
+</div>

@@ -2,6 +2,7 @@ using CRS.ADMIN.BUSINESS.AccountInformation;
 using CRS.ADMIN.BUSINESS.AdminPointManagement;
 using CRS.ADMIN.BUSINESS.AffiliateManagement;
 using CRS.ADMIN.BUSINESS.BasicClubManagement;
+using CRS.ADMIN.BUSINESS.ChargeManagement;
 using CRS.ADMIN.BUSINESS.ClubManagement;
 using CRS.ADMIN.BUSINESS.ClubPlanManagement;
 using CRS.ADMIN.BUSINESS.CommissionManagement;
@@ -33,6 +34,7 @@ using CRS.ADMIN.BUSINESS.ScheduleManagement;
 using CRS.ADMIN.BUSINESS.SMSLog;
 using CRS.ADMIN.BUSINESS.StaffManagement;
 using CRS.ADMIN.BUSINESS.StaticDataManagement;
+using CRS.ADMIN.BUSINESS.WithdrawalRequest;
 using CRS.ADMIN.BUSINESS.WithdrawSetup;
 using System.Web.Mvc;
 using Unity;
@@ -86,6 +88,8 @@ namespace CRS.ADMIN.APPLICATION
             container.RegisterType<IBasicClubManagementBusiness, BasicClubManagementBusiness>();
             container.RegisterType<IWithdrawSetupBusiness, WithdrawSetupBusiness>();
             container.RegisterType<IAccountInformationBusiness, AccountInformationBusiness>();
+            container.RegisterType<IWithdrawalRequestBusiness, WithdrawalRequestBusiness>();
+            container.RegisterType<IChargeManagementBusiness, ChargeManagementBusiness>();
             container.RegisterType<IGroupManagementBusiness, GroupManagementBusiness>();
             return container;
         }

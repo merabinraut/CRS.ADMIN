@@ -106,6 +106,8 @@
     <Compile Include="AffiliateManagement\IAffiliateManagementRepository.cs" />
     <Compile Include="BasicClubManagement\BasicClubManagementRepository.cs" />
     <Compile Include="BasicClubManagement\IBasicClubManagementRepository.cs" />
+    <Compile Include="ChargeManagement\ChargeManagementRepository.cs" />
+    <Compile Include="ChargeManagement\IChargeManagementRepository.cs" />
     <Compile Include="ClubManagement\ClubManagementRepository.cs" />
     <Compile Include="ClubManagement\IClubManagementRepository.cs" />
     <Compile Include="ClubPlanManagement\ClubPlanManagementRepository.cs" />
@@ -170,6 +172,8 @@
     <Compile Include="StaffManagement\StaffManagementRepository.cs" />
     <Compile Include="StaticDataManagement\IStaticDataManagementRepository.cs" />
     <Compile Include="StaticDataManagement\StaticDataManagementRepository.cs" />
+    <Compile Include="WithdrawalRequest\IWithdrawalRequestRepository.cs" />
+    <Compile Include="WithdrawalRequest\WithdrawalRequestRepository.cs" />
     <Compile Include="WithdrawSetup\IWithdrawSetupRepository.cs" />
     <Compile Include="WithdrawSetup\WithdrawSetupRepository.cs" />
   </ItemGroup>

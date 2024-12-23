@@ -1199,6 +1199,15 @@ namespace CRS.ADMIN.APPLICATION.Library
                         response.Add(item.Key.EncryptParameter(), item.Value);
                     });
                     return response;
+                case "CHARGECATEGORY":
+                    dbResponse = _CommonBuss.GetDropDown("061", search1, search2);
+                    dbResponse.ForEach(item =>
+                    {
+                        response.Add
+                        //(item.Key.EncryptParameter(), culture == "en-US" ? item.Value.Text: item.Value.JapaneseValue);
+                        (item.Key.EncryptParameter(), item.Value);
+                    });
+                    return response;
                 default: return response;
             }
         }
@@ -1341,6 +1350,12 @@ namespace CRS.ADMIN.APPLICATION.Library
             T model = default(T);
             model = JsonConvert.DeserializeObject<T>(json);
             return model;
+        }
+        public static string FormatPhoneNumber(string phoneNumber, string countryCode = "+81")
+        {
+            if (phoneNumber.StartsWith("0"))
+                phoneNumber = phoneNumber.Substring(1);
+            return $"{countryCode}{phoneNumber}";
         }
     }
 }

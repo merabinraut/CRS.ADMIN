@@ -84,6 +84,8 @@
     <Compile Include="AffiliateManagement\IAffiliateManagementBusiness.cs" />
     <Compile Include="BasicClubManagement\BasicClubManagementBusiness.cs" />
     <Compile Include="BasicClubManagement\IBasicClubManagementBusiness.cs" />
+    <Compile Include="ChargeManagement\ChargeManagementBusiness.cs" />
+    <Compile Include="ChargeManagement\IChargeManagementBusiness.cs" />
     <Compile Include="ClubManagement\ClubManagementBusiness.cs" />
     <Compile Include="ClubManagement\IClubManagementBusiness.cs" />
     <Compile Include="ClubPlanManagement\ClubPlanManagementBusiness.cs" />
@@ -146,6 +148,8 @@
     <Compile Include="StaffManagement\StaffManagementBusiness.cs" />
     <Compile Include="StaticDataManagement\IStaticDataManagementBusiness.cs" />
     <Compile Include="StaticDataManagement\StaticDataManagementBusiness.cs" />
+    <Compile Include="WithdrawalRequest\IWithdrawalRequestBusiness.cs" />
+    <Compile Include="WithdrawalRequest\WithdrawalRequestBusiness.cs" />
     <Compile Include="WithdrawSetup\IWithdrawSetupBusiness.cs" />
     <Compile Include="WithdrawSetup\WithdrawSetupBusiness.cs" />
   </ItemGroup>

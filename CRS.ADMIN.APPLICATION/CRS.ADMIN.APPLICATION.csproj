@@ -47,14 +47,26 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Amazon.Extensions.CognitoAuthentication, Version=1.0.0.0, Culture=neutral, PublicKeyToken=885c28607f98e604, processorArchitecture=MSIL">
+      <HintPath>..\packages\Amazon.Extensions.CognitoAuthentication.2.5.5\lib\netstandard2.0\Amazon.Extensions.CognitoAuthentication.dll</HintPath>
+    </Reference>
     <Reference Include="Aspose.Cells, Version=8.7.2.0, Culture=neutral, PublicKeyToken=716fcc553a201e56, processorArchitecture=MSIL">
       <HintPath>..\packages\Aspose.Cells.8.7.2\lib\net40\Aspose.Cells.dll</HintPath>
     </Reference>
+    <Reference Include="AWSSDK.CognitoIdentity, Version=3.3.0.0, Culture=neutral, PublicKeyToken=885c28607f98e604, processorArchitecture=MSIL">
+      <HintPath>..\packages\AWSSDK.CognitoIdentity.3.7.300.74\lib\net45\AWSSDK.CognitoIdentity.dll</HintPath>
+    </Reference>
+    <Reference Include="AWSSDK.CognitoIdentityProvider, Version=3.3.0.0, Culture=neutral, PublicKeyToken=885c28607f98e604, processorArchitecture=MSIL">
+      <HintPath>..\packages\AWSSDK.CognitoIdentityProvider.3.7.404.2\lib\net45\AWSSDK.CognitoIdentityProvider.dll</HintPath>
+    </Reference>
     <Reference Include="AWSSDK.Core, Version=3.3.0.0, Culture=neutral, PublicKeyToken=885c28607f98e604, processorArchitecture=MSIL">
-      <HintPath>..\packages\AWSSDK.Core.3.7.304.1\lib\net45\AWSSDK.Core.dll</HintPath>
+      <HintPath>..\packages\AWSSDK.Core.3.7.400.59\lib\net45\AWSSDK.Core.dll</HintPath>
     </Reference>
     <Reference Include="AWSSDK.S3, Version=3.3.0.0, Culture=neutral, PublicKeyToken=885c28607f98e604, processorArchitecture=MSIL">
       <HintPath>..\packages\AWSSDK.S3.3.7.308\lib\net45\AWSSDK.S3.dll</HintPath>
+    </Reference>
+    <Reference Include="AWSSDK.SecurityToken, Version=3.3.0.0, Culture=neutral, PublicKeyToken=885c28607f98e604, processorArchitecture=MSIL">
+      <HintPath>..\packages\AWSSDK.SecurityToken.3.7.300.75\lib\net45\AWSSDK.SecurityToken.dll</HintPath>
     </Reference>
     <Reference Include="CSharp-easy-RSA-PEM">
       <HintPath>..\Reference\CSharp-easy-RSA-PEM.dll</HintPath>
@@ -92,12 +104,27 @@
     <Reference Include="Microsoft.AspNetCore.Http.Features, Version=5.0.17.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNetCore.Http.Features.5.0.17\lib\net461\Microsoft.AspNetCore.Http.Features.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=1.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.1.0.0\lib\net461\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
+    <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.8.0.0\lib\net462\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Bcl.TimeProvider, Version=8.0.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Bcl.TimeProvider.8.0.1\lib\net462\Microsoft.Bcl.TimeProvider.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Extensions.Primitives, Version=5.0.0.1, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Extensions.Primitives.5.0.1\lib\net461\Microsoft.Extensions.Primitives.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.IdentityModel.Abstractions, Version=8.2.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.IdentityModel.Abstractions.8.2.1\lib\net472\Microsoft.IdentityModel.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.IdentityModel.JsonWebTokens, Version=8.2.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.IdentityModel.JsonWebTokens.8.2.1\lib\net472\Microsoft.IdentityModel.JsonWebTokens.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.IdentityModel.Logging, Version=8.2.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.IdentityModel.Logging.8.2.1\lib\net472\Microsoft.IdentityModel.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.IdentityModel.Tokens, Version=8.2.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.IdentityModel.Tokens.8.2.1\lib\net472\Microsoft.IdentityModel.Tokens.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.IO.RecyclableMemoryStream, Version=2.3.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.IO.RecyclableMemoryStream.2.3.1\lib\net462\Microsoft.IO.RecyclableMemoryStream.dll</HintPath>
@@ -128,6 +155,9 @@
     </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.IdentityModel.Tokens.Jwt, Version=8.2.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IdentityModel.Tokens.Jwt.8.2.1\lib\net472\System.IdentityModel.Tokens.Jwt.dll</HintPath>
+    </Reference>
     <Reference Include="System.IO.Pipelines, Version=5.0.0.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.IO.Pipelines.5.0.2\lib\net461\System.IO.Pipelines.dll</HintPath>
     </Reference>
@@ -138,13 +168,22 @@
     <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
     </Reference>
-    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.5.0.0\lib\net45\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.6.0.0\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
     </Reference>
     <Reference Include="System.Security" />
+    <Reference Include="System.Text.Encodings.Web, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Text.Encodings.Web.8.0.0\lib\net462\System.Text.Encodings.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Text.Json, Version=8.0.0.5, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Text.Json.8.0.5\lib\net462\System.Text.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System.Threading.Tasks" />
     <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.4\lib\net461\System.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net47\System.ValueTuple.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
@@ -235,6 +274,7 @@
     <Compile Include="Controllers\AffiliateManagementController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\BasicClubManagementController.cs" />
+    <Compile Include="Controllers\ChargeManagementController.cs" />
     <Compile Include="Controllers\ClubManagementController.cs" />
     <Compile Include="Controllers\ClubPlanManagementController.cs" />
     <Compile Include="Controllers\CommissionManagementController.cs" />
@@ -266,6 +306,7 @@
     <Compile Include="Controllers\SMSLogController.cs" />
     <Compile Include="Controllers\StaffManagementController.cs" />
     <Compile Include="Controllers\StaticDataManagementController.cs" />
+    <Compile Include="Controllers\WithdrawalRequestController.cs" />
     <Compile Include="Controllers\WithdrawSetupController.cs" />
     <Compile Include="CustomHelpers\CustomHtmlHelpers.cs" />
     <Compile Include="Filters\ActivityLogFilter.cs" />
@@ -280,12 +321,15 @@
     <Compile Include="Library\ProjectGrid.cs" />
     <Compile Include="Library\StaticData.cs" />
     <Compile Include="Library\StringCipher.cs" />
+    <Compile Include="Middleware\AmazonCognitoMiddleware.cs" />
     <Compile Include="Models\AccountInformation\AccountInformationModel.cs" />
     <Compile Include="Models\AdminDashboardModel.cs" />
     <Compile Include="Models\AdminPointManagement\AdminPointManagementModel.cs" />
     <Compile Include="Models\AffiliateManagement\AffiliateManagementModel.cs" />
     <Compile Include="Models\AmazonConfigruationModel.cs" />
     <Compile Include="Models\BasicClubManagement\BasicClubManagementModel.cs" />
+    <Compile Include="Models\ChargeManagement\ChargeCategoryModel.cs" />
+    <Compile Include="Models\ChargeManagement\ChargeDetailModel.cs" />
     <Compile Include="Models\ClubManagement\ClubManagementModel.cs" />
     <Compile Include="Models\ClubManagement\ClubManagerModel.cs" />
     <Compile Include="Models\ClubManagement\EventModel.cs" />
@@ -326,6 +370,7 @@
     <Compile Include="Models\StaffManagement\StaffManagementModel.cs" />
     <Compile Include="Models\StaticDataManagement\StaticDataManagementModel.cs" />
     <Compile Include="Models\TagManagement\TagManagementModel.cs" />
+    <Compile Include="Models\WithdrawalRequest\WithdrawalRequestModel.cs" />
     <Compile Include="Models\Withdraw\WithdrawSetupModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\Resource.Designer.cs">
@@ -338,8 +383,13 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resource.Ja.resx</DependentUpon>
     </Compile>
+    <Compile Include="Services\CognitoService.cs" />
+    <None Include="Views\ChargeManagement\_ManageChargeCategoryDetails.cshtml" />
+    <Content Include="Views\ChargeManagement\ChargeCategoryDetails.cshtml" />
+    <None Include="Views\ChargeManagement\_ManageChargeCategoryPartialView.cshtml" />
     <Content Include="Content\assets\images\pdficon.svg" />
     <Content Include="Views\AccountInformation\GetAccountInformation.cshtml" />
+    <Content Include="App_Data\AmazonConfigruation.json" />
     <None Include="Views\BasicClubManagement\_PremiumClubtPartialView.cshtml" />
     <Content Include="Content\assets\images\conversion.svg" />
     <Content Include="Content\assets_new\images\hoslog-balance.svg" />
@@ -349,6 +399,8 @@
     <Content Include="Views\AdminPointManagement\_ManageAdminPointPartialView.cshtml" />
     <Content Include="Views\BasicClubManagement\BasicClubManagementList.cshtml" />
     <Content Include="Views\BasicClubManagement\_ManageBasicClubPartialView.cshtml" />
+    <Content Include="Views\ChargeManagement\Index.cshtml" />
+    <Content Include="Views\ChargeManagement\ChargeCategoryType.cshtml" />
     <None Include="Views\ClubManagement\_RejectedClubListPartialView.cshtml" />
     <Content Include="Views\AffiliateManagement\_ConvertedCustomerPointsReport.cshtml" />
     <Content Include="Views\PointsManagement\_PointTransferRetrivePartialView.cshtml" />
@@ -373,7 +425,6 @@
     <None Include="Views\ClubPlanManagement\_ManageClubPlanPartialView.cshtml" />
     <Content Include="Content\assets\images\schedule.svg" />
     <Content Include="Views\PointsManagement\_ManagePointsRequestPartialView.cshtml" />
-    <Content Include="App_Data\AmazonConfigruation.json" />
     <Content Include="Views\ClubPlanManagement\ClubPlanList.cshtml" />
     <Content Include="Views\PointsManagement\_PointBalanceStatement.cshtml" />
     <None Include="Views\PointsManagement\_ManagePointsTransferPartialView.cshtml" />
@@ -2741,6 +2792,8 @@
     <Content Include="Views\PointSetup\PointsCategoryList.cshtml" />
     <Content Include="Views\WithdrawSetup\Index.cshtml" />
     <Content Include="Views\WithdrawSetup\_ManageWithdrawsetupPartial.cshtml" />
+    <Content Include="Views\WithdrawalRequest\WithdrawalRequestMonthlyList.cshtml" />
+    <Content Include="Views\WithdrawalRequest\WithdrawalDetailList.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -2763,8 +2816,11 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Analyzer Include="..\packages\AWSSDK.CognitoIdentity.3.7.300.74\analyzers\dotnet\cs\AWSSDK.CognitoIdentity.CodeAnalysis.dll" />
+    <Analyzer Include="..\packages\AWSSDK.CognitoIdentityProvider.3.7.404.2\analyzers\dotnet\cs\AWSSDK.CognitoIdentityProvider.CodeAnalysis.dll" />
     <Analyzer Include="..\packages\AWSSDK.S3.3.7.308\analyzers\dotnet\cs\AWSSDK.S3.CodeAnalysis.dll" />
     <Analyzer Include="..\packages\AWSSDK.S3.3.7.308\analyzers\dotnet\cs\SharedAnalysisCode.dll" />
+    <Analyzer Include="..\packages\AWSSDK.SecurityToken.3.7.300.75\analyzers\dotnet\cs\AWSSDK.SecurityToken.CodeAnalysis.dll" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -97,7 +97,7 @@
                                             style="width: 100%;">
                                         @foreach (var item in ViewBag.UserTypeList as IEnumerable<SelectListItem>)
                                         {
-                                            var selectedId = ViewBag.UserTypeIdKey as string;
+                                            var selectedId = ViewBag.UserTypeIdKeyPT1 as string;
                                             if (item.Value == selectedId)
                                             {
                                                 <option value="@item.Value" selected>
@@ -124,7 +124,7 @@
                                             style="width: 100%;">
                                         @foreach (var item in ViewBag.FilterUserList as IEnumerable<SelectListItem>)
                                         {
-                                            var selectedId = ViewBag.UsernameIdKey as string;
+                                            var selectedId = ViewBag.UsernameIdKeyPT1 as string;
                                             if (item.Value == selectedId)
                                             {
                                                 <option value="@item.Value" selected>
@@ -207,9 +207,9 @@
                                         </span>
                                     </div>
                                 </div>
-
+                                <br />
                                 <div>
-                                    <div class="py-4 flex justify-end">
+                                    <div class="py-4 flex justify-start mx-[18px]">
                                         <div class="flex gap-6">
                                             <button class="btn btn-secondary rounded-[4px]" type="button" data-drawer-hide="add-new-points-request"
                                                     aria-controls="add-new-points-request" onclick="CancelFunction();">
@@ -592,12 +592,12 @@
                 const page_size3 = @ViewBag.PageSize3;
                 const total_data3 = @ViewBag.TotalData3;
                 const start_index_val3 = @ViewBag.StartIndex3;
-                var usertypeid = $("#Usertype1").val();
-                var username = $("#Username1").val();
+                var usertypeid = $("#User_type").val();
+                var username = $("#User_name").val();
                 var transfertype = $("#TransferType1").val();
                 var FromDate = $("#From_Date1").val();
                 var ToDate = $("#To_Date1").val();
-                let URL3 = "/PointsManagement/GetSystemTransferReportAsync?UserType=" + usertypeid + "&UserName=" + username + "&TransferType=" + transfertype + "&From_Date1=" + FromDate + "&To_Date1=" + ToDate ;
+                let URL3 = "/PointsManagement/GetSystemTransferReportAsync?User_type=" + usertypeid + "&User_name=" + username + "&TransferType=" + transfertype + "&From_Date1=" + FromDate + "&To_Date1=" + ToDate ;
                 let search_filter3 = $('#default-search').val();
                 URL3 = addQueryParam2(URL3, 'SearchFilter', search_filter3, 'value', 'st');
                 dynamicStartIndexLabel = "StartIndex3";
@@ -917,70 +917,100 @@ $("#To_Date1").val("@_systemTransferModel.To_Date1");
             $('#ConfirmationId').val(Id);
         }
 
-    function ApproveClubPointRequestFunction() {
-    var fileInput = document.getElementById('file_input_cover');
-    var file = fileInput.files[0];
-    var formData = new FormData();
-    formData.append('Image', file);
-    let {  Id, AdminRemark } = {
+        $('#ConfirmationAdminRemark').on('change', function (event) {
+            if ($('#ConfirmationAdminRemark').val() != "") {
+                $("span#remarksrequired").text('');
+            }
+            else {
+                $("span#remarksrequired").text('@CRS.ADMIN.APPLICATION.Resources.Resource.Required');
+            }
+        });
 
-        Id: $('#ConfirmationId').val(),
-        AdminRemark: $('#ConfirmationAdminRemark').val()
-    };
-    formData.append('__RequestVerificationToken', $('input[name="__RequestVerificationToken"]').val());
-    formData.append('Id', Id);
-    formData.append('AdminRemark', AdminRemark);
-    formData.append('Status', 'Approve');
-    $.ajax({
-        type: 'POST',
-        async: true,
-        url: "/PointsManagement/ManageClubPointRequest",
-        data: formData,
-        processData: false,
-        contentType: false,
-        success: function (responseData) {
-            window.location.reload();
-        },
-        error: function (ex) {
-            window.location.reload();
-        }
-    });
-}
+        $('#RejectAdminRemark').on('change', function (event) {
+          if ($('#RejectAdminRemark').val() != "") {
+              $("span#rejectremarksrequired").text('');
+          }
+          else {
+              $("span#rejectremarksrequired").text('@CRS.ADMIN.APPLICATION.Resources.Resource.Required');
+          }
+       });
+      function ApproveClubPointRequestFunction() {
+          var fileInput = document.getElementById('file_input_cover');
+          var file = fileInput.files[0];
+          var formData = new FormData();
+          formData.append('Image', file);
+          if ($('#ConfirmationAdminRemark').val() == "") {
+              $("span#remarksrequired").text('@CRS.ADMIN.APPLICATION.Resources.Resource.Required');
+              return false;
+          }
+          if ($("#file_name_logo").text().toLowerCase().trim() == "no file choosen") {
+              $("span#imagerequired").text('@CRS.ADMIN.APPLICATION.Resources.Resource.Required');
+              return false;
+          }
+          else {
+              $("span#imagerequired").text('');
 
-function RejectClubPointRequestFunction() {
-    let { Id,AdminRemark } = {
-        Id: $('#RejectId').val(),
-        AdminRemark: $('#RejectAdminRemark').val(),
-    };
+          }
+          let {  Id, AdminRemark } = {
+               Id: $('#ConfirmationId').val(),
+               AdminRemark: $('#ConfirmationAdminRemark').val()
+               };
+          formData.append('__RequestVerificationToken', $('input[name="__RequestVerificationToken"]').val());
+          formData.append('Id', Id);
+          formData.append('AdminRemark', AdminRemark);
+          formData.append('Status', 'Approve');
+          $.ajax({
+              type: 'POST',
+              async: true,
+              url: "/PointsManagement/ManageClubPointRequest",
+              data: formData,
+              processData: false,
+              contentType: false,
+              success: function (responseData) {
+                  window.location.reload();
+              },
+              error: function (ex) {
+                  window.location.reload();
+              }
+          });
+    }
 
-    $.ajax({
-        type: 'POST',
-        async: true,
-        url: "/PointsManagement/ManageClubPointRequest",
-        dataType: 'json',
-        data: {
-            __RequestVerificationToken: $('input[name="__RequestVerificationToken"]').val(), Id,  AdminRemark, Status: 'Reject'
-        },
-        success: function (responseData) {
-            window.location.reload();
-        },
-        error: function (ex) {
-            window.location.reload();
-        }
-    });
-}
+   function RejectClubPointRequestFunction() {
+      let { Id,AdminRemark } = {
+          Id: $('#RejectId').val(),
+          AdminRemark: $('#RejectAdminRemark').val(),
+          };
+      if($('#RejectAdminRemark').val() == "") {
+          $("span#rejectremarksrequired").text('@CRS.ADMIN.APPLICATION.Resources.Resource.Required');
+          return false;
+       }
+      $.ajax({
+          type: 'POST',
+          async: true,
+          url: "/PointsManagement/ManageClubPointRequest",
+          dataType: 'json',
+          data: {
+              __RequestVerificationToken: $('input[name="__RequestVerificationToken"]').val(), Id,  AdminRemark, Status: 'Reject'
+          },
+          success: function (responseData) {
+              window.location.reload();
+          },
+          error: function (ex) {
+              window.location.reload();
+          }
+      });
+    }
 
 function ViewPointTransferRetriveDetail(i) {
- let search_filter = $('#default-search').val();
- const start_index_val = @ViewBag.StartIndex;
+    let search_filter = $('#default-search').val();
+    const start_index_val = @ViewBag.StartIndex;
     const page_size = @ViewBag.PageSize;
-
     const roletype = $('#large[name="UserType"]').val();
     const userId = $('#large[name="UserName"]').val();
     const transferType = $('#large[name="TransferTypeId"]').val();
     const fromDate = $('#FromDate').val();
     const toDate = $('#ToDate').val();
     window.location.href = '/PointsManagement/PointsTransferListDetails?Id=' + i + '&SearchFilter=' + search_filter + '&StartIndex=' + start_index_val + '&PageSize=' + page_size + '&Roletype=' + roletype + '&UserId=' + userId + '&TransferType=' + transferType + '&FromDate=' + fromDate + '&ToDate=' + toDate;
-}
+   }
     </script>
 }

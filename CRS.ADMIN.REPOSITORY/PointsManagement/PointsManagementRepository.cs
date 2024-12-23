@@ -117,7 +117,7 @@ namespace CRS.ADMIN.REPOSITORY.PointsManagement
            var response = new List<PointBalanceStatementResponseCommon>();
             string SQL = "EXEC sproc_club_GetPoint_Balance_StatementDetails ";
             SQL += !string.IsNullOrEmpty(request.SearchFilter) ? " @search=N" + _DAO.FilterString(request.SearchFilter) : " @search=null ";
-            //SQL += !string.IsNullOrEmpty(request.UserTypeList) ? " ,@UserTypeId=" + _DAO.FilterString(request.UserTypeList) : " ,@UserTypeId=null ";
+            SQL += !string.IsNullOrEmpty(request.UserTypeList) ? " ,@roleType=" + _DAO.FilterString(request.UserTypeList) : " ,@roleType=null ";
             SQL += !string.IsNullOrEmpty(request.UserNameList) ? ",@ClubId=" + _DAO.FilterString(request.UserNameList) : ",@ClubId=null";
             SQL += !string.IsNullOrEmpty(request.TransferTypeList) ? " ,@TranscationType=" + _DAO.FilterString(request.TransferTypeList) : " ,@TranscationType =null";
             SQL += !string.IsNullOrEmpty(request.From_Date) ? ",@FromDate=" + _DAO.FilterString(request.From_Date) : ",@FromDate=null";
@@ -155,7 +155,7 @@ namespace CRS.ADMIN.REPOSITORY.PointsManagement
             var response = new List<SystemTransferReponseCommon>();
             string SQL = "EXEC sproc_get_system_transferReport ";
             SQL += !string.IsNullOrEmpty(request.SearchFilter) ? " @search=N" + _DAO.FilterString(request.SearchFilter) : " @search=null ";
-            //SQL += !string.IsNullOrEmpty(request.UserTypeList) ? " ,@UserTypeId=" + _DAO.FilterString(request.UserTypeList) : " ,@UserTypeId=null ";
+            SQL += !string.IsNullOrEmpty(request.User_type) ? " ,@roleType=" + _DAO.FilterString(request.User_type) : " ,@roleType=null ";
             SQL += !string.IsNullOrEmpty(request.User_name) ? ",@ClubId=" + _DAO.FilterString(request.User_name) : ",@ClubId=null";
             SQL += !string.IsNullOrEmpty(request.TransferType) ? " ,@TranscationType=" + _DAO.FilterString(request.TransferType) : " ,@TranscationType =null";
             SQL += !string.IsNullOrEmpty(request.From_Date1) ? ",@FromDate=" + _DAO.FilterString(request.From_Date1) : ",@FromDate=null";
@@ -172,7 +172,8 @@ namespace CRS.ADMIN.REPOSITORY.PointsManagement
                         SNO = Convert.ToInt32(_DAO.ParseColumnValue(item, "SN").ToString()),
                         RowTotal = Convert.ToString(_DAO.ParseColumnValue(item, "RowTotal").ToString()),
                         TransactionId = Convert.ToString(_DAO.ParseColumnValue(item, "TranscationID")),
-                        TransactionDate = Convert.ToString(_DAO.ParseColumnValue(item, "TransactionDate")),
+                        //TransactionDate = Convert.ToString(_DAO.ParseColumnValue(item, "TransactionDate")),
+                        TransactionDate = !string.IsNullOrEmpty(_DAO.ParseColumnValue(item, "TransactionDate").ToString()) ? DateTime.Parse(_DAO.ParseColumnValue(item, "TransactionDate").ToString()).ToString("yyyy'年'MM'月'dd'日' HH:mm:ss") : _DAO.ParseColumnValue(item, "TransactionDate").ToString(),
                         TransactionType = Convert.ToString(_DAO.ParseColumnValue(item, "TransactionType")),
                         UserName = Convert.ToString(_DAO.ParseColumnValue(item, "Users")),
                         UserType = Convert.ToString(_DAO.ParseColumnValue(item, "UserType")),

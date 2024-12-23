@@ -5,6 +5,7 @@ using CRS.ADMIN.SHARED.PaginationManagement;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 
 namespace CRS.ADMIN.REPOSITORY.AffiliateManagement
@@ -93,14 +94,16 @@ namespace CRS.ADMIN.REPOSITORY.AffiliateManagement
             if (dbResponse != null && dbResponse.Rows.Count > 0) return _dao.DataTableToListObject<AffiliatePageAnalyticCommon>(dbResponse).First();
             return new AffiliatePageAnalyticCommon();
         }
-        public CommonDbResponse ResetPassword(ManageAffiliateStatusCommon Request)
+        public CommonDbResponse ResetPassword(ManageAffiliateStatusCommon Request, SqlConnection connection = null, SqlTransaction transaction = null )
         {
             string SQL = "EXEC sproc_admin_affiliate_management @Flag = 'res_ap'";
             SQL += ",@AgentId=" + _dao.FilterString(Request.AgentId);
             SQL += ",@ActionUser=" + _dao.FilterString(Request.ActionUser);
             SQL += ",@ActionIP=" + _dao.FilterString(Request.ActionIP);
             SQL += ",@ActionPlatform=" + _dao.FilterString(Request.ActionPlatform);
-            return _dao.ParseCommonDbResponse(SQL);
+            var _sqlTransactionHandler = new RepositoryDaoWithTransaction(connection, transaction);
+            return _sqlTransactionHandler.ParseCommonDbResponse(SQL);
+            //return _dao.ParseCommonDbResponse(SQL);
         }
         public ManageAffiliateCommon GetAffiliateDetails(string AffiliateId, String culture = "")
         {
@@ -115,9 +118,10 @@ namespace CRS.ADMIN.REPOSITORY.AffiliateManagement
                 {
                     AffiliateId = _dao.ParseColumnValue(dbResponse, "AgentId").ToString(),
                     LoginId = _dao.ParseColumnValue(dbResponse, "LoginId").ToString(),
+                    UserName = _dao.ParseColumnValue(dbResponse, "AffiliateCode").ToString(),
                     FullName = _dao.ParseColumnValue(dbResponse, "FullName").ToString(),
                     MobileNumber = _dao.ParseColumnValue(dbResponse, "MobileNumber").ToString(),
-                   EmailAddress = _dao.ParseColumnValue(dbResponse, "EmailAddress").ToString(),
+                    EmailAddress = _dao.ParseColumnValue(dbResponse, "EmailAddress").ToString(),
                     BirthDateYear = _dao.ParseColumnValue(dbResponse, "BirthDateYear").ToString(),
                     BirthDateMonth = _dao.ParseColumnValue(dbResponse, "BirthDateMonth").ToString(),
                     BirthDateDay = _dao.ParseColumnValue(dbResponse, "BirthDateDay").ToString(),

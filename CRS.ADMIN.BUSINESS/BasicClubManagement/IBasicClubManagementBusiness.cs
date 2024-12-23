@@ -4,9 +4,7 @@ using CRS.ADMIN.SHARED.ClubManagement;
 using CRS.ADMIN.SHARED.PaginationManagement;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Data.SqlClient;
 
 namespace CRS.ADMIN.BUSINESS.BasicClubManagement
 {
@@ -19,6 +17,6 @@ namespace CRS.ADMIN.BUSINESS.BasicClubManagement
         CommonDbResponse BlockBasicClubStatus(string AgentId, Common Request);
         CommonDbResponse UnBlockBasicClubStatus(string AgentId, Common Request);
         ClubDetailCommon GetBasicConversionClubDetails(string AgentId, String culture = "");
-        CommonDbResponse ManageConversionClub(ManageClubCommon Request);
+        CommonDbResponse ManageConversionClub(ManageClubCommon Request, SqlConnection connection = null, SqlTransaction transaction = null);
     }
 }
