@@ -191,6 +191,10 @@
     <value>アドミンプランコミッション額</value>
     <comment>Reservation Ledger</comment>
   </data>
+  <data name="Admin Point Management" xml:space="preserve">
+    <value>アドミン自己ポイント管理</value>
+    <comment>Admin Point Management</comment>
+  </data>
   <data name="Admin Remarks" xml:space="preserve">
     <value>アドミン備考</value>
     <comment>Reservation Ledger</comment>
@@ -377,17 +381,33 @@
     <value>言語を変更してもよろしいですか</value>
     <comment>Language Preference</comment>
   </data>
+  <data name="Are you sure you want to delete this charge category slab?" xml:space="preserve">
+    <value>この料金カテゴリーのスラブを削除してもよろしいですか？</value>
+    <comment>Charge Management</comment>
+  </data>
   <data name="Are you sure you want to delete this club" xml:space="preserve">
     <value>こちらの店舗を削除してもよろしいですか？</value>
     <comment>Club Management</comment>
+  </data>
+  <data name="Are you sure you want to suspend this charge category slab?" xml:space="preserve">
+    <value>この料金カテゴリーのスラブを一時停止してもよろしいですか？</value>
+    <comment>Charge Management</comment>
   </data>
   <data name="Are you sure you want to unblock this club" xml:space="preserve">
     <value>この店舗のブロックを解除してもよろしいですか？</value>
     <comment>Club Management</comment>
   </data>
+  <data name="Are you sure you want to unsuspend this charge category slab?" xml:space="preserve">
+    <value>この料金カテゴリーのスラブの一時停止を解除してもよろしいですか？</value>
+    <comment>Charge Management</comment>
+  </data>
   <data name="Assign" xml:space="preserve">
     <value>割当</value>
     <comment>Roles &amp; Privileges</comment>
+  </data>
+  <data name="Assign Charge" xml:space="preserve">
+    <value>チャージを割り当てる</value>
+    <comment>Charge Management</comment>
   </data>
   <data name="Assign Commission" xml:space="preserve">
     <value>コミッションの割り当て</value>
@@ -557,6 +577,18 @@
   <data name="CEOFurigana" xml:space="preserve">
     <value>フリガナ</value>
     <comment>ClubManagement</comment>
+  </data>
+  <data name="Charge" xml:space="preserve">
+    <value>チャージ</value>
+    <comment>Charge Management</comment>
+  </data>
+  <data name="Charge Management" xml:space="preserve">
+    <value>チャージ管理</value>
+    <comment>Charge Management</comment>
+  </data>
+  <data name="Charge Type" xml:space="preserve">
+    <value>チャージタイプ</value>
+    <comment>Charge Management</comment>
   </data>
   <data name="ChargeAmount" xml:space="preserve">
     <value>手数料 (¥)</value>
@@ -1229,6 +1261,10 @@
     <value>情報</value>
     <comment>Dashboard</comment>
   </data>
+  <data name="Informations regarding charges." xml:space="preserve">
+    <value>チャージに関する情報</value>
+    <comment>Charge Management</comment>
+  </data>
   <data name="Informations regarding commissions type" xml:space="preserve">
     <value>クラブの手数料タイプ情報を管理する。</value>
     <comment>CommissionManagement</comment>
@@ -1421,6 +1457,18 @@
   <data name="Manage affiliate withdraw logs." xml:space="preserve">
     <value>支払い引き出し設定を管理します。</value>
     <comment>Withdrawal Request</comment>
+  </data>
+  <data name="Manage Charge" xml:space="preserve">
+    <value>チャージを管理する</value>
+    <comment>Charge Management</comment>
+  </data>
+  <data name="Manage Charge Category" xml:space="preserve">
+    <value>チャージカテゴリを管理する</value>
+    <comment>Charge Management</comment>
+  </data>
+  <data name="Manage charge setting" xml:space="preserve">
+    <value>チャージ設定を管理する。</value>
+    <comment>Charge Management</comment>
   </data>
   <data name="Manage Api Response Message" xml:space="preserve">
     <value>APIレスポンスメッセージを管理する</value>

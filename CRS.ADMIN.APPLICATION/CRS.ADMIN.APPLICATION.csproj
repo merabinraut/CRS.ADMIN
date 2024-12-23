@@ -275,6 +275,7 @@
     <Compile Include="Controllers\ApiResponseMessageController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\BasicClubManagementController.cs" />
+    <Compile Include="Controllers\ChargeManagementController.cs" />
     <Compile Include="Controllers\ClubManagementController.cs" />
     <Compile Include="Controllers\ClubPlanManagementController.cs" />
     <Compile Include="Controllers\CommissionManagementController.cs" />
@@ -328,6 +329,8 @@
     <Compile Include="Models\AmazonConfigruationModel.cs" />
     <Compile Include="Models\ApiResponseMessage\ApiResponseMessageModel.cs" />
     <Compile Include="Models\BasicClubManagement\BasicClubManagementModel.cs" />
+    <Compile Include="Models\ChargeManagement\ChargeCategoryModel.cs" />
+    <Compile Include="Models\ChargeManagement\ChargeDetailModel.cs" />
     <Compile Include="Models\ClubManagement\ClubManagementModel.cs" />
     <Compile Include="Models\ClubManagement\ClubManagerModel.cs" />
     <Compile Include="Models\ClubManagement\EventModel.cs" />
@@ -381,6 +384,9 @@
       <DependentUpon>Resource.Ja.resx</DependentUpon>
     </Compile>
     <Compile Include="Services\CognitoService.cs" />
+    <None Include="Views\ChargeManagement\_ManageChargeCategoryDetails.cshtml" />
+    <Content Include="Views\ChargeManagement\ChargeCategoryDetails.cshtml" />
+    <None Include="Views\ChargeManagement\_ManageChargeCategoryPartialView.cshtml" />
     <Content Include="Content\assets\images\pdficon.svg" />
     <Content Include="Views\AccountInformation\GetAccountInformation.cshtml" />
     <Content Include="Views\ApiResponseMessage\ApiResponseMessageList.cshtml" />
@@ -397,6 +403,8 @@
     <Content Include="Views\AdminPointManagement\_ManageAdminPointPartialView.cshtml" />
     <Content Include="Views\BasicClubManagement\BasicClubManagementList.cshtml" />
     <Content Include="Views\BasicClubManagement\_ManageBasicClubPartialView.cshtml" />
+    <Content Include="Views\ChargeManagement\Index.cshtml" />
+    <Content Include="Views\ChargeManagement\ChargeCategoryType.cshtml" />
     <None Include="Views\ClubManagement\_RejectedClubListPartialView.cshtml" />
     <Content Include="Views\AffiliateManagement\_ConvertedCustomerPointsReport.cshtml" />
     <Content Include="Views\PointsManagement\_PointTransferRetrivePartialView.cshtml" />

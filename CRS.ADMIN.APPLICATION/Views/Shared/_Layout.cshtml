@@ -478,7 +478,7 @@
                             <img src="~/Content/assets_new/images/coins-solid-active.svg" class="active-image" />
 
                         </div>
-                        <div class="label">Admin Point Management </div>
+                        <div class="label">@CRS.ADMIN.APPLICATION.Resources.Resource.Admin_Point_Management </div>
                     </div>
                 </a>
             }
@@ -511,6 +511,22 @@
                         </div>
                         <div class="label">
                             @CRS.ADMIN.APPLICATION.Resources.Resource.Withdraw_Setup
+                        </div>
+                    </div>
+                </a>
+            }
+            @if (ApplicationUtilities.HasMenuRight("/ChargeManagement/Index"))
+            {
+                if (!string.IsNullOrEmpty(CurrentURL) && CurrentURL.Trim().ToUpper() == "/CHARGEMANAGEMENT/INDEX") { MenuActiveClass = "menuActive"; }
+                else { MenuActiveClass = string.Empty; }
+                <a href="@Url.Action("Index", "ChargeManagement")">
+                    <div class="menuContainer @MenuActiveClass">
+                        <div class="menu-icon w-max">
+                            <img src="~/Content/assets_new/images/payment.svg" class="image" />
+                            <img src="~/Content/assets_new/images/payment-active.svg" class="active-image" />
+                        </div>
+                        <div class="label">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Charge_Management
                         </div>
                     </div>
                 </a>

@@ -108,6 +108,8 @@
     <Compile Include="ApiResponseMessage\IApiResponseMessageRepository.cs" />
     <Compile Include="BasicClubManagement\BasicClubManagementRepository.cs" />
     <Compile Include="BasicClubManagement\IBasicClubManagementRepository.cs" />
+    <Compile Include="ChargeManagement\ChargeManagementRepository.cs" />
+    <Compile Include="ChargeManagement\IChargeManagementRepository.cs" />
     <Compile Include="ClubManagement\ClubManagementRepository.cs" />
     <Compile Include="ClubManagement\IClubManagementRepository.cs" />
     <Compile Include="ClubPlanManagement\ClubPlanManagementRepository.cs" />
