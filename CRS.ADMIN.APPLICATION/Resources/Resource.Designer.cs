@@ -664,11 +664,29 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to delete this charge category slab?.
+        /// </summary>
+        public static string Are_you_sure_you_want_to_delete_this_charge_category_slab_ {
+            get {
+                return ResourceManager.GetString("Are you sure you want to delete this charge category slab?", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Are you sure you want to delete this club?.
         /// </summary>
         public static string Are_you_sure_you_want_to_delete_this_club {
             get {
                 return ResourceManager.GetString("Are you sure you want to delete this club", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to suspend this charge category slab?.
+        /// </summary>
+        public static string Are_you_sure_you_want_to_suspend_this_charge_category_slab_ {
+            get {
+                return ResourceManager.GetString("Are you sure you want to suspend this charge category slab?", resourceCulture);
             }
         }
         
@@ -687,6 +705,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         public static string Are_you_sure_you_want_to_unblock_this_club {
             get {
                 return ResourceManager.GetString("Are you sure you want to unblock this club", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to unsuspend this charge category slab?.
+        /// </summary>
+        public static string Are_you_sure_you_want_to_unsuspend_this_charge_category_slab_ {
+            get {
+                return ResourceManager.GetString("Are you sure you want to unsuspend this charge category slab?", resourceCulture);
             }
         }
         

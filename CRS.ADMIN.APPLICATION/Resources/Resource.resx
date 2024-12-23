@@ -377,6 +377,10 @@
     <value>Are you sure you want to change the language</value>
     <comment>Language Preference</comment>
   </data>
+  <data name="Are you sure you want to delete this charge category slab?" xml:space="preserve">
+    <value>Are you sure you want to delete this charge category slab?</value>
+    <comment>Charge Management</comment>
+  </data>
   <data name="Are you sure you want to delete this charge category?" xml:space="preserve">
     <value>Are you sure you want to delete this charge category?</value>
     <comment>Charge Management</comment>
@@ -385,6 +389,10 @@
     <value>Are you sure you want to delete this club?</value>
     <comment>Club Management</comment>
   </data>
+  <data name="Are you sure you want to suspend this charge category slab?" xml:space="preserve">
+    <value>Are you sure you want to suspend this charge category slab?</value>
+    <comment>Charge Management</comment>
+  </data>
   <data name="Are you sure you want to unblock this charge category?" xml:space="preserve">
     <value>Are you sure you want to unblock this charge category?</value>
     <comment>Charge Management</comment>
@@ -392,6 +400,10 @@
   <data name="Are you sure you want to unblock this club" xml:space="preserve">
     <value>Are you sure you want to unblock this club?</value>
     <comment>Club Management</comment>
+  </data>
+  <data name="Are you sure you want to unsuspend this charge category slab?" xml:space="preserve">
+    <value>Are you sure you want to unsuspend this charge category slab?</value>
+    <comment>Charge Management</comment>
   </data>
   <data name="Assign" xml:space="preserve">
     <value>Assign</value>

@@ -28,19 +28,19 @@
                             <form action="/ChargeManagement/ChargeCategoryType" method="get">
                                 @*<input type="hidden" name="agentTypeValue" value="@Model.agentTypeValue"*@
                                 @*<div class="relative input-search-wrapper">
-                                    <div class="absolute inset-y-0 left-0 flex items-center pl-[16px] pointer-events-none">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21" fill="none">
-                                            <path d="M17.5 18L13.875 14.375M15.8333 9.66667C15.8333 13.3486 12.8486 16.3333 9.16667 16.3333C5.48477 16.3333 2.5 13.3486 2.5 9.66667C2.5 5.98477 5.48477 3 9.16667 3C12.8486 3 15.8333 5.98477 15.8333 9.66667Z"
-                                                  stroke="#667085" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round" />
-                                        </svg>
-                                    </div>
-                                    <input type="search"
-                                           id="default-search"
-                                           class="input-search block w-full "
-                                           placeholder="@CRS.ADMIN.APPLICATION.Resources.Resource.Search"
-                                           value="@Model.SearchFilter"
-                                           name="SearchFilter">
-                                </div>*@
+                                        <div class="absolute inset-y-0 left-0 flex items-center pl-[16px] pointer-events-none">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21" fill="none">
+                                                <path d="M17.5 18L13.875 14.375M15.8333 9.66667C15.8333 13.3486 12.8486 16.3333 9.16667 16.3333C5.48477 16.3333 2.5 13.3486 2.5 9.66667C2.5 5.98477 5.48477 3 9.16667 3C12.8486 3 15.8333 5.98477 15.8333 9.66667Z"
+                                                      stroke="#667085" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round" />
+                                            </svg>
+                                        </div>
+                                        <input type="search"
+                                               id="default-search"
+                                               class="input-search block w-full "
+                                               placeholder="@CRS.ADMIN.APPLICATION.Resources.Resource.Search"
+                                               value="@Model.SearchFilter"
+                                               name="SearchFilter">
+                                    </div>*@
                             </form>
 
                             <div class="btn btn-primary gap-[8px] h-[40px]" data-drawer-target="add-new-charge-category-slab"
@@ -187,7 +187,7 @@
                                                                 Active
                                                             </div>
                                                         }
-                                                        else if(!string.IsNullOrEmpty(item.status) && item.status.Trim().ToUpper() == "S")
+                                                        else if (!string.IsNullOrEmpty(item.status) && item.status.Trim().ToUpper() == "S")
                                                         {
                                                             <div class="blocked">
                                                                 Suspended
@@ -198,18 +198,20 @@
                                                         <div class="flex gap-[7px]">
 
                                                             <i class="las la-edit text-[20px] cursor-pointer text-[#A6A6A6]" onclick="EditCategory('@item.categoryId','@item.categoryDetailId','@Model.categoryName');"></i>
-                                                            <i class="las la-trash-alt text-[20px] cursor-pointer text-[#CB3F3F]" onclick="ManageStatus('@item.categoryId','@item.categoryDetailId','@Model.categoryName','D')"></i>
+                                                            <i class=" las la-trash-alt text-[20px] cursor-pointer text-[#CB3F3F]" onclick="openDeleteModal('@item.categoryId','@item.categoryDetailId','@Model.categoryName','D');" data-modal-target="delete-category-confirmation" data-modal-toggle="delete-category-confirmation"></i>
                                                             @if (!string.IsNullOrEmpty(@item.status) && item.status.Trim().ToUpper() == "A")
                                                             {
-                                                                <i class="las la-ban text-[20px] cursor-pointer text-[#CB3F3F]" onclick="ManageStatus('@item.categoryId','@item.categoryDetailId','@Model.categoryName','S')"></i>
-
+                                                                <div onclick="openBlockEventModal('@item.categoryId','@item.categoryDetailId','@Model.categoryName','S')" data-modal-target="block-category-confirmation" data-modal-toggle="block-category-confirmation">
+                                                                    <i class="las la-ban text-[20px] cursor-pointer text-[#CB3F3F]"></i>
+                                                                </div>
+                                                               
                                                             }
                                                             else if (!string.IsNullOrEmpty(@item.status) && item.status.Trim().ToUpper() == "S")
                                                             {
-                                                                <i class="las la-ban text-[20px] cursor-pointer text-[#A6A6A6]" onclick="ManageStatus('@item.categoryId','@item.categoryDetailId','@Model.categoryName','A')"></i>
+                                                                <div onclick="openUnBlockEventModal('@item.categoryId','@item.categoryDetailId','@Model.categoryName','A')" data-modal-target="unblock-confirmation" data-modal-toggle="unblock-confirmation">
+                                                                    <i class="las la-ban text-[20px] cursor-pointer text-[#A6A6A6]"></i>
+                                                                </div>
                                                             }
-
-
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -242,6 +244,116 @@
         </div>
     </div>
 </div>
+<!--block unblock Reject Modal For club-->
+<div id="unblock-category-confirmation" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 hidden w-full
+     p-4 overflow-x-hidden overflow-y-auto
+     md:inset-0 h-[calc(100%-1rem)] max-h-full " style="align-items: flex-start;">
+    <div class="relative max-w-2xl max-h-full w-[412px] px-4 pt-[40px] pb-[46px] mt-24">
+        <!-- Modal content -->
+        <div class="relative bg-white rounded-lg shadow">
+            <!-- Modal header -->
+            <button type="button"
+                    class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center absolute top-[24px] right-[20px] "
+                    data-modal-hide="unblock-category-confirmation">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="25" viewBox="0 0 24 25" fill="none">
+                    <rect y="0.621094" width="24" height="24" rx="12" fill="#FAFAFA" />
+                    <path d="M5.41406 4.95703L4.33594 6.03516L10.9219 12.6211L4.33594 19.207L5.41406 20.2852L12 13.6992L18.5859 20.2852L19.6641 19.207L13.0781 12.6211L19.6641 6.03516L18.5859 4.95703L12 11.543L5.41406 4.95703Z"
+                          fill="#7A7A7A" />
+                </svg>
+            </button>
+            <!-- Modal body -->
+            <div class="grid gap-6 px-[20px] py-8">
+                <div class="text-[#333] font-semibold pb-[11px] border-b border-[#eeeeee]">@CRS.ADMIN.APPLICATION.Resources.Resource.Confirmation</div>
+                <div class="grid gap-[20px] text-[#062937] mb-[45px]">
+                    <div class="text-[14px] text-secondary-text-2 text-start" id="confirmationMessage">
+                        @CRS.ADMIN.APPLICATION.Resources.Resource.Are_you_sure_you_want_to_unsuspend_this_charge_category_slab_
+                    </div>
+                </div>
+                <div class="flex justify-end">
+                    <div class="flex gap-2 justify-end mt-[45px]">
+                        <input id="request_id" value="" hidden />
+                        <div class="btn btn-secondary w-[110px]" data-modal-hide="unblock-category-confirmation">@CRS.ADMIN.APPLICATION.Resources.Resource.clubNo</div>
+                        <div class="btn btn-primary w-[110px]" onclick="UnBlockEvent()" data-val1="" data-val2="" id="unblock_id">@CRS.ADMIN.APPLICATION.Resources.Resource.clubYes</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div id="block-category-confirmation" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 hidden w-full
+     p-4 overflow-x-hidden overflow-y-auto
+     md:inset-0 h-[calc(100%-1rem)] max-h-full " style="align-items: flex-start; ">
+    <div class="relative max-w-2xl max-h-full w-[412px] px-4 pt-[40px] pb-[46px] mt-24">
+        <!-- Modal content -->
+        <div class="relative bg-white rounded-lg shadow">
+            <!-- Modal header -->
+            <button type="button"
+                    class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center absolute top-[24px] right-[20px] "
+                    data-modal-hide="block-category-confirmation">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="25" viewBox="0 0 24 25" fill="none">
+                    <rect y="0.621094" width="24" height="24" rx="12" fill="#FAFAFA" />
+                    <path d="M5.41406 4.95703L4.33594 6.03516L10.9219 12.6211L4.33594 19.207L5.41406 20.2852L12 13.6992L18.5859 20.2852L19.6641 19.207L13.0781 12.6211L19.6641 6.03516L18.5859 4.95703L12 11.543L5.41406 4.95703Z"
+                          fill="#7A7A7A" />
+                </svg>
+            </button>
+            <!-- Modal body -->
+            <div class="grid gap-6 px-[20px] py-8">
+                <div class="text-[#333] font-semibold pb-[11px] border-b border-[#eeeeee]">@CRS.ADMIN.APPLICATION.Resources.Resource.Confirmation</div>
+                <div class="grid gap-[20px] text-[#062937] mb-[45px]">
+                    <div class="text-[14px] text-secondary-text-2 text-start" id="confirmationMessage">
+                        @CRS.ADMIN.APPLICATION.Resources.Resource.Are_you_sure_you_want_to_suspend_this_charge_category_slab_
+                    </div>
+                </div>
+                <div class="flex justify-end">
+                    <div class="flex gap-2 justify-end mt-[45px]">
+                        <input id="request_id" value="" hidden />
+                        <div class="btn btn-secondary w-[110px]" data-modal-hide=" -category-confirmation">@CRS.ADMIN.APPLICATION.Resources.Resource.clubNo</div>
+                        <div class="btn btn-primary w-[110px]" onclick="BlockEvent()" data-val1="" data-val2="" id="block_id">@CRS.ADMIN.APPLICATION.Resources.Resource.clubYes</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- block and unblock -->
+<div id="delete-category-confirmation" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 hidden w-full
+     p-4 overflow-x-hidden overflow-y-auto
+     md:inset-0 h-[calc(100%-1rem)] max-h-full " style="align-items: flex-start;">
+    <div class="relative max-w-2xl max-h-full w-[412px] px-4 pt-[40px] pb-[46px] mt-24">
+        <!-- Modal content -->
+        <div class="relative bg-white rounded-lg shadow">
+            <!-- Modal header -->
+            <button type="button"
+                    class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center absolute top-[24px] right-[20px] "
+                    data-modal-hide="delete-category-confirmation">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="25" viewBox="0 0 24 25" fill="none">
+                    <rect y="0.621094" width="24" height="24" rx="12" fill="#FAFAFA" />
+                    <path d="M5.41406 4.95703L4.33594 6.03516L10.9219 12.6211L4.33594 19.207L5.41406 20.2852L12 13.6992L18.5859 20.2852L19.6641 19.207L13.0781 12.6211L19.6641 6.03516L18.5859 4.95703L12 11.543L5.41406 4.95703Z"
+                          fill="#7A7A7A" />
+                </svg>
+            </button>
+            <!-- Modal body -->
+            <div class="grid gap-6 px-[20px] py-8">
+                <div class="text-[#333] font-semibold pb-[11px] border-b border-[#eeeeee]">@CRS.ADMIN.APPLICATION.Resources.Resource.Confirmation</div>
+                <div class="grid gap-[20px] text-[#062937] mb-[45px]">
+                    <div class="text-[14px] text-secondary-text-2 text-start">
+                        @CRS.ADMIN.APPLICATION.Resources.Resource.Are_you_sure_you_want_to_delete_this_charge_category_slab_
+                    </div>
+                </div>
+                <div class="flex justify-end">
+                    <div class="flex gap-2 justify-end mt-[45px]">
+                        <input id="request_id" value="" hidden />
+                        <div class="btn btn-secondary w-[110px]" data-modal-hide="delete-category-confirmation">@CRS.ADMIN.APPLICATION.Resources.Resource.No</div>
+                        <div class="btn btn-primary w-[110px]" onclick="DeleteFunction()" data-val="" id="delete_category_id">@CRS.ADMIN.APPLICATION.Resources.Resource.Yes</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 @Html.Partial("_ManageChargeCategoryDetails", _ManageCategoryDetails)
 
 @section scripts
@@ -264,10 +376,61 @@
             }
             return url;
         }
+        function openDeleteModal(i, j, k,l) {
+            const modalTarget = document.querySelector("[data-modal-target='delete-category-confirmation']");
+            const modal = document.getElementById("delete-category-confirmation");
+            modal.classList.remove("hidden");
+            $('#delete_category_id').attr('data-val1', i);
+            $('#delete_category_id').attr('data-val2', j);
+            $('#delete_category_id').attr('data-val3', k);
+            $('#delete_category_id').attr('data-val4', l);
+            modal.setAttribute("aria-hidden", "false");
+        }
+        function openBlockEventModal(i, j, k,l) {
+            const modalTarget = document.querySelector("[data-modal-target='block-category-confirmation']");
+            const modal = document.getElementById("block-category-confirmation");
+            modal.classList.remove("hidden");
+            $('#block_id').attr('data-val1', i);
+            $('#block_id').attr('data-val2', j);
+            $('#block_id').attr('data-val3', k);
+            $('#block_id').attr('data-val4', l);
+            modal.setAttribute("aria-hidden", "false");
+        }
+        function openUnBlockEventModal(i, j, k,l) {
+            const modalTarget = document.querySelector("[data-modal-target='unblock-category-confirmation']");
+            const modal = document.getElementById("unblock-category-confirmation");
+            modal.classList.remove("hidden");
+            $('#unblock_id').attr('data-val1', i);
+            $('#unblock_id').attr('data-val2', j);
+            $('#unblock_id').attr('data-val3', k);
+            $('#unblock_id').attr('data-val4', l);
+            modal.setAttribute("aria-hidden", "false");
+        }
+        function BlockEvent() {
+            const i = $('#block_id').attr('data-val1');
+            const j = $('#block_id').attr('data-val2');
+            const k = $('#block_id').attr('data-val3');
+            const l = $('#block_id').attr('data-val4');
+            ManageStatus(i, j, k, l);
+        }
 
+        function UnBlockEvent() {
+            const i = $('#unblock_id').attr('data-val1');
+            const j = $('#unblock_id').attr('data-val2');
+            const k = $('#unblock_id').attr('data-val3');
+            const l = $('#unblock_id').attr('data-val4');
+            ManageStatus(i, j, k, l);
+        }
+
+        function DeleteFunction() {
+            const i = $('#delete_category_id').attr('data-val1');
+            const j = $('#delete_category_id').attr('data-val2');
+            const k = $('#delete_category_id').attr('data-val3');
+            const l = $('#delete_category_id').attr('data-val4');
+            ManageStatus(i, j, k, l);
+        }
 
         document.addEventListener('DOMContentLoaded', function () {
-            debugger;
             const page_size = @ViewBag.PageSize;
             const total_data = @ViewBag.TotalData;
             const start_index_val = @ViewBag.StartIndex;
@@ -289,5 +452,27 @@
         function CancelFunction() {
             location.reload();
         }
+        //function SubmitFunction(e) {
+        //    $("#ConfirmButton").attr('disabled', true);
+        //    const chargeTypeId = $('#large[name="chargeType"]').val();
+
+        //    var valid = true;
+        //    if (chargeTypeId === null || chargeTypeId === "") {
+        //        $('#ManageCategorychargeSlabForm [data-valmsg-for="UserTypeId"]').html("Required");
+        //        valid = false;
+        //    }
+
+
+        //    if (valid) {
+        //        $("#ManageCategorychargeSlabForm").submit();
+        //    }
+        //    else {
+        //        $("#ConfirmButton").attr('disabled', false);
+        //        $("#points").addcss("display", "none");
+        //        $("#assignpoint").addcss("display", "block");
+        //    }
+
+
+        //}
     </script>
 }

@@ -254,7 +254,6 @@
             window.location.href = '/ChargeManagement/ChargeCategoryType?agentTypeValue=' + i +'&agentType=' + j;
         }
         $('#large[name="AgentId"]').change(function () {
-            debugger;
             var agentTypeValue = $('#large[name="agentTypeValue"]').find("option:selected").val().trim();
             var agentId = $(this).find("option:selected").val().trim();
             var valid = true;

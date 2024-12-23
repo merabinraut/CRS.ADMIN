@@ -15,7 +15,7 @@
             </div>
         </div>
         <div class="p-[24px]">
-            @using (Html.BeginForm("ManageChargeCategoryDetails", "ChargeManagement", FormMethod.Post, new { @id = "ManageCategoryPointsSlabForm" }))
+            @using (Html.BeginForm("ManageChargeCategoryDetails", "ChargeManagement", FormMethod.Post, new { @id = "ManageCategorychargeSlabForm" }))
             {
                 @Html.AntiForgeryToken()
                 @Html.HiddenFor(model => model.categoryId);
@@ -32,8 +32,8 @@
                              {
                                @class = "w-full",
                                @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.FromAmount,
-                               @autocomplete = "off",
-                               @type = "text"
+                               @autocomplete = "off"
+                       
                            })
                                 <span class="error">
                                     @Html.ValidationMessageFor(m => m.fromAmount)
@@ -46,11 +46,12 @@
                                     @CRS.ADMIN.APPLICATION.Resources.Resource.ToAmount
                                 </label>
                                 @Html.TextBoxFor(model => model.toAmount, new
-                                    {
-                                    @class = "w-full",
-                                    @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.ToAmount,
-                                    autocomplete = "off"
-                                    })
+                           {
+                               @class = "w-full",
+                               @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.ToAmount,
+                               autocomplete = "off"
+                          
+                           })
                                 <span class="error">
                                     @Html.ValidationMessageFor(m => m.toAmount)
                                 </span>
@@ -89,11 +90,12 @@
                                 @CRS.ADMIN.APPLICATION.Resources.Resource.Value
                             </label>
                             @Html.TextBoxFor(model => model.chargeValue, new
-                                {
-                                @class = "w-full",
-                                @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.PointValue,
-                                autocomplete = "off"
-                                })
+                          {
+                              @class = "w-full",
+                              @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.PointValue,
+                              autocomplete = "off"
+                             
+                          })
                             <span class="error">
                                 @Html.ValidationMessageFor(m => m.chargeValue)
                             </span>
@@ -111,8 +113,8 @@
                              {
                                @class = "w-full",
                                @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.Min_Value,
-                               @autocomplete = "off",
-                               @type = "text"
+                               @autocomplete = "off"
+                            
                            })
                                 <span class="error">
                                     @Html.ValidationMessageFor(m => m.minChargeValue)
@@ -148,7 +150,7 @@
                                 aria-controls="add-new-host-tag" onclick="CancelFunction();">
                             @CRS.ADMIN.APPLICATION.Resources.Resource.Cancel
                         </button>
-                        <button class="btn btn-primary-default rounded-[4px]" type="submit"> @CRS.ADMIN.APPLICATION.Resources.Resource.Submit</button>
+                        <button class="btn btn-primary-default rounded-[4px]" type="submit" onclick="SubmitFunction()" id="submitbtn"> @CRS.ADMIN.APPLICATION.Resources.Resource.Submit</button>
 
 
                     </div>
