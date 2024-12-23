@@ -120,6 +120,7 @@
     <Compile Include="CustomerManagement\CustomerManagementCommon.cs" />
     <Compile Include="EmailLog\EmailLogModelCommon.cs" />
     <Compile Include="ErrorLog\ErrorLogCommon.cs" />
+    <Compile Include="GroupManagement\GroupInfoModelCommon.cs" />
     <Compile Include="Home\HomeCommon.cs" />
     <Compile Include="HostManagement\HostGalleryManagementCommon.cs" />
     <Compile Include="HostManagement\HostManagementCommon.cs" />

@@ -282,6 +282,7 @@
     <Compile Include="Controllers\EmailLogController.cs" />
     <Compile Include="Controllers\ErrorLogController.cs" />
     <Compile Include="Controllers\ErrorManagementController.cs" />
+    <Compile Include="Controllers\GroupManagementController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\HostManagementController.cs" />
     <Compile Include="Controllers\InquiriesController.cs" />
@@ -341,6 +342,7 @@
     <Compile Include="Models\CustomerManagement\CustomerManagementModel.cs" />
     <Compile Include="Models\EmailLog\EmailLogModel.cs" />
     <Compile Include="Models\ErrorLog\ErrorLogModel.cs" />
+    <Compile Include="Models\GroupManagement\GroupInfoModel.cs" />
     <Compile Include="Models\Home\DashboardInfoModel.cs" />
     <Compile Include="Models\Home\LoginManagementModel.cs" />
     <Compile Include="Models\HostManagement\HostGalleryManagementModel.cs" />
@@ -403,6 +405,13 @@
     <Content Include="Views\AffiliateManagement\_ConvertedCustomerPointsReport.cshtml" />
     <Content Include="Views\PointsManagement\_PointTransferRetrivePartialView.cshtml" />
     <Content Include="Views\PointsManagement\_PointRequestListPartialView.cshtml" />
+    <Content Include="Views\GroupManagement\Index.cshtml" />
+    <Content Include="Views\GroupManagement\_ManageGroup.cshtml" />
+    <Content Include="Views\GroupManagement\SubGroup.cshtml" />
+    <Content Include="Views\GroupManagement\_ManageSubGroup.cshtml" />
+    <Content Include="Views\GroupManagement\_ManageSubGroupClub.cshtml" />
+    <Content Include="Views\GroupManagement\GroupGallery.cshtml" />
+    <Content Include="Views\GroupManagement\_ManageGroupGallery.cshtml" />
     <None Include="Views\PromotionManagement\_ManageAdvertisementPartialView.cshtml" />
     <None Include="Views\PromotionManagement\_AdvertisementList.cshtml" />
     <Content Include="Content\assets\images\TickIcon.svg" />

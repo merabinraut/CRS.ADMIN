@@ -623,14 +623,31 @@
                             <img src="~/Content/assets_new/images/review.svg" class="image" />
                             <img src="~/Content/assets_new/images/review-active.svg" class="active-image" />
 
+                            </div>
+                            <div class="label">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Inquiries
+                            </div>
                         </div>
-                        <div class="label">
-                            @CRS.ADMIN.APPLICATION.Resources.Resource.Inquiries
+                    </a>
+                }
+                @if (ApplicationUtilities.HasMenuRight("/GroupManagement/Index"))
+                {
+                    if (!string.IsNullOrEmpty(CurrentURL) && CurrentURL.Trim().ToUpper() == "/GROUPMANAGEMENT/INDEX") { MenuActiveClass = "menuActive"; }
+                    else { MenuActiveClass = string.Empty; }
+                    <a href="@Url.Action("Index", "GroupManagement")">
+                        <div class="menuContainer @MenuActiveClass">
+                            <div class="menu-icon w-max">
+                                <img src="~/Content/assets_new/images/review.svg" class="image" />
+                                <img src="~/Content/assets_new/images/review-active.svg" class="active-image" />
+
+                            </div>
+                            <div class="label">
+                                Group Management
+                            </div>
                         </div>
-                    </div>
-                </a>
-            }
-        </div>
+                    </a>
+                }
+            </div>
             <div>
                 <div class="main-menu-title text-secondary-300 pb-[16px]">Setting</div>
 
