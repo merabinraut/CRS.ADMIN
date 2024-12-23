@@ -27,7 +27,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
         }
 
         [HttpGet]
-        public ActionResult ApiResponseMessageList(string SearchFilter = "", string value = "", int StartIndex = 0, int PageSize = 10, int StartIndex2 = 0, int PageSize2 = 10, int StartIndex3 = 0, int PageSize3 = 10)
+        public ActionResult ApiResponseMessageList(string SearchFilter = "", string value = "", int StartIndex = 0, int PageSize = 10)
         {
             ViewBag.SearchFilter = SearchFilter;
             //Session["CurrentURL"] = "/ClubManagement/ClubList";
@@ -39,22 +39,15 @@ namespace CRS.ADMIN.APPLICATION.Controllers
 
             PaginationFilterCommon dbRequestall = new PaginationFilterCommon()
             {
-                Skip = value == "" ? StartIndex : 0,
-                Take = value == "" ? PageSize : 10,
-                SearchFilter = value == "" ? !string.IsNullOrEmpty(SearchFilter) ? SearchFilter : null : null
+                Skip = StartIndex,
+                Take = PageSize,
+                SearchFilter = !string.IsNullOrEmpty(SearchFilter) ? SearchFilter : null
             };
-
-
             var dbResponse = _BUSS.ApiResponseMessageList(dbRequestall);
-
             obj.ApiResponseMessageList = dbResponse.MapObjects<ApiResponseMessageModel>();
-
-            //foreach (var item in responseInfo)
-            //{
-            //    item.MessageId = item.MessageId?.EncryptParameter();
-
-            //}
-
+            ViewBag.StartIndex = StartIndex;
+            ViewBag.PageSize = PageSize;
+            ViewBag.TotalData = dbResponse != null && dbResponse.Any() ? dbResponse[0].TotalRecords : 0;
             if (TempData.ContainsKey("ManageResponseEditModel")) obj.ManageResponse = TempData["ManageResponseEditModel"] as ApiResponseMessageModel;
             else obj.ManageResponse = new ApiResponseMessageModel();
             if (TempData.ContainsKey("RenderId")) RenderId = TempData["RenderId"].ToString();
@@ -66,24 +59,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 if (TempData.ContainsKey("RenderId")) RenderId = TempData["RenderId"].ToString();
 
             }
-
-
-
-
-            //ViewBag.Pref = DDLHelper.LoadDropdownList("PREF") as Dictionary<string, string>;
-            //ViewBag.IdentificationType = DDLHelper.LoadDropdownList("DOCUMENTTYPE") as Dictionary<string, string>;
-
-
-
-            ViewBag.StartIndex2 = StartIndex2;
-            ViewBag.PageSize2 = PageSize2;
-            ViewBag.StartIndex3 = StartIndex3;
-            ViewBag.PageSize3 = PageSize3;
-            ViewBag.StartIndex = StartIndex;
-            ViewBag.PageSize = PageSize;
             ViewBag.PopUpRenderValue = !string.IsNullOrEmpty(RenderId) ? RenderId : null;
-            ViewBag.TotalData = 10;//dbResponse != null && dbResponse.Any() ? dbResponse[0].Total : 0;
-
             response.SearchFilter = !string.IsNullOrEmpty(SearchFilter) ? SearchFilter : null;
 
             return View(obj);

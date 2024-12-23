@@ -67,8 +67,9 @@ namespace CRS.ADMIN.REPOSITORY.ApiResponseMessage
                         Description = _DAO.ParseColumnValue(item, "description").ToString(),
                         MessageType = _DAO.ParseColumnValue(item, "messageType").ToString(),
                         HttpStatusCode = _DAO.ParseColumnValue(item, "httpStatusCode").ToString(),
-                        MessageId = _DAO.ParseColumnValue(item, "sno").ToString()
-                        //MessageId = Convert.ToInt32(_DAO.ParseColumnValue(item, "SNO").ToString())
+                        MessageId = _DAO.ParseColumnValue(item, "sno").ToString(),
+                        SNO = Convert.ToInt32(_DAO.ParseColumnValue(item, "SNO").ToString()),
+                        TotalRecords = Convert.ToInt32(_DAO.ParseColumnValue(item, "totalRecords").ToString())
 
                     });
                 }

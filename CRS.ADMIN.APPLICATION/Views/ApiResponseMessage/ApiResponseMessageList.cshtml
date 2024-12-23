@@ -11,14 +11,14 @@
     @Html.AntiForgeryToken()
     <div>
         <div class="heading-title">
-            Api Response Message List
+            @CRS.ADMIN.APPLICATION.Resources.Resource.Api_Response_Message_List
         </div>
         <div class="span-title-light-gray">
-            Manage Api Response Message
+            @CRS.ADMIN.APPLICATION.Resources.Resource.Manage_API_Responses_
         </div>
     </div>
     <div class="flex justify-between pt-[24px] pb-[24px]">
-        <form action="/StaffManagement/StaffList" method="get">
+        <form action="/ApiResponseMessage/ApiResponseMessageList" method="get">
             <div class="relative input-search-wrapper">
                 <div class="absolute inset-y-0 left-0 flex items-center pl-[16px] pointer-events-none">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21" fill="none">
@@ -65,7 +65,7 @@
                         </th>
                         <th scope="col" class="p-[12px]">
                             <div class="flex w-max">
-                                Code
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Code
                                 <div class="relative pl-[5px]">
                                     <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
                                     <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
@@ -74,7 +74,7 @@
                         </th>
                         <th scope="col" class="p-[12px]">
                             <div class="flex w-max">
-                                Cateory
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.CategoryType
                                 <div class="relative pl-[5px]">
                                     <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
                                     <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
@@ -83,7 +83,7 @@
                         </th>
                         <th scope="col" class="p-[12px]">
                             <div class="flex w-max">
-                                Message
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Message
                                 <div class="relative pl-[5px]">
                                     <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
                                     <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
@@ -124,7 +124,7 @@
                     {
                         <tr class="bg-white border-b ">
                             <td class="p-[12px]">
-                                @responselist.MessageId
+                                @responselist.SNO
                             </td>
 
                             <td class="p-[12px]">
@@ -175,6 +175,21 @@
                     }
                 </tbody>
             </table>
+
+        </div>
+    </div>
+    <div class="pagination-club">
+        <div class="show-entry" id="Entries-Id">
+        </div>
+        <div class="flex gap-[12px]">
+            <div class="btn btn-secondary-box-shadow" id="prev-btn">
+                @CRS.ADMIN.APPLICATION.Resources.Resource.Previous
+            </div>
+            <div class="flex gap-[12px]" id="pagination-id">
+            </div>
+            <div class="btn btn-secondary-box-shadow" id="next-btn">
+                @CRS.ADMIN.APPLICATION.Resources.Resource.Next
+            </div>
         </div>
     </div>
 </div>
@@ -212,18 +227,19 @@
         var popUpRenderValue = '@ViewBag.PopUpRenderValue';
         if (popUpRenderValue != null && popUpRenderValue != "" && popUpRenderValue == "Manage") {
             var element = document.getElementById('add-new-response-message');
-
             element.classList.remove('translate-x-full');
         }
         else if (popUpRenderValue != null && popUpRenderValue != "" && popUpRenderValue == "Edit")
         {
+            var value = '@_ManageEdit.Category'; // Assuming this variable holds the correct value
+            $('#large[name="Category"] option[value="' + value + '"]').prop('selected', true).trigger('change');
             var element = document.getElementById('add-edit-response-message');
-
             element.classList.remove('translate-x-full');
         }
         else if (popUpRenderValue != null && popUpRenderValue != "" && popUpRenderValue == "Get") {
-            var element = document.getElementById('add-get-response-message');
-
+            var value = '@_ManageEdit.Category'; // Assuming this variable holds the correct value
+            $('#large[name="Category"] option[value="' + value + '"]').prop('selected', true).trigger('change');
+            var element = document.getElementById('display-get-response-message');
             element.classList.remove('translate-x-full');
         }
 

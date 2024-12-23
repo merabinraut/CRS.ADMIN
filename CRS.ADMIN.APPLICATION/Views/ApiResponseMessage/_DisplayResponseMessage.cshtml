@@ -1,14 +1,14 @@
 @model CRS.ADMIN.APPLICATION.Models.ApiResponseMessage.ApiResponseMessageModel
-<div id="add-get-response-message"
+<div id="display-get-response-message"
      class="drawer-close-disable  flex justify-end fixed top-0 right-0 z-40 h-screen overflow-y-auto transition-transform translate-x-full "
      tabindex="-1" aria-labelledby="drawer-right-label">
     <div class="bg-white w-[616px] drawer-container relative">
         <div class="drawer-form-container sticky top-0 z-[5] ">
             <div class="drawer-form flex justify-between bg-secondary-color-pink py-[16px] px-[24px] h-[56px]">
                 <div>
-                    Add Response Message
+                    @CRS.ADMIN.APPLICATION.Resources.Resource.Manage_Api_Response_Message
                 </div>
-                <button type="button" data-drawer-hide="add-new-response-message" aria-controls="add-new-response-message"
+                <button type="button" data-drawer-hide="display-new-response-message" aria-controls="display-new-response-message"
                         class="text-[20px]" onclick="CancelFunction()">
                     <i class="las la-window-close text-white"></i>
                 </button>
@@ -23,14 +23,14 @@
                     <div class="input-field-common">
 
                         <label class="block mb-[12px] text-sm font-medium text-secondary-100 ">
-                            Code
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Code
                         </label>
                         @Html.HiddenFor(model => model.MessageId, new
                         {
 
                             @class = "w-full rounded-[4px]",
                             @style = "border-radius:4px !important",
-                            @placeholder = "MessageId",
+                            @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.Code,
                             @maxlength = "30"
                         })
 
@@ -39,20 +39,20 @@
 
                             @class = "w-full rounded-[4px]",
                             @style = "border-radius:4px !important",
-                            @placeholder = "Code",
+                            @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.Code,
                             @maxlength = "30",
                             @disabled = "disabled"
                         })
                     </div>
                     <div class="input-field-common">
                         <label class="block mb-[12px] text-sm font-medium text-secondary-100 ">
-                            Message
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Message
                         </label>
                         @Html.TextBoxFor(model => model.Message, new
                         {
                             @class = "w-full rounded-[4px]",
                             @style = "border-radius:4px !important",
-                            @placeholder = "Message",
+                            @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.Message,
                             @maxlength = "30",
                             @disabled = "disabled"
                         })
@@ -60,13 +60,13 @@
                     </div>
                     <div class="input-field-common">
                         <label class="block mb-[12px] text-sm font-medium text-secondary-100 ">
-                            English Message
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.English_Message
                         </label>
                         @Html.TextBoxFor(model => model.MessageEng, new
                         {
                             @class = "w-full rounded-[4px]",
                             @style = "border-radius:4px !important",
-                            @placeholder = "English Message",
+                            @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.English_Message,
                             @maxlength = "30",
                             @disabled = "disabled"
                         })
@@ -74,13 +74,13 @@
                     </div>
                     <div class="input-field-common w-full">
                         <label class="block mb-4 text-sm font-medium text-secondary-100 ">
-                            Http Status Code
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Http_Status_Code
                         </label>
                         @Html.TextBoxFor(model => model.HttpStatusCode, new
                         {
                             @class = "w-full rounded-[4px]",
                             @style = "border-radius:4px !important",
-                            @placeholder = "Code",
+                            @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.Http_Status_Code,
                             @maxlength = "30",
                             @disabled = "disabled"
                         })
@@ -88,13 +88,13 @@
                     </div>
                     <div class="input-field-common w-full">
                         <label class="block mb-4 text-sm font-medium text-secondary-100 ">
-                            Description
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Description
                         </label>
                         @Html.TextBoxFor(model => model.Description, new
                         {
                             @class = "w-full rounded-[4px]",
                             @style = "border-radius:4px !important",
-                            @placeholder = "Description",
+                            @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.Description,
                             @maxlength = "200",
                             @disabled = "disabled"
                         })
@@ -104,9 +104,9 @@
 
                     <div class="input-field-common">
                         <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
-                            Category
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.CategoryType
                         </label>
-                        <select id="useRole" name="Category" class=" default_select select-common block w-full "
+                        <select id="large" name="Category" class=" default_select select-common block w-full "
                                 style="width: 100%;" disabled>
                             <option value="error">
                                 Error

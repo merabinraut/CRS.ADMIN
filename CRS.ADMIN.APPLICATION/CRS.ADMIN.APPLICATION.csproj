@@ -383,10 +383,10 @@
     <Compile Include="Services\CognitoService.cs" />
     <Content Include="Content\assets\images\pdficon.svg" />
     <Content Include="Views\AccountInformation\GetAccountInformation.cshtml" />
-    <Content Include="App_Data\AmazonConfigruation.json" />
     <Content Include="Views\ApiResponseMessage\ApiResponseMessageList.cshtml" />
     <Content Include="Views\ApiResponseMessage\_AddResponseMessage.cshtml" />
     <Content Include="Views\ApiResponseMessage\_EditResponseMessage.cshtml" />
+    <Content Include="App_Data\AmazonConfigruation.json" />
     <None Include="Views\ApiResponseMessage\_DisplayResponseMessage.cshtml" />
     <None Include="Views\BasicClubManagement\_PremiumClubtPartialView.cshtml" />
     <Content Include="Content\assets\images\conversion.svg" />

@@ -574,6 +574,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Api Response Message List.
+        /// </summary>
+        public static string Api_Response_Message_List {
+            get {
+                return ResourceManager.GetString("Api Response Message List", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Apply.
         /// </summary>
         public static string Apply {
@@ -1033,6 +1042,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cateory Type.
+        /// </summary>
+        public static string Cateory_Type {
+            get {
+                return ResourceManager.GetString("Cateory Type", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to CEO Full Name.
         /// </summary>
         public static string CEO_Full_Name {
@@ -1344,6 +1362,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         public static string clubYes {
             get {
                 return ResourceManager.GetString("clubYes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Code.
+        /// </summary>
+        public static string Code {
+            get {
+                return ResourceManager.GetString("Code", resourceCulture);
             }
         }
         
@@ -1924,6 +1951,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to English Message.
+        /// </summary>
+        public static string English_Message {
+            get {
+                return ResourceManager.GetString("English Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Enter Additional Information.
         /// </summary>
         public static string Enter_Additional_Information {
@@ -2473,6 +2509,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Http Status Code.
+        /// </summary>
+        public static string Http_Status_Code {
+            get {
+                return ResourceManager.GetString("Http Status Code", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Icon Image.
         /// </summary>
         public static string Icon_Image {
@@ -2982,6 +3027,24 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         public static string Manage_affiliate_withdraw_logs_ {
             get {
                 return ResourceManager.GetString("Manage affiliate withdraw logs.", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Manage Api Response Message.
+        /// </summary>
+        public static string Manage_Api_Response_Message {
+            get {
+                return ResourceManager.GetString("Manage Api Response Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Manage API Responses..
+        /// </summary>
+        public static string Manage_API_Responses_ {
+            get {
+                return ResourceManager.GetString("Manage API Responses.", resourceCulture);
             }
         }
         
@@ -5322,6 +5385,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         public static string String1 {
             get {
                 return ResourceManager.GetString("String1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string String2 {
+            get {
+                return ResourceManager.GetString("String2", resourceCulture);
             }
         }
         
