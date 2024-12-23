@@ -462,7 +462,6 @@
             headers.forEach(header => {
                 header.addEventListener('click', () => {
                     const targetClass = header.dataset.target;
-                    console.log("target:", targetClass);
                     const contentRows = document.querySelectorAll(`.accordion-content.${targetClass}`);
                     const icon = header.querySelector('.toggle-arrow');
                     let allHidden = true;
@@ -708,8 +707,6 @@
                clubCountdynamic = isStatic ? 0 : parseInt( $(`#TotalClubCount-${containerCounter - 1}`).val());
                GrandTotal = clubCountStatic + clubCountdynamic;
                $("#GrandTotalClubCount").val(parseInt(GrandTotal));
-               console.log($(this).val());
-               console.log(selectedCount);
            });
     // Update the locationClubMapping on selection changes
     $(document).on('change', '.select-common', function () {
@@ -727,9 +724,6 @@
             } else {
                 delete locationClubMapping[containerId];
             }
-
-            console.log("Current Mapping: ", locationClubMapping);
-            console.log("subgroupid", subgroupid);
         } else {
             const selectedLocation = $(`#staticLocationDDL`).val();
             const selectedClubs = $(`#staticClubDDL`).val();
@@ -743,9 +737,6 @@
             } else {
                 delete locationClubMapping[containerId];
             }
-
-            console.log("Current Mapping: ", locationClubMapping);
-            console.log("subgroupid", subgroupid);
         }
     });
             $('#addNewRow').on('click', function () {
