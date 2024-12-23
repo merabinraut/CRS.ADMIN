@@ -81,8 +81,8 @@ namespace CRS.ADMIN.APPLICATION.Models.GroupManagement
     }
     public class AssignedClubInfo
     {
-        public string  Text { get; set; }
-        public string  Value { get; set; }
+        public string Text { get; set; }
+        public string Value { get; set; }
         public AssignedClubInfo(string value, string text)
         {
             Value = value;
@@ -124,6 +124,7 @@ namespace CRS.ADMIN.APPLICATION.Models.GroupManagement
         public string ImagePath { get; set; }
         public string UpdatedDate { get; set; }
         public string ImageCount { get; set; }
+        public int TotalRecords { get; set; }
     }
     public class ManageGroupGalleryModel : PaginationFilterCommon
     {

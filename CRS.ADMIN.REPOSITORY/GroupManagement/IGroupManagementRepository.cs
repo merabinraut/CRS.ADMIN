@@ -25,7 +25,7 @@ namespace CRS.ADMIN.REPOSITORY.GroupManagement
         CommonDbResponse DeleteSubGroup(string subGroupId, Common request);
         CommonDbResponse ManageSubGroupClub(ManageSubGroupClubModelCommon commonModel);
         ManageSubGroupClubModelCommon GetSubGroupClubDetailById(string subGroupId);
-        List<GroupGalleryInfoModelCommon> GetGalleryListById(string groupId);
+        List<GroupGalleryInfoModelCommon> GetGalleryListById(string groupId,string SearchFilter);
         CommonDbResponse ManageGroupGallery(ManageGroupGalleryModelCommon commonModel);
         ManageGroupGalleryModelCommon GetGroupGalleryDetail(string imageid);
         CommonDbResponse DeleteImage(string imageid, string groupid, Common request);

@@ -280,12 +280,12 @@ namespace CRS.ADMIN.REPOSITORY.GroupManagement
         #endregion
 
         #region GROUP GALLERY
-        public List<GroupGalleryInfoModelCommon> GetGalleryListById(string groupId)
+        public List<GroupGalleryInfoModelCommon> GetGalleryListById(string groupId, string SearchFilter)
         {
 
             string sp_name = "EXEC [dbo].[sproc_admin_group_gallery_list]";
             sp_name += "@GroupId=" + _dao.FilterString(groupId);
-
+            sp_name += !string.IsNullOrEmpty(SearchFilter) ? ", @SearchFilter =N" + _dao.FilterString(SearchFilter) : "";
 
             var dbResponse = _dao.ExecuteDataTable(sp_name);
             if (dbResponse != null && dbResponse.Rows.Count > 0)

@@ -91,9 +91,9 @@ namespace CRS.ADMIN.BUSINESS.GroupManagement
         #endregion
 
         #region GROUP GALLERY
-        public List<GroupGalleryInfoModelCommon> GetGalleryListById(string groupId)
+        public List<GroupGalleryInfoModelCommon> GetGalleryListById(string groupId, string SearchFilter)
         {
-            return _repo.GetGalleryListById(groupId);
+            return _repo.GetGalleryListById(groupId, SearchFilter);
         }
 
         public CommonDbResponse ManageGroupGallery(ManageGroupGalleryModelCommon commonModel)

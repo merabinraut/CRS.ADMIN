@@ -75,7 +75,7 @@
         </div>
 
         <div class="flex flex-col  gap-4">
-            <form action="/GroupManagement/SubGroup?GroupId=@ViewBag.GroupId" method="get">
+            <form action="/GroupManagement/SubGroup" method="get">
                 <div class="flex justify-between items-center w-full">
                     <!-- Input Search Wrapper -->
                     <div class="relative input-search-wrapper flex-grow">
@@ -85,6 +85,7 @@
                             </svg>
                         </div>
                         <input type="search" id="default-search" class="input-search block w-full" placeholder="@CRS.ADMIN.APPLICATION.Resources.Resource.Search" value="@ViewBag.SearchFilter" name="SearchFilter">
+                        <input type="hidden" name="GroupId" value="@ViewBag.GroupId" />
                     </div>
 
                     <!-- Export Button -->

@@ -750,7 +750,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
 
         #region GROUP GALLERY
         [HttpGet]
-        public ActionResult GroupGallery(string GroupId = "", string SearchFilter = "", int StartIndex = 0, int PageSize = 10)
+        public ActionResult GroupGallery(string GroupId = "", string SearchFilter = "")
         {
             Session["CurrentURL"] = "GroupManagement/GroupGallery";
             string RenderId = string.Empty;
@@ -767,7 +767,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             if (!string.IsNullOrEmpty(GroupId))
             {
                 string groupId = GroupId.DecryptParameter();
-                var dbResponse = _business.GetGalleryListById(groupId);
+                var dbResponse = _business.GetGalleryListById(groupId, SearchFilter);
                 commonResponse.GroupGalleryList = dbResponse.MapObjects<GroupGalleryInfoModel>();
                 foreach (var item in commonResponse.GroupGalleryList)
                 {
@@ -777,6 +777,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 }
                 ViewBag.GroupId = GroupId;
                 ViewBag.PopUpRenderValue = !string.IsNullOrEmpty(RenderId) ? RenderId : null;
+                ViewBag.SearchFilter = SearchFilter;
                 return View(commonResponse);
             }
             else
@@ -789,9 +790,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 });
                 return RedirectToAction("Index", "GroupManagement", new
                 {
-                    SearchFilter = SearchFilter,
-                    StartIndex = StartIndex,
-                    PageSize = PageSize
+                    SearchFilter = SearchFilter
                 });
             }
         }
