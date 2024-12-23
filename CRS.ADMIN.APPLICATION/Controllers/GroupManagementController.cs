@@ -418,6 +418,8 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             redirectUrl = RedirectToAction("SubGroup", "GroupManagement", new
             {
                 GroupId = model.GroupId,
+                GroupName = model.GroupName,
+                GroupNamekatakana = model.GroupNameKatakana,
                 SearchFilter = model.SearchFilter,
                 StartIndex = model.Skip,
                 PageSize = model.Take == 0 ? 10 : model.Take
@@ -903,7 +905,6 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                         Message = dbresponse.Message ?? "Failed",
                         Title = dbresponse.Code == ResponseCode.Success ? NotificationMessage.SUCCESS.ToString() : NotificationMessage.INFORMATION.ToString()
                     });
-                    TempData["ManageGroupImage"] = model;
                     return RedirectToAction("GroupGallery", "GroupManagement", new
                     {
                         GroupId = model.GroupId

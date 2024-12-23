@@ -385,6 +385,7 @@
     </Compile>
     <Compile Include="Services\CognitoService.cs" />
     <None Include="Views\ChargeManagement\_ManageChargeCategoryDetails.cshtml" />
+    <Content Include="Content\assets_new\images\group_management_svg.png" />
     <Content Include="Views\ChargeManagement\ChargeCategoryDetails.cshtml" />
     <None Include="Views\ChargeManagement\_ManageChargeCategoryPartialView.cshtml" />
     <Content Include="Content\assets\images\pdficon.svg" />
