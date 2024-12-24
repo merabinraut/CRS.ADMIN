@@ -22,6 +22,6 @@ namespace CRS.ADMIN.APPLICATION.Models.ApiResponseMessage
         public string MessageType { get; set; }
         public string HttpStatusCode { get; set; }
         public string ActionUser { get; set; }
-        public string SNO { get; set; }
+        public int SNO { get; set; }
     }
 }
