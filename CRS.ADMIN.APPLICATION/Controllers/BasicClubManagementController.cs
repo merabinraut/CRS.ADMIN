@@ -31,6 +31,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             _buss = buss;
             _amazonCognitoMiddleware = amazonCognitoMiddleware;
             _clubManagementBusiness = clubManagementBusiness;
+            _amazonCognitoMiddleware.SetConfigNameViaUserType("club");
         }
         [HttpGet]
         public ActionResult BasicClubManagementList(string AgentId, string SearchFilter = "", int StartIndex = 0, int PageSize = 10)
@@ -728,7 +729,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                             Title = NotificationMessage.INFORMATION.ToString(),
                         });
                         TempData["ManageClubModel"] = Model;
-                        TempData["RenderId"] = "Manage";
+                        TempData["RenderId"] = "ManagePremium";
                         return redirectresult;
                     }
                 }
@@ -924,7 +925,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 if (allowRedirectfile == true)
                 {
                     TempData["ManageClubModel"] = Model;
-                    TempData["RenderId"] = "Manage";
+                    TempData["RenderId"] = "ManagePremium";
                     return redirectresult;
                 }
 
@@ -944,7 +945,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                         });
 
                         TempData["ManageClubModel"] = Model;
-                        TempData["RenderId"] = "Manage";
+                        TempData["RenderId"] = "ManagePremium";
                         return redirectresult;
                     }
                 }
@@ -961,7 +962,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                         });
 
                         TempData["ManageClubModel"] = Model;
-                        TempData["RenderId"] = "Manage";
+                        TempData["RenderId"] = "ManagePremium";
                         return redirectresult;
                     }
                 }
@@ -988,11 +989,11 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                         this.AddNotificationMessage(new NotificationModel()
                         {
                             NotificationType = NotificationMessage.INFORMATION,
-                            Message = dbResponse.Message ?? "Failed",
+                            Message = "Failed",
                             Title = NotificationMessage.INFORMATION.ToString()
                         });
                         TempData["ManageClubModel"] = Model;
-                        TempData["RenderId"] = "Manage";
+                        TempData["RenderId"] = "ManagePremium";
                         _sqlTransactionHandler.RollbackTransaction();
                         return redirectresult;
                     }
@@ -1026,7 +1027,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                             Title = NotificationMessage.INFORMATION.ToString()
                         });
                         TempData["ManageClubModel"] = Model;
-                        TempData["RenderId"] = "Manage";
+                        TempData["RenderId"] = "ManagePremium";
                         _sqlTransactionHandler.RollbackTransaction();
                         return redirectresult;
                     }
@@ -1042,7 +1043,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                             Title = NotificationMessage.INFORMATION.ToString()
                         });
                         TempData["ManageClubModel"] = Model;
-                        TempData["RenderId"] = "Manage";
+                        TempData["RenderId"] = "ManagePremium";
                         _sqlTransactionHandler.RollbackTransaction();
                         return redirectresult;
                     }
@@ -1084,7 +1085,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                     });
                     _sqlTransactionHandler.RollbackTransaction();
                     TempData["ManageClubModel"] = Model;
-                    TempData["RenderId"] = "Manage";
+                    TempData["RenderId"] = "ManagePremium";
                     return redirectresult;
                 }
             }
@@ -1101,7 +1102,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             AddNotificationMessage(notificationModels);
             var errors = ModelState.Where(x => x.Value.Errors.Count > 0).Select(x => new { x.Key }).ToList();
             TempData["ManageClubModel"] = Model;
-            TempData["RenderId"] = "Manage";
+            TempData["RenderId"] = "ManagePremium";
             return redirectresult;
         }
 
