@@ -7,12 +7,10 @@ using CRS.ADMIN.SHARED;
 using CRS.ADMIN.SHARED.GroupManagement;
 using CRS.ADMIN.SHARED.PaginationManagement;
 using Newtonsoft.Json;
-using Syncfusion.XlsIO.Implementation.PivotAnalysis;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -395,6 +393,8 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                     clubItem.ClubLogo = ImageHelper.ProcessedImage(clubItem.ClubLogo);
                 }
             }
+            ViewBag.IsBackAllowed = true;
+            ViewBag.BackButtonURL = "/GroupManagement/Index";
             ViewBag.StartIndex = StartIndex;
             ViewBag.PageSize = PageSize;
             ViewBag.GroupId = GroupId;
@@ -418,6 +418,8 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             redirectUrl = RedirectToAction("SubGroup", "GroupManagement", new
             {
                 GroupId = model.GroupId,
+                GroupName = model.GroupName,
+                GroupNamekatakana = model.GroupNameKatakana,
                 SearchFilter = model.SearchFilter,
                 StartIndex = model.Skip,
                 PageSize = model.Take == 0 ? 10 : model.Take
@@ -791,6 +793,8 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                     item.ImageId = item.ImageId.EncryptParameter();
                     item.ImagePath = ImageHelper.ProcessedImage(item.ImagePath);
                 }
+                ViewBag.IsBackAllowed = true;
+                ViewBag.BackButtonURL = "/GroupManagement/Index";
                 ViewBag.GroupId = GroupId;
                 ViewBag.PopUpRenderValue = !string.IsNullOrEmpty(RenderId) ? RenderId : null;
                 ViewBag.SearchFilter = SearchFilter;
@@ -903,7 +907,6 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                         Message = dbresponse.Message ?? "Failed",
                         Title = dbresponse.Code == ResponseCode.Success ? NotificationMessage.SUCCESS.ToString() : NotificationMessage.INFORMATION.ToString()
                     });
-                    TempData["ManageGroupImage"] = model;
                     return RedirectToAction("GroupGallery", "GroupManagement", new
                     {
                         GroupId = model.GroupId

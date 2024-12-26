@@ -48,10 +48,10 @@
         <div class="flex justify-between items-center">
             <div>
                 <div class="heading-title">
-                    Group View: @ViewBag.GroupName (@ViewBag.GroupNameKatakana)
+                    グループ管理: @ViewBag.GroupName (@ViewBag.GroupNameKatakana)
                 </div>
                 <div class="span-title-light-gray">
-                    Manage club under Group
+                    グループの下に店舗を管理する
                 </div>
             </div>
             <div class="flex gap-4">
@@ -61,7 +61,7 @@
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21" fill="none">
                         <path d="M10 2.375C5.52002 2.375 1.875 6.02002 1.875 10.5C1.875 14.98 5.52002 18.625 10 18.625C14.48 18.625 18.125 14.98 18.125 10.5C18.125 6.02002 14.48 2.375 10 2.375ZM10 3.625C13.8037 3.625 16.875 6.69629 16.875 10.5C16.875 14.3037 13.8037 17.375 10 17.375C6.19629 17.375 3.125 14.3037 3.125 10.5C3.125 6.69629 6.19629 3.625 10 3.625ZM9.375 6.75V9.875H6.25V11.125H9.375V14.25H10.625V11.125H13.75V9.875H10.625V6.75H9.375Z" fill="#D75A8B" />
                     </svg>
-                    Add Sub Group
+                    サブグループを追加
                 </div>
                 <div class="btn btn-primary flex items-center gap-[8px] h-[40px]" data-drawer-target="add-sub-group-club"
                      data-drawer-show="add-sub-group-club" data-drawer-placement="right" data-drawer-backdrop="false"
@@ -69,7 +69,7 @@
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21" fill="none">
                         <path d="M2.5 3V5.28516L0.625 7.78516V8C0.625 9.02783 1.47217 9.875 2.5 9.875V18H12.5V12.375H13.75V18H17.5V9.875C18.5278 9.875 19.375 9.02783 19.375 8V7.78516L17.5 5.28516V3H2.5ZM3.75 4.25H16.25V4.875H3.75V4.25ZM3.4375 6.125H16.5625L18.0664 8.13672C17.998 8.40771 17.793 8.625 17.5 8.625C17.1533 8.625 16.875 8.34668 16.875 8H15.625C15.625 8.34668 15.3467 8.625 15 8.625C14.6533 8.625 14.375 8.34668 14.375 8H13.125C13.125 8.34668 12.8467 8.625 12.5 8.625C12.1533 8.625 11.875 8.34668 11.875 8H10.625C10.625 8.34668 10.3467 8.625 10 8.625C9.65332 8.625 9.375 8.34668 9.375 8H8.125C8.125 8.34668 7.84668 8.625 7.5 8.625C7.15332 8.625 6.875 8.34668 6.875 8H5.625C5.625 8.34668 5.34668 8.625 5 8.625C4.65332 8.625 4.375 8.34668 4.375 8H3.125C3.125 8.34668 2.84668 8.625 2.5 8.625C2.20703 8.625 2.00195 8.40771 1.93359 8.13672L3.4375 6.125ZM3.75 9.38672C4.08203 9.68701 4.52148 9.875 5 9.875C5.47852 9.875 5.91797 9.68701 6.25 9.38672C6.58203 9.68701 7.02148 9.875 7.5 9.875C7.97852 9.875 8.41797 9.68701 8.75 9.38672C9.08203 9.68701 9.52148 9.875 10 9.875C10.4785 9.875 10.918 9.68701 11.25 9.38672C11.582 9.68701 12.0215 9.875 12.5 9.875C12.9785 9.875 13.418 9.68701 13.75 9.38672C14.082 9.68701 14.5215 9.875 15 9.875C15.4785 9.875 15.918 9.68701 16.25 9.38672V16.75H15V11.125H11.25V16.75H3.75V9.38672ZM5 11.125V15.5H10V11.125H5ZM6.25 12.375H8.75V14.25H6.25V12.375Z" fill="white" />
                     </svg>
-                    Manage Club
+                    店舗を管理
                 </div>
             </div>
         </div>
@@ -121,13 +121,13 @@
                             <div class="grid grid-cols-3 gap-[27px]">
                                 <div class="input-field-common">
                                     <label class="block mb-[12px] text-sm font-medium text-secondary-100 ">
-                                        Club Name
+                                        店舗名
                                     </label>
                                     <input type="text" class="w-full" placeholder="Enter club name" name="ClubName" id="clubname" value="@ViewBag.ClubName">
                                 </div>
                                 <div class="input-field-common">
                                     <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
-                                        Location
+                                        エリア
                                     </label>
                                     <select id="large" name="LocationId" class=" default_select select-common block w-full "
                                             style="width: 100%;">
@@ -187,7 +187,7 @@
                                     </th>
                                     <th scope="col" class="p-[12px]">
                                         <div class="flex">
-                                            Sub Group
+                                            サブグループ
                                             <div class="relative pl-[5px]">
                                                 <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
                                                 <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
@@ -196,7 +196,7 @@
                                     </th>
                                     <th scope="col" class="p-[12px]">
                                         <div class="flex">
-                                            Total Clubs
+                                            店舗件数
                                             <div class="relative pl-[5px]">
                                                 <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
                                                 <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
@@ -205,7 +205,7 @@
                                     </th>
                                     <th scope="col" class="p-[12px]">
                                         <div class="flex">
-                                            Club Profile
+                                            店舗名
                                             <div class="relative pl-[5px]">
                                                 <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
                                                 <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
@@ -214,7 +214,7 @@
                                     </th>
                                     <th scope="col" class="p-[12px]">
                                         <div class="flex">
-                                            Location
+                                            エリア
                                             <div class="relative pl-[5px]">
                                                 <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
                                                 <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
@@ -223,7 +223,7 @@
                                     </th>
                                     <th scope="col" class="p-[12px]">
                                         <div class="flex">
-                                            Added On
+                                            作成日
                                             <div class="relative pl-[5px]">
                                                 <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
                                                 <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
@@ -462,7 +462,6 @@
             headers.forEach(header => {
                 header.addEventListener('click', () => {
                     const targetClass = header.dataset.target;
-                    console.log("target:", targetClass);
                     const contentRows = document.querySelectorAll(`.accordion-content.${targetClass}`);
                     const icon = header.querySelector('.toggle-arrow');
                     let allHidden = true;
@@ -708,8 +707,6 @@
                clubCountdynamic = isStatic ? 0 : parseInt( $(`#TotalClubCount-${containerCounter - 1}`).val());
                GrandTotal = clubCountStatic + clubCountdynamic;
                $("#GrandTotalClubCount").val(parseInt(GrandTotal));
-               console.log($(this).val());
-               console.log(selectedCount);
            });
     // Update the locationClubMapping on selection changes
     $(document).on('change', '.select-common', function () {
@@ -727,9 +724,6 @@
             } else {
                 delete locationClubMapping[containerId];
             }
-
-            console.log("Current Mapping: ", locationClubMapping);
-            console.log("subgroupid", subgroupid);
         } else {
             const selectedLocation = $(`#staticLocationDDL`).val();
             const selectedClubs = $(`#staticClubDDL`).val();
@@ -743,9 +737,6 @@
             } else {
                 delete locationClubMapping[containerId];
             }
-
-            console.log("Current Mapping: ", locationClubMapping);
-            console.log("subgroupid", subgroupid);
         }
     });
             $('#addNewRow').on('click', function () {
@@ -774,7 +765,7 @@
                         location.reload();
                     }
                 });
-            } else if (sGroupId) {
+            } else if (sGroupId == null) {
                 showNotification("Please select sub group", 'INFORMATION', 'INFORMATION');
                 window.location.reload();
             } else {

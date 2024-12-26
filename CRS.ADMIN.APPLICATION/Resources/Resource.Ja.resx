@@ -2812,4 +2812,8 @@
     <value>確認</value>
     <comment>Customer Management</comment>
   </data>
+  <data name="Group Management" xml:space="preserve">
+    <value>グループ管理</value>
+    <comment>Group Management</comment>
+  </data>
 </root>
