@@ -53,7 +53,8 @@ namespace CRS.ADMIN.APPLICATION.Controllers
         [HttpGet]
         public ActionResult WithdrawalRequestDetailList(string SearchFilter = "", int StartIndex = 0, int PageSize = 10, WithdrawalDetailsModel objWithdrawalDetailsModel=null)
         {
-          
+            ViewBag.IsBackAllowed = true;
+            ViewBag.BackButtonURL = "/WithdrawalRequest/WithdrawalRequestMonthlyList";
             WithdrawalFilterCommon common = new WithdrawalFilterCommon()
             {
                 Skip = StartIndex,
