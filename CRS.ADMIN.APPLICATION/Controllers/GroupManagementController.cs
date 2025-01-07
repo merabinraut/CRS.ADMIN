@@ -167,6 +167,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                         Message = dbResponse.Message ?? "Failed",
                         Title = NotificationMessage.INFORMATION.ToString(),
                     });
+                    model.GroupCoverPhoto = "";
                     TempData["ManageGroup"] = model;
                     TempData["RenderId"] = "Manage";
                     return redirectUrl;
