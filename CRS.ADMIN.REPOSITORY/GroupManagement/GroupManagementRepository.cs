@@ -101,9 +101,9 @@ namespace CRS.ADMIN.REPOSITORY.GroupManagement
         {
             string sp_name = "EXEC [dbo].[sproc_admin_add_update_group]";
             sp_name += "@GroupId=" + _dao.FilterString(commonModel.GroupId);
-            sp_name += ",@GroupName=" + _dao.FilterString(commonModel.GroupName);
+            sp_name += ",@GroupName=" + (!string.IsNullOrEmpty(commonModel.GroupName) ? "N" + _dao.FilterString(commonModel.GroupName) : _dao.FilterString(commonModel.GroupName));
             sp_name += ",@GroupNameKatakana=" + (!string.IsNullOrEmpty(commonModel.GroupNameKatakana) ? "N" + _dao.FilterString(commonModel.GroupNameKatakana) : _dao.FilterString(commonModel.GroupNameKatakana));
-            sp_name += ",@GroupDescription=" + _dao.FilterString(commonModel.GroupDescription);
+            sp_name += ",@GroupDescription=" + (!string.IsNullOrEmpty(commonModel.GroupDescription) ? "N" + _dao.FilterString(commonModel.GroupDescription) : _dao.FilterString(commonModel.GroupNameKatakana));
             sp_name += ",@GroupCoverPhoto=" + _dao.FilterString(commonModel.GroupCoverPhoto);
             sp_name += ",@ActionUser=" + _dao.FilterString(commonModel.ActionUser);
             sp_name += ",@ActionIP=" + _dao.FilterString(commonModel.ActionIP);
@@ -137,7 +137,7 @@ namespace CRS.ADMIN.REPOSITORY.GroupManagement
             string sp_name = "EXEC [dbo].[sproc_admin_get_subgroup]";
             sp_name += "@GroupId=" + _dao.FilterString(groupId);
             sp_name += !string.IsNullOrEmpty(paginationFilter.SearchFilter) ? ", @SearchFilter =N" + _dao.FilterString(paginationFilter.SearchFilter) : "";
-           
+
             sp_name += ",@Skip=" + paginationFilter.Skip;
             sp_name += ",@Take=" + paginationFilter.Take;
 

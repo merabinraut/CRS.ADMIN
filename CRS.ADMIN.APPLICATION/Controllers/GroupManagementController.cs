@@ -155,7 +155,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                             NotificationType = dbResponse.Code == ResponseCode.Success ? NotificationMessage.SUCCESS : SHARED.NotificationMessage.INFORMATION,
                             Message = dbResponse.Message ?? "Failed",
                             Title = dbResponse.Code == SHARED.ResponseCode.Success ? SHARED.ResponseCode.Success.ToString() : SHARED.NotificationMessage.INFORMATION.ToString()
-                        });
+                        });                       
                         return redirectUrl;
                     }
                 }
