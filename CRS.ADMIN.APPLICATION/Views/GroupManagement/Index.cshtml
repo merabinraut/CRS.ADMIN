@@ -448,7 +448,7 @@
                     <div class="flex gap-2 justify-end">
                         <input id="request_id" value="" hidden />
                         <div class="btn btn-secondary rounded-[4px] w-[110px]" data-modal-hide="delete-confirmation">@CRS.ADMIN.APPLICATION.Resources.Resource.No</div>
-                        <div class="btn btn-primary w-[110px] rounded-[4px]" onclick="DeleteGroup()" data-val="" id="delete_id">@CRS.ADMIN.APPLICATION.Resources.Resource.Yes</div>
+                        <div class="btn btn-primary w-[110px] rounded-[4px]" onclick="DeleteGroup()" data-val1="" id="delete_id">@CRS.ADMIN.APPLICATION.Resources.Resource.Yes</div>
                     </div>
                 </div>
             </div>
@@ -544,12 +544,12 @@
             })
         }
         function DeleteGroup() {
-            const groupId = $('#delete_id').attr('data-val');
+            const groupId = $('#delete_id').attr('data-val1');
             var requestVerificationToken = $('input[name="__RequestVerificationToken"]').val();
             let search_filter = $('#default-search').val();
             const start_index_val = @ViewBag.StartIndex;
             const page_size = @ViewBag.PageSize;
-
+            debugger
             $.ajax({
                 type: 'POST',
                 async: true,
@@ -587,7 +587,6 @@
             const modal = document.getElementById("delete-confirmation");
             modal.classList.remove("hidden");
             $('#delete_id').attr('data-val1', groupId);
-            $('#delete_id').attr('data-val2', 'A');
             modal.setAttribute("aria-hidden", "false");
         }
         //END GROUP MODULE JS
