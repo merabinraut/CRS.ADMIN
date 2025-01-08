@@ -687,6 +687,14 @@
     // Remove a container
     $(document).on('click', '.remove-container-btn', function () {
         const containerId = $(this).data('container-id');
+        const removedClubCount = parseInt($(`#TotalClubCount-${containerId}`).val()) || 0;
+
+        // Subtract the removed count from the GrandTotal
+        let currentGrandTotal = parseInt($("#GrandTotalClubCount").val()) || 0;
+        currentGrandTotal -= removedClubCount;
+        GrandTotal = currentGrandTotal;
+        $("#GrandTotalClubCount").val(currentGrandTotal);
+
         delete locationClubMapping[containerId];
         console.log("Current Mapping: ", locationClubMapping);
         $(`#container-${containerId}`).remove();
@@ -700,13 +708,29 @@
         });
     }
            $(document).on('change', 'select[name="ClubDDL"]', function () {
-               const isStatic = $(this).attr('id') === 'staticClubDDL';
-               selectedCount = $(this).find('option:selected').length;
-               isStatic ? $('#TotalClubCount').val(selectedCount) : $(`#TotalClubCount-${containerCounter - 1}`).val(selectedCount);
-               clubCountStatic = parseInt($('#TotalClubCount').val());
-               clubCountdynamic = isStatic ? 0 : parseInt( $(`#TotalClubCount-${containerCounter - 1}`).val());
-               GrandTotal = clubCountStatic + clubCountdynamic;
-               $("#GrandTotalClubCount").val(parseInt(GrandTotal));
+               const containerId = $(this).data('container-id');
+
+               if (containerId > 2) {
+                   const isStatic = $(this).attr('id') === 'staticClubDDL';
+                   selectedCount = $(this).find('option:selected').length;
+                   isStatic ? $('#TotalClubCount').val(selectedCount) : $(`#TotalClubCount-${containerId}`).val(selectedCount);
+
+                   clubCountStatic = parseInt($('#TotalClubCount').val());
+                   clubCountdynamic = isStatic ? 0 : parseInt($(`#TotalClubCount-${containerId}`).val());
+                   var sumTotal  = GrandTotal;
+                   var GrandSumTotal = parseInt(sumTotal) + parseInt(clubCountdynamic)
+                   $("#GrandTotalClubCount").val(parseInt(GrandSumTotal));
+               } else {
+                   const isStatic = $(this).attr('id') === 'staticClubDDL';
+                   selectedCount = $(this).find('option:selected').length;
+                   isStatic ? $('#TotalClubCount').val(selectedCount) : $(`#TotalClubCount-${containerCounter - 1}`).val(selectedCount);
+
+                   clubCountStatic = parseInt($('#TotalClubCount').val());
+                   clubCountdynamic = isStatic ? 0 : parseInt($(`#TotalClubCount-${containerCounter - 1}`).val());
+                   GrandTotal = clubCountStatic + clubCountdynamic;
+                   $("#GrandTotalClubCount").val(parseInt(GrandTotal));
+               }
+
            });
     // Update the locationClubMapping on selection changes
     $(document).on('change', '.select-common', function () {
@@ -752,6 +776,7 @@
             var mappedData = JSON.stringify(locationClubMapping);
             var sGroupId = subgroupid;
             var groupId = '@ViewBag.GroupId';
+            document.getElementById('submit-button-id').disabled = true;
             if (mappedData) {
                 $.ajax({
                     type: 'POST',
@@ -759,9 +784,11 @@
                     dataType: 'json',
                     data: { '__RequestVerificationToken': requestVerificationToken, mapping: mappedData, SubGroupId: sGroupId, GroupId: groupId },
                     success: function (data) {
+                        document.getElementById('submit-button-id').disabled = false;
                         location.reload();
                     },
                     error: function () {
+                        document.getElementById('submit-button-id').disabled = false;
                         location.reload();
                     }
                 });
