@@ -121,7 +121,7 @@
                         @CRS.ADMIN.APPLICATION.Resources.Resource.Display_Order
                     </label>
                     <select id="default_select4" style="width: 100%;" class="text-[#B7B7B7] h-[44px]" name="DisplayOrderId">
-                        @foreach (var item in ViewBag.DisplayOrderDDL as IEnumerable<SelectListItem>)
+                        @foreach (var item in ViewBag.DisplayOrderDDLClub as IEnumerable<SelectListItem>)
                         {
                             var selectedId = Model.DisplayOrderId as string;
                             if (item.Value == selectedId)
