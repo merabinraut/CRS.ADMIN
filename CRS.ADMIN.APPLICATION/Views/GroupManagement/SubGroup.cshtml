@@ -771,34 +771,38 @@
 
 });
 
-        function submit() {
-            var requestVerificationToken = $('input[name="__RequestVerificationToken"]').val();
-            var mappedData = JSON.stringify(locationClubMapping);
-            var sGroupId = subgroupid;
-            var groupId = '@ViewBag.GroupId';
-            document.getElementById('submit-button-id').disabled = true;
-            if (mappedData) {
-                $.ajax({
-                    type: 'POST',
-                    url: '@Url.Action("ManageSubGroupClub")',
-                    dataType: 'json',
-                    data: { '__RequestVerificationToken': requestVerificationToken, mapping: mappedData, SubGroupId: sGroupId, GroupId: groupId },
-                    success: function (data) {
-                        document.getElementById('submit-button-id').disabled = false;
-                        location.reload();
-                    },
-                    error: function () {
-                        document.getElementById('submit-button-id').disabled = false;
-                        location.reload();
-                    }
-                });
-            } else if (sGroupId == null) {
-                showNotification("Please select sub group", 'INFORMATION', 'INFORMATION');
-                window.location.reload();
-            } else {
-                showNotification("Please select location and club", 'INFORMATION', 'INFORMATION');
-                window.location.reload();
-            }
+            function submit() {
+                var submitButton = document.getElementById('submit-button-id');
+                submitButton.disabled = true;
+                var requestVerificationToken = $('input[name="__RequestVerificationToken"]').val();
+                var mappedData = JSON.stringify(locationClubMapping);
+                var sGroupId = subgroupid;
+                var groupId = '@ViewBag.GroupId';
+
+                if (mappedData) {
+                    $.ajax({
+                        type: 'POST',
+                        url: '@Url.Action("ManageSubGroupClub")',
+                        dataType: 'json',
+                        data: { '__RequestVerificationToken': requestVerificationToken, mapping: mappedData, SubGroupId: sGroupId, GroupId: groupId },
+                        success: function (data) {
+                            submitButton.disabled = false;
+                            location.reload();
+                        },
+                        error: function () {
+                            submitButton.disabled = false;
+                            location.reload();
+                        }
+                    });
+                } else if (sGroupId == null) {
+                    showNotification("Please select sub group", 'INFORMATION', 'INFORMATION');
+                    submitButton.disabled = false;
+                    window.location.reload();
+                } else {
+                    showNotification("Please select location and club", 'INFORMATION', 'INFORMATION');
+                    submitButton.disabled = false;
+                    window.location.reload();
+                }
 
         }
         </script>
