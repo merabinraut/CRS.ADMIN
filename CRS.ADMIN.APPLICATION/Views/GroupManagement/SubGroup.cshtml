@@ -273,7 +273,7 @@
                                                     }
                                                     else
                                                     {
-                                                        <i class="las la-edit text-[20px] cursor-pointer text-[#A6A6A6]" onclick="ManageSubGroupDetailsFunction('@item.SubGroupId','@item.GroupId');"></i>
+                                                        <i class="las la-edit text-[20px] cursor-pointer text-[#A6A6A6]" onclick="ManageSubGroupDetailsFunction('@item.SubGroupId','@item.GroupId','@ViewBag.GroupName','@ViewBag.GroupNameKatakana');"></i>
                                                     }
                                                     @if (item.ClubShortInfo.Count > 0)
                                                     {
@@ -507,11 +507,11 @@
             element.classList.add('translate-x-full');
         }
 
-        function ManageSubGroupDetailsFunction(subgroupId,groupId) {
+        function ManageSubGroupDetailsFunction(subgroupId,groupId,groupName,groupNameKatakana) {
              let searchFilter = $('#default-search').val();
              const startIndex =@ViewBag.StartIndex;
             const pageSize =@ViewBag.PageSize;
-            window.location.href = "/GroupManagement/ManageSubGroup?SubGroupId=" + subgroupId + '&GroupId=' + groupId + '&SearchFilter=' + searchFilter + '&StartIndex=' + startIndex + '&PageSize=' + pageSize;
+            window.location.href = "/GroupManagement/ManageSubGroup?SubGroupId=" + subgroupId + '&GroupId=' + groupId + '&SearchFilter=' + searchFilter + '&StartIndex=' + startIndex + '&PageSize=' + pageSize + '&GroupName=' + groupName + '&GroupNameKatakana=' + groupNameKatakana;
         }
         function DeleteSubGroup() {
             var requestVerificationToken = $('input[name="__RequestVerificationToken"]').val();

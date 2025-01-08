@@ -155,7 +155,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                             NotificationType = dbResponse.Code == ResponseCode.Success ? NotificationMessage.SUCCESS : SHARED.NotificationMessage.INFORMATION,
                             Message = dbResponse.Message ?? "Failed",
                             Title = dbResponse.Code == SHARED.ResponseCode.Success ? SHARED.ResponseCode.Success.ToString() : SHARED.NotificationMessage.INFORMATION.ToString()
-                        });                       
+                        });
                         return redirectUrl;
                     }
                 }
@@ -472,8 +472,6 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                         Message = dbResponse.Message ?? "Failed",
                         Title = dbResponse.Code == ResponseCode.Success ? NotificationMessage.SUCCESS.ToString() : NotificationMessage.INFORMATION.ToString()
                     });
-                    TempData["ManageSubGroup"] = model;
-                    TempData["RenderId"] = "";
                     return redirectUrl;
                 }
                 else
@@ -495,7 +493,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             return redirectUrl;
         }
         [HttpGet]
-        public ActionResult ManageSubGroup(string SubGroupId = "", string GroupId = "")
+        public ActionResult ManageSubGroup(string SubGroupId = "", string GroupId = "", string GroupName = "", string GroupNameKatakana = "")
         {
             var culture = Request.Cookies["culture"]?.Value;
             culture = string.IsNullOrEmpty(culture) ? "ja" : culture;
@@ -529,6 +527,8 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             return RedirectToAction("SubGroup", "GroupManagement", new
             {
                 GroupId = GroupId,
+                GroupName = GroupName,
+                GroupNameKatakana = GroupNameKatakana,
                 SearchFilter = model.SearchFilter,
                 StartIndex = model.Skip,
                 PageSize = model.Take == 0 ? 10 : model.Take,
