@@ -1207,7 +1207,11 @@ namespace CRS.ADMIN.APPLICATION.Library
                     {
                         response.Add(item.Key.EncryptParameter(), item.Value);
                     });
-                    return response;               
+                    return response;
+                case "DISPLAYORDERDDLCLUB":
+                    dbResponse = _CommonBuss.GetDropDown("062", search1, search2);
+                    dbResponse.ForEach(item => { response.Add(item.Key.EncryptParameter(), item.Value); });
+                    return response;
                 default: return response;
             }
         }
