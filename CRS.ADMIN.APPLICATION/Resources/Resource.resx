@@ -2826,4 +2826,24 @@
     <value>Group Management</value>
     <comment>Group Management Controller</comment>
   </data>
+  <data name="Are you sure you want to block this group" xml:space="preserve">
+    <value>Are you sure you want to block this group</value>
+    <comment>Group Management</comment>
+  </data>
+  <data name="Are you sure you want to delete this group" xml:space="preserve">
+    <value>Are you sure you want to delete this group</value>
+    <comment>Group Management</comment>
+  </data>
+  <data name="Are you sure you want to unblock this group" xml:space="preserve">
+    <value>Are you sure you want to unblock this group</value>
+    <comment>Group Management</comment>
+  </data>
+  <data name="Note: If you block this group, clubs under any of its subgroups will no longer be visible as part of the group." xml:space="preserve">
+    <value>Note: If you block this group, clubs under any of its subgroups will no longer be visible as part of the group.</value>
+    <comment>Group Management</comment>
+  </data>
+  <data name="Note: Unblocking this group will restore the visibility of clubs under its subgroups as part of the group." xml:space="preserve">
+    <value>Note: Unblocking this group will restore the visibility of clubs under its subgroups as part of the group.</value>
+    <comment>Group Management</comment>
+  </data>
 </root>
