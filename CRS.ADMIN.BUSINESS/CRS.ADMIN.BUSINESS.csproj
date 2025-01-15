@@ -102,6 +102,8 @@
     <Compile Include="EmailLog\IEmailLogBusiness.cs" />
     <Compile Include="ErrorLog\ErrorLogBusiness.cs" />
     <Compile Include="ErrorLog\IErrorLogBusiness.cs" />
+    <Compile Include="GroupManagement\GroupManagementBusiness.cs" />
+    <Compile Include="GroupManagement\IGroupManagementBusiness.cs" />
     <Compile Include="Home\HomeBusiness.cs" />
     <Compile Include="Home\IHomeBusiness.cs" />
     <Compile Include="HostManagement\HostManagementBusiness.cs" />

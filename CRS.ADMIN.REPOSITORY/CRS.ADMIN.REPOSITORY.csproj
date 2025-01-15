@@ -124,6 +124,8 @@
     <Compile Include="EmailLog\IEmailLogRepository.cs" />
     <Compile Include="ErrorLog\ErrorLogRepository.cs" />
     <Compile Include="ErrorLog\IErrorLogRepository.cs" />
+    <Compile Include="GroupManagement\GroupManagementRepository.cs" />
+    <Compile Include="GroupManagement\IGroupManagementRepository.cs" />
     <Compile Include="Home\HomeRepository.cs" />
     <Compile Include="Home\IHomeRepository.cs" />
     <Compile Include="HostManagement\HostManagementRepository.cs" />

@@ -1,0 +1,612 @@
+﻿@model CRS.ADMIN.APPLICATION.Models.GroupManagement.GroupOverviewModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var _ManageGroup = Model.ManageGroup as CRS.ADMIN.APPLICATION.Models.GroupManagement.ManageGroupModel;
+}
+
+<div class="px-8 py-4 flex flex-col gap-8">
+    @Html.AntiForgeryToken()
+    <div class="flex justify-between items-center">
+        <div>
+            <div class="heading-title">グループ管理</div>
+            <div class="span-title-light-gray">概要</div>
+        </div>
+    </div>
+    <div class="overall-recommendation">
+        <div class="payment-details flex gap-[29px]">
+            <div class="payment-details-card w-[252px]">
+                <div class="title flex gap-[8px] mb-[12px] items-center">
+                    <div class="logo h-[32px] w-[32px] flex justify-center
+                    items-center rounded-full bg-[#D9EAFA]">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 20 20" fill="none">
+                            <g clip-path="url(#clip0_6409_24911)">
+                                <path d="M17.5 0.5625H2.5C1.4375 0.5625 0.5625 1.4375 0.5625 2.5V17.5C0.5625 18.5625 1.4375 19.4688 2.53125 19.4688H17.5312C18.5938 19.4688 19.5 18.5938 19.5 17.5V2.5C19.4688 1.4375 18.5625 0.5625 17.5 0.5625ZM7.4375 11.7188V7.125H12.5625V11.6875H7.4375V11.7188ZM12.5625 13.125V18.0625H7.4375V13.125H12.5625ZM1.96875 7.125H6.0625V11.6875H1.96875V7.125ZM13.9688 7.125H18.0625V11.6875H13.9688V7.125ZM2.5 1.96875H17.5C17.8125 1.96875 18.0625 2.21875 18.0625 2.53125V5.75H1.96875V2.5C1.96875 2.1875 2.1875 1.96875 2.5 1.96875ZM1.96875 17.5V13.125H6.0625V18.0625H2.5C2.1875 18.0625 1.96875 17.8125 1.96875 17.5ZM17.5 18.0625H13.9688V13.125H18.0625V17.5C18.0625 17.8125 17.8125 18.0625 17.5 18.0625Z"
+                                      fill="#1976D2" />
+                            </g>
+                            <defs>
+                                <clipPath id="clip0_6409_24911">
+                                    <rect width="20" height="20" fill="white" />
+                                </clipPath>
+                            </defs>
+                        </svg>
+                    </div>
+                    <div class="text-lg font-semibold">総グループ</div>
+                </div>
+                <div class="text-2xl font-semibold mb-[30px]">
+                    @Model.GetGroupAnalytic.TotalGroup
+                </div>
+            </div>
+            <div class="payment-details-card w-[252px] flex justify-between flex-col ">
+                <div>
+                    <div class="title flex gap-[8px] mb-[12px] items-center">
+                        <div class="logo h-[32px] w-[32px] flex justify-center
+                    items-center rounded-full bg-[#C4F7C6]">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 20 20"
+                                 fill="none">
+                                <g clip-path="url(#clip0_6409_24911)">
+                                    <path d="M17.5 0.5625H2.5C1.4375 0.5625 0.5625 1.4375 0.5625 2.5V17.5C0.5625 18.5625 1.4375 19.4688 2.53125 19.4688H17.5312C18.5938 19.4688 19.5 18.5938 19.5 17.5V2.5C19.4688 1.4375 18.5625 0.5625 17.5 0.5625ZM7.4375 11.7188V7.125H12.5625V11.6875H7.4375V11.7188ZM12.5625 13.125V18.0625H7.4375V13.125H12.5625ZM1.96875 7.125H6.0625V11.6875H1.96875V7.125ZM13.9688 7.125H18.0625V11.6875H13.9688V7.125ZM2.5 1.96875H17.5C17.8125 1.96875 18.0625 2.21875 18.0625 2.53125V5.75H1.96875V2.5C1.96875 2.1875 2.1875 1.96875 2.5 1.96875ZM1.96875 17.5V13.125H6.0625V18.0625H2.5C2.1875 18.0625 1.96875 17.8125 1.96875 17.5ZM17.5 18.0625H13.9688V13.125H18.0625V17.5C18.0625 17.8125 17.8125 18.0625 17.5 18.0625Z"
+                                          fill="#28A745" />
+                                </g>
+                                <defs>
+                                    <clipPath id="clip0_6409_24911">
+                                        <rect width="20" height="20" fill="white" />
+                                    </clipPath>
+                                </defs>
+                            </svg>
+                        </div>
+                        <div class="text-lg font-semibold">総店舗</div>
+                    </div>
+                    <div class="text-2xl font-semibold mb-[30px]">
+                        @Model.GetGroupAnalytic.TotalClub
+                    </div>
+                </div>
+                <div>
+                </div>
+            </div>
+            <div class="payment-details-card w-[252px] flex justify-between flex-col ">
+                <div>
+                    <div class="title flex gap-[8px] mb-[12px] items-center">
+                        <div class="logo h-[32px] w-[32px] flex justify-center
+                    items-center rounded-full bg-[#FEE5CD]">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 20 20"
+                                 fill="none">
+                                <g clip-path="url(#clip0_6409_24911)">
+                                    <path d="M17.5 0.5625H2.5C1.4375 0.5625 0.5625 1.4375 0.5625 2.5V17.5C0.5625 18.5625 1.4375 19.4688 2.53125 19.4688H17.5312C18.5938 19.4688 19.5 18.5938 19.5 17.5V2.5C19.4688 1.4375 18.5625 0.5625 17.5 0.5625ZM7.4375 11.7188V7.125H12.5625V11.6875H7.4375V11.7188ZM12.5625 13.125V18.0625H7.4375V13.125H12.5625ZM1.96875 7.125H6.0625V11.6875H1.96875V7.125ZM13.9688 7.125H18.0625V11.6875H13.9688V7.125ZM2.5 1.96875H17.5C17.8125 1.96875 18.0625 2.21875 18.0625 2.53125V5.75H1.96875V2.5C1.96875 2.1875 2.1875 1.96875 2.5 1.96875ZM1.96875 17.5V13.125H6.0625V18.0625H2.5C2.1875 18.0625 1.96875 17.8125 1.96875 17.5ZM17.5 18.0625H13.9688V13.125H18.0625V17.5C18.0625 17.8125 17.8125 18.0625 17.5 18.0625Z"
+                                          fill="#F89336" />
+                                </g>
+                                <defs>
+                                    <clipPath id="clip0_6409_24911">
+                                        <rect width="20" height="20" fill="white" />
+                                    </clipPath>
+                                </defs>
+                            </svg>
+                        </div>
+                        <div class="text-lg font-semibold">グループ内店舗数</div>
+                    </div>
+                    <div class="text-2xl font-semibold mb-[30px]">
+                        @Model.GetGroupAnalytic.AssignedClub
+                    </div>
+                </div>
+                <div>
+                </div>
+            </div>
+            <div class="payment-details-card w-[252px] flex justify-between flex-col ">
+                <div>
+                    <div class="title flex gap-[8px] mb-[12px] items-center">
+                        <div class="logo h-[32px] w-[32px] flex justify-center
+                    items-center rounded-full bg-[#FFCACA]">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 20 20"
+                                 fill="none">
+                                <g clip-path="url(#clip0_6409_24911)">
+                                    <path d="M17.5 0.5625H2.5C1.4375 0.5625 0.5625 1.4375 0.5625 2.5V17.5C0.5625 18.5625 1.4375 19.4688 2.53125 19.4688H17.5312C18.5938 19.4688 19.5 18.5938 19.5 17.5V2.5C19.4688 1.4375 18.5625 0.5625 17.5 0.5625ZM7.4375 11.7188V7.125H12.5625V11.6875H7.4375V11.7188ZM12.5625 13.125V18.0625H7.4375V13.125H12.5625ZM1.96875 7.125H6.0625V11.6875H1.96875V7.125ZM13.9688 7.125H18.0625V11.6875H13.9688V7.125ZM2.5 1.96875H17.5C17.8125 1.96875 18.0625 2.21875 18.0625 2.53125V5.75H1.96875V2.5C1.96875 2.1875 2.1875 1.96875 2.5 1.96875ZM1.96875 17.5V13.125H6.0625V18.0625H2.5C2.1875 18.0625 1.96875 17.8125 1.96875 17.5ZM17.5 18.0625H13.9688V13.125H18.0625V17.5C18.0625 17.8125 17.8125 18.0625 17.5 18.0625Z"
+                                          fill="#CB3F3F" />
+                                </g>
+                                <defs>
+                                    <clipPath id="clip0_6409_24911">
+                                        <rect width="20" height="20" fill="white" />
+                                    </clipPath>
+                                </defs>
+                            </svg>
+                        </div>
+                        <div class="text-lg font-semibold">グループ外店舗数</div>
+                    </div>
+                    <div class="text-2xl font-semibold mb-[30px]">
+                        @Model.GetGroupAnalytic.UnAssignedClub
+                    </div>
+                </div>
+                <div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="divider-common m-0 h-[1px]">
+    </div>
+    <div class="flex flex-col gap-4">
+        <div class="">
+            <div class="bg-white">
+                <div id="tab1" class="tab-content-plane ">
+                    <div class="font-[600] text-[20px] mb-4">
+                        グループ一覧
+                    </div>
+                    <!--Request tab here-->
+                    <div class="flex justify-between mb-4">
+                        <form>
+                            <div class="relative input-search-wrapper">
+                                <div class="absolute inset-y-0 left-0 flex items-center pl-[16px] pointer-events-none">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21" fill="none">
+                                        <path d="M17.5 18L13.875 14.375M15.8333 9.66667C15.8333 13.3486 12.8486 16.3333 9.16667 16.3333C5.48477 16.3333 2.5 13.3486 2.5 9.66667C2.5 5.98477 5.48477 3 9.16667 3C12.8486 3 15.8333 5.98477 15.8333 9.66667Z"
+                                              stroke="#667085" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round">
+                                        </path>
+                                    </svg>
+                                </div>
+                                <input type="search" id="default-search" class="input-search block w-full " placeholder="Search" value="@Model.SearchFilter" name="SearchFilter">
+                            </div>
+                        </form>
+                        <div class="btn btn-primary gap-[8px] h-[40px]" data-drawer-target="add-group"
+                             data-drawer-show="add-group" data-drawer-placement="right" data-drawer-backdrop="false"
+                             aria-controls="drawer-disabled-backdrop" id="add-new-id">
+                            <img src="~/Content/assets_new/images/plus-circle-solid.svg" />
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Add_New
+                        </div>
+                    </div>
+                    <div class="table-tab">
+                        <div class="px-[12px] py-[16px] flex justify-between entry-export-container">
+                            <div class="flex items-center select-entries" id="ShowEntries-Id">
+                            </div>
+                        </div>
+                        <div class="relative overflow-x-auto">
+                            <table class="w-full text-left club-table" id="table-id">
+                                <thead class="club-table-thead">
+                                    <tr>
+                                        <th scope="col" class="p-[12px]">
+                                            <div class="flex w-max">
+                                                S.N
+                                                <div class="relative pl-[5px]">
+                                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                                </div>
+                                            </div>
+                                        </th>
+                                        <th scope="col" class="p-[12px]">
+                                            <div class="flex w-max">
+                                                グループ名
+                                                <div class="relative pl-[5px]">
+                                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                                </div>
+                                            </div>
+                                        </th>
+                                        <th scope="col" class="p-[12px]">
+                                            <div class="flex w-max">
+                                                サブグループ数
+                                                <div class="relative pl-[5px]">
+                                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                                </div>
+                                            </div>
+                                        </th>
+                                        <th scope="col" class="p-[12px]">
+                                            <div class="flex w-max">
+                                                店舗数
+                                                <div class="relative pl-[5px]">
+                                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                                </div>
+                                            </div>
+                                        </th>
+                                        <th scope="col" class="p-[12px]">
+                                            <div class="flex w-max">
+                                                公開状況
+                                                <div class="relative pl-[5px]">
+                                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                                </div>
+                                            </div>
+                                        </th>
+                                        <th scope="col" class="p-[12px]">
+                                            <div class="flex w-max">
+                                                作成日
+                                                <div class="relative pl-[5px]">
+                                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                                </div>
+                                            </div>
+                                        </th>
+                                        <th scope="col" class="p-[12px]">
+                                            <div class="flex  w-max ">
+                                                アクション
+                                                <div class="relative pl-[5px]">
+                                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                                </div>
+                                            </div>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @{
+                                        int sn = 1;
+                                        if (Model.GetGroupList.Count() > 0)
+                                        {
+                                            foreach (var item in Model.GetGroupList)
+                                            {
+                                                <tr class="bg-white border-b ">
+                                                    <td class="p-[12px]">@sn</td>
+                                                    <td class="p-[12px]">
+                                                        <div class="round-image-text flex gap-[12px] w-max">
+                                                            <img class="w-[32px] h-[32px] rounded-full" src="@item.groupImage" />
+                                                            <div class="flex justify-between w-full">
+                                                                <div class="text-image grid flex-none ">
+                                                                    <div class="text-[14px] font-[600] text-[#101828] ">@item.groupName</div>
+                                                                    <div class="text-[12px] font-[400]">@item.groupNameKatakana</div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td class="p-[12px]">@item.subGroupCount</td>
+                                                    <td class="p-[12px]">@item.clubCount</td>
+                                                    <td class="p-[12px] ">
+                                                        @if (item.status.Trim().ToUpper() == "ACTIVE")
+                                                        {
+                                                            <span class="bg-[#ECFDF3] text-[#027A48] px-2 py-[2px] rounded-[16px]">
+                                                                @item.status
+                                                            </span>
+                                                        }
+                                                        else
+                                                        {
+                                                            <span class="bg-[#FEF3F2] text-[#B42318] px-2 py-[2px] rounded-[16px]">
+                                                                @item.status
+                                                            </span>
+                                                        }
+
+                                                    </td>
+
+                                                    <td class="p-[12px]">
+                                                        <div class="w-max">
+                                                            @item.createdDate
+                                                        </div>
+                                                    </td>
+                                                    <td class="p-[12px]">
+                                                        <div class="flex gap-[7px]">
+                                                            @if (item.status.Trim().ToUpper() == "ACTIVE")
+                                                            {
+                                                                <div onclick="ManageGroupDetailsFunction('@item.groupId');">
+                                                                    <img class="cursor-pointer" src="~/Content/assets_new/images/edit-solid.svg" />
+
+                                                                </div>
+                                                                <div onclick="GotoSubgroupPage('@item.groupId','@item.groupName','@item.groupNameKatakana')">
+                                                                    <img class="cursor-pointer" src="~/Content/assets_new/images/eye.svg" />
+                                                                </div>
+
+                                                                <div onclick="GotoGroupGallery('@item.groupId')" data-modal-target="" data-modal-toggle="">
+                                                                    <img class="cursor-pointer" src="~/Content/assets_new/images/image.svg" />
+                                                                </div>
+
+                                                                <div onclick="OpenBlockModal('@item.groupId')" data-modal-target="block-confirmation" data-modal-toggle="block-confirmation">
+                                                                    <img class="cursor-pointer" src="~/Content/assets_new/images/lock-solid.svg" />
+                                                                </div>
+
+                                                            }
+                                                            else
+                                                            {
+                                                                <div onclick="GotoGroupGallery('@item.groupId')" data-modal-target="" data-modal-toggle="">
+                                                                    <img class="cursor-pointer" src="~/Content/assets_new/images/image.svg" />
+                                                                </div>
+                                                                <div onclick="OpenUnblockModal('@item.groupId')" data-modal-target="unblock-confirmation" data-modal-toggle="unblock-confirmation">
+                                                                    <img class="cursor-pointer" src="~/Content/assets_new/images/unlock.svg" />
+                                                                </div>
+                                                            }
+
+                                                            <div onclick="OpenDeleteModal('@item.groupId')" data-modal-target="delete-confirmation" data-modal-toggle="delete-confirmation">
+                                                                <img class="cursor-pointer" src="~/Content/assets_new/images/trash-alt-solid.svg" />
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                sn++;
+                                            }
+                                        }
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="pagination-club">
+                            <div class="show-entry" id="Entries-Id">
+                            </div>
+                            <div class="flex gap-[12px]">
+                                <div class="btn btn-secondary-box-shadow" id="prev-btn">
+                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Previous
+                                </div>
+                                <div class="flex gap-[12px]" id="pagination-id">
+                                </div>
+                                <div class="btn btn-secondary-box-shadow" id="next-btn">
+                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Next
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--block confirmation modal start-->
+<div id="block-confirmation" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 hidden w-full
+     p-4 overflow-x-hidden overflow-y-auto
+     md:inset-0 h-[calc(100%-1rem)] max-h-full " style="align-items: flex-start; ">
+    <div class="relative max-w-2xl max-h-full w-[412px] px-4 pt-[40px] pb-[46px] mt-24">
+        <!-- Modal content -->
+        <div class="relative bg-white rounded-lg shadow">
+            <!-- Modal header -->
+            <button type="button"
+                    class="text-gray-400 bg-transparent rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center absolute top-[24px] right-[20px] "
+                    data-modal-hide="block-confirmation">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="25" viewBox="0 0 24 25" fill="none">
+                    <rect y="0.621094" width="24" height="24" rx="12" fill="#FAFAFA" />
+                    <path d="M5.41406 4.95703L4.33594 6.03516L10.9219 12.6211L4.33594 19.207L5.41406 20.2852L12 13.6992L18.5859 20.2852L19.6641 19.207L13.0781 12.6211L19.6641 6.03516L18.5859 4.95703L12 11.543L5.41406 4.95703Z"
+                          fill="#7A7A7A" />
+                </svg>
+            </button>
+            <!-- Modal body -->
+            <div class="grid  px-[20px] py-8">
+                <div class="text-[#333] font-semibold pb-[11px] border-b border-[#eeeeee]">@CRS.ADMIN.APPLICATION.Resources.Resource.Confirmation</div>
+                <div class="grid text-[#062937] mt-[20px] mb-[40px]">
+                    <div class="text-[14px] text-secondary-text-2 text-start" id="confirmationMessage">
+                        Are you sure you want to block this
+                        <span class="font-[700] mx-[1px]">
+                            "GROUP"
+                        </span> ?
+
+                        Note: If you block this group, clubs under any of its subgroups will no longer be visible as part of the group.
+                    </div>
+                </div>
+                <div class="flex justify-end">
+                    <div class="flex gap-2 justify-end">
+                        <input id="request_id" value="" hidden />
+                        <div class="btn btn-secondary rounded-[4px] w-[110px]" data-modal-hide="block-confirmation">@CRS.ADMIN.APPLICATION.Resources.Resource.clubNo</div>
+                        <div class="btn btn-primary rounded-[4px] w-[110px]" onclick="BlockGroup()" data-val1="" data-val2="" id="block_id">@CRS.ADMIN.APPLICATION.Resources.Resource.clubYes</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--block confirmation modal end-->
+<!--unblock confirmation modal start-->
+<div id="unblock-confirmation" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 hidden w-full
+     p-4 overflow-x-hidden overflow-y-auto
+     md:inset-0 h-[calc(100%-1rem)] max-h-full " style="align-items: flex-start;">
+    <div class="relative max-w-2xl max-h-full w-[412px] px-4 pt-[40px] pb-[46px] mt-24">
+        <!-- Modal content -->
+        <div class="relative bg-white rounded-lg shadow">
+            <!-- Modal header -->
+            <button type="button"
+                    class="text-gray-400 bg-transparent rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center absolute top-[24px] right-[20px] "
+                    data-modal-hide="unblock-confirmation">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="25" viewBox="0 0 24 25" fill="none">
+                    <rect y="0.621094" width="24" height="24" rx="12" fill="#FAFAFA" />
+                    <path d="M5.41406 4.95703L4.33594 6.03516L10.9219 12.6211L4.33594 19.207L5.41406 20.2852L12 13.6992L18.5859 20.2852L19.6641 19.207L13.0781 12.6211L19.6641 6.03516L18.5859 4.95703L12 11.543L5.41406 4.95703Z"
+                          fill="#7A7A7A" />
+                </svg>
+            </button>
+            <!-- Modal body -->
+            <div class="grid  px-[20px] py-8">
+                <div class="text-[#333] font-semibold pb-[11px] border-b border-[#eeeeee]">@CRS.ADMIN.APPLICATION.Resources.Resource.Confirmation</div>
+                <div class="grid text-[#062937] mt-[20px] mb-[40px]">
+                    <div class="text-[14px] flex text-secondary-text-2 text-start" id="confirmationMessage">
+                        Are you sure you want to un-block this
+                        <span class="font-[700]  mx-[3px]">
+
+                            "GROUP"
+                        </span> ?
+                    </div>
+                    <div class="mt-3 text-[16px] font-[400]">
+                        Note: Unblocking this group will restore the visibility of clubs under its subgroups as part of the group.
+                    </div>
+                </div>
+                <div class="flex justify-end">
+                    <div class="flex gap-2 justify-end">
+                        <input id="request_id" value="" hidden />
+                        <div class="btn btn-secondary rounded-[4px] w-[110px]" data-modal-hide="unblock-confirmation">@CRS.ADMIN.APPLICATION.Resources.Resource.clubNo</div>
+                        <div class="btn btn-primary rounded-[4px] w-[110px]" onclick="UnblockGroup()" data-val1="" data-val2="" id="unblock_id">@CRS.ADMIN.APPLICATION.Resources.Resource.clubYes</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--unblock confirmation modal end-->
+<!--delete confirmation modal start-->
+<div id="delete-confirmation" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 hidden w-full
+     p-4 overflow-x-hidden overflow-y-auto
+     md:inset-0 h-[calc(100%-1rem)] max-h-full " style="align-items: flex-start;">
+    <div class="relative max-w-2xl max-h-full w-[412px] px-4 pt-[40px] pb-[46px] mt-24">
+        <!-- Modal content -->
+        <div class="relative bg-white rounded-lg shadow">
+            <!-- Modal header -->
+            <button type="button"
+                    class="text-gray-400 bg-transparent rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center absolute top-[24px] right-[20px] "
+                    data-modal-hide="delete-confirmation">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="25" viewBox="0 0 24 25" fill="none">
+                    <rect y="0.621094" width="24" height="24" rx="12" fill="#FAFAFA" />
+                    <path d="M5.41406 4.95703L4.33594 6.03516L10.9219 12.6211L4.33594 19.207L5.41406 20.2852L12 13.6992L18.5859 20.2852L19.6641 19.207L13.0781 12.6211L19.6641 6.03516L18.5859 4.95703L12 11.543L5.41406 4.95703Z"
+                          fill="#7A7A7A" />
+                </svg>
+            </button>
+            <!-- Modal body -->
+            <div class="grid pt-[24px] px-[23px] pb-[45px] ">
+                <div class="text-[#333] font-semibold pb-[11px] border-b border-[#eeeeee]">@CRS.ADMIN.APPLICATION.Resources.Resource.Confirmation</div>
+                <div class="grid gap-[20px] text-[#062937] mt-[20px] mb-[40px]">
+                    <div class="text-[14px] text-secondary-text-2 text-start">
+                        Are you sure you want to delete this GROUP?
+                    </div>
+                </div>
+                <div class="flex justify-end">
+                    <div class="flex gap-2 justify-end">
+                        <input id="request_id" value="" hidden />
+                        <div class="btn btn-secondary rounded-[4px] w-[110px]" data-modal-hide="delete-confirmation">@CRS.ADMIN.APPLICATION.Resources.Resource.No</div>
+                        <div class="btn btn-primary w-[110px] rounded-[4px]" onclick="DeleteGroup()" data-val1="" id="delete_id">@CRS.ADMIN.APPLICATION.Resources.Resource.Yes</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--delete confirmation modal end-->
+
+
+@Html.Partial("_ManageGroup", _ManageGroup)
+@section scripts{
+    <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
+    <script>
+        //PAGINATION START
+       document.addEventListener('DOMContentLoaded', function () {
+        const page_size = @ViewBag.PageSize;
+        const total_data = @ViewBag.TotalRecords;
+        const start_index_val = @ViewBag.StartIndex;
+        let URL = "/GroupManagement/Index";
+        let search_filter = $('#default-search').val();
+        URL = addQueryParam(URL, 'SearchFilter', search_filter);
+        LoadPagination(page_size, total_data, start_index_val, URL);
+       });
+       //PAGINATION END
+
+        //START GROUP MODULE JS
+        function CancelFunction() {
+            location.reload();
+        }
+        $('#submit-button-id').click(function () {
+            $('#ManageGroupForm').submit();
+        })
+        var popUprenderValue = '@ViewBag.PopUpRenderValue';
+        if (popUprenderValue != null && popUprenderValue != '' && popUprenderValue == "Manage") {
+            var element = document.getElementById('add-group');
+            element.classList.remove('translate-x-full');
+        } else {
+            var element = document.getElementById('add-group');
+            element.classList.add('translate-x-full');
+        }
+        $('div #contentBasic').css('display', 'block');
+        function ManageGroupDetailsFunction(groupid) {
+            let searchFilter = $('#default-search').val();
+            const startIndex =@ViewBag.StartIndex;
+            const pageSize =@ViewBag.PageSize;
+            window.location.href = "/GroupManagement/ManageGroup?GroupId=" + groupid + '&SearchFilter=' + searchFilter + '&StartIndex=' + startIndex + '&PageSize=' + pageSize;
+
+        }
+        function BlockGroup() {
+            const groupId = $('#block_id').attr('data-val1');
+            var requestVerificationToken = $('input[name="__RequestVerificationToken"]').val();
+            let search_filter = $('#default-search').val();
+            const start_index_val = @ViewBag.StartIndex;
+            const page_size = @ViewBag.PageSize;
+
+            $.ajax({
+                type: 'POST',
+                async: true,
+                url: '/GroupManagement/BlockGroup?GroupId=' + groupId,
+                dataType: 'json',
+                data: {
+                    '__RequestVerificationToken': requestVerificationToken
+                },
+                success: function (response) {
+                    window.location.href = '/GroupManagement/Index?SearchFilter=' + search_filter + '&StartIndex=' + start_index_val + '&PageSize=' + page_size;
+                },
+                error: function (error) {
+                    window.location.href = '/GroupManagement/Index?SearchFilter=' + search_filter + '&StartIndex=' + start_index_val + '&PageSize=' + page_size;
+                }
+            })
+        }
+        function UnblockGroup() {
+            const groupId = $('#unblock_id').attr('data-val1');
+            var requestVerificationToken = $('input[name="__RequestVerificationToken"]').val();
+            let search_filter = $('#default-search').val();
+            const start_index_val = @ViewBag.StartIndex;
+            const page_size = @ViewBag.PageSize;
+
+            $.ajax({
+                type: 'POST',
+                async: true,
+                url: '@Url.Action("UnblockGroup", "GroupManagement")',
+                dataType: 'json',
+                data: {
+                    '__RequestVerificationToken': requestVerificationToken, 'GroupId': groupId
+                },
+                success: function (response) {
+                    window.location.href = '/GroupManagement/Index?SearchFilter=' + search_filter + '&StartIndex=' + start_index_val + '&PageSize=' + page_size;
+                },
+                error: function (error) {
+                    window.location.href = '/GroupManagement/Index?SearchFilter=' + search_filter + '&StartIndex=' + start_index_val + '&PageSize=' + page_size;
+                }
+            })
+        }
+        function DeleteGroup() {
+            const groupId = $('#delete_id').attr('data-val1');
+            var requestVerificationToken = $('input[name="__RequestVerificationToken"]').val();
+            let search_filter = $('#default-search').val();
+            const start_index_val = @ViewBag.StartIndex;
+            const page_size = @ViewBag.PageSize;
+            $.ajax({
+                type: 'POST',
+                async: true,
+                url: '@Url.Action("DeleteGroup", "GroupManagement")',
+                data: {
+                    '__RequestVerificationToken': requestVerificationToken, 'GroupId': groupId
+                },
+                dataType: 'json',
+                success: function (response) {
+                    window.location.href = '/GroupManagement/Index?SearchFilter=' + search_filter + '&StartIndex=' + start_index_val + '&PageSize=' + page_size;
+                },
+                error: function (error) {
+                    window.location.href = '/GroupManagement/Index?SearchFilter=' + search_filter + '&StartIndex=' + start_index_val + '&PageSize=' + page_size;
+                }
+            })
+        }
+        function OpenBlockModal(groupId) {
+            const modalTarget = document.querySelector("[data-modal-target='block-basicclub-confirmation']");
+            const modal = document.getElementById("block-confirmation");
+            modal.classList.remove("hidden");
+            $('#block_id').attr('data-val1', groupId);
+            $('#block_id').attr('data-val2', 'B');
+            modal.setAttribute("aria-hidden", "false");
+        }
+        function OpenUnblockModal(groupId) {
+            const modalTarget = document.querySelector("[data-modal-target='block-basicclub-confirmation']");
+            const modal = document.getElementById("unblock-confirmation");
+            modal.classList.remove("hidden");
+            $('#unblock_id').attr('data-val1', groupId);
+            $('#unblock_id').attr('data-val2', 'A');
+            modal.setAttribute("aria-hidden", "false");
+        }
+        function OpenDeleteModal(groupId) {
+            const modalTarget = document.querySelector("[data-modal-target='block-basicclub-confirmation']");
+            const modal = document.getElementById("delete-confirmation");
+            modal.classList.remove("hidden");
+            $('#delete_id').attr('data-val1', groupId);
+            modal.setAttribute("aria-hidden", "false");
+        }
+        //END GROUP MODULE JS
+    </script>
+
+    <script>
+        //START SUB GROUP MODULE JS
+        function GotoSubgroupPage(groupId, groupName,groupNameKatakana) {
+            window.location.href = "/GroupManagement/SubGroup?GroupId=" + groupId + "&GroupName=" + groupName + "&GroupNameKatakana=" + groupNameKatakana;
+        }
+
+        //END SUB GROUP MODULE JS
+    </script>
+
+    <script>
+        //START GROUP GALLERY MODULE JS
+        function GotoGroupGallery(groupid) {
+            window.location.href = "/GroupManagement/GroupGallery?GroupId=" + groupid;
+        }
+
+        //END GROUP GALLERY MODULE JS
+    </script>
+}
+

@@ -1,0 +1,163 @@
+﻿@model CRS.ADMIN.APPLICATION.Models.GroupManagement.ManageSubGroupClubModel
+
+<style>
+    .select2-container--default .select2-selection--single {
+        height: 44px !important;
+    }
+
+    .select2-container--default .select2-selection--multiple {
+        height: 80px !important;
+        overflow-y: auto;
+    }
+
+    .select2-container--default .select2-search--inline .select2-search__field {
+        width: 259px !important;
+        padding-left: 20px;
+        padding-top: 6px;
+        display: flex;
+        justify-content: flex-start;
+    }
+</style>
+
+<div id="add-sub-group-club" class="drawer-close-disable  flex justify-end fixed top-0 right-0 z-40 h-screen overflow-y-auto transition-transform translate-x-full "
+     tabindex="-1" aria-labelledby="drawer-right-label">
+    <div class="bg-white w-[574px] drawer-container relative">
+        <div class="drawer-form-container sticky top-0 z-[5] ">
+            <div class="drawer-form flex justify-between bg-secondary-color-pink py-[16px] px-[24px] h-[56px]">
+                <div> Manage Clubs</div>
+                <button type="button" data-drawer-hide="add-sub-group-club" aria-controls="add-sub-group-club" onclick="CancelFunction()"
+                        class="text-[20px]">
+                    <i class="las la-window-close text-white"></i>
+                </button>
+            </div>
+        </div>
+        <div class="p-[24px]">
+            <div class=" py-4 grid gap-6">
+                <div id="content3" class="content-section" style="display: block;">
+                    <div class="grid  gap-4">
+                        <div class="grid grid-cols-2 gap-x-4 gap-y-5">
+                            <div class="input-field-common">
+                                <label for="instagram" class="block mb-[12px] text-[14px] font-[500] text-secondary-100 ">
+                                    グループ名
+                                </label>
+                                @Html.TextBoxFor(model => model.GroupName, new
+                           {
+                               @class = "w-full text-[#B7B7B7]",
+                               @placeholder = "",
+                               autocomplete = "off",
+                               disabled = "disabled"
+
+                           })
+                            </div>
+                            <div class="input-field-common">
+                                <label for="WorkingHrTo" class="block mb-[12px]  text-[14px] font-[500] text-secondary-100 ">
+                                    グループ名（カタカナ）
+                                </label>
+                                @Html.TextBoxFor(model => model.GroupNameKatakana, new
+                                    {
+                                        @class = "w-full text-[#B7B7B7]",
+                                        @placeholder = "",
+                                        autocomplete = "off",
+                                          disabled = "disabled"
+                                    })
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-1 gap-x-4 gap-y-5">
+                            <div class="input-field-common">
+                                <label class="block mb-[12px] text-[14px] font-[500] text-secondary-100 ">
+                                    サブグループ
+                                </label>
+                                <select id="subgroupid" class="default_select block w-full "
+                                        style="width: 100%;" name="SubGroupDDL">
+                                    @foreach (var item in ViewBag.SubGroupList as IEnumerable<SelectListItem>)
+                                    {
+                                        var selectedId = Model.SubGroupId as string;
+
+                                        if (selectedId == item.Value)
+                                        {
+                                            <option value="@item.Value" selected disabled>@item.Text</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@item.Value">@item.Text</option>
+                                        }
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex flex-col gap-4">
+                        <div class="flex gap-2 text-primary-300 text-[14px] font-[600] items-center mt-[10px]">
+                            <div class="flex-none uppercase">店舗をサブグループに追加</div>
+                            <div class="bg-[#F4F4F4] h-[1px] w-full">
+                            </div>
+                        </div>
+                        <div class="grid  gap-4">
+                            <div class="grid grid-cols-2 gap-x-4 gap-y-5">
+                                <div class="input-field-common">
+                                    <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
+                                        エリア
+                                    </label>
+                                    <select id="staticLocationDDL" class=" default_select select-common block w-full "
+                                            style="width: 100%;" name="LocationDDL">
+                                        @foreach (var item in ViewBag.LocationDDL as IEnumerable<SelectListItem>)
+                                        {
+                                            <option value="@item.Value" selected>@item.Text</option>
+                                        }
+                                    </select>
+                                </div>
+                                <div class="input-field-common">
+                                    <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
+                                        店舗
+                                    </label>
+                                    @Html.HiddenFor(m => m.ClubId)
+                                    <select id="staticClubDDL" class="default_select select-common block w-full ClubDDL" multiple="multiple"
+                                            style="width: 100%;" name="ClubDDL" placeholder="Select">
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <label class="block text-sm font-medium text-secondary-text-2 ">
+                                    店舗の合計数
+                                </label>
+                                <div class="input-field-common max-w-[116px]">
+                                    <input type="text" id="TotalClubCount" name="TotalClubCount" class="w-full text-[#B7B7B7]"
+                                           placeholder="" autocomplete="off" disabled="disabled" />
+                                </div>
+                            </div>
+                            <div class="border border-[2px] border-dashed border-[#EBEBEB] w-full my-4"></div>
+                        </div>
+                    </div>
+                    <div class="flex flex-col gap-4" id="dynamicContainerWrapper">
+                       
+                       
+                    </div>
+                    <button class="border border-dashed border-[#D75A8B] text-[#D75A8B] rounded-[4px] border-[1px] px-4 py-[6px] gap-1 mt-[24px]" id="addNewRow">
+                        <i class="las la-plus-circle"></i>
+                        <span>
+                            新規追加
+                        </span>
+                    </button>
+                    <div class="flex justify-between items-center mt-4">
+                        <label class="block text-sm font-medium text-secondary-text-2 ">
+                            合計店舗数
+                        </label>
+                        <div class="input-field-common max-w-[116px]">
+                            <input type="text" id="GrandTotalClubCount" name="GrandTotalClubCount" class="w-full text-[#B7B7B7]"
+                                   placeholder="" autocomplete="off" disabled="disabled" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="py-4 flex justify-end">
+                <div class="flex gap-6">
+                    <button class="btn btn-secondary rounded-[4px]" type="button" data-drawer-hide="add-sub-group-club"
+                            aria-controls="add-sub-group-club" onclick="CancelFunction();">
+                        @CRS.ADMIN.APPLICATION.Resources.Resource.Cancel
+                    </button>
+                    <button class="btn btn-primary-default rounded-[4px]" id="submit-button-id" onclick="this.disabled=true;submit(); " > @CRS.ADMIN.APPLICATION.Resources.Resource.Submit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

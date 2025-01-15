@@ -1,0 +1,178 @@
+﻿@model CRS.ADMIN.APPLICATION.Models.GroupManagement.ManageGroupModel
+<style>
+
+    .landline-number-input {
+        padding: 1px !important;
+    }
+
+    .box {
+        display: flex;
+        height: 40px;
+        align-items: flex-start;
+        gap: 10px;
+        align-self: stretch;
+    }
+
+        .box i {
+            display: flex;
+            width: fit-content;
+            height: 40px;
+            padding: 0px 8px;
+            align-items: center;
+            gap: 5px;
+            border-radius: 4px;
+            border: 1px solid #A09E91;
+        }
+
+        .box p {
+            color: #B7B7B7;
+            font-family: &quot;
+            Noto Sans&quot;
+            font-size: 16px;
+            font-style: normal;
+            font-weight: 500;
+            line-height: 100%;
+        }
+</style>
+<div id="add-group" class="drawer-close-disable  flex justify-end fixed top-0 right-0 z-40 h-screen overflow-y-auto transition-transform translate-x-full"
+     tabindex="-1" aria-labelledby="drawer-right-label">
+    <div class="bg-white w-[574px] drawer-container relative">
+        <div class="drawer-form-container sticky top-0 z-[5] ">
+            <div class="drawer-form flex justify-between bg-secondary-color-pink py-[16px] px-[24px] h-[56px]">
+                <div>  Manage Group</div>
+                <button type="button" data-drawer-hide="add-group" aria-controls="add-group" onclick="CancelFunction()"
+                        class="text-[20px]">
+                    <i class="las la-window-close text-white"></i>
+                </button>
+            </div>
+        </div>
+        <div class="p-[24px]">
+            <div class=" py-4 grid gap-6">
+                @using (Html.BeginForm("ManageGroup", "GroupManagement", FormMethod.Post, new { @id = "ManageGroupForm", enctype = "multipart/form-data" }))
+                {
+                    @Html.AntiForgeryToken()
+                    if (!string.IsNullOrEmpty(Model.GroupId))
+                    {
+                        @Html.HiddenFor(model => model.GroupId)
+                    }
+
+                    if (!string.IsNullOrEmpty(Model.GroupCoverPhoto))
+                    {
+                        @Html.HiddenFor(model => model.GroupCoverPhoto)
+                    }
+                    @Html.HiddenFor(model => model.SearchFilter)
+                    @Html.HiddenFor(model => model.Skip)
+                    @Html.HiddenFor(model => model.Take)
+                    <div id="contentBasic" class="content-section " style="display:block">
+                        <div class="grid gap-4 py-[10px]">
+                            <div class="grid grid-cols-2 gap-x-5 gap-y-4">
+                                <div class="input-field-common">
+                                    <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
+                                        @CRS.ADMIN.APPLICATION.Resources.Resource.Group_Name
+                                    </label>
+                                    @Html.TextBoxFor(model => model.GroupName, new
+                               {
+                                   @class = "w-full border-[#A09E91]",
+                                   @id = "group_name_id",
+                                   @placeholder = CRS.ADMIN.APPLICATION.Resources.Resource.Group_Name_Placeholder,
+                                   autocomplete = "off",
+                                   @maxLength = "50"
+                               })
+                                    <span class="error">
+                                        @Html.ValidationMessageFor(m => m.GroupName)
+                                    </span>
+                                </div>
+                                <div class="input-field-common">
+                                    <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
+                                        @CRS.ADMIN.APPLICATION.Resources.Resource.Furigana
+                                    </label>
+                                    @Html.TextBoxFor(model => model.GroupNameKatakana, new
+                               {
+                                   @class = "w-full border-[#A09E91]",
+                                   @id = "group_name_katakana_id",
+                                   autocomplete = "off",
+                                   @maxLength = "50"
+                               })
+                                    <span class="error">
+                                        @Html.ValidationMessageFor(m => m.GroupNameKatakana)
+                                    </span>
+                                </div>
+                            </div>
+                            <!--group cover photo page start -->
+                            <div class="grid grid-cols-1 gap-x-5 gap-y-4">
+                                <div>
+                                    <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
+                                        @CRS.ADMIN.APPLICATION.Resources.Resource.Cover_Photo
+                                    </label>
+                                    <div class="file-upload-common bg-[#F5F5F5]">
+                                        <label for="file_input_cover1" class="custom-file-upload bg-[#CC527A] w-[123px] flex-none ">
+                                            <span>  @CRS.ADMIN.APPLICATION.Resources.Resource.Choose_Images</span>
+                                        </label>
+                                        <input id="file_input_cover1" class="file-input" name="groupCoverImage" type="file" value="@Model.GroupCoverPhoto" style="display:none;">
+                                        <p id="file_name_cover1"
+                                           class="file-name w-max h-[23px] overflow-hidden pl-2 text-xs text-[#686868] leading-[25px] flex items-center gap-1" >
+                                            <img src="~/Content/assets_new/images/images-solid.svg" />
+
+                                            @if (string.IsNullOrEmpty(Model.GroupCoverPhoto))
+                                            {
+                                                <span>
+
+                                                    @CRS.ADMIN.APPLICATION.Resources.Resource.No_File_Choosen
+                                                </span>
+                                            }
+                                            else
+                                            {
+                                                string fileName = Path.GetFileName(Model.GroupCoverPhoto);
+                                                @fileName
+                                            }
+                                        </p>
+                                    </div>
+                                    <div class="text-xs text-error mt-[8px]">
+                                        @CRS.ADMIN.APPLICATION.Resources.Resource.Note:
+                                        @CRS.ADMIN.APPLICATION.Resources.Resource.Image_should_be_in_HEIF_format
+                                        @CRS.ADMIN.APPLICATION.Resources.Resource.and_Maximum_file_size_is_5_MB
+                                        <span class="error">
+                                            @Html.ValidationMessageFor(m => m.GroupCoverPhoto)
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- description start -->
+                            <div class="grid grid-cols-1 gap-x-5 gap-y-4">
+                                <div class="input-field-common">
+                                    <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
+                                        @CRS.ADMIN.APPLICATION.Resources.Resource.Description
+                                    </label>
+                                    @Html.TextAreaFor(model => model.GroupDescription, new
+                               {
+                                   @class = "w-full",
+                                   @placeholder = "Enter group descriptions",
+                                   autocomplete = "off",
+                                   @maxLength = "500"
+                               })
+
+                                    <span class="error">
+                                        @Html.ValidationMessageFor(m => m.GroupDescription)
+                                    </span>
+                                </div>
+                                <!-- description end -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-[#EBEBEB] h-[2px] w-full">
+                    </div>
+                    <div class="py-4 flex justify-end">
+                        <div class="flex gap-6">
+                            <button class="btn btn-secondary rounded-[4px]" type="button" data-drawer-hide="add-group"
+                                    aria-controls="add-group" onclick="CancelFunction();">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Cancel
+                            </button>
+                            <button class="btn btn-primary-default rounded-[4px]" id="submit-button-id"> @CRS.ADMIN.APPLICATION.Resources.Resource.Submit</button>
+
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

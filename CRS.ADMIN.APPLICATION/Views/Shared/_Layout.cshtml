@@ -89,20 +89,20 @@
             width: 176px;
             height: 59px;
             position: absolute;*/ /* Ensure positioning is respected */
-            /*top: 8px;
+        /*top: 8px;
             right: 334px;
             padding: 6px 12px;
             gap: 8px;
             border-radius: 4px 4px 4px 4px;
             border: 1px solid #FCE6EF;*/ /* Ensure border is styled correctly */
-            /*opacity: 1;
+        /*opacity: 1;
             background-color: #FCE6EF
         }
         .card-text {*/
-            /*width: 91px;*/ /* Replace Hug (91px)px with 91px */
-            /*height: 28px;*/ /* Replace Hug (28px)px with 28px */
-            /*gap: 0;*/ /* '0px' is equivalent to '0' */
-            /*color: #d75a8b;
+        /*width: 91px;*/ /* Replace Hug (91px)px with 91px */
+        /*height: 28px;*/ /* Replace Hug (28px)px with 28px */
+        /*gap: 0;*/ /* '0px' is equivalent to '0' */
+        /*color: #d75a8b;
         }
         .hoslog-text {
             font-family: Noto Sans;
@@ -131,7 +131,7 @@
         }
 
             .border-card-balance img {
-                height:100%; /* Adjust the height of the image to fit the container */
+                height: 100%; /* Adjust the height of the image to fit the container */
                 width: auto; /* Maintain aspect ratio of the image */
             }
 
@@ -155,7 +155,6 @@
             text-align: left;
             margin-bottom: 8px;
         }
-
     </style>
 
     @*<style>
@@ -196,461 +195,457 @@
                 var MenuActiveClass = string.Empty;
             }
 
-        <div style="padding-bottom: 24px;" class="grid gap-[8px] ">
-            @if (ApplicationUtilities.HasMenuRight("/Home/Dashboard"))
-            {
-                if (!string.IsNullOrEmpty(CurrentURL) && CurrentURL.Trim().ToUpper() == "/HOME/DASHBOARD") { MenuActiveClass = "menuActive"; }
-                else { MenuActiveClass = string.Empty; }
-                <a href="@Url.Action("Dashboard", "Home")">
-                    <div class="menuContainer @MenuActiveClass">
-                        <div class="menu-icon w-max">
-                            <img src="~/Content/assets_new/images/dashboard.svg" class="image" />
-                            <img src="~/Content/assets_new/images/dashboard-active.svg" class="active-image" />
+            <div style="padding-bottom: 24px;" class="grid gap-[8px] ">
+                @if (ApplicationUtilities.HasMenuRight("/Home/Dashboard"))
+                {
+                    if (!string.IsNullOrEmpty(CurrentURL) && CurrentURL.Trim().ToUpper() == "/HOME/DASHBOARD") { MenuActiveClass = "menuActive"; }
+                    else { MenuActiveClass = string.Empty; }
+                    <a href="@Url.Action("Dashboard", "Home")">
+                        <div class="menuContainer @MenuActiveClass">
+                            <div class="menu-icon w-max">
+                                <img src="~/Content/assets_new/images/dashboard.svg" class="image" />
+                                <img src="~/Content/assets_new/images/dashboard-active.svg" class="active-image" />
+                            </div>
+                            <div class="label">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Dashboard
+                            </div>
                         </div>
-                        <div class="label">
-                            @CRS.ADMIN.APPLICATION.Resources.Resource.Dashboard
+                    </a>
+                }
+                <!-- -----  -->
+                @if (ApplicationUtilities.HasMenuRight("/RoleManagement/RoleList"))
+                {
+                    if (!string.IsNullOrEmpty(CurrentURL) && CurrentURL.Trim().ToUpper() == "/ROLEMANAGEMENT/ROLELIST") { MenuActiveClass = "menuActive"; }
+                    else { MenuActiveClass = string.Empty; }
+                    <a href="@Url.Action("RoleList", "RoleManagement")">
+                        <div class="menuContainer @MenuActiveClass">
+                            <div class="menu-icon w-max">
+                                <img src="~/Content/assets_new/images/user-cog-solid.svg" class="image" />
+                                <img src="~/Content/assets_new/images/user-cog-solid-active.svg" class="active-image" />
+                            </div>
+                            <div class="label">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Roles_and_Privileges
+                            </div>
                         </div>
-                    </div>
-                </a>
-            }
-            <!-- -----  -->
-            @if (ApplicationUtilities.HasMenuRight("/RoleManagement/RoleList"))
-            {
-                if (!string.IsNullOrEmpty(CurrentURL) && CurrentURL.Trim().ToUpper() == "/ROLEMANAGEMENT/ROLELIST") { MenuActiveClass = "menuActive"; }
-                else { MenuActiveClass = string.Empty; }
-                <a href="@Url.Action("RoleList", "RoleManagement")">
-                    <div class="menuContainer @MenuActiveClass">
-                        <div class="menu-icon w-max">
-                            <img src="~/Content/assets_new/images/user-cog-solid.svg" class="image" />
-                            <img src="~/Content/assets_new/images/user-cog-solid-active.svg" class="active-image" />
+                    </a>
+                }
+                <!-- -----  -->
+                @if (ApplicationUtilities.HasMenuRight("/LocationManagement/LocationList"))
+                {
+                    if (!string.IsNullOrEmpty(CurrentURL) && CurrentURL.Trim().ToUpper() == "/LOCATIONMANAGEMEN/LOCATIONLIST") { MenuActiveClass = "menuActive"; }
+                    else { MenuActiveClass = string.Empty; }
+                    <a href="@Url.Action("LocationList", "LocationManagement")">
+                        <div class="menuContainer @MenuActiveClass">
+                            <div class="menu-icon w-max">
+                                <img src="~/Content/assets_new/images/location-arrow-solid.svg" class="image" />
+                                <img src="~/Content/assets_new/images/location-arrow-solid-active.svg" class="active-image" />
+                            </div>
+                            <div class="label">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Location_Management
+                            </div>
                         </div>
-                        <div class="label">
-                            @CRS.ADMIN.APPLICATION.Resources.Resource.Roles_and_Privileges
+                    </a>
+                }
+                <!-- -----  -->
+                @if (ApplicationUtilities.HasMenuRight("/StaffManagement/StaffList"))
+                {
+                    if (!string.IsNullOrEmpty(CurrentURL) && CurrentURL.Trim().ToUpper() == "/STAFFMANAGEMENT/STAFFLIST") { MenuActiveClass = "menuActive"; }
+                    else { MenuActiveClass = string.Empty; }
+                    <a href="@Url.Action("StaffList", "StaffManagement")">
+                        <div class="menuContainer @MenuActiveClass">
+                            <div class="menu-icon w-max">
+                                <img src="~/Content/assets_new/images/customer.svg" class="image" />
+                                <img src="~/Content/assets_new/images/customer-active.svg" class="active-image" />
+                            </div>
+                            <div class="label">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Staff_Management
+                            </div>
                         </div>
-                    </div>
-                </a>
-            }
-            <!-- -----  -->
-            @if (ApplicationUtilities.HasMenuRight("/LocationManagement/LocationList"))
-            {
-                if (!string.IsNullOrEmpty(CurrentURL) && CurrentURL.Trim().ToUpper() == "/LOCATIONMANAGEMEN/LOCATIONLIST") { MenuActiveClass = "menuActive"; }
-                else { MenuActiveClass = string.Empty; }
-                <a href="@Url.Action("LocationList", "LocationManagement")">
-                    <div class="menuContainer @MenuActiveClass">
-                        <div class="menu-icon w-max">
-                            <img src="~/Content/assets_new/images/location-arrow-solid.svg" class="image" />
-                            <img src="~/Content/assets_new/images/location-arrow-solid-active.svg" class="active-image" />
+                    </a>
+                }
+                @if (ApplicationUtilities.HasMenuRight("/PromotionManagement/GetPromotionalImages"))
+                {
+                    if (!string.IsNullOrEmpty(CurrentURL) && CurrentURL.Trim().ToUpper() == "/PROMOTIONMANAGEMENT/GETPROMOTIONALIMAGES") { MenuActiveClass = "menuActive"; }
+                    else { MenuActiveClass = string.Empty; }
+                    <a href="@Url.Action("GetPromotionalImages", "PromotionManagement")">
+                        <div class="menuContainer @MenuActiveClass">
+                            <div class="menu-icon w-max">
+                                <img src="~/Content/assets_new/images/image-solid.svg" class="image" />
+                                <img src="~/Content/assets_new/images/image-solid-active.svg" class="active-image" />
+                            </div>
+                            <div class="label">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Promotion_Management
+                            </div>
                         </div>
-                        <div class="label">
-                            @CRS.ADMIN.APPLICATION.Resources.Resource.Location_Management
+                    </a>
+                }
+                @if (ApplicationUtilities.HasMenuRight("/CommissionManagement/CategoryList"))
+                {
+                    if (!string.IsNullOrEmpty(CurrentURL) && CurrentURL.Trim().ToUpper() == "/COMMISSIONMANAGEMENT/CATEGORYLIST") { MenuActiveClass = "menuActive"; }
+                    else { MenuActiveClass = string.Empty; }
+                    <a href="@Url.Action("CategoryList", "CommissionManagement")">
+                        <div class="menuContainer @MenuActiveClass">
+                            <div class="menu-icon w-max">
+                                <img src="~/Content/assets_new/images/commission.svg" class="image" />
+                                <img src="~/Content/assets_new/images/commission-active.svg" class="active-image" />
+                            </div>
+                            <div class="label">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Commission_Management
+                            </div>
                         </div>
-                    </div>
-                </a>
-            }
-            <!-- -----  -->
-            @if (ApplicationUtilities.HasMenuRight("/StaffManagement/StaffList"))
-            {
-                if (!string.IsNullOrEmpty(CurrentURL) && CurrentURL.Trim().ToUpper() == "/STAFFMANAGEMENT/STAFFLIST") { MenuActiveClass = "menuActive"; }
-                else { MenuActiveClass = string.Empty; }
-                <a href="@Url.Action("StaffList", "StaffManagement")">
-                    <div class="menuContainer @MenuActiveClass">
-                        <div class="menu-icon w-max">
-                            <img src="~/Content/assets_new/images/customer.svg" class="image" />
-                            <img src="~/Content/assets_new/images/customer-active.svg" class="active-image" />
+                    </a>
+                }
+                <!-- -----  -->
+                @if (ApplicationUtilities.HasMenuRight("/CustomerManagement/CustomerList"))
+                {
+                    if (!string.IsNullOrEmpty(CurrentURL) && CurrentURL.Trim().ToUpper() == "/CUSTOMERMANAGEMENT/CUSTOMERLIST") { MenuActiveClass = "menuActive"; }
+                    else { MenuActiveClass = string.Empty; }
+                    <a href="@Url.Action("CustomerList", "CustomerManagement")">
+                        <div class="menuContainer @MenuActiveClass">
+                            <div class="menu-icon w-max">
+                                <img src="~/Content/assets_new/images/customer.svg" class="image" />
+                                <img src="~/Content/assets_new/images/customer-active.svg" class="active-image" />
+                            </div>
+                            <div class="label">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Customer_Management
+                            </div>
                         </div>
-                        <div class="label">
-                            @CRS.ADMIN.APPLICATION.Resources.Resource.Staff_Management
-                        </div>
-                    </div>
-                </a>
-            }
-            @if (ApplicationUtilities.HasMenuRight("/PromotionManagement/GetPromotionalImages"))
-            {
-                if (!string.IsNullOrEmpty(CurrentURL) && CurrentURL.Trim().ToUpper() == "/PROMOTIONMANAGEMENT/GETPROMOTIONALIMAGES") { MenuActiveClass = "menuActive"; }
-                else { MenuActiveClass = string.Empty; }
-                <a href="@Url.Action("GetPromotionalImages", "PromotionManagement")">
-                    <div class="menuContainer @MenuActiveClass">
-                        <div class="menu-icon w-max">
-                            <img src="~/Content/assets_new/images/image-solid.svg" class="image" />
-                            <img src="~/Content/assets_new/images/image-solid-active.svg" class="active-image" />
-                        </div>
-                        <div class="label">
-                            @CRS.ADMIN.APPLICATION.Resources.Resource.Promotion_Management
-                        </div>
-                    </div>
-                </a>
-            }
-            @if (ApplicationUtilities.HasMenuRight("/CommissionManagement/CategoryList"))
-            {
-                if (!string.IsNullOrEmpty(CurrentURL) && CurrentURL.Trim().ToUpper() == "/COMMISSIONMANAGEMENT/CATEGORYLIST") { MenuActiveClass = "menuActive"; }
-                else { MenuActiveClass = string.Empty; }
-                <a href="@Url.Action("CategoryList", "CommissionManagement")">
-                    <div class="menuContainer @MenuActiveClass">
-                        <div class="menu-icon w-max">
-                            <img src="~/Content/assets_new/images/commission.svg" class="image" />
-                            <img src="~/Content/assets_new/images/commission-active.svg" class="active-image" />
-                        </div>
-                        <div class="label">
-                            @CRS.ADMIN.APPLICATION.Resources.Resource.Commission_Management
-                        </div>
-                    </div>
-                </a>
-            }
-            <!-- -----  -->
-            @if (ApplicationUtilities.HasMenuRight("/CustomerManagement/CustomerList"))
-            {
-                if (!string.IsNullOrEmpty(CurrentURL) && CurrentURL.Trim().ToUpper() == "/CUSTOMERMANAGEMENT/CUSTOMERLIST") { MenuActiveClass = "menuActive"; }
-                else { MenuActiveClass = string.Empty; }
-                <a href="@Url.Action("CustomerList", "CustomerManagement")">
-                    <div class="menuContainer @MenuActiveClass">
-                        <div class="menu-icon w-max">
-                            <img src="~/Content/assets_new/images/customer.svg" class="image" />
-                            <img src="~/Content/assets_new/images/customer-active.svg" class="active-image" />
-                        </div>
-                        <div class="label">
-                            @CRS.ADMIN.APPLICATION.Resources.Resource.Customer_Management
-                        </div>
-                    </div>
-                </a>
-            }
-            <!-- -----  -->
-            @if (ApplicationUtilities.HasMenuRight("/ClubManagement/ClubList"))
-            {
-                if (!string.IsNullOrEmpty(CurrentURL) && CurrentURL.Trim().ToUpper() == "/CLUBMANAGEMENT/CLUBLIST") { MenuActiveClass = "menuActive"; }
-                else { MenuActiveClass = string.Empty; }
-                <a href="@Url.Action("ClubList", "ClubManagement")">
-                    <div class="menuContainer @MenuActiveClass">
-                        <div class="menu-icon w-max">
-                            <img src="~/Content/assets_new/images/club.svg" class="image" />
-                            <img src="~/Content/assets_new/images/club-active.svg" class="active-image" />
+                    </a>
+                }
+                <!-- -----  -->
+                @if (ApplicationUtilities.HasMenuRight("/ClubManagement/ClubList"))
+                {
+                    if (!string.IsNullOrEmpty(CurrentURL) && CurrentURL.Trim().ToUpper() == "/CLUBMANAGEMENT/CLUBLIST") { MenuActiveClass = "menuActive"; }
+                    else { MenuActiveClass = string.Empty; }
+                    <a href="@Url.Action("ClubList", "ClubManagement")">
+                        <div class="menuContainer @MenuActiveClass">
+                            <div class="menu-icon w-max">
+                                <img src="~/Content/assets_new/images/club.svg" class="image" />
+                                <img src="~/Content/assets_new/images/club-active.svg" class="active-image" />
 
+                            </div>
+                            <div class="label">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.ClubManagement
+                            </div>
                         </div>
-                        <div class="label">
-                            @CRS.ADMIN.APPLICATION.Resources.Resource.ClubManagement
-                        </div>
-                    </div>
-                </a>
-            }
-            @if (ApplicationUtilities.HasMenuRight("/BasicClubManagement/BasicClubManagementList"))
-            {
-                if (!string.IsNullOrEmpty(CurrentURL) && CurrentURL.Trim().ToUpper() == "/BASICCLUBMANAGEMENT/BASICCLUBMANAGEMENTLIST") { MenuActiveClass = "menuActive"; }
-                else { MenuActiveClass = string.Empty; }
-                <a href="@Url.Action("BasicClubManagementList", "BasicClubManagement")">
-                    <div class="menuContainer @MenuActiveClass">
-                        <div class="menu-icon w-max">
-                            <img src="~/Content/assets_new/images/club.svg" class="image" />
-                            <img src="~/Content/assets_new/images/club-active.svg" class="active-image" />
+                    </a>
+                }
+                @if (ApplicationUtilities.HasMenuRight("/BasicClubManagement/BasicClubManagementList"))
+                {
+                    if (!string.IsNullOrEmpty(CurrentURL) && CurrentURL.Trim().ToUpper() == "/BASICCLUBMANAGEMENT/BASICCLUBMANAGEMENTLIST") { MenuActiveClass = "menuActive"; }
+                    else { MenuActiveClass = string.Empty; }
+                    <a href="@Url.Action("BasicClubManagementList", "BasicClubManagement")">
+                        <div class="menuContainer @MenuActiveClass">
+                            <div class="menu-icon w-max">
+                                <img src="~/Content/assets_new/images/club.svg" class="image" />
+                                <img src="~/Content/assets_new/images/club-active.svg" class="active-image" />
 
+                            </div>
+                            <div class="label">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Basic_Club_Management
+                            </div>
                         </div>
-                        <div class="label">
-                            @CRS.ADMIN.APPLICATION.Resources.Resource.Basic_Club_Management
-                        </div>
-                    </div>
-                </a>
-            }
-            @if (ApplicationUtilities.HasMenuRight("/PlanManagement/PlanList"))
-            {
-                if (!string.IsNullOrEmpty(CurrentURL) && CurrentURL.Trim().ToUpper() == "/PLANMANAGEMENT/PLANLIST") { MenuActiveClass = "menuActive"; }
-                else { MenuActiveClass = string.Empty; }
-                <a href="@Url.Action("PlanList", "PlanManagement")">
-                    <div class="menuContainer @MenuActiveClass">
-                        <div class="menu-icon w-max">
-                            <img src="~/Content/assets_new/images/Plan.svg" class="image" />
-                            <img src="~/Content/assets_new/images/Plan-active.svg" class="active-image" />
+                    </a>
+                }
+                @if (ApplicationUtilities.HasMenuRight("/PlanManagement/PlanList"))
+                {
+                    if (!string.IsNullOrEmpty(CurrentURL) && CurrentURL.Trim().ToUpper() == "/PLANMANAGEMENT/PLANLIST") { MenuActiveClass = "menuActive"; }
+                    else { MenuActiveClass = string.Empty; }
+                    <a href="@Url.Action("PlanList", "PlanManagement")">
+                        <div class="menuContainer @MenuActiveClass">
+                            <div class="menu-icon w-max">
+                                <img src="~/Content/assets_new/images/Plan.svg" class="image" />
+                                <img src="~/Content/assets_new/images/Plan-active.svg" class="active-image" />
 
+                            </div>
+                            <div class="label">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Plan_Management
+                            </div>
                         </div>
-                        <div class="label">
-                            @CRS.ADMIN.APPLICATION.Resources.Resource.Plan_Management
-                        </div>
-                    </div>
-                </a>
-            }
-            <!-- -----  -->
-            @if (ApplicationUtilities.HasMenuRight("/ReservationLedger/ReservationLedgerList"))
-            {
-                if (!string.IsNullOrEmpty(CurrentURL) && CurrentURL.Trim().ToUpper() == "/RESERVATIONLEDGER/RESERVATIONLEDGERLIST") { MenuActiveClass = "menuActive"; }
-                else { MenuActiveClass = string.Empty; }
-                <a href="@Url.Action("ReservationLedgerList", "ReservationLedger")">
-                    <div class="menuContainer @MenuActiveClass">
-                        <div class="menu-icon w-max">
-                            <img src="~/Content/assets_new/images/reservationledger.svg" class="image" />
-                            <img src="~/Content/assets_new/images/reservationledger-active.svg" class="active-image" />
+                    </a>
+                }
+                <!-- -----  -->
+                @if (ApplicationUtilities.HasMenuRight("/ReservationLedger/ReservationLedgerList"))
+                {
+                    if (!string.IsNullOrEmpty(CurrentURL) && CurrentURL.Trim().ToUpper() == "/RESERVATIONLEDGER/RESERVATIONLEDGERLIST") { MenuActiveClass = "menuActive"; }
+                    else { MenuActiveClass = string.Empty; }
+                    <a href="@Url.Action("ReservationLedgerList", "ReservationLedger")">
+                        <div class="menuContainer @MenuActiveClass">
+                            <div class="menu-icon w-max">
+                                <img src="~/Content/assets_new/images/reservationledger.svg" class="image" />
+                                <img src="~/Content/assets_new/images/reservationledger-active.svg" class="active-image" />
 
+                            </div>
+                            <div class="label">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Reservation_Ledger
+                            </div>
                         </div>
-                        <div class="label">
-                            @CRS.ADMIN.APPLICATION.Resources.Resource.Reservation_Ledger
-                        </div>
-                    </div>
-                </a>
-            }
-            <!-- -----  -->
-            @if (ApplicationUtilities.HasMenuRight("/AffiliateManagement/Index"))
-            {
-                if (!string.IsNullOrEmpty(CurrentURL) && CurrentURL.Trim().ToUpper() == "/AFFILIATEMANAGEMENT/INDEX") { MenuActiveClass = "menuActive"; }
-                else { MenuActiveClass = string.Empty; }
-                <a href="@Url.Action("Index", "AffiliateManagement")">
-                    <div class="menuContainer @MenuActiveClass">
-                        <div class="menu-icon w-max">
-                            <img src="~/Content/assets_new/images/affiliate.svg" class="image" />
-                            <img src="~/Content/assets_new/images/affiliate-active.svg" class="active-image" />
+                    </a>
+                }
+                <!-- -----  -->
+                @if (ApplicationUtilities.HasMenuRight("/AffiliateManagement/Index"))
+                {
+                    if (!string.IsNullOrEmpty(CurrentURL) && CurrentURL.Trim().ToUpper() == "/AFFILIATEMANAGEMENT/INDEX") { MenuActiveClass = "menuActive"; }
+                    else { MenuActiveClass = string.Empty; }
+                    <a href="@Url.Action("Index", "AffiliateManagement")">
+                        <div class="menuContainer @MenuActiveClass">
+                            <div class="menu-icon w-max">
+                                <img src="~/Content/assets_new/images/affiliate.svg" class="image" />
+                                <img src="~/Content/assets_new/images/affiliate-active.svg" class="active-image" />
 
+                            </div>
+                            <div class="label">@CRS.ADMIN.APPLICATION.Resources.Resource.Affiliate_Management</div>
                         </div>
-                        <div class="label">@CRS.ADMIN.APPLICATION.Resources.Resource.Affiliate_Management</div>
-                    </div>
-                </a>
-            }
+                    </a>
+                }
 
-            <!-- -----  -->
-            <!-- -----  -->
-            @if (ApplicationUtilities.HasMenuRight("/AccountInformation/GetAccountInformation"))
-            {
-                if (!string.IsNullOrEmpty(CurrentURL) && CurrentURL.Trim().ToUpper() == "/ACCOUNTINFORMATION/GETACCOUNTINFORMATION") { MenuActiveClass = "menuActive"; }
-                else { MenuActiveClass = string.Empty; }
-                <a href="@Url.Action("GETACCOUNTINFORMATION", "ACCOUNTINFORMATION")">
-                    <div class="menuContainer @MenuActiveClass">
-                        <div class="menu-icon w-max">
-                            <img src="~/Content/assets_new/images/affiliate.svg" class="image" />
-                            <img src="~/Content/assets_new/images/affiliate-active.svg" class="active-image" />
+                <!-- -----  -->
+                <!-- -----  -->
+                @if (ApplicationUtilities.HasMenuRight("/AccountInformation/GetAccountInformation"))
+                {
+                    if (!string.IsNullOrEmpty(CurrentURL) && CurrentURL.Trim().ToUpper() == "/ACCOUNTINFORMATION/GETACCOUNTINFORMATION") { MenuActiveClass = "menuActive"; }
+                    else { MenuActiveClass = string.Empty; }
+                    <a href="@Url.Action("GETACCOUNTINFORMATION", "ACCOUNTINFORMATION")">
+                        <div class="menuContainer @MenuActiveClass">
+                            <div class="menu-icon w-max">
+                                <img src="~/Content/assets_new/images/affiliate.svg" class="image" />
+                                <img src="~/Content/assets_new/images/affiliate-active.svg" class="active-image" />
 
+                            </div>
+                            <div class="label">@CRS.ADMIN.APPLICATION.Resources.Resource.Account_Information</div>
                         </div>
-                        <div class="label">@CRS.ADMIN.APPLICATION.Resources.Resource.Account_Information</div>
-                    </div>
-                </a>
-            }
+                    </a>
+                }
 
-            <!-- -----  -->
+                <!-- -----  -->
 
-            @if (ApplicationUtilities.HasMenuRight("/PointSetup/index"))  //@if (ApplicationUtilities.HasMenuRight("/PointSetup/PointSetupUserTypeList"))
-            {
-                if (!string.IsNullOrEmpty(CurrentURL) && CurrentURL.Trim().ToUpper() == "/POINTMANAGEMENT/INDEX") { MenuActiveClass = "menuActive"; }
-                else { MenuActiveClass = string.Empty; }
-                <a href="@Url.Action("index", "PointManagement")">
-                    <div class="menuContainer @MenuActiveClass">
-                        <div class="menu-icon w-max">
-                            <img src="~/Content/assets_new/images/affiliate.svg" class="image" />
-                            <img src="~/Content/assets_new/images/affiliate-active.svg" class="active-image" />
+                @if (ApplicationUtilities.HasMenuRight("/PointSetup/index"))  //@if (ApplicationUtilities.HasMenuRight("/PointSetup/PointSetupUserTypeList"))
+                {
+                    if (!string.IsNullOrEmpty(CurrentURL) && CurrentURL.Trim().ToUpper() == "/POINTMANAGEMENT/INDEX") { MenuActiveClass = "menuActive"; }
+                    else { MenuActiveClass = string.Empty; }
+                    <a href="@Url.Action("index", "PointManagement")">
+                        <div class="menuContainer @MenuActiveClass">
+                            <div class="menu-icon w-max">
+                                <img src="~/Content/assets_new/images/affiliate.svg" class="image" />
+                                <img src="~/Content/assets_new/images/affiliate-active.svg" class="active-image" />
 
+                            </div>
+                            <div class="label">Point Management</div>
                         </div>
-                        <div class="label">Point Management</div>
-                    </div>
-                </a>
-            }
-            <!-- -----  -->
-            @if (ApplicationUtilities.HasMenuRight("/PointSetup/PointSetupUserTypeList"))
-            {
-                if (!string.IsNullOrEmpty(CurrentURL) && CurrentURL.Trim().ToUpper() == "/POINTSETUP/POINTSETUPUSERTYPELIST") { MenuActiveClass = "menuActive"; }
-                else { MenuActiveClass = string.Empty; }
-                <a href="@Url.Action("PointSetupUserTypeList", "PointSetup")">
-                    <div class="menuContainer @MenuActiveClass">
-                        <div class="menu-icon w-max">
-                            <img src="~/Content/assets_new/images/coins-solid.svg" class="image" />
-                            <img src="~/Content/assets_new/images/coins-solid-active.svg" class="active-image" />
+                    </a>
+                }
+                <!-- -----  -->
+                @if (ApplicationUtilities.HasMenuRight("/PointSetup/PointSetupUserTypeList"))
+                {
+                    if (!string.IsNullOrEmpty(CurrentURL) && CurrentURL.Trim().ToUpper() == "/POINTSETUP/POINTSETUPUSERTYPELIST") { MenuActiveClass = "menuActive"; }
+                    else { MenuActiveClass = string.Empty; }
+                    <a href="@Url.Action("PointSetupUserTypeList", "PointSetup")">
+                        <div class="menuContainer @MenuActiveClass">
+                            <div class="menu-icon w-max">
+                                <img src="~/Content/assets_new/images/coins-solid.svg" class="image" />
+                                <img src="~/Content/assets_new/images/coins-solid-active.svg" class="active-image" />
 
+                            </div>
+                            <div class="label">@CRS.ADMIN.APPLICATION.Resources.Resource.Points_Setup</div>
                         </div>
-                        <div class="label">@CRS.ADMIN.APPLICATION.Resources.Resource.Points_Setup</div>
-                    </div>
-                </a>
-            }
-            <!-- -----  -->
-            @if (ApplicationUtilities.HasMenuRight("/PointsManagement/PointsTransferList"))
-            {
-                if (!string.IsNullOrEmpty(CurrentURL) && CurrentURL.Trim().ToUpper() == "/POINTSMANAGEMENT/POINTSTRANSFERLIST") { MenuActiveClass = "menuActive"; }
-                else { MenuActiveClass = string.Empty; }
-                <a href="@Url.Action("PointsTransferList", "PointsManagement")">
-                    <div class="menuContainer @MenuActiveClass">
-                        <div class="menu-icon w-max">
-                            <img src="~/Content/assets_new/images/coins-solid.svg" class="image" />
-                            <img src="~/Content/assets_new/images/coins-solid-active.svg" class="active-image" />
+                    </a>
+                }
+                <!-- -----  -->
+                @if (ApplicationUtilities.HasMenuRight("/PointsManagement/PointsTransferList"))
+                {
+                    if (!string.IsNullOrEmpty(CurrentURL) && CurrentURL.Trim().ToUpper() == "/POINTSMANAGEMENT/POINTSTRANSFERLIST") { MenuActiveClass = "menuActive"; }
+                    else { MenuActiveClass = string.Empty; }
+                    <a href="@Url.Action("PointsTransferList", "PointsManagement")">
+                        <div class="menuContainer @MenuActiveClass">
+                            <div class="menu-icon w-max">
+                                <img src="~/Content/assets_new/images/coins-solid.svg" class="image" />
+                                <img src="~/Content/assets_new/images/coins-solid-active.svg" class="active-image" />
 
+                            </div>
+                            <div class="label">@CRS.ADMIN.APPLICATION.Resources.Resource.Points_Management</div>
                         </div>
-                        <div class="label">@CRS.ADMIN.APPLICATION.Resources.Resource.Points_Management</div>
-                    </div>
-                </a>
-            }
-            @if (ApplicationUtilities.HasMenuRight("/AdminPointManagement/AdminPointList"))
-            {
-                if (!string.IsNullOrEmpty(CurrentURL) && CurrentURL.Trim().ToUpper() == "/ADMINPOINTMANAGEMENT/ADMINPOINTLIST") { MenuActiveClass = "menuActive"; }
-                else { MenuActiveClass = string.Empty; }
-                <a href="@Url.Action("AdminPointList", "AdminPointManagement")">
-                    <div class="menuContainer @MenuActiveClass">
-                        <div class="menu-icon w-max">
-                            <img src="~/Content/assets_new/images/coins-solid.svg" class="image" />
-                            <img src="~/Content/assets_new/images/coins-solid-active.svg" class="active-image" />
+                    </a>
+                }
+                @if (ApplicationUtilities.HasMenuRight("/AdminPointManagement/AdminPointList"))
+                {
+                    if (!string.IsNullOrEmpty(CurrentURL) && CurrentURL.Trim().ToUpper() == "/ADMINPOINTMANAGEMENT/ADMINPOINTLIST") { MenuActiveClass = "menuActive"; }
+                    else { MenuActiveClass = string.Empty; }
+                    <a href="@Url.Action("AdminPointList", "AdminPointManagement")">
+                        <div class="menuContainer @MenuActiveClass">
+                            <div class="menu-icon w-max">
+                                <img src="~/Content/assets_new/images/coins-solid.svg" class="image" />
+                                <img src="~/Content/assets_new/images/coins-solid-active.svg" class="active-image" />
 
+                            </div>
+                            <div class="label">@CRS.ADMIN.APPLICATION.Resources.Resource.Admin_Point_Management </div>
                         </div>
-                        <div class="label">@CRS.ADMIN.APPLICATION.Resources.Resource.Admin_Point_Management </div>
-                    </div>
-                </a>
-            }
-            <!-- -----  -->
-            @if (ApplicationUtilities.HasMenuRight("/PaymentManagement/Index"))
-            {
-                if (!string.IsNullOrEmpty(CurrentURL) && CurrentURL.Trim().ToUpper() == "/PAYMENTMANAGEMENT/INDEX") { MenuActiveClass = "menuActive"; }
-                else { MenuActiveClass = string.Empty; }
-                <a href="@Url.Action("Index", "PaymentManagement")">
-                    <div class="menuContainer @MenuActiveClass">
-                        <div class="menu-icon w-max">
-                            <img src="~/Content/assets_new/images/payment.svg" class="image" />
-                            <img src="~/Content/assets_new/images/payment-active.svg" class="active-image" />
+                    </a>
+                }
+                <!-- -----  -->
+                @if (ApplicationUtilities.HasMenuRight("/PaymentManagement/Index"))
+                {
+                    if (!string.IsNullOrEmpty(CurrentURL) && CurrentURL.Trim().ToUpper() == "/PAYMENTMANAGEMENT/INDEX") { MenuActiveClass = "menuActive"; }
+                    else { MenuActiveClass = string.Empty; }
+                    <a href="@Url.Action("Index", "PaymentManagement")">
+                        <div class="menuContainer @MenuActiveClass">
+                            <div class="menu-icon w-max">
+                                <img src="~/Content/assets_new/images/payment.svg" class="image" />
+                                <img src="~/Content/assets_new/images/payment-active.svg" class="active-image" />
+                            </div>
+                            <div class="label">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Payment_Management
+                            </div>
                         </div>
-                        <div class="label">
-                            @CRS.ADMIN.APPLICATION.Resources.Resource.Payment_Management
+                    </a>
+                }
+                @if (ApplicationUtilities.HasMenuRight("/WithdrawSetup/Index"))
+                {
+                    if (!string.IsNullOrEmpty(CurrentURL) && CurrentURL.Trim().ToUpper() == "/WITHDRAWSETUP/INDEX") { MenuActiveClass = "menuActive"; }
+                    else { MenuActiveClass = string.Empty; }
+                    <a href="@Url.Action("Index", "WithdrawSetup")">
+                        <div class="menuContainer @MenuActiveClass">
+                            <div class="menu-icon w-max">
+                                <img src="~/Content/assets_new/images/payment.svg" class="image" />
+                                <img src="~/Content/assets_new/images/payment-active.svg" class="active-image" />
+                            </div>
+                            <div class="label">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Withdraw_Setup
+                            </div>
                         </div>
-                    </div>
-                </a>
-            }
-            @if (ApplicationUtilities.HasMenuRight("/WithdrawSetup/Index"))
-            {
-                if (!string.IsNullOrEmpty(CurrentURL) && CurrentURL.Trim().ToUpper() == "/WITHDRAWSETUP/INDEX") { MenuActiveClass = "menuActive"; }
-                else { MenuActiveClass = string.Empty; }
-                <a href="@Url.Action("Index", "WithdrawSetup")">
-                    <div class="menuContainer @MenuActiveClass">
-                        <div class="menu-icon w-max">
-                            <img src="~/Content/assets_new/images/payment.svg" class="image" />
-                            <img src="~/Content/assets_new/images/payment-active.svg" class="active-image" />
+                    </a>
+                }
+                @if (ApplicationUtilities.HasMenuRight("/ChargeManagement/Index"))
+                {
+                    if (!string.IsNullOrEmpty(CurrentURL) && CurrentURL.Trim().ToUpper() == "/CHARGEMANAGEMENT/INDEX") { MenuActiveClass = "menuActive"; }
+                    else { MenuActiveClass = string.Empty; }
+                    <a href="@Url.Action("Index", "ChargeManagement")">
+                        <div class="menuContainer @MenuActiveClass">
+                            <div class="menu-icon w-max">
+                                <img src="~/Content/assets_new/images/payment.svg" class="image" />
+                                <img src="~/Content/assets_new/images/payment-active.svg" class="active-image" />
+                            </div>
+                            <div class="label">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Charge_Management
+                            </div>
                         </div>
-                        <div class="label">
-                            @CRS.ADMIN.APPLICATION.Resources.Resource.Withdraw_Setup
+                    </a>
+                }
+                @if (ApplicationUtilities.HasMenuRight("/WithdrawalRequest/WithdrawalRequestMonthlyList"))
+                {
+                    if (!string.IsNullOrEmpty(CurrentURL) && CurrentURL.Trim().ToUpper() == "/WITHDRAWALREQUEST/WITHDRAWALREQUESTMONTHLYLIST") { MenuActiveClass = "menuActive"; }
+                    else { MenuActiveClass = string.Empty; }
+                    <a href="@Url.Action("WithdrawalRequestMonthlyList", "WithdrawalRequest")">
+                        <div class="menuContainer @MenuActiveClass">
+                            <div class="menu-icon w-max">
+                                <img src="~/Content/assets_new/images/payment.svg" class="image" />
+                                <img src="~/Content/assets_new/images/payment-active.svg" class="active-image" />
+                            </div>
+                            <div class="label">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Affiliate_Withdraw_Logs
+                            </div>
                         </div>
-                    </div>
-                </a>
-            }
-            @if (ApplicationUtilities.HasMenuRight("/ChargeManagement/Index"))
-            {
-                if (!string.IsNullOrEmpty(CurrentURL) && CurrentURL.Trim().ToUpper() == "/CHARGEMANAGEMENT/INDEX") { MenuActiveClass = "menuActive"; }
-                else { MenuActiveClass = string.Empty; }
-                <a href="@Url.Action("Index", "ChargeManagement")">
-                    <div class="menuContainer @MenuActiveClass">
-                        <div class="menu-icon w-max">
-                            <img src="~/Content/assets_new/images/payment.svg" class="image" />
-                            <img src="~/Content/assets_new/images/payment-active.svg" class="active-image" />
-                        </div>
-                        <div class="label">
-                            @CRS.ADMIN.APPLICATION.Resources.Resource.Charge_Management
-                        </div>
-                    </div>
-                </a>
-            }
-            @if (ApplicationUtilities.HasMenuRight("/WithdrawalRequest/WithdrawalRequestMonthlyList"))
-            {
-                if (!string.IsNullOrEmpty(CurrentURL) && CurrentURL.Trim().ToUpper() == "/WITHDRAWALREQUEST/WITHDRAWALREQUESTMONTHLYLIST") { MenuActiveClass = "menuActive"; }
-                else { MenuActiveClass = string.Empty; }
-                <a href="@Url.Action("WithdrawalRequestMonthlyList", "WithdrawalRequest")">
-                    <div class="menuContainer @MenuActiveClass">
-                        <div class="menu-icon w-max">
-                            <img src="~/Content/assets_new/images/payment.svg" class="image" />
-                            <img src="~/Content/assets_new/images/payment-active.svg" class="active-image" />
-                        </div>
-                        <div class="label">
-                            @CRS.ADMIN.APPLICATION.Resources.Resource.Affiliate_Withdraw_Logs
-                        </div>
-                    </div>
-                </a>
-            }
-            <!-- -----  -->
-            @if (ApplicationUtilities.HasMenuRight(""))
-            {
-                <a href="../tag-management">
-                    <div class="menuContainer">
-                        <div class="menu-icon w-max">
-                            <img src="~/Content/assets_new/images/tag-solid.svg" class="image" />
-                            <img src="~/Content/assets_new/images/dashboard-active.svg" class="active-image" />
+                    </a>
+                }
+                <!-- -----  -->
+                @if (ApplicationUtilities.HasMenuRight(""))
+                {
+                    <a href="../tag-management">
+                        <div class="menuContainer">
+                            <div class="menu-icon w-max">
+                                <img src="~/Content/assets_new/images/tag-solid.svg" class="image" />
+                                <img src="~/Content/assets_new/images/dashboard-active.svg" class="active-image" />
 
+                            </div>
+                            <div class="label">Tag Management</div>
                         </div>
-                        <div class="label">Tag Management</div>
-                    </div>
-                </a>
-            }
-            <!-- -----  -->
-            @if (ApplicationUtilities.HasMenuRight("/RecommendationManagementV2/Index"))
-            {
-                if (!string.IsNullOrEmpty(CurrentURL) && CurrentURL.Trim().ToUpper() == "/RECOMMENDATIONMANAGEMENTV2/INDEX") { MenuActiveClass = "menuActive"; }
-                else { MenuActiveClass = string.Empty; }
-                <a href="@Url.Action("Index", "RecommendationManagementV2")">
-                    <div class="menuContainer @MenuActiveClass">
-                        <div class="menu-icon w-max">
-                            <img src="~/Content/assets_new/images/recommendation.svg" class="image" />
-                            <img src="~/Content/assets_new/images/recommendation-active.svg" class="active-image" />
+                    </a>
+                }
+                <!-- -----  -->
+                @if (ApplicationUtilities.HasMenuRight("/RecommendationManagementV2/Index"))
+                {
+                    if (!string.IsNullOrEmpty(CurrentURL) && CurrentURL.Trim().ToUpper() == "/RECOMMENDATIONMANAGEMENTV2/INDEX") { MenuActiveClass = "menuActive"; }
+                    else { MenuActiveClass = string.Empty; }
+                    <a href="@Url.Action("Index", "RecommendationManagementV2")">
+                        <div class="menuContainer @MenuActiveClass">
+                            <div class="menu-icon w-max">
+                                <img src="~/Content/assets_new/images/recommendation.svg" class="image" />
+                                <img src="~/Content/assets_new/images/recommendation-active.svg" class="active-image" />
 
+                            </div>
+                            <div class="label">@CRS.ADMIN.APPLICATION.Resources.Resource.Recommendation_Requests</div>
                         </div>
-                        <div class="label">@CRS.ADMIN.APPLICATION.Resources.Resource.Recommendation_Requests</div>
-                    </div>
-                </a>
-            }
-            <!-- -----  -->
-            @if (ApplicationUtilities.HasMenuRight("/ReviewAndRatingsManagement/Index"))
-            {
-                if (!string.IsNullOrEmpty(CurrentURL) && CurrentURL.Trim().ToUpper() == "/REVIEWANDRATINGSMANAGEMENT/INDEX") { MenuActiveClass = "menuActive"; }
-                else { MenuActiveClass = string.Empty; }
-                <a href="@Url.Action("Index", "ReviewAndRatingsManagement")">
-                    <div class="menuContainer @MenuActiveClass">
-                        <div class="menu-icon w-max">
-                            <img src="~/Content/assets_new/images/review.svg" class="image" />
-                            <img src="~/Content/assets_new/images/review-active.svg" class="active-image" />
+                    </a>
+                }
+                <!-- -----  -->
+                @if (ApplicationUtilities.HasMenuRight("/ReviewAndRatingsManagement/Index"))
+                {
+                    if (!string.IsNullOrEmpty(CurrentURL) && CurrentURL.Trim().ToUpper() == "/REVIEWANDRATINGSMANAGEMENT/INDEX") { MenuActiveClass = "menuActive"; }
+                    else { MenuActiveClass = string.Empty; }
+                    <a href="@Url.Action("Index", "ReviewAndRatingsManagement")">
+                        <div class="menuContainer @MenuActiveClass">
+                            <div class="menu-icon w-max">
+                                <img src="~/Content/assets_new/images/review.svg" class="image" />
+                                <img src="~/Content/assets_new/images/review-active.svg" class="active-image" />
 
+                            </div>
+                            <div class="label">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Review_and_Ratings
+                            </div>
                         </div>
-                        <div class="label">
-                            @CRS.ADMIN.APPLICATION.Resources.Resource.Review_and_Ratings
-                        </div>
-                    </div>
-                </a>
-            }
-            <!-- static data section  -->
-            @if (ApplicationUtilities.HasMenuRight("/StaticDataManagement/Index"))
-            {
-                if (!string.IsNullOrEmpty(CurrentURL) && CurrentURL.Trim().ToUpper() == "/STATICDATAMANAGEMENT/INDEX") { MenuActiveClass = "menuActive"; }
-                else { MenuActiveClass = string.Empty; }
-                <a href="@Url.Action("Index", "StaticDataManagement")">
-                    <div class="menuContainer @MenuActiveClass">
-                        <div class="menu-icon w-max">
-                            <img src="~/Content/assets_new/images/review.svg" class="image" />
-                            <img src="~/Content/assets_new/images/review-active.svg" class="active-image" />
+                    </a>
+                }
+                <!-- static data section  -->
+                @if (ApplicationUtilities.HasMenuRight("/StaticDataManagement/Index"))
+                {
+                    if (!string.IsNullOrEmpty(CurrentURL) && CurrentURL.Trim().ToUpper() == "/STATICDATAMANAGEMENT/INDEX") { MenuActiveClass = "menuActive"; }
+                    else { MenuActiveClass = string.Empty; }
+                    <a href="@Url.Action("Index", "StaticDataManagement")">
+                        <div class="menuContainer @MenuActiveClass">
+                            <div class="menu-icon w-max">
+                                <img src="~/Content/assets_new/images/review.svg" class="image" />
+                                <img src="~/Content/assets_new/images/review-active.svg" class="active-image" />
 
+                            </div>
+                            <div class="label">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.StaticDataType
+                            </div>
                         </div>
-                        <div class="label">
-                            @CRS.ADMIN.APPLICATION.Resources.Resource.StaticDataType
-                        </div>
-                    </div>
-                </a>
-            }
-            @if (ApplicationUtilities.HasMenuRight("/Inquiries/Index"))
-            {
-                if (!string.IsNullOrEmpty(CurrentURL) && CurrentURL.Trim().ToUpper() == "/INQUIRIES/INDEX") { MenuActiveClass = "menuActive"; }
-                else { MenuActiveClass = string.Empty; }
-                <a href="@Url.Action("Index", "Inquiries")">
-                    <div class="menuContainer @MenuActiveClass">
-                        <div class="menu-icon w-max">
-                            <img src="~/Content/assets_new/images/review.svg" class="image" />
-                            <img src="~/Content/assets_new/images/review-active.svg" class="active-image" />
+                    </a>
+                }
+                @if (ApplicationUtilities.HasMenuRight("/Inquiries/Index"))
+                {
+                    if (!string.IsNullOrEmpty(CurrentURL) && CurrentURL.Trim().ToUpper() == "/INQUIRIES/INDEX") { MenuActiveClass = "menuActive"; }
+                    else { MenuActiveClass = string.Empty; }
+                    <a href="@Url.Action("Index", "Inquiries")">
+                        <div class="menuContainer @MenuActiveClass">
+                            <div class="menu-icon w-max">
+                                <img src="~/Content/assets_new/images/review.svg" class="image" />
+                                <img src="~/Content/assets_new/images/review-active.svg" class="active-image" />
 
+                            </div>
+                            <div class="label">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Inquiries
+                            </div>
                         </div>
-                        <div class="label">
-                            @CRS.ADMIN.APPLICATION.Resources.Resource.Inquiries
+                    </a>
+                }
+                @if (ApplicationUtilities.HasMenuRight("/GroupManagement/Index"))
+                {
+                    if (!string.IsNullOrEmpty(CurrentURL) && CurrentURL.Trim().ToUpper() == "/GROUPMANAGEMENT/INDEX") { MenuActiveClass = "menuActive"; }
+                    else { MenuActiveClass = string.Empty; }
+                    <a href="@Url.Action("Index", "GroupManagement")">
+                        <div class="menuContainer @MenuActiveClass">
+                            <div class="menu-icon w-max">
+                                <img src="~/Content/assets_new/images/group_management_inactive.png" class="image" />
+                                <img src="~/Content/assets_new/images/group_management_svg.png" class="active-image" />
+                            </div>
+                            <div class="label">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Group_Management
+                            </div>
                         </div>
-                    </div>
-                </a>
-            }
-
-            @if (ApplicationUtilities.HasMenuRight("/ApiResponseMessage/ApiResponseMessageList"))
-            {
-                if (!string.IsNullOrEmpty(CurrentURL) && CurrentURL.Trim().ToUpper() == "/APIRESPONSEMESSAGE/APIRESPONSEMESSAGELIST") { MenuActiveClass = "menuActive"; }
-                else { MenuActiveClass = string.Empty; }
-                <a href="@Url.Action("ApiResponseMessageList", "ApiResponseMessage")">
-                    <div class="menuContainer @MenuActiveClass">
-                        <div class="menu-icon w-max">
-                            <img src="~/Content/assets_new/images/review.svg" class="image" />
-                            <img src="~/Content/assets_new/images/review-active.svg" class="active-image" />
-
-                        </div>
-                        <div class="label">
-                            @CRS.ADMIN.APPLICATION.Resources.Resource.Api_Response_Message
-                        </div>
-                    </div>
-                </a>
-            }
-
-
-        </div>
+                    </a>
+                }
+            </div>
             <div>
                 <div class="main-menu-title text-secondary-300 pb-[16px]">Setting</div>
 

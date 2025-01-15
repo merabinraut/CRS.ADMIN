@@ -11,6 +11,7 @@ using CRS.ADMIN.BUSINESS.CommonManagement;
 using CRS.ADMIN.BUSINESS.CustomerManagement;
 using CRS.ADMIN.BUSINESS.EmailLog;
 using CRS.ADMIN.BUSINESS.ErrorLog;
+using CRS.ADMIN.BUSINESS.GroupManagement;
 using CRS.ADMIN.BUSINESS.Home;
 using CRS.ADMIN.BUSINESS.HostManagement;
 using CRS.ADMIN.BUSINESS.Inquries;
@@ -90,6 +91,7 @@ namespace CRS.ADMIN.APPLICATION
             container.RegisterType<IAccountInformationBusiness, AccountInformationBusiness>();
             container.RegisterType<IWithdrawalRequestBusiness, WithdrawalRequestBusiness>();
             container.RegisterType<IChargeManagementBusiness, ChargeManagementBusiness>();
+            container.RegisterType<IGroupManagementBusiness, GroupManagementBusiness>();
             container.RegisterType<IApiResponseMessageBusiness, ApiResponseMessageBusiness>();
             return container;
         }

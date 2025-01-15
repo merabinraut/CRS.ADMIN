@@ -2856,4 +2856,8 @@
     <value>Yes</value>
     <comment>Customer Management</comment>
   </data>
+  <data name="Group Management" xml:space="preserve">
+    <value>Group Management</value>
+    <comment>Group Management Controller</comment>
+  </data>
 </root>

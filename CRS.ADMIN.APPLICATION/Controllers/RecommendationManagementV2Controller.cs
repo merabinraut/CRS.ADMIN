@@ -633,8 +633,10 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             else responseInfo = new ManageClubRecommendationRequest();
             ViewBag.ClubDDL = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("CLUBLIST", LocationId, "") as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---");
             ViewBag.DisplayOrderDDL = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("DISPLAYORDERDDL", "", "") as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---");
+            ViewBag.DisplayOrderDDLClub = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("DISPLAYORDERDDLCLUB", Groupid, "") as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---");
             ViewBag.ClubId = responseInfo.ClubId;
             ViewBag.DisplayOrderId = responseInfo.DisplayOrderId;
+            //ViewBag.DisplayOrderId = responseInfo.DisplayOrderClubId;
             if (string.IsNullOrEmpty(LocationId))
             {
                 AddNotificationMessage(new NotificationModel()

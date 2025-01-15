@@ -21,7 +21,8 @@ namespace CRS.ADMIN.REPOSITORY.ChargeManagement
         {
             var sql = $"EXEC  {request.sp} "
                     + $"@categoryName =N{_dao.FilterString(request.categoryName)}"
-                    + $",@description= N{_dao.FilterString(request.description)}"
+                     + ($", @description = {(string.IsNullOrEmpty(request.description) ? "NULL" : $"N{_dao.FilterString(request.description)}")}")
+                    //+ $",@description= N{_dao.FilterString(request.description)}"
                     + $",@isDefault={_dao.FilterString(request.isDefault)}"
                     + $",@agentType={_dao.FilterString(request.agentType)}"
                     + $",@actionUser=N{_dao.FilterString(request.ActionUser)}"
