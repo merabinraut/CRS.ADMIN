@@ -623,6 +623,7 @@
         const containerId = isStatic ? 'static' : $(this).data('container-id');
         const clubDDL = isStatic ? $('#staticClubDDL') : $(`#clubddl_id-${containerId}`);
         const locationId = $(this).val();
+        debugger;
         const RequestVerificationToken = $('input[name="__RequestVerificationToken"]').val();
         debugger;
         clubDDL.empty().append('<option value="">Loading...</option>');
@@ -636,6 +637,11 @@
                 success: function (data) {
                     /* clubDDL.empty().append('<option value="">Select Club</option>');*/
                     clubDDL.empty();
+                    //var count = clubDDL.length;
+                    //if (data.clubDDL.length >= 1)
+                    //{
+                    //    clubDDL.empty().append('<option value="">Select Club</option>');
+                    //}    
                     $.each(data.clubDDL, function (i, club) {
                         clubDDL.append(`<option value="${club.Value}">${club.Text}</option>`);
                     });
@@ -645,7 +651,8 @@
                 }
             });
         } else {
-            clubDDL.empty().append('<option value="">Select Club</option>');
+            /*clubDDL.empty().append('<option value="">Select Club</option>');*/
+            clubDDL.empty();
         }
 
         updateDropdownOptions();
