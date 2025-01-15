@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -700,12 +701,13 @@ namespace CRS.ADMIN.APPLICATION.Controllers
         public JsonResult GetClubListByLocationId(string LocationId = "")
         {
             var locationId = !string.IsNullOrEmpty(LocationId) ? LocationId.DecryptParameter() : string.Empty;
-
+            var culture = Request.Cookies["culture"]?.Value;
+            culture = string.IsNullOrEmpty(culture) ? "ja" : culture;
             if (string.IsNullOrEmpty(locationId))
                 return Json(new { clubDDL = new List<SelectListItem>() }, JsonRequestBehavior.AllowGet);
 
             var ddlDictionary = ApplicationUtilities.LoadDropdownList("CLUBDDLBYLOCATIONID", locationId, "");
-            List<SelectListItem> clubDDL = ApplicationUtilities.SetDDLValue(ddlDictionary as Dictionary<string, string>, null);
+            List<SelectListItem> clubDDL = ApplicationUtilities.SetDDLValue(ddlDictionary as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---");
             // Get assigned clubs
             var assignedClubDict = _business.GetAssignedClubList();
             List<AssignedClubInfo> mappedAssignedDDL = assignedClubDict.MapObjects<AssignedClubInfo>();

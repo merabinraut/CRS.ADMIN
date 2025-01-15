@@ -2848,4 +2848,24 @@
     <value>グループ管理</value>
     <comment>Group Management</comment>
   </data>
+  <data name="Are you sure you want to block this group" xml:space="preserve">
+    <value>このグループをブロックしてもよろしいですか</value>
+    <comment>Group Management</comment>
+  </data>
+  <data name="Are you sure you want to delete this group" xml:space="preserve">
+    <value>このグループを削除してもよろしいですか</value>
+    <comment>Group Management</comment>
+  </data>
+  <data name="Are you sure you want to unblock this group" xml:space="preserve">
+    <value>このグループのブロックを解除してもよろしいですか</value>
+    <comment>Group Management</comment>
+  </data>
+  <data name="Note: If you block this group, clubs under any of its subgroups will no longer be visible as part of the group." xml:space="preserve">
+    <value>注意: このグループをブロックすると、サブグループに属するクラブはグループの一部として表示されなくなります。</value>
+    <comment>Group Management</comment>
+  </data>
+  <data name="Note: Unblocking this group will restore the visibility of clubs under its subgroups as part of the group." xml:space="preserve">
+    <value>注意: このグループをブロックすると、サブグループに属するクラブはグループの一部として表示されなくなります。</value>
+    <comment>Group Management</comment>
+  </data>
 </root>

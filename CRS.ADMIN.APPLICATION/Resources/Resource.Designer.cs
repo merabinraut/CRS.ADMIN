@@ -664,6 +664,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to block this group.
+        /// </summary>
+        public static string Are_you_sure_you_want_to_block_this_group {
+            get {
+                return ResourceManager.GetString("Are you sure you want to block this group", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Are you sure you want to change the language.
         /// </summary>
         public static string Are_you_sure_you_want_to_change_the_language {
@@ -700,6 +709,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to delete this group.
+        /// </summary>
+        public static string Are_you_sure_you_want_to_delete_this_group {
+            get {
+                return ResourceManager.GetString("Are you sure you want to delete this group", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Are you sure you want to suspend this charge category slab?.
         /// </summary>
         public static string Are_you_sure_you_want_to_suspend_this_charge_category_slab_ {
@@ -723,6 +741,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         public static string Are_you_sure_you_want_to_unblock_this_club {
             get {
                 return ResourceManager.GetString("Are you sure you want to unblock this club", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to unblock this group.
+        /// </summary>
+        public static string Are_you_sure_you_want_to_unblock_this_group {
+            get {
+                return ResourceManager.GetString("Are you sure you want to unblock this group", resourceCulture);
             }
         }
         
@@ -3864,6 +3891,26 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         public static string Note {
             get {
                 return ResourceManager.GetString("Note", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Note: If you block this group, clubs under any of its subgroups will no longer be visible as part of the group..
+        /// </summary>
+        public static string Note__If_you_block_this_group__clubs_under_any_of_its_subgroups_will_no_longer_be_visible_as_part_of_the_group_ {
+            get {
+                return ResourceManager.GetString("Note: If you block this group, clubs under any of its subgroups will no longer be" +
+                        " visible as part of the group.", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Note: Unblocking this group will restore the visibility of clubs under its subgroups as part of the group..
+        /// </summary>
+        public static string Note__Unblocking_this_group_will_restore_the_visibility_of_clubs_under_its_subgroups_as_part_of_the_group_ {
+            get {
+                return ResourceManager.GetString("Note: Unblocking this group will restore the visibility of clubs under its subgro" +
+                        "ups as part of the group.", resourceCulture);
             }
         }
         

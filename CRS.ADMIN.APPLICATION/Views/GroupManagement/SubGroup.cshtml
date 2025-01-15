@@ -275,20 +275,34 @@
                                                     {
                                                         <i class="las la-edit text-[20px] cursor-pointer text-[#A6A6A6]" onclick="ManageSubGroupDetailsFunction('@item.SubGroupId','@item.GroupId','@ViewBag.GroupName','@ViewBag.GroupNameKatakana');"></i>
                                                     }
-                                                    @if (item.ClubShortInfo.Count > 0)
+                                                    @if (item.SubGroupName.Trim().ToUpper() != "DEFAULT" && item.ClubShortInfo.Count == 0)
                                                     {
-                                                        <div class="text-[#BBBBBB] text-center text-[20px]"
+                                                        <div class="text-[#CB3F3F] text-center text-[20px]"
                                                              onclick="">
                                                             <i class="las la-trash-alt text-[20px] cursor-pointer "></i>
                                                         </div>
                                                     }
                                                     else
                                                     {
-                                                        <div class="text-[#CB3F3F] text-center text-[20px]"
+                                                        <div class="text-[#BBBBBB] text-center text-[20px]"
                                                              onclick="OpenDeleteModal('@item.SubGroupId')">
                                                             <i class="las la-trash-alt text-[20px] cursor-pointer "></i>
                                                         </div>
                                                     }
+                                                    @*@if (item.ClubShortInfo.Count > 0)
+                                                        {
+                                                            <div class="text-[#BBBBBB] text-center text-[20px]"
+                                                                 onclick="">
+                                                                <i class="las la-trash-alt text-[20px] cursor-pointer "></i>
+                                                            </div>
+                                                        }
+                                                        else
+                                                        {
+                                                            <div class="text-[#BBBBBB] text-center text-[20px]"
+                                                                 onclick="OpenDeleteModal('@item.SubGroupId')">
+                                                                <i class="las la-trash-alt text-[20px] cursor-pointer "></i>
+                                                            </div>
+                                                        }*@
                                                 </div>
                                             </td>
                                         </tr>
@@ -578,7 +592,7 @@
         var clubCountStatic = 0;
         var clubCountdynamic = 0;
        $(document).ready(function () {
-           let containerCounter = 2;
+           let containerCounter = 1;
 
            $(document).on('change', 'select[name="SubGroupDDL"]', function () {
                subgroupid = $(`#subgroupid`).val();
@@ -609,10 +623,11 @@
         const containerId = isStatic ? 'static' : $(this).data('container-id');
         const clubDDL = isStatic ? $('#staticClubDDL') : $(`#clubddl_id-${containerId}`);
         const locationId = $(this).val();
+        debugger;
         const RequestVerificationToken = $('input[name="__RequestVerificationToken"]').val();
-
+        debugger;
         clubDDL.empty().append('<option value="">Loading...</option>');
-
+        /*clubDDL.empty();*/
         if (locationId) {
             $.ajax({
                 type: 'POST',
@@ -620,7 +635,13 @@
                 dataType: 'json',
                 data: { '__RequestVerificationToken': RequestVerificationToken, LocationId: locationId },
                 success: function (data) {
-                    clubDDL.empty().append('<option value="">Select Club</option>');
+                    /* clubDDL.empty().append('<option value="">Select Club</option>');*/
+                    clubDDL.empty();
+                    //var count = clubDDL.length;
+                    //if (data.clubDDL.length >= 1)
+                    //{
+                    //    clubDDL.empty().append('<option value="">Select Club</option>');
+                    //}    
                     $.each(data.clubDDL, function (i, club) {
                         clubDDL.append(`<option value="${club.Value}">${club.Text}</option>`);
                     });
@@ -630,14 +651,16 @@
                 }
             });
         } else {
-            clubDDL.empty().append('<option value="">Select Club</option>');
+            /*clubDDL.empty().append('<option value="">Select Club</option>');*/
+            clubDDL.empty();
         }
 
         updateDropdownOptions();
     });
 
     // Add a new container for Location and Club selection
-    function addNewContainer() {
+           function addNewContainer() {
+               containerCounter++;
         const newContainerHtml = `
             <div id="container-${containerCounter}" class="dynamic-container">
 
@@ -679,7 +702,7 @@
             </div>
         `;
         $('#dynamicContainerWrapper').append(newContainerHtml);
-        containerCounter++;
+       /* containerCounter++;*/
         updateDropdownOptions();
         initializeDynamicDropdowns();
     }
@@ -710,25 +733,33 @@
            $(document).on('change', 'select[name="ClubDDL"]', function () {
                const containerId = $(this).data('container-id');
 
-               if (containerId > 2) {
+               if (containerId > 1) {
                    const isStatic = $(this).attr('id') === 'staticClubDDL';
                    selectedCount = $(this).find('option:selected').length;
-                   isStatic ? $('#TotalClubCount').val(selectedCount) : $(`#TotalClubCount-${containerId}`).val(selectedCount);
+                   isStatic ? $(`#TotalClubCount-${containerId}`).val(selectedCount) : $(`#TotalClubCount-${containerId}`).val(selectedCount);
 
-                   clubCountStatic = parseInt($('#TotalClubCount').val());
-                   clubCountdynamic = isStatic ? 0 : parseInt($(`#TotalClubCount-${containerId}`).val());
-                   var sumTotal  = GrandTotal;
-                   var GrandSumTotal = parseInt(sumTotal) + parseInt(clubCountdynamic)
-                   $("#GrandTotalClubCount").val(parseInt(GrandSumTotal));
+                   clubCountStatic = parseInt($(`#TotalClubCount-${containerCounter}`).val());
+                   clubCountdynamic = isStatic ? 0 : parseInt($(`#TotalClubCount-${containerId}`).val());                  
+                   var GrandTotals = 0;
+                   for (var i = 1; i <= containerCounter; i++) {
+                       var clubcount = parseInt($(`#TotalClubCount-${i}`).val()) || 0;
+                       GrandTotals += clubcount;
+                   }
+                   $("#GrandTotalClubCount").val(parseInt(GrandTotals));
                } else {
                    const isStatic = $(this).attr('id') === 'staticClubDDL';
                    selectedCount = $(this).find('option:selected').length;
-                   isStatic ? $('#TotalClubCount').val(selectedCount) : $(`#TotalClubCount-${containerCounter - 1}`).val(selectedCount);
+                   isStatic ? $(`#TotalClubCount-${containerId}`).val(selectedCount) : $(`#TotalClubCount-${containerId}`).val(selectedCount);
 
-                   clubCountStatic = parseInt($('#TotalClubCount').val());
-                   clubCountdynamic = isStatic ? 0 : parseInt($(`#TotalClubCount-${containerCounter - 1}`).val());
-                   GrandTotal = clubCountStatic + clubCountdynamic;
-                   $("#GrandTotalClubCount").val(parseInt(GrandTotal));
+                   clubCountStatic = parseInt($(`#TotalClubCount-${containerId}`).val());
+                   clubCountdynamic = isStatic ? 0 : parseInt($(`#TotalClubCount-${containerId}`).val());
+                   var GrandTotals = 0;
+
+                   for (var i = 1; i <= containerCounter; i++) {
+                       var clubcount = parseInt($(`#TotalClubCount-${i}`).val()) || 0;
+                       GrandTotals += clubcount;
+                   }
+                   $("#GrandTotalClubCount").val(parseInt(GrandTotals));
                }
 
            });
