@@ -769,36 +769,36 @@
 
            });
     // Update the locationClubMapping on selection changes
-    $(document).on('change', '.select-common', function () {
-        const containerId = $(this).data('container-id');
-        if (containerId != null) {
-            const selectedLocation = $(`#locationddl-${containerId}`).val();
-            const selectedClubs = $(`#clubddl_id-${containerId}`).val();
+    //$(document).on('change', '.select-common', function () {
+    //    const containerId = $(this).data('container-id');
+    //    if (containerId != null) {
+    //        const selectedLocation = $(`#locationddl-${containerId}`).val();
+    //        const selectedClubs = $(`#clubddl_id-${containerId}`).val();
 
-            if (selectedLocation) {
-                locationClubMapping[containerId] = {
-                    locationId: selectedLocation,
-                    clubs: selectedClubs || [],
-                    clubCount: selectedCount
-                };
-            } else {
-                delete locationClubMapping[containerId];
-            }
-        } else {
-            const selectedLocation = $(`#staticLocationDDL`).val();
-            const selectedClubs = $(`#staticClubDDL`).val();
+    //        if (selectedLocation) {
+    //            locationClubMapping[containerId] = {
+    //                locationId: selectedLocation,
+    //                clubs: selectedClubs || [],
+    //                clubCount: selectedCount
+    //            };
+    //        } else {
+    //            delete locationClubMapping[containerId];
+    //        }
+    //    } else {
+    //        const selectedLocation = $(`#staticLocationDDL`).val();
+    //        const selectedClubs = $(`#staticClubDDL`).val();
 
-            if (selectedLocation) {
-                locationClubMapping[1] = {
-                    locationId: selectedLocation,
-                    clubs: selectedClubs || [],
-                    clubCount: selectedCount
-                };
-            } else {
-                delete locationClubMapping[containerId];
-            }
-        }
-    });
+    //        if (selectedLocation) {
+    //            locationClubMapping[1] = {
+    //                locationId: selectedLocation,
+    //                clubs: selectedClubs || [],
+    //                clubCount: selectedCount
+    //            };
+    //        } else {
+    //            delete locationClubMapping[containerId];
+    //        }
+    //    }
+    //});
             $('#addNewRow').on('click', function () {
                 addNewContainer();
             });
@@ -810,8 +810,7 @@
         function submit() {
                 var submitButton = document.getElementById('submit-button-id');
                 submitButton.disabled = true;
-                var requestVerificationToken = $('input[name="__RequestVerificationToken"]').val();
-                /*var mappedData = JSON.stringify(locationClubMapping);*/
+                var requestVerificationToken = $('input[name="__RequestVerificationToken"]').val();           
                 var sGroupId = subgroupid;
                 var groupId = '@ViewBag.GroupId';
                 var isvalid = true;
@@ -857,7 +856,8 @@
             if (isvalid == false) {
                 submitButton.disabled = false;
                 return false;
-            }                
+            }  
+            var mappedData = JSON.stringify(multiplerowsdata);
                 if (mappedData) {
                     $.ajax({
                         type: 'POST',
