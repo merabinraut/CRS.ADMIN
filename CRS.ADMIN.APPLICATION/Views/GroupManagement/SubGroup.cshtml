@@ -628,9 +628,7 @@
         const containerId = isStatic ? 'static' : $(this).data('container-id');
         const clubDDL = isStatic ? $('#staticClubDDL') : $(`#clubddl_id-${containerId}`);
         const locationId = $(this).val();
-        debugger;
         const RequestVerificationToken = $('input[name="__RequestVerificationToken"]').val();
-        debugger;
         clubDDL.empty().append('<option value="">Loading...</option>');
         /*clubDDL.empty();*/
         if (locationId) {
