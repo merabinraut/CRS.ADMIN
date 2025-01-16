@@ -2868,4 +2868,12 @@
     <value>注意: このグループをブロックすると、サブグループに属するクラブはグループの一部として表示されなくなります。</value>
     <comment>Group Management</comment>
   </data>
+  <data name="Sub_Group_Club_delete" xml:space="preserve">
+    <value>このクラブを削除してもよろしいですか </value>
+    <comment>Sub Group</comment>
+  </data>
+  <data name="Sub_Group_delete" xml:space="preserve">
+    <value>このサブグループを削除してもよろしいですか</value>
+    <comment>Sub Group</comment>
+  </data>
 </root>

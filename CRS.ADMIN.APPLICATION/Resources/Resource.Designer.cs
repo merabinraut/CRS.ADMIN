@@ -3175,6 +3175,24 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Manage Api Response Message.
+        /// </summary>
+        public static string Manage_Api_Response_Message {
+            get {
+                return ResourceManager.GetString("Manage Api Response Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Manage API Responses..
+        /// </summary>
+        public static string Manage_API_Responses_ {
+            get {
+                return ResourceManager.GetString("Manage API Responses.", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Manage Charge.
         /// </summary>
         public static string Manage_Charge {
@@ -3198,24 +3216,6 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         public static string Manage_charge_setting {
             get {
                 return ResourceManager.GetString("Manage charge setting", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Manage Api Response Message.
-        /// </summary>
-        public static string Manage_Api_Response_Message {
-            get {
-                return ResourceManager.GetString("Manage Api Response Message", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Manage API Responses..
-        /// </summary>
-        public static string Manage_API_Responses_ {
-            get {
-                return ResourceManager.GetString("Manage API Responses.", resourceCulture);
             }
         }
         
@@ -5594,6 +5594,24 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         public static string Stripe {
             get {
                 return ResourceManager.GetString("Stripe", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to delete this  club.
+        /// </summary>
+        public static string Sub_Group_Club_delete {
+            get {
+                return ResourceManager.GetString("Sub_Group_Club_delete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to delete this sub group.
+        /// </summary>
+        public static string Sub_Group_delete {
+            get {
+                return ResourceManager.GetString("Sub_Group_delete", resourceCulture);
             }
         }
         

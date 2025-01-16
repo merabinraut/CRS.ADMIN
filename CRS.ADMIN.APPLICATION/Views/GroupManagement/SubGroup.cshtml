@@ -277,15 +277,15 @@
                                                     }
                                                     @if (item.SubGroupName.Trim().ToUpper() != "DEFAULT" && item.ClubShortInfo.Count == 0)
                                                     {
-                                                        <div class="text-[#CB3F3F] text-center text-[20px]"
-                                                             onclick="">
-                                                            <i class="las la-trash-alt text-[20px] cursor-pointer "></i>
+                                                        <div class="text-[#BBBBBB] text-center text-[20px]">
+                                                            <i class="las la-trash-alt text-[20px] cursor-pointer"></i>
                                                         </div>
                                                     }
                                                     else
                                                     {
-                                                        <div class="text-[#BBBBBB] text-center text-[20px]"
-                                                             onclick="OpenDeleteModal('@item.SubGroupId')">
+
+                                                        <div class="text-[#CB3F3F] text-center text-[20px]"
+                                                             onclick="OpenDeleteModal('@item.SubGroupId','@item.SubGroupName')">
                                                             <i class="las la-trash-alt text-[20px] cursor-pointer "></i>
                                                         </div>
                                                     }
@@ -340,7 +340,7 @@
                                                     <td class="p-[12px]">
                                                         <div class="flex justify-center gap-[7px]">
                                                             <div class="text-[#CB3F3F] text-center text-[20px]"
-                                                                 onclick="OpenClubDeleteModal('@item.ClubShortInfo[i].Id','@item.ClubShortInfo[i].ClubId','@item.SubGroupId')">
+                                                                 onclick="OpenClubDeleteModal('@item.ClubShortInfo[i].Id','@item.ClubShortInfo[i].ClubId','@item.SubGroupId','@item.ClubShortInfo[i].ClubName')">
                                                                 <i class="las la-trash-alt text-[20px] cursor-pointer "></i>
                                                             </div>
                                                         </div>
@@ -393,8 +393,8 @@
                 <div class="grid pt-[24px] px-[23px] pb-[45px]">
                     <div class="text-[#333] font-semibold pb-[11px] border-b border-[#eeeeee]">@CRS.ADMIN.APPLICATION.Resources.Resource.Confirmation</div>
                     <div class="grid gap-[20px] text-[#062937] mt-[20px] mb-[40px]">
-                        <div class="text-[14px] text-secondary-text-2 text-start">
-                            Are you sure you want to delete this SUB GROUP?
+                        <div class="text-[14px] text-secondary-text-2 text-start" id="confirmationMessage-delete-subgroup">
+                            @*Are you sure you want to delete this SUB GROUP?*@
                         </div>
                     </div>
                     <div class="flex justify-end">
@@ -429,8 +429,8 @@
                 <div class="grid pt-[24px] px-[23px] pb-[45px]">
                     <div class="text-[#333] font-semibold pb-[11px] border-b border-[#eeeeee]">@CRS.ADMIN.APPLICATION.Resources.Resource.Confirmation</div>
                     <div class="grid gap-[20px] text-[#062937] mt-[20px] mb-[40px]">
-                        <div class="text-[14px] text-secondary-text-2 text-start">
-                            Are you sure you want to delete this SUB GROUP CLUB?
+                        <div class="text-[14px] text-secondary-text-2 text-start" id="confirmationMessage-delete">
+                            @*Are you sure you want to delete this SUB GROUP CLUB?*@
                         </div>
                     </div>
                     <div class="flex justify-end">
@@ -565,20 +565,22 @@
                 });
             }
         }
-        function OpenDeleteModal(subgroupId) {
+            function OpenDeleteModal(subgroupId, subGroupName) {
             const modalTarget = document.querySelector("[data-modal-target='block-basicclub-confirmation']");
             const modal = document.getElementById("delete-confirmation");
             modal.classList.remove("hidden");
             $('#delete_id').attr('data-val1', subgroupId);
+            $('#confirmationMessage-delete-subgroup').text('@CRS.ADMIN.APPLICATION.Resources.Resource.Sub_Group_delete' + ' ' + '( ' + subGroupName + ' )?');
             modal.setAttribute("aria-hidden", "false");
         }
-        function OpenClubDeleteModal(id, clubid, subgroupid) {
+        function OpenClubDeleteModal(id, clubid, subgroupid,subGroupName) {
             const modalTarget = document.querySelector("[data-modal-target='block-basicclub-confirmation']");
             const modal = document.getElementById("delete-club-confirmation");
             modal.classList.remove("hidden");
             $('#delete_id').attr('data-val1', id);
             $('#delete_id').attr('data-val2', clubid);
             $('#delete_id').attr('data-val3', subgroupid);
+            $('#confirmationMessage-delete').text('@CRS.ADMIN.APPLICATION.Resources.Resource.Sub_Group_Club_delete' + ' ' + '( ' + subGroupName + ' )?');
             modal.setAttribute("aria-hidden", "false");
         }
         </script>
@@ -641,7 +643,7 @@
                     //if (data.clubDDL.length >= 1)
                     //{
                     //    clubDDL.empty().append('<option value="">Select Club</option>');
-                    //}    
+                    //}
                     $.each(data.clubDDL, function (i, club) {
                         clubDDL.append(`<option value="${club.Value}">${club.Text}</option>`);
                     });
@@ -739,7 +741,7 @@
                    isStatic ? $(`#TotalClubCount-${containerId}`).val(selectedCount) : $(`#TotalClubCount-${containerId}`).val(selectedCount);
 
                    clubCountStatic = parseInt($(`#TotalClubCount-${containerCounter}`).val());
-                   clubCountdynamic = isStatic ? 0 : parseInt($(`#TotalClubCount-${containerId}`).val());                  
+                   clubCountdynamic = isStatic ? 0 : parseInt($(`#TotalClubCount-${containerId}`).val());
                    var GrandTotals = 0;
                    for (var i = 1; i <= containerCounter; i++) {
                        var clubcount = parseInt($(`#TotalClubCount-${i}`).val()) || 0;

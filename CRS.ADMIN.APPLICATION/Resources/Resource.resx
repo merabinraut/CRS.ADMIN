@@ -2880,4 +2880,12 @@
     <value>Note: Unblocking this group will restore the visibility of clubs under its subgroups as part of the group.</value>
     <comment>Group Management</comment>
   </data>
+  <data name="Sub_Group_Club_delete" xml:space="preserve">
+    <value>Are you sure you want to delete this  club</value>
+    <comment>Sub Group</comment>
+  </data>
+  <data name="Sub_Group_delete" xml:space="preserve">
+    <value>Are you sure you want to delete this sub group</value>
+    <comment>Sub Group</comment>
+  </data>
 </root>
