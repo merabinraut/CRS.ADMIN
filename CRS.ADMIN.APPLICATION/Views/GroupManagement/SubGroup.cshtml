@@ -277,32 +277,33 @@
                                                     }
                                                     @if (item.SubGroupName.Trim().ToUpper() != "DEFAULT" && item.ClubShortInfo.Count == 0)
                                                     {
-                                                        <div class="text-[#BBBBBB] text-center text-[20px]">
-                                                            <i class="las la-trash-alt text-[20px] cursor-pointer"></i>
-                                                        </div>
-                                                    }
-                                                    else
-                                                    {
-
                                                         <div class="text-[#CB3F3F] text-center text-[20px]"
                                                              onclick="OpenDeleteModal('@item.SubGroupId','@item.SubGroupName')">
                                                             <i class="las la-trash-alt text-[20px] cursor-pointer "></i>
                                                         </div>
+
+                                                    }
+                                                    else
+                                                    {
+                                                        <div class="text-[#BBBBBB] text-center text-[20px]">
+                                                            <i class="las la-trash-alt text-[20px] cursor-pointer"></i>
+                                                        </div>
+
                                                     }
                                                     @*@if (item.ClubShortInfo.Count > 0)
-                                                        {
-                                                            <div class="text-[#BBBBBB] text-center text-[20px]"
-                                                                 onclick="">
-                                                                <i class="las la-trash-alt text-[20px] cursor-pointer "></i>
-                                                            </div>
-                                                        }
-                                                        else
-                                                        {
-                                                            <div class="text-[#BBBBBB] text-center text-[20px]"
-                                                                 onclick="OpenDeleteModal('@item.SubGroupId')">
-                                                                <i class="las la-trash-alt text-[20px] cursor-pointer "></i>
-                                                            </div>
-                                                        }*@
+        {
+            <div class="text-[#BBBBBB] text-center text-[20px]"
+                 onclick="">
+                <i class="las la-trash-alt text-[20px] cursor-pointer "></i>
+            </div>
+        }
+        else
+        {
+            <div class="text-[#BBBBBB] text-center text-[20px]"
+                 onclick="OpenDeleteModal('@item.SubGroupId')">
+                <i class="las la-trash-alt text-[20px] cursor-pointer "></i>
+            </div>
+        }*@
                                                 </div>
                                             </td>
                                         </tr>

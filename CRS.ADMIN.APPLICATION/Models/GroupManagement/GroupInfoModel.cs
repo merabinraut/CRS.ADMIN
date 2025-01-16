@@ -1,5 +1,7 @@
-﻿using CRS.ADMIN.SHARED.PaginationManagement;
+﻿using CRS.ADMIN.APPLICATION.Resources;
+using CRS.ADMIN.SHARED.PaginationManagement;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace CRS.ADMIN.APPLICATION.Models.GroupManagement
 {
@@ -73,6 +75,7 @@ namespace CRS.ADMIN.APPLICATION.Models.GroupManagement
     }
     public class ManageSubGroupModel : PaginationFilterCommon
     {
+        [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Required")]
         public string SubGroupName { get; set; }
         public string GroupName { get; set; }
         public string GroupNameKatakana { get; set; }
