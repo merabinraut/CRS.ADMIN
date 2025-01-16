@@ -143,7 +143,8 @@ namespace CRS.ADMIN.REPOSITORY.HostManagement
             SQL += !string.IsNullOrEmpty(Request.HostId) ? "@Flag='uh'" : "@Flag='rh'";
             SQL += ",@AgentId=" + _DAO.FilterString(Request.AgentId);
             SQL += !string.IsNullOrEmpty(Request.HostId) ? ",@HostId=" + _DAO.FilterString(Request.HostId) : "";
-            SQL += ",@HostName=" + _DAO.FilterString(Request.HostName);
+            //SQL += ",@HostName=" + _DAO.FilterString(Request.HostName);
+            SQL += ",@HostName=N" + _DAO.FilterString(Request.HostName);
             SQL += ",@HostNameJapanese=N" + _DAO.FilterString(Request.HostNameJapanese);
             SQL += ",@Position=N" + _DAO.FilterString(Request.Position);
             SQL += string.IsNullOrEmpty(Request.OtherPositionRemark) ? ",@OtherPositionRemark=" + _DAO.FilterString(Request.OtherPositionRemark) : ",@OtherPositionRemark=N" + _DAO.FilterString(Request.OtherPositionRemark);

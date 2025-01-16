@@ -350,7 +350,8 @@ namespace CRS.ADMIN.REPOSITORY.ClubManagement
             //SQL += ",@LandLineCode=" + _DAO.FilterString(Request.LandLineCode);
             //SQL += ",@MiddleName=N" + _DAO.FilterString(Request.MiddleName);
             //SQL += ",@LastName=N" + _DAO.FilterString(Request.LastName);
-            SQL += ",@ClubName=" + _DAO.FilterString(Request.ClubName);
+            //SQL += ",@ClubName=" + _DAO.FilterString(Request.ClubName);
+            SQL += ",@ClubName=" + (!string.IsNullOrEmpty(Request.ClubName) ? "N" + _DAO.FilterString(Request.ClubName) : _DAO.FilterString(Request.ClubName));
             SQL += ",@ClubName2=" + (!string.IsNullOrEmpty(Request.ClubName2) ? "N" + _DAO.FilterString(Request.ClubName2) : _DAO.FilterString(Request.ClubName2));
             SQL += ",@ClubName1=" + (!string.IsNullOrEmpty(Request.ClubName1) ? "N" + _DAO.FilterString(Request.ClubName1) : _DAO.FilterString(Request.ClubName1));
             SQL += ",@BusinessType=" + _DAO.FilterString(Request.BusinessType);
