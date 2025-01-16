@@ -707,9 +707,9 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 return Json(new { clubDDL = new List<SelectListItem>() }, JsonRequestBehavior.AllowGet);
 
             var ddlDictionary = ApplicationUtilities.LoadDropdownList("CLUBDDLBYLOCATIONID", locationId, "");
-            List<SelectListItem> clubDDL = ApplicationUtilities.SetDDLValue(ddlDictionary as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---");
+            List<SelectListItem> clubDDL = ApplicationUtilities.SetDDLValue(ddlDictionary as Dictionary<string, string>, null, null);
             // Get assigned clubs
-            var assignedClubDict = _business.GetAssignedClubList();
+             var assignedClubDict = _business.GetAssignedClubList();
             List<AssignedClubInfo> mappedAssignedDDL = assignedClubDict.MapObjects<AssignedClubInfo>();
             foreach (var item in mappedAssignedDDL)
             {

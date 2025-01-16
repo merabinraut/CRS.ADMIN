@@ -114,6 +114,9 @@
                                     <select id="staticClubDDL" class="default_select select-common block w-full ClubDDL" multiple="multiple"
                                             style="width: 100%;" name="ClubDDL" placeholder="Select" data-container-id="1">
                                     </select>
+                                    <span class="error" id="span-club-error-1">
+
+                                    </span>
                                 </div>
                             </div>
                             <div class="flex justify-between items-center">
@@ -123,6 +126,7 @@
                                 <div class="input-field-common max-w-[116px]">
                                     <input type="text" id="TotalClubCount-1" name="TotalClubCount" class="w-full text-[#B7B7B7]"
                                            placeholder="" autocomplete="off" disabled="disabled" />
+                                   
                                 </div>
                             </div>
                             <div class="border border-[2px] border-dashed border-[#EBEBEB] w-full my-4"></div>
@@ -155,7 +159,7 @@
                             aria-controls="add-sub-group-club" onclick="CancelFunction();">
                         @CRS.ADMIN.APPLICATION.Resources.Resource.Cancel
                     </button>
-                    <button class="btn btn-primary-default rounded-[4px]" id="submit-button-id" onclick="this.disabled=true;submit(); " > @CRS.ADMIN.APPLICATION.Resources.Resource.Submit</button>
+                    <button class="btn btn-primary-default rounded-[4px]" id="submit-button-id" onclick="submit(); " > @CRS.ADMIN.APPLICATION.Resources.Resource.Submit</button>
                 </div>
             </div>
         </div>

@@ -586,13 +586,15 @@
 
         <script>
         let locationClubMapping = {};
+        let multiplerowsdata = {};
         let subgroupid;
         let selectedCount;
         var GrandTotal = 0;
         var clubCountStatic = 0;
-        var clubCountdynamic = 0;
+            var clubCountdynamic = 0;
+            var containerCounter = 1;
        $(document).ready(function () {
-           let containerCounter = 1;
+
 
            $(document).on('change', 'select[name="SubGroupDDL"]', function () {
                subgroupid = $(`#subgroupid`).val();
@@ -637,11 +639,11 @@
                 success: function (data) {
                     /* clubDDL.empty().append('<option value="">Select Club</option>');*/
                     clubDDL.empty();
-                    //var count = clubDDL.length;
-                    //if (data.clubDDL.length >= 1)
-                    //{
-                    //    clubDDL.empty().append('<option value="">Select Club</option>');
-                    //}    
+                    var count = clubDDL.length;
+                    if (data.clubDDL.length >= 1)
+                    {
+                        clubDDL.empty().append('<option value="" disabled>--- @CRS.ADMIN.APPLICATION.Resources.Resource.Select ---</option>');
+                    }
                     $.each(data.clubDDL, function (i, club) {
                         clubDDL.append(`<option value="${club.Value}">${club.Text}</option>`);
                     });
@@ -659,8 +661,8 @@
     });
 
     // Add a new container for Location and Club selection
-           function addNewContainer() {
-               containerCounter++;
+         function addNewContainer() {
+           containerCounter++;
         const newContainerHtml = `
             <div id="container-${containerCounter}" class="dynamic-container">
 
@@ -687,6 +689,9 @@
                         <label class="block mb-[12px] text-sm font-medium text-secondary-text-2">店舗</label>
                         <select id="clubddl_id-${containerCounter}" class="default_select select-common block w-full"
                                 name="ClubDDL" data-container-id="${containerCounter}" multiple="multiple" style="width: 100%;" placeholder="Select"></select>
+                                <span class="error" id="span-club-error-${containerCounter}">
+
+                                 </span>
                     </div>
                 </div>
                 <div class="flex justify-between mt-4 items-center">
@@ -739,7 +744,7 @@
                    isStatic ? $(`#TotalClubCount-${containerId}`).val(selectedCount) : $(`#TotalClubCount-${containerId}`).val(selectedCount);
 
                    clubCountStatic = parseInt($(`#TotalClubCount-${containerCounter}`).val());
-                   clubCountdynamic = isStatic ? 0 : parseInt($(`#TotalClubCount-${containerId}`).val());                  
+                   clubCountdynamic = isStatic ? 0 : parseInt($(`#TotalClubCount-${containerId}`).val());
                    var GrandTotals = 0;
                    for (var i = 1; i <= containerCounter; i++) {
                        var clubcount = parseInt($(`#TotalClubCount-${i}`).val()) || 0;
@@ -800,22 +805,65 @@
            updateDropdownOptions();
            initializeDynamicDropdowns();
 
-});
+    });
 
-            function submit() {
+        function submit() {
                 var submitButton = document.getElementById('submit-button-id');
                 submitButton.disabled = true;
                 var requestVerificationToken = $('input[name="__RequestVerificationToken"]').val();
-                var mappedData = JSON.stringify(locationClubMapping);
+                /*var mappedData = JSON.stringify(locationClubMapping);*/
                 var sGroupId = subgroupid;
                 var groupId = '@ViewBag.GroupId';
-
+                var isvalid = true;
+                j = 1;
+                  for (var i = 1; i <= containerCounter; i++) {
+                    if (i == 1) {
+                        if ($("#staticClubDDL").val().length === 0) {
+                            $(`#span-club-error-${i}`).text('@CRS.ADMIN.APPLICATION.Resources.Resource.Required')
+                            isvalid = false;
+                        }
+                        else
+                        {
+                            $(`#span-club-error-${i}`).text();
+                            multiplerowsdata[1] = {
+                                locationId: $(`#staticLocationDDL`).val(),
+                                clubs: $(`#staticClubDDL`).val(),
+                                clubCount: parseInt($(`#TotalClubCount-${i}`).val())
+                            }
+                            j++;
+                        }
+                    }
+                    else {
+                        if ($(`#clubddl_id-${i}`).val() !== undefined && $(`#clubddl_id-${i}`).val().length === 0)
+                        {
+                            $(`#span-club-error-${i}`).text('@CRS.ADMIN.APPLICATION.Resources.Resource.Required');
+                            isvalid = false;
+                        }
+                        else
+                        {
+                            if ($(`#span-club-error-${i}`).val() !== undefined) {
+                                $(`#span-club-error-${i}`).text('');
+                                multiplerowsdata[j] = {
+                                    locationId: $(`#locationddl-${i}`).val(),
+                                    clubs: $(`#clubddl_id-${i}`).val(),
+                                    clubCount: parseInt($(`#TotalClubCount-${i}`).val())
+                                }
+                                j++;
+                            }
+                            
+                        }
+                    }
+            }
+            if (isvalid == false) {
+                submitButton.disabled = false;
+                return false;
+            }                
                 if (mappedData) {
                     $.ajax({
                         type: 'POST',
                         url: '@Url.Action("ManageSubGroupClub")',
                         dataType: 'json',
-                        data: { '__RequestVerificationToken': requestVerificationToken, mapping: mappedData, SubGroupId: sGroupId, GroupId: groupId },
+                        data: { '__RequestVerificationToken': requestVerificationToken, mapping: JSON.stringify(multiplerowsdata), SubGroupId: sGroupId, GroupId: groupId },
                         success: function (data) {
                             submitButton.disabled = false;
                             location.reload();
