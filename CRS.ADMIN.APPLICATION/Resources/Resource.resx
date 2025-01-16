@@ -342,6 +342,14 @@
     <value>and Maximum file size is 5 MB</value>
     <comment>Location Management</comment>
   </data>
+  <data name="Api Response Message" xml:space="preserve">
+    <value>Api Response Message</value>
+    <comment>Api Response Message</comment>
+  </data>
+  <data name="Api Response Message List" xml:space="preserve">
+    <value>Api Response Message List</value>
+    <comment>API Response Message</comment>
+  </data>
   <data name="Apply" xml:space="preserve">
     <value>Apply</value>
     <comment>Reservation Ledger</comment>
@@ -570,6 +578,10 @@
     <value>CategoryType</value>
     <comment>CommissionManagement</comment>
   </data>
+  <data name="Cateory Type" xml:space="preserve">
+    <value>Cateory Type</value>
+    <comment>API Response Message</comment>
+  </data>
   <data name="CEO Full Name" xml:space="preserve">
     <value>CEO Full Name</value>
     <comment>Club Management</comment>
@@ -721,6 +733,10 @@
   <data name="clubYes" xml:space="preserve">
     <value>Yes</value>
     <comment>Club Management</comment>
+  </data>
+  <data name="Code" xml:space="preserve">
+    <value>Code</value>
+    <comment>API Response Message</comment>
   </data>
   <data name="Commission" xml:space="preserve">
     <value>Commission</value>
@@ -976,6 +992,10 @@
   <data name="English" xml:space="preserve">
     <value>English</value>
   </data>
+  <data name="English Message" xml:space="preserve">
+    <value>English Message</value>
+    <comment>API Response Message</comment>
+  </data>
   <data name="Enter Additional Information" xml:space="preserve">
     <value>Enter Additional Information</value>
     <comment>Plan Management</comment>
@@ -1217,6 +1237,10 @@
     <value>HOT-SKILLS</value>
     <comment>Host Management</comment>
   </data>
+  <data name="Http Status Code" xml:space="preserve">
+    <value>Http Status Code</value>
+    <comment>API Response Message</comment>
+  </data>
   <data name="Icon Image" xml:space="preserve">
     <value>Icon Image</value>
     <comment>Host Management</comment>
@@ -1456,6 +1480,13 @@
   <data name="Manage charge setting" xml:space="preserve">
     <value>Manage charge setting.</value>
     <comment>Charge Management</comment>
+  </data>
+  <data name="Manage Api Response Message" xml:space="preserve">
+    <value>Manage Api Response Message</value>
+    <comment>API Response Message</comment>
+  </data>
+  <data name="Manage API Responses." xml:space="preserve">
+    <value>Manage API Responses.</value>
   </data>
   <data name="Manage Club Events" xml:space="preserve">
     <value>Manage Club Events</value>
@@ -2474,6 +2505,9 @@
   <data name="String1" xml:space="preserve">
     <value />
   </data>
+  <data name="String2" xml:space="preserve">
+    <value />
+  </data>
   <data name="Stripe" xml:space="preserve">
     <value>Stripe</value>
     <comment>Dashboard</comment>
@@ -2845,5 +2879,13 @@
   <data name="Note: Unblocking this group will restore the visibility of clubs under its subgroups as part of the group." xml:space="preserve">
     <value>Note: Unblocking this group will restore the visibility of clubs under its subgroups as part of the group.</value>
     <comment>Group Management</comment>
+  </data>
+  <data name="Sub_Group_Club_delete" xml:space="preserve">
+    <value>Are you sure you want to delete this  club</value>
+    <comment>Sub Group</comment>
+  </data>
+  <data name="Sub_Group_delete" xml:space="preserve">
+    <value>Are you sure you want to delete this sub group</value>
+    <comment>Sub Group</comment>
   </data>
 </root>

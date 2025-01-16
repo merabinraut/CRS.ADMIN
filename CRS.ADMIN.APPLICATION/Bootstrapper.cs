@@ -1,6 +1,7 @@
 using CRS.ADMIN.BUSINESS.AccountInformation;
 using CRS.ADMIN.BUSINESS.AdminPointManagement;
 using CRS.ADMIN.BUSINESS.AffiliateManagement;
+using CRS.ADMIN.BUSINESS.ApiResponseMessage;
 using CRS.ADMIN.BUSINESS.BasicClubManagement;
 using CRS.ADMIN.BUSINESS.ChargeManagement;
 using CRS.ADMIN.BUSINESS.ClubManagement;
@@ -91,6 +92,7 @@ namespace CRS.ADMIN.APPLICATION
             container.RegisterType<IWithdrawalRequestBusiness, WithdrawalRequestBusiness>();
             container.RegisterType<IChargeManagementBusiness, ChargeManagementBusiness>();
             container.RegisterType<IGroupManagementBusiness, GroupManagementBusiness>();
+            container.RegisterType<IApiResponseMessageBusiness, ApiResponseMessageBusiness>();
             return container;
         }
     }

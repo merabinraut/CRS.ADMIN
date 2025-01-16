@@ -342,6 +342,14 @@
     <value>最大ファイルサイズは5MBです</value>
     <comment>Location Management</comment>
   </data>
+  <data name="Api Response Message" xml:space="preserve">
+    <value>API 応答メッセージ</value>
+    <comment>Api Response Message</comment>
+  </data>
+  <data name="Api Response Message List" xml:space="preserve">
+    <value>APIレスポンスメッセージリスト</value>
+    <comment>API Response Message</comment>
+  </data>
   <data name="Apply" xml:space="preserve">
     <value>適用する</value>
     <comment>Reservation Ledger</comment>
@@ -558,6 +566,10 @@
     <value>カテゴリータイプ</value>
     <comment>CommissionManagement</comment>
   </data>
+  <data name="Cateory Type" xml:space="preserve">
+    <value>カテゴリタイプ</value>
+    <comment>API Response Message</comment>
+  </data>
   <data name="CEO Full Name" xml:space="preserve">
     <value>代表者名</value>
     <comment>ClubManagement</comment>
@@ -709,6 +721,10 @@
   <data name="clubYes" xml:space="preserve">
     <value>はい</value>
     <comment>Club Management</comment>
+  </data>
+  <data name="Code" xml:space="preserve">
+    <value>コード</value>
+    <comment>API Response Message</comment>
   </data>
   <data name="Commission" xml:space="preserve">
     <value>手数料</value>
@@ -964,6 +980,10 @@
   <data name="English" xml:space="preserve">
     <value>英語</value>
   </data>
+  <data name="English Message" xml:space="preserve">
+    <value>英語のメッセージ</value>
+    <comment>API Response Message</comment>
+  </data>
   <data name="Enter Additional Information" xml:space="preserve">
     <value>追加情報を入力してください</value>
     <comment>Plan Management</comment>
@@ -1205,6 +1225,10 @@
     <value>ホットスキル</value>
     <comment>Host Management</comment>
   </data>
+  <data name="Http Status Code" xml:space="preserve">
+    <value>HTTPステータスコード</value>
+    <comment>API Response Message</comment>
+  </data>
   <data name="Icon Image" xml:space="preserve">
     <value>アイコン画像</value>
     <comment>Host Management</comment>
@@ -1445,6 +1469,14 @@
   <data name="Manage charge setting" xml:space="preserve">
     <value>チャージ設定を管理する。</value>
     <comment>Charge Management</comment>
+  </data>
+  <data name="Manage Api Response Message" xml:space="preserve">
+    <value>APIレスポンスメッセージを管理する</value>
+    <comment>API Response Message</comment>
+  </data>
+  <data name="Manage API Responses." xml:space="preserve">
+    <value>APIレスポンスを管理する。</value>
+    <comment>API Response Message</comment>
   </data>
   <data name="Manage Club Events" xml:space="preserve">
     <value>クラブイベント管理</value>
@@ -2835,5 +2867,13 @@
   <data name="Note: Unblocking this group will restore the visibility of clubs under its subgroups as part of the group." xml:space="preserve">
     <value>注意: このグループをブロックすると、サブグループに属するクラブはグループの一部として表示されなくなります。</value>
     <comment>Group Management</comment>
+  </data>
+  <data name="Sub_Group_Club_delete" xml:space="preserve">
+    <value>このクラブを削除してもよろしいですか </value>
+    <comment>Sub Group</comment>
+  </data>
+  <data name="Sub_Group_delete" xml:space="preserve">
+    <value>このサブグループを削除してもよろしいですか</value>
+    <comment>Sub Group</comment>
   </data>
 </root>

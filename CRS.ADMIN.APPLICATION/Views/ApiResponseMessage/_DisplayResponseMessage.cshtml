@@ -1,0 +1,136 @@
+@model CRS.ADMIN.APPLICATION.Models.ApiResponseMessage.ApiResponseMessageModel
+<div id="display-get-response-message"
+     class="drawer-close-disable  flex justify-end fixed top-0 right-0 z-40 h-screen overflow-y-auto transition-transform translate-x-full "
+     tabindex="-1" aria-labelledby="drawer-right-label">
+    <div class="bg-white w-[616px] drawer-container relative">
+        <div class="drawer-form-container sticky top-0 z-[5] ">
+            <div class="drawer-form flex justify-between bg-secondary-color-pink py-[16px] px-[24px] h-[56px]">
+                <div>
+                    @CRS.ADMIN.APPLICATION.Resources.Resource.Manage_Api_Response_Message
+                </div>
+                <button type="button" data-drawer-hide="display-new-response-message" aria-controls="display-new-response-message"
+                        class="text-[20px]" onclick="CancelFunction()">
+                    <i class="las la-window-close text-white"></i>
+                </button>
+            </div>
+        </div>
+        @using (Html.BeginForm("GetResponseMessage", "ApiResponseMessage", FormMethod.Post, new { @id = "addrespmsgform", enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="p-[24px]">
+                <div class=" py-4 grid gap-5">
+                    <div class="input-field-common">
+
+                        <label class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Code
+                        </label>
+                        @Html.HiddenFor(model => model.MessageId, new
+                        {
+
+                            @class = "w-full rounded-[4px]",
+                            @style = "border-radius:4px !important",
+                            @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.Code,
+                            @maxlength = "30"
+                        })
+
+                        @Html.TextBoxFor(model => model.Code, new
+                        {
+
+                            @class = "w-full rounded-[4px]",
+                            @style = "border-radius:4px !important",
+                            @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.Code,
+                            @maxlength = "30",
+                            @disabled = "disabled"
+                        })
+                    </div>
+                    <div class="input-field-common">
+                        <label class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Message
+                        </label>
+                        @Html.TextBoxFor(model => model.Message, new
+                        {
+                            @class = "w-full rounded-[4px]",
+                            @style = "border-radius:4px !important",
+                            @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.Message,
+                            @maxlength = "30",
+                            @disabled = "disabled"
+                        })
+
+                    </div>
+                    <div class="input-field-common">
+                        <label class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.English_Message
+                        </label>
+                        @Html.TextBoxFor(model => model.MessageEng, new
+                        {
+                            @class = "w-full rounded-[4px]",
+                            @style = "border-radius:4px !important",
+                            @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.English_Message,
+                            @maxlength = "30",
+                            @disabled = "disabled"
+                        })
+
+                    </div>
+                    <div class="input-field-common w-full">
+                        <label class="block mb-4 text-sm font-medium text-secondary-100 ">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Http_Status_Code
+                        </label>
+                        @Html.TextBoxFor(model => model.HttpStatusCode, new
+                        {
+                            @class = "w-full rounded-[4px]",
+                            @style = "border-radius:4px !important",
+                            @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.Http_Status_Code,
+                            @maxlength = "30",
+                            @disabled = "disabled"
+                        })
+
+                    </div>
+                    <div class="input-field-common w-full">
+                        <label class="block mb-4 text-sm font-medium text-secondary-100 ">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Description
+                        </label>
+                        @Html.TextBoxFor(model => model.Description, new
+                        {
+                            @class = "w-full rounded-[4px]",
+                            @style = "border-radius:4px !important",
+                            @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.Description,
+                            @maxlength = "200",
+                            @disabled = "disabled"
+                        })
+
+                    </div>
+
+
+                    <div class="input-field-common">
+                        <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.CategoryType
+                        </label>
+                        <select id="large" name="Category" class=" default_select select-common block w-full "
+                                style="width: 100%;" disabled>
+                            <option value="error">
+                                Error
+                            </option>
+                            <option value="success">
+                                Success
+                            </option>
+                        </select>
+                        <span class="error">
+
+                        </span>
+                    </div>
+
+                </div>
+
+                <div class="flex justify-end mt-6 ">
+                    <div class="flex gap-6">
+                        <button class="resetForm btn btn-gray-white h-[40px] rounded-[4px] px-8 text-sm" onclick="CancelFunction()" type="button">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Cancel
+                        </button>                  
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+</div>
