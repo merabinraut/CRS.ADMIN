@@ -100,7 +100,7 @@ namespace CRS.ADMIN.REPOSITORY.PointsManagement
         public CommonDbResponse ManageClubPointRequest(ManageClubPointRequestCommon request)
         {
 
-            string SQL = "EXEC sproc_admin_point_request_approvalrejection ";
+            string SQL = "EXEC sproc_admin_creditpoint_request_approvalrejection ";
             //SQL += "@AgentId=" + _DAO.FilterString(request.AgentId);
             //SQL += ",@UserId=" + _DAO.FilterString(request.UserId);
             SQL += " @sno=" + _DAO.FilterString(request.Id);
