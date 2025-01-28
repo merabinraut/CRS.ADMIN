@@ -10,6 +10,7 @@ using CRS.ADMIN.SHARED.StaffManagement;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Reflection;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 
@@ -66,7 +67,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
         }
 
         [HttpPost, ValidateAntiForgeryToken]
-        public ActionResult StoreResponseMessage(ApiResponseMessageModel model)
+        public ActionResult ApiResponseMessageList(ApiResponseMessageModel model)
         {
             if (ModelState.IsValid)
             {
@@ -140,7 +141,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             return RedirectToAction("ApiResponseMessageList");
         }
         [HttpGet]
-        public async Task<ActionResult> UpdateResponseMessage(string id, string Code, string Category, string Message, string HttpStatusCode, string MessageEng, string Description)
+        public async Task<ActionResult> UpdateResponseMessage(string id, string Code, string Category, string Message, string HttpStatusCode, string MessageEng, string Description, string Module, string UserCategory)
         {
             var request = new ApiResponseMessageModel()
             {
@@ -151,6 +152,8 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 HttpStatusCode = HttpStatusCode,
                 MessageEng = MessageEng,
                 Description = Description,
+                Module = Module,
+                UserCategory = UserCategory
             };
             ApiResponseMessageModel model = new ApiResponseMessageModel();
             TempData["ManageResponseEditModel"] = request;
@@ -160,7 +163,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult> GetApiResponseMessage(string id, string Code, string Category, string Message, string HttpStatusCode, string MessageEng, string Description)
+        public async Task<ActionResult> GetApiResponseMessage(string id, string Code, string Category, string Message, string HttpStatusCode, string MessageEng, string Description, string Module, string UserCategory)
         {
             var request = new ApiResponseMessageModel()
             {
@@ -171,6 +174,8 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 HttpStatusCode = HttpStatusCode,
                 MessageEng = MessageEng,
                 Description = Description,
+                Module = Module,
+                UserCategory = UserCategory
             };
             ApiResponseMessageModel model = new ApiResponseMessageModel();
             TempData["ManageResponseGetModel"] = request;
