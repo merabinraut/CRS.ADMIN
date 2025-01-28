@@ -2876,4 +2876,12 @@
     <value>このサブグループを削除してもよろしいですか</value>
     <comment>Sub Group</comment>
   </data>
+  <data name="User Category" xml:space="preserve">
+    <value>ユーザーカテゴリ</value>
+    <comment>Api Common Response</comment>
+  </data>
+  <data name="Module Name" xml:space="preserve">
+    <value>モジュール名</value>
+    <comment>Api Common Response</comment>
+  </data>
 </root>

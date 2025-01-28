@@ -2888,4 +2888,12 @@
     <value>Are you sure you want to delete this sub group</value>
     <comment>Sub Group</comment>
   </data>
+  <data name="User Category" xml:space="preserve">
+    <value>User Category</value>
+    <comment>Api Common Response</comment>
+  </data>
+  <data name="Module Name" xml:space="preserve">
+    <value>Module Name</value>
+    <comment>Api Common Response</comment>
+  </data>
 </root>

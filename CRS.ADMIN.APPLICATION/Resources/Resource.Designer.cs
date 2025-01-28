@@ -3733,6 +3733,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Module Name.
+        /// </summary>
+        public static string Module_Name {
+            get {
+                return ResourceManager.GetString("Module Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Mon.
         /// </summary>
         public static string Monday {
@@ -6170,6 +6179,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         public static string User {
             get {
                 return ResourceManager.GetString("User", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User Category.
+        /// </summary>
+        public static string User_Category {
+            get {
+                return ResourceManager.GetString("User Category", resourceCulture);
             }
         }
         

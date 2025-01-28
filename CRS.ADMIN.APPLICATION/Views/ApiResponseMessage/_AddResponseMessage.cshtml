@@ -14,7 +14,7 @@
                 </button>
             </div>
         </div>
-        @using (Html.BeginForm("StoreResponseMessage", "ApiResponseMessage", FormMethod.Post, new { @id = "addrespmsgform", enctype = "multipart/form-data" }))
+        @using (Html.BeginForm("ApiResponseMessageList", "ApiResponseMessage", FormMethod.Post, new { @id = "addrespmsgform", enctype = "multipart/form-data" }))
         {
             @Html.AntiForgeryToken()
 
@@ -42,7 +42,7 @@
                             @class = "w-full rounded-[4px]",
                             @style = "border-radius:4px !important",
                             @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.Message,
-                            @maxlength = "30"
+                            @maxlength = "400"
                         })
 
                     </div>
@@ -55,7 +55,7 @@
                             @class = "w-full rounded-[4px]",
                             @style = "border-radius:4px !important",
                             @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.English_Message,
-                            @maxlength = "30"
+                            @maxlength = "200"
                         })
 
                     </div>
@@ -103,6 +103,32 @@
                         <span class="error">
 
                         </span>
+                    </div>
+                    <div class="input-field-common w-full">
+                        <label class="block mb-4 text-sm font-medium text-secondary-100 ">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Module_Name
+                        </label>
+                        @Html.TextBoxFor(model => model.Module, new
+                        {
+                            @class = "w-full rounded-[4px]",
+                            @style = "border-radius:4px !important",
+                            @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.Module_Name,
+                            @maxlength = "200"
+                        })
+
+                    </div>
+                    <div class="input-field-common w-full">
+                        <label class="block mb-4 text-sm font-medium text-secondary-100 ">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.User_Category
+                        </label>
+                        @Html.TextBoxFor(model => model.UserCategory, new
+                        {
+                            @class = "w-full rounded-[4px]",
+                            @style = "border-radius:4px !important",
+                            @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.User_Category,
+                            @maxlength = "200"
+                        })
+
                     </div>
 
                 </div>
