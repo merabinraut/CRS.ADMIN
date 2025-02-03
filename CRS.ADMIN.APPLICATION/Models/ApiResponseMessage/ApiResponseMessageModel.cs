@@ -20,6 +20,8 @@ namespace CRS.ADMIN.APPLICATION.Models.ApiResponseMessage
         public string Category { get; set; }
         public string Description { get; set; }
         public string MessageType { get; set; }
+        public string Module { get; set; }
+        public string UserCategory { get; set; }
         public string HttpStatusCode { get; set; }
         public string ActionUser { get; set; }
         public int SNO { get; set; }

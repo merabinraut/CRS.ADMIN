@@ -90,6 +90,24 @@
                                 </div>
                             </div>
                         </th>
+                        <th scope="col" class="p-[12px]">
+                            <div class="flex w-max">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Module_Name
+                                <div class="relative pl-[5px]">
+                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                </div>
+                            </div>
+                        </th>
+                        <th scope="col" class="p-[12px]">
+                            <div class="flex w-max">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.User_Category
+                                <div class="relative pl-[5px]">
+                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                </div>
+                            </div>
+                        </th>
                         @*<th scope="col" class="p-[12px]">
                                 <div class="flex w-max">
                                     Message English
@@ -136,15 +154,21 @@
                             <td class="p-[12px]">
                                 @responselist.Message
                             </td>
+                            <td class="p-[12px]">
+                                @responselist.Module
+                            </td>
+                            <td class="p-[12px]">
+                                @responselist.UserCategory
+                            </td>
                             @*<td class="p-[12px]">
-                                    @responselist.MessageEng
-                                </td>
+            @responselist.MessageEng
+        </td>
 
-                                <td class="p-[12px]">
+        <td class="p-[12px]">
 
-                                        @responselist.MessageType
+                @responselist.MessageType
 
-                                </td>*@
+        </td>*@
                             <td class="p-[12px]">
                                 <div class="flex gap-[7px] justify-center text-[16px] ">
                                     <button class="edit-api-resp-btn" data-id="@responselist.MessageId"
