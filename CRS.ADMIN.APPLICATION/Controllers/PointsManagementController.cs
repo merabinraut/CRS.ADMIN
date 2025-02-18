@@ -416,19 +416,19 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 });
                 return Json("Invalid request", JsonRequestBehavior.AllowGet);
             }
-            if (request.Status.ToLower()=="approve" )              
-            {
-                if(string.IsNullOrEmpty( Image.FileName)){
-                    this.AddNotificationMessage(new NotificationModel()
-                    {
-                        NotificationType = NotificationMessage.INFORMATION,
-                        Message = "Image is required",
-                        Title = NotificationMessage.INFORMATION.ToString(),
-                    });
-                    return Json("Image is required", JsonRequestBehavior.AllowGet);
-                }
+            //if (request.Status.ToLower()=="approve" )              
+            //{
+            //    if(string.IsNullOrEmpty( Image.FileName)){
+            //        this.AddNotificationMessage(new NotificationModel()
+            //        {
+            //            NotificationType = NotificationMessage.INFORMATION,
+            //            Message = "Image is required",
+            //            Title = NotificationMessage.INFORMATION.ToString(),
+            //        });
+            //        return Json("Image is required", JsonRequestBehavior.AllowGet);
+            //    }
                 
-            }
+            //}
             if (string.IsNullOrEmpty(request.AdminRemark))
             {
                 this.AddNotificationMessage(new NotificationModel()
@@ -439,16 +439,16 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 });
                 return Json("Remark is required", JsonRequestBehavior.AllowGet);
             }
-            if (dbRequest.Status.Trim().ToUpper() == "S" && Image == null)
-            {
-                this.AddNotificationMessage(new NotificationModel()
-                {
-                    NotificationType = NotificationMessage.INFORMATION,
-                    Message = "Image required",
-                    Title = NotificationMessage.INFORMATION.ToString(),
-                });
-                return Json("Image required", JsonRequestBehavior.AllowGet);
-            }
+            //if (dbRequest.Status.Trim().ToUpper() == "S" && Image == null)
+            //{
+            //    this.AddNotificationMessage(new NotificationModel()
+            //    {
+            //        NotificationType = NotificationMessage.INFORMATION,
+            //        Message = "Image required",
+            //        Title = NotificationMessage.INFORMATION.ToString(),
+            //    });
+            //    return Json("Image required", JsonRequestBehavior.AllowGet);
+            //}
             string fileName = string.Empty;
             var allowedContentType = AllowedImageContentType();
             if (Image != null)
