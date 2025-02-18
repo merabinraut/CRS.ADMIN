@@ -244,6 +244,18 @@ namespace CRS.ADMIN.APPLICATION.Services
             await _provider.GlobalSignOutAsync(globalSignOutRequest);
             return true;
         }
+
+        public async Task<bool> AdminSignOut(string userName)
+        {
+            var request = new AdminUserGlobalSignOutRequest
+            {
+                UserPoolId = _userPoolId, 
+                Username = userName
+            };
+
+            var response = await _provider.AdminUserGlobalSignOutAsync(request);
+            return true;
+        }
         #endregion
 
         #region Password

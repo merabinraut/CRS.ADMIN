@@ -1,10 +1,13 @@
-﻿using Amazon.CognitoIdentityProvider.Model;
+﻿using Amazon.CognitoIdentityProvider;
+using Amazon.CognitoIdentityProvider.Model;
 using CRS.ADMIN.APPLICATION.Library;
 using CRS.ADMIN.APPLICATION.Services;
 using CRS.ADMIN.SHARED.Middleware.AmazonCognitoModel;
 using CRS.ADMIN.SHARED.Middleware.AmazonCognitoModel.SignUp;
+using DocumentFormat.OpenXml.Office2013.Drawing.ChartStyle;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Threading.Tasks;
 using SharedCognitoModel = CRS.ADMIN.SHARED.Middleware.AmazonCognitoModel;
@@ -548,6 +551,34 @@ namespace CRS.ADMIN.APPLICATION.Middleware
                     Code = ResponseCode.Success,
                     Message = ResponseCode.Success.ToString(),
                     Data = getUserDetailResponse.MapObject<SharedCognitoModel.UserManagement.UserDetailModel.Response>()
+                };
+            }
+            catch (System.Exception ex)
+            {
+                return new SharedCognitoModel.CommonResponse
+                {
+                    Code = SharedCognitoModel.ResponseCode.Exception,
+                    Message = $"Something went wrong. Please try again later. Message: {ex.Message}"
+                };
+            }
+        }
+        #endregion
+        #region Admin control
+        public async Task<SharedCognitoModel.CommonResponse> AdminSignOut(string userName)
+        {
+            try
+            {
+                var signOutResponse = await _cognitoService.AdminSignOut(userName);
+                if (!signOutResponse)
+                    return new SharedCognitoModel.CommonResponse
+                    {
+                        Code = SharedCognitoModel.ResponseCode.Warning,
+                        Message = "Something went wrong. Please try again later."
+                    };
+                return new SharedCognitoModel.CommonResponse
+                {
+                    Code = ResponseCode.Success,
+                    Message = ResponseCode.Success.ToString()
                 };
             }
             catch (System.Exception ex)

@@ -29,7 +29,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             _amazonCognitoMiddleware = amazonCognitoMiddleware;
             _amazonCognitoMiddleware.SetConfigNameViaUserType("affiliate");
         }
-        public ActionResult Index(string SearchFilter1 = "", string SearchFilter2 = "", string value="" ,int StartIndex = 0, int PageSize = 10, int StartIndex2 = 0, int PageSize2 = 10)
+        public ActionResult Index(string SearchFilter1 = "", string SearchFilter2 = "", string value = "", int StartIndex = 0, int PageSize = 10, int StartIndex2 = 0, int PageSize2 = 10)
         {
             Session["CurrentURL"] = "/AffiliateManagement/Index";
             var ResponseModel = new ReferalCommonModel();
@@ -48,7 +48,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             //ViewBag.Pref = DDLHelper.LoadDropdownList("PREF") as Dictionary<string, string>;
             //ViewBag.PrefIdKey = !string.IsNullOrEmpty(ResponseModel.ManageAffiliate.Prefecture) ? ViewBag.Pref[ResponseModel.ManageAffiliate.Prefecture] : null;
             ViewBag.BusinessTypeKey = ResponseModel.ManageAffiliate.BusinessType;
-            var dbResponse = _affiliateBuss.GetAffiliateList(dbAffiliateListRequest);            
+            var dbResponse = _affiliateBuss.GetAffiliateList(dbAffiliateListRequest);
             var dbCustomerListRequest = new PaginationFilterCommon()
             {
                 Skip = StartIndex2,
@@ -81,7 +81,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             ViewBag.StartIndex = StartIndex;
             ViewBag.PageSize = PageSize;
             ViewBag.TotalData1 = dbResponse != null && dbResponse.Any() ? dbResponse[0].TotalRecords : 0;
-            
+
             ViewBag.StartIndex2 = StartIndex2;
             ViewBag.PageSize2 = PageSize2;
             ViewBag.TotalData2 = dbReferalRes != null && dbReferalRes.Any() ? dbReferalRes[0].TotalRecords : 0;
@@ -93,7 +93,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
         {
             var culture = Request.Cookies["culture"]?.Value;
             culture = string.IsNullOrEmpty(culture) ? "ja" : culture;
-            ManageAffiliateModel model = new ManageAffiliateModel();            
+            ManageAffiliateModel model = new ManageAffiliateModel();
             if (!string.IsNullOrEmpty(AffiliateId))
             {
                 var id = AffiliateId.DecryptParameter();
@@ -109,13 +109,13 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 }
                 var dbResponse = _affiliateBuss.GetAffiliateDetails(id, culture);
                 model = dbResponse.MapObject<ManageAffiliateModel>();
-                model.AffiliateId =!string.IsNullOrEmpty(model.AffiliateId) ? model.AffiliateId.EncryptParameter():null;
+                model.AffiliateId = !string.IsNullOrEmpty(model.AffiliateId) ? model.AffiliateId.EncryptParameter() : null;
                 //model.Prefecture = !string.IsNullOrEmpty(model.Prefecture) ? model.Prefecture.EncryptParameter() : null;
-                model.BusinessType = !string.IsNullOrEmpty(model.BusinessType) ? model.BusinessType.EncryptParameter() : null;                
+                model.BusinessType = !string.IsNullOrEmpty(model.BusinessType) ? model.BusinessType.EncryptParameter() : null;
             }
             TempData["ManageAffiliateModel"] = model;
-            TempData["RenderId"] = "Manage";         
-            return RedirectToAction("Index", "AffiliateManagement", new { SearchFilter1 = SearchFilter, value = "a" ,StartIndex = StartIndex, PageSize = PageSize });
+            TempData["RenderId"] = "Manage";
+            return RedirectToAction("Index", "AffiliateManagement", new { SearchFilter1 = SearchFilter, value = "a", StartIndex = StartIndex, PageSize = PageSize });
         }
 
         [HttpPost, ValidateAntiForgeryToken]
@@ -141,7 +141,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 {
                     ModelState.AddModelError("CompanyName", "Required");
                 }
-            }            
+            }
             if (ModelState.IsValid)
             {
                 ManageAffiliateCommon commonModel = model.MapObject<ManageAffiliateCommon>();
@@ -186,7 +186,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 Title = NotificationMessage.INFORMATION.ToString(),
             }).ToArray();
             AddNotificationMessage(notificationModels);
-            var errors = ModelState.Where(x => x.Value.Errors.Count > 0).Select(x => new { x.Key }).ToList();           
+            var errors = ModelState.Where(x => x.Value.Errors.Count > 0).Select(x => new { x.Key }).ToList();
             TempData["ManageAffiliateModel"] = model;
             TempData["RenderId"] = "Manage";
             return RedirectToAction("Index", "AffiliateManagement");
@@ -262,7 +262,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             return RedirectToAction("Index", "AffiliateManagement");
         }
 
-        [HttpGet,OverrideActionFilters]
+        [HttpGet, OverrideActionFilters]
         public async Task<ActionResult> ResetAffiliatePassword(string AgentId)
         {
             var response = new CommonDbResponse();
@@ -270,7 +270,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             if (string.IsNullOrEmpty(aId)) response = new CommonDbResponse { ErrorCode = 1, Message = "Invalid details" };
             var commonRequest = new ManageAffiliateStatusCommon()
             {
-                AgentId=aId,
+                AgentId = aId,
                 ActionIP = ApplicationUtilities.GetIP(),
                 ActionUser = ApplicationUtilities.GetSessionValue("Username").ToString()
             };
@@ -296,6 +296,9 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 IsPermanent = true
             });
 
+            await _amazonCognitoMiddleware.AdminSignOut(response.Extra1);
+
+
             if (resetPasswordResponse?.Code != CRS.ADMIN.SHARED.Middleware.AmazonCognitoModel.ResponseCode.Success)
             {
                 this.AddNotificationMessage(new NotificationModel()
@@ -307,7 +310,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 _sqlTransactionHandler.RollbackTransaction();
                 return RedirectToAction("Index", "AffiliateManagement");
             }
-            
+
             this.AddNotificationMessage(new NotificationModel()
             {
                 NotificationType = response.Code == ResponseCode.Success ? NotificationMessage.SUCCESS : NotificationMessage.INFORMATION,
