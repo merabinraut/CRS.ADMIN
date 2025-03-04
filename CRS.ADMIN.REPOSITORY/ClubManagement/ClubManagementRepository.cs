@@ -592,20 +592,30 @@ namespace CRS.ADMIN.REPOSITORY.ClubManagement
                     ClubName = _DAO.ParseColumnValue(dbResponse, "English").ToString(),
                     CompanyNameFurigana = _DAO.ParseColumnValue(dbResponse, "CompanyNameKatakana").ToString(),
                     CeoFurigana = _DAO.ParseColumnValue(dbResponse, "CeoNameKatakana").ToString(),
-                    CorporateRegistryDocument = _DAO.ParseColumnValue(dbResponse, "CompanyRegistry").ToString(),
-                    PassportPhoto = (_DAO.ParseColumnValue(dbResponse, "DocumentType").ToString() == "2")
-                                         ? _DAO.ParseColumnValue(dbResponse, "KYCDocument").ToString()
-                                         : null,
-                    InsurancePhoto = (_DAO.ParseColumnValue(dbResponse, "DocumentType").ToString() == "2")
-                                         ? _DAO.ParseColumnValue(dbResponse, "KYCDocumentBack").ToString()
-                                         : null,
+                    CorporateRegistryDocument = !string.IsNullOrEmpty(_DAO.ParseColumnValue(dbResponse, "CompanyRegistry")?.ToString())?
+                                               _DAO.ParseColumnValue(dbResponse, "CompanyRegistry").ToString()
+                                               :null,
+                    PassportPhoto = !string.IsNullOrEmpty(_DAO.ParseColumnValue(dbResponse, "KYCDocument")?.ToString())
+                                     ? (_DAO.ParseColumnValue(dbResponse, "DocumentType")?.ToString() == "2"
+                                         ? _DAO.ParseColumnValue(dbResponse, "KYCDocument")?.ToString()
+                                         : null)
+                                     : null,
+                    InsurancePhoto = !string.IsNullOrEmpty(_DAO.ParseColumnValue(dbResponse, "KYCDocumentBack")?.ToString())
+                                       ?(_DAO.ParseColumnValue(dbResponse, "DocumentType").ToString() == "2"
+                                         ? _DAO.ParseColumnValue(dbResponse, "KYCDocumentBack")?.ToString()
+                                         : null)
+                                         :null,
 
-                    KYCDocument = (_DAO.ParseColumnValue(dbResponse, "DocumentType").ToString() == "2")
+                    KYCDocument = !string.IsNullOrEmpty(_DAO.ParseColumnValue(dbResponse, "KYCDocument")?.ToString())
+                                       ?(_DAO.ParseColumnValue(dbResponse, "DocumentType").ToString() == "2"
                                          ? null
-                                         : _DAO.ParseColumnValue(dbResponse, "KYCDocument").ToString(),
-                    KYCDocumentBack = (_DAO.ParseColumnValue(dbResponse, "DocumentType").ToString() == "2")
+                                         : _DAO.ParseColumnValue(dbResponse, "KYCDocument").ToString())
+                                         :null,
+                    KYCDocumentBack = !string.IsNullOrEmpty(_DAO.ParseColumnValue(dbResponse, "KYCDocumentBack")?.ToString())
+                                       ?(_DAO.ParseColumnValue(dbResponse, "DocumentType").ToString() == "2"
                                          ? null
-                                         : _DAO.ParseColumnValue(dbResponse, "KYCDocumentBack").ToString(),
+                                         : _DAO.ParseColumnValue(dbResponse, "KYCDocumentBack").ToString())
+                                         :null,
                     IdentificationType = _DAO.ParseColumnValue(dbResponse, "DocumentType").ToString()
 
                 };

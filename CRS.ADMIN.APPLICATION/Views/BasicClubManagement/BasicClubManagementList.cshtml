@@ -497,7 +497,8 @@
         }
         var commaSeparatedString = "";
         $(document).ready(function () {
-            $('#submit-button-basic-id').click(function () {
+            $('#submit-button-basic-id').click(function (e) {
+                e.preventDefault(); 
                 commaSeparatedString = [];
                 var items = [];
                 $('#large[name="holiday"] option:selected').each(function () {
@@ -744,11 +745,11 @@
                 var isimagevalid = true;
                 var logo = $("#file_name_logo").text().trim().toLowerCase(); //$("input[name='Logo_Certificate']").val();
                 var CoverPhoto = $("#file_name_cover").text().trim().toLowerCase();  //$("input[name='CoverPhoto_Certificate']").val();
-                var CorporateRegistryDocument = $("#file_name_corporateregistrydocument").text().trim().toLowerCase();  //$("input[name='CorporateRegistry_Certificate']").val();
-                var KYCDocument = $("#file_name_kycdocument").text().trim().toLowerCase();   //$("input[name='KYCDocument_Certificate']").val();
-                var PassportPhoto = $("#file_name_passportphoto").text().trim().toLowerCase();   //$("input[name='PassportPhotot_Certificate']").val();
-                var KYCDocumentBack = $("#file_name_kycdocumentback").text().trim().toLowerCase();   //$("input[name='KYCDocumentBack_Certificate']").val();
-                var Insurance = $("#file_name_insurancephoto").text().trim().toLowerCase();    //$("input[name='InsurancePhoto_Certificate']").val();
+                //var CorporateRegistryDocument = $("#file_name_corporateregistrydocument").text().trim().toLowerCase();  //$("input[name='CorporateRegistry_Certificate']").val();
+                //var KYCDocument = $("#file_name_kycdocument").text().trim().toLowerCase();   //$("input[name='KYCDocument_Certificate']").val();
+                //var PassportPhoto = $("#file_name_passportphoto").text().trim().toLowerCase();   //$("input[name='PassportPhotot_Certificate']").val();
+                //var KYCDocumentBack = $("#file_name_kycdocumentback").text().trim().toLowerCase();   //$("input[name='KYCDocumentBack_Certificate']").val();
+                //var Insurance = $("#file_name_insurancephoto").text().trim().toLowerCase();    //$("input[name='InsurancePhoto_Certificate']").val();
                 var Business = $("#file_name_bussiness_certificate").text().trim().toLowerCase();    //$("input[name='Business_Certificate']").val();
                 var identificationtype = $('#large[name="IdentificationType"]').find("option:selected").text().trim().toLowerCase();
                 var businesstype = $('#large[name="BusinessTypeDDL"]').find("option:selected").text().trim().toLowerCase();
@@ -763,12 +764,12 @@
                     $('span.field-validation-valid[data-valmsg-for="CoverPhoto"]').text('@CRS.ADMIN.APPLICATION.Resources.Resource.Required');
                     isimagevalid = false;
                 }*@
-                if ((CorporateRegistryDocument == "no file choosen" || CorporateRegistryDocument == "ファイルが選択されていません") && (businesstype == "corporation" || businesstype == "法人"))
+                @*if ((CorporateRegistryDocument == "no file choosen" || CorporateRegistryDocument == "ファイルが選択されていません") && (businesstype == "corporation" || businesstype == "法人"))
                 {
                     $('span.field-validation-valid[data-valmsg-for="CorporateRegistryDocument"]').text('@CRS.ADMIN.APPLICATION.Resources.Resource.Required');
                     isimagevalid = false;
-                }
-                if (KYCDocument == "no file choosen" || KYCDocument == "ファイルが選択されていません")
+                }*@
+                @*if (KYCDocument == "no file choosen" || KYCDocument == "ファイルが選択されていません")
                 {
                       if (identificationtype != "passport + insurance card")
                        {
@@ -819,7 +820,7 @@
                 {
                     $('span.field-validation-valid[data-valmsg-for="InsurancePhoto"]').text('@CRS.ADMIN.APPLICATION.Resources.Resource.Required');
                     isimagevalid = false;
-                }
+                }*@
                 if (Business == "no file choosen" || Business == "ファイルが選択されていません") {
                     $('span.field-validation-valid[data-valmsg-for="BusinessCertificate"]').text('@CRS.ADMIN.APPLICATION.Resources.Resource.Required');
                     isimagevalid = false;
@@ -891,36 +892,36 @@
         //        $('span.field-validation-valid[data-valmsg-for="CoverPhoto"]').text('');
         //    }
         //});
-        $('#file_input_corporateregistrydocument').on('change', function () {
-            var CorporateRegistryDocument = $("#file_name_corporateregistrydocument").text().trim().toLowerCase();
-            if (CorporateRegistryDocument != "") {
-                $('span.field-validation-valid[data-valmsg-for="CorporateRegistryDocument"]').text('');
-            }
-        });
-        $('#file_input_kycdocument').on('change', function () {
-            var KYCDocument = $("#file_name_kycdocument").text().trim().toLowerCase();
-            if (KYCDocument != "") {
-                $('span.field-validation-valid[data-valmsg-for="KYCDocument"]').text('');
-            }
-        });
-        $('#file_input_passportphoto').on('change', function () {
-            var PassportPhoto = $("#file_name_passportphoto").text().trim().toLowerCase();
-            if (PassportPhoto != "") {
-                $('span.field-validation-valid[data-valmsg-for="PassportPhoto"]').text('');
-            }
-        });
-        $('#file_input_kycdocumentback').on('change', function () {
-            var KYCDocumentBack = $("#file_name_kycdocumentback").text().trim().toLowerCase();
-            if (KYCDocumentBack != "") {
-                $('span.field-validation-valid[data-valmsg-for="KYCDocumentBack"]').text('');
-            }
-        });
-        $('#file_input_insurancephoto').on('change', function () {
-            var Insurance = $("#file_name_insurancephoto").text().trim().toLowerCase();
-            if (Insurance != "") {
-                $('span.field-validation-valid[data-valmsg-for="InsurancePhoto"]').text('');
-            }
-        });
+        //$('#file_input_corporateregistrydocument').on('change', function () {
+        //    var CorporateRegistryDocument = $("#file_name_corporateregistrydocument").text().trim().toLowerCase();
+        //    if (CorporateRegistryDocument != "") {
+        //        $('span.field-validation-valid[data-valmsg-for="CorporateRegistryDocument"]').text('');
+        //    }
+        //});
+        //$('#file_input_kycdocument').on('change', function () {
+        //    var KYCDocument = $("#file_name_kycdocument").text().trim().toLowerCase();
+        //    if (KYCDocument != "") {
+        //        $('span.field-validation-valid[data-valmsg-for="KYCDocument"]').text('');
+        //    }
+        //});
+        //$('#file_input_passportphoto').on('change', function () {
+        //    var PassportPhoto = $("#file_name_passportphoto").text().trim().toLowerCase();
+        //    if (PassportPhoto != "") {
+        //        $('span.field-validation-valid[data-valmsg-for="PassportPhoto"]').text('');
+        //    }
+        //});
+        //$('#file_input_kycdocumentback').on('change', function () {
+        //    var KYCDocumentBack = $("#file_name_kycdocumentback").text().trim().toLowerCase();
+        //    if (KYCDocumentBack != "") {
+        //        $('span.field-validation-valid[data-valmsg-for="KYCDocumentBack"]').text('');
+        //    }
+        //});
+        //$('#file_input_insurancephoto').on('change', function () {
+        //    var Insurance = $("#file_name_insurancephoto").text().trim().toLowerCase();
+        //    if (Insurance != "") {
+        //        $('span.field-validation-valid[data-valmsg-for="InsurancePhoto"]').text('');
+        //    }
+        //});
         $('#file_input_business_certificate').on('change', function () {
             var Business = $("#file_name_bussiness_certificate").text().trim().toLowerCase();
             if (Business != "") {
@@ -937,6 +938,7 @@
         });
         $(document).ready(function () {
             $('#ManagePremiumClubForm').on('keypress', function (e) {
+                e.preventDefault(); 
                 if (e.key === 'Enter') { // Use 'Enter' for better readability
                     e.preventDefault(); // Prevent form submission
                     return false; // Prevent any default action

@@ -651,13 +651,13 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 if
            (
               string.IsNullOrEmpty(Model.BusinessCertificate) ||
-              string.IsNullOrEmpty(Model.KYCDocument) ||
+              //string.IsNullOrEmpty(Model.KYCDocument) ||
               string.IsNullOrEmpty(Model.Logo) ||
               string.IsNullOrEmpty(Model.CoverPhoto) ||
-              string.IsNullOrEmpty(Model.Gallery) ||
-              string.IsNullOrEmpty(Model.KYCDocumentBack) ||
-              string.IsNullOrEmpty(Model.PassportPhoto) ||
-              string.IsNullOrEmpty(Model.InsurancePhoto)
+              string.IsNullOrEmpty(Model.Gallery) 
+              //string.IsNullOrEmpty(Model.KYCDocumentBack) ||
+              //string.IsNullOrEmpty(Model.PassportPhoto) ||
+              //string.IsNullOrEmpty(Model.InsurancePhoto)
            )
                 {
                     bool allowRedirect = false;
@@ -683,43 +683,43 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                         //}
 
 
-                        if (Model.BusinessTypeDDL.DecryptParameter() == "1")
-                        {
-                            if (CorporateRegistry_Certificate == null && string.IsNullOrEmpty(Model.CorporateRegistryDocument))
-                            {
-                                ErrorMessage = "Corporate registry required";
-                                allowRedirect = true;
-                            }
-                        }
+                        //if (Model.BusinessTypeDDL.DecryptParameter() == "1")
+                        //{
+                        //    if (CorporateRegistry_Certificate == null && string.IsNullOrEmpty(Model.CorporateRegistryDocument))
+                        //    {
+                        //        ErrorMessage = "Corporate registry required";
+                        //        allowRedirect = true;
+                        //    }
+                        //}
 
                     }
-                    if (Model.IdentificationType.DecryptParameter() == "2")
-                    {
-                        if (PassportPhotot_Certificate == null && string.IsNullOrEmpty(Model.PassportPhoto))
-                        {
-                            ErrorMessage = "Passport photo required";
-                            allowRedirect = true;
-                        }
-                        else if (InsurancePhoto_Certificate == null && string.IsNullOrEmpty(Model.InsurancePhoto))
-                        {
-                            ErrorMessage = "Insurance card required";
-                            allowRedirect = true;
-                        }
-                    }
-                    else
-                    {
-                        if (KYCDocument_Certificate == null && string.IsNullOrEmpty(Model.KYCDocument))
-                        {
-                            ErrorMessage = "KYC front document required";
-                            allowRedirect = true;
-                        }
-                        else if (KYCDocumentBack_Certificate == null && string.IsNullOrEmpty(Model.KYCDocumentBack))
-                        {
-                            ErrorMessage = "KYC back document required";
-                            allowRedirect = true;
-                        }
+                    //if (Model.IdentificationType.DecryptParameter() == "2")
+                    //{
+                    //    if (PassportPhotot_Certificate == null && string.IsNullOrEmpty(Model.PassportPhoto))
+                    //    {
+                    //        ErrorMessage = "Passport photo required";
+                    //        allowRedirect = true;
+                    //    }
+                    //    else if (InsurancePhoto_Certificate == null && string.IsNullOrEmpty(Model.InsurancePhoto))
+                    //    {
+                    //        ErrorMessage = "Insurance card required";
+                    //        allowRedirect = true;
+                    //    }
+                    //}
+                    //else
+                    //{
+                    //    if (KYCDocument_Certificate == null && string.IsNullOrEmpty(Model.KYCDocument))
+                    //    {
+                    //        ErrorMessage = "KYC front document required";
+                    //        allowRedirect = true;
+                    //    }
+                    //    else if (KYCDocumentBack_Certificate == null && string.IsNullOrEmpty(Model.KYCDocumentBack))
+                    //    {
+                    //        ErrorMessage = "KYC back document required";
+                    //        allowRedirect = true;
+                    //    }
 
-                    }
+                    //}
                     if (allowRedirect)
                     {
                         this.AddNotificationMessage(new NotificationModel()
