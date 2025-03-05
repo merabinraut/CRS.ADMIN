@@ -1000,11 +1000,13 @@
         };
         var isvalid = true;
 
-    //---------------------------------------START required validation according to next button-------------------------------------////
+        //---------------------------------------START required validation according to next button-------------------------------------////
+        submitButton.addEventListener('click', () => {
+            $('#submit-button-id').prop('disabled', true);
+            $('#ManageClubForm').submit();
+        });
         nextButton.addEventListener('click', () => {
             var id = $('.content-section[style*="display: block"]').attr('id');
-
-
             if (id.toLowerCase() == "content1") {
                 var isimagevalid = true;
                 var logo = $("#file_name_logo").text().trim().toLowerCase(); //$("input[name='Logo_Certificate']").val();
@@ -1202,13 +1204,13 @@
             }
         });
         $(document).ready(function () {
-
-            var validator = $('#ManageClubForm').validate({
+            var validator = $('#ManageClubForm').validate({              
                 errorClass: 'invalid',
                 errorElement: 'div',
                 errorPlacement: function (error, element) {
                     error.insertAfter(element);
                 },
+
                 rules: {
                     ClubName1: {
                         required: true
@@ -1350,6 +1352,7 @@
                        required: '@CRS.ADMIN.APPLICATION.Resources.Resource.Required'
                     },
                 }
+                 
             });
 
 
