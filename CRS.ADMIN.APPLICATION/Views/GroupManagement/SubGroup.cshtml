@@ -445,6 +445,7 @@
             </div>
         </div>
     </div>
+    </div>
     @Html.Partial("_ManageSubGroup", _SubGroupModel)
     @Html.Partial("_ManageSubGroupClub", _SubGroupClubModel)
     @section scripts{
@@ -620,7 +621,7 @@
                 }
             });
         });
-    }
+        }
 
     // Event handler for Location selection
     $(document).on('change', 'select[name="LocationDDL"]', function () {
@@ -807,13 +808,24 @@
            initializeDynamicDropdowns();
 
     });
-
-        function submit() {
+            $('#subgroupid[name="SubGroupDDL"]').change(function () {
+                var selectedValue = $(this).find("option:selected").val();
+                if (selectedValue != undefined || selectedValue != null) {
+                    $(`#span-sub-group-id`).text('');
+                } 
+            });
+            function submit() {
                 var submitButton = document.getElementById('submit-button-id');
                 submitButton.disabled = true;
-                var requestVerificationToken = $('input[name="__RequestVerificationToken"]').val();           
+                var requestVerificationToken = $('input[name="__RequestVerificationToken"]').val();
                 var sGroupId = subgroupid;
                 var groupId = '@ViewBag.GroupId';
+                var subGroupId = $('#subgroupid[name="SubGroupDDL"]').find("option:selected").val();
+                if (subGroupId === undefined || subGroupId === null|| subGroupId === "")
+                {
+                    $(`#span-sub-group-id`).text('@CRS.ADMIN.APPLICATION.Resources.Resource.Required');
+                    return false;
+                }
                 var isvalid = true;
                 j = 1;
                   for (var i = 1; i <= containerCounter; i++) {
@@ -850,14 +862,14 @@
                                 }
                                 j++;
                             }
-                            
+
                         }
                     }
             }
             if (isvalid == false) {
                 submitButton.disabled = false;
                 return false;
-            }  
+            }
             var mappedData = JSON.stringify(multiplerowsdata);
                 if (mappedData) {
                     $.ajax({
