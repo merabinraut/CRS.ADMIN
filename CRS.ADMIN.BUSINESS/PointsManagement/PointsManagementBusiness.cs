@@ -14,6 +14,7 @@ namespace CRS.ADMIN.BUSINESS.PointsManagement
         {
             _REPO = REPO;
         }
+
         public List<PointsTansferReportCommon> GetPointTransferList(PointsManagementCommon objPointsTansferReportCommon = null, PaginationFilterCommon objPaginationFilterCommon = null)
         {
             return _REPO.GetPointTransferList(objPointsTansferReportCommon, objPaginationFilterCommon);
@@ -22,6 +23,7 @@ namespace CRS.ADMIN.BUSINESS.PointsManagement
         {
             return _REPO.ManagePoints(objPointsTansferCommon);
         }
+
         public CommonDbResponse ManagePointsRequest(PointsRequestCommon objPointsRequestCommon)
         {
             return _REPO.ManagePointsRequest(objPointsRequestCommon);
@@ -45,6 +47,11 @@ namespace CRS.ADMIN.BUSINESS.PointsManagement
         {
             return _REPO.GetSystemTransferDetailsAsync(mappedObject);
         }
+        public PointsTansferRetriveDetailsCommon GetPointTransferDetails(string id)
+        {
+            return _REPO.GetPointTransferDetails(id);
+        }
+
         #endregion
     }
 }

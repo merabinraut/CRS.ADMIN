@@ -395,11 +395,11 @@
 }
 
 
-        function HostGalleryRedirectFunction(i, j, k) {
+        function HostGalleryRedirectFunction(i, j, k) {   
             const page_size = @ViewBag.PageSize;
             const start_index_val = @ViewBag.StartIndex;
             let search_filter = '@ViewBag.SearchFilter';
-            window.location.href = '/HostManagement/GalleryManagement?AgentId=' + i + '&HostId=' + j + '&clubCategory=' + k + '&SearchFilter=' + search_filter + '&StartIndex=' + start_index_val + '&PageSize=' + page_size;;
+            window.location.href = '/HostManagement/GalleryManagement?AgentId=' + i + '&HostId=' + j + '&clubCategory=' + k + '&SearchFilterBck=' + search_filter + '&StartIndexBck=' + start_index_val + '&PageSizeBck=' + page_size 
         }
     </script>
 

@@ -1,31 +1,37 @@
 ﻿using CRS.ADMIN.APPLICATION.Helper;
 using CRS.ADMIN.APPLICATION.Library;
+using CRS.ADMIN.APPLICATION.Middleware;
 using CRS.ADMIN.APPLICATION.Models;
 using CRS.ADMIN.APPLICATION.Models.BasicClubManagement;
-using CRS.ADMIN.APPLICATION.Models.ClubManagement;
 using CRS.ADMIN.BUSINESS.BasicClubManagement;
-using CRS.ADMIN.SHARED.ClubManagement;
+using CRS.ADMIN.BUSINESS.ClubManagement;
 using CRS.ADMIN.SHARED;
+using CRS.ADMIN.SHARED.BasicClubManagement;
+using CRS.ADMIN.SHARED.ClubManagement;
+using CRS.ADMIN.SHARED.Middleware.AmazonCognitoModel;
 using CRS.ADMIN.SHARED.PaginationManagement;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.IO;
 using System.Linq;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
-using static Google.Apis.Requests.BatchRequest;
-using System.IO;
-using CRS.ADMIN.SHARED.BasicClubManagement;
 
 namespace CRS.ADMIN.APPLICATION.Controllers
 {
     public class BasicClubManagementController : BaseController
     {
         private readonly IBasicClubManagementBusiness _buss;
-        public BasicClubManagementController(IBasicClubManagementBusiness buss)
+        private readonly AmazonCognitoMiddleware _amazonCognitoMiddleware;
+        private readonly IClubManagementBusiness _clubManagementBusiness;
+        public BasicClubManagementController(IBasicClubManagementBusiness buss, AmazonCognitoMiddleware amazonCognitoMiddleware, IClubManagementBusiness clubManagementBusiness)
         {
             _buss = buss;
+            _amazonCognitoMiddleware = amazonCognitoMiddleware;
+            _clubManagementBusiness = clubManagementBusiness;
+            _amazonCognitoMiddleware.SetConfigNameViaUserType("club");
         }
         [HttpGet]
         public ActionResult BasicClubManagementList(string AgentId, string SearchFilter = "", int StartIndex = 0, int PageSize = 10)
@@ -83,6 +89,9 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             ViewBag.BusinessTypeKey = objBasicClubManagementModel.ManagePremiumClub.BusinessTypeDDL;
             ViewBag.ClosingDate = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("CLOSINGDATE", "", culture) as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---");
             ViewBag.ClosingDateIdKey = objBasicClubManagementModel.ManagePremiumClub.ClosingDate;
+            ViewBag.OthersHoliday = ApplicationUtilities.SetDDLValue(DDLHelper.LoadDropdownList("OTHERSHOLIDAY", "", culture) as Dictionary<string, string>, null, "");
+            ViewBag.OthersHolidayIdKey = !string.IsNullOrEmpty(objBasicClubManagementModel.ManageBasicClub.OthersHoliday) ? objBasicClubManagementModel.ManageBasicClub.OthersHoliday : null;
+            ViewBag.OthersHolidayIdConversion = !string.IsNullOrEmpty(objBasicClubManagementModel.ManagePremiumClub.OthersHoliday) ? objBasicClubManagementModel.ManagePremiumClub.OthersHoliday : null;
             ViewBag.PopUpRenderValue = !string.IsNullOrEmpty(RenderId) ? RenderId : null;
             return View(objBasicClubManagementModel);
         }
@@ -91,9 +100,13 @@ namespace CRS.ADMIN.APPLICATION.Controllers
         public async Task<ActionResult> ManageBasicClub(ManageBasicClubModel Model, HttpPostedFileBase Logo_Certificate, HttpPostedFileBase CoverPhoto_Certificate, string LocationDDL, string BusinessTypeDDL)
         {
             string holidays = "";
+            string othersHoliday = "";
             string[] array = Model.HolidayStr;
             string commaSeparatedString = string.Join(", ", array);
             List<string> holidayList = commaSeparatedString.Split(new[] { ", " }, StringSplitOptions.RemoveEmptyEntries).ToList();
+            string[] otherArray = Model.OthersHolidayStr;
+            string otherCommaSeparatedString = string.Join(", ", otherArray);
+            List<string> othersHolidayList = otherCommaSeparatedString.Split(new[] { ", " }, StringSplitOptions.RemoveEmptyEntries).ToList();
             ActionResult redirectresult = null;
             redirectresult = RedirectToAction("BasicClubManagementList", "BasicClubManagement", new
             {
@@ -116,6 +129,20 @@ namespace CRS.ADMIN.APPLICATION.Controllers
 
             }
             Model.Holiday = holidays;
+            foreach (var otherholiday in othersHolidayList)
+            {
+                var item = otherholiday.DecryptParameter();
+                if (string.IsNullOrEmpty(othersHoliday))
+                {
+                    othersHoliday = item.Trim();
+                }
+                else
+                {
+                    othersHoliday = othersHoliday + "," + item.Trim();
+                }
+
+            }
+            Model.OthersHoliday = othersHoliday;
             string ErrorMessage = string.Empty;
             string concatenateplanvalue = string.Empty;
             string LogoPath = "";
@@ -240,9 +267,9 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                     if (CoverPhoto_Certificate != null) await ImageHelper.ImageUpload(CoverPhotoFileName, CoverPhoto_Certificate);
                     this.AddNotificationMessage(new NotificationModel()
                     {
-                        NotificationType = dbResponse.Code == ResponseCode.Success ? NotificationMessage.SUCCESS : NotificationMessage.INFORMATION,
+                        NotificationType = dbResponse.Code == CRS.ADMIN.SHARED.ResponseCode.Success ? NotificationMessage.SUCCESS : NotificationMessage.INFORMATION,
                         Message = dbResponse.Message ?? "Failed",
-                        Title = dbResponse.Code == ResponseCode.Success ? NotificationMessage.SUCCESS.ToString() : NotificationMessage.INFORMATION.ToString()
+                        Title = dbResponse.Code == CRS.ADMIN.SHARED.ResponseCode.Success ? NotificationMessage.SUCCESS.ToString() : NotificationMessage.INFORMATION.ToString()
                     });
                     return redirectresult;
                 }
@@ -325,6 +352,24 @@ namespace CRS.ADMIN.APPLICATION.Controllers
 
                 }
                 model.Holiday = !string.IsNullOrEmpty(holidays) ? holidays : null;
+                string otherHolidays = "";
+                string[] otherarray = model.OthersHoliday.Split(','); ;
+                string othercommaSeparatedString = string.Join(", ", otherarray);
+                List<string> otherholidayList = othercommaSeparatedString.Split(new[] { ", " }, StringSplitOptions.RemoveEmptyEntries).ToList();
+                foreach (var holiday in otherholidayList)
+                {
+                    var item = holiday.EncryptParameter();
+                    if (string.IsNullOrEmpty(otherHolidays))
+                    {
+                        otherHolidays = item.Trim();
+                    }
+                    else
+                    {
+                        otherHolidays = otherHolidays + "," + item.Trim();
+                    }
+
+                }
+                model.OthersHoliday = !string.IsNullOrEmpty(otherHolidays) ? otherHolidays : null;
                 model.ClosingDate = !string.IsNullOrEmpty(model.ClosingDate) ? model.ClosingDate.EncryptParameter() : null;
             }
             TempData["RenderId"] = "Manage";
@@ -332,9 +377,9 @@ namespace CRS.ADMIN.APPLICATION.Controllers
 
             return RedirectToAction("BasicClubManagementList", "BasicClubManagement", new
             {
-                SearchFilter= SearchFilter,
-                StartIndex= StartIndex,
-                PageSize= PageSize
+                SearchFilter = SearchFilter,
+                StartIndex = StartIndex,
+                PageSize = PageSize
             });
         }
 
@@ -361,9 +406,9 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             response = dbResponse;
             this.AddNotificationMessage(new NotificationModel()
             {
-                NotificationType = response.Code == ResponseCode.Success ? NotificationMessage.SUCCESS : NotificationMessage.INFORMATION,
+                NotificationType = response.Code == CRS.ADMIN.SHARED.ResponseCode.Success ? NotificationMessage.SUCCESS : NotificationMessage.INFORMATION,
                 Message = response.Message ?? "Something went wrong. Please try again later",
-                Title = response.Code == ResponseCode.Success ? NotificationMessage.SUCCESS.ToString() : NotificationMessage.INFORMATION.ToString()
+                Title = response.Code == CRS.ADMIN.SHARED.ResponseCode.Success ? NotificationMessage.SUCCESS.ToString() : NotificationMessage.INFORMATION.ToString()
             });
             return Json(dbResponse.Message, JsonRequestBehavior.AllowGet);
         }
@@ -390,9 +435,9 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             response = dbResponse;
             this.AddNotificationMessage(new NotificationModel()
             {
-                NotificationType = response.Code == ResponseCode.Success ? NotificationMessage.SUCCESS : NotificationMessage.INFORMATION,
+                NotificationType = response.Code == CRS.ADMIN.SHARED.ResponseCode.Success ? NotificationMessage.SUCCESS : NotificationMessage.INFORMATION,
                 Message = response.Message ?? "Something went wrong. Please try again later",
-                Title = response.Code == ResponseCode.Success ? NotificationMessage.SUCCESS.ToString() : NotificationMessage.INFORMATION.ToString()
+                Title = response.Code == CRS.ADMIN.SHARED.ResponseCode.Success ? NotificationMessage.SUCCESS.ToString() : NotificationMessage.INFORMATION.ToString()
             });
             return Json(dbResponse.Message, JsonRequestBehavior.AllowGet);
         }
@@ -411,9 +456,9 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             response = dbResponse;
             this.AddNotificationMessage(new NotificationModel()
             {
-                NotificationType = response.Code == ResponseCode.Success ? NotificationMessage.SUCCESS : NotificationMessage.INFORMATION,
+                NotificationType = response.Code == CRS.ADMIN.SHARED.ResponseCode.Success ? NotificationMessage.SUCCESS : NotificationMessage.INFORMATION,
                 Message = response.Message ?? "Something went wrong. Please try again later",
-                Title = response.Code == ResponseCode.Success ? NotificationMessage.SUCCESS.ToString() : NotificationMessage.INFORMATION.ToString()
+                Title = response.Code == CRS.ADMIN.SHARED.ResponseCode.Success ? NotificationMessage.SUCCESS.ToString() : NotificationMessage.INFORMATION.ToString()
             });
             return Json(response.SetMessageInTempData(this));
         }
@@ -465,6 +510,24 @@ namespace CRS.ADMIN.APPLICATION.Controllers
 
                 }
                 model.Holiday = !string.IsNullOrEmpty(holidays) ? holidays : null;
+                string otherHolidays = "";
+                string[] otherarray = model.OthersHoliday.Split(','); ;
+                string othercommaSeparatedString = string.Join(", ", otherarray);
+                List<string> otherholidayList = othercommaSeparatedString.Split(new[] { ", " }, StringSplitOptions.RemoveEmptyEntries).ToList();
+                foreach (var holiday in otherholidayList)
+                {
+                    var item = holiday.EncryptParameter();
+                    if (string.IsNullOrEmpty(otherHolidays))
+                    {
+                        otherHolidays = item.Trim();
+                    }
+                    else
+                    {
+                        otherHolidays = otherHolidays + "," + item.Trim();
+                    }
+
+                }
+                model.OthersHoliday = !string.IsNullOrEmpty(otherHolidays) ? otherHolidays : null;
                 model.ClosingDate = !string.IsNullOrEmpty(model.ClosingDate) ? model.ClosingDate.EncryptParameter() : null;
             }
 
@@ -477,6 +540,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
         public async Task<ActionResult> ManageConversionBasicClub(ManagePremiumClubModel Model, HttpPostedFileBase Business_Certificate, HttpPostedFileBase Logo_Certificate, HttpPostedFileBase CoverPhoto_Certificate, HttpPostedFileBase KYCDocument_Certificate, HttpPostedFileBase KYCDocumentBack_Certificate, HttpPostedFileBase PassportPhotot_Certificate, HttpPostedFileBase InsurancePhoto_Certificate, HttpPostedFileBase CorporateRegistry_Certificate, string LocationDDL, string BusinessTypeDDL)
         {
             string holidays = "";
+            string othersHoliday = "";
             ActionResult redirectresult = null;
             if (!string.IsNullOrEmpty(Model.holdId))
             {
@@ -517,7 +581,26 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 }
                 Model.Holiday = holidays;
             }
+            string[] otherarray = Model.OthersHolidayStr;
+            if (Model.OthersHolidayStr != null && Model.OthersHolidayStr.Any(str => !string.IsNullOrEmpty(str)))
+            {
+                string othercommaSeparatedString = string.Join(", ", otherarray);
+                List<string> otherholidayList = othercommaSeparatedString.Split(new[] { ", " }, StringSplitOptions.RemoveEmptyEntries).ToList();
+                foreach (var holiday in otherholidayList)
+                {
+                    var item = holiday.DecryptParameter();
+                    if (string.IsNullOrEmpty(othersHoliday))
+                    {
+                        othersHoliday = item.Trim();
+                    }
+                    else
+                    {
+                        othersHoliday = othersHoliday + "," + item.Trim();
+                    }
 
+                }
+                Model.OthersHoliday = othersHoliday;
+            }
             string ErrorMessage = string.Empty;
             if (!string.IsNullOrEmpty(BusinessTypeDDL?.DecryptParameter())) ModelState.Remove("BusinessType");
             ViewBag.PlansList = ApplicationUtilities.LoadDropdownList("CLUBPLANS") as Dictionary<string, string>;
@@ -528,6 +611,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             string LogoPath = "";
             string coverPhotoPath = "";
             var allowedContentType = AllowedImageContentType();
+            var allowedContentTypeWithPDF = AllowedImageContentTypePdf();
             string dateTime = "";
             if (Model.BusinessTypeDDL.DecryptParameter() == "1")
             {
@@ -567,13 +651,13 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 if
            (
               string.IsNullOrEmpty(Model.BusinessCertificate) ||
-              string.IsNullOrEmpty(Model.KYCDocument) ||
+              //string.IsNullOrEmpty(Model.KYCDocument) ||
               string.IsNullOrEmpty(Model.Logo) ||
               string.IsNullOrEmpty(Model.CoverPhoto) ||
-              string.IsNullOrEmpty(Model.Gallery) ||
-              string.IsNullOrEmpty(Model.KYCDocumentBack) ||
-              string.IsNullOrEmpty(Model.PassportPhoto) ||
-              string.IsNullOrEmpty(Model.InsurancePhoto)
+              string.IsNullOrEmpty(Model.Gallery) 
+              //string.IsNullOrEmpty(Model.KYCDocumentBack) ||
+              //string.IsNullOrEmpty(Model.PassportPhoto) ||
+              //string.IsNullOrEmpty(Model.InsurancePhoto)
            )
                 {
                     bool allowRedirect = false;
@@ -592,50 +676,50 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                             ErrorMessage = "Logo required";
                             allowRedirect = true;
                         }
-                        else if (CoverPhoto_Certificate == null && string.IsNullOrEmpty(Model.CoverPhoto))
-                        {
-                            ErrorMessage = "Cover photo required";
-                            allowRedirect = true;
-                        }
+                        //else if (CoverPhoto_Certificate == null && string.IsNullOrEmpty(Model.CoverPhoto))
+                        //{
+                        //    ErrorMessage = "Cover photo required";
+                        //    allowRedirect = true;
+                        //}
 
 
-                        if (Model.BusinessTypeDDL.DecryptParameter() == "1")
-                        {
-                            if (CorporateRegistry_Certificate == null && string.IsNullOrEmpty(Model.CorporateRegistryDocument))
-                            {
-                                ErrorMessage = "Corporate registry required";
-                                allowRedirect = true;
-                            }
-                        }
-
-                    }
-                    if (Model.IdentificationType.DecryptParameter() == "2")
-                    {
-                        if (PassportPhotot_Certificate == null && string.IsNullOrEmpty(Model.PassportPhoto))
-                        {
-                            ErrorMessage = "Passport photo required";
-                            allowRedirect = true;
-                        }
-                        else if (InsurancePhoto_Certificate == null && string.IsNullOrEmpty(Model.InsurancePhoto))
-                        {
-                            ErrorMessage = "Insurance card required";
-                            allowRedirect = true;
-                        }
-                    }
-                    else
-                    {
-                        if (KYCDocument_Certificate == null && string.IsNullOrEmpty(Model.KYCDocument))
-                        {
-                            ErrorMessage = "KYC front document required";
-                            allowRedirect = true;
-                        }
-                        else if (KYCDocumentBack_Certificate == null && string.IsNullOrEmpty(Model.KYCDocumentBack))
-                        {
-                            ErrorMessage = "KYC back document required";
-                            allowRedirect = true;
-                        }
+                        //if (Model.BusinessTypeDDL.DecryptParameter() == "1")
+                        //{
+                        //    if (CorporateRegistry_Certificate == null && string.IsNullOrEmpty(Model.CorporateRegistryDocument))
+                        //    {
+                        //        ErrorMessage = "Corporate registry required";
+                        //        allowRedirect = true;
+                        //    }
+                        //}
 
                     }
+                    //if (Model.IdentificationType.DecryptParameter() == "2")
+                    //{
+                    //    if (PassportPhotot_Certificate == null && string.IsNullOrEmpty(Model.PassportPhoto))
+                    //    {
+                    //        ErrorMessage = "Passport photo required";
+                    //        allowRedirect = true;
+                    //    }
+                    //    else if (InsurancePhoto_Certificate == null && string.IsNullOrEmpty(Model.InsurancePhoto))
+                    //    {
+                    //        ErrorMessage = "Insurance card required";
+                    //        allowRedirect = true;
+                    //    }
+                    //}
+                    //else
+                    //{
+                    //    if (KYCDocument_Certificate == null && string.IsNullOrEmpty(Model.KYCDocument))
+                    //    {
+                    //        ErrorMessage = "KYC front document required";
+                    //        allowRedirect = true;
+                    //    }
+                    //    else if (KYCDocumentBack_Certificate == null && string.IsNullOrEmpty(Model.KYCDocumentBack))
+                    //    {
+                    //        ErrorMessage = "KYC back document required";
+                    //        allowRedirect = true;
+                    //    }
+
+                    //}
                     if (allowRedirect)
                     {
                         this.AddNotificationMessage(new NotificationModel()
@@ -645,7 +729,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                             Title = NotificationMessage.INFORMATION.ToString(),
                         });
                         TempData["ManageClubModel"] = Model;
-                        TempData["RenderId"] = "Manage";
+                        TempData["RenderId"] = "ManagePremium";
                         return redirectresult;
                     }
                 }
@@ -656,7 +740,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 {
                     var contentType = Business_Certificate.ContentType;
                     var ext = Path.GetExtension(Business_Certificate.FileName);
-                    if (allowedContentType.Contains(contentType.ToLower()))
+                    if (allowedContentTypeWithPDF.Contains(contentType.ToLower()))
                     {
                         businessCertificateFileName = $"{AWSBucketFolderNameModel.CLUB}/BusinessCertificate_{DateTime.Now.ToString("yyyyMMddHHmmssffff")}{ext.ToLower()}";
                         Model.BusinessCertificate = $"/{businessCertificateFileName}";
@@ -723,7 +807,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 {
                     var contentType = CorporateRegistry_Certificate.ContentType;
                     var ext = Path.GetExtension(CorporateRegistry_Certificate.FileName);
-                    if (allowedContentType.Contains(contentType.ToLower()))
+                    if (allowedContentTypeWithPDF.Contains(contentType.ToLower()))
                     {
                         CorporateRegistryFileName = $"{AWSBucketFolderNameModel.CLUB}/CompanyRegistry_{DateTime.Now.ToString("yyyyMMddHHmmssffff")}{ext.ToLower()}";
                         Model.CorporateRegistryDocument = $"/{CorporateRegistryFileName}";
@@ -752,7 +836,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                     {
                         var contentType = PassportPhotot_Certificate.ContentType;
                         var ext = Path.GetExtension(PassportPhotot_Certificate.FileName);
-                        if (allowedContentType.Contains(contentType.ToLower()))
+                        if (allowedContentTypeWithPDF.Contains(contentType.ToLower()))
                         {
                             PassportFileName = $"{AWSBucketFolderNameModel.CLUB}/PassportPhotot_{DateTime.Now.ToString("yyyyMMddHHmmssffff")}{ext.ToLower()}";
                             Model.PassportPhoto = $"/{PassportFileName}";
@@ -774,7 +858,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                     {
                         var contentType = InsurancePhoto_Certificate.ContentType;
                         var ext = Path.GetExtension(InsurancePhoto_Certificate.FileName);
-                        if (allowedContentType.Contains(contentType.ToLower()))
+                        if (allowedContentTypeWithPDF.Contains(contentType.ToLower()))
                         {
                             InsuranceFileName = $"{AWSBucketFolderNameModel.CLUB}/InsuranceCard_{DateTime.Now.ToString("yyyyMMddHHmmssffff")}{ext.ToLower()}";
                             Model.InsurancePhoto = $"/{InsuranceFileName}";
@@ -799,7 +883,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                     {
                         var contentType = KYCDocument_Certificate.ContentType;
                         var ext = Path.GetExtension(KYCDocument_Certificate.FileName);
-                        if (allowedContentType.Contains(contentType.ToLower()))
+                        if (allowedContentTypeWithPDF.Contains(contentType.ToLower()))
                         {
                             KYCDocumentFileName = $"{AWSBucketFolderNameModel.CLUB}/KYCDocument_{DateTime.Now.ToString("yyyyMMddHHmmssffff")}{ext.ToLower()}";
                             Model.KYCDocument = $"/{KYCDocumentFileName}";
@@ -820,7 +904,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                     {
                         var contentType = KYCDocumentBack_Certificate.ContentType;
                         var ext = Path.GetExtension(KYCDocumentBack_Certificate.FileName);
-                        if (allowedContentType.Contains(contentType.ToLower()))
+                        if (allowedContentTypeWithPDF.Contains(contentType.ToLower()))
                         {
                             KYCDocumentBackFileName = $"{AWSBucketFolderNameModel.CLUB}/KYCDocumentBack_{DateTime.Now.ToString("yyyyMMddHHmmssffff")}{ext.ToLower()}";
                             Model.KYCDocumentBack = $"/{KYCDocumentBackFileName}";
@@ -841,7 +925,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 if (allowRedirectfile == true)
                 {
                     TempData["ManageClubModel"] = Model;
-                    TempData["RenderId"] = "Manage";
+                    TempData["RenderId"] = "ManagePremium";
                     return redirectresult;
                 }
 
@@ -861,7 +945,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                         });
 
                         TempData["ManageClubModel"] = Model;
-                        TempData["RenderId"] = "Manage";
+                        TempData["RenderId"] = "ManagePremium";
                         return redirectresult;
                     }
                 }
@@ -878,7 +962,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                         });
 
                         TempData["ManageClubModel"] = Model;
-                        TempData["RenderId"] = "Manage";
+                        TempData["RenderId"] = "ManagePremium";
                         return redirectresult;
                     }
                 }
@@ -889,9 +973,81 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 commonModel.IdentificationType = commonModel.IdentificationType?.DecryptParameter();
                 Model.BusinessType = BusinessTypeDDL;
                 var returntype = string.Empty;
-                var dbResponse = _buss.ManageConversionClub(commonModel);
-                if (dbResponse != null && dbResponse.Code == 0)
+                var _sqlTransactionHandler = new RepositoryDaoWithTransaction(null, null);
+                _sqlTransactionHandler.BeginTransaction();
+                try
                 {
+                    var dbResponse = _buss.ManageConversionClub(commonModel, _sqlTransactionHandler.GetCurrentConnection(), _sqlTransactionHandler.GetCurrentTransaction());
+                    if (dbResponse == null || dbResponse.Code != 0
+                        || string.IsNullOrEmpty(dbResponse?.Extra1)
+                        || string.IsNullOrEmpty(dbResponse?.Extra2)
+                        || string.IsNullOrEmpty(dbResponse?.Extra3)
+                        || string.IsNullOrEmpty(dbResponse?.Extra4)
+                        || string.IsNullOrEmpty(dbResponse?.Extra5)
+                    )
+                    {
+                        this.AddNotificationMessage(new NotificationModel()
+                        {
+                            NotificationType = NotificationMessage.INFORMATION,
+                            Message = "Failed",
+                            Title = NotificationMessage.INFORMATION.ToString()
+                        });
+                        TempData["ManageClubModel"] = Model;
+                        TempData["RenderId"] = "ManagePremium";
+                        _sqlTransactionHandler.RollbackTransaction();
+                        return redirectresult;
+                    }
+
+                    var countryCode = ConfigurationManager.AppSettings["CountryCode"];
+                    var signUpResponse = await _amazonCognitoMiddleware.AdminCreateUserAsync(new CRS.ADMIN.SHARED.Middleware.AmazonCognitoModel.SignUp.SignUpModel.Request
+                    {
+                        Username = dbResponse?.Extra5,
+                        Password = dbResponse.Extra2,
+                        AttributeType = new List<CRS.ADMIN.SHARED.Middleware.AmazonCognitoModel.SignUp.SignUpModel.AttributeType>
+                        {
+                            new CRS.ADMIN.SHARED.Middleware.AmazonCognitoModel.SignUp.SignUpModel.AttributeType
+                            {
+                                Name = AttributeTypeName.PhoneNumber,
+                                Value = ApplicationUtilities.FormatPhoneNumber(dbResponse?.Extra3, countryCode)
+                            },
+                            new CRS.ADMIN.SHARED.Middleware.AmazonCognitoModel.SignUp.SignUpModel.AttributeType
+                            {
+                                Name = AttributeTypeName.Email,
+                                Value =dbResponse?.Extra4
+                            }
+                        }
+                    });
+
+                    if (signUpResponse?.Code != CRS.ADMIN.SHARED.Middleware.AmazonCognitoModel.ResponseCode.Success)
+                    {
+                        this.AddNotificationMessage(new NotificationModel()
+                        {
+                            NotificationType = NotificationMessage.INFORMATION,
+                            Message = "Something went wrong. Please try again later",
+                            Title = NotificationMessage.INFORMATION.ToString()
+                        });
+                        TempData["ManageClubModel"] = Model;
+                        TempData["RenderId"] = "ManagePremium";
+                        _sqlTransactionHandler.RollbackTransaction();
+                        return redirectresult;
+                    }
+
+                    var cognitoUserId = signUpResponse.Data.MapObjects<CRS.ADMIN.SHARED.Middleware.AmazonCognitoModel.SignUp.SignUpModel.AdminCreateUserResponse>().FirstOrDefault(x => x.Name == CRS.ADMIN.SHARED.Middleware.AmazonCognitoModel.AttributeTypeName.Sub)?.Value;
+                    var manageClubCognitoDetailResponse = _clubManagementBusiness.ManageClubCognitoDetail(dbResponse.Extra1, dbResponse.Extra5, cognitoUserId, _sqlTransactionHandler.GetCurrentConnection(), _sqlTransactionHandler.GetCurrentTransaction());
+                    if (manageClubCognitoDetailResponse?.Code != CRS.ADMIN.SHARED.ResponseCode.Success)
+                    {
+                        this.AddNotificationMessage(new NotificationModel()
+                        {
+                            NotificationType = NotificationMessage.INFORMATION,
+                            Message = "Something went wrong. Please try again later",
+                            Title = NotificationMessage.INFORMATION.ToString()
+                        });
+                        TempData["ManageClubModel"] = Model;
+                        TempData["RenderId"] = "ManagePremium";
+                        _sqlTransactionHandler.RollbackTransaction();
+                        return redirectresult;
+                    }
+
                     if (Business_Certificate != null) await ImageHelper.ImageUpload(businessCertificateFileName, Business_Certificate);
                     if (Logo_Certificate != null) await ImageHelper.ImageUpload(LogoFileName, Logo_Certificate);
                     if (CoverPhoto_Certificate != null) await ImageHelper.ImageUpload(CoverPhotoFileName, CoverPhoto_Certificate);
@@ -912,23 +1068,24 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                     }
                     this.AddNotificationMessage(new NotificationModel()
                     {
-                        NotificationType = dbResponse.Code == ResponseCode.Success ? NotificationMessage.SUCCESS : NotificationMessage.INFORMATION,
+                        NotificationType = dbResponse.Code == CRS.ADMIN.SHARED.ResponseCode.Success ? NotificationMessage.SUCCESS : NotificationMessage.INFORMATION,
                         Message = dbResponse.Message ?? "Failed",
-                        Title = dbResponse.Code == ResponseCode.Success ? NotificationMessage.SUCCESS.ToString() : NotificationMessage.INFORMATION.ToString()
+                        Title = dbResponse.Code == CRS.ADMIN.SHARED.ResponseCode.Success ? NotificationMessage.SUCCESS.ToString() : NotificationMessage.INFORMATION.ToString()
                     });
+                    _sqlTransactionHandler.CommitTransaction();
                     return redirectresult;
                 }
-                else
+                catch (Exception ex)
                 {
                     this.AddNotificationMessage(new NotificationModel()
                     {
-                        NotificationType = NotificationMessage.INFORMATION,
-                        Message = dbResponse.Message ?? "Failed",
-                        Title = NotificationMessage.INFORMATION.ToString()
+                        NotificationType = NotificationMessage.WARNING,
+                        Message = $"Something went wrong. Please try again later {ex.Message}",
+                        Title = "Exception"
                     });
-
+                    _sqlTransactionHandler.RollbackTransaction();
                     TempData["ManageClubModel"] = Model;
-                    TempData["RenderId"] = "Manage";
+                    TempData["RenderId"] = "ManagePremium";
                     return redirectresult;
                 }
             }
@@ -945,7 +1102,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             AddNotificationMessage(notificationModels);
             var errors = ModelState.Where(x => x.Value.Errors.Count > 0).Select(x => new { x.Key }).ToList();
             TempData["ManageClubModel"] = Model;
-            TempData["RenderId"] = "Manage";
+            TempData["RenderId"] = "ManagePremium";
             return redirectresult;
         }
 

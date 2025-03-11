@@ -1,0 +1,94 @@
+﻿@model CRS.ADMIN.APPLICATION.Models.GroupManagement.ManageGroupGalleryModel
+<div id="add-group-gallery" class="drawer-close-disable  flex justify-end fixed top-0 right-0  z-40 h-screen overflow-y-auto transition-transform translate-x-full"
+     tabindex="-1" aria-labelledby="drawer-right-label">
+    <div class="bg-white w-[574px] drawer-container relative">
+        <div class="drawer-form-container sticky top-0 z-[5] ">
+            <div class="drawer-form flex justify-between bg-secondary-color-pink py-[16px] px-[24px] h-[56px]">
+                <div> グループギャラリーを管理</div>
+                <button type="button" data-drawer-hide="add-group-gallery" aria-controls="add-group-gallery"
+                        class="text-[20px]" onclick="CancelFunction()">
+                    <i class="las la-window-close text-white"></i>
+                </button>
+            </div>
+        </div>
+        <div class="pl-[24px] pt-[24px] pr-[26px]">
+            @using (Html.BeginForm("ManageGroupGallery", "GroupManagement", FormMethod.Post, new { @id = "ManageGroupGalleryForm", enctype = "multipart/form-data" }))
+            {
+                @Html.AntiForgeryToken()
+                if (!string.IsNullOrEmpty(Model.GroupId))
+                {
+                    @Html.HiddenFor(model => model.GroupId)
+                }
+                if (!string.IsNullOrEmpty(Model.ImageId))
+                {
+                    @Html.HiddenFor(model => model.ImageId)
+                }
+                if (!string.IsNullOrEmpty(Model.GalleryImage))
+                {
+                    @Html.HiddenFor(model => model.GalleryImage)
+                }
+                <div class="input-field-common">
+                    <label class="block mb-[12px] text-sm font-[500] text-secondary-text-2 ">
+                        タイトル
+                    </label>
+                    @Html.TextBoxFor(model => model.ImageTitle, new
+                        {
+                        @class = "w-full",
+                        @id = "ImageTitle_id",
+                        @placeholder = "タイトル",
+                        autocomplete = "off",
+                        @maxLength = "255"
+                        })
+                    <span class="error">
+                        @Html.ValidationMessageFor(m => m.ImageTitle)
+                    </span>
+                </div>
+                <div class="mt-4">
+                    <label class="block mb-[12px] text-sm font-[500] text-secondary-text-2 ">
+                        グループカバー写真
+                    </label>
+                    <div class="file-upload-common border-none bg-[#F5F5F5]">
+                        <label for="file_input_cover1" class="custom-file-upload bg-[#CC527A] w-[123px] flex-none ">
+                            <span>  @CRS.ADMIN.APPLICATION.Resources.Resource.Choose_Images</span>
+                        </label>
+                        <input id="file_input_cover1" class="file-input" name="Cover_Image_Path" type="file" style="display:none;" value="@Model.GalleryImage">
+                        <p id="file_name_cover1"
+                           class="file-name w-max h-[23px] overflow-hidden pl-2 text-xs text-[#686868] leading-[25px] flex items-center gap-1">
+                            <img src="~/Content/assets_new/images/images-solid.svg" />
+                            @if (string.IsNullOrEmpty(Model.GalleryImage))
+                            {
+                                <span>
+
+                                    @CRS.ADMIN.APPLICATION.Resources.Resource.No_File_Choosen
+                                </span>
+                            }
+                            else
+                            {
+                                string fileName = Path.GetFileName(Model.GalleryImage);
+                                @fileName
+                            }
+                        </p>
+                    </div>
+                    <div class="text-xs text-error mt-[8px]">
+                        @CRS.ADMIN.APPLICATION.Resources.Resource.Note:
+                        @CRS.ADMIN.APPLICATION.Resources.Resource.Image_should_be_in_HEIF_format
+                        @CRS.ADMIN.APPLICATION.Resources.Resource.and_Maximum_file_size_is_5_MB
+                        <span class="error">
+                            @Html.ValidationMessageFor(m => m.GalleryImage)
+                        </span>
+                    </div>
+                </div>
+                <div class="bg-[#EBEBEB] my-4 h-[2px] w-full">
+                </div>
+                <div class="py-4 flex justify-end">
+                    <div class="flex gap-6">
+                        <button class="btn btn-secondary text-[16px] font-[500] rounded-[4px] px-[32px] py-[12px]" type="button" data-drawer-hide="add-group-gallery" aria-controls="add-group-gallery" onclick="CancelFunction()">
+                            キャンセル
+                        </button>
+                        <button class="btn btn-primary-default text-[16px] font-[500] rounded-[4px]" id="submit-button-id"> 追加する</button>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>

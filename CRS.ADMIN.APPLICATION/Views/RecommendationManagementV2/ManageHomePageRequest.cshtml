@@ -100,8 +100,16 @@
 </div>
 @section scripts{
     <script>
-    var RequestVerificationToken = $('input[name="__RequestVerificationToken"]').val();
-        $('#default_select3').prop('disabled', true);
+        var RequestVerificationToken = $('input[name="__RequestVerificationToken"]').val(); 
+        var value = $('#large[name="HostId"]').val();
+        if (value != "") {
+            $('#default_select3').prop('disabled', false);
+        }
+        else
+        {
+            $('#default_select3').prop('disabled', true);
+        }
+      
         $('.clubDDL').change(function () {
             $(".hostDDL").empty().prepend("<option value='' disabled selected>--- @CRS.ADMIN.APPLICATION.Resources.Resource.Select ---</option>");
             $(".displayOrderDDL").empty().prepend("<option value='' disabled selected>--- @CRS.ADMIN.APPLICATION.Resources.Resource.Select ---</option>");

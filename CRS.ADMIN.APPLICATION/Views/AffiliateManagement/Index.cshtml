@@ -317,12 +317,19 @@
                                                         Active
                                                     </div>
                                                 }
-                                                else
+                                                else if (!string.IsNullOrEmpty(item.Status) && item.Status.Trim().ToUpper() == "B")
                                                 {
                                                     <div class="blocked">
                                                         Blocked
                                                     </div>
                                                 }
+                                                else if (!string.IsNullOrEmpty(item.Status) && item.Status.Trim().ToUpper() == "S")
+                                                {
+                                                    <div class="blocked">
+                                                        Suspended
+                                                    </div>
+                                                }
+
                                             </td>
                                             <td class="p-[12px]">
                                                 @item.RequestedDate
@@ -343,12 +350,12 @@
                                                         </div>
                                                         @*<i class="las la-unlock cursor-pointer text-[#697DBF] text-[18px]" onclick="ManageStatusFunction('@item.AffiliateId', 'A');"></i>*@
                                                     }
-                                                    else
+                                                    else if(!string.IsNullOrEmpty(item.Status) && item.Status.Trim().ToUpper() == "A")
                                                     {
                                                         <div onclick="ManageStatusFunction('@item.AffiliateId', 'B');">
                                                             <i class="fa-solid fa-lock text-primary-100 cursor-pointer"></i>
                                                         </div>
-                                                        @*<i class="las la-lock cursor-pointer text-[#697DBF] text-[18px]" onclick="ManageStatusFunction('@item.AffiliateId', 'B');"></i>*@
+                                                       
                                                     }
 
                                                 </div>

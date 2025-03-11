@@ -78,7 +78,7 @@
                    name="SearchFilter4">
         </div>
 
-        <div class="flex gap-6">
+        @*<div class="flex gap-6">
             <div class="flex gap-6">
                 <div class="btn btn-primary gap-[8px] h-[40px]" data-drawer-target="add-new-points-request"
                      data-drawer-show="add-new-points-request" data-drawer-placement="right" data-drawer-backdrop="false"
@@ -87,7 +87,7 @@
                     @CRS.ADMIN.APPLICATION.Resources.Resource.Self_Request
                 </div>
             </div>
-        </div>
+        </div>*@
     </div>
 
     <div class="grid grid-cols-3 gap-x-12 table-tab filteroutlinepadding">
@@ -97,22 +97,24 @@
             </label>
             <select id="LocationId4" name="LocationId4" class=" default_select select-common block w-full "
                     style="width: 100%;">
-                @foreach (var item in ViewBag.LocationIdList as IEnumerable<SelectListItem>)
-                {
+                @foreach (var item in ViewBag.LocationIdList as IEnumerable
+                <SelectListItem>
+                    )
+                    {
                     var selectedId = Model.LocationId as string;
                     if (item.Value == selectedId)
                     {
-                        <option value="@item.Value" selected>
-                            @item.Text
-                        </option>
+                    <option value="@item.Value" selected>
+                        @item.Text
+                    </option>
                     }
                     else
                     {
-                        <option value="@item.Value">
-                            @item.Text
-                        </option>
+                    <option value="@item.Value">
+                        @item.Text
+                    </option>
                     }
-                }
+                    }
             </select>
             <span class="error">
                 @Html.ValidationMessageFor(m => m.LocationId)
@@ -125,13 +127,13 @@
                     @CRS.ADMIN.APPLICATION.Resources.Resource.ClubName
                 </label>
                 @Html.TextBox("ClubName4", Model.ClubName, new
-           {
-               @class = "w-full",
-               @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.ClubName,
-               @autocomplete = "off",
-               @type = "text",
-               @id = "ClubName4"
-           })
+                {
+                @class = "w-full",
+                @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.ClubName,
+                @autocomplete = "off",
+                @type = "text",
+                @id = "ClubName4"
+                })
 
                 <span class="error">
                     @Html.ValidationMessageFor(m => m.ClubName)
@@ -145,22 +147,24 @@
             </label>
             <select id="PaymentMethodId4" name="PaymentMethodId4" class=" default_select select-common block w-full "
                     style="width: 100%;">
-                @foreach (var item in ViewBag.CLUBTOADMINPaymentMethodListIdList as IEnumerable<SelectListItem>)
-                {
+                @foreach (var item in ViewBag.CLUBTOADMINPaymentMethodListIdList as IEnumerable
+                <SelectListItem>
+                    )
+                    {
                     var selectedId = Model.PaymentMethodId as string;
                     if (item.Value == selectedId)
                     {
-                        <option value="@item.Value" selected>
-                            @item.Text
-                        </option>
+                    <option value="@item.Value" selected>
+                        @item.Text
+                    </option>
                     }
                     else
                     {
-                        <option value="@item.Value">
-                            @item.Text
-                        </option>
+                    <option value="@item.Value">
+                        @item.Text
+                    </option>
                     }
-                }
+                    }
             </select>
             <span class="error">
                 @Html.ValidationMessageFor(m => m.PaymentMethodId)
@@ -173,14 +177,14 @@
                     @CRS.ADMIN.APPLICATION.Resources.Resource.From_Date
                 </label>
                 @Html.TextBox("FromDate4", Model.FromDate, new
-               {
-                   @class = "w-full",
-                   @placeholder = "YYYY/MM/DD",
-                   @autocomplete = "off",
-                   @type = "text",
-                   @readonly = "readonly",
-                   @id = "FromDate4"
-               })
+                {
+                @class = "w-full",
+                @placeholder = "YYYY/MM/DD",
+                @autocomplete = "off",
+                @type = "text",
+                @readonly = "readonly",
+                @id = "FromDate4"
+                })
                 <span class="error">
                     @Html.ValidationMessageFor(m => m.FromDate)
                 </span>
@@ -192,14 +196,14 @@
                     @CRS.ADMIN.APPLICATION.Resources.Resource.To_Date
                 </label>
                 @Html.TextBox("ToDate4", Model.ToDate, new
-                  {
-                      @class = "w-full",
-                      @placeholder = "YYYY/MM/DD",
-                      @autocomplete = "off",
-                      @type = "text",
-                      @readonly = "readonly",
-                      @id = "ToDate4"
-                  })
+                {
+                @class = "w-full",
+                @placeholder = "YYYY/MM/DD",
+                @autocomplete = "off",
+                @type = "text",
+                @readonly = "readonly",
+                @id = "ToDate4"
+                })
 
                 <span class="error">
                     @Html.ValidationMessageFor(m => m.ToDate)
@@ -346,64 +350,65 @@
             </thead>
             <tbody>
                 @{
-                    if (Model.PointRequestsListModel.Count > 0 && !string.IsNullOrEmpty(Model.PointRequestsListModel.FirstOrDefault().RowsTotal))
-                    {
-                        int SN = 1;
-                        foreach (var item in Model.PointRequestsListModel)
-                        {
-                            <tr class="bg-white border-b ">
-                                <td class="p-[12px]">
-                                    @SN
-                                </td>
-                                <td class="p-[12px]">
-                                    @item.RequestId
-                                </td>
-                                <td class="p-[12px]">
-                                    @item.RequestedDate
-                                </td>
-                                <td class="p-[12px]">
-                                    @item.ClubName
-                                </td>
-                                <td class="p-[12px]">
-                                    @item.PaymentMethod
-                                </td>
-                                <td class="p-[12px]">
-                                    @item.AmountTransferred
-                                </td>
-                                <td class="p-[12px]">
-                                    @item.Status
-                                </td>
-                                <td class="p-[12px]">
-                                    @item.Remarks
-                                </td>
-                                <td class="p-[12px]">
-                                    @item.UpdatedBy
-                                </td>
-                                <td class="p-[12px]">
-                                    @item.UpdatedDate
-                                </td>
-                                <td class="grid grid-cols-2 p-[12px]">
-                                    @* <div class="grid grid-cols-2">*@
-                                    @if (!string.IsNullOrEmpty(item.Status) && item.Status.Trim().ToUpper() == "PENDING")
-                                    {
-                                        <i class="las la-window-close text-[24px] text-[#CB3F3F] cursor-pointer " data-modal-target="popup-modal-reject" data-modal-toggle="popup-modal-reject" alt=""
-                                           onclick="InitateRejectRequest('@item.AgentId', '@item.UserId', '@item.RequestId')"> </i>
+                if (Model.PointRequestsListModel.Count > 0 && !string.IsNullOrEmpty(Model.PointRequestsListModel.FirstOrDefault().RowsTotal))
+                {
+                int SN = 1;
+                foreach (var item in Model.PointRequestsListModel)
+                {
+                <tr class="bg-white border-b ">
+                    <td class="p-[12px]">
+                        @SN
+                    </td>
+                    <td class="p-[12px]">
+                        @item.RequestId
+                    </td>
+                    <td class="p-[12px]">
+                        @item.RequestedDate
+                    </td>
+                    <td class="p-[12px]">
+                        @item.ClubName
+                    </td>
+                    <td class="p-[12px]">
+                        @item.PaymentMethod
+                    </td>
+                    <td class="p-[12px]">
+                        @item.AmountTransferred
+                    </td>
+                    <td class="p-[12px]">
+                        @item.Status
+                    </td>
+                    <td class="p-[12px]">
+                        @item.Remarks
+                    </td>
+                    <td class="p-[12px]">
+                        @item.UpdatedBy
+                    </td>
+                    <td class="p-[12px]">
+                        @item.UpdatedDate
+                    </td>
+                    <td class="grid grid-cols-2 p-[12px]">
+                        @* <div class="grid grid-cols-2">*@
+                            @if (!string.IsNullOrEmpty(item.Status) && item.Status.Trim().ToUpper() == "PENDING")
+                            {
+                            @*<i class="las la-window-close text-[24px] text-[#CB3F3F] cursor-pointer " data-modal-target="popup-modal-reject" data-modal-toggle="popup-modal-reject" alt=""
+                               onclick="InitateRejectRequest( '@item.Id')"> </i>*@
 
 
 
-                                        <img src="/Content/assets_new/images/check-square.svg"
-                                             data-modal-target="popup-modal-accept"
-                                             data-modal-toggle="popup-modal-accept" alt="" class="cursor-pointer" onclick="InitateApproveRequest('@item.AgentId', '@item.UserId', '@item.RequestId')" />
+                            <img src="/Content/assets_new/images/check-square.svg"
+                                 data-modal-target="popup-modal-accept"
+                                 data-modal-toggle="popup-modal-accept" alt="" class="cursor-pointer" onclick="InitateApproveRequest( '@item.Id')" />
 
 
-                                    }
-                                    @*</div>*@
+                            }
+                            @*
+                        </div>*@
 
-                                </td>
-                            </tr>
-                            SN++;
-                        }
-                    }
+                    </td>
+                </tr>
+                SN++;
+                }
+                }
 
                 }
             </tbody>
@@ -448,13 +453,12 @@
                         @CRS.ADMIN.APPLICATION.Resources.Resource.PointRequestAcceptMessage
                     </div>
                     <div class="flex flex-col  gap-[20px] mt-[28px]">
-                        <input id="ConfirmationAgentId" value="" hidden />
-                        <input id="ConfirmationUserId" value="" hidden />
-                        <input id="ConfirmationTxnId" value="" hidden />
+                        <input id="ConfirmationId" value="" hidden />
                         <div>
                             <p style="font-size: 14px; color: #333 ">@CRS.ADMIN.APPLICATION.Resources.Resource.Remarks</p>
                             <textarea placeholder="@CRS.ADMIN.APPLICATION.Resources.Resource.Remarks" class="modalstyle" id="ConfirmationAdminRemark" name="ConfirmationAdminRemark"></textarea>
                             <p class="downlabel">Less than 200 words</p>
+                            <span class="downlabel" id="remarksrequired"></span>
                         </div>
                         <div style="height:110px;">
                             <p style="font-size: 14px; color: #333 ">
@@ -474,6 +478,7 @@
                                 @CRS.ADMIN.APPLICATION.Resources.Resource.Note:
                                 @CRS.ADMIN.APPLICATION.Resources.Resource.Image_should_be_in_HEIF_format
                                 @CRS.ADMIN.APPLICATION.Resources.Resource.and_Maximum_file_size_is_5_MB .
+                                <span class="downlabel" id="imagerequired"></span>
                             </p>
 
                         </div>
@@ -513,13 +518,12 @@
                         @CRS.ADMIN.APPLICATION.Resources.Resource.PointRequestRejectMessage
                     </div>
                     <div class="flex flex-col  gap-[20px] mt-[28px]">
-                        <input id="RejectAgentId" value="" hidden />
-                        <input id="RejectUserId" value="" hidden />
-                        <input id="RejectTxnId" value="" hidden />
+                        <input id="RejectId" value="" hidden />
                         <div>
                             <p style="font-size: 14px; color: #333 ">@CRS.ADMIN.APPLICATION.Resources.Resource.Remarks</p>
                             <textarea placeholder="@CRS.ADMIN.APPLICATION.Resources.Resource.Remarks" class="modalstyle" id="RejectAdminRemark" name="RejectAdminRemark"></textarea>
                             <p class="downlabel">Less than 200 words</p>
+                            <span class="downlabel" id="rejectremarksrequired"></span>
                         </div>
                     </div>
                     <div class="flex flex-row  justify-end">

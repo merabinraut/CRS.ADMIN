@@ -105,11 +105,12 @@
     <Compile Include="AffiliateManagement\AffiliateManagementRepository.cs" />
     <Compile Include="AffiliateManagement\IAffiliateManagementRepository.cs" />
 
-    <Compile Include="ApiResponseMessage\ApiResponseMessageRepository.cs" />
+    <Compile Include="ApiResponseMessage\ApiResponseMessageRepository .cs" />
     <Compile Include="ApiResponseMessage\IApiResponseMessageRepository.cs" />
-
     <Compile Include="BasicClubManagement\BasicClubManagementRepository.cs" />
     <Compile Include="BasicClubManagement\IBasicClubManagementRepository.cs" />
+    <Compile Include="ChargeManagement\ChargeManagementRepository.cs" />
+    <Compile Include="ChargeManagement\IChargeManagementRepository.cs" />
 
     <Compile Include="ClubManagement\ClubManagementRepository.cs" />
     <Compile Include="ClubManagement\IClubManagementRepository.cs" />
@@ -125,6 +126,8 @@
     <Compile Include="EmailLog\IEmailLogRepository.cs" />
     <Compile Include="ErrorLog\ErrorLogRepository.cs" />
     <Compile Include="ErrorLog\IErrorLogRepository.cs" />
+    <Compile Include="GroupManagement\GroupManagementRepository.cs" />
+    <Compile Include="GroupManagement\IGroupManagementRepository.cs" />
     <Compile Include="Home\HomeRepository.cs" />
     <Compile Include="Home\IHomeRepository.cs" />
     <Compile Include="HostManagement\HostManagementRepository.cs" />
@@ -173,6 +176,8 @@
     <Compile Include="StaffManagement\StaffManagementRepository.cs" />
     <Compile Include="StaticDataManagement\IStaticDataManagementRepository.cs" />
     <Compile Include="StaticDataManagement\StaticDataManagementRepository.cs" />
+    <Compile Include="WithdrawalRequest\IWithdrawalRequestRepository.cs" />
+    <Compile Include="WithdrawalRequest\WithdrawalRequestRepository.cs" />
     <Compile Include="WithdrawSetup\IWithdrawSetupRepository.cs" />
     <Compile Include="WithdrawSetup\WithdrawSetupRepository.cs" />
   </ItemGroup>

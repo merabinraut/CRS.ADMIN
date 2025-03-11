@@ -1,0 +1,646 @@
+﻿@model CRS.ADMIN.APPLICATION.Models.WithdrawalRequest.WithdrawalDetailsModel
+@{
+    ViewBag.Title = "User Type List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+
+}
+<style>
+    .filterborder {
+        outline: 1px solid #d0d5dd;
+        border-radius: 0;
+    }
+
+    .filteroutlinepadding {
+        padding-left: 18px;
+        padding-top: 18px;
+        padding-right: 18px;
+    }
+</style>
+<link href="~/Content/css/jquery-ui.min.css" rel="stylesheet" />
+
+
+<div class="px-8 py-4">
+    @Html.AntiForgeryToken()
+    <!-- title  -->
+    <div class="flex flex-col  gap-6">
+        <div>
+            <div class="heading-title">
+                @CRS.ADMIN.APPLICATION.Resources.Resource.WithdrawalRequests [@Model.name]
+            </div>
+            <div class="span-title-light-gray">
+                @CRS.ADMIN.APPLICATION.Resources.Resource.Manage_payment_withdrawal_request_
+            </div>
+        </div>
+        <!-- container  -->
+        <div id="tab1" class="tab-content-plane">
+            <div class="flex flex-col gap-8">
+
+
+                <div id="pointstransfer" class="pane active">
+                    <form action="/WithdrawalRequest/WithdrawalRequestDetailList" method="get">
+                        <div class="flex justify-between pb-[24px]">
+                            @Html.HiddenFor(model => model.id, new { id = "idreq" })
+
+                            <div class="relative input-search-wrapper">
+                                <div class="absolute inset-y-0 left-0 flex items-center pl-[16px] pointer-events-none">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21" fill="none">
+                                        <path d="M17.5 18L13.875 14.375M15.8333 9.66667C15.8333 13.3486 12.8486 16.3333 9.16667 16.3333C5.48477 16.3333 2.5 13.3486 2.5 9.66667C2.5 5.98477 5.48477 3 9.16667 3C12.8486 3 15.8333 5.98477 15.8333 9.66667Z"
+                                              stroke="#667085" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round" />
+                                    </svg>
+                                </div>
+
+                                <input type="search"
+                                       id="default-search-detail"
+                                       class="input-search block w-full "
+                                       placeholder="@CRS.ADMIN.APPLICATION.Resources.Resource.Search"
+                                       value="@Model.SearchFilter"
+                                       name="SearchFilter">
+                            </div>
+
+                            <div class="flex gap-6">
+                                @*<div class="btn btn-primary gap-[8px] h-[40px]" data-drawer-target="add-new-points"
+                                         data-drawer-show="add-new-points" data-drawer-placement="right" data-drawer-backdrop="false"
+                                         aria-controls="drawer-disabled-backdrop" id="add-new-id">
+                                        <img src="~/Content/assets_new/images/plus-circle-solid.svg" />
+                                        @CRS.ADMIN.APPLICATION.Resources.Resource.Add_New
+                                    </div>*@
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-3 gap-x-12 table-tab filteroutlinepadding">
+
+                            <div class="input-field-common mb-[20px]" id="tagInput1">
+                                <div class="input-field-common filteroutlinepadding">
+                                    <label for="date" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                                        @CRS.ADMIN.APPLICATION.Resources.Resource.From_Date
+                                    </label>
+                                    @Html.TextBoxFor(model => model.FromDate, new
+                               {
+                                   @class = "w-full",
+                                   @placeholder = "YYYY/MM/DD",
+                                   @autocomplete = "off",
+                                   @type = "text",
+                                   @readonly = "readonly"
+                               })
+                                    <span class="error">
+                                        @Html.ValidationMessageFor(m => m.FromDate)
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="input-field-common mb-[20px]" id="tagInput2">
+                                <div class="input-field-common filteroutlinepadding">
+                                    <label for="date" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                                        @CRS.ADMIN.APPLICATION.Resources.Resource.To_Date
+                                    </label>
+                                    @Html.TextBoxFor(model => model.ToDate, new
+                               {
+                                   @class = "w-full",
+                                   @placeholder = "YYYY/MM/DD",
+                                   @autocomplete = "off",
+                                   @type = "text",
+                                   @readonly = "readonly"
+                               })
+                                    <span class="error">
+                                        @Html.ValidationMessageFor(m => m.ToDate)
+                                    </span>
+                                </div>
+                            </div>
+                            <br />
+                            <div>
+                                <div class="py-4 flex justify-start mx-[18px]">
+                                    <div class="flex gap-6">
+                                        <button class="btn btn-secondary rounded-[4px]" type="button" data-drawer-hide="add-new-points-request"
+                                                aria-controls="add-new-points-request" onclick="CancelFunction();">
+                                            @CRS.ADMIN.APPLICATION.Resources.Resource.Cancel
+                                        </button>
+                                        <button class="btn btn-primary-default rounded-[4px]" type="submit"> @CRS.ADMIN.APPLICATION.Resources.Resource.Apply</button>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <br />
+                    @*<div class="px-[12px] py-[16px] flex justify-between entry-export-container">
+                            <div class="flex items-center select-entries" id="ShowEntries-Id">
+                            </div>
+                        </div>*@
+                    <div class="table-tab">
+                        <div class="px-[16px] py-[12px] flex justify-between entry-export-container">
+                            <div class="flex items-center select-entries" id="ShowEntries-Id">
+                            </div>
+                            <div class="export-button h-[40px]" onclick="exportExcel('id_withdrawsdetailreport', 'WithdrawRequestReport')">
+                                <img src="~/Content/assets_new/images/club/download-solid.svg"> @CRS.ADMIN.APPLICATION.Resources.Resource.Export
+                            </div>
+                        </div>
+                        <div class="relative overflow-x-auto">
+                            <table class="w-full text-left club-table" id="id_withdrawsdetailreport">
+                                <thead class="club-table-thead">
+                                    <tr>
+                                        <th scope="col" class="p-[12px]">
+                                            <div class="flex w-max">
+                                                S.N
+                                                <div class="relative pl-[5px]">
+                                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                                </div>
+                                            </div>
+                                        </th>
+
+                                        <th scope="col" class="p-[12px]">
+                                            <div class="flex w-max">
+                                                @CRS.ADMIN.APPLICATION.Resources.Resource.RequestId
+                                                <div class="relative pl-[5px]">
+                                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                                </div>
+                                            </div>
+                                        </th>
+                                        <th scope="col" class="p-[12px]">
+                                            <div class="flex w-max">
+                                                @CRS.ADMIN.APPLICATION.Resources.Resource.Requested_Date
+                                                <div class="relative pl-[5px]">
+                                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                                </div>
+                                            </div>
+                                        </th>
+                                        <th scope="col" class="p-[12px]">
+                                            <div class="flex w-max">
+                                                @CRS.ADMIN.APPLICATION.Resources.Resource.AffiliateInfo
+                                                <div class="relative pl-[5px]">
+                                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                                </div>
+                                            </div>
+                                        </th>
+                                        <th scope="col" class="p-[12px]">
+                                            <div class="flex w-max">
+                                                @CRS.ADMIN.APPLICATION.Resources.Resource.EmailAddress
+                                                <div class="relative pl-[5px]">
+                                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                                </div>
+                                            </div>
+                                        </th>
+                                        <th scope="col" class="p-[12px]">
+                                            <div class="flex w-max">
+                                                @CRS.ADMIN.APPLICATION.Resources.Resource.PhoneNumber
+                                                <div class="relative pl-[5px]">
+                                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                                </div>
+                                            </div>
+                                        </th>
+                                        <th scope="col" class="p-[12px]">
+                                            <div class="flex w-max">
+                                                @CRS.ADMIN.APPLICATION.Resources.Resource.BankType
+                                                <div class="relative pl-[5px]">
+                                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                                </div>
+                                            </div>
+                                        </th>
+                                        <th scope="col" class="p-[12px]">
+                                            <div class="flex w-max">
+                                                @CRS.ADMIN.APPLICATION.Resources.Resource.Bank_Name
+                                                <div class="relative pl-[5px]">
+                                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                                </div>
+                                            </div>
+                                        </th>
+                                        <th scope="col" class="p-[12px]">
+                                            <div class="flex w-max">
+                                                @CRS.ADMIN.APPLICATION.Resources.Resource.BranchName
+                                                <div class="relative pl-[5px]">
+                                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                                </div>
+                                            </div>
+                                        </th>
+                                        <th scope="col" class="p-[12px]">
+                                            <div class="flex w-max">
+                                                @CRS.ADMIN.APPLICATION.Resources.Resource.AccountSymbol
+                                                <div class="relative pl-[5px]">
+                                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                                </div>
+                                            </div>
+                                        </th>
+                                        <th scope="col" class="p-[12px]">
+                                            <div class="flex w-max">
+                                                @CRS.ADMIN.APPLICATION.Resources.Resource.BankAccountName
+                                                <div class="relative pl-[5px]">
+                                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                                </div>
+                                            </div>
+                                        </th>
+                                        <th scope="col" class="p-[12px]">
+                                            <div class="flex w-max">
+                                                @CRS.ADMIN.APPLICATION.Resources.Resource.BankAccountNumber
+                                                <div class="relative pl-[5px]">
+                                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                                </div>
+                                            </div>
+                                        </th>
+                                        <th scope="col" class="p-[12px]">
+                                            <div class="flex w-max">
+                                                @CRS.ADMIN.APPLICATION.Resources.Resource.RequestedAmount
+                                                <div class="relative pl-[5px]">
+                                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                                </div>
+                                            </div>
+                                        </th>
+
+                                        <th scope="col" class="p-[12px]">
+                                            <div class="flex w-max">
+                                                @CRS.ADMIN.APPLICATION.Resources.Resource.ChargeAmount
+                                                <div class="relative pl-[5px]">
+                                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                                </div>
+                                            </div>
+                                        </th>
+                                        <th scope="col" class="p-[12px]">
+                                            <div class="flex w-max">
+                                                @CRS.ADMIN.APPLICATION.Resources.Resource.TransferAmount
+                                                <div class="relative pl-[5px]">
+                                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                                </div>
+                                            </div>
+                                        </th>
+                                        <th scope="col" class="p-[12px]">
+                                            <div class="flex w-max">
+                                                @CRS.ADMIN.APPLICATION.Resources.Resource.Status
+                                                <div class="relative pl-[5px]">
+                                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                                </div>
+                                            </div>
+                                        </th>
+                                        <th scope="col" class="p-[12px]">
+                                            <div class="flex w-max">
+                                                @CRS.ADMIN.APPLICATION.Resources.Resource.Action
+                                                <div class="relative pl-[5px]">
+                                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                                </div>
+                                            </div>
+                                        </th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @{
+                                        if (Model.WithdrawalMonthlyList != null)
+                                        {
+                                            if (Model.WithdrawalMonthlyList.Count > 0)
+                                            {
+
+                                                foreach (var item in Model.WithdrawalMonthlyList)
+                                                {
+                                                    <tr class="bg-white border-b ">
+                                                        <td class="p-[12px]">
+                                                            @item.SNO
+                                                        </td>
+                                                        <td class="p-[12px]">
+                                                            @item.requestId
+                                                        </td>
+                                                        <td class="p-[12px]">
+                                                            @item.requestedDate
+                                                        </td>
+                                                        <td class="p-[12px]">
+                                                            @item.affiliateInfo
+                                                        </td>
+                                                        <td class="p-[12px]">
+                                                            @item.emailAddress
+                                                        </td>
+                                                        <td class="p-[12px]">
+                                                            @item.phoneNumber
+                                                        </td>
+                                                        <td class="p-[12px]">
+                                                            @item.bankType
+                                                        </td>
+                                                        <td class="p-[12px]">
+                                                            @item.bankName
+                                                        </td>
+                                                        <td class="p-[12px]">
+                                                            @item.branchName
+                                                        </td>
+                                                        <td class="p-[12px]">
+                                                            @item.accountSymbol
+                                                        </td>
+                                                        <td class="p-[12px]">
+                                                            @item.bankAccountNumber
+                                                        </td>
+                                                        <td class="p-[12px]">
+                                                            @item.bankAccountName
+                                                        </td>
+                                                        <td class="p-[12px]">
+                                                            @item.requestedAmount
+                                                        </td>
+                                                        <td class="p-[12px]">
+                                                            @item.chargeAmount
+                                                        </td>
+                                                        <td class="p-[12px]">
+                                                            @item.transferAmount
+                                                        </td>
+                                                        <td class="p-[12px]">
+                                                            @item.status
+                                                        </td>
+                                                        <td class="p-[12px]">
+                                                            @if (!string.IsNullOrEmpty(item.status) && item.status.Trim().ToUpper() == "PENDING")
+                                                            {
+                                                                <i class="las la-window-close text-[24px] text-[#CB3F3F] cursor-pointer " data-modal-target="popup-modal-reject" data-modal-toggle="popup-modal-reject" alt=""
+                                                                   onclick="RejectWithdrawalRequest( '@item.id')"> </i>
+
+
+
+                                                                <img src="/Content/assets_new/images/check-square.svg"
+                                                                     data-modal-target="popup-modal-accept"
+                                                                     data-modal-toggle="popup-modal-accept" alt="" class="cursor-pointer" onclick="ApproveWithdrawalRequest( '@item.id')" />
+
+
+                                                            }
+                                                        </td>
+                                                    </tr>
+
+                                                }
+                                            }
+                                        }
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    @*<br><hr>
+                         <div class="total-column">
+                             <div class="pagination-club">
+                                 <div class="show-entry" ></div>
+                                 <div class="flex gap-[12px]">
+                                     <div class="" style="cursor: not-allowed;">
+                                         Total
+                                     </div>
+                                     <div class="" style="cursor: not-allowed;">
+                                         10000
+                                     </div>
+                                     <div class="" style="cursor: not-allowed;">
+                                         5000
+                                     </div>
+                                     <div class="">
+                                         20000
+                                     </div>
+                                 </div>
+                             </div>
+                         </div>
+                        <hr>*@
+                    <div class="pagination-club">
+                        <div class="show-entry" id="Entries-Id">
+                        </div>
+                        <div class="flex gap-[12px]">
+                            <div class="btn btn-secondary-box-shadow" id="prev-btn">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Previous
+                            </div>
+                            <div class="flex gap-[12px]" id="pagination-id">
+                            </div>
+                            <div class="btn btn-secondary-box-shadow" id="next-btn">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Next
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+            </div>
+        </div>
+    </div>
+</div>
+<div id="popup-modal-accept" tabindex="-1"
+     class="fixed top-0 left-0 right-0 z-50 hidden p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
+    <div class="relative w-full max-w-md max-h-full">
+        <div style="background-color:white" class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+            <div class="p-6 text-start">
+                <div class=" pb-[11px] border-b border-[rgba(44, 44, 44, 0.08)] text-base font-semibold text-secondary-100">
+                    @CRS.ADMIN.APPLICATION.Resources.Resource.Confirmation
+                    <button type="button"
+                            class="absolute top-4 right-3 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                            data-modal-hide="popup-modal-accept">
+                        <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                             viewBox="0 0 14 14">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                  d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                        </svg>
+                    </button>
+                </div>
+                <div>
+                    <div class="pt-[20px] text-base text-secondary-100" id="AcceptRequestId">
+                        @CRS.ADMIN.APPLICATION.Resources.Resource.PointRequestAcceptMessage
+                    </div>
+                    <div class="flex flex-col  gap-[20px] mt-[28px]">
+                        <input id="ConfirmationId" value="" hidden />
+
+                    </div>
+                    <div class="flex flex-row  justify-end">
+
+                        <div class="flex flex-row gap-[8px] justify-end">
+                            <div class="btn btn-secondary w-[110px]" data-modal-hide="popup-modal-accept">@CRS.ADMIN.APPLICATION.Resources.Resource.Cancel</div>
+                            <div class="btn btn-primary w-[110px]" onclick="ApproveWithdrawalRequestFunction()">@CRS.ADMIN.APPLICATION.Resources.Resource.Confirm</div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="popup-modal-reject" tabindex="-1"
+     class="fixed top-0 left-0 right-0 z-50 hidden p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
+    <div class="relative w-full max-w-md max-h-full">
+        <div style="background-color:white" class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+            <div class="p-6 text-start">
+                <div class=" pb-[11px] border-b border-[rgba(44, 44, 44, 0.08)] text-base font-semibold text-secondary-100">
+                    @CRS.ADMIN.APPLICATION.Resources.Resource.Confirmation
+                    <button type="button"
+                            class="absolute top-4 right-3 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                            data-modal-hide="popup-modal-reject">
+                        <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                             viewBox="0 0 14 14">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                  d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                        </svg>
+                    </button>
+                </div>
+                <div>
+                    <div class="pt-[20px] text-base  text-secondary-100">
+                        @CRS.ADMIN.APPLICATION.Resources.Resource.PointRequestRejectMessage
+                    </div>
+                    <div class="flex flex-col  gap-[20px] mt-[28px]">
+                        <input id="RejectId" value="" hidden />
+                        @*<div>
+                                <p style="font-size: 14px; color: #333 ">@CRS.ADMIN.APPLICATION.Resources.Resource.Remarks</p>
+                                <textarea placeholder="@CRS.ADMIN.APPLICATION.Resources.Resource.Remarks" class="modalstyle" id="RejectAdminRemark" name="RejectAdminRemark"></textarea>
+                                <p class="downlabel">Less than 200 words</p>
+                            </div>*@
+                    </div>
+                    <div class="flex flex-row  justify-end">
+
+                        <div class="flex flex-row gap-[8px] justify-end">
+                            <div class="btn btn-secondary w-[110px]" data-modal-hide="popup-modal-reject">@CRS.ADMIN.APPLICATION.Resources.Resource.Cancel</div>
+                            <div class="btn btn-primary w-[110px]" onclick="RejectWithdrawalRequestFunction()">@CRS.ADMIN.APPLICATION.Resources.Resource.Confirm</div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts
+{
+    <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
+    <script>
+        function addQueryParam2(url, paramName, paramValue, paramName2, paramValue2) {
+            if (paramValue != null && paramValue != "") {
+                url += url.includes('?') ? `&${paramName}=${paramValue}` : `?${paramName}=${paramValue}`;
+            }
+            if (paramValue2 != null && paramValue2 != "") {
+                url += url.includes('?') ? `&${paramName2}=${paramValue2}` : `?${paramName2}=${paramValue2}`;
+            }
+
+            return url;
+        }
+        function RejectWithdrawalRequest(sno) {
+            $('#RejectId').val(sno);
+        }
+
+        function ApproveWithdrawalRequest(sno) {
+            $('#ConfirmationId').val(sno);
+        }
+
+        function ApproveWithdrawalRequestFunction() {
+            let id = $('#ConfirmationId').val();
+
+            $.ajax({
+                type: "POST",
+                url: "/WithdrawalRequest/ApproveWithdrawalRequest ",
+                dataType: 'json',
+                data: {
+                    __RequestVerificationToken: $('input[name="__RequestVerificationToken"]').val(), 'id': id
+                },
+
+                success: function (responseData) {
+                    window.location.reload();
+                },
+                error: function (ex) {
+                    window.location.reload();
+                }
+            });
+        }
+
+        function RejectWithdrawalRequestFunction() {
+            let { id } = {
+                id: $('#RejectId').val()
+            };
+
+            $.ajax({
+                type: "POST",
+                async: true,
+                url: "/WithdrawalRequest/RejectWithdrawalRequest",
+                dataType: 'json',
+                data: {
+                    __RequestVerificationToken: $('input[name="__RequestVerificationToken"]').val(), 'id': id
+                },
+                success: function (responseData) {
+                    window.location.reload();
+                },
+                error: function (ex) {
+                    window.location.reload();
+                }
+            });
+        }
+        document.addEventListener('DOMContentLoaded', function () {
+         const page_size = @ViewBag.PageSize;
+         const total_data = @ViewBag.TotalData;
+         const start_index_val = @ViewBag.StartIndex;
+         var id = $("#idreq").val();
+         var FromDate = $("#FromDate").val();
+         var ToDate = $("#ToDate").val();
+            let URL2 = "/WithdrawalRequest/WithdrawalRequestDetailList?id=" + id + "&FromDate=" + FromDate + "&ToDate=" + ToDate;
+         dynamicStartIndexLabel = "StartIndex";
+         dynamicPageSizeLabel = "PageSize";
+         LoadPagination(page_size, total_data, start_index_val, URL2, 'pagination-id', 'prev-btn', 'next-btn', 'ShowEntries-Id', 'Entries-Id');
+
+         $("#FromDate").val("@Model.FromDate");
+         jQuery(function ($) {
+                $.datepicker.regional['ja'] = {
+                closeText: '閉じる',
+                prevText: '&#x3c;前',
+                nextText: '次&#x3e;',
+                currentText: '今日',
+                monthNames: ['1月', '2月', '3月', '4月', '5月', '6月',
+                '7月', '8月', '9月', '10月', '11月', '12月'],
+                monthNamesShort: ['1月', '2月', '3月', '4月', '5月', '6月',
+                '7月', '8月', '9月', '10月', '11月', '12月'],
+                dayNames: ['日曜日', '月曜日', '火曜日', '水曜日', '木曜日', '金曜日', '土曜日'],
+                dayNamesShort: ['日', '月', '火', '水', '木', '金', '土'],
+                dayNamesMin: ['日', '月', '火', '水', '木', '金', '土'],
+                weekHeader: '週',
+                dateFormat: 'yy/mm/dd',
+                firstDay: 0,
+                isRTL: false,
+                showMonthAfterYear: true,
+                yearSuffix: '年'
+                };
+                $.datepicker.setDefaults($.datepicker.regional['ja']);
+                $("#FromDate").datepicker({
+                /*minDate: new Date(),*/
+                    /*   maxDate: new Date(),*/
+
+                defaultDate: '@Model.FromDate',
+                onClose: function (selectedDate) { $("#ToDate").datepicker("option", "minDate", selectedDate); }
+                });
+                });
+
+         $("#ToDate").val("@Model.ToDate");
+         jQuery(function ($) {
+               $.datepicker.regional['ja'] = {
+               closeText: '閉じる',
+               prevText: '&#x3c;前',
+               nextText: '次&#x3e;',
+               currentText: '今日',
+               monthNames: ['1月', '2月', '3月', '4月', '5月', '6月',
+               '7月', '8月', '9月', '10月', '11月', '12月'],
+               monthNamesShort: ['1月', '2月', '3月', '4月', '5月', '6月',
+               '7月', '8月', '9月', '10月', '11月', '12月'],
+               dayNames: ['日曜日', '月曜日', '火曜日', '水曜日', '木曜日', '金曜日', '土曜日'],
+               dayNamesShort: ['日', '月', '火', '水', '木', '金', '土'],
+               dayNamesShort: ['日', '月', '火', '水', '木', '金', '土'],
+               dayNamesMin: ['日', '月', '火', '水', '木', '金', '土'],
+               weekHeader: '週',
+               dateFormat: 'yy/mm/dd',
+               firstDay: 0,
+               isRTL: false,
+               showMonthAfterYear: true,
+               yearSuffix: '年'
+               };
+               $.datepicker.setDefaults($.datepicker.regional['ja']);
+               $("#ToDate").datepicker({
+                   //minDate: '@Model.FromDate',
+                   defaultDate: '@Model.ToDate'
+               });
+               });
+
+
+        });
+
+    </script>
+
+
+
+}

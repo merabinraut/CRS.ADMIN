@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 ﻿@model CRS.ADMIN.APPLICATION.Models.ApiResponseMessage.ApiResponseMessageModel
+=======
+@model CRS.ADMIN.APPLICATION.Models.ApiResponseMessage.ApiResponseMessageModel
+>>>>>>> 9a5f5ff2682516912a6a6928c4d594ce6ea591bc
 <div id="add-new-response-message"
      class="drawer-close-disable  flex justify-end fixed top-0 right-0 z-40 h-screen overflow-y-auto transition-transform translate-x-full "
      tabindex="-1" aria-labelledby="drawer-right-label">
@@ -6,7 +10,11 @@
         <div class="drawer-form-container sticky top-0 z-[5] ">
             <div class="drawer-form flex justify-between bg-secondary-color-pink py-[16px] px-[24px] h-[56px]">
                 <div>
+<<<<<<< HEAD
                     Add Response Message
+=======
+                    @CRS.ADMIN.APPLICATION.Resources.Resource.Manage_Api_Response_Message
+>>>>>>> 9a5f5ff2682516912a6a6928c4d594ce6ea591bc
                 </div>
                 <button type="button" data-drawer-hide="add-new-response-message" aria-controls="add-new-response-message"
                         class="text-[20px]" onclick="CancelFunction()">
@@ -14,14 +22,22 @@
                 </button>
             </div>
         </div>
+<<<<<<< HEAD
         @using (Html.BeginForm("StoreResponseMessage", "ApiResponseMessage", FormMethod.Post, new { @id = "addrespmsgform", enctype = "multipart/form-data" }))
         {
             @Html.AntiForgeryToken()
            
+=======
+        @using (Html.BeginForm("ApiResponseMessageList", "ApiResponseMessage", FormMethod.Post, new { @id = "addrespmsgform", enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+
+>>>>>>> 9a5f5ff2682516912a6a6928c4d594ce6ea591bc
             <div class="p-[24px]">
                 <div class=" py-4 grid gap-5">
                     <div class="input-field-common">
                         <label class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+<<<<<<< HEAD
                             Code
                         </label>
 
@@ -33,37 +49,78 @@
                             @class = "w-full rounded-[4px]",
                             @style = "border-radius:4px !important",
                             @placeholder = "Code",
+=======
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Code
+                        </label>
+                        @Html.TextBoxFor(model => model.Code, new
+                        {
+
+                            @class = "w-full rounded-[4px]",
+                            @style = "border-radius:4px !important",
+                            @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.Code,
+>>>>>>> 9a5f5ff2682516912a6a6928c4d594ce6ea591bc
                             @maxlength = "30"
                         })
                     </div>
                     <div class="input-field-common">
                         <label class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+<<<<<<< HEAD
                             Message
+=======
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Message
+>>>>>>> 9a5f5ff2682516912a6a6928c4d594ce6ea591bc
                         </label>
                         @Html.TextBoxFor(model => model.Message, new
                         {
                             @class = "w-full rounded-[4px]",
                             @style = "border-radius:4px !important",
+<<<<<<< HEAD
                             @placeholder = "Message",
                             @maxlength = "30"
+=======
+                            @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.Message,
+                            @maxlength = "400"
+>>>>>>> 9a5f5ff2682516912a6a6928c4d594ce6ea591bc
                         })
 
                     </div>
                     <div class="input-field-common">
                         <label class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+<<<<<<< HEAD
                            English Message
+=======
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.English_Message
+>>>>>>> 9a5f5ff2682516912a6a6928c4d594ce6ea591bc
                         </label>
                         @Html.TextBoxFor(model => model.MessageEng, new
                         {
                             @class = "w-full rounded-[4px]",
                             @style = "border-radius:4px !important",
+<<<<<<< HEAD
                             @placeholder = "English Message",
+=======
+                            @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.English_Message,
+                            @maxlength = "200"
+                        })
+
+                    </div>
+                    <div class="input-field-common w-full">
+                        <label class="block mb-4 text-sm font-medium text-secondary-100 ">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Http_Status_Code
+                        </label>
+                        @Html.TextBoxFor(model => model.HttpStatusCode, new
+                        {
+                            @class = "w-full rounded-[4px]",
+                            @style = "border-radius:4px !important",
+                            @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.Http_Status_Code,
+>>>>>>> 9a5f5ff2682516912a6a6928c4d594ce6ea591bc
                             @maxlength = "30"
                         })
 
                     </div>
                     <div class="input-field-common w-full">
                         <label class="block mb-4 text-sm font-medium text-secondary-100 ">
+<<<<<<< HEAD
                             Http Status Code
                         </label>
                         @Html.TextBoxFor(model => model.HttpStatusCode, new
@@ -72,25 +129,74 @@
                             @style = "border-radius:4px !important",
                             @placeholder = "Code",
                             @maxlength = "30"
+=======
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Description
+                        </label>
+                        @Html.TextBoxFor(model => model.Description, new
+                        {
+                            @class = "w-full rounded-[4px]",
+                            @style = "border-radius:4px !important",
+                            @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.Description,
+                            @maxlength = "200"
+>>>>>>> 9a5f5ff2682516912a6a6928c4d594ce6ea591bc
                         })
 
                     </div>
 
                     <div class="input-field-common">
                         <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
+<<<<<<< HEAD
                             Category
+=======
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.CategoryType
+>>>>>>> 9a5f5ff2682516912a6a6928c4d594ce6ea591bc
                         </label>
                         <select id="useRole" name="Category" class=" default_select select-common block w-full "
                                 style="width: 100%;">
                             <option value="error">
                                 Error
                             </option>
+<<<<<<< HEAD
+=======
+                            <option value="success">
+                                Success
+                            </option>
+>>>>>>> 9a5f5ff2682516912a6a6928c4d594ce6ea591bc
 
                         </select>
                         <span class="error">
 
                         </span>
                     </div>
+<<<<<<< HEAD
+=======
+                    <div class="input-field-common w-full">
+                        <label class="block mb-4 text-sm font-medium text-secondary-100 ">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Module_Name
+                        </label>
+                        @Html.TextBoxFor(model => model.Module, new
+                        {
+                            @class = "w-full rounded-[4px]",
+                            @style = "border-radius:4px !important",
+                            @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.Module_Name,
+                            @maxlength = "200"
+                        })
+
+                    </div>
+                    <div class="input-field-common w-full">
+                        <label class="block mb-4 text-sm font-medium text-secondary-100 ">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.User_Category
+                        </label>
+                        @Html.TextBoxFor(model => model.UserCategory, new
+                        {
+                            @class = "w-full rounded-[4px]",
+                            @style = "border-radius:4px !important",
+                            @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.User_Category,
+                            @maxlength = "200"
+                        })
+
+                    </div>
+>>>>>>> 9a5f5ff2682516912a6a6928c4d594ce6ea591bc
 
                 </div>
 

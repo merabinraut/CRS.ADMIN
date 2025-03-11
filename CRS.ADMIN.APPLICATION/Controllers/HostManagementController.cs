@@ -648,12 +648,11 @@ namespace CRS.ADMIN.APPLICATION.Controllers
 
         #region Gallery Management
         [HttpGet]
-        public ActionResult GalleryManagement(string AgentId, string HostId, string SearchFilter = "", string clubCategory = "")
+        public ActionResult GalleryManagement(string AgentId, string HostId, string SearchFilter = "",string clubCategory="", int StartIndexBck = 0, int PageSizeBck = 10,string SearchFilterBck = "")
         {
             ViewBag.AgentId = AgentId;
             ViewBag.HostId = HostId;
             ViewBag.SearchFilter = SearchFilter;
-
             var aId = AgentId?.DecryptParameter();
             var hId = HostId?.DecryptParameter();
             ActionResult redirectresult = null;
@@ -699,18 +698,23 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             ViewBag.IsBackAllowed = true;
             if (!string.IsNullOrEmpty(clubCategory) && clubCategory.ToUpper() == "BASIC")
             {
-                ViewBag.BackButtonURL = "/HostManagement/HostList?AgentId=" + AgentId + "&clubCategory=" + clubCategory;
+
+                ViewBag.BackButtonURL = "/HostManagement/HostList?AgentId=" + AgentId+ "&clubCategory=" + clubCategory + "&StartIndex=" + StartIndexBck + "&PageSize=" + PageSizeBck+ "&SearchFilter=" + SearchFilterBck;
+
             }
             else
             {
-                ViewBag.BackButtonURL = "/HostManagement/HostList?AgentId=" + AgentId;
+                ViewBag.BackButtonURL = "/HostManagement/HostList?AgentId=" + AgentId + "&StartIndex=" + StartIndexBck + "&PageSize=" + PageSizeBck + "&SearchFilter=" + SearchFilterBck; ;
             }
             ReturnModel.HostManageGalleryImageModel.clubCategory = clubCategory;
+            ViewBag.SearchFilterBck = SearchFilterBck;
+            ViewBag.StartIndexBck = StartIndexBck;
+            ViewBag.PageSizeBck = PageSizeBck;
             return View(ReturnModel);
         }
 
         [HttpGet]
-        public ActionResult ManageGallery(string AgentId, string HostId, string GalleryId, string clubCategory)
+        public ActionResult ManageGallery(string AgentId, string HostId, string GalleryId,string clubCategory, int StartIndexBck = 0, int PageSizeBck = 10, string SearchFilterBck = "")
         {
             HostManageGalleryImageModel model = new HostManageGalleryImageModel();
             var aId = AgentId?.DecryptParameter();
@@ -744,7 +748,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                     Message = "Invalid gallery details",
                     Title = NotificationMessage.INFORMATION.ToString(),
                 });
-                return RedirectToAction("GalleryManagement", "HostManagement", new { AgentId, HostId, clubCategory });
+                return RedirectToAction("GalleryManagement", "HostManagement", new { AgentId, HostId, clubCategory, StartIndexBck, PageSizeBck, SearchFilterBck });
             }
             var dbResponse = _buss.GetGalleryImage(aId, hId, gId);
             if (dbResponse.Count > 0) model = dbResponse[0].MapObject<HostManageGalleryImageModel>();
@@ -753,11 +757,11 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             model.GalleryId = model.GalleryId.EncryptParameter();
             TempData["GalleryManagementModel"] = model;
             TempData["RenderId"] = "ManageHostGallery";
-            return RedirectToAction("GalleryManagement", "HostManagement", new { AgentId, HostId, clubCategory });
+            return RedirectToAction("GalleryManagement", "HostManagement", new { AgentId, HostId, clubCategory, StartIndexBck, PageSizeBck, SearchFilterBck });
         }
 
         [HttpPost, ValidateAntiForgeryToken]
-        public async Task<ActionResult> ManageGallery(HostManageGalleryImageModel Model, HttpPostedFileBase Image_Path)
+        public async Task<ActionResult> ManageGallery(HostManageGalleryImageModel Model, HttpPostedFileBase Image_Path, int StartIndexBck = 0, int PageSizeBck = 10, string SearchFilterBck = "")
         {
             var aId = Model.AgentId?.DecryptParameter();
             var hId = Model.HostId?.DecryptParameter();
@@ -794,7 +798,8 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                     });
                     TempData["GalleryManagementModel"] = Model;
                     TempData["RenderId"] = "ManageHostGallery";
-                    return RedirectToAction("GalleryManagement", "HostManagement", new { AgentId = Model.AgentId, HostId = Model.HostId, clubCategory = Model.clubCategory });
+
+                    return RedirectToAction("GalleryManagement", "HostManagement", new { AgentId = Model.AgentId, HostId = Model.HostId, clubCategory =Model.clubCategory, StartIndexBck = StartIndexBck, PageSizeBck = PageSizeBck, SearchFilterBck = SearchFilterBck });
                 }
             }
             if (string.IsNullOrEmpty(Model.ImagePath))
@@ -818,7 +823,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                         });
                         TempData["GalleryManagementModel"] = Model;
                         TempData["RenderId"] = "ManageHostGallery";
-                        return RedirectToAction("GalleryManagement", "HostManagement", new { AgentId = Model.AgentId, HostId = Model.HostId, clubCategory = Model.clubCategory });
+                        return RedirectToAction("GalleryManagement", "HostManagement", new { AgentId = Model.AgentId, HostId = Model.HostId, clubCategory = Model.clubCategory ,StartIndexBck = StartIndexBck, PageSizeBck = PageSizeBck, SearchFilterBck = SearchFilterBck });
                     }
                 }
             }
@@ -843,7 +848,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                     });
                     TempData["GalleryManagementModel"] = Model;
                     TempData["RenderId"] = "ManageHostGallery";
-                    return RedirectToAction("GalleryManagement", "HostManagement", new { AgentId = Model.AgentId, HostId = Model.HostId, clubCategory = Model.clubCategory });
+                    return RedirectToAction("GalleryManagement", "HostManagement", new { AgentId = Model.AgentId, HostId = Model.HostId, clubCategory = Model.clubCategory , StartIndexBck = StartIndexBck, PageSizeBck = PageSizeBck, SearchFilterBck = SearchFilterBck });
                 }
             }
             var dbRequest = Model.MapObject<HostManageGalleryImageCommon>();
@@ -862,7 +867,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                     Message = dbResponse.Message ?? "Failed",
                     Title = dbResponse.Code == ResponseCode.Success ? NotificationMessage.SUCCESS.ToString() : NotificationMessage.INFORMATION.ToString()
                 });
-                return RedirectToAction("GalleryManagement", "HostManagement", new { AgentId = Model.AgentId, HostId = Model.HostId, clubCategory = Model.clubCategory });
+                return RedirectToAction("GalleryManagement", "HostManagement", new { AgentId = Model.AgentId, HostId = Model.HostId, clubCategory = Model.clubCategory,StartIndexBck = StartIndexBck, PageSizeBck = PageSizeBck, SearchFilterBck = SearchFilterBck });
             }
             else
             {
@@ -874,12 +879,12 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 });
                 TempData["GalleryManagementModel"] = Model;
                 TempData["RenderId"] = "ManageHostGallery";
-                return RedirectToAction("GalleryManagement", "HostManagement", new { AgentId = Model.AgentId, HostId = Model.HostId, clubCategory = Model.clubCategory });
+                return RedirectToAction("GalleryManagement", "HostManagement", new { AgentId = Model.AgentId, HostId = Model.HostId, clubCategory = Model.clubCategory , StartIndexBck = StartIndexBck, PageSizeBck = PageSizeBck, SearchFilterBck = SearchFilterBck });
             }
         }
 
         [HttpPost, ValidateAntiForgeryToken]
-        public JsonResult ManageGalleryStatus(string AgentId, string HostId, string GalleryId, string clubCategory)
+        public JsonResult ManageGalleryStatus(string AgentId, string HostId, string GalleryId,string clubCategory, int StartIndexBck = 0, int PageSizeBck = 10, string SearchFilterBck = "")
         {
             var response = new CommonDbResponse();
             var aId = !string.IsNullOrEmpty(AgentId) ? AgentId.DecryptParameter() : null;

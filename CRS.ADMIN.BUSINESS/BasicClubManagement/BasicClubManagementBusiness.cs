@@ -1,18 +1,15 @@
 ﻿using CRS.ADMIN.REPOSITORY.BasicClubManagement;
-using CRS.ADMIN.REPOSITORY.ClubManagement;
 using CRS.ADMIN.SHARED;
 using CRS.ADMIN.SHARED.BasicClubManagement;
 using CRS.ADMIN.SHARED.ClubManagement;
 using CRS.ADMIN.SHARED.PaginationManagement;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Data.SqlClient;
 
 namespace CRS.ADMIN.BUSINESS.BasicClubManagement
 {
-    public class BasicClubManagementBusiness: IBasicClubManagementBusiness
+    public class BasicClubManagementBusiness : IBasicClubManagementBusiness
     {
         IBasicClubManagementRepository _REPO;
         public BasicClubManagementBusiness(BasicClubManagementRepository REPO)
@@ -47,9 +44,9 @@ namespace CRS.ADMIN.BUSINESS.BasicClubManagement
         {
             return _REPO.GetBasicConversionClubDetails(AgentId, culture);
         }
-        public CommonDbResponse ManageConversionClub(ManageClubCommon Request)
+        public CommonDbResponse ManageConversionClub(ManageClubCommon Request, SqlConnection connection = null, SqlTransaction transaction = null)
         {
-            return _REPO.ManageConversionClub(Request);
+            return _REPO.ManageConversionClub(Request, connection, transaction);
         }
     }
 }

@@ -25,7 +25,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
         }
 
         [HttpGet]
-        public ActionResult PointsTransferList(PointBalanceStatementRequestModel modelRequest, string UserType = "", string UserName = "", string TransferTypeId = "", string FromDate = "", string ToDate = "", string SearchFilter = "", string value = "", int StartIndex = 0, int PageSize = 10, int StartIndex2 = 0, int PageSize2 = 10, int StartIndex3 = 0, int PageSize3 = 10, int StartIndex4 = 0, int PageSize4 = 10, string SearchFilter4 = "", string LocationId4 = "", string ClubName4 = "", string PaymentMethodId4 = "", string FromDate4 = "", string ToDate4 = "", int TotalData3 = 0)
+        public ActionResult PointsTransferList(PointBalanceStatementRequestModel modelRequest, string UserType = "", string UserName = "", string TransferTypeId = "", string FromDate = "", string ToDate = "", string SearchFilter = "", string value = "", int StartIndex = 0, int PageSize = 10, int StartIndex2 = 0, int PageSize2 = 10, int StartIndex3 = 0, int PageSize3 = 10, int StartIndex4 = 0, int PageSize4 = 10, string SearchFilter4 = "", string LocationId4 = "", string ClubName4 = "", string PaymentMethodId4 = "", string FromDate4 = "", string ToDate4 = "", int TotalData3 = 0, int TotalData2 = 0)
         {
             Session["CurrentURL"] = "/PointsManagement/PointsTransferList";
             ViewBag.SearchFilter = SearchFilter;
@@ -60,19 +60,39 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             Commonmodel.UserType = !string.IsNullOrEmpty(UserType) ? UserType.DecryptParameter() : null;
             Commonmodel.UserName = !string.IsNullOrEmpty(UserName) ? UserName.DecryptParameter() : null;
             Commonmodel.TransferTypeId = !string.IsNullOrEmpty(TransferTypeId) ? TransferTypeId.DecryptParameter() : null;
-            Commonmodel.FromDate = !string.IsNullOrEmpty(FromDate) ? FromDate : null;
-            Commonmodel.ToDate = !string.IsNullOrEmpty(ToDate) ? ToDate : null;
-            ViewBag.UserTypeIdKey = !string.IsNullOrEmpty(UserType) ? UserType : null;
-            ViewBag.UsernameIdKey = !string.IsNullOrEmpty(UserName) ? UserName : null;
+            Commonmodel.FromDate =value==""?!string.IsNullOrEmpty(FromDate) ? FromDate : null:null;
+            Commonmodel.ToDate = value == "" ? !string.IsNullOrEmpty(ToDate) ? ToDate : null:null;
+            ViewBag.UserTypeIdKey =value.ToUpper()== "PBS"?!string.IsNullOrEmpty(UserType) ? UserType : null:null;
+            ViewBag.UsernameIdKey = value.ToUpper() == "PBS" ? !string.IsNullOrEmpty(UserName) ? UserName : null:null;
             ViewBag.TransferTypeIdKey = !string.IsNullOrEmpty(TransferTypeId) ? TransferTypeId : null;
             var dbResponse = _BUSS.GetPointTransferList(Commonmodel, dbRequest);
+
             objPointsManagementModel.PointsTansferReportList = dbResponse.MapObjects<PointsTansferReportModel>();
+            objPointsManagementModel.PointsTansferReportList.ForEach(x =>
+            {
+                x.Id = x?.Id?.EncryptParameter();
+            });
             if (TempData.ContainsKey("ManagePointsModel")) objPointsManagementModel.ManagePointsTansfer = TempData["ManagePointsModel"] as PointsTansferModel;
             else objPointsManagementModel.ManagePointsTansfer = new PointsTansferModel();
             if (TempData.ContainsKey("ManagePointsRequestModel")) objPointsManagementModel.ManagePointsRequest = TempData["ManagePointsRequestModel"] as PointsRequestModel;
             else objPointsManagementModel.ManagePointsRequest = new PointsRequestModel();
+            if (TempData.ContainsKey("PointTransferRetriveDetails")) objPointsManagementModel.PointsTransferRetriveDetails = TempData["PointTransferRetriveDetails"] as PointsTansferRetriveDetailsModel;
+            else objPointsManagementModel.PointsTransferRetriveDetails = new PointsTansferRetriveDetailsModel();
             if (TempData.ContainsKey("RenderId")) RenderId = TempData["RenderId"].ToString();
             ViewBag.PopUpRenderValue = !string.IsNullOrEmpty(RenderId) ? RenderId : null;
+
+            ViewBag.UserTypeListPT = ApplicationUtilities.SetDDLValue(DDLHelper.LoadDropdownList("USERTYPELIST", "", culture) as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---");
+
+            if (string.IsNullOrEmpty(objPointsManagementModel.ManagePointsTansfer.UserTypeId))
+            {                                                                 
+                ViewBag.UserListPT = ApplicationUtilities.SetDDLValue(dictionaryempty, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---");
+            }
+            else
+            {
+                ViewBag.UserListPT = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("USERTYPENAME", objPointsManagementModel.ManagePointsTansfer.UserTypeId.DecryptParameter()) as Dictionary<string, string>, "--- Select ---");
+            }
+            ViewBag.UserTypeIdKeyPT = !string.IsNullOrEmpty(objPointsManagementModel.ManagePointsTansfer.UserTypeId) ? objPointsManagementModel.ManagePointsTansfer.UserTypeId : null;
+            ViewBag.AgentIdKeyPT = !string.IsNullOrEmpty(objPointsManagementModel.ManagePointsTansfer.UserId) ? objPointsManagementModel.ManagePointsTansfer.UserId : null;
             ViewBag.StartIndex = StartIndex;
             ViewBag.PageSize = PageSize;
             ViewBag.StartIndex2 = StartIndex2;
@@ -83,10 +103,9 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             ViewBag.PageSize4 = PageSize4;
             objPointsManagementModel.ListType = value;
             ViewBag.TotalData = dbResponse != null && dbResponse.Any() ? dbResponse[0].TotalRecords : 0;
-            ViewBag.TotalData2 = 0;
+           
             ViewBag.TotalData3 = TotalData3;
-            objPointsManagementModel.FromDate = FromDate;
-            objPointsManagementModel.ToDate = ToDate;
+           
             objPointsManagementModel.PointRequestCommonModel = new PointRequestCommonModel()
             {
                 LocationId = LocationId4,
@@ -104,12 +123,12 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 From_Date = FromDate,
                 To_Date = ToDate
             };
-            if (!string.IsNullOrEmpty(TransferTypeId))
-                ViewBag.TransferTypeIdKey = TransferTypeId;
-            if (!string.IsNullOrEmpty(UserName))
-                ViewBag.UsernameIdKey = UserName;
-            if (!string.IsNullOrEmpty(UserType))
-                ViewBag.UserTypeIdKey = UserType;
+            //if (!string.IsNullOrEmpty(TransferTypeId))
+            //    ViewBag.TransferTypeIdKey = TransferTypeId;
+            //if (!string.IsNullOrEmpty(UserName))
+            //    ViewBag.UsernameIdKey =value== UserName;
+            //if (!string.IsNullOrEmpty(UserType))
+            //    ViewBag.UserTypeIdKey = UserType;
 
 
             objPointsManagementModel.SystemTransferModel = new SystemTransferRequestModel()
@@ -122,10 +141,10 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             };
             if (!string.IsNullOrEmpty(TransferTypeId))
                 ViewBag.TransferTypeIdKey = TransferTypeId;
-            if (!string.IsNullOrEmpty(UserName))
-                ViewBag.UsernameIdKey = UserName;
-            if (!string.IsNullOrEmpty(UserType))
-                ViewBag.UserTypeIdKey = UserType;
+            //if (!string.IsNullOrEmpty(UserName))
+            //    ViewBag.UsernameIdKey = UserName;
+            //if (!string.IsNullOrEmpty(UserType))
+            //    ViewBag.UserTypeIdKey = UserType;
 
 
 
@@ -154,7 +173,6 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                     From_Date1 = null,
                     To_Date1 = null
                 };
-
             }
             if (value.ToUpper() != "PBS")
             {
@@ -176,11 +194,18 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 };
             }
 
-
+            ViewBag.UserTypeIdKeyST = value.ToUpper() == "ST"?!string.IsNullOrEmpty(UserType) ? UserType : null:null;
+            ViewBag.UsernameIdKeyST = value.ToUpper() == "ST" ? !string.IsNullOrEmpty(UserName) ? UserName : null:null;
+            ViewBag.UserTypeIdKeyPT1 = value == "" ? !string.IsNullOrEmpty(UserType) ? UserType : null:null;
+            ViewBag.UsernameIdKeyPT1 = value == "" ? !string.IsNullOrEmpty(UserName) ? UserName : null:null;
+            objPointsManagementModel.FromDate = value == "" ? !string.IsNullOrEmpty(FromDate) ? FromDate : null : null;
+            objPointsManagementModel.ToDate = value == "" ? !string.IsNullOrEmpty(ToDate) ? ToDate : null : null;
+            ViewBag.TotalData2 = TotalData2;
             objPointsManagementModel.PointRequestCommonModel.PointRequestsListModel = getPointRequestListDBResponse.MapObjects<PointRequestsListModel>();
             objPointsManagementModel.PointRequestCommonModel.PointRequestsListModel.ForEach(x =>
             {
                 x.AgentId = x?.AgentId?.EncryptParameter();
+                x.Id = x?.Id?.EncryptParameter();
                 x.UserId = x?.UserId?.EncryptParameter();
             });
             ViewBag.TotalData4 = objPointsManagementModel?.PointRequestCommonModel?.PointRequestsListModel.Count > 0 ? objPointsManagementModel?.PointRequestCommonModel?.PointRequestsListModel?.FirstOrDefault().RowsTotal ?? "0" : "0";
@@ -244,6 +269,14 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 commonModel.ActionIP = ApplicationUtilities.GetIP();
                 commonModel.UserTypeId = objPointsTansferModel.UserTypeId.DecryptParameter();
                 commonModel.UserId = objPointsTansferModel.UserId.DecryptParameter();
+                if (commonModel.TransferType.ToUpper() == "TRANSFER")
+                {
+                    commonModel.SpName = "sproc_point_transfer";
+                }
+                else
+                {
+                    commonModel.SpName = "sproc_point_retrive";
+                }
                 var dbResponse = _BUSS.ManagePoints(commonModel);
                 if (dbResponse != null && dbResponse.Code == 0)
                 {
@@ -293,7 +326,37 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             TempData["RenderId"] = "Manage";
             return RedirectToAction("PointsTransferList", "PointsManagement");
         }
+        [HttpGet]
+        [OverrideActionFilters]
+        public ActionResult PointsTransferListDetails(PointsTransferRequest obj)
+        {
+            string id = ""; string SearchFilter = ""; int StartIndex = 0; int PageSize = 10;
+            var ResponseModel = new PointsTansferRetriveDetailsModel();
+            var culture = Request.Cookies["culture"]?.Value;
+            culture = string.IsNullOrEmpty(culture) ? "ja" : culture;
+            //var availabilityInfo = new List<AvailabilityTagModel>();
+            var Id = obj.Id?.DecryptParameter();
+            if (string.IsNullOrEmpty(Id))
+            {
+                this.AddNotificationMessage(new NotificationModel()
+                {
+                    NotificationType = NotificationMessage.INFORMATION,
+                    Message = "Invalid details",
+                    Title = NotificationMessage.INFORMATION.ToString(),
+                });
+                return RedirectToAction("PointsTransferList", "PointsManagement", new { SearchFilter = obj.SearchFilter, StartIndex = obj.StartIndex, PageSize = obj.PageSize, UserType = obj.RoleType, UserName = obj.UserId, TransferTypeId = obj.TransferType, FromDate = obj.FromDate, ToDate = obj.ToDate });
+            }
+            else
+            {
 
+                var dbResponseInfo = _BUSS.GetPointTransferDetails(Id);
+                ResponseModel = dbResponseInfo.MapObject<PointsTansferRetriveDetailsModel>();
+                ResponseModel.Image = ImageHelper.ProcessedImage(ResponseModel.Image);
+                TempData["PointTransferRetriveDetails"] = ResponseModel;
+                TempData["RenderId"] = "PointTransferRetriveDetails";
+                return RedirectToAction("PointsTransferList", "PointsManagement", new { SearchFilter = obj.SearchFilter, StartIndex = obj.StartIndex, PageSize = obj.PageSize, UserType = obj.RoleType, UserName = obj.UserId, TransferTypeId = obj.TransferType, FromDate = obj.FromDate, ToDate = obj.ToDate });
+            }
+        }
         [HttpPost, ValidateAntiForgeryToken]
         public ActionResult ManagePointsRequest(PointsRequestModel objPointsRequestModel)
         {
@@ -341,11 +404,9 @@ namespace CRS.ADMIN.APPLICATION.Controllers
         public async Task<JsonResult> ManageClubPointRequest(ManageClubPointRequestModel request, HttpPostedFileBase Image)
         {
             var dbRequest = request.MapObject<ManageClubPointRequestCommon>();
-            dbRequest.AgentId = dbRequest?.AgentId?.DecryptParameter() ?? string.Empty;
+            dbRequest.Id = dbRequest?.Id?.DecryptParameter() ?? string.Empty;
             dbRequest.UserId = dbRequest?.UserId?.DecryptParameter() ?? string.Empty;
-            if (string.IsNullOrEmpty(dbRequest.AgentId) ||
-                string.IsNullOrEmpty(dbRequest.UserId) ||
-                string.IsNullOrEmpty(dbRequest.TxnId))
+            if (string.IsNullOrEmpty(dbRequest.Id))              
             {
                 this.AddNotificationMessage(new NotificationModel()
                 {
@@ -355,16 +416,39 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 });
                 return Json("Invalid request", JsonRequestBehavior.AllowGet);
             }
-            if (dbRequest.Status.Trim().ToUpper() == "S" && Image == null)
+            //if (request.Status.ToLower()=="approve" )              
+            //{
+            //    if(string.IsNullOrEmpty( Image.FileName)){
+            //        this.AddNotificationMessage(new NotificationModel()
+            //        {
+            //            NotificationType = NotificationMessage.INFORMATION,
+            //            Message = "Image is required",
+            //            Title = NotificationMessage.INFORMATION.ToString(),
+            //        });
+            //        return Json("Image is required", JsonRequestBehavior.AllowGet);
+            //    }
+                
+            //}
+            if (string.IsNullOrEmpty(request.AdminRemark))
             {
                 this.AddNotificationMessage(new NotificationModel()
                 {
                     NotificationType = NotificationMessage.INFORMATION,
-                    Message = "Image required",
+                    Message = "Remark is required",
                     Title = NotificationMessage.INFORMATION.ToString(),
                 });
-                return Json("Image required", JsonRequestBehavior.AllowGet);
+                return Json("Remark is required", JsonRequestBehavior.AllowGet);
             }
+            //if (dbRequest.Status.Trim().ToUpper() == "S" && Image == null)
+            //{
+            //    this.AddNotificationMessage(new NotificationModel()
+            //    {
+            //        NotificationType = NotificationMessage.INFORMATION,
+            //        Message = "Image required",
+            //        Title = NotificationMessage.INFORMATION.ToString(),
+            //    });
+            //    return Json("Image required", JsonRequestBehavior.AllowGet);
+            //}
             string fileName = string.Empty;
             var allowedContentType = AllowedImageContentType();
             if (Image != null)

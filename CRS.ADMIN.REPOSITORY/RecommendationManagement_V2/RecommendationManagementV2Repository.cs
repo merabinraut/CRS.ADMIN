@@ -1,5 +1,7 @@
 ﻿using CRS.ADMIN.SHARED;
+using CRS.ADMIN.SHARED.PaginationManagement;
 using CRS.ADMIN.SHARED.RecommendationManagement_V2;
+using DocumentFormat.OpenXml.Office2016.Excel;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -202,12 +204,14 @@ namespace CRS.ADMIN.REPOSITORY.RecommendationManagement_V2
         #endregion
 
         #region "Manage Search Page Request"
-        public List<SearchPageClubRequestListModelCommon> GetClubRequestListBySearchPage(string locationId, string SearchFilter = "")
+        public List<SearchPageClubRequestListModelCommon> GetClubRequestListBySearchPage(string locationId, PaginationFilterCommon objPaginationFilterCommon)
         {
             List<SearchPageClubRequestListModelCommon> responseInfo = new List<SearchPageClubRequestListModelCommon>();
             string sp_name = "EXEC sproc_admin_searchpage_recommendation_management_v2 @Flag= 'gspac'";
             sp_name += ",@LocationId=" + _dao.FilterString(locationId);
-            sp_name += !string.IsNullOrEmpty(SearchFilter) ? ",@SearchFilter=N" + _dao.FilterString(SearchFilter) : null;
+            sp_name += !string.IsNullOrEmpty(objPaginationFilterCommon.SearchFilter) ? ",@SearchFilter=N" + _dao.FilterString(objPaginationFilterCommon.SearchFilter) : null;
+            sp_name += ",@Skip=" + objPaginationFilterCommon.Skip;
+            sp_name += ",@Take=" + objPaginationFilterCommon.Take;
             var dbResponseInfo = _dao.ExecuteDataTable(sp_name);
             if (dbResponseInfo != null)
             {
@@ -217,6 +221,7 @@ namespace CRS.ADMIN.REPOSITORY.RecommendationManagement_V2
                     {
                         ClubName = row["ClubName"].ToString(),
                         ClubLogo = row["ClubLogo"].ToString(),
+                        TotalRecords =Convert.ToInt32( row["TotalRecords"].ToString()),
                         HostName = row["HostName"].ToString(),
                         ClubCategory = row["ClubCategory"].ToString(),
                         DisplayPageLabel = row["DisplayPageLabel"].ToString(),

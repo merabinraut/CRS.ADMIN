@@ -1,0 +1,308 @@
+﻿@model CRS.ADMIN.APPLICATION.Models.WithdrawalRequest.WithdrawalRequestModel
+@{
+    ViewBag.Title = "User Type List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+
+}
+<style>
+    .filterborder {
+        outline: 1px solid #d0d5dd;
+        border-radius: 0;
+    }
+
+    .filteroutlinepadding {
+        padding-left: 18px;
+        padding-top: 18px;
+        padding-right: 18px;
+    }
+</style>
+<link href="~/Content/css/jquery-ui.min.css" rel="stylesheet" />
+
+
+<div class="px-8 py-4">
+    @Html.AntiForgeryToken()
+    <!-- title  -->
+    <div class="flex flex-col  gap-6">
+        <div>
+            <div class="heading-title">
+                @CRS.ADMIN.APPLICATION.Resources.Resource.WithdrawalRequests
+            </div>
+            <div class="span-title-light-gray">
+                @CRS.ADMIN.APPLICATION.Resources.Resource.Manage_affiliate_withdraw_logs_
+            </div>
+        </div>
+        <!-- container  -->
+        <div id="tab1" class="tab-content-plane">
+            <div class="flex flex-col gap-8">
+
+
+                <div id="pointstransfer" class="pane active">
+                    <form action="/WithdrawalRequest/WithdrawalRequestMonthlyList" method="get">
+                        <div class="flex justify-between pb-[24px]">
+
+
+
+
+                        </div>
+
+                        <div class="grid grid-cols-3 gap-x-12 table-tab filteroutlinepadding">
+
+                            <div class="input-field-common mb-[20px]" id="tagInput1">
+                                <div class="input-field-common filteroutlinepadding">
+                                    <label for="date" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                                        @CRS.ADMIN.APPLICATION.Resources.Resource.From_Date
+                                    </label>
+                                    @Html.TextBoxFor(model => model.FromDate, new
+                                   {
+                                   @class = "w-full",
+                                   @placeholder = "YYYY/MM/DD",
+                                   @autocomplete = "off",
+                                   @type = "text",
+                                     @readonly = "readonly"
+                                      })
+                                    <span class="error">
+                                        @Html.ValidationMessageFor(m => m.FromDate)
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="input-field-common mb-[20px]" id="tagInput2">
+                                <div class="input-field-common filteroutlinepadding">
+                                    <label for="date" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                                        @CRS.ADMIN.APPLICATION.Resources.Resource.To_Date
+                                    </label>
+                                    @Html.TextBoxFor(model => model.ToDate, new
+                               {
+                                   @class = "w-full",
+                                   @placeholder = "YYYY/MM/DD",
+                                   @autocomplete = "off",
+                                   @type = "text",
+                                    @readonly = "readonly"
+                                      })
+                                    <span class="error">
+                                        @Html.ValidationMessageFor(m => m.ToDate)
+                                    </span>
+                                </div>
+                            </div>
+                            <br />
+                            <div>
+                                <div class="py-4 flex justify-start mx-[18px]">
+                                    <div class="flex gap-6">
+                                        <button class="btn btn-secondary rounded-[4px]" type="button" data-drawer-hide="add-new-points-request"
+                                                aria-controls="add-new-points-request" onclick="CancelFunction();">
+                                            @CRS.ADMIN.APPLICATION.Resources.Resource.Cancel
+                                        </button>
+                                        <button class="btn btn-primary-default rounded-[4px]" type="submit"> @CRS.ADMIN.APPLICATION.Resources.Resource.Apply</button>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <br />
+                    @*<div class="px-[12px] py-[16px] flex justify-between entry-export-container">
+                            <div class="flex items-center select-entries" id="ShowEntries-Id">
+                            </div>
+                        </div>*@
+                    <div class="table-tab">
+                        <div class="px-[16px] py-[12px] flex justify-between entry-export-container">
+                            <div class="flex items-center select-entries" id="ShowEntries-Id">
+                            </div>
+                            <div class="export-button h-[40px]" onclick="exportExcel('id_withdrawmonthlyreport', 'WithdrawMonthlyRequestReport')">
+                                <img src="~/Content/assets_new/images/club/download-solid.svg"> @CRS.ADMIN.APPLICATION.Resources.Resource.Export
+                            </div>
+                        </div>
+                        <div class="relative overflow-x-auto">
+                            <table class="w-full text-left club-table" id="id_withdrawmonthlyreport">
+                                <thead class="club-table-thead">
+                                    <tr>
+                                        <th scope="col" class="p-[12px]">
+                                            <div class="flex w-max">
+                                                S.N
+                                                <div class="relative pl-[5px]">
+                                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                                </div>
+                                            </div>
+                                        </th>
+
+                                        <th scope="col" class="p-[12px]">
+                                            <div class="flex w-max">
+                                                @CRS.ADMIN.APPLICATION.Resources.Resource.MonthAndYear
+                                                <div class="relative pl-[5px]">
+                                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                                </div>
+                                            </div>
+                                        </th>
+                                        <th scope="col" class="p-[12px]">
+                                            <div class="flex w-max">
+                                                @CRS.ADMIN.APPLICATION.Resources.Resource.TotalRequestedAmount
+                                                <div class="relative pl-[5px]">
+                                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                                </div>
+                                            </div>
+                                        </th>
+
+                                        <th scope="col" class="p-[12px]">
+                                            <div class="flex w-max">
+                                                @CRS.ADMIN.APPLICATION.Resources.Resource.Action
+                                                <div class="relative pl-[5px]">
+                                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                                </div>
+                                            </div>
+                                        </th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @{
+                                        if (Model.WithdrawalMonthlyList.Count > 0)
+                                        {
+                                            int SN = 1;
+                                            foreach (var item in Model.WithdrawalMonthlyList)
+                                            {
+                                                <tr class="bg-white border-b ">
+                                                    <td class="p-[12px]">
+                                                        @item.SNO
+                                                    </td>
+                                                    <td class="p-[12px]">
+                                                        @item.formattedDate
+                                                    </td>
+                                                    <td class="p-[12px]">
+                                                        @item.totalAmount
+                                                    </td>
+
+                                                    <td class="p-[12px]">
+                                                        <i class="las la-eye text-[20px] cursor-pointer text-[#A6A6A6]" onclick="ViewWithdrawalRequestDetail('@item.formattedDate');"></i>
+                                                    </td>
+                                                </tr>
+                                                SN++;
+                                            }
+                                        }
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="pagination-club">
+                        <div class="show-entry" id="Entries-Id">
+                        </div>
+                        <div class="flex gap-[12px]">
+                            <div class="btn btn-secondary-box-shadow" id="prev-btn">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Previous
+                            </div>
+                            <div class="flex gap-[12px]" id="pagination-id">
+                            </div>
+                            <div class="btn btn-secondary-box-shadow" id="next-btn">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Next
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts
+{
+    <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
+    <script>
+        function addQueryParam2(url, paramName, paramValue, paramName2, paramValue2) {
+            if (paramValue != null && paramValue != "") {
+                url += url.includes('?') ? `&${paramName}=${paramValue}` : `?${paramName}=${paramValue}`;
+            }
+            if (paramValue2 != null && paramValue2 != "") {
+                url += url.includes('?') ? `&${paramName2}=${paramValue2}` : `?${paramName2}=${paramValue2}`;
+            }
+
+            return url;
+        }
+           function ViewWithdrawalRequestDetail(i) {
+            window.location.href = '/WithdrawalRequest/WithdrawalRequestDetailList?Id=' + i ;
+           }
+        document.addEventListener('DOMContentLoaded', function () {
+         const page_size = @ViewBag.PageSize;
+         const total_data = @ViewBag.TotalData;
+         const start_index_val = @ViewBag.StartIndex;
+         var FromDate = $("#FromDate").val();
+         var ToDate = $("#ToDate").val();
+         let URL2 = "/WithdrawalRequest/WithdrawalRequestMonthlyList?FromDate=" + FromDate + "&ToDate=" + ToDate ;
+         dynamicStartIndexLabel = "StartIndex";
+         dynamicPageSizeLabel = "PageSize";
+         LoadPagination(page_size, total_data, start_index_val, URL2, 'pagination-id', 'prev-btn', 'next-btn', 'ShowEntries-Id', 'Entries-Id');
+
+         $("#FromDate").val("@Model.FromDate");
+         jQuery(function ($) {
+                $.datepicker.regional['ja'] = {
+                closeText: '閉じる',
+                prevText: '&#x3c;前',
+                nextText: '次&#x3e;',
+                currentText: '今日',
+                monthNames: ['1月', '2月', '3月', '4月', '5月', '6月',
+                '7月', '8月', '9月', '10月', '11月', '12月'],
+                monthNamesShort: ['1月', '2月', '3月', '4月', '5月', '6月',
+                '7月', '8月', '9月', '10月', '11月', '12月'],
+                dayNames: ['日曜日', '月曜日', '火曜日', '水曜日', '木曜日', '金曜日', '土曜日'],
+                dayNamesShort: ['日', '月', '火', '水', '木', '金', '土'],
+                dayNamesMin: ['日', '月', '火', '水', '木', '金', '土'],
+                weekHeader: '週',
+                dateFormat: 'yy/mm/dd',
+                firstDay: 0,
+                isRTL: false,
+                showMonthAfterYear: true,
+                yearSuffix: '年'
+                };
+                $.datepicker.setDefaults($.datepicker.regional['ja']);
+                $("#FromDate").datepicker({
+                /*minDate: new Date(),*/
+                    /*   maxDate: new Date(),*/
+
+                defaultDate: '@Model.FromDate',
+                onClose: function (selectedDate) { $("#ToDate").datepicker("option", "minDate", selectedDate); }
+                });
+                });
+
+         $("#ToDate").val("@Model.ToDate");
+         jQuery(function ($) {
+               $.datepicker.regional['ja'] = {
+               closeText: '閉じる',
+               prevText: '&#x3c;前',
+               nextText: '次&#x3e;',
+               currentText: '今日',
+               monthNames: ['1月', '2月', '3月', '4月', '5月', '6月',
+               '7月', '8月', '9月', '10月', '11月', '12月'],
+               monthNamesShort: ['1月', '2月', '3月', '4月', '5月', '6月',
+               '7月', '8月', '9月', '10月', '11月', '12月'],
+               dayNames: ['日曜日', '月曜日', '火曜日', '水曜日', '木曜日', '金曜日', '土曜日'],
+               dayNamesShort: ['日', '月', '火', '水', '木', '金', '土'],
+               dayNamesShort: ['日', '月', '火', '水', '木', '金', '土'],
+               dayNamesMin: ['日', '月', '火', '水', '木', '金', '土'],
+               weekHeader: '週',
+               dateFormat: 'yy/mm/dd',
+               firstDay: 0,
+               isRTL: false,
+               showMonthAfterYear: true,
+               yearSuffix: '年'
+               };
+               $.datepicker.setDefaults($.datepicker.regional['ja']);
+               $("#ToDate").datepicker({
+                   //minDate: '@Model.FromDate',
+                   defaultDate: '@Model.ToDate'
+               });
+               });
+
+
+        });
+
+    </script>
+
+
+
+}

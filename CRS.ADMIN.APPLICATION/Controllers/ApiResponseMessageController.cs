@@ -1,6 +1,8 @@
-﻿using CRS.ADMIN.APPLICATION.Helper;
+
+using CRS.ADMIN.APPLICATION.Helper;
 using CRS.ADMIN.APPLICATION.Library;
 using CRS.ADMIN.APPLICATION.Models.ApiResponseMessage;
+using CRS.ADMIN.APPLICATION.Models.ClubManagement;
 
 using CRS.ADMIN.BUSINESS.ApiResponseMessage;
 using CRS.ADMIN.SHARED;
@@ -10,6 +12,10 @@ using CRS.ADMIN.SHARED.StaffManagement;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+
+using System.Reflection;
+using System.Threading.Tasks;
+
 using System.Web.Mvc;
 
 namespace CRS.ADMIN.APPLICATION.Controllers
@@ -17,7 +23,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
     //[OverrideActionFilters]
     public class ApiResponseMessageController : BaseController
     {
- 
+
         private readonly IApiResponseMessageBusiness _BUSS;
         private readonly HttpClient _httpClient;
         public ApiResponseMessageController(IApiResponseMessageBusiness BUSS, HttpClient httpClient)
@@ -27,63 +33,55 @@ namespace CRS.ADMIN.APPLICATION.Controllers
         }
 
         [HttpGet]
-        public ActionResult ApiResponseMessageList(string SearchFilter = "", string value = "", int StartIndex = 0, int PageSize = 10, int StartIndex2 = 0, int PageSize2 = 10, int StartIndex3 = 0, int PageSize3 = 10)
+
+        public ActionResult ApiResponseMessageList(string SearchFilter = "", string value = "", int StartIndex = 0, int PageSize = 10)
         {
             ViewBag.SearchFilter = SearchFilter;
             //Session["CurrentURL"] = "/ClubManagement/ClubList";
             string RenderId = "";
-            
+            ApiResponseModel obj = new ApiResponseModel();
+
             var response = new ApiResponseMessageModel();
 
             List<ApiResponseMessageModel> responseInfo = new List<ApiResponseMessageModel>();
 
             PaginationFilterCommon dbRequestall = new PaginationFilterCommon()
             {
-                Skip = value == "" ? StartIndex : 0,
-                Take = value == "" ? PageSize : 10,
-                SearchFilter = value == "" ? !string.IsNullOrEmpty(SearchFilter) ? SearchFilter : null : null
+                Skip = StartIndex,
+                Take = PageSize,
+                SearchFilter = !string.IsNullOrEmpty(SearchFilter) ? SearchFilter : null
             };
-
-          
             var dbResponse = _BUSS.ApiResponseMessageList(dbRequestall);
-
-            responseInfo = dbResponse.MapObjects<ApiResponseMessageModel>();
-           
-            //foreach (var item in responseInfo)
-            //{
-            //    item.MessageId = item.MessageId?.EncryptParameter();
-                
-            //}
-            
-
-            //ViewBag.Pref = DDLHelper.LoadDropdownList("PREF") as Dictionary<string, string>;
-            //ViewBag.IdentificationType = DDLHelper.LoadDropdownList("DOCUMENTTYPE") as Dictionary<string, string>;
-            
-
-            
-            ViewBag.StartIndex2 = StartIndex2;
-            ViewBag.PageSize2 = PageSize2;
-            ViewBag.StartIndex3 = StartIndex3;
-            ViewBag.PageSize3 = PageSize3;
+            obj.ApiResponseMessageList = dbResponse.MapObjects<ApiResponseMessageModel>();
             ViewBag.StartIndex = StartIndex;
             ViewBag.PageSize = PageSize;
+            ViewBag.TotalData = dbResponse != null && dbResponse.Any() ? dbResponse[0].TotalRecords : 0;
+            if (TempData.ContainsKey("ManageResponseEditModel")) obj.ManageResponse = TempData["ManageResponseEditModel"] as ApiResponseMessageModel;
+            else obj.ManageResponse = new ApiResponseMessageModel();
+            if (TempData.ContainsKey("RenderId")) RenderId = TempData["RenderId"].ToString();
 
-            ViewBag.TotalData = 10;//dbResponse != null && dbResponse.Any() ? dbResponse[0].Total : 0;
+            if (value == "G")
+            {
+                if (TempData.ContainsKey("ManageResponseGetModel")) obj.ManageResponse = TempData["ManageResponseGetModel"] as ApiResponseMessageModel;
+                else obj.ManageResponse = new ApiResponseMessageModel();
+                if (TempData.ContainsKey("RenderId")) RenderId = TempData["RenderId"].ToString();
 
+            }
+            ViewBag.PopUpRenderValue = !string.IsNullOrEmpty(RenderId) ? RenderId : null;
             response.SearchFilter = !string.IsNullOrEmpty(SearchFilter) ? SearchFilter : null;
 
-            return View(responseInfo);
+            return View(obj);
         }
 
         [HttpPost, ValidateAntiForgeryToken]
-        public ActionResult StoreResponseMessage(ApiResponseMessageModel model)
+        public ActionResult ApiResponseMessageList(ApiResponseMessageModel model)
         {
             if (ModelState.IsValid)
             {
                 ApiResponseMessageCommon commonModel = model.MapObject<ApiResponseMessageCommon>();
                 commonModel.ActionUser = ApplicationUtilities.GetSessionValue("Username").ToString();
                 //commonModel.ActionIP = ApplicationUtilities.GetIP();
-                
+
                 var dbResponseInfo = _BUSS.StoreApiResponseMessage(commonModel);
                 if (dbResponseInfo == null)
                 {
@@ -113,7 +111,9 @@ namespace CRS.ADMIN.APPLICATION.Controllers
         }
 
         [HttpPost, ValidateAntiForgeryToken]
-        public ActionResult UpdateResponseMessage(ApiResponseMessageModel model) {
+        public ActionResult UpdateResponseMessage(ApiResponseMessageModel model)
+        {
+
             if (ModelState.IsValid)
             {
                 ApiResponseMessageCommon commonModel = model.MapObject<ApiResponseMessageCommon>();
@@ -121,7 +121,8 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 //commonModel.ActionIP = ApplicationUtilities.GetIP();
 
                 var dbResponseInfo = _BUSS.UpdateApiResponseMessage(commonModel);
-                if (dbResponseInfo == null)
+
+                if (dbResponseInfo.Code.ToString().ToUpper() != "SUCCESS")
                 {
                     AddNotificationMessage(new NotificationModel()
                     {
@@ -146,6 +147,49 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             TempData["ManageResponseModel"] = model;
 
             return RedirectToAction("ApiResponseMessageList");
+        }
+        [HttpGet]
+        public async Task<ActionResult> UpdateResponseMessage(string id, string Code, string Category, string Message, string HttpStatusCode, string MessageEng, string Description, string Module, string UserCategory)
+        {
+            var request = new ApiResponseMessageModel()
+            {
+                MessageId = id,
+                Code = Code,
+                Category = Category,
+                Message = Message,
+                HttpStatusCode = HttpStatusCode,
+                MessageEng = MessageEng,
+                Description = Description,
+                Module = Module,
+                UserCategory = UserCategory
+            };
+            ApiResponseMessageModel model = new ApiResponseMessageModel();
+            TempData["ManageResponseEditModel"] = request;
+            TempData["RenderId"] = "Edit";
+            return RedirectToAction("ApiResponseMessageList");
+
+        }
+
+        [HttpGet]
+        public async Task<ActionResult> GetApiResponseMessage(string id, string Code, string Category, string Message, string HttpStatusCode, string MessageEng, string Description, string Module, string UserCategory)
+        {
+            var request = new ApiResponseMessageModel()
+            {
+                MessageId = id,
+                Code = Code,
+                Category = Category,
+                Message = Message,
+                HttpStatusCode = HttpStatusCode,
+                MessageEng = MessageEng,
+                Description = Description,
+                Module = Module,
+                UserCategory = UserCategory
+            };
+            ApiResponseMessageModel model = new ApiResponseMessageModel();
+            TempData["ManageResponseGetModel"] = request;
+            TempData["RenderId"] = "Get";
+            return RedirectToAction("ApiResponseMessageList", new { value = "G" });
+
         }
 
         //public ActionResult Index(string SearchFilter = "", string FromDate = "", string ToDate = "")

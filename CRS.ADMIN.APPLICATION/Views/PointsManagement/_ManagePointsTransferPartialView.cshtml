@@ -69,9 +69,9 @@
                         </label>
                         <select id="large" class=" default_select select-common block w-full "
                                 style="width: 100%;" name="UserTypeId">
-                            @foreach (var item in ViewBag.UserTypeList as IEnumerable<SelectListItem>)
+                            @foreach (var item in ViewBag.UserTypeListPT as IEnumerable<SelectListItem>)
                             {
-                                var selectedId = ViewBag.UserTypeIdKey as string;
+                                var selectedId = ViewBag.UserTypeIdKeyPT as string;
                                 if (item.Value == selectedId)
                                 {
                                     <option value="@item.Value" selected>
@@ -97,9 +97,9 @@
                             </label>
                             <select id="large" name="UserId" class=" default_select select-common block w-full "
                                     style="width: 100%;">
-                                @foreach (var item in ViewBag.UserList as IEnumerable<SelectListItem>)
+                                @foreach (var item in ViewBag.UserListPT as IEnumerable<SelectListItem>)
                                 {
-                                    var selectedId = ViewBag.AgentIdKey as string;
+                                    var selectedId = ViewBag.AgentIdKeyPT as string;
                                     if (item.Value == selectedId)
                                     {
                                         <option value="@item.Value" selected>

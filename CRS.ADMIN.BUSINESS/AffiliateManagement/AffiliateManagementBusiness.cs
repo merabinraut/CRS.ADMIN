@@ -4,6 +4,7 @@ using CRS.ADMIN.SHARED.AffiliateManagement;
 using CRS.ADMIN.SHARED.PaginationManagement;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 
 namespace CRS.ADMIN.BUSINESS.AffiliateManagement
 {
@@ -34,9 +35,9 @@ namespace CRS.ADMIN.BUSINESS.AffiliateManagement
         {
             return _repo.ManageAffiliateStatus(Request);
         }
-        public CommonDbResponse ResetPassword(ManageAffiliateStatusCommon Request)
+        public CommonDbResponse ResetPassword(ManageAffiliateStatusCommon Request, SqlConnection connection = null, SqlTransaction transaction = null)
         {
-            return _repo.ResetPassword(Request);
+            return _repo.ResetPassword(Request, connection,transaction);
         }
         public ManageAffiliateCommon GetAffiliateDetails(string AffiliateId, String culture = "")
         {

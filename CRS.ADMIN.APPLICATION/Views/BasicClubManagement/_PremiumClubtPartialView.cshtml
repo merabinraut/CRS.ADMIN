@@ -317,7 +317,7 @@
                             <!-- logo and cover page end -->
                             <!-- for Business Information -->
                             <div class="flex gap-2 text-primary-300 text-sm font-semibold items-center mt-[10px]">
-                                <div class="flex-none uppercase">  @CRS.ADMIN.APPLICATION.Resources.Resource.BusinessInfo</div>
+                                <div class="flex-none uppercase">  @CRS.ADMIN.APPLICATION.Resources.Resource.Contract_Information</div>
                                 <div class="bg-[#F4F4F4] h-[1px] w-full">
                                 </div>
                             </div>
@@ -1194,6 +1194,35 @@
                                                     </option>
                                                 }
                                             }
+                                        </select>
+                                    </div>
+                                    <div class="input-field-common">
+                                        <label class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                                            @CRS.ADMIN.APPLICATION.Resources.Resource.other_holidays
+                                        </label>
+                                        @Html.HiddenFor(m => m.OthersHolidayStr)
+                                        <select id="large" name="OthersHoliday" class=" default_select select-common block w-full "
+                                                style="width: 100%;" multiple="multiple" placeholder="Select">
+                                            @foreach (var item in ViewBag.OthersHoliday as IEnumerable<SelectListItem>)
+                                            {
+                                                var selectedId = ViewBag.OthersHolidayIdConversion as string;
+                                                string[] selectedIds = !string.IsNullOrEmpty(selectedId) ? selectedId.Split(',') : new string[0]; ;
+                                                bool isSelected = selectedIds.Contains(item.Value);
+                                                if (isSelected == true)
+                                                {
+                                                    <option value="@item.Value" selected @(item.Disabled == true ? "selected disabled" : "")>
+                                                        @item.Text
+                                                    </option>
+                                                }
+                                                else
+                                                {
+                                                    <option value="@item.Value" @(item.Disabled == true ? "selected disabled" : "")>
+                                                        @item.Text
+                                                    </option>
+                                                }
+
+                                            }
+
                                         </select>
                                     </div>
                                 </div>

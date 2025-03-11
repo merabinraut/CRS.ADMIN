@@ -7,6 +7,7 @@
     var _PointRequestCommonModel = Model.PointRequestCommonModel as CRS.ADMIN.APPLICATION.Models.PointsManagement.PointRequestCommonModel;
     var _PointStatementModel = Model.PointBalanceStatementRequest as CRS.ADMIN.APPLICATION.Models.PointsManagement.PointBalanceStatementRequestModel;
     var _systemTransferModel = Model.SystemTransferModel as CRS.ADMIN.APPLICATION.Models.PointsManagement.SystemTransferRequestModel;
+    var _pointTransferDetails = Model.PointsTransferRetriveDetails as CRS.ADMIN.APPLICATION.Models.PointsManagement.PointsTansferRetriveDetailsModel;
 
 }
 <style>
@@ -96,7 +97,7 @@
                                             style="width: 100%;">
                                         @foreach (var item in ViewBag.UserTypeList as IEnumerable<SelectListItem>)
                                         {
-                                            var selectedId = ViewBag.UserTypeIdKey as string;
+                                            var selectedId = ViewBag.UserTypeIdKeyPT1 as string;
                                             if (item.Value == selectedId)
                                             {
                                                 <option value="@item.Value" selected>
@@ -123,7 +124,7 @@
                                             style="width: 100%;">
                                         @foreach (var item in ViewBag.FilterUserList as IEnumerable<SelectListItem>)
                                         {
-                                            var selectedId = ViewBag.UsernameIdKey as string;
+                                            var selectedId = ViewBag.UsernameIdKeyPT1 as string;
                                             if (item.Value == selectedId)
                                             {
                                                 <option value="@item.Value" selected>
@@ -206,9 +207,9 @@
                                         </span>
                                     </div>
                                 </div>
-
+                                <br />
                                 <div>
-                                    <div class="py-4 flex justify-end">
+                                    <div class="py-4 flex justify-start mx-[18px]">
                                         <div class="flex gap-6">
                                             <button class="btn btn-secondary rounded-[4px]" type="button" data-drawer-hide="add-new-points-request"
                                                     aria-controls="add-new-points-request" onclick="CancelFunction();">
@@ -223,9 +224,9 @@
                         </form>
 
                         @*<div class="px-[12px] py-[16px] flex justify-between entry-export-container">
-                            <div class="flex items-center select-entries" id="ShowEntries-Id">
-                            </div>
-                        </div>*@
+                                <div class="flex items-center select-entries" id="ShowEntries-Id">
+                                </div>
+                            </div>*@
                         <div class="table-tab">
                             <div class="px-[16px] py-[12px] flex justify-between entry-export-container">
                                 <div class="flex items-center select-entries" id="ShowEntries-Id">
@@ -315,7 +316,15 @@
                                                     </div>
                                                 </div>
                                             </th>
-
+                                            <th scope="col" class="p-[12px]">
+                                                <div class="flex w-max">
+                                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Action
+                                                    <div class="relative pl-[5px]">
+                                                        <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                                        <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                                    </div>
+                                                </div>
+                                            </th>
 
                                         </tr>
                                     </thead>
@@ -352,7 +361,9 @@
                                                             @item.Points
                                                         </td>
 
-
+                                                        <td class="p-[12px]">
+                                                            <i class="las la-eye text-[20px] cursor-pointer text-[#A6A6A6]" onclick="ViewPointTransferRetriveDetail('@item.Id');"></i>
+                                                        </td>
                                                     </tr>
                                                     SN++;
                                                 }
@@ -395,7 +406,7 @@
 </div>
 @Html.Partial("_ManagePointsTransferPartialView", _ManagePointsModel)
 @Html.Partial("_ManagePointsRequestPartialView", _ManagePointsRequestModel)
-
+@Html.Partial("_PointTransferRetrivePartialView", _pointTransferDetails)
 
 @section scripts
 {
@@ -403,7 +414,10 @@
     @* <script src="~/Content/assets_new/js/jquery.min.js"></script>*@
     <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
     <script>
-        $("input[name='TransferType'][value='Transfer']").prop("checked", true);
+
+            $("input[name='TransferType'][value='Transfer']").prop("checked", true);
+
+
         //$(".cls_trftype").click(function () {
 
         //});
@@ -496,7 +510,7 @@
         }
 
 
-          $('#large[name="UserTypeId"]').change(function () {
+        $('#large[name="UserTypeId"]').change(function () {
               var UserTypeId = $(this).find("option:selected").val().trim();
               $('#large[name="UserId"]').prop("disabled", true);
             $.ajax({
@@ -578,12 +592,12 @@
                 const page_size3 = @ViewBag.PageSize3;
                 const total_data3 = @ViewBag.TotalData3;
                 const start_index_val3 = @ViewBag.StartIndex3;
-                var usertypeid = $("#Usertype1").val();
-                var username = $("#Username1").val();
+                var usertypeid = $("#User_type").val();
+                var username = $("#User_name").val();
                 var transfertype = $("#TransferType1").val();
                 var FromDate = $("#From_Date1").val();
                 var ToDate = $("#To_Date1").val();
-                let URL3 = "/PointsManagement/GetSystemTransferReportAsync?UserType=" + usertypeid + "&UserName=" + username + "&TransferType=" + transfertype + "&From_Date1=" + FromDate + "&To_Date1=" + ToDate ;
+                let URL3 = "/PointsManagement/GetSystemTransferReportAsync?User_type=" + usertypeid + "&User_name=" + username + "&TransferType=" + transfertype + "&From_Date1=" + FromDate + "&To_Date1=" + ToDate ;
                 let search_filter3 = $('#default-search').val();
                 URL3 = addQueryParam2(URL3, 'SearchFilter', search_filter3, 'value', 'st');
                 dynamicStartIndexLabel = "StartIndex3";
@@ -877,84 +891,126 @@ $("#To_Date1").val("@_systemTransferModel.To_Date1");
         document.getElementById('tab1Link').style.borderBottom = '#D75A8B 2px solid';
 
         var PopUpRenderValue = '@ViewBag.PopUpRenderValue';
-       if (PopUpRenderValue != null && PopUpRenderValue != "" && PopUpRenderValue == "Manage") {
+        if (PopUpRenderValue != null && PopUpRenderValue != "" && PopUpRenderValue == "Manage") {
+            if ("@_ManagePointsModel.TransferType" != "" && "@_ManagePointsModel.TransferType" == "Retrieve") {
+             $("input[name='TransferType'][value='Retrieve']").prop("checked", true);
+            }
          var element = document.getElementById('add-new-points');
-          element.classList.remove('translate-x-full');
+           element.classList.remove('translate-x-full');
+
         }
         if (PopUpRenderValue != null && PopUpRenderValue != "" && PopUpRenderValue == "ManagePoints") {
             var element = document.getElementById('add-new-points-request');
             element.classList.remove('translate-x-full');
         }
+        else if (PopUpRenderValue != null && PopUpRenderValue != "" && PopUpRenderValue == "PointTransferRetriveDetails") {
+            var element = document.getElementById('add-points-transfer-details');
+            element.classList.remove('translate-x-full');
+        }
     </script>
     <script>
-        function InitateRejectRequest(AgentId, UserId, RequestId) {
-            $('#RejectAgentId').val(AgentId);
-            $('#RejectUserId').val(UserId);
-            $('#RejectTxnId').val(RequestId);
+        function InitateRejectRequest(Id) {
+            $('#RejectId').val(Id);
         }
 
-        function InitateApproveRequest(AgentId, UserId, RequestId) {
-            $('#ConfirmationAgentId').val(AgentId);
-            $('#ConfirmationUserId').val(UserId);
-            $('#ConfirmationTxnId').val(RequestId);
+        function InitateApproveRequest(Id) {
+            $('#ConfirmationId').val(Id);
         }
 
-        function ApproveClubPointRequestFunction() {
-            var fileInput = document.getElementById('file_input_cover');
-            var file = fileInput.files[0];
-            var formData = new FormData();
-            formData.append('Image', file);
-            let { AgentId, UserId, TxnId, AdminRemark } = {
-                AgentId: $('#ConfirmationAgentId').val(),
-                UserId: $('#ConfirmationUserId').val(),
-                TxnId: $('#ConfirmationTxnId').val(),
-                AdminRemark: $('#ConfirmationAdminRemark').val()
-            };
-            formData.append('__RequestVerificationToken', $('input[name="__RequestVerificationToken"]').val());
-            formData.append('AgentId', AgentId);
-            formData.append('UserId', UserId);
-            formData.append('TxnId', TxnId);
-            formData.append('AdminRemark', AdminRemark);
-            formData.append('Status', 'S');
-            $.ajax({
-                type: 'POST',
-                async: true,
-                url: "/PointsManagement/ManageClubPointRequest",
-                data: formData,
-                processData: false,
-                contentType: false,
-                success: function (responseData) {
-                    window.location.reload();
-                },
-                error: function (ex) {
-                    window.location.reload();
-                }
-            });
-        }
+        $('#ConfirmationAdminRemark').on('change', function (event) {
+            if ($('#ConfirmationAdminRemark').val() != "") {
+                $("span#remarksrequired").text('');
+            }
+            else {
+                $("span#remarksrequired").text('@CRS.ADMIN.APPLICATION.Resources.Resource.Required');
+            }
+        });
 
-        function RejectClubPointRequestFunction() {
-            let { AgentId, UserId, TxnId, AdminRemark } = {
-                AgentId: $('#RejectAgentId').val(),
-                UserId: $('#RejectUserId').val(),
-                TxnId: $('#RejectTxnId').val(),
-                AdminRemark: $('#RejectAdminRemark').val(),
-            };
+        $('#RejectAdminRemark').on('change', function (event) {
+          if ($('#RejectAdminRemark').val() != "") {
+              $("span#rejectremarksrequired").text('');
+          }
+          else {
+              $("span#rejectremarksrequired").text('@CRS.ADMIN.APPLICATION.Resources.Resource.Required');
+          }
+       });
+      function ApproveClubPointRequestFunction() {
+          var fileInput = document.getElementById('file_input_cover');
+          var file = fileInput.files[0];
+          var formData = new FormData();
+          formData.append('Image', file);
+          if ($('#ConfirmationAdminRemark').val() == "") {
+              $("span#remarksrequired").text('@CRS.ADMIN.APPLICATION.Resources.Resource.Required');
+              return false;
+          }
+          @*if ($("#file_name_logo").text().toLowerCase().trim() == "no file choosen") {
+              $("span#imagerequired").text('@CRS.ADMIN.APPLICATION.Resources.Resource.Required');
+              return false;
+          }*@
+          else {
+              $("span#imagerequired").text('');
 
-            $.ajax({
-                type: 'POST',
-                async: true,
-                url: "/PointsManagement/ManageClubPointRequest",
-                dataType: 'json',
-                data: {
-                    __RequestVerificationToken: $('input[name="__RequestVerificationToken"]').val(), AgentId, UserId, TxnId, AdminRemark, Status: 'R'
-                },
-                success: function (responseData) {
-                    window.location.reload();
-                },
-                error: function (ex) {
-                    window.location.reload();
-                }
-            });
-        }
+          }
+          let {  Id, AdminRemark } = {
+               Id: $('#ConfirmationId').val(),
+               AdminRemark: $('#ConfirmationAdminRemark').val()
+               };
+          formData.append('__RequestVerificationToken', $('input[name="__RequestVerificationToken"]').val());
+          formData.append('Id', Id);
+          formData.append('AdminRemark', AdminRemark);
+          formData.append('Status', 'Approve');
+          $.ajax({
+              type: 'POST',
+              async: true,
+              url: "/PointsManagement/ManageClubPointRequest",
+              data: formData,
+              processData: false,
+              contentType: false,
+              success: function (responseData) {
+                  window.location.reload();
+              },
+              error: function (ex) {
+                  window.location.reload();
+              }
+          });
+    }
+
+   function RejectClubPointRequestFunction() {
+      let { Id,AdminRemark } = {
+          Id: $('#RejectId').val(),
+          AdminRemark: $('#RejectAdminRemark').val(),
+          };
+      if($('#RejectAdminRemark').val() == "") {
+          $("span#rejectremarksrequired").text('@CRS.ADMIN.APPLICATION.Resources.Resource.Required');
+          return false;
+       }
+      $.ajax({
+          type: 'POST',
+          async: true,
+          url: "/PointsManagement/ManageClubPointRequest",
+          dataType: 'json',
+          data: {
+              __RequestVerificationToken: $('input[name="__RequestVerificationToken"]').val(), Id,  AdminRemark, Status: 'Reject'
+          },
+          success: function (responseData) {
+              window.location.reload();
+          },
+          error: function (ex) {
+              window.location.reload();
+          }
+      });
+    }
+
+function ViewPointTransferRetriveDetail(i) {
+    let search_filter = $('#default-search').val();
+    const start_index_val = @ViewBag.StartIndex;
+    const page_size = @ViewBag.PageSize;
+    const roletype = $('#large[name="UserType"]').val();
+    const userId = $('#large[name="UserName"]').val();
+    const transferType = $('#large[name="TransferTypeId"]').val();
+    const fromDate = $('#FromDate').val();
+    const toDate = $('#ToDate').val();
+    window.location.href = '/PointsManagement/PointsTransferListDetails?Id=' + i + '&SearchFilter=' + search_filter + '&StartIndex=' + start_index_val + '&PageSize=' + page_size + '&Roletype=' + roletype + '&UserId=' + userId + '&TransferType=' + transferType + '&FromDate=' + fromDate + '&ToDate=' + toDate;
+   }
     </script>
 }

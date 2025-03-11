@@ -83,11 +83,12 @@
     <Compile Include="AffiliateManagement\AffiliateManagementBusiness.cs" />
     <Compile Include="AffiliateManagement\IAffiliateManagementBusiness.cs" />
 
-    <Compile Include="ApiResponseMessage\ApiResponseMessageBusiness.cs" />
+    <Compile Include="ApiResponseMessage\ApiResponseMessageBusiness .cs" />
     <Compile Include="ApiResponseMessage\IApiResponseMessageBusiness.cs" />
-
     <Compile Include="BasicClubManagement\BasicClubManagementBusiness.cs" />
     <Compile Include="BasicClubManagement\IBasicClubManagementBusiness.cs" />
+    <Compile Include="ChargeManagement\ChargeManagementBusiness.cs" />
+    <Compile Include="ChargeManagement\IChargeManagementBusiness.cs" />
 
     <Compile Include="ClubManagement\ClubManagementBusiness.cs" />
     <Compile Include="ClubManagement\IClubManagementBusiness.cs" />
@@ -103,6 +104,8 @@
     <Compile Include="EmailLog\IEmailLogBusiness.cs" />
     <Compile Include="ErrorLog\ErrorLogBusiness.cs" />
     <Compile Include="ErrorLog\IErrorLogBusiness.cs" />
+    <Compile Include="GroupManagement\GroupManagementBusiness.cs" />
+    <Compile Include="GroupManagement\IGroupManagementBusiness.cs" />
     <Compile Include="Home\HomeBusiness.cs" />
     <Compile Include="Home\IHomeBusiness.cs" />
     <Compile Include="HostManagement\HostManagementBusiness.cs" />
@@ -149,6 +152,8 @@
     <Compile Include="StaffManagement\StaffManagementBusiness.cs" />
     <Compile Include="StaticDataManagement\IStaticDataManagementBusiness.cs" />
     <Compile Include="StaticDataManagement\StaticDataManagementBusiness.cs" />
+    <Compile Include="WithdrawalRequest\IWithdrawalRequestBusiness.cs" />
+    <Compile Include="WithdrawalRequest\WithdrawalRequestBusiness.cs" />
     <Compile Include="WithdrawSetup\IWithdrawSetupBusiness.cs" />
     <Compile Include="WithdrawSetup\WithdrawSetupBusiness.cs" />
   </ItemGroup>

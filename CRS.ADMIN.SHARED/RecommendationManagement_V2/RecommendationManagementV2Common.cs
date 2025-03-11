@@ -1,4 +1,6 @@
-﻿namespace CRS.ADMIN.SHARED.RecommendationManagement_V2
+﻿using CRS.ADMIN.SHARED.PaginationManagement;
+
+namespace CRS.ADMIN.SHARED.RecommendationManagement_V2
 {
     #region "Club Recommedation Request List Model"
     public class ClubRecommendationManagementListModelCommon
@@ -96,7 +98,7 @@
         public string LocationId { get; set; }
         public string HostId { get; set; }
     }
-    public class SearchPageClubRequestListModelCommon
+    public class SearchPageClubRequestListModelCommon : PaginationResponseCommon
     {
         public string RecommendationId { get; set; }
         public string ClubId { get; set; }

@@ -63,5 +63,9 @@ namespace CRS.ADMIN.APPLICATION.Controllers
         {
             return new[] { "image/png", "image/jpeg", "image/HEIF", "image/heif" };
         }
+        public string[] AllowedImageContentTypePdf()
+        {
+            return new[] { "image/png", "image/jpeg", "image/HEIF", "image/heif", "application/pdf" };
+        }
     }
 }

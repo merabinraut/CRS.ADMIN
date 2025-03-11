@@ -1,4 +1,5 @@
 ﻿using CRS.ADMIN.SHARED;
+using CRS.ADMIN.SHARED.PaginationManagement;
 using CRS.ADMIN.SHARED.RecommendationManagement_V2;
 using System.Collections.Generic;
 
@@ -15,7 +16,7 @@ namespace CRS.ADMIN.REPOSITORY.RecommendationManagement_V2
         List<ClubRecommendationManagementListModelCommon> GetClubRecommendationReqList();
         List<HomePageClubRequestListModelCommon> GetClubRequestListByHomePage(string locationId, string SearchFilter = "");
         List<MainPageClubRequestListModelCommon> GetClubRequestListByMainPage(string locationId, string groupId, string SearchFilter = "");
-        List<SearchPageClubRequestListModelCommon> GetClubRequestListBySearchPage(string locationId, string SearchFilter = "");
+        List<SearchPageClubRequestListModelCommon> GetClubRequestListBySearchPage(string locationId, PaginationFilterCommon objPaginationFilterCommon);
         List<DisplayPageListModelCommon> GetDisplayPageList();
         List<GroupListModelCommon> GetGroupList(string LocationId, string SearchFilter = "");
         List<LocationListModelCommon> GetLocationList();

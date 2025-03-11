@@ -1,6 +1,7 @@
 ﻿using CRS.ADMIN.SHARED;
 using CRS.ADMIN.SHARED.PaginationManagement;
 using CRS.ADMIN.SHARED.PlanManagement;
+using DocumentFormat.OpenXml.Office2016.Excel;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -137,7 +138,7 @@ namespace CRS.ADMIN.REPOSITORY.PlanManagement
             sql += ", @Price=" + _dao.FilterString(planManagementCommon.Price);
             sql += ", @Liquor=" + _dao.FilterString(planManagementCommon.Liquor);
             sql += ", @Nomination=" + planManagementCommon.Nomination;
-            sql += ", @Remarks=N" + _dao.FilterString(planManagementCommon.Remarks);
+            sql += ",@Remarks=" + (!string.IsNullOrEmpty(planManagementCommon.Remarks) ? "N" + _dao.FilterString(planManagementCommon.Remarks) : _dao.FilterString(planManagementCommon.Remarks));
             sql += ", @ActionIp=" + _dao.FilterString(planManagementCommon.ActionIP);
             sql += ", @ActionPlatform=" + _dao.FilterString(planManagementCommon.ActionPlatform);
             sql += ", @ActionUser=" + _dao.FilterString(planManagementCommon.ActionUser);

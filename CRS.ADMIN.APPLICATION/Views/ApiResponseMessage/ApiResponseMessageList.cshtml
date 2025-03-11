@@ -1,15 +1,25 @@
+<<<<<<< HEAD
 ﻿@model List<CRS.ADMIN.APPLICATION.Models.ApiResponseMessage.ApiResponseMessageModel>
 
+=======
+@*@model List<CRS.ADMIN.APPLICATION.Models.ApiResponseMessage.ApiResponseMessageModel>*@
+@model CRS.ADMIN.APPLICATION.Models.ApiResponseMessage.ApiResponseModel
+>>>>>>> 9a5f5ff2682516912a6a6928c4d594ce6ea591bc
 @{
     ViewBag.Title = "Api Response Message";
     Layout = "~/Views/Shared/_Layout.cshtml";
     var partialViewModel = new CRS.ADMIN.APPLICATION.Models.ApiResponseMessage.ApiResponseMessageModel();
+<<<<<<< HEAD
+=======
+    var _ManageEdit = Model.ManageResponse as CRS.ADMIN.APPLICATION.Models.ApiResponseMessage.ApiResponseMessageModel;
+>>>>>>> 9a5f5ff2682516912a6a6928c4d594ce6ea591bc
 
 }
 <div class="px-8 py-4">
     @Html.AntiForgeryToken()
     <div>
         <div class="heading-title">
+<<<<<<< HEAD
             Api Response Message List
         </div>
         <div class="span-title-light-gray">
@@ -18,6 +28,16 @@
     </div>
     <div class="flex justify-between pt-[24px] pb-[24px]">
         <form action="/StaffManagement/StaffList" method="get">
+=======
+            @CRS.ADMIN.APPLICATION.Resources.Resource.Api_Response_Message_List
+        </div>
+        <div class="span-title-light-gray">
+            @CRS.ADMIN.APPLICATION.Resources.Resource.Manage_API_Responses_
+        </div>
+    </div>
+    <div class="flex justify-between pt-[24px] pb-[24px]">
+        <form action="/ApiResponseMessage/ApiResponseMessageList" method="get">
+>>>>>>> 9a5f5ff2682516912a6a6928c4d594ce6ea591bc
             <div class="relative input-search-wrapper">
                 <div class="absolute inset-y-0 left-0 flex items-center pl-[16px] pointer-events-none">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21" fill="none">
@@ -64,7 +84,11 @@
                         </th>
                         <th scope="col" class="p-[12px]">
                             <div class="flex w-max">
+<<<<<<< HEAD
                                 Code
+=======
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Code
+>>>>>>> 9a5f5ff2682516912a6a6928c4d594ce6ea591bc
                                 <div class="relative pl-[5px]">
                                     <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
                                     <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
@@ -73,7 +97,11 @@
                         </th>
                         <th scope="col" class="p-[12px]">
                             <div class="flex w-max">
+<<<<<<< HEAD
                                 Cateory
+=======
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.CategoryType
+>>>>>>> 9a5f5ff2682516912a6a6928c4d594ce6ea591bc
                                 <div class="relative pl-[5px]">
                                     <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
                                     <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
@@ -82,7 +110,29 @@
                         </th>
                         <th scope="col" class="p-[12px]">
                             <div class="flex w-max">
+<<<<<<< HEAD
                                 Message
+=======
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Message
+                                <div class="relative pl-[5px]">
+                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                </div>
+                            </div>
+                        </th>
+                        <th scope="col" class="p-[12px]">
+                            <div class="flex w-max">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Module_Name
+                                <div class="relative pl-[5px]">
+                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                </div>
+                            </div>
+                        </th>
+                        <th scope="col" class="p-[12px]">
+                            <div class="flex w-max">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.User_Category
+>>>>>>> 9a5f5ff2682516912a6a6928c4d594ce6ea591bc
                                 <div class="relative pl-[5px]">
                                     <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
                                     <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
@@ -119,11 +169,19 @@
                     </tr>
                 </thead>
                 <tbody>
+<<<<<<< HEAD
                     @foreach (var responselist in Model)
                     {
                         <tr class="bg-white border-b ">
                             <td class="p-[12px]">
                                 @responselist.MessageId
+=======
+                    @foreach (var responselist in Model.ApiResponseMessageList)
+                    {
+                        <tr class="bg-white border-b ">
+                            <td class="p-[12px]">
+                                @responselist.SNO
+>>>>>>> 9a5f5ff2682516912a6a6928c4d594ce6ea591bc
                             </td>
 
                             <td class="p-[12px]">
@@ -135,6 +193,7 @@
                             <td class="p-[12px]">
                                 @responselist.Message
                             </td>
+<<<<<<< HEAD
                             @*<td class="p-[12px]">
                                     @responselist.MessageEng
                                 </td>
@@ -161,15 +220,81 @@
                                         </div>
 
                             </td>
+=======
+                            <td class="p-[12px]">
+                                @responselist.Module
+                            </td>
+                            <td class="p-[12px]">
+                                @responselist.UserCategory
+                            </td>
+                            @*<td class="p-[12px]">
+            @responselist.MessageEng
+        </td>
+
+        <td class="p-[12px]">
+
+                @responselist.MessageType
+
+        </td>*@
+                            <td class="p-[12px]">
+                                <div class="flex gap-[7px] justify-center text-[16px] ">
+                                    <button class="edit-api-resp-btn" data-id="@responselist.MessageId"
+                                            data-code="@responselist.Code"
+                                            data-category="@responselist.Category"
+                                            data-message="@responselist.Message"
+                                            data-http-status="@responselist.HttpStatusCode"
+                                            data-message-eng="@responselist.MessageEng">
+                                        @*<i class="fa-regular fa-pen-to-square text-[#989898] cursor-pointer" onclick="editResponseMessage('@responselist.MessageId')"</i>*@
+                                        <i class="fa-regular fa-pen-to-square text-[#989898] cursor-pointer"
+                                           onclick="return updateApiResponseMessage('@responselist.MessageId','@responselist.Code','@responselist.Category','@responselist.Message','@responselist.HttpStatusCode','@responselist.MessageEng','@responselist.Description')"></i>
+                                    </button>
+
+                                    <button class="edit-api-resp-btn" data-id="@responselist.MessageId"
+                                            data-code="@responselist.Code"
+                                            data-category="@responselist.Category"
+                                            data-message="@responselist.Message"
+                                            data-http-status="@responselist.HttpStatusCode"
+                                            data-message-eng="@responselist.MessageEng">
+                                        @*<i class="fa-regular fa-pen-to-square text-[#989898] cursor-pointer" onclick="editResponseMessage('@responselist.MessageId')"</i>*@
+                                        <i class="fa-regular fa-solid fa-eye text-[#989898] cursor-pointer"
+                                           onclick="return getApiResponseMessage('@responselist.MessageId','@responselist.Code','@responselist.Category','@responselist.Message','@responselist.HttpStatusCode','@responselist.MessageEng','@responselist.Description')"></i>
+                                    </button>
+                                </div>
+                            </td>
+
+>>>>>>> 9a5f5ff2682516912a6a6928c4d594ce6ea591bc
                         </tr>
                     }
                 </tbody>
             </table>
+<<<<<<< HEAD
+=======
+
+        </div>
+    </div>
+    <div class="pagination-club">
+        <div class="show-entry" id="Entries-Id">
+        </div>
+        <div class="flex gap-[12px]">
+            <div class="btn btn-secondary-box-shadow" id="prev-btn">
+                @CRS.ADMIN.APPLICATION.Resources.Resource.Previous
+            </div>
+            <div class="flex gap-[12px]" id="pagination-id">
+            </div>
+            <div class="btn btn-secondary-box-shadow" id="next-btn">
+                @CRS.ADMIN.APPLICATION.Resources.Resource.Next
+            </div>
+>>>>>>> 9a5f5ff2682516912a6a6928c4d594ce6ea591bc
         </div>
     </div>
 </div>
 @Html.Partial("_AddResponseMessage", partialViewModel)
+<<<<<<< HEAD
 @Html.Partial("_EditResponseMessage", partialViewModel)
+=======
+@Html.Partial("_EditResponseMessage", _ManageEdit)
+@Html.Partial("_DisplayResponseMessage", _ManageEdit)
+>>>>>>> 9a5f5ff2682516912a6a6928c4d594ce6ea591bc
 @section scripts{
     <script>
     $(document).ready(function () {
@@ -179,7 +304,10 @@
 
         $('.edit-api-resp-btn').click(function (e) {
             e.preventDefault();
+<<<<<<< HEAD
 
+=======
+>>>>>>> 9a5f5ff2682516912a6a6928c4d594ce6ea591bc
             var t = $(this);
             var id = t.data("id");
             var code = t.data("code");
@@ -201,11 +329,37 @@
         var popUpRenderValue = '@ViewBag.PopUpRenderValue';
         if (popUpRenderValue != null && popUpRenderValue != "" && popUpRenderValue == "Manage") {
             var element = document.getElementById('add-new-response-message');
+<<<<<<< HEAD
            
             element.classList.remove('translate-x-full');
         }
     });
 
+=======
+            element.classList.remove('translate-x-full');
+        }
+        else if (popUpRenderValue != null && popUpRenderValue != "" && popUpRenderValue == "Edit")
+        {
+            var value = '@_ManageEdit.Category'; // Assuming this variable holds the correct value
+            $('#large[name="Category"] option[value="' + value + '"]').prop('selected', true).trigger('change');
+            var element = document.getElementById('add-edit-response-message');
+            element.classList.remove('translate-x-full');
+        }
+        else if (popUpRenderValue != null && popUpRenderValue != "" && popUpRenderValue == "Get") {
+            var value = '@_ManageEdit.Category'; // Assuming this variable holds the correct value
+            $('#large[name="Category"] option[value="' + value + '"]').prop('selected', true).trigger('change');
+            var element = document.getElementById('display-get-response-message');
+            element.classList.remove('translate-x-full');
+        }
+
+    });
+        function updateApiResponseMessage(i,j,k,l,m,n,o) {
+            window.location.href = '/ApiResponseMessage/UpdateResponseMessage?id=' + i + '&Code=' + j + '&Category=' + k + '&Message=' + l + '&HttpStatusCode=' + m + '&MessageEng=' + n + '&Description=' + o;
+        }
+        function getApiResponseMessage(i, j, k, l, m, n,o) {
+            window.location.href = '/ApiResponseMessage/GetApiResponseMessage?id=' + i + '&Code=' + j + '&Category=' + k + '&Message=' + l + '&HttpStatusCode=' + m + '&MessageEng=' + n + '&Description='+o;
+        }
+>>>>>>> 9a5f5ff2682516912a6a6928c4d594ce6ea591bc
         function CancelFunction() {
             location.reload();
         }
@@ -220,6 +374,13 @@
              let search_filter = $('#default-search').val();
              URL = addQueryParam(URL, 'SearchFilter', search_filter);
              LoadPagination(page_size, total_data, start_index_val, URL);
+<<<<<<< HEAD
          });
     </script>
 }
+=======
+        });
+
+    </script>
+}
+>>>>>>> 9a5f5ff2682516912a6a6928c4d594ce6ea591bc

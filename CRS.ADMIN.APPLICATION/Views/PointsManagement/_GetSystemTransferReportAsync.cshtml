@@ -78,7 +78,7 @@
                     style="width: 100%;">
                 @foreach (var item in ViewBag.UserTypeList as IEnumerable<SelectListItem>)
                 {
-                    var selectedId = ViewBag.UserTypeIdKey as string;
+                    var selectedId = ViewBag.UserTypeIdKeyST as string;
                     if (item.Value == selectedId)
                     {
                         <option value="@item.Value" selected>
@@ -109,7 +109,7 @@
                         style="width: 100%;">
                     @foreach (var item in ViewBag.FilterUserList as IEnumerable<SelectListItem>)
                     {
-                        var selectedId = ViewBag.UsernameIdKey as string;
+                        var selectedId = ViewBag.UsernameIdKeyST as string;
                         if (item.Value == selectedId)
                         {
                             <option value="@item.Value" selected>

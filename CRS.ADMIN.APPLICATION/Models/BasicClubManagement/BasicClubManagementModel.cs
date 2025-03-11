@@ -88,6 +88,8 @@ namespace CRS.ADMIN.APPLICATION.Models.BasicClubManagement
         public string WorkingHrTo { get; set; }
         public string Holiday { get; set; }
         public string[] HolidayStr { get; set; }
+        public string OthersHoliday { get; set; }
+        public string[] OthersHolidayStr { get; set; }
         public string LastOrderTime { get; set; }
         public string LastEntryTime { get; set; }
        
@@ -184,7 +186,7 @@ namespace CRS.ADMIN.APPLICATION.Models.BasicClubManagement
         [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Required")]
         public string ceoFullName { get; set; }
         public string Line { get; set; }
-        [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Required")]
+        //[Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Required")]
         public string GoogleMap { get; set; }
         [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Required")]
         public string WorkingHrFrom { get; set; }
@@ -192,6 +194,8 @@ namespace CRS.ADMIN.APPLICATION.Models.BasicClubManagement
         public string WorkingHrTo { get; set; }
         public string Holiday { get; set; }
         public string[] HolidayStr { get; set; }
+        public string OthersHoliday { get; set; }
+        public string[] OthersHolidayStr { get; set; }
         [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Required")]
         public string LastOrderTime { get; set; }
         [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Required")]

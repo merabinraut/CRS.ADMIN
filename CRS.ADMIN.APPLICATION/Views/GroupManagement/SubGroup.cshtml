@@ -1,0 +1,905 @@
+﻿@model CRS.ADMIN.APPLICATION.Models.GroupManagement.CommonSubGroupModel
+@{
+    ViewBag.Title = "SubGroup";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var _SubGroupModel = Model.ManageSubGroup as CRS.ADMIN.APPLICATION.Models.GroupManagement.ManageSubGroupModel;
+    var _SubGroupClubModel = Model.ManageSubGroupClub as CRS.ADMIN.APPLICATION.Models.GroupManagement.ManageSubGroupClubModel;
+    _SubGroupModel.GroupName = ViewBag.GroupName;
+    _SubGroupModel.GroupNameKatakana = ViewBag.GroupNameKatakana;
+    _SubGroupModel.GroupId = ViewBag.GroupId;
+
+    _SubGroupClubModel.GroupName = ViewBag.GroupName;
+    _SubGroupClubModel.GroupNameKatakana = ViewBag.GroupNameKatakana;
+    _SubGroupClubModel.GroupId = ViewBag.GroupId;
+}
+<link rel="stylesheet" href="//code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
+
+<style>
+    .even-row {
+        background-color: #f7f7f7; /* Light grey background */
+    }
+
+    .odd-row {
+        background-color: #ffffff; /* White background */
+    }
+</style>
+<style>
+    .select2-container--default .select2-selection--single {
+        height: 44px !important;
+    }
+
+    .select2-container--default .select2-selection--multiple {
+        height: 80px !important;
+        overflow-y: auto;
+    }
+
+    .select2-container--default .select2-search--inline .select2-search__field {
+        width: 259px !important;
+        padding-left: 20px;
+        padding-top: 6px;
+        display: flex;
+        justify-content: flex-start;
+    }
+</style>
+@Html.AntiForgeryToken()
+<div class="px-8 py-4">
+    <!-- title  -->
+    <div class="flex flex-col  gap-8">
+        <div class="flex justify-between items-center">
+            <div>
+                <div class="heading-title">
+                    グループ管理: @ViewBag.GroupName (@ViewBag.GroupNameKatakana)
+                </div>
+                <div class="span-title-light-gray">
+                    グループの下に店舗を管理する
+                </div>
+            </div>
+            <div class="flex gap-4">
+                <div class="btn btn-secondary text-[#D75A8B] border-[#D75A8B] flex items-center gap-[8px] h-[40px]" data-drawer-target="add-sub-group"
+                     data-drawer-show="add-sub-group" data-drawer-placement="right" data-drawer-backdrop="false"
+                     aria-controls="drawer-disabled-backdrop" id="add-new-id">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21" fill="none">
+                        <path d="M10 2.375C5.52002 2.375 1.875 6.02002 1.875 10.5C1.875 14.98 5.52002 18.625 10 18.625C14.48 18.625 18.125 14.98 18.125 10.5C18.125 6.02002 14.48 2.375 10 2.375ZM10 3.625C13.8037 3.625 16.875 6.69629 16.875 10.5C16.875 14.3037 13.8037 17.375 10 17.375C6.19629 17.375 3.125 14.3037 3.125 10.5C3.125 6.69629 6.19629 3.625 10 3.625ZM9.375 6.75V9.875H6.25V11.125H9.375V14.25H10.625V11.125H13.75V9.875H10.625V6.75H9.375Z" fill="#D75A8B" />
+                    </svg>
+                    サブグループを追加
+                </div>
+                <div class="btn btn-primary flex items-center gap-[8px] h-[40px]" data-drawer-target="add-sub-group-club"
+                     data-drawer-show="add-sub-group-club" data-drawer-placement="right" data-drawer-backdrop="false"
+                     aria-controls="drawer-disabled-backdrop" id="manage-club-id">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21" fill="none">
+                        <path d="M2.5 3V5.28516L0.625 7.78516V8C0.625 9.02783 1.47217 9.875 2.5 9.875V18H12.5V12.375H13.75V18H17.5V9.875C18.5278 9.875 19.375 9.02783 19.375 8V7.78516L17.5 5.28516V3H2.5ZM3.75 4.25H16.25V4.875H3.75V4.25ZM3.4375 6.125H16.5625L18.0664 8.13672C17.998 8.40771 17.793 8.625 17.5 8.625C17.1533 8.625 16.875 8.34668 16.875 8H15.625C15.625 8.34668 15.3467 8.625 15 8.625C14.6533 8.625 14.375 8.34668 14.375 8H13.125C13.125 8.34668 12.8467 8.625 12.5 8.625C12.1533 8.625 11.875 8.34668 11.875 8H10.625C10.625 8.34668 10.3467 8.625 10 8.625C9.65332 8.625 9.375 8.34668 9.375 8H8.125C8.125 8.34668 7.84668 8.625 7.5 8.625C7.15332 8.625 6.875 8.34668 6.875 8H5.625C5.625 8.34668 5.34668 8.625 5 8.625C4.65332 8.625 4.375 8.34668 4.375 8H3.125C3.125 8.34668 2.84668 8.625 2.5 8.625C2.20703 8.625 2.00195 8.40771 1.93359 8.13672L3.4375 6.125ZM3.75 9.38672C4.08203 9.68701 4.52148 9.875 5 9.875C5.47852 9.875 5.91797 9.68701 6.25 9.38672C6.58203 9.68701 7.02148 9.875 7.5 9.875C7.97852 9.875 8.41797 9.68701 8.75 9.38672C9.08203 9.68701 9.52148 9.875 10 9.875C10.4785 9.875 10.918 9.68701 11.25 9.38672C11.582 9.68701 12.0215 9.875 12.5 9.875C12.9785 9.875 13.418 9.68701 13.75 9.38672C14.082 9.68701 14.5215 9.875 15 9.875C15.4785 9.875 15.918 9.68701 16.25 9.38672V16.75H15V11.125H11.25V16.75H3.75V9.38672ZM5 11.125V15.5H10V11.125H5ZM6.25 12.375H8.75V14.25H6.25V12.375Z" fill="white" />
+                    </svg>
+                    店舗を管理
+                </div>
+            </div>
+        </div>
+
+        <div class="flex flex-col  gap-4">
+            <form action="/GroupManagement/SubGroup" method="get">
+                <div class="flex justify-between items-center w-full">
+                    <!-- Input Search Wrapper -->
+                    <div class="relative input-search-wrapper flex-grow">
+                        <div class="absolute inset-y-0 left-0 flex items-center pl-[16px] pointer-events-none">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21" fill="none">
+                                <path d="M17.5 18L13.875 14.375M15.8333 9.66667C15.8333 13.3486 12.8486 16.3333 9.16667 16.3333C5.48477 16.3333 2.5 13.3486 2.5 9.66667C2.5 5.98477 5.48477 3 9.16667 3C12.8486 3 15.8333 5.98477 15.8333 9.66667Z" stroke="#667085" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"></path>
+                            </svg>
+                        </div>
+                        <input type="search" id="default-search" class="input-search block w-full" placeholder="@CRS.ADMIN.APPLICATION.Resources.Resource.Search" value="@ViewBag.SearchFilter" name="SearchFilter">
+                        <input type="hidden" name="GroupId" value="@ViewBag.GroupId" />
+                        <input type="hidden" name="GroupName" value="@ViewBag.GroupName" />
+                        <input type="hidden" name="GroupNameKatakana" value="@ViewBag.GroupNameKatakana" />
+                    </div>
+
+                    <!-- Export Button -->
+                    <div class="export-button h-[40px] flex items-center justify-end ml-[16px]" onclick="exportExcel('table-id', 'Customer');">
+                        <img src="~/Content/assets_new/images/club/download-solid.svg" alt="Download Icon" class="mr-[8px]">
+                        @CRS.ADMIN.APPLICATION.Resources.Resource.Export
+                    </div>
+                </div>
+
+                <br />
+                <!-- filter  -->
+                <div class="mb-4">
+                    <div id="filter" class="export-button h-[40px] text-[#3E3E3E] w-max" onclick="showFilterContainer()">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21" fill="none">
+                            <path d="M5 10.5H15M2.5 5.5H17.5M7.5 15.5H12.5" stroke="#3E3E3E" stroke-width="1.67"
+                                  stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                        @CRS.ADMIN.APPLICATION.Resources.Resource.Filter_By
+                    </div>
+                    <div id="filter-container" class="px-6 py-5 rounded-[5px] border border-[#D0D5DD]"
+                         style="display: none;">
+                        <div class="flex flex-col gap-4">
+                            <div class="flex text-[#3E3E3E] gap-1 items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg"
+                                     width="20" height="21" viewBox="0 0 20 21" fill="none">
+                                    <path d="M5 10.5H15M2.5 5.5H17.5M7.5 15.5H12.5" stroke="#3E3E3E" stroke-width="1.67"
+                                          stroke-linecap="round" stroke-linejoin="round" />
+                                </svg>
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Filter_By
+                            </div>
+                            <div class="grid grid-cols-3 gap-[27px]">
+                                <div class="input-field-common">
+                                    <label class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                                        店舗名
+                                    </label>
+                                    <input type="text" class="w-full" placeholder="Enter club name" name="ClubName" id="clubname" value="@ViewBag.ClubName">
+                                </div>
+                                <div class="input-field-common">
+                                    <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
+                                        エリア
+                                    </label>
+                                    <select id="large" name="LocationId" class=" default_select select-common block w-full "
+                                            style="width: 100%;">
+                                        @foreach (var item in ViewBag.LocationDDL as IEnumerable<SelectListItem>)
+                                        {
+                                            var selectedValue = ViewBag.LocationId;
+                                            if (item.Value == selectedValue)
+                                            {
+                                                <option value="@item.Value" selected>@item.Text</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@item.Value">@item.Text</option>
+                                            }
+
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class=" flex gap-4 mt-4">
+                            <button id="cancelFilter" class="btn btn-primary-normal gap-1 rounded-[4px]"
+                                    onclick="window.location.reload()" type="button">
+                                <i class="las la-times"></i>@CRS.ADMIN.APPLICATION.Resources.Resource.Cancel
+                            </button>
+
+                            <button id="cancelFilter" class="btn btn-primary-default gap-1 rounded-[4px]" type="submit">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18"
+                                     height="19" viewBox="0 0 18 19" fill="none">
+                                    <path d="M5.25 14.75V10.25H12.75V14.75H14.25V6.371L12.129 4.25H3.75V14.75H5.25ZM3 2.75H12.75L15.75 5.75V15.5C15.75 15.6989 15.671 15.8897 15.5303 16.0303C15.3897 16.171 15.1989 16.25 15 16.25H3C2.80109 16.25 2.61032 16.171 2.46967 16.0303C2.32902 15.8897 2.25 15.6989 2.25 15.5V3.5C2.25 3.30109 2.32902 3.11032 2.46967 2.96967C2.61032 2.82902 2.80109 2.75 3 2.75ZM6.75 11.75V14.75H11.25V11.75H6.75Z"
+                                          fill="white" />
+                                </svg>@CRS.ADMIN.APPLICATION.Resources.Resource.Apply
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <div class="table-tab">
+                <div class="px-[16px] py-[12px] flex justify-between entry-export-container">
+                    <div class="flex items-center select-entries" id="ShowEntries-Id">
+                    </div>
+                </div>
+                <!-- table  -->
+                <div class="table-tab">
+                    <div class="relative overflow-x-auto">
+                        <table class="w-full  text-left club-table" id="table-id">
+                            <thead class="club-table-thead">
+                                <tr>
+                                    <th scope="col" class="p-[12px]">
+                                        <div class="flex">
+                                            S.N
+                                            <div class="relative pl-[5px]">
+                                                <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                                <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                            </div>
+                                        </div>
+                                    </th>
+                                    <th scope="col" class="p-[12px]">
+                                        <div class="flex">
+                                            サブグループ
+                                            <div class="relative pl-[5px]">
+                                                <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                                <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                            </div>
+                                        </div>
+                                    </th>
+                                    <th scope="col" class="p-[12px]">
+                                        <div class="flex">
+                                            店舗件数
+                                            <div class="relative pl-[5px]">
+                                                <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                                <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                            </div>
+                                        </div>
+                                    </th>
+                                    <th scope="col" class="p-[12px]">
+                                        <div class="flex">
+                                            店舗名
+                                            <div class="relative pl-[5px]">
+                                                <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                                <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                            </div>
+                                        </div>
+                                    </th>
+                                    <th scope="col" class="p-[12px]">
+                                        <div class="flex">
+                                            エリア
+                                            <div class="relative pl-[5px]">
+                                                <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                                <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                            </div>
+                                        </div>
+                                    </th>
+                                    <th scope="col" class="p-[12px]">
+                                        <div class="flex">
+                                            作成日
+                                            <div class="relative pl-[5px]">
+                                                <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                                <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                            </div>
+                                        </div>
+                                    </th>
+                                    <th scope="col" class="p-[12px]">
+                                        <div class="flex justify-center">
+                                            @CRS.ADMIN.APPLICATION.Resources.Resource.Action
+                                            <div class="relative pl-[5px]">
+                                                <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                                <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                            </div>
+                                        </div>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{
+                                    int sno = 1;
+                                    foreach (var item in Model.SubGroupInfoList)
+                                    {
+                                        // Determine the row class for alternating backgrounds
+
+                                        <tr class=" border-b bg-[#EAEAEA] accordion-header" data-target="details-row-@sno">
+                                            <td class="py-[28px] px-[16px]">
+                                                @sno
+                                                <i class="fa-solid fa-chevron-up cursor-pointer toggle-arrow"></i>
+                                            </td>
+                                            <td class="py-[28px] px-[16px]">
+                                                @item.SubGroupName
+                                            </td>
+                                            <td class="py-[28px] px-[16px]">
+                                                @item.TotalClubCount
+                                            </td>
+                                            <td class="py-[28px] px-[16px]">
+                                            </td>
+                                            <td class="py-[28px] px-[16px]">
+                                            </td>
+                                            <td class="py-[28px] px-[16px]">
+                                            </td>
+                                            <td class="py-[28px] px-[16px]">
+                                                <div class="flex justify-center gap-[7px]">
+                                                    @if (item.SubGroupName.Trim().ToUpper() == "DEFAULT")
+                                                    {
+
+                                                    }
+                                                    else
+                                                    {
+                                                        <i class="las la-edit text-[20px] cursor-pointer text-[#A6A6A6]" onclick="ManageSubGroupDetailsFunction('@item.SubGroupId','@item.GroupId','@ViewBag.GroupName','@ViewBag.GroupNameKatakana');"></i>
+                                                    }
+                                                    @if (item.SubGroupName.Trim().ToUpper() != "DEFAULT" && item.ClubShortInfo.Count == 0)
+                                                    {
+                                                        <div class="text-[#CB3F3F] text-center text-[20px]"
+                                                             onclick="OpenDeleteModal('@item.SubGroupId','@item.SubGroupName')">
+                                                            <i class="las la-trash-alt text-[20px] cursor-pointer "></i>
+                                                        </div>
+
+                                                    }
+                                                    else
+                                                    {
+                                                        <div class="text-[#BBBBBB] text-center text-[20px]">
+                                                            <i class="las la-trash-alt text-[20px] cursor-pointer"></i>
+                                                        </div>
+
+                                                    }
+                                                    @*@if (item.ClubShortInfo.Count > 0)
+        {
+            <div class="text-[#BBBBBB] text-center text-[20px]"
+                 onclick="">
+                <i class="las la-trash-alt text-[20px] cursor-pointer "></i>
+            </div>
+        }
+        else
+        {
+            <div class="text-[#BBBBBB] text-center text-[20px]"
+                 onclick="OpenDeleteModal('@item.SubGroupId')">
+                <i class="las la-trash-alt text-[20px] cursor-pointer "></i>
+            </div>
+        }*@
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <!-- Hidden Row -->
+                                        string rowClass;
+                                        if (item.ClubShortInfo != null && item.ClubShortInfo.Count > 0)
+                                        {
+                                            for (int i = 0; i < item.ClubShortInfo.Count(); i++)
+                                            {
+                                                rowClass = i % 2 == 0 ? "bg-[#f6f6f6]" : "bg-white";
+                                                <tr class="@rowClass accordion-content details-row-@sno">
+                                                    <td class="p-[12px]">
+                                                    </td>
+                                                    <td class="p-[12px]">
+                                                    </td>
+                                                    <td class="p-[12px]">
+                                                    </td>
+                                                    <td class="p-[12px] w-max">
+                                                        <div class="round-image-text w-max flex justify-center items-center gap-[12px]">
+                                                            <img class="w-[36px] h-[36px] rounded-full"
+                                                                 src="@item.ClubShortInfo[i].ClubLogo">
+                                                            <div class="flex flex-col gap-1 justify-between w-full">
+                                                                <div class="text-[14px] font-[600] text-[#101828] ">@item.ClubShortInfo[i].ClubName</div>
+                                                                <div class="text-[12px] font-[400]">@item.ClubShortInfo[i].ClubNameJp</div>
+
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td class="p-[12px]">
+                                                        @item.ClubShortInfo[i].LocationName
+                                                    </td>
+                                                    <td class="p-[12px] ">
+                                                        @item.ClubShortInfo[i].CreatedOn
+                                                    </td>
+                                                    <td class="p-[12px]">
+                                                        <div class="flex justify-center gap-[7px]">
+                                                            <div class="text-[#CB3F3F] text-center text-[20px]"
+                                                                 onclick="OpenClubDeleteModal('@item.ClubShortInfo[i].Id','@item.ClubShortInfo[i].ClubId','@item.SubGroupId','@item.ClubShortInfo[i].ClubName')">
+                                                                <i class="las la-trash-alt text-[20px] cursor-pointer "></i>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            }
+                                        }
+                                        sno++;
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="pagination-club">
+                        <div class="show-entry" id="Entries-Id">
+                        </div>
+                        <div class="flex gap-[12px]">
+                            <div class="btn btn-secondary-box-shadow" id="prev-btn">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Previous
+                            </div>
+                            <div class="flex gap-[12px]" id="pagination-id">
+                            </div>
+                            <div class="btn btn-secondary-box-shadow" id="next-btn">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Next
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="delete-confirmation" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 hidden w-full flex justify-center
+     p-4 overflow-x-hidden overflow-y-auto
+     md:inset-0 h-[calc(100%-1rem)] max-h-full " style="align-items: flex-start;">
+        <div class="relative max-w-2xl max-h-full w-[412px] px-4 pt-[40px] pb-[46px] mt-24">
+            <!-- Modal content -->
+            <div class="relative bg-white rounded-lg shadow">
+                <!-- Modal header -->
+                <button type="button" onclick="CloseModal('delete-confirmation')"
+                        class="text-gray-400 bg-transparent rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center absolute top-[24px] right-[20px] "
+                        data-modal-hide="delete-confirmation">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="25" viewBox="0 0 24 25" fill="none">
+                        <rect y="0.621094" width="24" height="24" rx="12" fill="#FAFAFA" />
+                        <path d="M5.41406 4.95703L4.33594 6.03516L10.9219 12.6211L4.33594 19.207L5.41406 20.2852L12 13.6992L18.5859 20.2852L19.6641 19.207L13.0781 12.6211L19.6641 6.03516L18.5859 4.95703L12 11.543L5.41406 4.95703Z"
+                              fill="#7A7A7A" />
+                    </svg>
+                </button>
+                <!-- Modal body -->
+                <div class="grid pt-[24px] px-[23px] pb-[45px]">
+                    <div class="text-[#333] font-semibold pb-[11px] border-b border-[#eeeeee]">@CRS.ADMIN.APPLICATION.Resources.Resource.Confirmation</div>
+                    <div class="grid gap-[20px] text-[#062937] mt-[20px] mb-[40px]">
+                        <div class="text-[14px] text-secondary-text-2 text-start" id="confirmationMessage-delete-subgroup">
+                            @*Are you sure you want to delete this SUB GROUP?*@
+                        </div>
+                    </div>
+                    <div class="flex justify-end">
+                        <div class="flex gap-2 justify-end ">
+                            <input id="request_id" value="" hidden />
+                            <div class="btn btn-secondary rounded-[4px] w-[110px]" onclick="CloseModal('delete-confirmation')" data-modal-hide="delete-confirmation">@CRS.ADMIN.APPLICATION.Resources.Resource.No</div>
+                            <div class="btn btn-primary w-[110px]" onclick="DeleteSubGroup()" data-val="" id="delete_id">@CRS.ADMIN.APPLICATION.Resources.Resource.Yes</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="delete-club-confirmation" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 hidden w-full flex justify-center
+     p-4 overflow-x-hidden overflow-y-auto
+     md:inset-0 h-[calc(100%-1rem)] max-h-full " style="align-items: flex-start;">
+        <div class="relative max-w-2xl max-h-full w-[412px] px-4 pt-[40px] pb-[46px] mt-24">
+            <!-- Modal content -->
+            <div class="relative bg-white rounded-lg shadow">
+                <!-- Modal header -->
+                <button type="button" onclick="CloseModal('delete-club-confirmation')"
+                        class="text-gray-400 bg-transparent rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center absolute top-[24px] right-[20px] "
+                        data-modal-hide="delete-club-confirmation">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="25" viewBox="0 0 24 25" fill="none">
+                        <rect y="0.621094" width="24" height="24" rx="12" fill="#FAFAFA" />
+                        <path d="M5.41406 4.95703L4.33594 6.03516L10.9219 12.6211L4.33594 19.207L5.41406 20.2852L12 13.6992L18.5859 20.2852L19.6641 19.207L13.0781 12.6211L19.6641 6.03516L18.5859 4.95703L12 11.543L5.41406 4.95703Z"
+                              fill="#7A7A7A" />
+                    </svg>
+                </button>
+                <!-- Modal body -->
+                <div class="grid pt-[24px] px-[23px] pb-[45px]">
+                    <div class="text-[#333] font-semibold pb-[11px] border-b border-[#eeeeee]">@CRS.ADMIN.APPLICATION.Resources.Resource.Confirmation</div>
+                    <div class="grid gap-[20px] text-[#062937] mt-[20px] mb-[40px]">
+                        <div class="text-[14px] text-secondary-text-2 text-start" id="confirmationMessage-delete">
+                            @*Are you sure you want to delete this SUB GROUP CLUB?*@
+                        </div>
+                    </div>
+                    <div class="flex justify-end">
+                        <div class="flex gap-2 justify-end ">
+                            <input id="request_id" value="" hidden />
+                            <div class="btn btn-secondary rounded-[4px] w-[110px]" onclick="CloseModal('delete-club-confirmation')" data-modal-hide="delete-club-confirmation">@CRS.ADMIN.APPLICATION.Resources.Resource.No</div>
+                            <div class="btn btn-primary w-[110px]" onclick="DeleteSubgroupClub()" data-val1="" data-val2="" id="delete_id">@CRS.ADMIN.APPLICATION.Resources.Resource.Yes</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    @Html.Partial("_ManageSubGroup", _SubGroupModel)
+    @Html.Partial("_ManageSubGroupClub", _SubGroupClubModel)
+    @section scripts{
+        <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
+        <script>
+        //PAGINATION START
+    document.addEventListener('DOMContentLoaded', function () {
+            const page_size = @ViewBag.PageSize;
+            const total_data = @ViewBag.TotalRecords;
+            const start_index_val = @ViewBag.StartIndex;
+            let URL = "/GroupManagement/SubGroup?GroupId=@ViewBag.GroupId";
+            let search_filter = $('#default-search').val();
+            URL = addQueryParam(URL, 'SearchFilter', search_filter);
+            LoadPagination(page_size, total_data, start_index_val, URL);
+    });
+        //PAGINATION END
+        </script>
+
+        <script>
+        function CloseModal(id) {
+            const modal = document.getElementById(id);
+            modal.classList.add("hidden");
+            modal.setAttribute("aria-hidden", "true");
+        }
+        function CancelFunction() {
+            location.reload();
+        }
+        document.addEventListener('DOMContentLoaded', () => {
+            const headers = document.querySelectorAll('.accordion-header');
+            headers.forEach(header => {
+                header.addEventListener('click', () => {
+                    const targetClass = header.dataset.target;
+                    const contentRows = document.querySelectorAll(`.accordion-content.${targetClass}`);
+                    const icon = header.querySelector('.toggle-arrow');
+                    let allHidden = true;
+
+                    contentRows.forEach(content => {
+                        if (!content.classList.contains('hidden')) {
+                            allHidden = false;
+                        }
+                    });
+                    contentRows.forEach(content => {
+                        if (allHidden) {
+                            content.classList.remove('hidden');
+                        } else {
+                            content.classList.add('hidden');
+                        }
+                    });
+                    if (allHidden) {
+                        icon.classList.replace('fa-chevron-down', 'fa-chevron-up');
+                        header.classList.add('bg-[#EAEAEA]');
+                    } else {
+                        icon.classList.replace('fa-chevron-up', 'fa-chevron-down');
+                        header.classList.remove('bg-[#EAEAEA]');
+                    }
+                });
+            });
+        });
+
+         var popUprenderValue = '@ViewBag.PopUpRenderValue';
+        if (popUprenderValue != null && popUprenderValue != '' && popUprenderValue == "ManageSG") {
+            var element = document.getElementById('add-sub-group');
+            element.classList.remove('translate-x-full');
+        }
+        else {
+            var element = document.getElementById('add-sub-group');
+            element.classList.add('translate-x-full');
+        }
+        if (popUprenderValue != null && popUprenderValue != '' && popUprenderValue == "ManageSGC") {
+            var element = document.getElementById('add-sub-group-club');
+            element.classList.remove('translate-x-full');
+        }
+        else {
+            var element = document.getElementById('add-sub-group-club');
+            element.classList.add('translate-x-full');
+        }
+
+        function ManageSubGroupDetailsFunction(subgroupId,groupId,groupName,groupNameKatakana) {
+             let searchFilter = $('#default-search').val();
+             const startIndex =@ViewBag.StartIndex;
+            const pageSize =@ViewBag.PageSize;
+            window.location.href = "/GroupManagement/ManageSubGroup?SubGroupId=" + subgroupId + '&GroupId=' + groupId + '&SearchFilter=' + searchFilter + '&StartIndex=' + startIndex + '&PageSize=' + pageSize + '&GroupName=' + groupName + '&GroupNameKatakana=' + groupNameKatakana;
+        }
+        function DeleteSubGroup() {
+            var requestVerificationToken = $('input[name="__RequestVerificationToken"]').val();
+            var subgroupid = $('#delete_id').attr('data-val1');
+            if (subgroupid) {
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("DeleteSubGroup")',
+                    dataType: 'json',
+                    data: { '__RequestVerificationToken': requestVerificationToken, SubGroupId: subgroupid },
+                    success: function (data) {
+                        location.reload();
+                    },
+                    error: function () {
+                        location.reload();
+                    }
+                });
+            }
+        }
+        function DeleteSubgroupClub() {
+            var requestVerificationToken = $('input[name="__RequestVerificationToken"]').val();
+            var id = $('#delete_id').attr('data-val1');
+            var clubid = $('#delete_id').attr('data-val2');
+            var subgroupid = $('#delete_id').attr('data-val3');
+            if (subgroupid) {
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("DeleteSubGroupClub")',
+                    dataType: 'json',
+                    data: { '__RequestVerificationToken': requestVerificationToken, Id: id, ClubId: clubid, SubGroupId: subgroupid },
+                    success: function (data) {
+                        location.reload();
+                    },
+                    error: function () {
+                        location.reload();
+                    }
+                });
+            }
+        }
+            function OpenDeleteModal(subgroupId, subGroupName) {
+            const modalTarget = document.querySelector("[data-modal-target='block-basicclub-confirmation']");
+            const modal = document.getElementById("delete-confirmation");
+            modal.classList.remove("hidden");
+            $('#delete_id').attr('data-val1', subgroupId);
+            $('#confirmationMessage-delete-subgroup').text('@CRS.ADMIN.APPLICATION.Resources.Resource.Sub_Group_delete' + ' ' + '( ' + subGroupName + ' )?');
+            modal.setAttribute("aria-hidden", "false");
+        }
+        function OpenClubDeleteModal(id, clubid, subgroupid,subGroupName) {
+            const modalTarget = document.querySelector("[data-modal-target='block-basicclub-confirmation']");
+            const modal = document.getElementById("delete-club-confirmation");
+            modal.classList.remove("hidden");
+            $('#delete_id').attr('data-val1', id);
+            $('#delete_id').attr('data-val2', clubid);
+            $('#delete_id').attr('data-val3', subgroupid);
+            $('#confirmationMessage-delete').text('@CRS.ADMIN.APPLICATION.Resources.Resource.Sub_Group_Club_delete' + ' ' + '( ' + subGroupName + ' )?');
+            modal.setAttribute("aria-hidden", "false");
+        }
+        </script>
+
+
+        <script>
+        let locationClubMapping = {};
+        let multiplerowsdata = {};
+        let subgroupid;
+        let selectedCount;
+        var GrandTotal = 0;
+        var clubCountStatic = 0;
+            var clubCountdynamic = 0;
+            var containerCounter = 1;
+       $(document).ready(function () {
+
+
+           $(document).on('change', 'select[name="SubGroupDDL"]', function () {
+               subgroupid = $(`#subgroupid`).val();
+           });
+    // Update dropdown options to avoid duplicate selection of locations
+    function updateDropdownOptions() {
+        const selectedValues = [];
+        $('select[name="LocationDDL"]').each(function () {
+            const value = $(this).val();
+            if (value) selectedValues.push(value);
+        });
+
+        $('select[name="LocationDDL"]').each(function () {
+            const currentDropdown = $(this);
+            currentDropdown.find('option').each(function () {
+                if (selectedValues.includes($(this).val()) && $(this).val() !== currentDropdown.val()) {
+                    $(this).prop('disabled', true);
+                } else {
+                    $(this).prop('disabled', false);
+                }
+            });
+        });
+        }
+
+    // Event handler for Location selection
+    $(document).on('change', 'select[name="LocationDDL"]', function () {
+        const isStatic = $(this).attr('id') === 'staticLocationDDL';
+        const containerId = isStatic ? 'static' : $(this).data('container-id');
+        const clubDDL = isStatic ? $('#staticClubDDL') : $(`#clubddl_id-${containerId}`);
+        const locationId = $(this).val();
+        const RequestVerificationToken = $('input[name="__RequestVerificationToken"]').val();
+        clubDDL.empty().append('<option value="">Loading...</option>');
+        /*clubDDL.empty();*/
+        if (locationId) {
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("GetClubListByLocationId")',
+                dataType: 'json',
+                data: { '__RequestVerificationToken': RequestVerificationToken, LocationId: locationId },
+                success: function (data) {
+                    /* clubDDL.empty().append('<option value="">Select Club</option>');*/
+                    clubDDL.empty();
+                    var count = clubDDL.length;
+                    if (data.clubDDL.length >= 1)
+                    {
+                        clubDDL.empty().append('<option value="" disabled>--- @CRS.ADMIN.APPLICATION.Resources.Resource.Select ---</option>');
+                    }
+                    $.each(data.clubDDL, function (i, club) {
+                        clubDDL.append(`<option value="${club.Value}">${club.Text}</option>`);
+                    });
+                },
+                error: function () {
+                    alert('Failed to retrieve club details.');
+                }
+            });
+        } else {
+            /*clubDDL.empty().append('<option value="">Select Club</option>');*/
+            clubDDL.empty();
+        }
+
+        updateDropdownOptions();
+    });
+
+    // Add a new container for Location and Club selection
+         function addNewContainer() {
+           containerCounter++;
+        const newContainerHtml = `
+            <div id="container-${containerCounter}" class="dynamic-container">
+
+                <div class="flex justify-end">
+                    <button class="flex gap-1 items-center remove-container-btn" data-container-id="${containerCounter}">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="17" viewBox="0 0 16 17" fill="none">
+                            <path d="M2.5 3V14H13.5V3H2.5ZM3.5 4H12.5V13H3.5V4ZM5.5 8V9H10.5V8H5.5Z" fill="#D75A8B" />
+                        </svg>
+                        <span>削除</span>
+                    </button>
+                </div>
+                <div class="grid gap-4 grid-cols-2 gap-x-4 gap-y-5">
+                    <div class="input-field-common">
+                        <label class="block mb-[12px] text-sm font-medium text-secondary-text-2">エリア</label>
+                        <select id="locationddl-${containerCounter}" class="default_select select-common block w-full"
+                                name="LocationDDL" data-container-id="${containerCounter}" style="width: 100%;">
+                            @foreach (var item in ViewBag.LocationDDL)
+                            {
+                                <option value="@item.Value">@item.Text</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="input-field-common">
+                        <label class="block mb-[12px] text-sm font-medium text-secondary-text-2">店舗</label>
+                        <select id="clubddl_id-${containerCounter}" class="default_select select-common block w-full"
+                                name="ClubDDL" data-container-id="${containerCounter}" multiple="multiple" style="width: 100%;" placeholder="Select"></select>
+                                <span class="error" id="span-club-error-${containerCounter}">
+
+                                 </span>
+                    </div>
+                </div>
+                <div class="flex justify-between mt-4 items-center">
+                    <label class="block text-sm font-medium text-secondary-text-2">
+                        店舗の合計数
+                    </label>
+                    <div class="input-field-common max-w-[116px]">
+                        <input type="text" id="TotalClubCount-${containerCounter}" name="TotalClubCount" class="w-full text-[#B7B7B7]"
+                               placeholder="" autocomplete="off" disabled="disabled" />
+                    </div>
+                </div>
+                  <div class="border border-[2px] border-dashed border-[#EBEBEB] w-full my-4"></div>
+            </div>
+        `;
+        $('#dynamicContainerWrapper').append(newContainerHtml);
+       /* containerCounter++;*/
+        updateDropdownOptions();
+        initializeDynamicDropdowns();
+    }
+
+    // Remove a container
+    $(document).on('click', '.remove-container-btn', function () {
+        const containerId = $(this).data('container-id');
+        const removedClubCount = parseInt($(`#TotalClubCount-${containerId}`).val()) || 0;
+
+        // Subtract the removed count from the GrandTotal
+        let currentGrandTotal = parseInt($("#GrandTotalClubCount").val()) || 0;
+        currentGrandTotal -= removedClubCount;
+        GrandTotal = currentGrandTotal;
+        $("#GrandTotalClubCount").val(currentGrandTotal);
+
+        delete locationClubMapping[containerId];
+        console.log("Current Mapping: ", locationClubMapping);
+        $(`#container-${containerId}`).remove();
+        updateDropdownOptions();
+    });
+
+    // Initialize select2 for dropdowns
+    function initializeDynamicDropdowns() {
+        $('.default_select').select2({
+            minimumResultsForSearch: Infinity,
+        });
+    }
+           $(document).on('change', 'select[name="ClubDDL"]', function () {
+               const containerId = $(this).data('container-id');
+
+               if (containerId > 1) {
+                   const isStatic = $(this).attr('id') === 'staticClubDDL';
+                   selectedCount = $(this).find('option:selected').length;
+                   isStatic ? $(`#TotalClubCount-${containerId}`).val(selectedCount) : $(`#TotalClubCount-${containerId}`).val(selectedCount);
+
+                   clubCountStatic = parseInt($(`#TotalClubCount-${containerCounter}`).val());
+                   clubCountdynamic = isStatic ? 0 : parseInt($(`#TotalClubCount-${containerId}`).val());
+                   var GrandTotals = 0;
+                   for (var i = 1; i <= containerCounter; i++) {
+                       var clubcount = parseInt($(`#TotalClubCount-${i}`).val()) || 0;
+                       GrandTotals += clubcount;
+                   }
+                   $("#GrandTotalClubCount").val(parseInt(GrandTotals));
+               } else {
+                   const isStatic = $(this).attr('id') === 'staticClubDDL';
+                   selectedCount = $(this).find('option:selected').length;
+                   isStatic ? $(`#TotalClubCount-${containerId}`).val(selectedCount) : $(`#TotalClubCount-${containerId}`).val(selectedCount);
+
+                   clubCountStatic = parseInt($(`#TotalClubCount-${containerId}`).val());
+                   clubCountdynamic = isStatic ? 0 : parseInt($(`#TotalClubCount-${containerId}`).val());
+                   var GrandTotals = 0;
+
+                   for (var i = 1; i <= containerCounter; i++) {
+                       var clubcount = parseInt($(`#TotalClubCount-${i}`).val()) || 0;
+                       GrandTotals += clubcount;
+                   }
+                   $("#GrandTotalClubCount").val(parseInt(GrandTotals));
+               }
+
+           });
+    // Update the locationClubMapping on selection changes
+    //$(document).on('change', '.select-common', function () {
+    //    const containerId = $(this).data('container-id');
+    //    if (containerId != null) {
+    //        const selectedLocation = $(`#locationddl-${containerId}`).val();
+    //        const selectedClubs = $(`#clubddl_id-${containerId}`).val();
+
+    //        if (selectedLocation) {
+    //            locationClubMapping[containerId] = {
+    //                locationId: selectedLocation,
+    //                clubs: selectedClubs || [],
+    //                clubCount: selectedCount
+    //            };
+    //        } else {
+    //            delete locationClubMapping[containerId];
+    //        }
+    //    } else {
+    //        const selectedLocation = $(`#staticLocationDDL`).val();
+    //        const selectedClubs = $(`#staticClubDDL`).val();
+
+    //        if (selectedLocation) {
+    //            locationClubMapping[1] = {
+    //                locationId: selectedLocation,
+    //                clubs: selectedClubs || [],
+    //                clubCount: selectedCount
+    //            };
+    //        } else {
+    //            delete locationClubMapping[containerId];
+    //        }
+    //    }
+    //});
+            $('#addNewRow').on('click', function () {
+                addNewContainer();
+            });
+           updateDropdownOptions();
+           initializeDynamicDropdowns();
+
+    });
+            $('#subgroupid[name="SubGroupDDL"]').change(function () {
+                var selectedValue = $(this).find("option:selected").val();
+                if (selectedValue != undefined || selectedValue != null) {
+                    $(`#span-sub-group-id`).text('');
+                } 
+            });
+            function submit() {
+                var submitButton = document.getElementById('submit-button-id');
+                submitButton.disabled = true;
+                var requestVerificationToken = $('input[name="__RequestVerificationToken"]').val();
+                var sGroupId = subgroupid;
+                var groupId = '@ViewBag.GroupId';
+                var subGroupId = $('#subgroupid[name="SubGroupDDL"]').find("option:selected").val();
+                if (subGroupId === undefined || subGroupId === null|| subGroupId === "")
+                {
+                    $(`#span-sub-group-id`).text('@CRS.ADMIN.APPLICATION.Resources.Resource.Required');
+                    return false;
+                }
+                var isvalid = true;
+                j = 1;
+                  for (var i = 1; i <= containerCounter; i++) {
+                    if (i == 1) {
+                        if ($("#staticClubDDL").val().length === 0) {
+                            $(`#span-club-error-${i}`).text('@CRS.ADMIN.APPLICATION.Resources.Resource.Required')
+                            isvalid = false;
+                        }
+                        else
+                        {
+                            $(`#span-club-error-${i}`).text();
+                            multiplerowsdata[1] = {
+                                locationId: $(`#staticLocationDDL`).val(),
+                                clubs: $(`#staticClubDDL`).val(),
+                                clubCount: parseInt($(`#TotalClubCount-${i}`).val())
+                            }
+                            j++;
+                        }
+                    }
+                    else {
+                        if ($(`#clubddl_id-${i}`).val() !== undefined && $(`#clubddl_id-${i}`).val().length === 0)
+                        {
+                            $(`#span-club-error-${i}`).text('@CRS.ADMIN.APPLICATION.Resources.Resource.Required');
+                            isvalid = false;
+                        }
+                        else
+                        {
+                            if ($(`#span-club-error-${i}`).val() !== undefined) {
+                                $(`#span-club-error-${i}`).text('');
+                                multiplerowsdata[j] = {
+                                    locationId: $(`#locationddl-${i}`).val(),
+                                    clubs: $(`#clubddl_id-${i}`).val(),
+                                    clubCount: parseInt($(`#TotalClubCount-${i}`).val())
+                                }
+                                j++;
+                            }
+
+                        }
+                    }
+            }
+            if (isvalid == false) {
+                submitButton.disabled = false;
+                return false;
+            }
+            var mappedData = JSON.stringify(multiplerowsdata);
+                if (mappedData) {
+                    $.ajax({
+                        type: 'POST',
+                        url: '@Url.Action("ManageSubGroupClub")',
+                        dataType: 'json',
+                        data: { '__RequestVerificationToken': requestVerificationToken, mapping: JSON.stringify(multiplerowsdata), SubGroupId: sGroupId, GroupId: groupId },
+                        success: function (data) {
+                            submitButton.disabled = false;
+                            location.reload();
+                        },
+                        error: function () {
+                            submitButton.disabled = false;
+                            location.reload();
+                        }
+                    });
+                } else if (sGroupId == null) {
+                    showNotification("Please select sub group", 'INFORMATION', 'INFORMATION');
+                    submitButton.disabled = false;
+                    window.location.reload();
+                } else {
+                    showNotification("Please select location and club", 'INFORMATION', 'INFORMATION');
+                    submitButton.disabled = false;
+                    window.location.reload();
+                }
+
+        }
+        </script>
+
+    }
+
+
+

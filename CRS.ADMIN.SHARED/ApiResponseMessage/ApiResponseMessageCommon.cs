@@ -1,4 +1,7 @@
-﻿using System;
+
+﻿using CRS.ADMIN.SHARED.PaginationManagement;
+using System;
+
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace CRS.ADMIN.SHARED.ApiResponseMessage
 {
-    public class ApiResponseMessageCommon
+    public class ApiResponseMessageCommon:PaginationResponseCommon
     {
         public string MessageId { get; set; }
         public string Code { get; set; }
@@ -16,6 +19,8 @@ namespace CRS.ADMIN.SHARED.ApiResponseMessage
         public string Description { get; set; }
         public string MessageType { get; set; }
         public string HttpStatusCode { get; set; }
+        public string Module { get; set; }
+        public string UserCategory { get; set; }
         public string ActionUser { get; set; }
     }
 }

@@ -174,7 +174,7 @@ namespace CRS.ADMIN.APPLICATION.Models.ClubManagement
         [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Required")]
         public string ceoFullName { get; set; }
         public string Line { get; set; }
-        [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Required")]
+        //[Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Required")]
         public string GoogleMap { get; set; }
         [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Required")]
         public string WorkingHrFrom { get; set; }
@@ -258,7 +258,8 @@ namespace CRS.ADMIN.APPLICATION.Models.ClubManagement
         public string SearchFilter { get; set; }
         public int StartIndex { get; set; }
         public int PageSize { get; set; }
-
+        public string OthersHoliday { get; set; }
+        public string[] OthersHolidayStr { get; set; }
         // public List<planIdentityDataModel> PlanList { get; set; }
     }
 
