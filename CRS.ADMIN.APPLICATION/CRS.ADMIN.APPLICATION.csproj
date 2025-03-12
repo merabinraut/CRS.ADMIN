@@ -110,13 +110,11 @@
     <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.8.0.0\lib\net462\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
     </Reference>
-
     <Reference Include="Microsoft.Bcl.HashCode, Version=1.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Bcl.HashCode.1.1.1\lib\net461\Microsoft.Bcl.HashCode.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Bcl.TimeProvider, Version=8.0.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Bcl.TimeProvider.8.0.1\lib\net462\Microsoft.Bcl.TimeProvider.dll</HintPath>
-
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Extensions.Primitives, Version=5.0.0.1, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
@@ -318,6 +316,7 @@
     <Compile Include="Controllers\WithdrawalRequestController.cs" />
     <Compile Include="Controllers\WithdrawSetupController.cs" />
     <Compile Include="CustomHelpers\CustomHtmlHelpers.cs" />
+    <Compile Include="CustomHelpers\ExternalApiCallHelpers.cs" />
     <Compile Include="Filters\ActivityLogFilter.cs" />
     <Compile Include="Filters\SessionExpiryFilterAttribute.cs" />
     <Compile Include="Global.asax.cs">
@@ -418,13 +417,11 @@
     <Content Include="Views\ChargeManagement\ChargeCategoryType.cshtml" />
     <None Include="Views\ClubManagement\_RejectedClubListPartialView.cshtml" />
     <Content Include="Views\AffiliateManagement\_ConvertedCustomerPointsReport.cshtml" />
-
     <Content Include="Views\ApiResponseMessage\Index.cshtml" />
     <Content Include="Views\ApiResponseMessage\ApiResponseMessageList.cshtml" />
     <Content Include="Views\ApiResponseMessage\_AddResponseMessage.cshtml" />
     <Content Include="Views\ApiResponseMessage\_EditResponseMessage.cshtml" />
     <Content Include="Views\HostManagement\UploadBulkImage.cshtml" />
-
     <Content Include="Views\PointsManagement\_PointTransferRetrivePartialView.cshtml" />
     <Content Include="Views\PointsManagement\_PointRequestListPartialView.cshtml" />
     <Content Include="Views\GroupManagement\Index.cshtml" />
@@ -434,7 +431,6 @@
     <Content Include="Views\GroupManagement\_ManageSubGroupClub.cshtml" />
     <Content Include="Views\GroupManagement\GroupGallery.cshtml" />
     <Content Include="Views\GroupManagement\_ManageGroupGallery.cshtml" />
-
     <None Include="Views\PromotionManagement\_ManageAdvertisementPartialView.cshtml" />
     <None Include="Views\PromotionManagement\_AdvertisementList.cshtml" />
     <Content Include="Content\assets\images\TickIcon.svg" />

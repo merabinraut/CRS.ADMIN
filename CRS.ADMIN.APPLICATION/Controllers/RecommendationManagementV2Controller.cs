@@ -219,6 +219,8 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                     Message = dbResponseInfo.Message ?? "Group has been deleted successfully",
                     Title = NotificationMessage.SUCCESS.ToString()
                 });
+                string apiUrl = ConfigurationManager.AppSettings["RevalidateApiUrl"];
+                string apiResponse = ExternalApiCallHelpers.CallApi(apiUrl, HttpMethod.Get);
                 return Json(responseInfo.SetMessageInTempData(this));
             }
             else
@@ -436,6 +438,8 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                         Title = NotificationMessage.SUCCESS.ToString()
 
                     });
+                    string apiUrl = ConfigurationManager.AppSettings["RevalidateApiUrl"];
+                    string apiResponse = ExternalApiCallHelpers.CallApi(apiUrl, HttpMethod.Get);
                     return RedirectToAction("ClubListView", new { locationId = Model.LocationId });
                 }
                 else
@@ -492,6 +496,8 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                     Title = NotificationMessage.SUCCESS.ToString()
 
                 });
+                string apiUrl = ConfigurationManager.AppSettings["RevalidateApiUrl"];
+                string apiResponse = ExternalApiCallHelpers.CallApi(apiUrl, HttpMethod.Get);
                 return Json(JsonRequestBehavior.AllowGet);
             }
             else
@@ -802,6 +808,8 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                             Title = NotificationMessage.SUCCESS.ToString()
 
                         });
+                        string apiUrl = ConfigurationManager.AppSettings["RevalidateApiUrl"];
+                        string apiResponse = ExternalApiCallHelpers.CallApi(apiUrl, HttpMethod.Get);
                         return RedirectToAction("ClubListForMainPage", new { groupId = Model.GroupId, locationId = Model.LocationId });
                     }
                     else
@@ -867,6 +875,8 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                     Message = dbResponseInfo.Message ?? "Club Recommendation has been deleted successfully",
                     Title = NotificationMessage.SUCCESS.ToString()
                 });
+                string apiUrl = ConfigurationManager.AppSettings["RevalidateApiUrl"];
+                string apiResponse = ExternalApiCallHelpers.CallApi(apiUrl, HttpMethod.Get);
                 return Json(responseInfo.SetMessageInTempData(this));
             }
             else
