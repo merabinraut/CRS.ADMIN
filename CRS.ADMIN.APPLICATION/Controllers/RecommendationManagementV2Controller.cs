@@ -1130,6 +1130,8 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                     Message = dbResponseInfo.Message ?? "Recommendation Request has been Rejected",
                     Title = NotificationMessage.SUCCESS.ToString()
                 });
+                string apiUrl = ConfigurationManager.AppSettings["RevalidateApiUrl"];
+                string apiResponse = ExternalApiCallHelpers.CallApi(apiUrl, HttpMethod.Get);
 
             }
             else if (dbResponseInfo.Code == ResponseCode.Failed)
@@ -1328,6 +1330,8 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                     Message = dbResponseInfo.Message ?? "Recommendation Request has been Approved",
                     Title = NotificationMessage.SUCCESS.ToString()
                 });
+                string apiUrl = ConfigurationManager.AppSettings["RevalidateApiUrl"];
+                string apiResponse = ExternalApiCallHelpers.CallApi(apiUrl, HttpMethod.Get);
 
             }
             else if (dbResponseInfo.Code == ResponseCode.Failed)
