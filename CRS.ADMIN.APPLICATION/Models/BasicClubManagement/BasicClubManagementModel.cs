@@ -224,7 +224,7 @@ namespace CRS.ADMIN.APPLICATION.Models.BasicClubManagement
         [RegularExpression(@"^(?:100|\d{1,2})$", ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Invalid_Tax")]
         public string Drink { get; set; }
         public string Pref { get; set; }
-        [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Required")]
+       // [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Required")]
         public string LocationDDL { get; set; }
         [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Required")]
         public string BusinessTypeDDL { get; set; }

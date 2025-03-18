@@ -1095,7 +1095,7 @@
                                         </label>
                                         @Html.HiddenFor(m => m.HolidayStr)
                                            <select id="large" name="holiday" class=" default_select select-common block w-full "
-                                             style="width: 100%;" multiple="multiple" placeholder="Select">
+                                             style="width: 100%;" multiple="multiple" placeholder="Select" >
                                             @foreach (var item in ViewBag.Holiday as IEnumerable<SelectListItem>)
                                             {
                                                 var selectedId = ViewBag.HolidayIdKey as string;
@@ -1295,7 +1295,7 @@
                                             @CRS.ADMIN.APPLICATION.Resources.Resource.Prefecture
                                         </label>
                                         <select id="large" class=" default_select select-common block w-full "
-                                                style="width: 100%;" name="LocationDDL">
+                                                style="width: 100%;" name="LocationDDL" disabled>
                                             @foreach (var item in ViewBag.LocationDDLList as IEnumerable<SelectListItem>)
                                             {
                                                 var selectedId = ViewBag.LocationIdKey as string;

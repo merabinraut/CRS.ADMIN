@@ -579,6 +579,11 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             string otherCommaSeparatedString = string.Join(", ", otherArray);
             List<string> othersHolidayList = otherCommaSeparatedString.Split(new[] { ", " }, StringSplitOptions.RemoveEmptyEntries).ToList();
             ActionResult redirectresult = null;
+            if (!string.IsNullOrEmpty(Model.holdId) || !string.IsNullOrEmpty(Model.AgentId))
+            {
+                ModelState.Remove("LocationDDL");
+            }
+           
             if (!string.IsNullOrEmpty(Model.holdId))
             {
                 redirectresult = RedirectToAction("ClubList", "ClubManagement", new
