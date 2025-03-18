@@ -1,7 +1,9 @@
+
 using CRS.ADMIN.APPLICATION.Helper;
 using CRS.ADMIN.APPLICATION.Library;
 using CRS.ADMIN.APPLICATION.Models.ApiResponseMessage;
 using CRS.ADMIN.APPLICATION.Models.ClubManagement;
+
 using CRS.ADMIN.BUSINESS.ApiResponseMessage;
 using CRS.ADMIN.SHARED;
 using CRS.ADMIN.SHARED.ApiResponseMessage;
@@ -10,8 +12,10 @@ using CRS.ADMIN.SHARED.StaffManagement;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+
 using System.Reflection;
 using System.Threading.Tasks;
+
 using System.Web.Mvc;
 
 namespace CRS.ADMIN.APPLICATION.Controllers
@@ -19,6 +23,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
     //[OverrideActionFilters]
     public class ApiResponseMessageController : BaseController
     {
+
         private readonly IApiResponseMessageBusiness _BUSS;
         private readonly HttpClient _httpClient;
         public ApiResponseMessageController(IApiResponseMessageBusiness BUSS, HttpClient httpClient)
@@ -28,12 +33,14 @@ namespace CRS.ADMIN.APPLICATION.Controllers
         }
 
         [HttpGet]
+
         public ActionResult ApiResponseMessageList(string SearchFilter = "", string value = "", int StartIndex = 0, int PageSize = 10)
         {
             ViewBag.SearchFilter = SearchFilter;
             //Session["CurrentURL"] = "/ClubManagement/ClubList";
             string RenderId = "";
             ApiResponseModel obj = new ApiResponseModel();
+
             var response = new ApiResponseMessageModel();
 
             List<ApiResponseMessageModel> responseInfo = new List<ApiResponseMessageModel>();
@@ -106,6 +113,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
         [HttpPost, ValidateAntiForgeryToken]
         public ActionResult UpdateResponseMessage(ApiResponseMessageModel model)
         {
+
             if (ModelState.IsValid)
             {
                 ApiResponseMessageCommon commonModel = model.MapObject<ApiResponseMessageCommon>();
@@ -113,6 +121,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 //commonModel.ActionIP = ApplicationUtilities.GetIP();
 
                 var dbResponseInfo = _BUSS.UpdateApiResponseMessage(commonModel);
+
                 if (dbResponseInfo.Code.ToString().ToUpper() != "SUCCESS")
                 {
                     AddNotificationMessage(new NotificationModel()
@@ -136,7 +145,6 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             }
 
             TempData["ManageResponseModel"] = model;
-
 
             return RedirectToAction("ApiResponseMessageList");
         }
@@ -183,7 +191,6 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             return RedirectToAction("ApiResponseMessageList", new { value = "G" });
 
         }
-
 
         //public ActionResult Index(string SearchFilter = "", string FromDate = "", string ToDate = "")
         //{

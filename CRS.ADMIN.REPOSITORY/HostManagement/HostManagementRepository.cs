@@ -2,6 +2,8 @@
 using CRS.ADMIN.SHARED.HostManagement;
 using CRS.ADMIN.SHARED.PaginationManagement;
 using DocumentFormat.OpenXml.Office2016.Excel;
+using DocumentFormat.OpenXml.Spreadsheet;
+using Syncfusion.XlsIO.Implementation.PivotAnalysis;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -269,5 +271,17 @@ namespace CRS.ADMIN.REPOSITORY.HostManagement
             return new List<InquiryListCommon>();
         }
         #endregion
+
+        public CommonDbResponse UploadHostImage(string ClubName, string LocationId, string HostName, string ImagePath)
+        {
+            string SQL = "EXEC sproc_bulk_image_upload ";
+            SQL += "@club_name=" + _DAO.FilterString(ClubName);
+            SQL += ",@locationId=" + _DAO.FilterString(LocationId);
+            SQL += ",@host_name=" + _DAO.FilterString(HostName);
+            SQL += ",@imagePath=" + _DAO.FilterString(ImagePath);
+        
+            return _DAO.ParseCommonDbResponse(SQL);
+        }
+
     }
 }

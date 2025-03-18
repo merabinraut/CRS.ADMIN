@@ -1,13 +1,13 @@
-﻿using CRS.ADMIN.SHARED.PaginationManagement;
-using CRS.ADMIN.SHARED;
+﻿using CRS.ADMIN.SHARED;
+using CRS.ADMIN.SHARED.ApiResponseMessage;
+using CRS.ADMIN.SHARED.ClubManagement;
+using CRS.ADMIN.SHARED.PaginationManagement;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using CRS.ADMIN.SHARED.ApiResponseMessage;
-
 
 namespace CRS.ADMIN.REPOSITORY.ApiResponseMessage
 {
@@ -66,12 +66,9 @@ namespace CRS.ADMIN.REPOSITORY.ApiResponseMessage
                         Category = _DAO.ParseColumnValue(item, "category").ToString(),
                         Description = _DAO.ParseColumnValue(item, "description").ToString(),
                         MessageType = _DAO.ParseColumnValue(item, "messageType").ToString(),
-                        Module = _DAO.ParseColumnValue(item, "Module").ToString(),
-                        UserCategory = _DAO.ParseColumnValue(item, "UserCategory").ToString(),
                         HttpStatusCode = _DAO.ParseColumnValue(item, "httpStatusCode").ToString(),
-                        MessageId = _DAO.ParseColumnValue(item, "messageId").ToString(),
-                        SNO = Convert.ToInt32(_DAO.ParseColumnValue(item, "SNO").ToString()),
-                        TotalRecords = Convert.ToInt32(_DAO.ParseColumnValue(item, "totalRecords").ToString())
+                        MessageId = _DAO.ParseColumnValue(item, "sno").ToString()
+                        //MessageId = Convert.ToInt32(_DAO.ParseColumnValue(item, "SNO").ToString())
 
                     });
                 }
@@ -83,20 +80,18 @@ namespace CRS.ADMIN.REPOSITORY.ApiResponseMessage
         {
             var Response = new CommonDbResponse();
             string SQL = "EXEC sproc_add_api_response_message ";
-            SQL += "@code = " + _DAO.FilterString(Request.Code);
-            SQL += ",@message = N" + _DAO.FilterString(Request.Message);
-            SQL += ",@messageEng = " + _DAO.FilterString(Request.MessageEng);
-            SQL += ",@category = " + _DAO.FilterString(Request.Category);
-            SQL += ",@description = " + _DAO.FilterString(Request.Description);
-            SQL += ",@messageType = " + _DAO.FilterString(Request.MessageType);
-            SQL += ",@httpStatusCode = " + _DAO.FilterString(Request.HttpStatusCode);
-            SQL += ",@module = " + _DAO.FilterString(Request.Module);
-            SQL += ",@userCategory = " + _DAO.FilterString(Request.UserCategory);
-            SQL += ",@actionUser = " + _DAO.FilterString(Request.ActionUser);
+                SQL += "@code = " + _DAO.FilterString(Request.Code);
+                SQL += ",@message = N" + _DAO.FilterString(Request.Message);
+                SQL += ",@messageEng = " + _DAO.FilterString(Request.MessageEng);
+                SQL += ",@category = " + _DAO.FilterString(Request.Category);
+                SQL += ",@description = " + _DAO.FilterString(Request.Description);
+                SQL += ",@messageType = " + _DAO.FilterString(Request.MessageType);
+                SQL += ",@httpStatusCode = " + _DAO.FilterString(Request.HttpStatusCode);
+                SQL += ",@actionUser = " + _DAO.FilterString(Request.ActionUser);
 
             Response = _DAO.ParseCommonDbResponse(SQL);
             return Response;
-
+            
         }
 
         public CommonDbResponse UpdateApiResponseMessage(ApiResponseMessageCommon Request)
@@ -109,8 +104,6 @@ namespace CRS.ADMIN.REPOSITORY.ApiResponseMessage
             SQL += ",@messageEng = " + _DAO.FilterString(Request.MessageEng);
             SQL += ",@category = " + _DAO.FilterString(Request.Category);
             SQL += ",@description = " + _DAO.FilterString(Request.Description);
-            SQL += ",@module = " + _DAO.FilterString(Request.Module);
-            SQL += ",@userCategory = " + _DAO.FilterString(Request.UserCategory);
             SQL += ",@messageType = " + _DAO.FilterString(Request.MessageType);
             SQL += ",@httpStatusCode = " + _DAO.FilterString(Request.HttpStatusCode);
             SQL += ",@actionUser = " + _DAO.FilterString(Request.ActionUser);

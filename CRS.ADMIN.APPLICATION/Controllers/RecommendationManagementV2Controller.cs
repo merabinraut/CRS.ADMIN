@@ -1,4 +1,5 @@
-﻿using CRS.ADMIN.APPLICATION.Helper;
+﻿using CRS.ADMIN.APPLICATION.CustomHelpers;
+using CRS.ADMIN.APPLICATION.Helper;
 using CRS.ADMIN.APPLICATION.Library;
 using CRS.ADMIN.APPLICATION.Models.RecommendationManagementV2;
 using CRS.ADMIN.BUSINESS.RecommendationManagement_V2;
@@ -6,9 +7,12 @@ using CRS.ADMIN.SHARED;
 using CRS.ADMIN.SHARED.PaginationManagement;
 using CRS.ADMIN.SHARED.RecommendationManagement_V2;
 using DocumentFormat.OpenXml.Office2010.Excel;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
+using System.Net.Http;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web;
@@ -144,6 +148,12 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                             Message = dbGroupResponseInfo.Message ?? "Group Added Successfully",
                             Title = NotificationMessage.SUCCESS.ToString()
                         });
+
+                        //string apiUrl = "https://cus.hoslog.jp/api/revalidate?tag=hostDetail,clubHosts";
+                        string apiUrl = ConfigurationManager.AppSettings["RevalidateApiUrl"];
+                        string apiResponse =  ExternalApiCallHelpers.CallApi(apiUrl, HttpMethod.Get);
+
+
                         return RedirectToAction("GroupView", new { pageid = pageid, locationId = locationId });
                     }
                     else
@@ -209,6 +219,8 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                     Message = dbResponseInfo.Message ?? "Group has been deleted successfully",
                     Title = NotificationMessage.SUCCESS.ToString()
                 });
+                string apiUrl = ConfigurationManager.AppSettings["RevalidateApiUrl"];
+                string apiResponse = ExternalApiCallHelpers.CallApi(apiUrl, HttpMethod.Get);
                 return Json(responseInfo.SetMessageInTempData(this));
             }
             else
@@ -426,6 +438,8 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                         Title = NotificationMessage.SUCCESS.ToString()
 
                     });
+                    string apiUrl = ConfigurationManager.AppSettings["RevalidateApiUrl"];
+                    string apiResponse = ExternalApiCallHelpers.CallApi(apiUrl, HttpMethod.Get);
                     return RedirectToAction("ClubListView", new { locationId = Model.LocationId });
                 }
                 else
@@ -482,6 +496,8 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                     Title = NotificationMessage.SUCCESS.ToString()
 
                 });
+                string apiUrl = ConfigurationManager.AppSettings["RevalidateApiUrl"];
+                string apiResponse = ExternalApiCallHelpers.CallApi(apiUrl, HttpMethod.Get);
                 return Json(JsonRequestBehavior.AllowGet);
             }
             else
@@ -792,6 +808,8 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                             Title = NotificationMessage.SUCCESS.ToString()
 
                         });
+                        string apiUrl = ConfigurationManager.AppSettings["RevalidateApiUrl"];
+                        string apiResponse = ExternalApiCallHelpers.CallApi(apiUrl, HttpMethod.Get);
                         return RedirectToAction("ClubListForMainPage", new { groupId = Model.GroupId, locationId = Model.LocationId });
                     }
                     else
@@ -857,6 +875,8 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                     Message = dbResponseInfo.Message ?? "Club Recommendation has been deleted successfully",
                     Title = NotificationMessage.SUCCESS.ToString()
                 });
+                string apiUrl = ConfigurationManager.AppSettings["RevalidateApiUrl"];
+                string apiResponse = ExternalApiCallHelpers.CallApi(apiUrl, HttpMethod.Get);
                 return Json(responseInfo.SetMessageInTempData(this));
             }
             else
@@ -1110,6 +1130,8 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                     Message = dbResponseInfo.Message ?? "Recommendation Request has been Rejected",
                     Title = NotificationMessage.SUCCESS.ToString()
                 });
+                string apiUrl = ConfigurationManager.AppSettings["RevalidateApiUrl"];
+                string apiResponse = ExternalApiCallHelpers.CallApi(apiUrl, HttpMethod.Get);
 
             }
             else if (dbResponseInfo.Code == ResponseCode.Failed)
@@ -1308,6 +1330,8 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                     Message = dbResponseInfo.Message ?? "Recommendation Request has been Approved",
                     Title = NotificationMessage.SUCCESS.ToString()
                 });
+                string apiUrl = ConfigurationManager.AppSettings["RevalidateApiUrl"];
+                string apiResponse = ExternalApiCallHelpers.CallApi(apiUrl, HttpMethod.Get);
 
             }
             else if (dbResponseInfo.Code == ResponseCode.Failed)

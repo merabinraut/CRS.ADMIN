@@ -103,10 +103,12 @@
     <Compile Include="AccountInformation\AccountInformationCommon.cs" />
     <Compile Include="AdminPointManagement\AdminPointManagementCommon.cs" />
     <Compile Include="AffiliateManagement\AffiliateManagementCommon.cs" />
+
     <Compile Include="ApiResponseMessage\ApiResponseMessageCommon.cs" />
     <Compile Include="BasicClubManagement\BasicClubManagementCommon.cs" />
     <Compile Include="ChargeManagement\ChargeCategoryCommon.cs" />
     <Compile Include="ChargeManagement\ChargeDetailCommon.cs" />
+
     <Compile Include="ClubManagement\ClubManagementCommon.cs" />
     <Compile Include="ClubManagement\EventManagementCommon.cs" />
     <Compile Include="ClubManagement\GalleryManagementCommon.cs" />

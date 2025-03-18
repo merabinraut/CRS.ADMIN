@@ -322,6 +322,7 @@ __pycache__/
 *.btm.cs
 *.odx.cs
 *.xsd.cs
+*.DS_Store
 
 # OpenCover UI analysis results
 OpenCover/
@@ -340,12 +341,11 @@ ASALocalRun/
 
 # Local History for Visual Studio
 .localhistory/
-/CRS.ADMIN.APPLICATION/Web.config
-/CRS.ADMIN.APPLICATION/Web.Debug.config
-/CRS.ADMIN.APPLICATION/Web.Release.config
+
 
 # Ignore AmazonConfigruation.json
 AmazonConfigruation.json
+
 /CRS.ADMIN.APPLICATION/App_Data/AmazonConfigruation.json
 /CRS.ADMIN.APPLICATION/Web.config
 /CRS.ADMIN.APPLICATION/Web.Debug.config
