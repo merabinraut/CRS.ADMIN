@@ -1,21 +1,12 @@
-<<<<<<< HEAD
-﻿@model CRS.ADMIN.APPLICATION.Models.ApiResponseMessage.ApiResponseMessageModel
-<div id="edit-api-response-message"
-=======
 @model CRS.ADMIN.APPLICATION.Models.ApiResponseMessage.ApiResponseMessageModel
 <div id="add-edit-response-message"
->>>>>>> 9a5f5ff2682516912a6a6928c4d594ce6ea591bc
      class="drawer-close-disable  flex justify-end fixed top-0 right-0 z-40 h-screen overflow-y-auto transition-transform translate-x-full "
      tabindex="-1" aria-labelledby="drawer-right-label">
     <div class="bg-white w-[616px] drawer-container relative">
         <div class="drawer-form-container sticky top-0 z-[5] ">
             <div class="drawer-form flex justify-between bg-secondary-color-pink py-[16px] px-[24px] h-[56px]">
                 <div>
-<<<<<<< HEAD
-                    Edit Response Message
-=======
                     @CRS.ADMIN.APPLICATION.Resources.Resource.Manage_Api_Response_Message
->>>>>>> 9a5f5ff2682516912a6a6928c4d594ce6ea591bc
                 </div>
                 <button type="button" data-drawer-hide="add-new-response-message" aria-controls="add-new-response-message"
                         class="text-[20px]" onclick="CancelFunction()">
@@ -23,40 +14,6 @@
                 </button>
             </div>
         </div>
-<<<<<<< HEAD
-        @using (Html.BeginForm("UpdateResponseMessage", "ApiResponseMessage", FormMethod.Post, new { @id = "editrespmsgform", enctype = "multipart/form-data" }))
-        {
-            @Html.AntiForgeryToken()
-            <input type="hidden" name="MessageId" id="edit-id-input" value="" />
-            <div class="p-[24px]">
-                <div class=" py-4 grid gap-5">
-                    <div class="input-field-common">
-                        <label class="block mb-[12px] text-sm font-medium text-secondary-100 ">
-                            Code
-                        </label>
-
-                        @Html.TextBoxFor(model => model.Code, new
-                        {
-                           @id = "edit-code-input",
-                           @class = "w-full rounded-[4px]",
-                           @style = "border-radius:4px !important",
-                           @placeholder = "Code",
-                           @maxlength = "30"
-                        })
-                    </div>
-                    <div class="input-field-common">
-                        <label class="block mb-[12px] text-sm font-medium text-secondary-100 ">
-                            Message
-                        </label>
-                        @Html.TextBoxFor(model => model.Message, new
-                        {
-                            @id = "edit-message-input",
-                            @class = "w-full rounded-[4px]",
-                            @style = "border-radius:4px !important",
-                            @placeholder = "Message",
-                            @maxlength = "30"
-                        })
-=======
         @using (Html.BeginForm("UpdateResponseMessage", "ApiResponseMessage", FormMethod.Post, new { @id = "addrespmsgform", enctype = "multipart/form-data" }))
         {
             @Html.AntiForgeryToken()
@@ -96,21 +53,10 @@
                        @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.Message,
                        @maxlength = "30"
                    })
->>>>>>> 9a5f5ff2682516912a6a6928c4d594ce6ea591bc
 
                     </div>
                     <div class="input-field-common">
                         <label class="block mb-[12px] text-sm font-medium text-secondary-100 ">
-<<<<<<< HEAD
-                           English Message
-                        </label>
-                        @Html.TextBoxFor(model => model.MessageEng, new
-                        {
-                            @id = "edit-messageeng-input",
-                            @class = "w-full rounded-[4px]",
-                            @style = "border-radius:4px !important",
-                            @placeholder = "English Message",
-=======
                             @CRS.ADMIN.APPLICATION.Resources.Resource.English_Message
                         </label>
                         @Html.TextBoxFor(model => model.MessageEng, new
@@ -118,23 +64,12 @@
                             @class = "w-full rounded-[4px]",
                             @style = "border-radius:4px !important",
                             @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.English_Message,
->>>>>>> 9a5f5ff2682516912a6a6928c4d594ce6ea591bc
                             @maxlength = "30"
                         })
 
                     </div>
                     <div class="input-field-common w-full">
                         <label class="block mb-4 text-sm font-medium text-secondary-100 ">
-<<<<<<< HEAD
-                            Http Status Code
-                        </label>
-                        @Html.TextBoxFor(model => model.HttpStatusCode, new
-                        {
-                            @id = "edit-httpstatuscode-input",
-                            @class = "w-full rounded-[4px]",
-                            @style = "border-radius:4px !important",
-                            @placeholder = "Code",
-=======
                             @CRS.ADMIN.APPLICATION.Resources.Resource.Http_Status_Code
                         </label>
                         @Html.TextBoxFor(model => model.HttpStatusCode, new
@@ -142,19 +77,10 @@
                             @class = "w-full rounded-[4px]",
                             @style = "border-radius:4px !important",
                             @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.Http_Status_Code,
->>>>>>> 9a5f5ff2682516912a6a6928c4d594ce6ea591bc
                             @maxlength = "30"
                         })
 
                     </div>
-<<<<<<< HEAD
-
-                    <div class="input-field-common">
-                        <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
-                            Category
-                        </label>
-                        <select id="edit-category-input" name="Category" class=" default_select select-common block w-full "
-=======
                     <div class="input-field-common w-full">
                         <label class="block mb-4 text-sm font-medium text-secondary-100 ">
                             @CRS.ADMIN.APPLICATION.Resources.Resource.Description
@@ -174,25 +100,18 @@
                             @CRS.ADMIN.APPLICATION.Resources.Resource.CategoryType
                         </label>
                         <select id="large" name="Category" class=" default_select select-common block w-full "
->>>>>>> 9a5f5ff2682516912a6a6928c4d594ce6ea591bc
                                 style="width: 100%;">
                             <option value="error">
                                 Error
                             </option>
-<<<<<<< HEAD
-
-=======
                             <option value="success">
                                 Success
                             </option>
->>>>>>> 9a5f5ff2682516912a6a6928c4d594ce6ea591bc
                         </select>
                         <span class="error">
 
                         </span>
                     </div>
-<<<<<<< HEAD
-=======
                     <div class="input-field-common w-full">
                         <label class="block mb-4 text-sm font-medium text-secondary-100 ">
                             @CRS.ADMIN.APPLICATION.Resources.Resource.Module_Name
@@ -219,7 +138,6 @@
                         })
 
                     </div>
->>>>>>> 9a5f5ff2682516912a6a6928c4d594ce6ea591bc
 
                 </div>
 
@@ -229,11 +147,7 @@
                             @CRS.ADMIN.APPLICATION.Resources.Resource.Cancel
                         </button>
                         <button class="resetForm btn btn-primary-default h-[40px] px-8 rounded-[4px]  text-sm leading-[10px]" id="saveData" type="submit">
-<<<<<<< HEAD
-                            Update
-=======
                             @CRS.ADMIN.APPLICATION.Resources.Resource.Create
->>>>>>> 9a5f5ff2682516912a6a6928c4d594ce6ea591bc
                         </button>
                     </div>
                 </div>

@@ -9,8 +9,6 @@ using System.Text;
 using System.Threading.Tasks;
 using CRS.ADMIN.SHARED.ApiResponseMessage;
 
-using CRS.ADMIN.SHARED.PaginationManagement;
-
 namespace CRS.ADMIN.REPOSITORY.ApiResponseMessage
 {
     public interface IApiResponseMessageRepository
