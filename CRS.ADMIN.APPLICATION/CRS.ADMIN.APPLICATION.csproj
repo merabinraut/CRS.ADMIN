@@ -343,6 +343,7 @@
     <Compile Include="Models\ClubManagement\ClubManagerModel.cs" />
     <Compile Include="Models\ClubManagement\EventModel.cs" />
     <Compile Include="Models\ClubManagement\GalleryManagementModel.cs" />
+    <Compile Include="Models\ClubManagement\LineGroupModel.cs" />
     <Compile Include="Models\CommissionManagement\AdminCommissionModel.cs" />
     <Compile Include="Models\CommissionManagement\AssignCommissionModel.cs" />
     <Compile Include="Models\CommissionManagement\CommissionCategoryModel.cs" />
@@ -393,7 +394,9 @@
       <DependentUpon>Resource.Ja.resx</DependentUpon>
     </Compile>
     <Compile Include="Services\CognitoService.cs" />
+    <None Include="Views\ClubManagement\_ManageLineGroupPartialView.cshtml" />
     <None Include="Views\ChargeManagement\_ManageChargeCategoryDetails.cshtml" />
+    <Content Include="Content\assets\images\line.svg" />
     <Content Include="Content\assets_new\images\group_management_svg.png" />
     <Content Include="Views\ChargeManagement\ChargeCategoryDetails.cshtml" />
     <None Include="Views\ChargeManagement\_ManageChargeCategoryPartialView.cshtml" />

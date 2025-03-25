@@ -1,0 +1,132 @@
+@model CRS.ADMIN.APPLICATION.Models.ClubManagement.LineGroupModel
+<div id="add-new-line-group"
+     class="drawer-close-disable  flex justify-end fixed top-0 right-0 z-40 h-screen overflow-y-auto transition-transform translate-x-full"
+     tabindex="-1" aria-labelledby="add-new-line-group" aria-modal="true" role="dialog">
+    <div class="bg-white w-[616px] drawer-container relative">
+        <div class="drawer-form-container sticky top-0 z-[5] ">
+            <div class="drawer-form flex justify-between bg-secondary-color-pink py-[16px] px-[24px] h-[56px]">
+                <div>
+                    @CRS.ADMIN.APPLICATION.Resources.Resource.Manage_LINE_Group
+                </div>
+                <button type="button" data-drawer-hide="add-new-line-group" aria-controls="add-new-line-group"
+                        class="text-[20px]">
+                    <i class="las la-window-close text-white" onclick="CancelFunction()"></i>
+                </button>
+            </div>
+        </div>
+        <div class="p-[24px]">
+            @using (Html.BeginForm("ManageLineGroup", "ClubManagement", FormMethod.Post, new { @id = "ManageLineGroupForm", enctype = "multipart/form-data" }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.HiddenFor(model => model.clubId);
+                @Html.HiddenFor(model => model.groupId);
+                @Html.HiddenFor(model => model.searchFilter);
+                @Html.HiddenFor(model => model.startIndex);
+                @Html.HiddenFor(model => model.pageSize);
+                if (!string.IsNullOrEmpty(Model.qrImage))
+                {
+                    @Html.HiddenFor(model => model.qrImage)
+                }
+                <div class="grid gap-4">
+                    <!-- notice rendering -->
+                    <div class=" ">
+                        <!-- for date -->
+                        <div class="mb-[20px]">
+                            <div class="input-field-common mb-[20px]">
+                                <div class="input-field-common">
+                                    <label for="date" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                                        @CRS.ADMIN.APPLICATION.Resources.Resource.LINE_Group_Name
+                                    </label>
+                                    @Html.TextBoxFor(model => model.groupName, new
+                                             {
+                                             @class = "w-full",
+                                             @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.Title,
+                                             autocomplete = "off"
+                                             })
+
+                                    <span class="error">
+                                        @Html.ValidationMessageFor(m => m.groupName)
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div id="qrimage" class="mb-[20px]">
+
+                                <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
+                                    @CRS.ADMIN.APPLICATION.Resources.Resource.QR_Code
+                                </label>
+                                <div class="file-upload-common rounded-[4px] border-[#E6E6E6]">
+                                    <label for="file_input_line_group" class="custom-file-upload bg-[#E49797] w-[123px] flex-none ">
+                                        <span>@CRS.ADMIN.APPLICATION.Resources.Resource.Choose_Images</span>
+                                    </label>
+                                    <input id="file_input_line_group" class="file-input" name="qrImage_certificate" type="file"
+                                           style="display:none;">
+                                    <p id="file_name_line_group"
+                                       class="file-name w-max h-[23px] overflow-hidden pl-2 text-xs text-[#686868] leading-[25px]">
+                                        @if (string.IsNullOrEmpty(Model.qrImage))
+                                        {
+                                            @CRS.ADMIN.APPLICATION.Resources.Resource.No_File_Choosen
+                                        }
+                                        else
+                                        {
+                                            string fileName = Path.GetFileName(Model.qrImage);
+                                            @fileName
+                                        }
+                                </div>
+                                <div class="text-xs text-error mt-[8px]">
+                                    @CRS.ADMIN.APPLICATION.Resources.Resource.ImageValidationMsg
+                                    <br />
+                                    <span class="error">
+                                        @Html.ValidationMessageFor(m => m.qrImage)
+                                    </span>
+                                </div>
+                            </div>
+
+                            <!-- </div> -->
+                            <div class="input-field-common mb-[20px]">
+                                <div class="input-field-common">
+                                    <label for="date" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                                        @CRS.ADMIN.APPLICATION.Resources.Resource.LINE_Group_Link
+                                    </label>
+                                    @Html.TextBoxFor(model => model.link, new
+                                             {
+                                             @class = "w-full",
+                                             @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.Title,
+                                             autocomplete = "off"
+                                             })
+
+                                    <span class="error">
+                                        @Html.ValidationMessageFor(m => m.link)
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- for submit button -->
+                <div class="py-4 flex justify-end">
+                    <div class="flex gap-6">
+                        <button class="btn btn-secondary rounded-[4px]" type="button" data-drawer-hide="add-new-host-tag"
+                                aria-controls="add-new-host-tag" onclick="CancelFunction();">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Cancel
+                        </button>
+                        <button class="btn btn-primary-default rounded-[4px]" id="LineFormSubmit"> @CRS.ADMIN.APPLICATION.Resources.Resource.Submit</button>
+
+
+                    </div>
+
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<script>
+var imagePath = "@Model.qrImage"
+
+if (imagePath !==null) {   
+    $("#file_name_logo").text(imageName)
+}
+
+</script>

@@ -27,6 +27,7 @@ using System.Web.Mvc;
 using static Google.Apis.Requests.BatchRequest;
 using CRS.ADMIN.SHARED.Middleware.AmazonCognitoModel.Password;
 using Amazon.CognitoIdentityProvider.Model;
+using System.Drawing.Printing;
 
 namespace CRS.ADMIN.APPLICATION.Controllers
 {
@@ -67,6 +68,8 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             if (TempData.ContainsKey("AvailabilityModel")) response.GetAvailabilityList = TempData["AvailabilityModel"] as List<AvailabilityTagModel>;
             else response.ManageTag.GetAvailabilityTagModel = new List<AvailabilityTagModel>();
 
+            if (TempData.ContainsKey("LineGroupModel")) response.LineGroupModel = TempData["LineGroupModel"] as LineGroupModel;
+            else response.LineGroupModel = new LineGroupModel();
             //****************************  Start Approved List  **************************************//
 
             if (TabValue == "")
@@ -2121,6 +2124,140 @@ namespace CRS.ADMIN.APPLICATION.Controllers
 
         #endregion
 
+        #region Line Group
+        [HttpGet]
+        public ActionResult ManageLineGroup(string agentId = "", string groupId = "", string searchFilter = "", int startIndex = 0, int pageSize = 10)
+        {
+            LineGroupModel model = new LineGroupModel();
+            var culture = System.Threading.Thread.CurrentThread.CurrentCulture.ToString();
+            ViewBag.EventType = ApplicationUtilities.LoadDropdownValuesList("EVENTTYPECLUB", "", "", culture);
+            if (!string.IsNullOrEmpty(agentId))
+            {
+                if (!string.IsNullOrEmpty(groupId))
+                {
+                    var id = agentId.DecryptParameter();
+                    
+                    // var lineid = groupId.DecryptParameter();
+                    if (string.IsNullOrEmpty(id))
+                    {
+                        model.clubId = agentId;
+                        model.groupId = groupId;
+                        this.AddNotificationMessage(new NotificationModel()
+                        {
+                            NotificationType = NotificationMessage.INFORMATION,
+                            Message = "Invalid club details",
+                            Title = NotificationMessage.INFORMATION.ToString(),
+                        });
+                        return RedirectToAction("ClubList", "ClubManagement", new { SearchFilter = searchFilter, StartIndex = startIndex, PageSize = pageSize });
+                    }
+                    
+                    var dbResponse = _BUSS.GetLineGroupDetails(id, groupId);
+                    model = dbResponse.MapObject<LineGroupModel>();
+                    model.clubId = agentId;
+                    model.groupId = groupId;
+
+                }
+            }
+            TempData["LineGroupModel"] = model;
+            TempData["RenderId"] = "ManageLineGroup";
+            return RedirectToAction("ClubList", "ClubManagement", new { SearchFilter = searchFilter, StartIndex = startIndex, PageSize = pageSize });
+        }
+
+        [HttpPost, ValidateAntiForgeryToken]
+        public async Task<ActionResult> ManageLineGroup(LineGroupModel Model, HttpPostedFileBase qrImage_certificate)
+        {
+            string fileName = string.Empty;
+            string ErrorMessage = string.Empty;       
+            if (ModelState.IsValid)
+            {
+                LineGroupCommon commonModel = Model.MapObject<LineGroupCommon>();
+                commonModel.clubId = !string.IsNullOrEmpty(Model.clubId) ? Model.clubId.DecryptParameter() : null;             
+                if (string.IsNullOrEmpty(commonModel.clubId))
+                {
+                    this.AddNotificationMessage(new NotificationModel()
+                    {
+                        NotificationType = NotificationMessage.INFORMATION,
+                        Message = "Invalid club details.",
+                        Title = NotificationMessage.INFORMATION.ToString(),
+                    });
+                    TempData["LineGroupModel"] = Model;
+                    TempData["RenderId"] = "ManageLineGroup";
+                    return RedirectToAction("ClubList", "ClubManagement", new { SearchFilter = Model.searchFilter, StartIndex = Model.startIndex, PageSize = Model.pageSize });
+
+                }
+                string qrImageFileName = string.Empty;
+               
+                    if (qrImage_certificate != null)
+                    {
+
+                        var allowedContentType = AllowedImageContentType();
+                        var contentType = qrImage_certificate.ContentType;
+                        var ext = Path.GetExtension(qrImage_certificate.FileName);
+                        if (allowedContentType.Contains(contentType.ToLower()))
+                        {
+                            qrImageFileName = $"{AWSBucketFolderNameModel.CLUB}/ClubLineGroupQR_{DateTime.Now.ToString("yyyyMMddHHmmssffff")}{ext.ToLower()}";
+                            commonModel.qrImage = $"/{qrImageFileName}";
+                        }
+                        else
+                        {
+                            this.AddNotificationMessage(new NotificationModel()
+                            {
+                                NotificationType = NotificationMessage.INFORMATION,
+                                Message = "Invalid image format.",
+                                Title = NotificationMessage.INFORMATION.ToString(),
+                            });
+
+                            return RedirectToAction("ClubList", "ClubManagement", new { SearchFilter = Model.searchFilter, StartIndex = Model.startIndex, PageSize = Model.pageSize });
+
+                        }
+                    }
+                
+               
+                var dbResponse = _BUSS.ManageLineGroup(commonModel);
+                if (dbResponse != null && dbResponse.Code == 0)
+                {
+                    if (qrImage_certificate != null) await ImageHelper.ImageUpload(qrImageFileName, qrImage_certificate);
+                    this.AddNotificationMessage(new NotificationModel()
+                    {
+                        NotificationType = dbResponse.Code == CRS.ADMIN.SHARED.ResponseCode.Success ? NotificationMessage.SUCCESS : NotificationMessage.INFORMATION,
+                        Message = dbResponse.Message ?? "Failed",
+                        Title = dbResponse.Code == CRS.ADMIN.SHARED.ResponseCode.Success ? NotificationMessage.SUCCESS.ToString() : NotificationMessage.INFORMATION.ToString()
+                    });
+                    return RedirectToAction("ClubList", "ClubManagement", new { SearchFilter = Model.searchFilter, StartIndex = Model.startIndex, PageSize = Model.pageSize });
+
+                }
+                else
+                {
+                    this.AddNotificationMessage(new NotificationModel()
+                    {
+                        NotificationType = NotificationMessage.INFORMATION,
+                        Message = dbResponse.Message ?? "Failed",
+                        Title = NotificationMessage.INFORMATION.ToString()
+                    });
+                    TempData["LineGroupModel"] = Model;
+                    TempData["RenderId"] = "ManageLineGroup";
+                    return RedirectToAction("ClubList", "ClubManagement", new { SearchFilter = Model.searchFilter, StartIndex = Model.startIndex, PageSize = Model.pageSize });
+
+                }
+            }
+            var errorMessages = ModelState.Where(x => x.Value.Errors.Count > 0)
+                                  .SelectMany(x => x.Value.Errors.Select(e => $"{x.Key}: {e.ErrorMessage}"))
+                                  .ToList();
+
+            var notificationModels = errorMessages.Select(errorMessage => new NotificationModel
+            {
+                NotificationType = NotificationMessage.INFORMATION,
+                Message = errorMessage,
+                Title = NotificationMessage.INFORMATION.ToString(),
+            }).ToArray();
+            AddNotificationMessage(notificationModels);
+            var errors = ModelState.Where(x => x.Value.Errors.Count > 0).Select(x => new { x.Key }).ToList();
+            TempData["LineGroupModel"] = Model;
+            TempData["RenderId"] = "ManageLineGroup";
+            return RedirectToAction("ClubList", "ClubManagement", new { SearchFilter = Model.searchFilter, StartIndex = Model.startIndex, PageSize = Model.pageSize });
+
+        }
+        #endregion
 
 
     }

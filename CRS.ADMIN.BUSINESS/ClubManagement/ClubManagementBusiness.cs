@@ -139,5 +139,13 @@ namespace CRS.ADMIN.BUSINESS.ClubManagement
         {
             return _REPO.ManageClubCognitoDetail(clubId, loginId, cognitoUserId, connection, transaction);
         }
+        public LineGroupCommon GetLineGroupDetails(string agentId, string groupId)
+        {
+            return _REPO.GetLineGroupDetails( agentId, groupId);
+        }
+        public CommonDbResponse ManageLineGroup(LineGroupCommon request)
+        {
+            return _REPO.ManageLineGroup(request);
+        }
     }
 }

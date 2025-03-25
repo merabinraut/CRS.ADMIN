@@ -3013,6 +3013,24 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to LINE Group Link.
+        /// </summary>
+        public static string LINE_Group_Link {
+            get {
+                return ResourceManager.GetString("LINE Group Link", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to LINE Group Name.
+        /// </summary>
+        public static string LINE_Group_Name {
+            get {
+                return ResourceManager.GetString("LINE Group Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Link.
         /// </summary>
         public static string Link {
@@ -3306,6 +3324,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         public static string Manage_Host {
             get {
                 return ResourceManager.GetString("Manage Host", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Manage LINE Group.
+        /// </summary>
+        public static string Manage_LINE_Group {
+            get {
+                return ResourceManager.GetString("Manage LINE Group", resourceCulture);
             }
         }
         
@@ -4640,6 +4667,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         public static string Promotional_Image {
             get {
                 return ResourceManager.GetString("Promotional Image", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to QR Code.
+        /// </summary>
+        public static string QR_Code {
+            get {
+                return ResourceManager.GetString("QR Code", resourceCulture);
             }
         }
         

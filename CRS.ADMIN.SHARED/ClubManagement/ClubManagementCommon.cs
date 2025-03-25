@@ -22,6 +22,7 @@ namespace CRS.ADMIN.SHARED.ClubManagement
         public string ClubCategory { get; set; }
         public string holdStatus { get; set; }
         public string LandLineCode { get; set; }
+        public string LineGroupId {get; set; }
 
     }
 

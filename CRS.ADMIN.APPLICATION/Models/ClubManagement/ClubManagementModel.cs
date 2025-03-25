@@ -25,6 +25,7 @@ namespace CRS.ADMIN.APPLICATION.Models.ClubManagement
         public ManageClubModel ClubHoldModel { get; set; }
         public ManageTag ManageTag { get; set; }
         public ManageManagerModel ManageManager { get; set; }
+        public LineGroupModel LineGroupModel { get; set; }
         public List<AvailabilityTagModel> GetAvailabilityList { get; set; }
     }
     public class ClubListModel
@@ -48,6 +49,7 @@ namespace CRS.ADMIN.APPLICATION.Models.ClubManagement
         public string holdStatus { get; set; }
         public string ActionPlatform { get; set; }
         public string LandLineCode { get; set; }
+        public string LineGroupId { get; set; }
     }
 
     public class ClubDetailModel

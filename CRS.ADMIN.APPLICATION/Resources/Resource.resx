@@ -2896,4 +2896,20 @@
     <value>Module Name</value>
     <comment>Api Common Response</comment>
   </data>
+  <data name="Manage LINE Group" xml:space="preserve">
+    <value>Manage LINE Group</value>
+    <comment>Club Management</comment>
+  </data>
+  <data name="LINE Group Name" xml:space="preserve">
+    <value>LINE Group Name</value>
+    <comment>Club Management</comment>
+  </data>
+  <data name="QR Code" xml:space="preserve">
+    <value>QR Code</value>
+    <comment>Club Management</comment>
+  </data>
+  <data name="LINE Group Link" xml:space="preserve">
+    <value>LINE Group Link</value>
+    <comment>Club Management</comment>
+  </data>
 </root>

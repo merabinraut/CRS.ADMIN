@@ -6,6 +6,8 @@
     var _ClubHoldModel = Model.ClubHoldModel as CRS.ADMIN.APPLICATION.Models.ClubManagement.ManageClubModel;
     var _ManageTag = Model.ManageTag as CRS.ADMIN.APPLICATION.Models.TagManagement.ManageTag;
     var _ManageManager = Model.ManageManager as CRS.ADMIN.APPLICATION.Models.ClubManagerModel.ManageManagerModel;
+    var _lineGroupModel = Model.LineGroupModel as CRS.ADMIN.APPLICATION.Models.ClubManagement.LineGroupModel;
+    var ss = "";
 }
 
 <div class="px-8 py-4">
@@ -389,6 +391,7 @@
 <!-- block and unblock -->
 @Html.Partial("_ManageClubPartialView", _ManageClubModel)
 @Html.Partial("_ClubHoldDetailPartialView", _ClubHoldModel)
+@Html.Partial("_ManageLineGroupPartialView", _lineGroupModel)
 @section scripts
 {
     <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
@@ -884,6 +887,10 @@
             }
             else if (PopUpRenderValue != null && PopUpRenderValue != "" && PopUpRenderValue == "ClubHoldDetails") {
                 var element = document.getElementById('add-new-club-hold-details');
+                element.classList.remove('translate-x-full');
+            }
+            else if (PopUpRenderValue != null && PopUpRenderValue != "" && PopUpRenderValue == "ManageLineGroup") {
+                var element = document.getElementById('add-new-line-group');
                 element.classList.remove('translate-x-full');
             }
             var tag1Status = $('#Tag1Status').val();
@@ -1424,6 +1431,7 @@
             document.getElementById("ManageClubForm").submit();
         }
 
+        
         function ManageClubGetDetailsFunction(i) {
             let search_filter = $('#default-search').val();
             const start_index_val = @ViewBag.StartIndex;
@@ -1503,6 +1511,12 @@
         }
         function PlanRedirectFunction(i) {
             window.location.href = '/ClubPlanManagement/ClubPlanList?AgentId=' + i;
+        }
+        function LineGroupFunction(i, j) {
+             let search_filter = $('#default-search').val();
+             const start_index_val = @ViewBag.StartIndex;
+             const page_size = @ViewBag.PageSize;
+            window.location.href = '/ClubManagement/ManageLineGroup?agentId=' + i + '&groupId=' + j + '&searchFilter=' + search_filter + '&startIndex=' + start_index_val + '&pageSize=' + page_size;
         }
 
     </script>
@@ -1819,7 +1833,16 @@
                  defaultDate: '@_ManageClubModel.LicenseIssuedDate'
              });
          })
-
+$("#LineFormSubmit").click(function () {
+    debugger;
+    var image = $("#file_name_line_group").text().trim().toLowerCase(); //$("input[name='Logo_Certificate']").val();
+    if (image == "no file choosen" || image == "ファイルが選択されていません" || image == "")
+    {
+        $('span.field-validation-valid[data-valmsg-for="qrImage"]').text('@CRS.ADMIN.APPLICATION.Resources.Resource.Required');
+        return false;
+    }
+    $("#ManageLineGroupForm").submit();
+});
 
      });
 
