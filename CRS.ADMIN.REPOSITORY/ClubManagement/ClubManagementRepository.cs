@@ -1198,7 +1198,7 @@ namespace CRS.ADMIN.REPOSITORY.ClubManagement
             SQL += " @agentId=" + _DAO.FilterString(Request.clubId);
             SQL += ",@groupId=" + _DAO.FilterString(Request.groupId);
             SQL += ",@image=" + _DAO.FilterString(Request.qrImage);
-            SQL += ",@groupName=" + _DAO.FilterString(Request.groupName);
+            SQL += ",@groupName=" + (!string.IsNullOrEmpty(Request.groupName) ? "N" + _DAO.FilterString(Request.groupName) : _DAO.FilterString(Request.groupName));
             SQL += ",@link=" + _DAO.FilterString(Request.link);
             
             return _DAO.ParseCommonDbResponse(SQL);
