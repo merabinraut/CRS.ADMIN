@@ -1836,10 +1836,12 @@
 $("#LineFormSubmit").click(function () {
     debugger;
     var image = $("#file_name_line_group").text().trim().toLowerCase(); //$("input[name='Logo_Certificate']").val();
-    if (image == "no file choosen" || image == "ファイルが選択されていません" || image == "")
-    {
+    if (image == "no file choosen" || image == "ファイルが選択されていません" || image == "") {
         $('span.field-validation-valid[data-valmsg-for="qrImage"]').text('@CRS.ADMIN.APPLICATION.Resources.Resource.Required');
         return false;
+    }
+    else {
+         $('span.field-validation-valid[data-valmsg-for="qrImage"]').text('');
     }
     $("#ManageLineGroupForm").submit();
 });
