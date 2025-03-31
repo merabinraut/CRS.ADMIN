@@ -7,4 +7,12 @@
             public string AccessToken { get; set; }
         }
     }
+
+    public class AdminSignOutModel
+    {
+        public class Request
+        {
+            public string Username { get; set; }
+        }
+    }
 }

@@ -459,6 +459,23 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                     return Json(JsonRequestBehavior.AllowGet);
                 }
 
+                var signOutResponse = await _amazonCognitoMiddleware.AdminSignOutUserAsync(new SHARED.Middleware.AmazonCognitoModel.Auth.AdminSignOutModel.Request
+                {
+                    Username = response.Extra1
+                });
+
+                if (signOutResponse?.Code != CRS.ADMIN.SHARED.Middleware.AmazonCognitoModel.ResponseCode.Success)
+                {
+                    this.AddNotificationMessage(new NotificationModel()
+                    {
+                        NotificationType = NotificationMessage.INFORMATION,
+                        Message = "Something went wrong. Please try again later",
+                        Title = NotificationMessage.INFORMATION.ToString()
+                    });
+                    _sqlTransactionHandler.RollbackTransaction();
+                    return RedirectToAction("Index", "AffiliateManagement");
+                }
+
                 this.AddNotificationMessage(new NotificationModel()
                 {
                     NotificationType = response.Code == CRS.ADMIN.SHARED.ResponseCode.Success ? NotificationMessage.SUCCESS : NotificationMessage.INFORMATION,
