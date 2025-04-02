@@ -71,6 +71,9 @@
     <Reference Include="CSharp-easy-RSA-PEM">
       <HintPath>..\Reference\CSharp-easy-RSA-PEM.dll</HintPath>
     </Reference>
+    <Reference Include="CsvHelper, Version=33.0.0.0, Culture=neutral, PublicKeyToken=8c4959082be5c823, processorArchitecture=MSIL">
+      <HintPath>..\packages\CsvHelper.33.0.1\lib\net47\CsvHelper.dll</HintPath>
+    </Reference>
     <Reference Include="DocumentFormat.OpenXml, Version=2.19.0.0, Culture=neutral, PublicKeyToken=8fb06cb64d019a17, processorArchitecture=MSIL">
       <HintPath>..\packages\DocumentFormat.OpenXml.2.19.0\lib\net46\DocumentFormat.OpenXml.dll</HintPath>
     </Reference>
@@ -106,6 +109,9 @@
     </Reference>
     <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.8.0.0\lib\net462\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Bcl.HashCode, Version=1.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Bcl.HashCode.1.1.1\lib\net461\Microsoft.Bcl.HashCode.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Bcl.TimeProvider, Version=8.0.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Bcl.TimeProvider.8.0.1\lib\net462\Microsoft.Bcl.TimeProvider.dll</HintPath>
@@ -310,6 +316,7 @@
     <Compile Include="Controllers\WithdrawalRequestController.cs" />
     <Compile Include="Controllers\WithdrawSetupController.cs" />
     <Compile Include="CustomHelpers\CustomHtmlHelpers.cs" />
+    <Compile Include="CustomHelpers\ExternalApiCallHelpers.cs" />
     <Compile Include="Filters\ActivityLogFilter.cs" />
     <Compile Include="Filters\SessionExpiryFilterAttribute.cs" />
     <Compile Include="Global.asax.cs">
@@ -336,6 +343,7 @@
     <Compile Include="Models\ClubManagement\ClubManagerModel.cs" />
     <Compile Include="Models\ClubManagement\EventModel.cs" />
     <Compile Include="Models\ClubManagement\GalleryManagementModel.cs" />
+    <Compile Include="Models\ClubManagement\LineGroupModel.cs" />
     <Compile Include="Models\CommissionManagement\AdminCommissionModel.cs" />
     <Compile Include="Models\CommissionManagement\AssignCommissionModel.cs" />
     <Compile Include="Models\CommissionManagement\CommissionCategoryModel.cs" />
@@ -386,7 +394,9 @@
       <DependentUpon>Resource.Ja.resx</DependentUpon>
     </Compile>
     <Compile Include="Services\CognitoService.cs" />
+    <None Include="Views\ClubManagement\_ManageLineGroupPartialView.cshtml" />
     <None Include="Views\ChargeManagement\_ManageChargeCategoryDetails.cshtml" />
+    <Content Include="Content\assets\images\line.svg" />
     <Content Include="Content\assets_new\images\group_management_svg.png" />
     <Content Include="Views\ChargeManagement\ChargeCategoryDetails.cshtml" />
     <None Include="Views\ChargeManagement\_ManageChargeCategoryPartialView.cshtml" />
@@ -410,6 +420,11 @@
     <Content Include="Views\ChargeManagement\ChargeCategoryType.cshtml" />
     <None Include="Views\ClubManagement\_RejectedClubListPartialView.cshtml" />
     <Content Include="Views\AffiliateManagement\_ConvertedCustomerPointsReport.cshtml" />
+    <Content Include="Views\ApiResponseMessage\Index.cshtml" />
+    <Content Include="Views\ApiResponseMessage\ApiResponseMessageList.cshtml" />
+    <Content Include="Views\ApiResponseMessage\_AddResponseMessage.cshtml" />
+    <Content Include="Views\ApiResponseMessage\_EditResponseMessage.cshtml" />
+    <Content Include="Views\HostManagement\UploadBulkImage.cshtml" />
     <Content Include="Views\PointsManagement\_PointTransferRetrivePartialView.cshtml" />
     <Content Include="Views\PointsManagement\_PointRequestListPartialView.cshtml" />
     <Content Include="Views\GroupManagement\Index.cshtml" />

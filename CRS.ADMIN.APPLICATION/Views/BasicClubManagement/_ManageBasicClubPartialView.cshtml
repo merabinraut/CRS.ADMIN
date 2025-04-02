@@ -72,7 +72,7 @@
                     @Html.HiddenFor(model => model.StartIndex)
                     @Html.HiddenFor(model => model.PageSize)
 
-                    <div id="contentBasic" class="content-section " style="display:block" >
+                    <div id="contentBasic" class="content-section " style="display:block">
                         <div class="grid gap-4 py-[10px]">
                             <div class="flex gap-2 text-primary-300 text-sm font-semibold items-center mt-[10px]">
                                 <div class="flex-none uppercase">@CRS.ADMIN.APPLICATION.Resources.Resource.Basic_Info</div>
@@ -87,7 +87,7 @@
                                     @Html.TextBoxFor(model => model.ClubName1, new
                                {
                                    @class = "w-full",
-                                   @id= "ClubName1_basic",
+                                   @id = "ClubName1_basic",
                                    @placeholder = CRS.ADMIN.APPLICATION.Resources.Resource.StoreName,
                                    //@onkeypress = "return isAlphabetWithSpace(event)",
                                    autocomplete = "off",
@@ -484,25 +484,51 @@
                                         <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
                                             @CRS.ADMIN.APPLICATION.Resources.Resource.Prefecture
                                         </label>
-                                        <select id="large" class=" default_select select-common block w-full "
-                                                style="width: 100%;" name="LocationDDL">
-                                            @foreach (var item in ViewBag.LocationDDLList as IEnumerable<SelectListItem>)
-                                            {
-                                                var selectedId = ViewBag.LocationIdKeyBasic as string;
-                                                if (item.Value == selectedId)
+                                        @if (!string.IsNullOrEmpty(Model.AgentId))
+                                        {
+                                            <select id="large" class=" default_select select-common block w-full "
+                                                    style="width: 100%;" name="LocationDDL" disabled>
+                                                @foreach (var item in ViewBag.LocationDDLList as IEnumerable<SelectListItem>)
                                                 {
-                                                    <option value="@item.Value" selected>
-                                                        @item.Text
-                                                    </option>
+                                                    var selectedId = ViewBag.LocationIdKeyBasic as string;
+                                                    if (item.Value == selectedId)
+                                                    {
+                                                        <option value="@item.Value" selected>
+                                                            @item.Text
+                                                        </option>
+                                                    }
+                                                    else
+                                                    {
+                                                        <option value="@item.Value">
+                                                            @item.Text
+                                                        </option>
+                                                    }
                                                 }
-                                                else
+                                            </select>
+                                        }
+                                        else
+                                        {
+                                            <select id="large" class=" default_select select-common block w-full "
+                                                    style="width: 100%;" name="LocationDDL">
+                                                @foreach (var item in ViewBag.LocationDDLList as IEnumerable<SelectListItem>)
                                                 {
-                                                    <option value="@item.Value">
-                                                        @item.Text
-                                                    </option>
+                                                    var selectedId = ViewBag.LocationIdKeyBasic as string;
+                                                    if (item.Value == selectedId)
+                                                    {
+                                                        <option value="@item.Value" selected>
+                                                            @item.Text
+                                                        </option>
+                                                    }
+                                                    else
+                                                    {
+                                                        <option value="@item.Value">
+                                                            @item.Text
+                                                        </option>
+                                                    }
                                                 }
-                                            }
-                                        </select>
+                                            </select>
+                                        }
+
                                         <span class="error">
                                             @Html.ValidationMessageFor(m => m.LocationDDL)
                                         </span>

@@ -252,6 +252,34 @@ namespace CRS.ADMIN.APPLICATION.Middleware
             }
         }
 
+        public async Task<SharedCognitoModel.CommonResponse> AdminSignOutUserAsync(SharedCognitoModel.Auth.AdminSignOutModel.Request request)
+        {
+            var signOutRequest = request.MapObject<SharedCognitoModel.Auth.AdminSignOutModel.Request>();
+            try
+            {
+                var signOutResponse = await _cognitoService.AdminSignOutUserAsync(signOutRequest);
+                if (!signOutResponse)
+                    return new SharedCognitoModel.CommonResponse
+                    {
+                        Code = SharedCognitoModel.ResponseCode.Warning,
+                        Message = "Something went wrong. Please try again later."
+                    };
+                return new SharedCognitoModel.CommonResponse
+                {
+                    Code = ResponseCode.Success,
+                    Message = ResponseCode.Success.ToString()
+                };
+            }
+            catch (System.Exception ex)
+            {
+                return new SharedCognitoModel.CommonResponse
+                {
+                    Code = SharedCognitoModel.ResponseCode.Exception,
+                    Message = $"Something went wrong. Please try again later. Message: {ex.Message}"
+                };
+            }
+        }
+
         public async Task<bool> IsValidTokenAsync(string accessToken)
         {
             return await _cognitoService.IsValidateToken(accessToken);

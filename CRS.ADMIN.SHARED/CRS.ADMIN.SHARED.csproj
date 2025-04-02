@@ -110,6 +110,7 @@
     <Compile Include="ClubManagement\ClubManagementCommon.cs" />
     <Compile Include="ClubManagement\EventManagementCommon.cs" />
     <Compile Include="ClubManagement\GalleryManagementCommon.cs" />
+    <Compile Include="ClubManagement\LineGroupCommon.cs" />
     <Compile Include="ClubManagement\ManageManagerCommon.cs" />
     <Compile Include="CommissionManagement\AdminCommissionCommon.cs" />
     <Compile Include="CommissionManagement\AssignCommissionCommon.cs" />

@@ -108,6 +108,10 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             string otherCommaSeparatedString = string.Join(", ", otherArray);
             List<string> othersHolidayList = otherCommaSeparatedString.Split(new[] { ", " }, StringSplitOptions.RemoveEmptyEntries).ToList();
             ActionResult redirectresult = null;
+            if(!string.IsNullOrEmpty(Model.AgentId))
+            {
+                ModelState.Remove("LocationDDL");
+            }
             redirectresult = RedirectToAction("BasicClubManagementList", "BasicClubManagement", new
             {
                 SearchFilter = Model.SearchFilter,
@@ -966,7 +970,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                         return redirectresult;
                     }
                 }
-                commonModel.LocationId = LocationDDL?.DecryptParameter();
+                //commonModel.LocationId = LocationDDL?.DecryptParameter();
                 commonModel.BusinessType = BusinessTypeDDL?.DecryptParameter();
                 commonModel.Prefecture = commonModel.Prefecture?.DecryptParameter();
                 commonModel.ClosingDate = commonModel.ClosingDate?.DecryptParameter();

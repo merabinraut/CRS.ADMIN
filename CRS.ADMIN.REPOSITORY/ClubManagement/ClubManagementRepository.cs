@@ -48,7 +48,8 @@ namespace CRS.ADMIN.REPOSITORY.ClubManagement
                         TotalRecords = Convert.ToInt32(_DAO.ParseColumnValue(item, "TotalRecords").ToString()),
                         holdStatus = _DAO.ParseColumnValue(item, "holdStatus").ToString(),
                         //LandLineCode = _DAO.ParseColumnValue(item, "LandLineCode").ToString(),
-                        SNO = Convert.ToInt32(_DAO.ParseColumnValue(item, "SNO").ToString())
+                        SNO = Convert.ToInt32(_DAO.ParseColumnValue(item, "SNO").ToString()),
+                        LineGroupId = _DAO.ParseColumnValue(item, "lineGroupId").ToString()
                     });
                 }
             }
@@ -1172,5 +1173,36 @@ namespace CRS.ADMIN.REPOSITORY.ClubManagement
             var _sqlTransactionHandler = new RepositoryDaoWithTransaction(connection, transaction);
             return _sqlTransactionHandler.ParseCommonDbResponse(sp_name);
         }
+
+        #region Line Group
+        public LineGroupCommon GetLineGroupDetails(string agentId, string groupId)
+        {
+            string SQL = "EXEC sproc_get_line_group_details ";
+            SQL += " @agentId=" + _DAO.FilterString(agentId);
+            SQL += ",@groupId=" + _DAO.FilterString(groupId);
+            var dbResponse = _DAO.ExecuteDataRow(SQL);
+            if (dbResponse != null)
+            {
+                return new LineGroupCommon()
+                {
+                    groupName = Convert.ToString(_DAO.ParseColumnValue(dbResponse, "groupName")),
+                    link = Convert.ToString(_DAO.ParseColumnValue(dbResponse, "link")),
+                    qrImage = Convert.ToString(_DAO.ParseColumnValue(dbResponse, "qrImage")),
+                };
+            }
+            return new LineGroupCommon();
+        }
+        public CommonDbResponse ManageLineGroup(LineGroupCommon Request)
+        {
+            string SQL = "EXEC sproc_update_line_group_details ";            
+            SQL += " @agentId=" + _DAO.FilterString(Request.clubId);
+            SQL += ",@groupId=" + _DAO.FilterString(Request.groupId);
+            SQL += ",@image=" + _DAO.FilterString(Request.qrImage);
+            SQL += ",@groupName=" + (!string.IsNullOrEmpty(Request.groupName) ? "N" + _DAO.FilterString(Request.groupName) : _DAO.FilterString(Request.groupName));
+            SQL += ",@link=" + _DAO.FilterString(Request.link);
+            
+            return _DAO.ParseCommonDbResponse(SQL);
+        }
+        #endregion
     }
 }

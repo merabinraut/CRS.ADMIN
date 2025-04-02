@@ -61,5 +61,10 @@ namespace CRS.ADMIN.BUSINESS.HostManagement
             return _REPO.GetInquiryListAsync(SearchFilter,StartIndex,PageSize);
         }
         #endregion
+
+        public CommonDbResponse UploadHostImage(string ClubName, string LocationId, string HostName, string ImagePath)
+        {
+            return _REPO.UploadHostImage(ClubName, LocationId, HostName, ImagePath);
+        }
     }
 }

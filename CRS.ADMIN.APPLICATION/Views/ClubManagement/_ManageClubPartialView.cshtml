@@ -1528,29 +1528,57 @@
                                         </span>
 
                                     </div>
+
+
                                     <div class="input-field-common">
                                         <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
                                             @CRS.ADMIN.APPLICATION.Resources.Resource.Prefecture
                                         </label>
-                                        <select id="large" class=" default_select select-common block w-full "
-                                                style="width: 100%;" name="LocationDDL">
-                                            @foreach (var item in ViewBag.LocationDDLList as IEnumerable<SelectListItem>)
-                                            {
-                                                var selectedId = ViewBag.LocationIdKey as string;
-                                                if (item.Value == selectedId)
+                                        @if (!string.IsNullOrEmpty(Model.AgentId) || !string.IsNullOrEmpty(Model.holdId))
+                                        {
+                                            <select id="large" class=" default_select select-common block w-full "
+                                                    style="width: 100%;" name="LocationDDL" disabled>
+                                                @foreach (var item in ViewBag.LocationDDLList as IEnumerable<SelectListItem>)
                                                 {
-                                                    <option value="@item.Value" selected>
-                                                        @item.Text
-                                                    </option>
+                                                    var selectedId = ViewBag.LocationIdKey as string;
+                                                    if (item.Value == selectedId)
+                                                    {
+                                                        <option value="@item.Value" selected>
+                                                            @item.Text
+                                                        </option>
+                                                    }
+                                                    else
+                                                    {
+                                                        <option value="@item.Value">
+                                                            @item.Text
+                                                        </option>
+                                                    }
                                                 }
-                                                else
+                                            </select>
+                                        }
+                                        else
+                                        {
+                                            <select id="large" class=" default_select select-common block w-full "
+                                                    style="width: 100%;" name="LocationDDL">
+                                                @foreach (var item in ViewBag.LocationDDLList as IEnumerable<SelectListItem>)
                                                 {
-                                                    <option value="@item.Value">
-                                                        @item.Text
-                                                    </option>
+                                                    var selectedId = ViewBag.LocationIdKey as string;
+                                                    if (item.Value == selectedId)
+                                                    {
+                                                        <option value="@item.Value" selected>
+                                                            @item.Text
+                                                        </option>
+                                                    }
+                                                    else
+                                                    {
+                                                        <option value="@item.Value">
+                                                            @item.Text
+                                                        </option>
+                                                    }
                                                 }
-                                            }
-                                        </select>
+                                            </select>
+                                        }
+
                                         <span class="error">
                                             @Html.ValidationMessageFor(m => m.LocationDDL)
                                         </span>

@@ -8,6 +8,7 @@ namespace CRS.ADMIN.APPLICATION.Models.ApiResponseMessage
         public ApiResponseMessageModel ManageResponse { get; set; }
         public List<ApiResponseMessageModel> ApiResponseMessageList { get; set; }
     }
+
     public class ApiResponseMessageModel
     {
         public string SearchFilter { get; set; }
@@ -25,5 +26,6 @@ namespace CRS.ADMIN.APPLICATION.Models.ApiResponseMessage
         public string HttpStatusCode { get; set; }
         public string ActionUser { get; set; }
         public int SNO { get; set; }
+
     }
 }

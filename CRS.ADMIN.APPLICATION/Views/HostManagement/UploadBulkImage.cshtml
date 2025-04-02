@@ -1,0 +1,270 @@
+﻿@model CRS.ADMIN.APPLICATION.Models.HostManagement.ManageHostCommonModel
+@{
+    ViewBag.Title = "Host List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    //var _ManageHostModel = Model.ManageHostModel as CRS.ADMIN.APPLICATION.Models.HostManagement.ManageHostModel;
+}
+<link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+<div class="px-8 py-4">
+    
+    <!-- title  -->
+    <div class="flex flex-col  gap-6">
+        <div>
+            <div class="heading-title">
+                @CRS.ADMIN.APPLICATION.Resources.Resource.Host_Management
+            </div>
+            <div class="span-title-light-gray">
+                @CRS.ADMIN.APPLICATION.Resources.Resource.Host_Management_Supporting_Text
+            </div>
+        </div>
+        <div class="flex justify-between pb-[24px]">
+            <form action="/HostManagement/UploadBulkImage" method="POST" enctype="multipart/form-data">
+                <div class="relative input-search-wrapper">
+                    @Html.AntiForgeryToken()
+
+                    <input type="file"
+                           id="csv-file-upload"
+                           class=" block w-full "
+                           name="CSVFileUpload">
+                    <input type="submit" value="Submit">
+                </div>
+            </form>
+           
+
+        </div>
+        <div class="table-tab">
+            
+
+           
+        </div>
+
+      
+    </div>
+</div>
+@section scripts
+{
+    <script>
+     $(document).ready(function () {
+         $('select').select2({
+             minimumResultsForSearch: Infinity
+         });
+          var PopUpRenderValue = '@ViewBag.PopUpRenderValue';
+         if (PopUpRenderValue != null && PopUpRenderValue != "" && PopUpRenderValue == "ManageHost") {
+              var element = document.getElementById('add-new-host');
+              element.classList.remove('translate-x-full');
+         }
+     });
+    </script>
+    <script>
+
+        function LangChangeAlert(message, buttonText, agentId, hostId, type) {
+            toastr.options = {
+                "closeButton": true,
+                "debug": false,
+                "newestOnTop": false,
+                "progressBar": false,
+                "positionClass": "toast-top-right",
+                "preventDuplicates": true,
+                "showDuration": "300",
+                "hideDuration": "0",
+                "timeOut": 0,
+                "extendedTimeOut": 0,
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut",
+                "tapToDismiss": false
+            };
+
+            let buttonHtml;
+                buttonHtml = `
+            <button style="display: block; margin-top: 10px; background-color: #007bff; color: #fff; border: none; padding: 5px 10px; cursor: pointer;"
+                    onclick="handleLanguageSelection('${agentId}', '${hostId}', '${type}')">
+                ${buttonText}
+            </button>`;
+
+            const fullMessage = `${message} ${buttonHtml}`;
+
+            toastr.info(fullMessage);
+        }
+
+
+
+
+        function handleLanguageSelection(agentId, hostId, type) {
+            switch (type) {
+                case "B":
+                    BlockFunction(agentId, hostId);
+                    break;
+                case "U":
+                    UnBlockFunction(agentId, hostId);
+                    break;
+                default:
+                    DeleteHostFunction(agentId, hostId);
+                    break;
+            }
+        }
+
+
+        function BlockFunction(i, j) {
+    var RequestVerificationToken = $('input[name="__RequestVerificationToken"]').val();
+    $.ajax({
+        type: "POST",
+        url: '@Url.Action("BlockHost", "HostManagement")',
+        data: {
+            '__RequestVerificationToken': RequestVerificationToken,
+            'AgentId': i,
+            'HostId': j
+        },
+        success: function (response) {
+            window.location.reload();
+        },
+        error: function (error) {
+            window.location.reload();
+        }
+    });
+}
+
+        function UnBlockFunction(i, j) {
+            var RequestVerificationToken = $('input[name="__RequestVerificationToken"]').val();
+        $.ajax({
+                 type: "POST",
+                 url: '@Url.Action("UnBlockHost", "HostManagement")',
+                 data: {
+                     '__RequestVerificationToken': RequestVerificationToken, 'AgentId': i, 'HostId' : j},
+                success: function (response) {
+                    window.location.reload();
+                 },
+                error: function (error) {
+                    window.location.reload();
+                 }
+             })
+        }
+
+
+   function DeleteHostFunction(i, j) {
+    var RequestVerificationToken = $('input[name="__RequestVerificationToken"]').val();
+    $.ajax({
+        type: "POST",
+        url: '@Url.Action("DeleteHostAsync", "HostManagement")',
+        data: {
+            '__RequestVerificationToken': RequestVerificationToken,
+            'AgentId': i,
+            'HostId': j
+        },
+        success: function (response) {
+            window.location.reload();
+        },
+        error: function (error) {
+            window.location.reload();
+        }
+    });
+}
+
+
+        function HostGalleryRedirectFunction(i, j) {
+            window.location.href = '/HostManagement/GalleryManagement?AgentId=' + i + '&&HostId=' + j;
+        }
+    </script>
+
+    <script>
+        function CancelFunction() {
+            location.reload();
+        }
+        function ManageHostGetDetailsFunction(i, j) {
+            window.location.href = '/HostManagement/ManageHost?AgentId=' + i + '&&HostId=' + j;
+        }
+    </script>
+
+    <script>
+     document.addEventListener('DOMContentLoaded', function () {
+             const page_size = @ViewBag.PageSize;
+             const total_data = @ViewBag.TotalData;
+             const start_index_val = @ViewBag.StartIndex;
+             let URL = "/HostManagement/HostList";
+             let search_filter = '@ViewBag.SearchFilter';
+             let AgentId = '@ViewBag.AgentId';
+             URL = addQueryParam(URL, 'SearchFilter', search_filter);
+             URL = addQueryParam(URL, 'AgentId', AgentId);
+             LoadPagination(page_size, total_data, start_index_val, URL);
+         });
+    </script>
+
+    <script>
+                const steps = document.querySelectorAll('.profile-steps');
+        const nextButton = document.getElementById('nextBtn');
+        const saveData = document.getElementById('saveData');
+        const previousButton = document.getElementById('previousBtn');
+        const submitButton = document.getElementById('submit-button-id');
+        const contentSections = document.querySelectorAll('.content-section');
+
+        let currentStep = 0;
+        const cancelButton = document.querySelector('.resetForm');
+
+        cancelButton.addEventListener('click', () => {
+            currentStep = 0; // Reset the step to 0
+            updateStep(); // Update the UI to reflect the new step
+        });
+
+        const updateStep = () => {
+            steps.forEach((step, index) => {
+                if (index === currentStep) {
+                    step.classList.add('active');
+                    step.classList.remove('active-green');
+                } else if (index < currentStep) {
+                    step.classList.remove('active');
+                    step.classList.add('active-green');
+                } else {
+                    step.classList.remove('active', 'active-green');
+                }
+            });
+
+            contentSections.forEach((section, index) => {
+                if (index === currentStep) {
+                    section.style.display = 'block';
+                } else {
+                    section.style.display = 'none';
+                }
+            });
+
+            if (currentStep === 0) {
+                previousButton.style.display = 'none';
+                previousButton.setAttribute('type', 'button');
+            } else {
+                previousButton.style.display = 'inline';
+                previousButton.setAttribute('type', 'button');
+            }
+
+            if (currentStep === steps.length - 1) {
+                nextButton.style.display = 'none';
+                //saveData.style.display = 'block';
+                nextButton.textContent = '@CRS.ADMIN.APPLICATION.Resources.Resource.Save_Changes';
+                nextButton.setAttribute('type', 'button');
+            } else {
+                nextButton.style.display = 'block';
+                //saveData.style.display = 'none';
+                nextButton.textContent = '@CRS.ADMIN.APPLICATION.Resources.Resource.Next';
+                nextButton.setAttribute('type', 'button');
+                $('')
+            }
+        };
+
+        nextButton.addEventListener('click', () => {
+            if (currentStep < steps.length - 1) {
+                currentStep++;
+                updateStep();
+            }
+        });
+
+        previousButton.addEventListener('click', () => {
+            if (currentStep > 0) {
+                currentStep--;
+                updateStep();
+            }
+        });
+
+        // Initial state setup
+        updateStep();
+    </script>
+}

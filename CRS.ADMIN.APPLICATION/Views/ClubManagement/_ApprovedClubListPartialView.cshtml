@@ -196,6 +196,10 @@
                                         <i class=" las la-trash-alt text-[20px] cursor-pointer text-[#CB3F3F]" onclick="openDeleteClubModal('@item.AgentId');" data-modal-target="delete-club-confirmation" data-modal-toggle="delete-club-confirmation"></i>
                                         <i class="las la-key text-[24px] text-[#C8B477] cursor-pointer" onclick="openResetCustomerPasswordModal('@item.ClubNameEng','@item.AgentId')" data-name="@item.ClubNameEng" data-id="@item.AgentId" data-modal-target="reset-customer-passwordconfirmation" data-modal-toggle="reset-customer-passwordconfirmation"></i>
                                         <img src="/Content/assets/images/notice.svg" alt="plan" class="cursor-pointer h-[20px] aspect-square" onclick="PlanRedirectFunction('@item.AgentId');" data-drawer-target="add-new-plan-tag" data-drawer-show="add-new-plan-tag" data-drawer-placement="right" data-drawer-backdrop="false" aria-controls="drawer-disabled-backdrop">
+                                        if (!string.IsNullOrEmpty(@item.LineGroupId))
+                                        {
+                                            <img src="/Content/assets/images/line.svg" alt="line" class="cursor-pointer h-[20px] aspect-square" onclick="LineGroupFunction('@item.AgentId','@item.LineGroupId');"data-drawer-placement="right" data-drawer-backdrop="false" aria-controls="drawer-disabled-backdrop">
+                                        }
 
                                         @*<i class="las la-user text-[20px] cursor-pointer text-[#A6A6A6]" onclick="PlanRedirectFunction('@item.AgentId');"></i>*@
                                         <i class="las la-user text-[20px] cursor-pointer text-[#A6A6A6]" onclick="HostRedirectFunction('@item.AgentId');"></i>

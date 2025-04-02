@@ -497,8 +497,27 @@
         }
         var commaSeparatedString = "";
         $(document).ready(function () {
-            $('#submit-button-basic-id').click(function (e) {
-                e.preventDefault(); 
+            //$('#submit-button-basic-id').click(function () {
+            //    commaSeparatedString = [];
+            //    var items = [];
+            //    $('#large[name="holiday"] option:selected').each(function () {
+            //        items.push($(this).val());
+            //    });
+            //    commaSeparatedString = items.join(', ');
+            //    $('input[name="HolidayStr"]').val(commaSeparatedString);
+
+            //    commaSeparatedStringOther = [];
+            //    var items = [];
+            //    $('#large[name="OthersHoliday"] option:selected').each(function () {
+            //        items.push($(this).val());
+            //    });
+            //    commaSeparatedStringOther = items.join(', ');
+            //    $('input[name="OthersHolidayStr"]').val(commaSeparatedStringOther);
+            //    $('#ManageBasicClubForm').submit(); // Submit the form
+            //});
+            $('#ManageBasicClubForm').submit(function (e) {
+                e.preventDefault();
+                $('#submit-button-basic-id').prop('disabled', true); // Disable the button
                 commaSeparatedString = [];
                 var items = [];
                 $('#large[name="holiday"] option:selected').each(function () {
@@ -514,7 +533,17 @@
                 });
                 commaSeparatedStringOther = items.join(', ');
                 $('input[name="OthersHolidayStr"]').val(commaSeparatedStringOther);
-                $('#ManageBasicClubForm').submit(); // Submit the form
+                //var hasRequiredFields = $('#ManageBasicClubForm').find('[data-val-required="Required"]').length > 0;
+                var hasErrorMessage = $('span .field-validation-error').find('span').length > 0;
+                if (!hasErrorMessage) {  // `this` refers to the form element                    
+                    this.submit();  // Submit the form after validation
+                    return true;
+                }
+                else {
+                    $('#submit-button-basic-id').prop('disabled', false); // Disable the button
+                    return false;
+                }
+
             });
         });
 
@@ -788,13 +817,13 @@
                            }
 
                        }
-                }
-                if ((PassportPhoto == "no file choosen" || PassportPhoto == "ファイルが選択されていません") && (identificationtype == "passport + insurance card" || identificationtype == "パスポート + 保険証"))
+                }*@
+                @*if ((PassportPhoto == "no file choosen" || PassportPhoto == "ファイルが選択されていません") && (identificationtype == "passport + insurance card" || identificationtype == "パスポート + 保険証"))
                 {
                     $('span.field-validation-valid[data-valmsg-for="PassportPhoto"]').text('@CRS.ADMIN.APPLICATION.Resources.Resource.Required');
                     isimagevalid = false;
-                }
-                if (KYCDocumentBack == "no file choosen" || KYCDocumentBack == "ファイルが選択されていません")
+                }*@
+                @*if (KYCDocumentBack == "no file choosen" || KYCDocumentBack == "ファイルが選択されていません")
                 {
                     if (identificationtype != "passport + insurance card")
                     {
@@ -815,8 +844,8 @@
                     }
 
 
-                }
-                if ((Insurance == "no file choosen" || Insurance == "ファイルが選択されていません") && (identificationtype == "passport + insurance card" || identificationtype == "パスポート + 保険証"))
+                }*@
+                @*if ((Insurance == "no file choosen" || Insurance == "ファイルが選択されていません") && (identificationtype == "passport + insurance card" || identificationtype == "パスポート + 保険証"))
                 {
                     $('span.field-validation-valid[data-valmsg-for="InsurancePhoto"]').text('@CRS.ADMIN.APPLICATION.Resources.Resource.Required');
                     isimagevalid = false;
@@ -938,13 +967,15 @@
         });
         $(document).ready(function () {
             $('#ManagePremiumClubForm').on('keypress', function (e) {
-                e.preventDefault(); 
                 if (e.key === 'Enter') { // Use 'Enter' for better readability
                     e.preventDefault(); // Prevent form submission
                     return false; // Prevent any default action
                 }
+
+
             });
             var validator = $('#ManagePremiumClubForm').validate({
+
                 errorClass: 'invalid',
                 errorElement: 'div',
                 errorPlacement: function (error, element) {
@@ -1090,6 +1121,8 @@
                     LastEntryTime: {
                        required: '@CRS.ADMIN.APPLICATION.Resources.Resource.Required'
                     },
+
+                    
                 }
             });
 
