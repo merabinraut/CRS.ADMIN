@@ -1,4 +1,5 @@
-﻿using CRS.ADMIN.APPLICATION.Helper;
+﻿using CRS.ADMIN.APPLICATION.CustomHelpers;
+using CRS.ADMIN.APPLICATION.Helper;
 using CRS.ADMIN.APPLICATION.Library;
 using CRS.ADMIN.APPLICATION.Models;
 using CRS.ADMIN.APPLICATION.Models.HostManagement;
@@ -11,6 +12,7 @@ using DocumentFormat.OpenXml.Bibliography;
 using Microsoft.Ajax.Utilities;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -492,6 +494,8 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                         Message = dbResponse.Message ?? "Success",
                         Title = NotificationMessage.SUCCESS.ToString()
                     });
+                    string apiUrl = ConfigurationManager.AppSettings["RevalidateApiUrl"];
+                    string apiResponse = ExternalApiCallHelpers.CallApi(apiUrl, HttpMethod.Get);
                     return RedirectToAction("HostList", "HostManagement", new { AgentId = Model.AgentId, clubCategory = Model.clubCategory });
                 }
                 else
@@ -575,6 +579,8 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 Message = response.Message ?? "Failed",
                 Title = response.Code == ResponseCode.Success ? NotificationMessage.SUCCESS.ToString() : NotificationMessage.INFORMATION.ToString()
             });
+            string apiUrl = ConfigurationManager.AppSettings["RevalidateApiUrl"];
+            string apiResponse = ExternalApiCallHelpers.CallApi(apiUrl, HttpMethod.Get);
             return Json(response.Message, JsonRequestBehavior.AllowGet);
         }
 
@@ -608,6 +614,8 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 Message = response.Message ?? "Failed",
                 Title = response.Code == ResponseCode.Success ? NotificationMessage.SUCCESS.ToString() : NotificationMessage.INFORMATION.ToString()
             });
+            string apiUrl = ConfigurationManager.AppSettings["RevalidateApiUrl"];
+            string apiResponse = ExternalApiCallHelpers.CallApi(apiUrl, HttpMethod.Get);
             return Json(response.Message, JsonRequestBehavior.AllowGet);
         }
 
@@ -641,6 +649,8 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 Message = response.Message ?? "Failed",
                 Title = response.Code == ResponseCode.Success ? NotificationMessage.SUCCESS.ToString() : NotificationMessage.INFORMATION.ToString()
             });
+            string apiUrl = ConfigurationManager.AppSettings["RevalidateApiUrl"];
+            string apiResponse = ExternalApiCallHelpers.CallApi(apiUrl, HttpMethod.Get);
             return Json(response.Message, JsonRequestBehavior.AllowGet);
         }
 
