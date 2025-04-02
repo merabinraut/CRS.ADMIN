@@ -591,33 +591,5 @@ namespace CRS.ADMIN.APPLICATION.Middleware
             }
         }
         #endregion
-        #region Admin control
-        public async Task<SharedCognitoModel.CommonResponse> AdminSignOut(string userName)
-        {
-            try
-            {
-                var signOutResponse = await _cognitoService.AdminSignOut(userName);
-                if (!signOutResponse)
-                    return new SharedCognitoModel.CommonResponse
-                    {
-                        Code = SharedCognitoModel.ResponseCode.Warning,
-                        Message = "Something went wrong. Please try again later."
-                    };
-                return new SharedCognitoModel.CommonResponse
-                {
-                    Code = ResponseCode.Success,
-                    Message = ResponseCode.Success.ToString()
-                };
-            }
-            catch (System.Exception ex)
-            {
-                return new SharedCognitoModel.CommonResponse
-                {
-                    Code = SharedCognitoModel.ResponseCode.Exception,
-                    Message = $"Something went wrong. Please try again later. Message: {ex.Message}"
-                };
-            }
-        }
-        #endregion
     }
 }

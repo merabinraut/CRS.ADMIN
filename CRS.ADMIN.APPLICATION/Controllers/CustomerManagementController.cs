@@ -260,7 +260,6 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                     Message = response.Message ?? "Something went wrong. Please try again later",
                     Title = response.Code == ResponseCode.Success ? NotificationMessage.SUCCESS.ToString() : NotificationMessage.INFORMATION.ToString()
                 });
-                await _amazonCognitoMiddleware.AdminSignOut(response.Extra1);
                 _sqlTransactionHandler.CommitTransaction();
                 return Json(JsonRequestBehavior.AllowGet);
             }

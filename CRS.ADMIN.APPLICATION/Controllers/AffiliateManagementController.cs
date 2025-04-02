@@ -262,6 +262,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             return RedirectToAction("Index", "AffiliateManagement");
         }
 
+
         [HttpGet, OverrideActionFilters]
         public async Task<ActionResult> ResetAffiliatePassword(string AgentId)
         {
@@ -295,9 +296,6 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 Password = response.Extra2,
                 IsPermanent = true
             });
-
-            await _amazonCognitoMiddleware.AdminSignOut(response.Extra1);
-
 
             if (resetPasswordResponse?.Code != CRS.ADMIN.SHARED.Middleware.AmazonCognitoModel.ResponseCode.Success)
             {
