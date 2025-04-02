@@ -52,6 +52,8 @@ namespace CRS.ADMIN.REPOSITORY.ApiResponseMessage
             SQL += !string.IsNullOrEmpty(Request.SearchFilter) ? ",@SearchFilter=N" + _DAO.FilterString(Request.SearchFilter) : null;
             SQL += ",@Skip=" + Request.Skip;
             SQL += ",@Take=" + Request.Take;
+            SQL += !string.IsNullOrEmpty(Request.category) ? ",@category=N" + _DAO.FilterString(Request.category) : null;
+            SQL += !string.IsNullOrEmpty(Request.moduleName) ? ",@moduleName=N" + _DAO.FilterString(Request.moduleName) : null;
             var dbResponse = _DAO.ExecuteDataTable(SQL);
 
             if (dbResponse != null)

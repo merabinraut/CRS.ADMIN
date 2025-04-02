@@ -17,31 +17,131 @@
             @CRS.ADMIN.APPLICATION.Resources.Resource.Manage_API_Responses_
         </div>
     </div>
-    <div class="flex justify-between pt-[24px] pb-[24px]">
-        <form action="/ApiResponseMessage/ApiResponseMessageList" method="get">
-            <div class="relative input-search-wrapper">
-                <div class="absolute inset-y-0 left-0 flex items-center pl-[16px] pointer-events-none">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21" fill="none">
-                        <path d="M17.5 18L13.875 14.375M15.8333 9.66667C15.8333 13.3486 12.8486 16.3333 9.16667 16.3333C5.48477 16.3333 2.5 13.3486 2.5 9.66667C2.5 5.98477 5.48477 3 9.16667 3C12.8486 3 15.8333 5.98477 15.8333 9.66667Z"
-                              stroke="#667085" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round">
-                        </path>
-                    </svg>
-                </div>
-                <input type="search"
-                       id="default-search"
-                       class="input-search block w-full "
-                       placeholder="@CRS.ADMIN.APPLICATION.Resources.Resource.Search"
-                       value=""
-                       name="SearchFilter">
+
+    <div id="tab1" class="tab-content-plane">
+        <div class="flex flex-col gap-8">
+            <div id="tab1" class="tab-content">
+                <form action="/ApiResponseMessage/ApiResponseMessageList" method="get">
+                    <div class="flex justify-between pb-[24px]">
+                        <div class="relative input-search-wrapper">
+                            <div class="absolute inset-y-0 left-0 flex items-center pl-[16px] pointer-events-none">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21" fill="none">
+                                    <path d="M17.5 18L13.875 14.375M15.8333 9.66667C15.8333 13.3486 12.8486 16.3333 9.16667 16.3333C5.48477 16.3333 2.5 13.3486 2.5 9.66667C2.5 5.98477 5.48477 3 9.16667 3C12.8486 3 15.8333 5.98477 15.8333 9.66667Z"
+                                          stroke="#667085" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round" />
+                                </svg>
+                            </div>
+
+                            <input type="search"
+                                   id="default-search"
+                                   class="input-search block w-full "
+                                   placeholder="@CRS.ADMIN.APPLICATION.Resources.Resource.Search"
+                                   value=""
+                                   name="SearchFilter">
+                        </div>
+                        <div class="flex gap-6">
+                            <div class="btn btn-primary gap-[8px] h-[40px]" data-drawer-target="add-admin-points-request"
+                                 data-drawer-show="add-admin-points-request" data-drawer-placement="right" data-drawer-backdrop="false"
+                                 aria-controls="drawer-disabled-backdrop" id="add-new-id">
+                                <img src="~/Content/assets_new/images/plus-circle-solid.svg" />
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Add_New
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class=" table-tab filteroutlinepadding px-2 py-3">
+                        <div class="grid grid-cols-4 gap-x-6 ">
+
+                            <div class="input-field-common mb-[20px]" id="tagInput1">
+                                <div class="input-field-common filteroutlinepadding">
+                                    <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
+                                        @CRS.ADMIN.APPLICATION.Resources.Resource.CategoryType
+                                    </label>
+                                    <select id="useRole" name="Category" class=" default_select select-common block w-full "
+                                            style="width: 100%;">
+                                        <option value="">
+                                            All
+                                        </option>
+                                        <option value="error">
+                                            Error
+                                        </option>
+                                        <option value="success">
+                                            Success
+                                        </option>
+
+                                    </select>
+                                    <span class="error">
+
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="input-field-common mb-[20px]" id="tagInput2">
+                                <div class="input-field-common filteroutlinepadding">
+                                    <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
+                                        @CRS.ADMIN.APPLICATION.Resources.Resource.Module_Name
+                                    </label>
+                                    <input type="text"
+                                           id="default-search"
+                                           class="input-search block w-full "
+                                           placeholder="@CRS.ADMIN.APPLICATION.Resources.Resource.Module_Name"
+                                           value=""
+                                           name="moduleName">
+                                    <span class="error">
+
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="flex justify-start">
+                            <div class="flex gap-4">
+                                <button class="btn btn-secondary rounded-[4px]" type="button" data-drawer-hide="add-new-points-request"
+                                        aria-controls="add-new-points-request" onclick="CancelFunction();">
+
+                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Cancel
+                                </button>
+                                <button class="btn btn-primary-default rounded-[4px]" type="submit"> @CRS.ADMIN.APPLICATION.Resources.Resource.Apply</button>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </form>
             </div>
-        </form>
-        <div class="btn btn-primary gap-[8px] h-[40px]" data-drawer-target="add-new-response-message"
-             data-drawer-show="add-new-response-message" data-drawer-placement="right" data-drawer-backdrop="false"
-             aria-controls="drawer-disabled-backdrop">
-            <img src="~/Content/assets_new/images/plus-circle-solid.svg">
-            @CRS.ADMIN.APPLICATION.Resources.Resource.Add_New
         </div>
     </div>
+
+
+
+
+
+
+    @*<div class="flex justify-between pt-[24px] pb-[24px]">
+            <form action="/ApiResponseMessage/ApiResponseMessageList" method="get">
+                <div class="relative input-search-wrapper">
+                    <div class="absolute inset-y-0 left-0 flex items-center pl-[16px] pointer-events-none">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21" fill="none">
+                            <path d="M17.5 18L13.875 14.375M15.8333 9.66667C15.8333 13.3486 12.8486 16.3333 9.16667 16.3333C5.48477 16.3333 2.5 13.3486 2.5 9.66667C2.5 5.98477 5.48477 3 9.16667 3C12.8486 3 15.8333 5.98477 15.8333 9.66667Z"
+                                  stroke="#667085" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round">
+                            </path>
+                        </svg>
+                    </div>
+                    <input type="search"
+                           id="default-search"
+                           class="input-search block w-full "
+                           placeholder="@CRS.ADMIN.APPLICATION.Resources.Resource.Search"
+                           value=""
+                           name="SearchFilter">
+                </div>
+            </form>
+            <div class="btn btn-primary gap-[8px] h-[40px]" data-drawer-target="add-new-response-message"
+                 data-drawer-show="add-new-response-message" data-drawer-placement="right" data-drawer-backdrop="false"
+                 aria-controls="drawer-disabled-backdrop">
+                <img src="~/Content/assets_new/images/plus-circle-solid.svg">
+                @CRS.ADMIN.APPLICATION.Resources.Resource.Add_New
+            </div>
+        </div>*@
     <div class="table-tab">
         <div class="px-[16px] py-[12px] flex justify-between entry-export-container">
             <div class="flex items-center select-entries" id="ShowEntries-Id">
@@ -161,14 +261,14 @@
                                 @responselist.UserCategory
                             </td>
                             @*<td class="p-[12px]">
-            @responselist.MessageEng
-        </td>
+                                    @responselist.MessageEng
+                                </td>
 
-        <td class="p-[12px]">
+                                <td class="p-[12px]">
 
-                @responselist.MessageType
+                                        @responselist.MessageType
 
-        </td>*@
+                                </td>*@
                             <td class="p-[12px]">
                                 <div class="flex gap-[7px] justify-center text-[16px] ">
                                     <button class="edit-api-resp-btn" data-id="@responselist.MessageId"

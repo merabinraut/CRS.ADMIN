@@ -28,7 +28,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
         }
 
         [HttpGet]
-        public ActionResult ApiResponseMessageList(string SearchFilter = "", string value = "", int StartIndex = 0, int PageSize = 10)
+        public ActionResult ApiResponseMessageList(string SearchFilter = "", string value = "", int StartIndex = 0, int PageSize = 10,string Category = "",string moduleName="")
         {
             ViewBag.SearchFilter = SearchFilter;
             //Session["CurrentURL"] = "/ClubManagement/ClubList";
@@ -42,7 +42,9 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             {
                 Skip = StartIndex,
                 Take = PageSize,
-                SearchFilter = !string.IsNullOrEmpty(SearchFilter) ? SearchFilter : null
+                SearchFilter = !string.IsNullOrEmpty(SearchFilter) ? SearchFilter : null,
+                category = !string.IsNullOrEmpty(Category) ? Category : null,
+                moduleName = !string.IsNullOrEmpty(moduleName) ? moduleName : null,
             };
             var dbResponse = _BUSS.ApiResponseMessageList(dbRequestall);
             obj.ApiResponseMessageList = dbResponse.MapObjects<ApiResponseMessageModel>();
