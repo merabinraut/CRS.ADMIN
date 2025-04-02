@@ -219,7 +219,14 @@
 
 
 @Html.Partial("_ManageTemplate", _ManageTemplateModel)
-
+<style>
+    .fr-element.fr-view br {
+        display: block; /* Ensures `<br>` behaves like a block element */
+        height: 8px; /* Control the vertical spacing */
+        content: ''; /* Maintain compatibility */
+        color: #6495ED; /* Optional: Add color to emphasize breaks */
+    }
+</style>
 @section scripts
 {
 
@@ -235,22 +242,18 @@
                     let pastedData = clipboardData.getData('text/plain'); // Get plain text
                     pastedData = pastedData.trim(); // Trim whitespace
                     pastedData = pastedData.replace(/\s+/g, ' '); // Normalize spaces
-                }
-                
+                }                
             },
             heightMin: 200, // Optional: Minimum height for the editor      
             toolbarButtons: ['bold', 'italic', 'underline'],
-            pluginsEnabled: ['fontSize'],
+            pluginsEnabled: [''],
             fontSize: ['8', '10', '12'],
             inlineMode: false, // Disable inline mode if not required
         });
 
         function insertAtCursor() {
-            // Get the selected value from the dropdown
             const dropdown = $('#large[name="fieldTypeDDL"]');
-            // Get the selected value using jQuery
             const selectedValue = dropdown.val();
-            // Use Froala's API to insert the value at the current cursor position
             editorInstance.html.insert(selectedValue);
         }
         document.addEventListener('DOMContentLoaded', function () {
@@ -267,7 +270,6 @@
                 editorInstance.html.set();
                 editorInstance.html.set(`${messageBody}`);
             }
-
         });
         function cleanContent(content) {
             // Create a temporary DOM element
@@ -277,15 +279,12 @@
             const elements = tempDiv.querySelectorAll('*');
             elements.forEach(el => el.removeAttribute('style'));
             tempDiv.innerHTML = tempDiv.innerHTML.replace(/<p><br><\/p>/g, '<br>');
-
             return tempDiv.innerHTML;
         }
         function submitContent() {
             // Get the HTML content from Froala Editor
             const content = editorInstance.html.get();
             const raw = cleanContent(content);
-
-            //const raw = cleanContent(content);
             $('#editorContent[name="messageBody"]').val(raw);
             $("#ManageTemplateEmailForm").submit();
         }
@@ -296,8 +295,7 @@
             const page_size = @ViewBag.PageSize;
             window.location.href = '/TemplateManagement/ManageTemplate?Id=' + i + '&SearchFilter=' + search_filter + '&StartIndex=' + start_index_val + '&PageSize=' + page_size;
          }
-
-         var PopUpRenderValue = '@ViewBag.PopUpRenderValue';
+        var PopUpRenderValue = '@ViewBag.PopUpRenderValue';
         if (PopUpRenderValue != null && PopUpRenderValue != "" && PopUpRenderValue == "Manage")
         {
             var element = document.getElementById('add-template-message');
@@ -307,7 +305,6 @@
         {
             location.reload();
         };
-
     </script>
 
 }
