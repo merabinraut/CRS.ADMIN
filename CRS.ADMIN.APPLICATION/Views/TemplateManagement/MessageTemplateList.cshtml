@@ -1,0 +1,313 @@
+@model CRS.ADMIN.APPLICATION.Models.TemplateMessage.TemplateMessageModel
+@{
+    ViewBag.Title = "Event List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var _ManageTemplateModel = Model.ManageTemplateModel as CRS.ADMIN.APPLICATION.Models.TemplateMessage.ManageTemplateModel;
+
+}
+
+<style>
+   
+
+    /*.custom-br {
+        display: block;
+        height: 8px;*/ /* Control the vertical space */
+        /*content: '';
+    }*/
+</style>
+
+
+<div class="px-8 py-4">
+
+    @Html.AntiForgeryToken()
+    <!-- title  -->
+    <div class="flex flex-col  gap-6">
+        <div>
+            <div class="heading-title">
+                @CRS.ADMIN.APPLICATION.Resources.Resource.Template_Message
+            </div>
+           
+        </div>
+        <!-- container  -->
+        <div id="tab1" class="tab-content-plane">
+            <div class="flex flex-col gap-8">
+                <div id="tab1" class="tab-content">
+                    <div class="flex justify-between pb-[24px]">
+                        <form action="/ClubManagement/EventList" method="get">
+                            @*<input type="hidden" name="ClubId" value="@Model.ManageEventModel.AgentId">*@
+                            <div class="relative input-search-wrapper">
+                                <div class="absolute inset-y-0 left-0 flex items-center pl-[16px] pointer-events-none">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21" fill="none">
+                                        <path d="M17.5 18L13.875 14.375M15.8333 9.66667C15.8333 13.3486 12.8486 16.3333 9.16667 16.3333C5.48477 16.3333 2.5 13.3486 2.5 9.66667C2.5 5.98477 5.48477 3 9.16667 3C12.8486 3 15.8333 5.98477 15.8333 9.66667Z"
+                                              stroke="#667085" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round" />
+                                    </svg>
+                                </div>
+                                <input type="search"
+                                       id="default-search"
+                                       class="input-search block w-full "
+                                       placeholder="@CRS.ADMIN.APPLICATION.Resources.Resource.Search"
+                                       value="@Model.SearchFilter"
+                                       name="SearchFilter">
+                            </div>
+                        </form>
+                        <div class="flex gap-6">
+                            <div class="export-button h-[40px]" onclick="exportExcel('table-id', 'Event')">
+                                <img src="~/Content/assets_new/images/club/download-solid.svg">@CRS.ADMIN.APPLICATION.Resources.Resource.Export
+                            </div>
+
+                            <div class="btn btn-primary gap-[8px] h-[40px]" data-drawer-target="add-template-message"
+                                 data-drawer-show="add-template-message" data-drawer-placement="right" data-drawer-backdrop="false"
+                                 aria-controls="drawer-disabled-backdrop" id="add-template-message-id">
+                                <img src="~/Content/assets_new/images/plus-circle-solid.svg" />
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Add_New
+                            </div>
+                        </div>
+                    </div>
+                    <div class="table-tab">
+                        <div class="px-[12px] py-[16px] flex justify-between entry-export-container">
+                            <div class="flex items-center select-entries" id="ShowEntries-Id">
+                            </div>
+                        </div>
+                        <div class="relative overflow-x-auto">
+
+                            <table class="w-full text-left club-table" id="table-id">
+                                <thead class="club-table-thead">
+                                    <tr>
+                                        <th scope="col" class="p-[12px]">
+                                            <div class="flex w-max">
+                                                S.N
+                                                <div class="relative pl-[5px]">
+                                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                                </div>
+                                            </div>
+                                        </th>
+                                        <th scope="col" class="p-[12px]">
+                                            <div class="flex w-max">
+                                                @CRS.ADMIN.APPLICATION.Resources.Resource.User_Type
+                                                <div class="relative pl-[5px]">
+                                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                                </div>
+                                            </div>
+                                        </th>
+                                        <th scope="col" class="p-[12px]">
+                                            <div class="flex w-max">
+                                                @CRS.ADMIN.APPLICATION.Resources.Resource.Content_Category
+                                                <div class="relative pl-[5px]">
+                                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                                </div>
+                                            </div>
+                                        </th>
+                                        <th scope="col" class="p-[12px]">
+                                            <div class="flex w-max">
+                                                @CRS.ADMIN.APPLICATION.Resources.Resource.Content_Type
+                                                <div class="relative pl-[5px]">
+                                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                                </div>
+                                            </div>
+                                        </th>
+
+
+                                        <th scope="col" class="p-[12px]">
+                                            <div class="flex w-max">
+                                                @CRS.ADMIN.APPLICATION.Resources.Resource.Created_On
+                                                <div class="relative pl-[5px]">
+                                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                                </div>
+                                            </div>
+                                        </th>
+                                        @*<th scope="col" class="p-[12px]">
+                                                <div class="flex w-max">
+                                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Status
+                                                    <div class="relative pl-[5px]">
+                                                        <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                                        <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                                    </div>
+                                                </div>
+                                            </th>*@
+                                        <th scope="col" class="p-[12px]">
+                                            <div class="flex w-max">
+                                                @CRS.ADMIN.APPLICATION.Resources.Resource.Action
+                                                <div class="relative pl-[5px]">
+                                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                                </div>
+                                            </div>
+                                        </th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @{
+                                        if (Model.GetTemplateMessageList.Count > 0)
+                                        {
+                                            int SN = 1;
+                                            foreach (var item in Model.GetTemplateMessageList)
+                                            {
+                                                <tr class="bg-white border-b ">
+                                                    <td class="p-[12px]">
+                                                        @SN
+                                                    </td>
+                                                    <td class="p-[12px]">
+                                                        @item.userType
+                                                    </td>
+                                                    <td class="p-[12px]">
+                                                        @item.contentCategory
+                                                    </td>
+                                                    <td class="p-[12px]">
+                                                        @item.contentType
+                                                    </td>
+                                                    <td class="p-[12px]">
+                                                        @item.createdDate
+                                                    </td>
+                                                    @*<td class="p-[12px]">
+                                                            @if (!string.IsNullOrEmpty(item.Status) && item.Status.Trim().ToUpper() == "A")
+                                                            {
+                                                                <div class="approved">
+                                                                    Active
+                                                                </div>
+                                                            }
+                                                            else
+                                                            {
+                                                                <div class="blocked">
+                                                                    Blocked
+                                                                </div>
+                                                            }
+                                                        </td>*@
+
+                                                    <td class="p-[12px]">
+                                                        <div class="flex gap-[7px]">
+                                                            @*<i class="las la-eye text-[20px] cursor-pointer text-[#A6A6A6]" onclick="ViewCategory('@item.RoleTypeId','@item.CategoryId');"></i>*@
+                                                            <i class="las la-edit text-[20px] cursor-pointer text-[#A6A6A6]" onclick="EditTemplate('@item.Id');"></i>
+
+
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                SN++;
+                                            }
+                                        }
+
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="pagination-club">
+                            <div class="show-entry" id="Entries-Id">
+                            </div>
+                            <div class="flex gap-[12px]">
+                                <div class="btn btn-secondary-box-shadow" id="prev-btn">
+                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Previous
+                                </div>
+                                <div class="flex gap-[12px]" id="pagination-id">
+                                </div>
+                                <div class="btn btn-secondary-box-shadow" id="next-btn">
+                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Next
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@Html.Partial("_ManageTemplate", _ManageTemplateModel)
+
+@section scripts
+{
+
+    <script src="~/Content/assets_new/js/calendar-management.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script>
+        // Initialize Froala Editor
+        const editorInstance = new FroalaEditor('#froala-editor', {
+            events: {
+                'paste.before': function (e, editor) {
+                    const clipboardData = e.clipboardData || window.clipboardData;
+                    let pastedData = clipboardData.getData('text/plain'); // Get plain text
+                    pastedData = pastedData.trim(); // Trim whitespace
+                    pastedData = pastedData.replace(/\s+/g, ' '); // Normalize spaces
+                }
+                
+            },
+            heightMin: 200, // Optional: Minimum height for the editor      
+            toolbarButtons: ['bold', 'italic', 'underline'],
+            pluginsEnabled: ['fontSize'],
+            fontSize: ['8', '10', '12'],
+            inlineMode: false, // Disable inline mode if not required
+        });
+
+        function insertAtCursor() {
+            // Get the selected value from the dropdown
+            const dropdown = $('#large[name="fieldTypeDDL"]');
+            // Get the selected value using jQuery
+            const selectedValue = dropdown.val();
+            // Use Froala's API to insert the value at the current cursor position
+            editorInstance.html.insert(selectedValue);
+        }
+        document.addEventListener('DOMContentLoaded', function () {
+            const page_size = @ViewBag.PageSize;
+            const total_data = @ViewBag.TotalData;
+            const start_index_val = @ViewBag.StartIndex;
+            let URL = "/TemplateManagement/MessageTemplateList";
+            let search_filter = $('#default-search').val();
+            URL = addQueryParam(URL, 'SearchFilter', search_filter);
+            LoadPagination(page_size, total_data, start_index_val, URL);
+            if ("@Model.ManageTemplateModel.Id" != "") {
+                var body = $('input[name="messageBody"]').val()
+                var messageBody = `${body}`;
+                editorInstance.html.set();
+                editorInstance.html.set(`${messageBody}`);
+            }
+
+        });
+        function cleanContent(content) {
+            // Create a temporary DOM element
+            const tempDiv = document.createElement('div');
+            tempDiv.innerHTML = content;
+            // Loop through all elements and remove inline styles
+            const elements = tempDiv.querySelectorAll('*');
+            elements.forEach(el => el.removeAttribute('style'));
+            tempDiv.innerHTML = tempDiv.innerHTML.replace(/<p><br><\/p>/g, '<br>');
+
+            return tempDiv.innerHTML;
+        }
+        function submitContent() {
+            // Get the HTML content from Froala Editor
+            const content = editorInstance.html.get();
+            const raw = cleanContent(content);
+
+            //const raw = cleanContent(content);
+            $('#editorContent[name="messageBody"]').val(raw);
+            $("#ManageTemplateEmailForm").submit();
+        }
+        function EditTemplate(i)
+        {
+            let search_filter = $('#default-search').val();
+            const start_index_val = @ViewBag.StartIndex;
+            const page_size = @ViewBag.PageSize;
+            window.location.href = '/TemplateManagement/ManageTemplate?Id=' + i + '&SearchFilter=' + search_filter + '&StartIndex=' + start_index_val + '&PageSize=' + page_size;
+         }
+
+         var PopUpRenderValue = '@ViewBag.PopUpRenderValue';
+        if (PopUpRenderValue != null && PopUpRenderValue != "" && PopUpRenderValue == "Manage")
+        {
+            var element = document.getElementById('add-template-message');
+            element.classList.remove('translate-x-full');
+        }
+        function CancelFunction()
+        {
+            location.reload();
+        };
+
+    </script>
+
+}

@@ -313,6 +313,7 @@
     <Compile Include="Controllers\SMSLogController.cs" />
     <Compile Include="Controllers\StaffManagementController.cs" />
     <Compile Include="Controllers\StaticDataManagementController.cs" />
+    <Compile Include="Controllers\TemplateManagementController.cs" />
     <Compile Include="Controllers\WithdrawalRequestController.cs" />
     <Compile Include="Controllers\WithdrawSetupController.cs" />
     <Compile Include="CustomHelpers\CustomHtmlHelpers.cs" />
@@ -380,6 +381,7 @@
     <Compile Include="Models\StaffManagement\StaffManagementModel.cs" />
     <Compile Include="Models\StaticDataManagement\StaticDataManagementModel.cs" />
     <Compile Include="Models\TagManagement\TagManagementModel.cs" />
+    <Compile Include="Models\TemplateMessage\TemplateMessageModel.cs" />
     <Compile Include="Models\WithdrawalRequest\WithdrawalRequestModel.cs" />
     <Compile Include="Models\Withdraw\WithdrawSetupModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -2816,6 +2818,8 @@
     <Content Include="Views\WithdrawSetup\_ManageWithdrawsetupPartial.cshtml" />
     <Content Include="Views\WithdrawalRequest\WithdrawalRequestMonthlyList.cshtml" />
     <Content Include="Views\WithdrawalRequest\WithdrawalDetailList.cshtml" />
+    <Content Include="Views\TemplateManagement\MessageTemplateList.cshtml" />
+    <Content Include="Views\TemplateManagement\_ManageTemplate.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

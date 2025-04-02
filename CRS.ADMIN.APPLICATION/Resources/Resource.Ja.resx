@@ -2876,6 +2876,30 @@
   <data name="Manage LINE Group" xml:space="preserve">
     <value>Manage LINE Group</value>
   </data>
+  <data name="LINE Group Name" xml:space="preserve">
+    <value>LINEグループ名</value>
+  </data>
+  <data name="QR Code" xml:space="preserve">
+    <value>QRコード</value>
+  </data>
+  <data name="LINE Group Link" xml:space="preserve">
+    <value>LINEグループリンク</value>
+  </data>
+  <data name="Message Template" xml:space="preserve">
+    <value>メッセージテンプレート</value>
+  </data>
+  <data name="Content Category" xml:space="preserve">
+    <value>コンテンツカテゴリ</value>
+  </data>
+  <data name="Content Type" xml:space="preserve">
+    <value>コンテンツタイプ</value>
+  </data>
+  <data name="Field Type" xml:space="preserve">
+    <value>フィールドタイプ</value>
+  </data>
+  <data name="Subject" xml:space="preserve">
+    <value>主題</value>
+  </data>
   <data name="Manager" xml:space="preserve">
     <value />
   </data>
@@ -2887,13 +2911,11 @@
     <value>引き出しリクエスト</value>
     <comment>Withdrawal Request</comment>
   </data>
-  <data name="LINE Group Name" xml:space="preserve">
-    <value>LINEグループ名</value>
+  <data name="Template Message" xml:space="preserve">
+    <value>
+テンプレートメッセージ</value>
   </data>
-  <data name="QR Code" xml:space="preserve">
-    <value>QRコード</value>
-  </data>
-  <data name="LINE Group Link" xml:space="preserve">
-    <value>LINEグループリンク</value>
+  <data name="Manage Template" xml:space="preserve">
+    <value>テンプレートの管理</value>
   </data>
 </root>

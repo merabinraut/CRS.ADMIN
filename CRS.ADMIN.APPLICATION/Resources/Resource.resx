@@ -2912,4 +2912,32 @@
     <value>LINE Group Link</value>
     <comment>Club Management</comment>
   </data>
+  <data name="Message Template" xml:space="preserve">
+    <value>Message Template</value>
+    <comment>Template Management</comment>
+  </data>
+  <data name="Content Category" xml:space="preserve">
+    <value>Content Category</value>
+    <comment>Template Management</comment>
+  </data>
+  <data name="Content Type" xml:space="preserve">
+    <value>Content Type</value>
+    <comment>Template Management</comment>
+  </data>
+  <data name="Field Type" xml:space="preserve">
+    <value>Field Type</value>
+    <comment>Template Management</comment>
+  </data>
+  <data name="Subject" xml:space="preserve">
+    <value>Subject</value>
+    <comment>Template Management</comment>
+  </data>
+  <data name="Template Message" xml:space="preserve">
+    <value>Template Message</value>
+    <comment>Template Management</comment>
+  </data>
+  <data name="Manage Template" xml:space="preserve">
+    <value>Manage Template</value>
+    <comment>Template Management</comment>
+  </data>
 </root>
