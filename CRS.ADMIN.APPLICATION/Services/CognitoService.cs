@@ -47,9 +47,9 @@ namespace CRS.ADMIN.APPLICATION.Services
             _userPoolId = jsonData[_configName]["Cognito"]["UserPoolId"].ToString();
             _jwkUrl = jsonData[_configName]["Cognito"]["JwkUrl"].ToString();
             _issuer = jsonData[_configName]["Cognito"]["Issuer"].ToString();
-            
 
-            var accessKey = jsonData[_configName]["Credentials"]["AccessKey"].ToString();           
+
+            var accessKey = jsonData[_configName]["Credentials"]["AccessKey"].ToString();
             var secretKey = jsonData[_configName]["Credentials"]["SecretKey"].ToString();
             var region = jsonData[_configName]["Cognito"]["Region"].ToString();
 
@@ -242,6 +242,20 @@ namespace CRS.ADMIN.APPLICATION.Services
             };
 
             await _provider.GlobalSignOutAsync(globalSignOutRequest);
+            return true;
+        }
+
+        public async Task<bool> AdminSignOutUserAsync(SharedCognitoModel.Auth.AdminSignOutModel.Request request)
+        {
+            var globalSignOutRequest = new AdminUserGlobalSignOutRequest
+            {
+                Username = request.Username,
+                UserPoolId = _userPoolId
+            };
+
+            var response = await _provider.AdminUserGlobalSignOutAsync(globalSignOutRequest);
+            if (response.HttpStatusCode == System.Net.HttpStatusCode.OK)
+                return true;
             return true;
         }
         #endregion
