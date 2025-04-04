@@ -396,6 +396,7 @@
       <DependentUpon>Resource.Ja.resx</DependentUpon>
     </Compile>
     <Compile Include="Services\CognitoService.cs" />
+    <Content Include="App_Data\AmazonConfigruation.json" />
     <None Include="Views\ClubManagement\_ManageLineGroupPartialView.cshtml" />
     <None Include="Views\ChargeManagement\_ManageChargeCategoryDetails.cshtml" />
     <Content Include="Content\assets\images\line.svg" />
@@ -407,7 +408,6 @@
     <Content Include="Views\ApiResponseMessage\ApiResponseMessageList.cshtml" />
     <Content Include="Views\ApiResponseMessage\_AddResponseMessage.cshtml" />
     <Content Include="Views\ApiResponseMessage\_EditResponseMessage.cshtml" />
-    <Content Include="App_Data\AmazonConfigruation.json" />
     <None Include="Views\ApiResponseMessage\_DisplayResponseMessage.cshtml" />
     <None Include="Views\BasicClubManagement\_PremiumClubtPartialView.cshtml" />
     <Content Include="Content\assets\images\conversion.svg" />
