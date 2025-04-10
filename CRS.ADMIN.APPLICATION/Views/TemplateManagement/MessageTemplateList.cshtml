@@ -7,12 +7,12 @@
 }
 
 <style>
-   
+
 
     /*.custom-br {
         display: block;
         height: 8px;*/ /* Control the vertical space */
-        /*content: '';
+    /*content: '';
     }*/
 </style>
 
@@ -26,7 +26,7 @@
             <div class="heading-title">
                 @CRS.ADMIN.APPLICATION.Resources.Resource.Template_Message
             </div>
-           
+
         </div>
         <!-- container  -->
         <div id="tab1" class="tab-content-plane">
@@ -235,21 +235,7 @@
 
     <script>
         // Initialize Froala Editor
-        const editorInstance = new FroalaEditor('#froala-editor', {
-            events: {
-                'paste.before': function (e, editor) {
-                    const clipboardData = e.clipboardData || window.clipboardData;
-                    let pastedData = clipboardData.getData('text/plain'); // Get plain text
-                    pastedData = pastedData.trim(); // Trim whitespace
-                    pastedData = pastedData.replace(/\s+/g, ' '); // Normalize spaces
-                }                
-            },
-            heightMin: 200, // Optional: Minimum height for the editor      
-            toolbarButtons: ['bold', 'italic', 'underline'],
-            pluginsEnabled: [''],
-            fontSize: ['8', '10', '12'],
-            inlineMode: false, // Disable inline mode if not required
-        });
+        let editorInstance;
 
         function insertAtCursor() {
             const dropdown = $('#large[name="fieldTypeDDL"]');
@@ -264,12 +250,38 @@
             let search_filter = $('#default-search').val();
             URL = addQueryParam(URL, 'SearchFilter', search_filter);
             LoadPagination(page_size, total_data, start_index_val, URL);
-            if ("@Model.ManageTemplateModel.Id" != "") {
+            editorInstance = new FroalaEditor('#froala-editor', {
+                events: {
+                    'initialized': function () {
+                        const body = $('input[name="messageBody"]').val();
+                        if (body) {
+                            this.html.set(body); // 'this' refers to the editor instance
+                        }
+                    },
+                    'paste.before': function (e, editor) {
+                        const clipboardData = e.clipboardData || window.clipboardData;
+                        let pastedData = clipboardData.getData('text/plain'); // Get plain text
+                        pastedData = pastedData.trim(); // Trim whitespace
+                        pastedData = pastedData.replace(/\s+/g, ' '); // Normalize spaces
+                        editor.html.insert(pastedData); // Insert cleaned data manually
+                        e.preventDefault(); // Prevent the default paste action
+                    }
+                },
+                heightMin: 200, // Optional: Minimum height for the editor
+                toolbarButtons: ['bold', 'italic', 'underline'],
+                pluginsEnabled: [], // Optional: List plugins you want to enable
+                fontSize: {
+                    options: ['8', '10', '12']
+                },
+                inlineMode: false // Disable inline mode if not required
+            });
+
+            @*if ("@Model.ManageTemplateModel.Id" != "") {
+                debugger;
                 var body = $('input[name="messageBody"]').val()
-                var messageBody = `${body}`;
                 editorInstance.html.set();
-                editorInstance.html.set(`${messageBody}`);
-            }
+                editorInstance.html.set(body);
+            }*@
         });
         function cleanContent(content) {
             // Create a temporary DOM element
