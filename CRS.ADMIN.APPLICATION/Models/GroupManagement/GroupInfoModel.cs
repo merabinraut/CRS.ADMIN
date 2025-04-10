@@ -36,7 +36,9 @@ namespace CRS.ADMIN.APPLICATION.Models.GroupManagement
     public class ManageGroupModel : PaginationFilterCommon
     {
         public string GroupId { get; set; }
+        [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Required")]
         public string GroupName { get; set; }
+        [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Required")]
         public string GroupNameKatakana { get; set; }
         public string GroupCoverPhoto { get; set; }
         public string GroupDescription { get; set; }
