@@ -7,8 +7,7 @@
         public int Take { get; set; }
         public string FromDate { get; set; }
         public string ToDate { get; set; }
-        public string category { get; set; }
-        public string moduleName { get; set; }
+        
     }
 
     public class PaginationResponseCommon : Common

@@ -17,7 +17,12 @@
         @using (Html.BeginForm("ApiResponseMessageList", "ApiResponseMessage", FormMethod.Post, new { @id = "addrespmsgform", enctype = "multipart/form-data" }))
         {
             @Html.AntiForgeryToken()
-
+            @Html.HiddenFor(model => model.SearchFilter)
+            @Html.HiddenFor(model => model.StartIndex)
+            @Html.HiddenFor(model => model.PageSize)
+            @Html.HiddenFor(model => model.UserCategoryFilter)
+            @Html.HiddenFor(model => model.CategoryFilter)
+            @Html.HiddenFor(model => model.ModuleNameFilter)
             <div class="p-[24px]">
                 <div class=" py-4 grid gap-5">
                     <div class="input-field-common">
