@@ -37,6 +37,9 @@
                             @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.Code,
                             @maxlength = "30"
                         })
+                        <span class="error">
+                            @Html.ValidationMessageFor(m => m.Code)
+                        </span>
                     </div>
                     <div class="input-field-common">
                         <label class="block mb-[12px] text-sm font-medium text-secondary-100 ">
@@ -49,7 +52,9 @@
                             @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.Message,
                             @maxlength = "400"
                         })
-
+                        <span class="error">
+                            @Html.ValidationMessageFor(m => m.Message)
+                        </span>
                     </div>
                     <div class="input-field-common">
                         <label class="block mb-[12px] text-sm font-medium text-secondary-100 ">
@@ -62,7 +67,9 @@
                             @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.English_Message,
                             @maxlength = "200"
                         })
-
+                        <span class="error">
+                            @Html.ValidationMessageFor(m => m.MessageEng)
+                        </span>
                     </div>
                     <div class="input-field-common w-full">
                         <label class="block mb-4 text-sm font-medium text-secondary-100 ">
@@ -75,7 +82,9 @@
                             @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.Http_Status_Code,
                             @maxlength = "30"
                         })
-
+                        <span class="error">
+                            @Html.ValidationMessageFor(m => m.HttpStatusCode)
+                        </span>
                     </div>
                     <div class="input-field-common w-full">
                         <label class="block mb-4 text-sm font-medium text-secondary-100 ">
@@ -88,7 +97,9 @@
                             @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.Description,
                             @maxlength = "200"
                         })
-
+                        <span class="error">
+                            @Html.ValidationMessageFor(m => m.Description)
+                        </span>
                     </div>
 
                     <div class="input-field-common">
@@ -106,7 +117,7 @@
 
                         </select>
                         <span class="error">
-
+                            @Html.ValidationMessageFor(m => m.Category)
                         </span>
                     </div>
                     <div class="input-field-common w-full">
@@ -120,7 +131,9 @@
                             @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.Module_Name,
                             @maxlength = "200"
                         })
-
+                        <span class="error">
+                            @Html.ValidationMessageFor(m => m.Module)
+                        </span>
                     </div>
                     <div class="input-field-common w-full">
                         <label class="block mb-4 text-sm font-medium text-secondary-100 ">
@@ -133,7 +146,9 @@
                             @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.User_Category,
                             @maxlength = "200"
                         })
-
+                        <span class="error">
+                            @Html.ValidationMessageFor(m => m.UserCategory)
+                        </span>
                     </div>
 
                 </div>

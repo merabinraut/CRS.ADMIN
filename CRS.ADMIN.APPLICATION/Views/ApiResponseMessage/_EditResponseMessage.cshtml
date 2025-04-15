@@ -17,7 +17,12 @@
         @using (Html.BeginForm("UpdateResponseMessage", "ApiResponseMessage", FormMethod.Post, new { @id = "addrespmsgform", enctype = "multipart/form-data" }))
         {
             @Html.AntiForgeryToken()
-
+            @Html.HiddenFor(model => model.SearchFilter)
+            @Html.HiddenFor(model => model.StartIndex)
+            @Html.HiddenFor(model => model.PageSize)
+            @Html.HiddenFor(model => model.UserCategoryFilter)
+            @Html.HiddenFor(model => model.CategoryFilter)
+            @Html.HiddenFor(model => model.ModuleNameFilter)
             <div class="p-[24px]">
                 <div class=" py-4 grid gap-5">
                     <div class="input-field-common">
@@ -25,14 +30,7 @@
                         <label class="block mb-[12px] text-sm font-medium text-secondary-100 ">
                             @CRS.ADMIN.APPLICATION.Resources.Resource.Code
                         </label>
-                        @Html.HiddenFor(model => model.MessageId, new
-                        {
-
-                            @class = "w-full rounded-[4px]",
-                            @style = "border-radius:4px !important",
-                            @placeholder = "MessageId",
-                            @maxlength = "30"
-                        })
+                        @Html.HiddenFor(model => model.MessageId)
                         @Html.TextBoxFor(model => model.Code, new
                         {
 
@@ -41,6 +39,9 @@
                             @placeholder = "Code",
                             @maxlength = "30"
                         })
+                        <span class="error">
+                            @Html.ValidationMessageFor(m => m.Code)
+                        </span>
                     </div>
                     <div class="input-field-common">
                         <label class="block mb-[12px] text-sm font-medium text-secondary-100 ">
@@ -53,7 +54,9 @@
                        @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.Message,
                        @maxlength = "30"
                    })
-
+                        <span class="error">
+                            @Html.ValidationMessageFor(m => m.Message)
+                        </span>
                     </div>
                     <div class="input-field-common">
                         <label class="block mb-[12px] text-sm font-medium text-secondary-100 ">
@@ -64,7 +67,7 @@
                             @class = "w-full rounded-[4px]",
                             @style = "border-radius:4px !important",
                             @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.English_Message,
-                            @maxlength = "30"
+                            @maxlength = "200"
                         })
 
                     </div>
@@ -79,7 +82,9 @@
                             @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.Http_Status_Code,
                             @maxlength = "30"
                         })
-
+                        <span class="error">
+                            @Html.ValidationMessageFor(m => m.HttpStatusCode)
+                        </span>
                     </div>
                     <div class="input-field-common w-full">
                         <label class="block mb-4 text-sm font-medium text-secondary-100 ">
@@ -136,7 +141,9 @@
                             @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.User_Category,
                             @maxlength = "200"
                         })
-
+                        <span class="error">
+                            @Html.ValidationMessageFor(m => m.UserCategory)
+                        </span>
                     </div>
 
                 </div>
