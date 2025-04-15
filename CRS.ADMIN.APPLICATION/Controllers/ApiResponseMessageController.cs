@@ -38,7 +38,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
         public ActionResult ApiResponseMessageList(string SearchFilter = "", string value = "", int StartIndex = 0, int PageSize = 10,string Category = "",string ModuleName="",string UserCategory = "")
         {
             ViewBag.SearchFilter = SearchFilter;
-            //Session["CurrentURL"] = "/ClubManagement/ClubList";
+            Session["CurrentURL"] = "/ApiResponseMessage/ApiResponseMessageList";
             string RenderId = "";
             ApiResponseModel obj = new ApiResponseModel();
 
