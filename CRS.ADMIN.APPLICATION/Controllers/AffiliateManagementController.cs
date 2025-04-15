@@ -262,6 +262,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             return RedirectToAction("Index", "AffiliateManagement");
         }
 
+
         [HttpGet, OverrideActionFilters]
         public async Task<ActionResult> ResetAffiliatePassword(string AgentId)
         {
