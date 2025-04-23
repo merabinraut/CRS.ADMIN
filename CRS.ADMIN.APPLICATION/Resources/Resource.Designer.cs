@@ -4410,6 +4410,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Plan Category.
+        /// </summary>
+        public static string Plan_Category {
+            get {
+                return ResourceManager.GetString("Plan Category", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Plan Fee.
         /// </summary>
         public static string Plan_Fee {

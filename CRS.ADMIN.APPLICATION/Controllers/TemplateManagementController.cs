@@ -23,7 +23,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
         public ActionResult MessageTemplateList(string SearchFilter = "", int StartIndex = 0, int PageSize = 10)
         {
             ViewBag.SearchFilter = null;
-            Session["CurrentURL"] = "/PointSetup/PointSetupUserTypeList";
+            Session["CurrentURL"] = "/TemplateManagement/MessageTemplateList";
             string RenderId = "";
             var culture = Request.Cookies["culture"]?.Value;
             culture = string.IsNullOrEmpty(culture) ? "ja" : culture;
