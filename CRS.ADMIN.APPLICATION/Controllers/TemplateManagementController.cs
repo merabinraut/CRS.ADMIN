@@ -1,15 +1,11 @@
 ﻿using CRS.ADMIN.APPLICATION.Library;
-using CRS.ADMIN.APPLICATION.Models.PointSetup;
-using CRS.ADMIN.SHARED.PointSetup;
 using CRS.ADMIN.SHARED;
 using System.Linq;
 using System.Web.Mvc;
-using CRS.ADMIN.APPLICATION.Models.PointsManagement;
 using CRS.ADMIN.APPLICATION.Models.TemplateMessage;
 using CRS.ADMIN.APPLICATION.Helper;
 using System.Collections.Generic;
 using CRS.ADMIN.SHARED.TemplateManagement;
-using CRS.ADMIN.BUSINESS.PointSetup;
 using CRS.ADMIN.BUSINESS.TemplateManagement;
 using CRS.ADMIN.SHARED.PaginationManagement;
 
@@ -18,10 +14,10 @@ namespace CRS.ADMIN.APPLICATION.Controllers
     public class TemplateManagementController : BaseController
     {
         private readonly ITemplateBusiness _BUSS;
-         public TemplateManagementController(ITemplateBusiness BUSS)
-         {
-             _BUSS = BUSS;
-         }
+        public TemplateManagementController(ITemplateBusiness BUSS)
+        {
+            _BUSS = BUSS;
+        }
 
         [HttpGet]
         public ActionResult MessageTemplateList(string SearchFilter = "", int StartIndex = 0, int PageSize = 10)
@@ -47,16 +43,15 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             if (dbResponse.Count > 0)
             {
                 objTemplateMessageModel.GetTemplateMessageList.ForEach(x => x.Id = !string.IsNullOrEmpty(x.Id) ? x.Id.EncryptParameter() : x.Id);
-              
             }
             ViewBag.PopUpRenderValue = !string.IsNullOrEmpty(RenderId) ? RenderId : null;
-            ViewBag.contentCategoryDDL = ApplicationUtilities.SetDDLValue(DDLHelper.LoadDropdownList("CONTENTCATEGORY", "", culture) as Dictionary<string, string>, null,  culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---");
-            ViewBag.contentTypeDDL = ApplicationUtilities.SetDDLValue(DDLHelper.LoadDropdownList("CONTENTTYPE", "", culture) as Dictionary<string, string>, null,  culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---");
+            ViewBag.contentCategoryDDL = ApplicationUtilities.SetDDLValue(DDLHelper.LoadDropdownList("CONTENTCATEGORY", "", culture) as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---");
+            ViewBag.contentTypeDDL = ApplicationUtilities.SetDDLValue(DDLHelper.LoadDropdownList("CONTENTTYPE", "", culture) as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---");
             ViewBag.fieldTypeDDL = ApplicationUtilities.SetDDLValue(DDLHelper.LoadDropdownList("FIELDTYPE", "", culture) as Dictionary<string, string>, null, "");
             ViewBag.userTypeDDL = ApplicationUtilities.SetDDLValue(DDLHelper.LoadDropdownList("USERTYPEALL", "", culture) as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---");
-            ViewBag.userTypeKey= objTemplateMessageModel.ManageTemplateModel.userTypeDDL;
-            ViewBag.contentCategoryKey= objTemplateMessageModel.ManageTemplateModel.contentCategoryDDL;
-            ViewBag.contentTypeKey= objTemplateMessageModel.ManageTemplateModel.contentTypeDDL;
+            ViewBag.userTypeKey = objTemplateMessageModel.ManageTemplateModel.userTypeDDL;
+            ViewBag.contentCategoryKey = objTemplateMessageModel.ManageTemplateModel.contentCategoryDDL;
+            ViewBag.contentTypeKey = objTemplateMessageModel.ManageTemplateModel.contentTypeDDL;
             ViewBag.StartIndex = StartIndex;
             ViewBag.PageSize = PageSize;
             ViewBag.TotalData = dbResponse != null && dbResponse.Any() ? dbResponse[0].TotalRecords : 0;
@@ -68,7 +63,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
         public ActionResult ManageTemplate(ManageTemplateModel Model)
         {
             string ErrorMessage = string.Empty;
-       
+
             if (ModelState.IsValid)
             {
                 ManageTemplateCommon commonModel = Model.MapObject<ManageTemplateCommon>();
@@ -77,7 +72,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 commonModel.userTypeDDL = Model.userTypeDDL.DecryptParameter();
                 commonModel.contentTypeDDL = Model.contentTypeDDL.DecryptParameter();
                 commonModel.contentCategoryDDL = Model.contentCategoryDDL.DecryptParameter();
-                commonModel.Id =! string.IsNullOrEmpty(Model.Id) ? Model.Id.DecryptParameter() : null;
+                commonModel.Id = !string.IsNullOrEmpty(Model.Id) ? Model.Id.DecryptParameter() : null;
                 var dbResponse = _BUSS.ManageTemplate(commonModel);
                 if (dbResponse != null && dbResponse.Code == 0)
                 {
@@ -88,7 +83,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                         Message = dbResponse.Message ?? "Failed",
                         Title = dbResponse.Code == ResponseCode.Success ? NotificationMessage.SUCCESS.ToString() : NotificationMessage.INFORMATION.ToString()
                     });
-                    return RedirectToAction("MessageTemplateList", "TemplateManagement" );
+                    return RedirectToAction("MessageTemplateList", "TemplateManagement");
                 }
                 else
                 {
@@ -126,7 +121,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
         {
             ManageTemplateModel model = new ManageTemplateModel();
             var culture = System.Threading.Thread.CurrentThread.CurrentCulture.ToString();
-            Id =!string.IsNullOrEmpty(Id)? Id.DecryptParameter():null;
+            Id = !string.IsNullOrEmpty(Id) ? Id.DecryptParameter() : null;
             if (string.IsNullOrEmpty(Id))
             {
 
@@ -158,9 +153,9 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 PageSize = PageSize
             });
         }
-           
-        }
+
     }
+}
 
 
 

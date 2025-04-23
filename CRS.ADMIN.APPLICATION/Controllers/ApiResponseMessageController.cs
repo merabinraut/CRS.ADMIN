@@ -1,19 +1,12 @@
-
-using CRS.ADMIN.APPLICATION.Helper;
 using CRS.ADMIN.APPLICATION.Library;
 using CRS.ADMIN.APPLICATION.Models.ApiResponseMessage;
-using CRS.ADMIN.APPLICATION.Models.ClubManagement;
-
 using CRS.ADMIN.BUSINESS.ApiResponseMessage;
 using CRS.ADMIN.SHARED;
 using CRS.ADMIN.SHARED.ApiResponseMessage;
 using CRS.ADMIN.SHARED.PaginationManagement;
-using CRS.ADMIN.SHARED.StaffManagement;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
-
-using System.Reflection;
 using System.Threading.Tasks;
 
 using System.Web.Mvc;
