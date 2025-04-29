@@ -2944,4 +2944,8 @@
     <value>Plan Category</value>
     <comment>Plan Management</comment>
   </data>
+  <data name="Res ID" xml:space="preserve">
+    <value>Res ID</value>
+    <comment>Reservation Ledger</comment>
+  </data>
 </root>

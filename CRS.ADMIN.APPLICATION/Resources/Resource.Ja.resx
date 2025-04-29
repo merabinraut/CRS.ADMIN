@@ -2907,6 +2907,9 @@
   <data name="Manage Template" xml:space="preserve">
     <value>テンプレートの管理</value>
   </data>
+  <data name="Plan Category" xml:space="preserve">
+    <value>プランカテゴリー</value>
+  </data>
   <data name="Manager" xml:space="preserve">
     <value />
   </data>
@@ -2918,7 +2921,7 @@
     <value>引き出しリクエスト</value>
     <comment>Withdrawal Request</comment>
   </data>
-  <data name="Plan Category" xml:space="preserve">
-    <value>プランカテゴリー</value>
+  <data name="Res ID" xml:space="preserve">
+    <value>予約ID</value>
   </data>
 </root>

@@ -5058,6 +5058,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Res ID.
+        /// </summary>
+        public static string Res_ID {
+            get {
+                return ResourceManager.GetString("Res ID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Reservation Ledger.
         /// </summary>
         public static string Reservation_Ledger {

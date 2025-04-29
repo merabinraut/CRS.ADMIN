@@ -398,6 +398,7 @@
     <Compile Include="Services\CognitoService.cs" />
     <None Include="Views\ClubManagement\_ManageLineGroupPartialView.cshtml" />
     <None Include="Views\ChargeManagement\_ManageChargeCategoryDetails.cshtml" />
+    <Content Include="Content\assets\images\checked-status.svg" />
     <Content Include="Content\assets\images\line.svg" />
     <Content Include="Content\assets_new\images\group_management_svg.png" />
     <Content Include="Views\ChargeManagement\ChargeCategoryDetails.cshtml" />
