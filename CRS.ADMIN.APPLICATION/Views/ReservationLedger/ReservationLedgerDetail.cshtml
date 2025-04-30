@@ -471,7 +471,6 @@
                                                     <td class="">
                                                         @if (paymentLedger.TransactionStatus?.ToLower() == "pending" && paymentLedger.ClubVerification?.ToLower() == "pending")
                                                         {
-                                                            // <img src="/Content/assets/images/checked-status.svg" alt="status" class="cursor-pointer h-[20px] aspect-square" onclick="ResStatusFunction('@paymentLedger.Id');" data-drawer-placement="add-new-status-tag" data-drawer-backdrop="false" aria-controls="drawer-disabled-backdrop">
                                                             <img src="/Content/assets/images/checked-status.svg" alt="status" class="cursor-pointer h-[100px] aspect-square" onclick="VerifyStatusFunction('@paymentLedger.Id','@paymentLedger.ClubId');" data-modal-target="check-status-confirmation" data-modal-toggle="check-status-confirmation">
 
                                                         }
@@ -527,9 +526,9 @@
             <!-- Modal body -->
             <div class="grid gap-2 px-[20px] py-4">
                 <div class="text-[#333] font-semibold pb-[11px] border-b border-[#eeeeee]">来店コード確認</div>
-                @*<div class="grid gap-[10px] text-[#062937] mb-[15px]">            
-                        来店コード確認    
-                </div>*@
+                @*<div class="grid gap-[10px] text-[#062937] mb-[15px]">
+                            来店コード確認
+                    </div>*@
                 <!-- OTP Input Field -->
                 <div class="">
                     <label for="otp" class="block mb-[12px] text-sm font-medium text-secondary-text-2">来店コードを入力:</label>
@@ -539,7 +538,7 @@
                     <div class="flex gap-2 justify-end mt-[45px]">
                         <input id="request_id" value="" hidden />
                         <div class="btn btn-secondary w-[110px]" data-modal-hide="check-status-confirmation">@CRS.ADMIN.APPLICATION.Resources.Resource.No</div>
-                        <div class="btn btn-primary w-[110px]" onclick="VerifyOTPCode()" data-val1="" data-val2=""  data-modal-target="status-confirmation" data-modal-toggle="status-confirmation"id="check_status_id">@CRS.ADMIN.APPLICATION.Resources.Resource.Yes</div>
+                        <div class="btn btn-primary w-[110px]" onclick="VerifyOTPCode()" data-val1="" data-val2="" data-modal-target="status-confirmation" data-modal-toggle="status-confirmation" id="check_status_id">@CRS.ADMIN.APPLICATION.Resources.Resource.Yes</div>
                     </div>
                 </div>
             </div>
@@ -554,7 +553,7 @@
         <div class="relative bg-white rounded-lg shadow">
             <!-- Modal header -->
             <button type="button"
-                    class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center absolute top-[24px] right-[20px] "
+                    class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center absolute top-[24px] right-[20px] clsCancelConfirmation"
                     data-modal-hide="status-confirmation">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="25" viewBox="0 0 24 25" fill="none">
                     <rect y="0.621094" width="24" height="24" rx="12" fill="#FAFAFA" />
@@ -564,14 +563,14 @@
             </button>
             <!-- Modal body -->
             <div class="grid gap-2 px-[20px] py-4">
-                <div class="text-[#333] font-semibold pb-[11px] border-b border-[#eeeeee]">@CRS.ADMIN.APPLICATION.Resources.Resource.Confirmation</div>               
+                <div class="text-[#333] font-semibold pb-[11px] border-b border-[#eeeeee]">@CRS.ADMIN.APPLICATION.Resources.Resource.Confirmation</div>
                 <div class="text-[14px] text-secondary-text-2 text-start" id="confirmationMessage">
                     訪問コードの確認を行ってもよろしいですか？
-                </div>           
+                </div>
                 <div class="flex justify-end">
                     <div class="flex gap-2 justify-end mt-[45px]">
                         <input id="request_id" value="" hidden />
-                        <div class="btn btn-secondary w-[110px]" data-modal-hide="status-confirmation">@CRS.ADMIN.APPLICATION.Resources.Resource.No</div>
+                        <div class="btn btn-secondary w-[110px] clsCancelConfirmation" data-modal-hide="status-confirmation">@CRS.ADMIN.APPLICATION.Resources.Resource.No</div>
                         <div class="btn btn-primary w-[110px]" onclick="ConfirmCode()" data-val-confirm1="" data-val-confirm2="" id="status_id">@CRS.ADMIN.APPLICATION.Resources.Resource.Yes</div>
                     </div>
                 </div>
@@ -582,6 +581,57 @@
 @section scripts{
     <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
     <script>
+        function VerifyStatusFunction(id, agentid)
+        {
+           const modalTarget = document.querySelector("[data-modal-target='check-status-confirmation']");
+           const modal = document.getElementById("check-status-confirmation");
+           modal.classList.remove("hidden");
+           $('#check_status_id').attr('data-val1', id);
+           $('#check_status_id').attr('data-val2', agentid);
+           $("#check-status-confirmation").show();
+           $("#otp").val("");
+           modal.classList.remove("hidden"); // If using Tailwind or similar
+           modal.setAttribute("aria-hidden", "false");
+        }
+        function VerifyOTPCode() {
+            var otp = document.getElementById("otp").value;
+            const modalTarget = document.querySelector("[data-modal-target='status-confirmation']");
+            const modal = document.getElementById("status-confirmation");
+            $('#status_id').attr('data-val-confirm1', otp);
+            $("#check-status-confirmation").css("display", "none");
+            modal.classList.remove("hidden"); // If using Tailwind or similar
+            modal.setAttribute("aria-hidden", "false");
+        }
+        function ConfirmCode() {
+          const id = $('#check_status_id').attr('data-val1');
+          const agentId = $('#check_status_id').attr('data-val2');
+          const code = $('#status_id').attr('data-val-confirm1');
+          let search_filter = $('#default-search').val();
+          const start_index_val = @ViewBag.StartIndex;
+          const page_size = @ViewBag.PageSize;
+          let ClubId = '@ViewBag.ClubId';
+          let FromDate = '@ViewBag.FromDate';
+          let ToDate = '@ViewBag.ToDate';
+          let Date1 = '@ViewBag.Date';
+          $.ajax({
+               type: "POST",
+               url: '@Url.Action("VerifyOTPClubCode", "ReservationLedger")',
+              data: {
+                   'reservationId': id, 'agentId': agentId, 'code': code
+              },
+              success: function (response) {
+                  window.location.href = '/ReservationLedger/ReservationLedgerDetail?SearchFilter=' + search_filter + '&StartIndex=' + start_index_val + '&PageSize=' + page_size + '&ClubId=' + ClubId + '&FromDate=' + FromDate + '&ToDate=' + ToDate + '&Date=' + Date1  ;
+                  //window.location.reload();
+               },
+              error: function (error) {
+                  window.location.href = '/ReservationLedger/ReservationLedgerDetail?SearchFilter=' + search_filter + '&StartIndex=' + start_index_val + '&PageSize=' + page_size + '&ClubId=' + ClubId + '&FromDate=' + FromDate + '&ToDate=' + ToDate + '&Date=' + Date1;                  //window.location.reload();
+               }
+           })
+        }
+        $(document).on("click", ".clsCancelConfirmation", function () {
+            $("[modal-backdrop]").hide();
+        });
+
         document.addEventListener('DOMContentLoaded', function () {
                 const page_size = @ViewBag.PageSize;
                 const total_data = @ViewBag.TotalData;
@@ -598,10 +648,10 @@
                 LoadPagination(page_size, total_data, start_index_val, URL);
 
                 var currentDate = new Date();
-            var lastThreeMonths = new Date();
-            var Future14days = new Date();
-            lastThreeMonths.setMonth(currentDate.getMonth() - 3);
-            Future14days.setDate(currentDate.getDate() + 14);
+                var lastThreeMonths = new Date();
+                var Future14days = new Date();
+                lastThreeMonths.setMonth(currentDate.getMonth() - 3);
+                Future14days.setDate(currentDate.getDate() + 14);
 
                  $("#FromDate").val("@ViewBag.FromDate");
                  jQuery(function ($) {
@@ -663,64 +713,6 @@
                      });
                  });
         });
-        function VerifyStatusFunction(id, agentid)
-        {
-           const modalTarget = document.querySelector("[data-modal-target='check-status-confirmation']");
-           const modal = document.getElementById("check-status-confirmation");
-           modal.classList.remove("hidden");
-            $('#check_status_id').attr('data-val1', id);
-            $('#check_status_id').attr('data-val2', agentid);
-           modal.setAttribute("aria-hidden", "false");
-        }
-        function VerifyOTPCode() {
-            debugger;
-            var otp = document.getElementById("otp").value;
-            //if (!/^\d+$/.test(otp)) {
-            //    $("#status-confirmation").hide();
-            //    return false;
-            //}
 
-            //// Check maximum length
-            //if (otp.length !== 6) {
-            //    $("#status-confirmation").hide();
-            //    return false;
-            //}
-            const modalTarget = document.querySelector("[data-modal-target='status-confirmation']");
-            const modal = document.getElementById("status-confirmation");
-            //modal.classList.remove("hidden");
-            $('#status_id').attr('data-val-confirm1', otp);
-            $("#check-status-confirmation").hide();
-            modal.classList.remove("hidden"); // If using Tailwind or similar
-            modal.setAttribute("aria-hidden", "false");
-            //modal.style.display = "block"; // If using inline styles
-        }
-        function ConfirmCode() {
-            debugger;
-            const id = $('#check_status_id').attr('data-val1');
-            const agentId = $('#check_status_id').attr('data-val2');
-            const code = $('#status_id').attr('data-val-confirm1');
-          //var RequestVerificationToken = $('input[name="__RequestVerificationToken"]').val();
-          let search_filter = $('#default-search').val();
-          const start_index_val = @ViewBag.StartIndex;
-          const page_size = @ViewBag.PageSize;
-           let search_filter = '@ViewBag.SearchFilter';
-           let ClubId = '@ViewBag.ClubId';
-           let FromDate = '@ViewBag.FromDate';
-           let ToDate = '@ViewBag.ToDate';
-          $.ajax({
-               type: "POST",
-               url: '@Url.Action("VerifyOTPClubCode", "ReservationLedger")',
-              data: {
-                   'reservationId': id, 'agentId': agentId, 'code': code
-              },
-              success: function (response) {
-                  window.location.href = '/ReservationLedger/ReservationLedgerDetail?SearchFilter=' + search_filter + '&StartIndex=' + start_index_val + '&PageSize=' + page_size + '&ClubId=' + ClubId + '&FromDate=' + FromDate + '&ToDate=' + ToDate  ;
-                  //window.location.reload();
-               },
-              error: function (error) {
-                  window.location.href = '/ReservationLedger/ReservationLedgerDetail?SearchFilter=' + search_filter + '&StartIndex=' + start_index_val + '&PageSize=' + page_size + '&ClubId=' + ClubId + '&FromDate=' + FromDate + '&ToDate=' + ToDate;                  //window.location.reload();
-               }
-           })
-        }
     </script>
 }
