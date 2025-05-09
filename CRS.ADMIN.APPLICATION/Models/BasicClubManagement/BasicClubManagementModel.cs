@@ -94,7 +94,8 @@ namespace CRS.ADMIN.APPLICATION.Models.BasicClubManagement
         public string LastEntryTime { get; set; }
        
         [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Required")]
-        [RegularExpression(@"^\d{3} \d{4}$", ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Invalid_Postal_Code")]
+        //[RegularExpression(@"^\d{3} \d{4}$", ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Invalid_Postal_Code")]
+        [RegularExpression(@"^\d{3}-\d{4}$", ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Invalid_Postal_Code")]
         public string PostalCode { get; set; }
       
         public string Prefecture { get; set; }
@@ -203,7 +204,8 @@ namespace CRS.ADMIN.APPLICATION.Models.BasicClubManagement
         [RegularExpression(@"^(?:100|\d{1,2})$", ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Invalid_Tax")]
         public string Tax { get; set; }
         [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Required")]
-        [RegularExpression(@"^\d{3} \d{4}$", ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Invalid_Postal_Code")]
+        //[RegularExpression(@"^\d{3} \d{4}$", ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Invalid_Postal_Code")]
+        [RegularExpression(@"^\d{3}-\d{4}$", ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Invalid_Postal_Code")]
         public string PostalCode { get; set; }
         public string Prefecture { get; set; }
         [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Required")]
