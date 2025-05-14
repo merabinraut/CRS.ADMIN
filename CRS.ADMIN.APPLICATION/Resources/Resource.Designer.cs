@@ -6048,6 +6048,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Total Basic Club.
+        /// </summary>
+        public static string Total_Basic_Club {
+            get {
+                return ResourceManager.GetString("Total Basic Club", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Total Clicks.
         /// </summary>
         public static string Total_Clicks {
@@ -6089,6 +6098,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         public static string Total_Plan_Amount {
             get {
                 return ResourceManager.GetString("Total Plan Amount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Total Premium Club.
+        /// </summary>
+        public static string Total_Premium_Club {
+            get {
+                return ResourceManager.GetString("Total Premium Club", resourceCulture);
             }
         }
         

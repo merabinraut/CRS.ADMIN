@@ -2910,6 +2910,9 @@
   <data name="Plan Category" xml:space="preserve">
     <value>プランカテゴリー</value>
   </data>
+  <data name="Res ID" xml:space="preserve">
+    <value>予約ID</value>
+  </data>
   <data name="Manager" xml:space="preserve">
     <value />
   </data>
@@ -2921,7 +2924,10 @@
     <value>引き出しリクエスト</value>
     <comment>Withdrawal Request</comment>
   </data>
-  <data name="Res ID" xml:space="preserve">
-    <value>予約ID</value>
+  <data name="Total Premium Club" xml:space="preserve">
+    <value>契約店</value>
+  </data>
+  <data name="Total Basic Club" xml:space="preserve">
+    <value>未契約店</value>
   </data>
 </root>

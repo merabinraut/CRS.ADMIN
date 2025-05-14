@@ -26,6 +26,7 @@ namespace CRS.ADMIN.REPOSITORY.Home
             {
                 return new DashboardInfoModelCommon()
                 {
+                    TotalBasicClubs = Convert.ToInt32(dbResponseInfo.Rows[0]["TotalBasicClubs"]),
                     TotalClubs = Convert.ToInt32(dbResponseInfo.Rows[0]["TotalClubs"]),
                     TotalVisitors = Convert.ToInt32(dbResponseInfo.Rows[0]["TotalVisitors"]),
                     TotalSales = Convert.ToDecimal(dbResponseInfo.Rows[0]["TotalSales"]),

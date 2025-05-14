@@ -414,9 +414,21 @@
     @* <script src="~/Content/assets_new/js/jquery.min.js"></script>*@
     <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
     <script>
-
-            $("input[name='TransferType'][value='Transfer']").prop("checked", true);
-
+        $(document).ready(function () {
+            $('#large[name="UserName"]').select2({
+                width: 'resolve'
+            });
+            $('#large[name="UserId"]').select2({
+                width: 'resolve'
+            });
+            $('#User_name[name="User_name"]').select2({
+                width: 'resolve'
+            });
+            $('#UserNameList[name="UserNameList"]').select2({
+                width: 'resolve'
+            });
+          });
+          $("input[name='TransferType'][value='Transfer']").prop("checked", true);
 
         //$(".cls_trftype").click(function () {
 
@@ -504,8 +516,6 @@
                 document.getElementById('tab4Link').style.color = '#D75A8B';
                 document.getElementById('tab4Link').style.borderBottom = '#D75A8B 2px solid';
 
-
-
             }
         }
 
@@ -526,7 +536,11 @@
                         $.each(response.userNameList, function (i, value) {
                             $('#large[name="UserId"]').append($("<option>").val(value.Value).text(value.Text));
                         });
-                        $('#large[name="UserId"]').prop("disabled", false);
+                          $('#large[name="UserId"]').prop("disabled", false);
+                          $('#large[name="UserName"]').select2({
+                                width: 'resolve'
+                           });
+                     
                     }
                     else {
                         $('#large[name="UserId"]').empty();
@@ -555,6 +569,9 @@
                               $('#large[name="UserName"]').append($("<option>").val(value.Value).text(value.Text));
                           });
                           $('#large[name="UserName"]').prop("disabled", false);
+                          $('#large[name="UserName"]').select2({
+                              width: 'resolve'
+                          });
                       }
                       else {
                           $('#large[name="UserName"]').empty();

@@ -736,7 +736,14 @@
 @section scripts{
     <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
     <script>
+        $(document).ready(function () {
+            $('#large[name="ClubId"]').select2({
+                width: 'resolve'
+            });
+        });
         document.addEventListener('DOMContentLoaded', function () {
+              
+          
                 const page_size = @ViewBag.PageSize;
                 const total_data = @ViewBag.TotalData;
                 const start_index_val = @ViewBag.StartIndex;
@@ -753,10 +760,10 @@
                 LoadPagination(page_size, total_data, start_index_val, URL);
 
                 var currentDate = new Date();
-            var lastThreeMonths = new Date();
-            var Future14days = new Date();
+                var lastThreeMonths = new Date();
+                var Future14days = new Date();
                 lastThreeMonths.setMonth(currentDate.getMonth() - 3);
-            Future14days.setDate(currentDate.getDate() + 14);
+                Future14days.setDate(currentDate.getDate() + 14);
                  $("#FromDate").val("@ViewBag.FromDate");
                  jQuery(function ($) {
                      $.datepicker.regional['ja'] = {

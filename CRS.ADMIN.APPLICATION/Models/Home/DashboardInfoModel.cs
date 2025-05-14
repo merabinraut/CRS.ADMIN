@@ -3,6 +3,7 @@
     public class DashboardInfoModel
     {
         public int TotalClubs { get; set; }
+        public int TotalBasicClubs { get; set; }
         public int TotalVisitors { get; set; }
         public decimal TotalSales { get; set; }
         public string Username { get; set; }

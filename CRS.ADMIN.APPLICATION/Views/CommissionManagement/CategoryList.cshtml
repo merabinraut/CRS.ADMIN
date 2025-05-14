@@ -350,9 +350,15 @@
 @section scripts
 {
     <script>
-
-  $(document).ready(function () {
-    var PopUpRenderValue = '@ViewBag.PopUpRenderValue';
+   
+    $(document).ready(function () {
+        $('#large[name="NewCommissionCategoryDDL"]').select2({
+            width: 'resolve'
+        });
+        $('#large[name="ClubDDL"]').select2({
+            width: 'resolve'
+        });
+        var PopUpRenderValue = '@ViewBag.PopUpRenderValue';
         if (PopUpRenderValue != null && PopUpRenderValue != "" && PopUpRenderValue == "Manage")
         {
             var element = document.getElementById('add-new-commision');
@@ -414,7 +420,8 @@
             success: function (data) {
                  $.each(data.clubLists, function (i, clubDDL) {
                     $(".ClubDDL").append('<option value="' + clubDDL.Value + '">' + clubDDL.Text + '</option>');
-                });
+                 });
+
              },
              error: function (ex) {
                 toastr.info('Failed to retrive club.');
