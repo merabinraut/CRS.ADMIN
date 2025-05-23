@@ -126,7 +126,7 @@ namespace CRS.ADMIN.REPOSITORY.HostManagement
                     Address = _DAO.ParseColumnValue(dbResponse, "Address").ToString(),
                     HostNameJapanese = _DAO.ParseColumnValue(dbResponse, "HostNameJapanese").ToString(),
                     HostIntroduction = _DAO.ParseColumnValue(dbResponse, "HostIntroduction").ToString(),
-                    OtherPositionRemark = _DAO.ParseColumnValue(dbResponse, "OtherPosition").ToString(),
+                    //OtherPositionRemark = _DAO.ParseColumnValue(dbResponse, "OtherPosition").ToString(),
                 };
 
                 string SQL2 = "EXEC sproc_host_identity_detail_management @Flag = 'ghid'";
@@ -149,13 +149,13 @@ namespace CRS.ADMIN.REPOSITORY.HostManagement
             SQL += ",@HostName=N" + _DAO.FilterString(Request.HostName);
             SQL += ",@HostNameJapanese=N" + _DAO.FilterString(Request.HostNameJapanese);
             SQL += ",@Position=N" + _DAO.FilterString(Request.Position);
-            SQL += string.IsNullOrEmpty(Request.OtherPositionRemark) ? ",@OtherPositionRemark=" + _DAO.FilterString(Request.OtherPositionRemark) : ",@OtherPositionRemark=N" + _DAO.FilterString(Request.OtherPositionRemark);
+            //SQL += string.IsNullOrEmpty(Request.OtherPositionRemark) ? ",@OtherPositionRemark=" + _DAO.FilterString(Request.OtherPositionRemark) : ",@OtherPositionRemark=N" + _DAO.FilterString(Request.OtherPositionRemark);
             SQL += !string.IsNullOrEmpty(Request.Rank?.ToString()) ? ",@Rank=" + Request.Rank : "";
             SQL += ",@DOB=" + "'" + Request.DOB + "'";
             SQL += ",@ConstellationGroup=" + _DAO.FilterString(Request.ConstellationGroup);
             SQL += ",@Height=" + _DAO.FilterString(Request.Height);
             SQL += ",@BloodType=" + _DAO.FilterString(Request.BloodType);
-            SQL += ",@PreviousOccupation=" + _DAO.FilterString(Request.PreviousOccupation);
+            SQL += ",@PreviousOccupation=N" + _DAO.FilterString(Request.PreviousOccupation);
             SQL += ",@LiquorStrength=" + _DAO.FilterString(Request.LiquorStrength);
             //SQL += ",@WebsiteLink=" + _DAO.FilterString(Request.WebsiteLink);
 
