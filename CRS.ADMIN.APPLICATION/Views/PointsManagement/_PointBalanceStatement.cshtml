@@ -401,7 +401,7 @@
     </div>
 </div>
 <script>
-
+   
     function GetUserNameByUser_Type() {
     //$('#large[name="UserTypeList"]').change(function () {
         var UserTypeId = $('#UserTypeList[name="UserTypeList"]').find("option:selected").val();
@@ -420,10 +420,14 @@
                         $('#UserNameList[name="UserNameList"]').append($("<option>").val(value.Value).text(value.Text));
                     });
                     $('#UserNameList[name="UserNameList"]').prop("disabled", false);
+                    $('#UserNameList[name="UserNameList"]').select2({
+                        width: 'resolve'
+                    });
                 }
                 else {
                     $('#UserNameList[name="UserNameList"]').empty();
                 }
+                
             },
             error: function (ex) {
                 alert('Failed to retrive details.' + ex);

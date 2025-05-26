@@ -329,6 +329,11 @@
 
     </script>
     <script>
+        $(document).ready(function () {
+            $('#large[name="NewCategoryId"]').select2({
+                width: 'resolve'
+            });
+        });
        $('#large[name="UserTypeId"]').change(function () {
            var UserTypeId = $(this).find("option:selected").val().trim();
          $.ajax({
@@ -361,10 +366,15 @@
                          $('#large[name="NewCategoryId"]').append($("<option>").val(value.Value).text(value.Text));
                      });
                      $('#large[name="NewCategoryId"]').prop("disabled", false);
+                      $('#large[name="AgentId"]').select2({
+                          placeholder: "--- @CRS.ADMIN.APPLICATION.Resources.Resource.Select ---",               
+                          width: 'resolve'
+                       });
                  }
                  else {
                      $('#large[name="NewCategoryId"]').empty();
                  }
+
              },
              error: function (ex) {
                  alert('Failed to retrive details.' + ex);
@@ -383,7 +393,7 @@
         url: '@Url.Action("GetPointsCategoryListByAgentId")',
         dataType: 'json',
              data: { RoleTypeId: UserTypeId, AgentId: AgentId },
-             success: function (response) {
+            success: function (response) {               
                  $('#form [data-valmsg-for="AgentId"]').html("");
                  $("#points").css("display", "none");
                  $("#assignpoint").css("display", "block");
@@ -396,7 +406,7 @@
         });
          return false;
         });
-
+        
         $('#large[name="NewCategoryId"]').change(function () {
             $('#form [data-valmsg-for="NewCategoryId"]').html("");
         });

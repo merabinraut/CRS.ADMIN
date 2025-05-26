@@ -2944,6 +2944,18 @@
     <value>Plan Category</value>
     <comment>Plan Management</comment>
   </data>
+  <data name="Res ID" xml:space="preserve">
+    <value>Res ID</value>
+    <comment>Reservation Ledger</comment>
+  </data>
+  <data name="Total Premium Club" xml:space="preserve">
+    <value>Total Premium Club</value>
+    <comment>Total Premium Club</comment>
+  </data>
+  <data name="Total Basic Club" xml:space="preserve">
+    <value>Total Basic Club</value>
+    <comment>Total Basic Club</comment>
+  </data>
   <data name="IsVariableExists" xml:space="preserve">
     <value>IsVariableExists</value>
     <comment>Api Message Response</comment>

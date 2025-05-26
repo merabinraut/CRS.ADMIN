@@ -1,8 +1,10 @@
-﻿using CRS.ADMIN.SHARED.PaginationManagement;
+﻿using CRS.ADMIN.SHARED;
+using CRS.ADMIN.SHARED.PaginationManagement;
 using CRS.ADMIN.SHARED.ReservationLedger;
 using DocumentFormat.OpenXml.Office2016.Excel;
 using DocumentFormat.OpenXml.VariantTypes;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 
 namespace CRS.ADMIN.REPOSITORY.ReservationLedger
@@ -46,6 +48,18 @@ namespace CRS.ADMIN.REPOSITORY.ReservationLedger
                 if (Code.Trim() == "0") return _dao.DataTableToListObject<ReservationLedgerDetailCommon>(dbResponseInfo).ToList();
             }
             return new List<ReservationLedgerDetailCommon>();
+        }
+
+        public CommonDbResponse VerifyCode(string reservationId, string agentId, string code, Common requestCommon)
+        {
+            string SQL = "EXEC sproc_admin_customer_reservation_status ";
+            SQL += "@ReservationId=" + _dao.FilterString(reservationId);
+            SQL += ",@id=" + _dao.FilterString(agentId);
+            SQL += ",@OTPCode=" + _dao.FilterString(code);
+            SQL += ",@adminUserId=" + _dao.FilterString(requestCommon.ActionUser);
+            SQL += ",@ActionIP=" + _dao.FilterString(requestCommon.ActionIP);
+            SQL += ",@ActionPlatform=admin";
+            return _dao.ParseCommonDbResponse(SQL);
         }
     }
 }

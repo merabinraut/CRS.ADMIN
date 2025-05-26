@@ -108,7 +108,7 @@ namespace CRS.ADMIN.APPLICATION.Models.HostManagement
         public string HostIconImage { get; set; }
         public string Address { get; set; }
         public string clubCategory { get; set; }
-        public string OtherPositionRemark { get; set; }        
+        //public string OtherPositionRemark { get; set; }        
         public List<HostIdentityDataModel> HostIdentityDataModel { get; set; } = new List<HostIdentityDataModel>();
     }
     public class HostIdentityDataModel

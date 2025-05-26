@@ -399,6 +399,7 @@
     <Content Include="App_Data\AmazonConfigruation.json" />
     <None Include="Views\ClubManagement\_ManageLineGroupPartialView.cshtml" />
     <None Include="Views\ChargeManagement\_ManageChargeCategoryDetails.cshtml" />
+    <Content Include="Content\assets\images\checked-status.svg" />
     <Content Include="Content\assets\images\line.svg" />
     <Content Include="Content\assets_new\images\group_management_svg.png" />
     <Content Include="Views\ChargeManagement\ChargeCategoryDetails.cshtml" />
@@ -436,6 +437,7 @@
     <Content Include="Views\GroupManagement\_ManageSubGroupClub.cshtml" />
     <Content Include="Views\GroupManagement\GroupGallery.cshtml" />
     <Content Include="Views\GroupManagement\_ManageGroupGallery.cshtml" />
+    <Content Include="Views\PointsManagement\_GetSystemTransferReportAsync.cshtml" />
     <None Include="Views\PromotionManagement\_ManageAdvertisementPartialView.cshtml" />
     <None Include="Views\PromotionManagement\_AdvertisementList.cshtml" />
     <Content Include="Content\assets\images\TickIcon.svg" />

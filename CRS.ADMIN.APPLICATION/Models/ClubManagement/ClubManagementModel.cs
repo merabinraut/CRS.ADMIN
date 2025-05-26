@@ -191,7 +191,8 @@ namespace CRS.ADMIN.APPLICATION.Models.ClubManagement
         [RegularExpression(@"^(?:100|\d{1,2})$", ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Invalid_Tax")]
         public string Tax { get; set; }
         [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Required")]
-        [RegularExpression(@"^\d{3} \d{4}$", ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Invalid_Postal_Code")]
+        //[RegularExpression(@"^\d{3} \d{4}$", ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Invalid_Postal_Code")]
+        [RegularExpression(@"^\d{3}-\d{4}$", ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Invalid_Postal_Code")]
         public string PostalCode { get; set; }
         //[Required(AllowEmptyStrings = false, ErrorMessage = "Required")]
         public string Prefecture { get; set; }
