@@ -2921,4 +2921,8 @@
   <data name="Plan Category" xml:space="preserve">
     <value>プランカテゴリー</value>
   </data>
+  <data name="IsVariableExists" xml:space="preserve">
+    <value>変数が存在するかどうか</value>
+    <comment>Api Message Response</comment>
+  </data>
 </root>

@@ -2842,6 +2842,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to IsVariableExists.
+        /// </summary>
+        public static string IsVariableExists {
+            get {
+                return ResourceManager.GetString("IsVariableExists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Jan.
         /// </summary>
         public static string January {

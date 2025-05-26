@@ -151,6 +151,23 @@
                         </span>
                     </div>
 
+                    <div class="input-field-common">
+                        <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.IsVariableExists
+                        </label>
+                        <select id="IsVariableExists" name="IsVariableExists" class=" default_select select-common block w-full "
+                                style="width: 100%;">
+                            <option value="false">
+                                No
+                            </option>
+                            <option value="true">
+                                Yes
+                            </option>
+                        </select>
+                        <span class="error">
+                            @Html.ValidationMessageFor(m => m.IsVariableExists)
+                        </span>
+                    </div>
                 </div>
 
                 <div class="flex justify-end mt-6 ">

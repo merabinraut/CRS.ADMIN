@@ -29,7 +29,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
         }
 
         [HttpGet]
-        public ActionResult ApiResponseMessageList(string SearchFilter = "", string value = "", int StartIndex = 0, int PageSize = 10,string Category = "",string ModuleName="",string UserCategory = "")
+        public ActionResult ApiResponseMessageList(string SearchFilter = "", string value = "", int StartIndex = 0, int PageSize = 10, string Category = "", string ModuleName = "", string UserCategory = "")
         {
             ViewBag.SearchFilter = SearchFilter;
             Session["CurrentURL"] = "/ApiResponseMessage/ApiResponseMessageList";
@@ -45,15 +45,15 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 Skip = StartIndex,
                 Take = PageSize,
                 SearchFilter = !string.IsNullOrEmpty(SearchFilter) ? SearchFilter : null,
-                userCategory= !string.IsNullOrEmpty(UserCategory) ? UserCategory : null,
+                userCategory = !string.IsNullOrEmpty(UserCategory) ? UserCategory : null,
                 category = !string.IsNullOrEmpty(Category) ? Category : null,
                 moduleName = !string.IsNullOrEmpty(ModuleName) ? ModuleName : null,
             };
-            var dbResponse = _BUSS.ApiResponseMessageList(dbRequestall);           
+            var dbResponse = _BUSS.ApiResponseMessageList(dbRequestall);
             obj.ApiResponseMessageList = dbResponse.MapObjects<ApiResponseMessageModel>();
             if (dbResponse.Count > 0)
             {
-                obj.ApiResponseMessageList.ForEach(x => x.MessageId = !string.IsNullOrEmpty(x.MessageId) ? x.MessageId.EncryptParameter() : x.MessageId);               
+                obj.ApiResponseMessageList.ForEach(x => x.MessageId = !string.IsNullOrEmpty(x.MessageId) ? x.MessageId.EncryptParameter() : x.MessageId);
             }
             ViewBag.StartIndex = StartIndex;
             ViewBag.PageSize = PageSize;
@@ -82,7 +82,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
         public ActionResult ApiResponseMessageList(ApiResponseMessageModel model)
         {
             if (ModelState.IsValid)
-            {               
+            {
                 ApiResponseMessageCommon commonModel = model.MapObject<ApiResponseMessageCommon>();
                 commonModel.ActionUser = ApplicationUtilities.GetSessionValue("Username").ToString();
                 commonModel.MessageId = model.MessageId.DecryptParameter();
@@ -121,7 +121,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             {
                 ApiResponseMessageCommon commonModel = model.MapObject<ApiResponseMessageCommon>();
                 commonModel.ActionUser = ApplicationUtilities.GetSessionValue("Username").ToString();
-                commonModel.MessageId =!string.IsNullOrEmpty(model.MessageId) ?model.MessageId.DecryptParameter():null;
+                commonModel.MessageId = !string.IsNullOrEmpty(model.MessageId) ? model.MessageId.DecryptParameter() : null;
 
                 var dbResponseInfo = _BUSS.UpdateApiResponseMessage(commonModel);
 
@@ -135,7 +135,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                     });
                     return RedirectToAction("ApiResponseMessageList", "ApiResponseMessage", new
                     {
-                        SearchFilter =! string.IsNullOrEmpty(model.SearchFilter)? model.SearchFilter:null,
+                        SearchFilter = !string.IsNullOrEmpty(model.SearchFilter) ? model.SearchFilter : null,
                         StartIndex = model.StartIndex,
                         PageSize = model.PageSize,
                         Category = model.CategoryFilter,
@@ -223,9 +223,9 @@ namespace CRS.ADMIN.APPLICATION.Controllers
 
                 });
             }
-            var dbResponse = _BUSS.ApiResponseMessageDetail(messgaeId);        
+            var dbResponse = _BUSS.ApiResponseMessageDetail(messgaeId);
             ApiResponseMessageModel request = new ApiResponseMessageModel();
-            request = dbResponse.MapObject<ApiResponseMessageModel>();           
+            request = dbResponse.MapObject<ApiResponseMessageModel>();
             request.MessageId = id;
             request.SearchFilter = SearchFilter;
             request.ModuleNameFilter = ModuleName;
@@ -299,7 +299,8 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             request.MessageId = id;
             TempData["ManageResponseGetModel"] = request;
             TempData["RenderId"] = "Get";
-            return RedirectToAction("ApiResponseMessageList", new {
+            return RedirectToAction("ApiResponseMessageList", new
+            {
                 SearchFilter = SearchFilter,
                 StartIndex = StartIndex,
                 PageSize = PageSize,

@@ -2944,4 +2944,8 @@
     <value>Plan Category</value>
     <comment>Plan Management</comment>
   </data>
+  <data name="IsVariableExists" xml:space="preserve">
+    <value>IsVariableExists</value>
+    <comment>Api Message Response</comment>
+  </data>
 </root>

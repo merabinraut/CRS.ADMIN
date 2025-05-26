@@ -41,6 +41,7 @@ namespace CRS.ADMIN.APPLICATION.Models.ApiResponseMessage
         public string UserCategoryFilter { get; set; }
         public string CategoryFilter { get; set; }
         public string ModuleNameFilter { get; set; }
+        public bool IsVariableExists { get; set; }
 
 
     }
