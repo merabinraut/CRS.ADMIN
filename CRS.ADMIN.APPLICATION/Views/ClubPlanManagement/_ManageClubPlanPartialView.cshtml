@@ -223,17 +223,17 @@
 
                                                             </select>
                                                             @*<select id="@ids" class="default_select select-common block w-full selectplan" style="width: 100%;"
-                                                                        name="ClubPlanDetailList[@i].PlanIdentityList[@j].IdentityDescription">
+                                        name="ClubPlanDetailList[@i].PlanIdentityList[@j].IdentityDescription">
 
-                                                                    @foreach (var item in ViewBag.TimeIntervalList as IEnumerable<SelectListItem>)
-                                                                    {
-                                                                        var selectedId = Model.ClubPlanDetailList[i].PlanIdentityList[j].PlanId as string;
-                                                                        <option value="@item.Value" @(item.Value == "21:00" ? "selected disabled" : "")>
-                                                                            @item.Text
-                                                                        </option>
-                                                                    }
+                                    @foreach (var item in ViewBag.TimeIntervalList as IEnumerable<SelectListItem>)
+                                    {
+                                        var selectedId = Model.ClubPlanDetailList[i].PlanIdentityList[j].PlanId as string;
+                                        <option value="@item.Value" @(item.Value == "21:00" ? "selected disabled" : "")>
+                                            @item.Text
+                                        </option>
+                                    }
 
-                                                                </select>*@
+                                </select>*@
 
 
 
@@ -273,7 +273,7 @@
                                                                 </span>
                                                             </label>
                                                         </div>
-
+                                                        <br />
                                                     }
                                                 }
 
@@ -282,10 +282,10 @@
 
 
                                         </div>
-
+                                        <br />
                                     }
 
-                                    <br />
+
 
                                     <!-- for max reservation code -->
 
