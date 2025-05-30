@@ -8,26 +8,17 @@ using CRS.ADMIN.APPLICATION.Models.TagManagement;
 using CRS.ADMIN.BUSINESS.ClubManagement;
 using CRS.ADMIN.SHARED;
 using CRS.ADMIN.SHARED.ClubManagement;
-using CRS.ADMIN.SHARED.Middleware.AmazonCognitoModel.SignUp;
 using CRS.ADMIN.SHARED.Middleware.AmazonCognitoModel;
 using CRS.ADMIN.SHARED.PaginationManagement;
-using DocumentFormat.OpenXml.Office2019.Excel.RichData2;
-using DocumentFormat.OpenXml.Wordprocessing;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
 using System.Linq;
-using System.Net;
 using System.Net.Http;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
-using static Google.Apis.Requests.BatchRequest;
-using CRS.ADMIN.SHARED.Middleware.AmazonCognitoModel.Password;
-using Amazon.CognitoIdentityProvider.Model;
-using System.Drawing.Printing;
 
 namespace CRS.ADMIN.APPLICATION.Controllers
 {

@@ -19,6 +19,7 @@ namespace CRS.ADMIN.SHARED.ApiResponseMessage
         public string HttpStatusCode { get; set; }
         public string Module { get; set; }
         public string UserCategory { get; set; }
+        public bool IsVariableExists { get; set; }
     }
     public class ApiResponseMessageFilterCommon : PaginationFilterCommon
     {
