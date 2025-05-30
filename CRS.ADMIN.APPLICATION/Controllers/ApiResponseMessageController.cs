@@ -8,6 +8,7 @@ using CRS.ADMIN.SHARED.StaffManagement;
 using DocumentFormat.OpenXml.Office2010.Excel;
 using DocumentFormat.OpenXml.Wordprocessing;
 using System.Collections.Generic;
+using System.Diagnostics.SymbolStore;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -140,7 +141,8 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                         PageSize = model.PageSize,
                         Category = model.CategoryFilter,
                         ModuleName = model.ModuleNameFilter,
-                        UserCategory = model.UserCategoryFilter
+                        UserCategory = model.UserCategoryFilter,
+                        IsVariableExists=model.IsVariableExists
 
                     });
                 }
@@ -159,7 +161,8 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                         PageSize = model.PageSize,
                         Category = model.CategoryFilter,
                         ModuleName = model.ModuleNameFilter,
-                        UserCategory = model.UserCategoryFilter
+                        UserCategory = model.UserCategoryFilter,
+                        IsVariableExists = model.IsVariableExists,
 
                     });
                 }
@@ -178,7 +181,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             });
         }
         [HttpGet]
-        public async Task<ActionResult> UpdateResponseMessage(string id, string SearchFilter = "", string value = "", int StartIndex = 0, int PageSize = 10, string Category = "", string ModuleName = "", string UserCategory = "")
+        public async Task<ActionResult> UpdateResponseMessage(string id, string SearchFilter = "", string value = "", int StartIndex = 0, int PageSize = 10, string Category = "", string ModuleName = "", string UserCategory = "",bool IsVariableExists=false)
         {
             var messgaeId = "";
             if (!string.IsNullOrEmpty(id))
@@ -200,7 +203,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                         Category = Category,
                         ModuleName = ModuleName,
                         UserCategory = UserCategory,
-
+                        IsVariableExists= IsVariableExists
                     });
                 }
             }
@@ -220,6 +223,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                     Category = Category,
                     ModuleName = ModuleName,
                     UserCategory = UserCategory,
+                    IsVariableExists = IsVariableExists
 
                 });
             }
@@ -233,6 +237,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             request.CategoryFilter = Category;
             request.StartIndex = StartIndex;
             request.PageSize = PageSize;
+            request.IsVariableExists= IsVariableExists;
             TempData["ManageResponseEditModel"] = request;
             TempData["RenderId"] = "Edit";
             return RedirectToAction("ApiResponseMessageList", "ApiResponseMessage", new
@@ -243,7 +248,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 Category = Category,
                 ModuleName = ModuleName,
                 UserCategory = UserCategory,
-
+                IsVariableExists = IsVariableExists
             });
         }
 
@@ -270,7 +275,6 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                         Category = Category,
                         ModuleName = ModuleName,
                         UserCategory = UserCategory,
-
                     });
                 }
             }

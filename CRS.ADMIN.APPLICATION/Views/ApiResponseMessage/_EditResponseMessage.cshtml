@@ -52,7 +52,7 @@
                        @class = "w-full rounded-[4px]",
                        @style = "border-radius:4px !important",
                        @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.Message,
-                       @maxlength = "30"
+                       @maxlength = "200"
                    })
                         <span class="error">
                             @Html.ValidationMessageFor(m => m.Message)
@@ -143,6 +143,23 @@
                         })
                         <span class="error">
                             @Html.ValidationMessageFor(m => m.UserCategory)
+                        </span>
+                    </div>
+                    <div class="input-field-common">
+                        <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.IsVariableExists
+                        </label>
+                        <select id="IsVariableExists" name="IsVariableExists" class=" default_select select-common block w-full "
+                                style="width: 100%;">
+                            <option value="false">
+                                No
+                            </option>
+                            <option value="true">
+                                Yes
+                            </option>
+                        </select>
+                        <span class="error">
+                            @Html.ValidationMessageFor(m => m.IsVariableExists)
                         </span>
                     </div>
 

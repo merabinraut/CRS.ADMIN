@@ -97,6 +97,7 @@ namespace CRS.ADMIN.REPOSITORY.ApiResponseMessage
             SQL += ",@module = " + _DAO.FilterString(Request.Module);
             SQL += ",@userCategory = " + _DAO.FilterString(Request.UserCategory);
             SQL += ",@actionUser = " + _DAO.FilterString(Request.ActionUser);
+            SQL += ",@isVariableExists = " + _DAO.FilterString(Request.IsVariableExists.ToString());
 
             Response = _DAO.ParseCommonDbResponse(SQL);
             return Response;
@@ -118,6 +119,7 @@ namespace CRS.ADMIN.REPOSITORY.ApiResponseMessage
             SQL += ",@messageType = " + _DAO.FilterString(Request.MessageType);
             SQL += ",@httpStatusCode = " + _DAO.FilterString(Request.HttpStatusCode);
             SQL += ",@actionUser = " + _DAO.FilterString(Request.ActionUser);
+            SQL += ",@isVariableExists = " + _DAO.FilterString(Request.IsVariableExists.ToString());
 
             Response = _DAO.ParseCommonDbResponse(SQL);
             return Response;
