@@ -54,6 +54,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             ViewBag.contentTypeKey = objTemplateMessageModel.ManageTemplateModel.contentTypeDDL;
             ViewBag.StartIndex = StartIndex;
             ViewBag.PageSize = PageSize;
+            ViewBag.SearchFilter = SearchFilter;
             ViewBag.TotalData = dbResponse != null && dbResponse.Any() ? dbResponse[0].TotalRecords : 0;
             return View(objTemplateMessageModel);
         }
