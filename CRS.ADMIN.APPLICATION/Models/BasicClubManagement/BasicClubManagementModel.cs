@@ -197,7 +197,7 @@ namespace CRS.ADMIN.APPLICATION.Models.BasicClubManagement
         public string[] HolidayStr { get; set; }
         public string OthersHoliday { get; set; }
         public string[] OthersHolidayStr { get; set; }
-        [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Required")]
+        //[Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Required")]
         public string LastOrderTime { get; set; }
         [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Required")]
         public string LastEntryTime { get; set; }
