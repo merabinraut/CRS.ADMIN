@@ -17,6 +17,7 @@
 </style>
 
 
+<link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote-lite.min.css" rel="stylesheet">
 <div class="px-8 py-4">
 
     @Html.AntiForgeryToken()
@@ -33,7 +34,7 @@
             <div class="flex flex-col gap-8">
                 <div id="tab1" class="tab-content">
                     <div class="flex justify-between pb-[24px]">
-                        <form action="/ClubManagement/EventList" method="get">
+                        <form action="/TemplateManagement/MessageTemplateList" method="get">
                             @*<input type="hidden" name="ClubId" value="@Model.ManageEventModel.AgentId">*@
                             <div class="relative input-search-wrapper">
                                 <div class="absolute inset-y-0 left-0 flex items-center pl-[16px] pointer-events-none">
@@ -231,8 +232,8 @@
 {
 
     <script src="~/Content/assets_new/js/calendar-management.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote-lite.min.js"></script>
     <script>
         // Initialize Froala Editor
         let editorInstance;
@@ -240,8 +241,42 @@
         function insertAtCursor() {
             const dropdown = $('#large[name="fieldTypeDDL"]');
             const selectedValue = dropdown.val();
-            editorInstance.html.insert(selectedValue);
+            //editorInstance.html.insert(selectedValue);
+            $('#summernote').summernote('focus'); // Ensure the editor is focused
+            $('#summernote').summernote('insertText', selectedValue);
+        
         }
+        $(document).ready(function () {
+            $('#summernote').summernote({
+                height: 200, // Set minimum height
+                placeholder: 'Start writing here...',
+                toolbar: [
+                    ['style', ['bold', 'italic', 'underline']], // Toolbar customization
+                ],
+                callbacks: {
+                    onInit: function () {
+                        // Load initial content from input field if available
+                        const body = $('input[name="messageBody"]').val();
+                        if (body) {
+                            $('#summernote').summernote('code', body);
+                        }
+                    },
+                    onPaste: function (e) {
+                        e.preventDefault(); // Prevent default paste action
+
+                        // Get plain text from clipboard
+                        const clipboardData = e.originalEvent.clipboardData || window.clipboardData;
+                        let pastedData = clipboardData.getData('text/plain');
+
+                        // Clean up the pasted content
+                        pastedData = pastedData.trim().replace(/\s+/g, ' ');
+
+                        // Insert cleaned text manually
+                        $('#summernote').summernote('pasteHTML', pastedData);
+                    }
+                }
+            });
+        });
         document.addEventListener('DOMContentLoaded', function () {
             const page_size = @ViewBag.PageSize;
             const total_data = @ViewBag.TotalData;
@@ -250,38 +285,33 @@
             let search_filter = $('#default-search').val();
             URL = addQueryParam(URL, 'SearchFilter', search_filter);
             LoadPagination(page_size, total_data, start_index_val, URL);
-            editorInstance = new FroalaEditor('#froala-editor', {
-                events: {
-                    'initialized': function () {
-                        const body = $('input[name="messageBody"]').val();
-                        if (body) {
-                            this.html.set(body); // 'this' refers to the editor instance
-                        }
-                    },
-                    'paste.before': function (e, editor) {
-                        const clipboardData = e.clipboardData || window.clipboardData;
-                        let pastedData = clipboardData.getData('text/plain'); // Get plain text
-                        pastedData = pastedData.trim(); // Trim whitespace
-                        pastedData = pastedData.replace(/\s+/g, ' '); // Normalize spaces
-                        editor.html.insert(pastedData); // Insert cleaned data manually
-                        e.preventDefault(); // Prevent the default paste action
-                    }
-                },
-                heightMin: 200, // Optional: Minimum height for the editor
-                toolbarButtons: ['bold', 'italic', 'underline'],
-                pluginsEnabled: [], // Optional: List plugins you want to enable
-                fontSize: {
-                    options: ['8', '10', '12']
-                },
-                inlineMode: false // Disable inline mode if not required
-            });
+            //editorInstance = new FroalaEditor('#froala-editor', {
+            //    events: {
+            //        'initialized': function () {
+            //            const body = $('input[name="messageBody"]').val();
+            //            if (body) {
+            //                this.html.set(body); // 'this' refers to the editor instance
+            //            }
+            //        },
+            //        'paste.before': function (e, editor) {
+            //            const clipboardData = e.clipboardData || window.clipboardData;
+            //            let pastedData = clipboardData.getData('text/plain'); // Get plain text
+            //            pastedData = pastedData.trim(); // Trim whitespace
+            //            pastedData = pastedData.replace(/\s+/g, ' '); // Normalize spaces
+            //            editor.html.insert(pastedData); // Insert cleaned data manually
+            //            e.preventDefault(); // Prevent the default paste action
+            //        }
+            //    },
+            //    heightMin: 200, // Optional: Minimum height for the editor
+            //    toolbarButtons: ['bold', 'italic', 'underline'],
+            //    pluginsEnabled: [], // Optional: List plugins you want to enable
+            //    fontSize: {
+            //        options: ['8', '10', '12']
+            //    },
+            //    inlineMode: false // Disable inline mode if not required
+            //});
 
-            @*if ("@Model.ManageTemplateModel.Id" != "") {
-                debugger;
-                var body = $('input[name="messageBody"]').val()
-                editorInstance.html.set();
-                editorInstance.html.set(body);
-            }*@
+
         });
         function cleanContent(content) {
             // Create a temporary DOM element
@@ -294,10 +324,15 @@
             return tempDiv.innerHTML;
         }
         function submitContent() {
+            debugger;
             // Get the HTML content from Froala Editor
-            const content = editorInstance.html.get();
-            const raw = cleanContent(content);
-            $('#editorContent[name="messageBody"]').val(raw);
+            //const content = editorInstance.html.get();
+            //const raw = cleanContent(content);
+            //$('#editorContent[name="messageBody"]').val(raw);
+            const content = $('#summernote').summernote('code');
+
+            $('#editorContent[name="messageBody"]').val(content);
+            
             $("#ManageTemplateEmailForm").submit();
         }
         function EditTemplate(i)
