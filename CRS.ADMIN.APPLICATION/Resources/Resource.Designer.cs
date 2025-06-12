@@ -3058,11 +3058,38 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Enter LINE Group Link.
+        /// </summary>
+        public static string Line_Group_Link_Title {
+            get {
+                return ResourceManager.GetString("Line Group Link Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to LINE Group Name.
         /// </summary>
         public static string LINE_Group_Name {
             get {
                 return ResourceManager.GetString("LINE Group Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter LINE Group Name.
+        /// </summary>
+        public static string Line_Group_Name_Title {
+            get {
+                return ResourceManager.GetString("Line Group Name Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Submit.
+        /// </summary>
+        public static string Line_Submit {
+            get {
+                return ResourceManager.GetString("Line Submit", resourceCulture);
             }
         }
         

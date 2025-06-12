@@ -2934,4 +2934,16 @@
     <value>変数が存在するかどうか</value>
     <comment>Api Message Response</comment>
   </data>
+  <data name="Line Group Link Title" xml:space="preserve">
+    <value>LINEグループリンクを入力</value>
+    <comment>Line Group Management</comment>
+  </data>
+  <data name="Line Group Name Title" xml:space="preserve">
+    <value>LINEグループ名を入力</value>
+    <comment>Line Group Management</comment>
+  </data>
+  <data name="Line Submit" xml:space="preserve">
+    <value>追加</value>
+    <comment>Line Group Management</comment>
+  </data>
 </root>
