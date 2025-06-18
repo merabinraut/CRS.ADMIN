@@ -1,0 +1,193 @@
+@model CRS.ADMIN.APPLICATION.Models.TemplateMessage.ManageTemplateModel
+<div id="add-template-message"
+     class="drawer-close-disable  flex justify-end fixed top-0 right-0 z-40 h-screen overflow-y-auto transition-transform translate-x-full"
+     tabindex="-1" aria-labelledby="add-template-message" aria-modal="true" role="dialog">
+    <div class="bg-white w-[863px] drawer-container relative">
+        <div class="drawer-form-container sticky top-0 z-[5] ">
+            <div class="drawer-form flex justify-between bg-secondary-color-pink py-[16px] px-[24px] h-[56px]">
+                <div>
+                    @CRS.ADMIN.APPLICATION.Resources.Resource.Manage_Template
+                </div>
+                <button type="button" data-drawer-hide="add-template-message" aria-controls="add-template-message"
+                        class="text-[20px]">
+                    <i class="las la-window-close text-white" onclick="CancelFunction()"></i>
+                </button>
+            </div>
+        </div>
+        @Html.Raw(Html.HiddenFor(model => model.messageBody).ToString())
+        <div class="p-[24px] ">
+            <div class=" py-4 grid gap-6">
+                @using (Html.BeginForm("ManageTemplate", "TemplateManagement", FormMethod.Post, new { @id = "ManageTemplateEmailForm", enctype = "multipart/form-data" }))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.HiddenFor(model => model.Id);
+
+                    <div id="content1" class="content-section " style="display: block;">
+                        <div class="grid grid-cols-3 gap-x-5 gap-y-4">
+
+                            <div class="input-field-common">
+                                <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
+                                    @CRS.ADMIN.APPLICATION.Resources.Resource.User_Type
+                                </label>
+                                <select id="large" name="userTypeDDL" class=" default_select select-common block w-full "
+                                        style="width: text-2%;">
+                                    @foreach (var item in ViewBag.userTypeDDL as IEnumerable<SelectListItem>)
+                                    {
+                                        var selectedId = ViewBag.userTypeKey as string;
+                                        if (item.Value == selectedId)
+                                        {
+                                            <option value="@item.Value" selected>
+                                                @item.Text
+                                            </option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@item.Value">
+                                                @item.Text
+                                            </option>
+                                        }
+                                    }
+                                </select>
+                            </div>
+
+                            <div class="input-field-common">
+                                <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
+                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Content_Category
+                                </label>
+                                <select id="large" name="contentCategoryDDL" class=" default_select select-common block w-full "
+                                        style="width: text-2%;">
+                                    @foreach (var item in ViewBag.contentCategoryDDL as IEnumerable<SelectListItem>)
+                                    {
+                                        var selectedId = ViewBag.contentCategoryKey as string;
+                                        if (item.Value == selectedId)
+                                        {
+                                            <option value="@item.Value" selected>
+                                                @item.Text
+                                            </option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@item.Value">
+                                                @item.Text
+                                            </option>
+                                        }
+                                    }
+                                </select>
+                            </div>
+                            <div class="input-field-common">
+                                <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
+                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Content_Type
+                                </label>
+                                <select id="large" name="contentTypeDDL" class=" default_select select-common block w-full "
+                                        style="width: text-2%;">
+                                    @foreach (var item in ViewBag.contentTypeDDL as IEnumerable<SelectListItem>)
+                                    {
+                                        var selectedId = ViewBag.contentTypeKey as string;
+                                        if (item.Value == selectedId)
+                                        {
+                                            <option value="@item.Value" selected>
+                                                @item.Text
+                                            </option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@item.Value">
+                                                @item.Text
+                                            </option>
+                                        }
+                                    }
+                                </select>
+                            </div>
+
+                            <div class="input-field-common mb-[20px]">
+                                <div class="input-field-common">
+                                    <label for="date" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                                        @CRS.ADMIN.APPLICATION.Resources.Resource.Subject
+                                    </label>
+                                    @Html.TextBoxFor(model => model.subject, new
+                                             {
+                                             @class = "w-full",
+                                             @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.Title,
+                                             autocomplete = "off"
+                                             })
+
+                                    <span class="error">
+                                        @Html.ValidationMessageFor(m => m.subject)
+                                    </span>
+                                </div>
+                            </div>
+
+
+
+                        </div>
+                        <br />
+                        <hr />
+                        <br />
+                        <div class="grid grid-cols-3 gap-x-5 gap-y-4">
+                            <div class="input-field-common">
+                                <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
+                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Field_Type
+                                </label>
+                                <select id="large" name="fieldTypeDDL" class=" default_select select-common block w-full "
+                                        style="width: text-2%;">
+                                    @foreach (var item in ViewBag.fieldTypeDDL as IEnumerable<SelectListItem>)
+                                    {
+                                        var selectedId = ViewBag.fieldTypeKey as string;
+                                        if (item.Value == selectedId)
+                                        {
+                                            <option value="@item.Value" selected>
+                                                @item.Text
+                                            </option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@item.Value">
+                                                @item.Text
+                                            </option>
+                                        }
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="grid gap-x-5 gap-y-4">
+
+                            <div class="input-field-common mb-[20px]">
+                                <label for="textEditor" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Description
+                                </label>
+                                @*<div id="froala-editor"></div>*@
+                                <div id="summernote"></div>
+                            </div>
+                            <input type="hidden" id="editorContent" name="messageBody">
+
+                        </div>
+                        <div class="grid gap-x-5 gap-y-4">
+                            <div class="input-field-common mb-[20px]">
+                                <button type="button" class="btn btn-secondary rounded-[4px]" onclick="insertAtCursor()">Insert Field Type</button>
+                            </div>
+                            <br><br>
+
+                        </div>
+                        <hr />
+                        <div class="grid gap-4 py-[10px]">
+                            <!-- for submit button -->
+                            <div class="py-4 flex justify-end">
+                                <div class="flex gap-6">
+                                    <button class="btn btn-secondary rounded-[4px]" type="button" data-drawer-hide="add-template-message"
+                                            aria-controls="add-new-host-tag" onclick="CancelFunction();">
+                                        @CRS.ADMIN.APPLICATION.Resources.Resource.Cancel
+                                    </button>
+                                    <button class="btn btn-primary-default rounded-[4px]" onclick="submitContent()"> @CRS.ADMIN.APPLICATION.Resources.Resource.Submit</button>
+
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

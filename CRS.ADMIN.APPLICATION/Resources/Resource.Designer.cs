@@ -1645,6 +1645,24 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Content Category.
+        /// </summary>
+        public static string Content_Category {
+            get {
+                return ResourceManager.GetString("Content Category", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Content Type.
+        /// </summary>
+        public static string Content_Type {
+            get {
+                return ResourceManager.GetString("Content Type", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Contract Information.
         /// </summary>
         public static string Contract_Information {
@@ -2248,6 +2266,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Field Type.
+        /// </summary>
+        public static string Field_Type {
+            get {
+                return ResourceManager.GetString("Field Type", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Filter By.
         /// </summary>
         public static string Filter_By {
@@ -2815,6 +2842,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to IsVariableExists.
+        /// </summary>
+        public static string IsVariableExists {
+            get {
+                return ResourceManager.GetString("IsVariableExists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Jan.
         /// </summary>
         public static string January {
@@ -3022,11 +3058,38 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Enter LINE Group Link.
+        /// </summary>
+        public static string Line_Group_Link_Title {
+            get {
+                return ResourceManager.GetString("Line Group Link Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to LINE Group Name.
         /// </summary>
         public static string LINE_Group_Name {
             get {
                 return ResourceManager.GetString("LINE Group Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter LINE Group Name.
+        /// </summary>
+        public static string Line_Group_Name_Title {
+            get {
+                return ResourceManager.GetString("Line Group Name Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Submit.
+        /// </summary>
+        public static string Line_Submit {
+            get {
+                return ResourceManager.GetString("Line Submit", resourceCulture);
             }
         }
         
@@ -3436,6 +3499,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Manage Template.
+        /// </summary>
+        public static string Manage_Template {
+            get {
+                return ResourceManager.GetString("Manage Template", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Manage the inquiries that has been made by customers..
         /// </summary>
         public static string Manage_the_inquiries_that_has_been_made_by_customers {
@@ -3702,6 +3774,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         public static string Message {
             get {
                 return ResourceManager.GetString("Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Message Template.
+        /// </summary>
+        public static string Message_Template {
+            get {
+                return ResourceManager.GetString("Message Template", resourceCulture);
             }
         }
         
@@ -4365,6 +4446,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Plan Category.
+        /// </summary>
+        public static string Plan_Category {
+            get {
+                return ResourceManager.GetString("Plan Category", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Plan Fee.
         /// </summary>
         public static string Plan_Fee {
@@ -5000,6 +5090,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         public static string Required {
             get {
                 return ResourceManager.GetString("Required", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Res ID.
+        /// </summary>
+        public static string Res_ID {
+            get {
+                return ResourceManager.GetString("Res ID", resourceCulture);
             }
         }
         
@@ -5661,6 +5760,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Subject.
+        /// </summary>
+        public static string Subject {
+            get {
+                return ResourceManager.GetString("Subject", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Submit.
         /// </summary>
         public static string Submit {
@@ -5729,6 +5837,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         public static string Tax {
             get {
                 return ResourceManager.GetString("Tax", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Template Message.
+        /// </summary>
+        public static string Template_Message {
+            get {
+                return ResourceManager.GetString("Template Message", resourceCulture);
             }
         }
         
@@ -5967,6 +6084,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Total Basic Club.
+        /// </summary>
+        public static string Total_Basic_Club {
+            get {
+                return ResourceManager.GetString("Total Basic Club", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Total Clicks.
         /// </summary>
         public static string Total_Clicks {
@@ -6008,6 +6134,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         public static string Total_Plan_Amount {
             get {
                 return ResourceManager.GetString("Total Plan Amount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Total Premium Club.
+        /// </summary>
+        public static string Total_Premium_Club {
+            get {
+                return ResourceManager.GetString("Total Premium Club", resourceCulture);
             }
         }
         

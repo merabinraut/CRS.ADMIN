@@ -72,7 +72,7 @@
                                 </div>
                             </div>
                         </th>
-                        <th scope="col" class="p-[12px]">
+                        @*<th scope="col" class="p-[12px]">
                             <div class="flex justify-center">
                                 @CRS.ADMIN.APPLICATION.Resources.Resource.Action
                                 <div class="relative pl-[5px]">
@@ -80,7 +80,7 @@
                                     <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
                                 </div>
                             </div>
-                        </th>
+                        </th>*@
                     </tr>
                 </thead>
                 <tbody>
@@ -119,13 +119,13 @@
                                         @item.DisplayOrder
                                     </div>
                                 </td>
-                                <td class="p-[12px]">
+                                @*<td class="p-[12px]">
                                     <div class="flex gap-2 items-center justify-center">
                                         <a href="">
                                             <i class="las la-trash-alt text-[24px] text-[#CB3F3F] cursor-pointer" onclick="DeleteRequest('@item.RecommendationId','@item.ClubId','@item.HostId','@item.RecommendationHostId')"></i>
                                         </a>
                                     </div>
-                                </td>
+                                </td>*@
                             </tr>
                             sno++;
                         }

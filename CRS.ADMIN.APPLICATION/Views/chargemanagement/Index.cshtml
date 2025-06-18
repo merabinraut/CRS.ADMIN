@@ -250,6 +250,16 @@
 {
 
     <script>
+
+        $(document).ready(function () {
+
+            $('#large[name="AgentId"]').select2({
+                width: 'resolve'
+            });
+            $('#large[name="newChargeCategoryId"]').select2({
+                width: 'resolve'
+            });
+        });
         function ViewChargeCategory(i,j) {
             window.location.href = '/ChargeManagement/ChargeCategoryType?agentTypeValue=' + i +'&agentType=' + j;
         }
@@ -286,6 +296,9 @@
                           $('#large[name="newChargeCategoryId"]').append($("<option>").val(value.Value).text(value.Text));
                       });
                       $('#large[name="newChargeCategoryId"]').prop("disabled", false);
+                      $('#large[name="newChargeCategoryId"]').select2({
+                          width: 'resolve'
+                      });
                   }
                   else {
                       $('#large[name="newChargeCategoryId"]').empty();

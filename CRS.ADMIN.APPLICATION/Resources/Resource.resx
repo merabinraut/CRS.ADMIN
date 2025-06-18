@@ -2912,4 +2912,64 @@
     <value>LINE Group Link</value>
     <comment>Club Management</comment>
   </data>
+  <data name="Message Template" xml:space="preserve">
+    <value>Message Template</value>
+    <comment>Template Management</comment>
+  </data>
+  <data name="Content Category" xml:space="preserve">
+    <value>Content Category</value>
+    <comment>Template Management</comment>
+  </data>
+  <data name="Content Type" xml:space="preserve">
+    <value>Content Type</value>
+    <comment>Template Management</comment>
+  </data>
+  <data name="Field Type" xml:space="preserve">
+    <value>Field Type</value>
+    <comment>Template Management</comment>
+  </data>
+  <data name="Subject" xml:space="preserve">
+    <value>Subject</value>
+    <comment>Template Management</comment>
+  </data>
+  <data name="Template Message" xml:space="preserve">
+    <value>Template Message</value>
+    <comment>Template Management</comment>
+  </data>
+  <data name="Manage Template" xml:space="preserve">
+    <value>Manage Template</value>
+    <comment>Template Management</comment>
+  </data>
+  <data name="Plan Category" xml:space="preserve">
+    <value>Plan Category</value>
+    <comment>Plan Management</comment>
+  </data>
+  <data name="Res ID" xml:space="preserve">
+    <value>Res ID</value>
+    <comment>Reservation Ledger</comment>
+  </data>
+  <data name="Total Premium Club" xml:space="preserve">
+    <value>Total Premium Club</value>
+    <comment>Total Premium Club</comment>
+  </data>
+  <data name="Total Basic Club" xml:space="preserve">
+    <value>Total Basic Club</value>
+    <comment>Total Basic Club</comment>
+  </data>
+  <data name="IsVariableExists" xml:space="preserve">
+    <value>IsVariableExists</value>
+    <comment>Api Message Response</comment>
+  </data>
+  <data name="Line Group Link Title" xml:space="preserve">
+    <value>Enter LINE Group Link</value>
+    <comment>Line Group Management</comment>
+  </data>
+  <data name="Line Group Name Title" xml:space="preserve">
+    <value>Enter LINE Group Name</value>
+    <comment>Line Group Management</comment>
+  </data>
+  <data name="Line Submit" xml:space="preserve">
+    <value>Submit</value>
+    <comment>Line Group Management</comment>
+  </data>
 </root>

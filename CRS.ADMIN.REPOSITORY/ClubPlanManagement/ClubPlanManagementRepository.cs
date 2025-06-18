@@ -173,7 +173,7 @@ namespace CRS.ADMIN.REPOSITORY.ClubPlanManagement
                         PlanName = _DAO.ParseColumnValue(item, "PlanName").ToString(),
                         PlanId = _DAO.ParseColumnValue(item, "PlanId").ToString(),
                         LastEntryTime = _DAO.ParseColumnValue(item, "LastEntryTime").ToString(),
-                        LastOrderTime = _DAO.ParseColumnValue(item, "LastOrderTime").ToString(),
+                       // LastOrderTime = _DAO.ParseColumnValue(item, "LastOrderTime").ToString(),
                         CreatedDate = _DAO.ParseColumnValue(item, "CreatedDate").ToString(),
                         UpdatedDate = _DAO.ParseColumnValue(item, "UpdatedDate").ToString(),
                         NoofPeople = _DAO.ParseColumnValue(item, "NoofPeople").ToString(),

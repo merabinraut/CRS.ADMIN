@@ -247,17 +247,17 @@
 {
     <script>
         $(document).ready(function () {
-            $("#otherpositionid").hide();
-            if ($("#HostId").val() != "" || $("#AgentId").val() != "") {
-                var Value = $('#large[name="Position"]').find("option:selected").text().trim();
-                if (Value.toLowerCase() == "other" || Value.toLowerCase() == "スタッフ") {
-                    $("#otherpositionid").show();
-                }
-                else {
-                    $("#otherpositionid").hide();
-                    $("#OtherPositionRemark").val('');
-                }
-            }
+            //$("#otherpositionid").hide();
+            //if ($("#HostId").val() != "" || $("#AgentId").val() != "") {
+            //    var Value = $('#large[name="Position"]').find("option:selected").text().trim();
+            //    if (Value.toLowerCase() == "other" || Value.toLowerCase() == "その他") {
+            //        $("#otherpositionid").show();
+            //    }
+            //    else {
+            //        $("#otherpositionid").hide();
+            //        $("#OtherPositionRemark").val('');
+            //    }
+            //}
          $('select').select2({
              minimumResultsForSearch: Infinity
          });
@@ -508,18 +508,18 @@
         // Initial state setup
         updateStep();
 
-        $('#large[name="Position"]').change(function () {
+        //$('#large[name="Position"]').change(function () {
 
-            var selectedValue = $(this).find("option:selected").text().trim();
-            if (selectedValue.toLowerCase() == "other" || selectedValue.toLowerCase() == "その他") {
-                $("#otherpositionid").show();
+        //    var selectedValue = $(this).find("option:selected").text().trim();
+        //    if (selectedValue.toLowerCase() == "other" || selectedValue.toLowerCase() == "その他") {
+        //        $("#otherpositionid").show();
 
 
-            }
-            else {
-                $("#otherpositionid").hide();
-                $("#OtherPositionRemark").val('');
-            }
-        });
+        //    }
+        //    else {
+        //        $("#otherpositionid").hide();
+        //        $("#OtherPositionRemark").val('');
+        //    }
+        //});
     </script>
 }

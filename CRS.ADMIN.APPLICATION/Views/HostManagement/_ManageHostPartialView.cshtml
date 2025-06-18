@@ -145,36 +145,36 @@
                                     <label for="email" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
                                         @CRS.ADMIN.APPLICATION.Resources.Resource.Position
                                     </label>
-                                    @*@Html.TextBoxFor(model => model.Position, new
+                                    @Html.TextBoxFor(model => model.Position, new
                                         {
                                            @class = "w-full",
                                            @placeholder = CRS.ADMIN.APPLICATION.Resources.Resource.Position,
                                            //@onkeypress = "return isAlphabetWithSpace(event)",
                                            autocomplete = "off",
-                                           @maxLength = "100"
+                                           @maxLength = "150"
                                         })
-                                        <span class="error">
-                                            @Html.ValidationMessageFor(m => m.Position)
-                                        </span>*@
+                                    <span class="error">
+                                        @Html.ValidationMessageFor(m => m.Position)
+                                    </span>
 
-                                    <select id="large" class="select-common block w-full " name="Position">
-                                        @foreach (var item in ViewBag.positionddl as IEnumerable<SelectListItem>)
-                                        {
-                                            var selectedId = ViewBag.postitionkey as string;
-                                            if (item.Value == selectedId)
+                                    @*<select id="large" class="select-common block w-full " name="Position">
+                                            @foreach (var item in ViewBag.positionddl as IEnumerable<SelectListItem>)
                                             {
-                                                <option value="@item.Value" selected>
-                                                    @item.Text
-                                                </option>
+                                                var selectedId = ViewBag.postitionkey as string;
+                                                if (item.Value == selectedId)
+                                                {
+                                                    <option value="@item.Value" selected>
+                                                        @item.Text
+                                                    </option>
+                                                }
+                                                else
+                                                {
+                                                    <option value="@item.Value">
+                                                        @item.Text
+                                                    </option>
+                                                }
                                             }
-                                            else
-                                            {
-                                                <option value="@item.Value">
-                                                    @item.Text
-                                                </option>
-                                            }
-                                        }
-                                    </select>
+                                        </select>*@
 
                                     <span class="error">
                                         @Html.ValidationMessageFor(m => m.Position)
@@ -182,24 +182,24 @@
                                 </div>
 
                             </div>
-                            <div class="grid grid-cols-2 gap-x-5 gap-y-4" id="otherpositionid">
-                                <div class="input-field-common">
-                                    <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
-                                        @CRS.ADMIN.APPLICATION.Resources.Resource.Others
-                                    </label>
-                                    @Html.TextBoxFor(model => model.OtherPositionRemark, new
-                                   {
-                                       @class = "w-full",
-                                       @placeholder = CRS.ADMIN.APPLICATION.Resources.Resource.Others,
-                                       //@onkeypress = "return isAlphabetWithSpace(event)",
-                                       autocomplete = "off",
-                                       @maxLength = "100"
-                                   })
-                                    <span class="error">
-                                        @Html.ValidationMessageFor(m => m.OtherPositionRemark)
-                                    </span>
-                                </div>
-                            </div>
+                            @*<div class="grid grid-cols-2 gap-x-5 gap-y-4" id="otherpositionid">
+                                    <div class="input-field-common">
+                                        <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
+                                            @CRS.ADMIN.APPLICATION.Resources.Resource.Others
+                                        </label>
+                                        @Html.TextBoxFor(model => model.OtherPositionRemark, new
+                                       {
+                                           @class = "w-full",
+                                           @placeholder = CRS.ADMIN.APPLICATION.Resources.Resource.Others,
+                                           //@onkeypress = "return isAlphabetWithSpace(event)",
+                                           autocomplete = "off",
+                                           @maxLength = "100"
+                                       })
+                                        <span class="error">
+                                            @Html.ValidationMessageFor(m => m.OtherPositionRemark)
+                                        </span>
+                                    </div>
+                                </div>*@
                             <div>
                                 <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
                                     @CRS.ADMIN.APPLICATION.Resources.Resource.ProfileImage
@@ -426,25 +426,32 @@
                                     <label for="email" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
                                         @CRS.ADMIN.APPLICATION.Resources.Resource.Previous_Occupation
                                     </label>
-
-                                    <select id="large" class="select-common block w-full " name="OccupationDDLKey">
-                                        @foreach (var item in ViewBag.OccupationDDL as IEnumerable<SelectListItem>)
-                                        {
-                                            var selectedId = ViewBag.OccupationDDLKey as string;
-                                            if (item.Value == selectedId)
+                                    @Html.TextBoxFor(model => model.PreviousOccupation, new
+                                    {
+                                       @class = "w-full",
+                                       @placeholder = CRS.ADMIN.APPLICATION.Resources.Resource.Previous_Occupation,
+                                       //@onkeypress = "return isNumber(event)",
+                                       autocomplete = "off",
+                                       @maxLength = "150"
+                                    })
+                                    @*<select id="large" class="select-common block w-full " name="OccupationDDLKey">
+                                            @foreach (var item in ViewBag.OccupationDDL as IEnumerable<SelectListItem>)
                                             {
-                                                <option value="@item.Value" selected>
-                                                    @item.Text
-                                                </option>
+                                                var selectedId = ViewBag.OccupationDDLKey as string;
+                                                if (item.Value == selectedId)
+                                                {
+                                                    <option value="@item.Value" selected>
+                                                        @item.Text
+                                                    </option>
+                                                }
+                                                else
+                                                {
+                                                    <option value="@item.Value">
+                                                        @item.Text
+                                                    </option>
+                                                }
                                             }
-                                            else
-                                            {
-                                                <option value="@item.Value">
-                                                    @item.Text
-                                                </option>
-                                            }
-                                        }
-                                    </select>
+                                        </select>*@
                                 </div>
                             </div>
                             <div class="grid grid-cols-2 gap-x-5 gap-y-4">
@@ -631,7 +638,7 @@
                                                         var valueRange = string.IsNullOrEmpty(Model.HostIdentityDataModel[i].IdentityDescription) || Model.HostIdentityDataModel[i].IdentityDescription == "0" ? "0" : Model.HostIdentityDataModel[i].IdentityDescription;
                                                         //var valueRangeVal = string.IsNullOrEmpty(Model.HostIdentityDataModel[i].IdentityDescription) || Model.HostIdentityDataModel[i].IdentityDescription == "0" ? "0" : Model.HostIdentityDataModel[i].IdentityDescription;
 
-                                                     }
+                                                    }
                                                     <input type="range" class="sliderBlue" min="0" max="100" value="@valueRange" step="20" id="myRange_@k" oninput="updateRangeValue(@k, this.value)" />
                                                     @*<input type="range" min="0" max="100" value="20" step="20" oninput="updateRangeValue(@k, this.value)">*@
                                                     @*<p id="rangeValues_@k" name="">@valueRange</p>*@
@@ -766,8 +773,8 @@
                                             <div>
                                                 @{
                                                     var valueRange = string.IsNullOrEmpty(Model.HostIdentityDataModel[i].IdentityDescription) || Model.HostIdentityDataModel[i].IdentityDescription == "0" ? "0" : Model.HostIdentityDataModel[i].IdentityDescription;
-                                                    
-                                                 }
+
+                                                }
                                                 <input type="range" class="sliderBlue" min="0" max="100" value="@valueRange" step="20" id="myRange_@k" oninput="updateRangeValue(@k, this.value)" />
                                                 <p id="rangeValue_@k" name="">@valueRange</p>
 

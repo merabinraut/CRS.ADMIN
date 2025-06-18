@@ -103,8 +103,8 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             ViewBag.ZodiacSignsDDLKey = ResponseModel.ManageHostModel.ConstellationGroup;
             ViewBag.BloodGroupDDL = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("BLOODGROUPDDL", "", culture) as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---");
             ViewBag.BloodGroupDDLKey = ResponseModel.ManageHostModel.BloodType;
-            ViewBag.OccupationDDL = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("OCCUPATIONDDL", "", culture) as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---");
-            ViewBag.OccupationDDLKey = ResponseModel.ManageHostModel.PreviousOccupation;
+            //ViewBag.OccupationDDL = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("OCCUPATIONDDL", "", culture) as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---");
+            //ViewBag.OccupationDDLKey = ResponseModel.ManageHostModel.PreviousOccupation;
             ViewBag.LiquorStrengthDDL = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("LIQUORSTRENGTHDDL", "", culture) as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---");
             ViewBag.LiquorStrengthDDLKey = ResponseModel.ManageHostModel.LiquorStrength;
             ViewBag.PopUpRenderValue = !string.IsNullOrEmpty(RenderId) ? RenderId : null;
@@ -123,10 +123,10 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             ViewBag.SkillDDL = ApplicationUtilities.SetDDLValue(CustomLoadDropdownList("SKILLDDL") as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---");
             ViewBag.BirthPlaceDdl = ApplicationUtilities.SetDDLValue(DDLHelper.LoadDropdownList("BIRTHPLACE", "", culture) as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---");
             //ViewBag.heightlistddl = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("HEIGHTLIST", "", culture) as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---");
-            ViewBag.positionddl = ApplicationUtilities.SetDDLValue(DDLHelper.LoadDropdownList("POSITIONLIST", "", culture) as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---");
+            //ViewBag.positionddl = ApplicationUtilities.SetDDLValue(DDLHelper.LoadDropdownList("POSITIONLIST", "", culture) as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---");
             ViewBag.BirthPlacekey = ResponseModel.ManageHostModel.Address;
             //ViewBag.heightlistkey = ResponseModel.ManageHostModel.Height;
-            ViewBag.postitionkey = ResponseModel.ManageHostModel.Position;
+            //ViewBag.postitionkey = ResponseModel.ManageHostModel.Position;
             ViewBag.StartIndex = StartIndex;
             ViewBag.PageSize = PageSize;
             ResponseModel.ManageHostModel.clubCategory = clubCategory;
@@ -288,14 +288,14 @@ namespace CRS.ADMIN.APPLICATION.Controllers
 
                 model.ConstellationGroup = model.ConstellationGroup?.EncryptParameter();
                 model.BloodType = model.BloodType?.EncryptParameter();
-                model.PreviousOccupation = model.PreviousOccupation?.EncryptParameter();
+                //model.PreviousOccupation = model.PreviousOccupation?.EncryptParameter();
                 model.LiquorStrength = model.LiquorStrength?.EncryptParameter();
                 model.HostLogo = dbResponse.ImagePath;
                 model.HostIconImage = dbResponse.IconImagePath;
                 model.Rank = dbResponse.Rank.EncryptParameter();
                 model.Address = dbResponse.Address.EncryptParameter();
                 //model.Height = dbResponse.Height.EncryptParameter();
-                model.Position = dbResponse.Position.EncryptParameter();
+                //model.Position = dbResponse.Position.EncryptParameter();
                 model.HostIdentityDataModel.ForEach(x => x.IdentityLabel = (!string.IsNullOrEmpty(culture) && culture == "en") ? x.IdentityLabelEnglish : x.IdentityLabelJapanese);
                 model.HostIdentityDataModel.ForEach(x => x.IdentityType = x.IdentityType.EncryptParameter());
                 model.HostIdentityDataModel.ForEach(x => x.IdentityValue = x.IdentityValue.EncryptParameter());
@@ -315,7 +315,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
 
         [HttpPost, ValidateAntiForgeryToken]
         public async Task<ActionResult> ManageHost(ManageHostModel Model, string ZodiacSignsDDLKey, string BloodGroupDDLKey,
-            string OccupationDDLKey, string LiquorStrengthDDLKey, string BirthYearKey, string BirthMonthKey, string BirthDayKey, HttpPostedFileBase HostLogoFile, HttpPostedFileBase HostIconImageFile)
+            string LiquorStrengthDDLKey, string BirthYearKey, string BirthMonthKey, string BirthDayKey, HttpPostedFileBase HostLogoFile, HttpPostedFileBase HostIconImageFile)
         {
             //Model.BirthYear = BirthYearKey;
             //Model.BirthMonth = BirthMonthKey;
@@ -323,12 +323,12 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             Model.DOB = string.Concat(Model.BirthYear, '-', Model.BirthMonth, '-', Model.BirthDate);
             Model.ConstellationGroup = ZodiacSignsDDLKey;
             Model.BloodType = BloodGroupDDLKey;
-            Model.PreviousOccupation = OccupationDDLKey;
+            //Model.PreviousOccupation = OccupationDDLKey;
             Model.LiquorStrength = LiquorStrengthDDLKey;
             //if (!string.IsNullOrEmpty(RankDDLKey?.DecryptParameter())) ModelState.Remove("Rank");
             if (!string.IsNullOrEmpty(ZodiacSignsDDLKey?.DecryptParameter())) ModelState.Remove("ConstellationGroup");
             if (!string.IsNullOrEmpty(BloodGroupDDLKey?.DecryptParameter())) ModelState.Remove("BloodType");
-            if (!string.IsNullOrEmpty(OccupationDDLKey?.DecryptParameter())) ModelState.Remove("PreviousOccupation");
+            //if (!string.IsNullOrEmpty(OccupationDDLKey?.DecryptParameter())) ModelState.Remove("PreviousOccupation");
             if (!string.IsNullOrEmpty(LiquorStrengthDDLKey?.DecryptParameter())) ModelState.Remove("LiquorStrength");
             if (!string.IsNullOrEmpty(Model.DOB))
             {
@@ -465,16 +465,16 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                     requestCommon.ConstellationGroup = ZodiacSignsDDLKey?.DecryptParameter();
                 if (!string.IsNullOrEmpty(requestCommon.BloodType))
                     requestCommon.BloodType = BloodGroupDDLKey?.DecryptParameter();
-                if (!string.IsNullOrEmpty(requestCommon.PreviousOccupation))
-                    requestCommon.PreviousOccupation = OccupationDDLKey?.DecryptParameter();
+                //if (!string.IsNullOrEmpty(requestCommon.PreviousOccupation))
+                //    requestCommon.PreviousOccupation = OccupationDDLKey?.DecryptParameter();
                 if (!string.IsNullOrEmpty(requestCommon.LiquorStrength))
                     requestCommon.LiquorStrength = LiquorStrengthDDLKey?.DecryptParameter();
                 if (!string.IsNullOrEmpty(requestCommon.Address))
                     requestCommon.Address = Model.Address?.DecryptParameter();
                 //if (!string.IsNullOrEmpty(requestCommon.Height))
                 //    requestCommon.Height = Model.Height?.DecryptParameter();
-                if (!string.IsNullOrEmpty(requestCommon.Position))
-                    requestCommon.Position = Model.Position?.DecryptParameter();
+                //if (!string.IsNullOrEmpty(requestCommon.Position))
+                //    requestCommon.Position = Model.Position?.DecryptParameter();
                 requestCommon.DOB = Model.DOB;
                 requestCommon.ActionUser = ApplicationUtilities.GetSessionValue("Username").ToString();
                 requestCommon.ActionIP = ApplicationUtilities.GetIP();

@@ -56,6 +56,12 @@
     <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
 
     <script>
+        $(document).ready(function () {
+          
+            $('#large[name="ClubId"]').select2({
+              width: 'resolve'
+          });
+        });
         function getActiveButtonValue() {
             const activeButton = document.querySelector('.tab-link.active');
             const sectionToHide = document.querySelector('.section-to-hide');

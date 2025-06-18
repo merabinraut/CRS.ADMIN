@@ -1,10 +1,13 @@
-﻿using Amazon.CognitoIdentityProvider.Model;
+﻿using Amazon.CognitoIdentityProvider;
+using Amazon.CognitoIdentityProvider.Model;
 using CRS.ADMIN.APPLICATION.Library;
 using CRS.ADMIN.APPLICATION.Services;
 using CRS.ADMIN.SHARED.Middleware.AmazonCognitoModel;
 using CRS.ADMIN.SHARED.Middleware.AmazonCognitoModel.SignUp;
+using DocumentFormat.OpenXml.Office2013.Drawing.ChartStyle;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Threading.Tasks;
 using SharedCognitoModel = CRS.ADMIN.SHARED.Middleware.AmazonCognitoModel;

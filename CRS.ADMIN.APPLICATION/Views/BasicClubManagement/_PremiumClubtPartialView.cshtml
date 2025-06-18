@@ -37,6 +37,31 @@
         }
 </style>
 
+
+
+<style>
+    .select2-container--default .select2-selection--single {
+        height: 44px !important;
+    }
+
+    .select2-container--default .select2-selection--multiple {
+        height: 44px !important;
+        overflow-y: auto;
+    }
+
+    .select2-container--default .select2-search--inline .select2-search__field {
+        width: 259px !important;
+        padding-left: 20px;
+        padding-top: 6px;
+    }
+
+    input[type="text"], input[type="email"], input[type="number"], textarea {
+        pointer-events: auto !important;
+        opacity: 1 !important;
+    }
+</style>
+
+
 <div id="add-new-host-club" class="drawer-close-disable  flex justify-end fixed top-0 right-0 z-40 h-screen overflow-y-auto transition-transform translate-x-full "
      tabindex="-1" aria-labelledby="drawer-right-label">
     <div class="bg-white w-[863px] drawer-container relative">
@@ -101,9 +126,9 @@
                     @Html.HiddenFor(model => model.StartIndex)
                     @Html.HiddenFor(model => model.PageSize)
                     @*if (!string.IsNullOrEmpty(Model.LoginId))
-            {
-                @Html.HiddenFor(model => model.LoginId)
-            }*@
+                        {
+                            @Html.HiddenFor(model => model.LoginId)
+                        }*@
                     <div class="flex gap-2 ">
                         <div class="flex items-center gap-2 profile-steps add-new-host-wizard  active" id="step1">
                             <div class="steps-number ">
@@ -173,7 +198,7 @@
                                     </span>
                                 </div>
 
-                                <div class="input-field-common">
+                                <div class="">
                                     <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
                                         @CRS.ADMIN.APPLICATION.Resources.Resource.Furigana
                                     </label>
@@ -201,7 +226,7 @@
                                    autocomplete = "off",
                                    @maxLength = "50"
                                })
-                                 
+
                                 </div>
 
 
@@ -223,7 +248,7 @@
                                     <span class="error">
                                         @Html.ValidationMessageFor(m => m.GroupName)
                                     </span>
-                                </div>                               
+                                </div>
                             </div>
 
                             <!-- description start -->
@@ -429,10 +454,10 @@
                                     <label class="block mb-4 text-sm font-medium text-secondary-100 ">
                                         @CRS.ADMIN.APPLICATION.Resources.Resource.LandlineNumber
                                     </label>
-                                    
 
 
-                                    <div class="w-full flex">                                       
+
+                                    <div class="w-full flex">
 
                                         @Html.TextBoxFor(model => model.LandlineNumber, new
                                      {
@@ -454,27 +479,27 @@
                                         @CRS.ADMIN.APPLICATION.Resources.Resource.Phone_Number
                                     </label>
                                     <div class="number-input w-full">
-                                            <div class="flag-section">
-                                                <div class="japan-flag" style="border: 1px solid #dbd6d6;">
-                                                    <div></div>
-                                                </div>
-                                                <div>
-                                                    +81
-                                                </div>
-                                                <div class="line-y">
-
-                                                </div>
+                                        <div class="flag-section">
+                                            <div class="japan-flag" style="border: 1px solid #dbd6d6;">
+                                                <div></div>
+                                            </div>
+                                            <div>
+                                                +81
+                                            </div>
+                                            <div class="line-y">
 
                                             </div>
-                                            @Html.TextBoxFor(model => model.MobileNumber, new
-                                         {
-                                           @class = "w-full",
-                                           @placeholder = CRS.ADMIN.APPLICATION.Resources.Resource.Phone_Number,
-                                           @onkeypress = "return isNumber(event)",
-                                           autocomplete = "off",
-                                           @maxLength = "11"
-                                       })                                            
-                                     
+
+                                        </div>
+                                        @Html.TextBoxFor(model => model.MobileNumber, new
+                                     {
+                                       @class = "w-full",
+                                       @placeholder = CRS.ADMIN.APPLICATION.Resources.Resource.Phone_Number,
+                                       @onkeypress = "return isNumber(event)",
+                                       autocomplete = "off",
+                                       @maxLength = "11"
+                                   })
+
                                     </div>
                                     <span class="error">
                                         @Html.ValidationMessageFor(m => m.MobileNumber)
@@ -484,18 +509,18 @@
                                     <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
                                         @CRS.ADMIN.APPLICATION.Resources.Resource.Email
                                     </label>
-                                    
-                                        @Html.TextBoxFor(model => model.Email, new
-                                   {
-                                       @class = "w-full",
-                                       @placeholder = CRS.ADMIN.APPLICATION.Resources.Resource.Email,
-                                       autocomplete = "off",
-                                       @maxLength = "200"
-                                   })
-                                        <span class="error">
-                                            @Html.ValidationMessageFor(m => m.Email)
-                                        </span>
-                       
+
+                                    @Html.TextBoxFor(model => model.Email, new
+                               {
+                                   @class = "w-full",
+                                   @placeholder = CRS.ADMIN.APPLICATION.Resources.Resource.Email,
+                                   autocomplete = "off",
+                                   @maxLength = "200"
+                               })
+                                    <span class="error">
+                                        @Html.ValidationMessageFor(m => m.Email)
+                                    </span>
+
                                 </div>
                                 @if (!string.IsNullOrEmpty(Model.AgentId) || !string.IsNullOrEmpty(Model.holdId))
                                 {
@@ -1119,26 +1144,26 @@
                                         </select>
                                     </div>
                                 </div>
-                              
+
                                 <!-- for last order -->
                                 <div class="grid grid-cols-3 gap-x-4 gap-y-5">
-                                    <div class="input-field-common">
+                                    @*<div class="input-field-common">
                                         <label for="instagram" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
                                             @CRS.ADMIN.APPLICATION.Resources.Resource.Last_Order_Time
-                                        </label>
-                                        @Html.TextBoxFor(model => model.LastOrderTime, new
+                                        </label>*@
+                                        @*@Html.TextBoxFor(model => model.LastOrderTime, new
                                    {
                                        @class = "w-full",
                                        @placeholder = "HH:MM",
                                        autocomplete = "off",
                                        @maxLength = "30",
                                        @type = "time"
-                                   })
-                                        <span class="error">
+                                   })*@
+                                        @*<span class="error">
                                             @Html.ValidationMessageFor(m => m.LastOrderTime)
-                                        </span>
+                                        </span>*@
 
-                                    </div>
+                                    @*</div>*@
                                     <div class="input-field-common">
                                         <label for="instagram" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
                                             @CRS.ADMIN.APPLICATION.Resources.Resource.LastEntryTime
@@ -1236,7 +1261,7 @@
                             </div>
                             <div class="grid  gap-4">
                                 <div class="grid grid-cols-3 gap-x-4 gap-y-5">
-                                    
+
                                     <div class="input-field-common">
                                         <label for="instagram" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
                                             @CRS.ADMIN.APPLICATION.Resources.Resource.Longitude
@@ -1263,7 +1288,7 @@
                                        @placeholder = CRS.ADMIN.APPLICATION.Resources.Resource.Latitude_Placeholder,
                                        autocomplete = "off",
                                        @maxLength = "30"
-                                   })                                       
+                                   })
                                         <span class="error">
                                             @Html.ValidationMessageFor(m => m.Latitude)
                                         </span>
@@ -1410,7 +1435,7 @@
                                    })
                                         <span class="error">
                                             @Html.ValidationMessageFor(m => m.ExtensionFee)
-                                        </span> 
+                                        </span>
                                         <!-- <span class="error">Validation msg</span> -->
                                     </div>
                                     <div class="input-field-common">
@@ -1430,7 +1455,7 @@
 
                                         <!-- <span class="error">Validation msg</span> -->
                                     </div>
-                                    
+
 
                                 </div>
 
@@ -1472,7 +1497,7 @@
                             </div>
 
                             <!-- for Plan list -->
-                           
+
                         </div>
                     </div>
                     <div class="flex justify-between ">
@@ -1509,25 +1534,14 @@
     </div>
 </div>
 
+<script>
+    $(document).ready(function () {
+        // Initialize Select2
+        $('.select-common').select2();
 
-
-<style>
-    .select2-container--default .select2-selection--single {
-        height: 44px !important;
-    }
-
-    .select2-container--default .select2-selection--multiple {
-        height: 44px !important;
-        overflow-y: auto;
-    }
-
-    .select2-container--default .select2-search--inline .select2-search__field {
-        width: 259px !important;
-        padding-left: 20px;
-        padding-top: 6px; 
-       /* background:red;*/
-        display:flex;
-        justify-content:flex-start;
-       
-    }
-</style>
+        // Ensure input fields are focusable
+        $('input, textarea').on('focus', function () {
+            $(this).css('pointer-events', 'auto');
+        });
+    });
+</script>

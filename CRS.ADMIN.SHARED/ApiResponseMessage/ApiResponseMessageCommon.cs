@@ -12,8 +12,6 @@ namespace CRS.ADMIN.SHARED.ApiResponseMessage
     public class ApiResponseMessageCommon:PaginationResponseCommon
     {
         public string MessageId { get; set; }
-        public string Code { get; set; }
-        public string Message { get; set; }
         public string MessageEng { get; set; }
         public string Category { get; set; }
         public string Description { get; set; }
@@ -21,6 +19,12 @@ namespace CRS.ADMIN.SHARED.ApiResponseMessage
         public string HttpStatusCode { get; set; }
         public string Module { get; set; }
         public string UserCategory { get; set; }
-        public string ActionUser { get; set; }
+        public bool IsVariableExists { get; set; }
+    }
+    public class ApiResponseMessageFilterCommon : PaginationFilterCommon
+    {
+        public string category { get; set; }
+        public string userCategory { get; set; }
+        public string moduleName { get; set; }
     }
 }

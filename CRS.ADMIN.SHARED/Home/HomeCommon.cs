@@ -43,6 +43,7 @@ namespace CRS.ADMIN.SHARED.Home
     public class DashboardInfoModelCommon
     {
         public int TotalClubs { get; set; }
+        public int TotalBasicClubs { get; set; }
         public int TotalVisitors { get; set; }
         public decimal TotalSales { get; set; }
     }

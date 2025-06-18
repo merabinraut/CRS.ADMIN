@@ -170,7 +170,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                         Title = NotificationMessage.INFORMATION.ToString()
                     });
 
-                    TempData["ManageClubModel"] = model;
+                    TempData["ManageAffiliateModel"] = model;
                     TempData["RenderId"] = "Manage";
                     return RedirectToAction("Index", "AffiliateManagement");
                 }
@@ -261,6 +261,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             });
             return RedirectToAction("Index", "AffiliateManagement");
         }
+
 
         [HttpGet, OverrideActionFilters]
         public async Task<ActionResult> ResetAffiliatePassword(string AgentId)

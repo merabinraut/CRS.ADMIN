@@ -36,5 +36,8 @@
         public string AdminCommissionAmount { get; set; }
         public string TotalAdminCommissionAmount { get; set; }
         public string TotalAdminPayableAmount { get; set; }
+        public string CreatedDate { get; set; }
+        public string Id { get; set; }
+        public string InvoiceId { get; set; }
     }
 }

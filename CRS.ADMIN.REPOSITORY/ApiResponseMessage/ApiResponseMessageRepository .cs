@@ -36,7 +36,8 @@ namespace CRS.ADMIN.REPOSITORY.ApiResponseMessage
                     Description = _DAO.ParseColumnValue(dbResponse, "description").ToString(),
                     MessageType = _DAO.ParseColumnValue(dbResponse, "messageType").ToString(),
                     HttpStatusCode = _DAO.ParseColumnValue(dbResponse, "httpStatusCode").ToString(),
-                    MessageId = _DAO.ParseColumnValue(dbResponse, "sno").ToString()
+                    Module = _DAO.ParseColumnValue(dbResponse, "Module").ToString(),
+                    // MessageId = _DAO.ParseColumnValue(dbResponse, "sno").ToString()
 
                 };
             }
@@ -45,13 +46,16 @@ namespace CRS.ADMIN.REPOSITORY.ApiResponseMessage
 
         }
 
-        public List<ApiResponseMessageCommon> ApiResponseMessageList(PaginationFilterCommon Request)
+        public List<ApiResponseMessageCommon> ApiResponseMessageList(ApiResponseMessageFilterCommon Request)
         {
             var response = new List<ApiResponseMessageCommon>();
             string SQL = "EXEC sproc_api_response_message_list @Flag='s'";
             SQL += !string.IsNullOrEmpty(Request.SearchFilter) ? ",@SearchFilter=N" + _DAO.FilterString(Request.SearchFilter) : null;
             SQL += ",@Skip=" + Request.Skip;
             SQL += ",@Take=" + Request.Take;
+            SQL += !string.IsNullOrEmpty(Request.category) ? ",@category=N" + _DAO.FilterString(Request.category) : null;
+            SQL += !string.IsNullOrEmpty(Request.moduleName) ? ",@moduleName=N" + _DAO.FilterString(Request.moduleName) : null;
+            SQL += !string.IsNullOrEmpty(Request.userCategory) ? ",@userCategory=" + _DAO.FilterString(Request.userCategory) : null;
             var dbResponse = _DAO.ExecuteDataTable(SQL);
 
             if (dbResponse != null)
@@ -93,6 +97,7 @@ namespace CRS.ADMIN.REPOSITORY.ApiResponseMessage
             SQL += ",@module = " + _DAO.FilterString(Request.Module);
             SQL += ",@userCategory = " + _DAO.FilterString(Request.UserCategory);
             SQL += ",@actionUser = " + _DAO.FilterString(Request.ActionUser);
+            SQL += ",@isVariableExists = " + _DAO.FilterString(Request.IsVariableExists.ToString());
 
             Response = _DAO.ParseCommonDbResponse(SQL);
             return Response;
@@ -114,6 +119,7 @@ namespace CRS.ADMIN.REPOSITORY.ApiResponseMessage
             SQL += ",@messageType = " + _DAO.FilterString(Request.MessageType);
             SQL += ",@httpStatusCode = " + _DAO.FilterString(Request.HttpStatusCode);
             SQL += ",@actionUser = " + _DAO.FilterString(Request.ActionUser);
+            SQL += ",@isVariableExists = " + _DAO.FilterString(Request.IsVariableExists.ToString());
 
             Response = _DAO.ParseCommonDbResponse(SQL);
             return Response;

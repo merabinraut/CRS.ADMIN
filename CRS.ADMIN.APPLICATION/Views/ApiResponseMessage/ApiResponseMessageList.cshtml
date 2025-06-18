@@ -17,31 +17,151 @@
             @CRS.ADMIN.APPLICATION.Resources.Resource.Manage_API_Responses_
         </div>
     </div>
-    <div class="flex justify-between pt-[24px] pb-[24px]">
-        <form action="/ApiResponseMessage/ApiResponseMessageList" method="get">
-            <div class="relative input-search-wrapper">
-                <div class="absolute inset-y-0 left-0 flex items-center pl-[16px] pointer-events-none">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21" fill="none">
-                        <path d="M17.5 18L13.875 14.375M15.8333 9.66667C15.8333 13.3486 12.8486 16.3333 9.16667 16.3333C5.48477 16.3333 2.5 13.3486 2.5 9.66667C2.5 5.98477 5.48477 3 9.16667 3C12.8486 3 15.8333 5.98477 15.8333 9.66667Z"
-                              stroke="#667085" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round">
-                        </path>
-                    </svg>
-                </div>
-                <input type="search"
-                       id="default-search"
-                       class="input-search block w-full "
-                       placeholder="@CRS.ADMIN.APPLICATION.Resources.Resource.Search"
-                       value=""
-                       name="SearchFilter">
+    <br />
+    <div id="tab1" class="tab-content-plane">
+        <div class="flex flex-col gap-8">
+            <div id="tab1" class="tab-content">
+                <form action="/ApiResponseMessage/ApiResponseMessageList" method="get">
+                    <div class="flex justify-between pb-[24px]">
+                        <div class="relative input-search-wrapper">
+                            <div class="absolute inset-y-0 left-0 flex items-center pl-[16px] pointer-events-none">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21" fill="none">
+                                    <path d="M17.5 18L13.875 14.375M15.8333 9.66667C15.8333 13.3486 12.8486 16.3333 9.16667 16.3333C5.48477 16.3333 2.5 13.3486 2.5 9.66667C2.5 5.98477 5.48477 3 9.16667 3C12.8486 3 15.8333 5.98477 15.8333 9.66667Z"
+                                          stroke="#667085" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round" />
+                                </svg>
+                            </div>
+
+                            <input type="search"
+                                   id="default-search"
+                                   class="input-search block w-full "
+                                   placeholder="@CRS.ADMIN.APPLICATION.Resources.Resource.Search"
+                                   value="@Model.SearchFilter"
+                                   name="SearchFilter">
+                        </div>
+                        <div class="flex gap-6">
+                            <div class="btn btn-primary gap-[8px] h-[40px]" data-drawer-target="add-new-response-message"
+                                 data-drawer-show="add-new-response-message" data-drawer-placement="right" data-drawer-backdrop="false"
+                                 aria-controls="drawer-disabled-backdrop" id="add-new-id">
+                                <img src="~/Content/assets_new/images/plus-circle-solid.svg" />
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Add_New
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class=" table-tab filteroutlinepadding px-2 py-3">
+                        <div class="grid grid-cols-4 gap-x-6 ">
+
+                            <div class="input-field-common mb-[20px]" id="tagInput1">
+                                <div class="input-field-common filteroutlinepadding">
+                                    <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
+                                        @CRS.ADMIN.APPLICATION.Resources.Resource.CategoryType
+                                    </label>
+                                    <select id="large" name="Category" class=" default_select select-common block w-full "
+                                            style="width: 100%;">
+                                        @if (string.IsNullOrEmpty( @ViewBag.CategoryKey))
+                                        {
+                                            <option value="" selected>
+                                                All
+                                            </option>
+
+                                        }
+                                        else
+                                        {
+                                            <option value="">
+                                                All
+                                            </option>
+                                        }
+                                        <option value="error">
+                                            Error
+                                        </option>
+                                        <option value="success">
+                                            Success
+                                        </option>
+
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="input-field-common mb-[20px]" id="tagInput1">
+                                <div class="input-field-common filteroutlinepadding">
+                                    <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
+                                        @CRS.ADMIN.APPLICATION.Resources.Resource.User_Category
+                                    </label>
+                                    <select id="large" name="UserCategory" class=" default_select select-common block w-full "
+                                            style="width: 100%;">
+                                        @if (string.IsNullOrEmpty(@ViewBag.UserCategoryKey))
+                                        {
+                                            <option value="" selected>
+                                                All
+                                            </option>
+                                        }
+                                        else
+                                        {
+                                            <option value="" >
+                                                All
+                                            </option>
+                                        }                                      
+                                        <option value="affiliate">
+                                            Affiliate
+                                        </option>
+                                        <option value="club">
+                                            Club
+                                        </option>
+                                        <option value="common">
+                                            Common
+                                        </option>
+                                        <option value="customer">
+                                            Customer
+                                        </option>
+
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="input-field-common mb-[20px]" id="tagInput2">
+                                <div class="input-field-common filteroutlinepadding">
+                                    <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
+                                        @CRS.ADMIN.APPLICATION.Resources.Resource.Module_Name
+                                    </label>                                  
+                                    @Html.TextBoxFor(model => model.moduleName, new
+                                    {
+                                        @class = "w-full",
+                                        @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.Module_Name,
+                                        autocomplete = "off"
+                                    })
+                                    @*<input type="text"
+                                           id="default-search"
+                                           class="input-search block w-full "
+                                           placeholder="@CRS.ADMIN.APPLICATION.Resources.Resource.Module_Name"
+                                           value=""
+                                           name="moduleName">*@
+                                    <span class="error">
+
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="flex justify-start">
+                            <div class="flex gap-4">
+                                <button class="btn btn-secondary rounded-[4px]" type="button" data-drawer-hide="add-new-points-request"
+                                        aria-controls="add-new-points-request" onclick="CancelFunction();">
+
+                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Cancel
+                                </button>
+                                <button class="btn btn-primary-default rounded-[4px]" type="submit"> @CRS.ADMIN.APPLICATION.Resources.Resource.Apply</button>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </form>
             </div>
-        </form>
-        <div class="btn btn-primary gap-[8px] h-[40px]" data-drawer-target="add-new-response-message"
-             data-drawer-show="add-new-response-message" data-drawer-placement="right" data-drawer-backdrop="false"
-             aria-controls="drawer-disabled-backdrop">
-            <img src="~/Content/assets_new/images/plus-circle-solid.svg">
-            @CRS.ADMIN.APPLICATION.Resources.Resource.Add_New
         </div>
     </div>
+
+
+    <br />
     <div class="table-tab">
         <div class="px-[16px] py-[12px] flex justify-between entry-export-container">
             <div class="flex items-center select-entries" id="ShowEntries-Id">
@@ -160,37 +280,17 @@
                             <td class="p-[12px]">
                                 @responselist.UserCategory
                             </td>
-                            @*<td class="p-[12px]">
-                                    @responselist.MessageEng
-                                </td>
-
-                                <td class="p-[12px]">
-
-                                        @responselist.MessageType
-
-                                </td>*@
+                           
                             <td class="p-[12px]">
                                 <div class="flex gap-[7px] justify-center text-[16px] ">
-                                    <button class="edit-api-resp-btn" data-id="@responselist.MessageId"
-                                            data-code="@responselist.Code"
-                                            data-category="@responselist.Category"
-                                            data-message="@responselist.Message"
-                                            data-http-status="@responselist.HttpStatusCode"
-                                            data-message-eng="@responselist.MessageEng">
-                                        @*<i class="fa-regular fa-pen-to-square text-[#989898] cursor-pointer" onclick="editResponseMessage('@responselist.MessageId')"</i>*@
+                                    <button class="edit-api-resp-btn" data-id="@responselist.MessageId">
                                         <i class="fa-regular fa-pen-to-square text-[#989898] cursor-pointer"
-                                           onclick="return updateApiResponseMessage('@responselist.MessageId','@responselist.Code','@responselist.Category','@responselist.Message','@responselist.HttpStatusCode','@responselist.MessageEng','@responselist.Description')"></i>
+                                           onclick="return updateApiResponseMessage('@responselist.MessageId')"></i>
                                     </button>
 
-                                    <button class="edit-api-resp-btn" data-id="@responselist.MessageId"
-                                            data-code="@responselist.Code"
-                                            data-category="@responselist.Category"
-                                            data-message="@responselist.Message"
-                                            data-http-status="@responselist.HttpStatusCode"
-                                            data-message-eng="@responselist.MessageEng">
-                                        @*<i class="fa-regular fa-pen-to-square text-[#989898] cursor-pointer" onclick="editResponseMessage('@responselist.MessageId')"</i>*@
+                                    <button class="edit-api-resp-btn" data-id="@responselist.MessageId">                                       
                                         <i class="fa-regular fa-solid fa-eye text-[#989898] cursor-pointer"
-                                           onclick="return getApiResponseMessage('@responselist.MessageId','@responselist.Code','@responselist.Category','@responselist.Message','@responselist.HttpStatusCode','@responselist.MessageEng','@responselist.Description')"></i>
+                                           onclick="return getApiResponseMessage('@responselist.MessageId')"></i>
                                     </button>
                                 </div>
                             </td>
@@ -267,11 +367,26 @@
         }
 
     });
-        function updateApiResponseMessage(i,j,k,l,m,n,o) {
-            window.location.href = '/ApiResponseMessage/UpdateResponseMessage?id=' + i + '&Code=' + j + '&Category=' + k + '&Message=' + l + '&HttpStatusCode=' + m + '&MessageEng=' + n + '&Description=' + o;
+
+        function updateApiResponseMessage(i) {
+            debugger;
+            const page_size = @ViewBag.PageSize;
+            const SearchFilter = '@Model.SearchFilter';
+            const start_index_val = @ViewBag.StartIndex;
+            const Category = '@ViewBag.CategoryKey';
+            const UserCategory = '@ViewBag.UserCategoryKey';
+            const ModuleName = "@Model.moduleName";
+            window.location.href = '/ApiResponseMessage/UpdateResponseMessage?id=' + i + '&SearchFilter=' + SearchFilter + '&StartIndex=' + start_index_val + '&PageSize=' + page_size + '&Category=' + Category + '&UserCategory=' + UserCategory + '&ModuleName=' + ModuleName;
         }
-        function getApiResponseMessage(i, j, k, l, m, n,o) {
-            window.location.href = '/ApiResponseMessage/GetApiResponseMessage?id=' + i + '&Code=' + j + '&Category=' + k + '&Message=' + l + '&HttpStatusCode=' + m + '&MessageEng=' + n + '&Description='+o;
+
+        function getApiResponseMessage(i) {
+            const page_size = @ViewBag.PageSize;
+            const SearchFilter = '@Model.SearchFilter';
+            const start_index_val = @ViewBag.StartIndex;
+            const Category = '@ViewBag.CategoryKey';
+            const UserCategory = '@ViewBag.UserCategoryKey';
+            const ModuleName = "@Model.moduleName";
+            window.location.href = '/ApiResponseMessage/GetApiResponseMessage?id=' + i + '&SearchFilter=' + SearchFilter + '&StartIndex=' + start_index_val + '&PageSize=' + page_size + '&Category=' + Category + '&UserCategory=' + UserCategory + '&ModuleName=' + ModuleName;
         }
         function CancelFunction() {
             location.reload();
@@ -280,13 +395,31 @@
     </script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
+            debugger;
              const page_size = @ViewBag.PageSize;
              const total_data = @ViewBag.TotalData;
              const start_index_val = @ViewBag.StartIndex;
-            let URL = "/ApiResponseMessage/ApiResponseMessageList";
+             const Category = '@ViewBag.CategoryKey';
+             const UserCategory = '@ViewBag.UserCategoryKey';
+             const ModuleName = "@Model.moduleName";
+            const value = "";
+            let URL = "/ApiResponseMessage/ApiResponseMessageList?value=" + value + "&Category=" + Category + "&ModuleName=" + ModuleName + "&UserCategory=" + UserCategory ;
              let search_filter = $('#default-search').val();
-             URL = addQueryParam(URL, 'SearchFilter', search_filter);
-             LoadPagination(page_size, total_data, start_index_val, URL);
+            URL = addQueryParam(URL, 'SearchFilter', search_filter);
+
+            LoadPagination(page_size, total_data, start_index_val, URL);
+            if ('@ViewBag.CategoryKey' != '')
+            {
+                debugger;
+                $('#large[name="Category"]').val('@ViewBag.CategoryKey').trigger('change');
+
+            }
+            if ('@ViewBag.UserCategoryKey' != '')
+            {
+                debugger;
+                $('#large[name="UserCategory"]').val('@ViewBag.UserCategoryKey').trigger('change');
+
+            }
         });
 
     </script>

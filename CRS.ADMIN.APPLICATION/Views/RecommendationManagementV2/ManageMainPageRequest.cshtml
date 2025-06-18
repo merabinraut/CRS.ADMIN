@@ -5,11 +5,13 @@
     int rowCount = 1;
 }
 
-<style>
-    .select2-search--dropdown {
-        display: none !important;
-    }
-</style>
+@*<style>
+        .select2-search--dropdown {
+            display: none !important;
+        }
+    </style>*@
+<link rel="stylesheet" href="//code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
+
 <span id="rowCountDisplay" hidden>@rowCount</span>
 <div class="px-8 py-4 flex flex-col gap-8">
     <div class="flex justify-between items-center">
@@ -93,11 +95,34 @@
                         }
                     </select>
                 </div>
+                @*<div class="input-field-common">
+                        <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.ClubName
+                        </label>
+                        <select id="default_select3 larges" style="width: 100%;" name="ClubId" class="default_select select-common block w-full text-[#B7B7B7] h-[44px] clubDDL">
+                            @foreach (var item in ViewBag.ClubDDL as IEnumerable<SelectListItem>)
+                            {
+                                var selectedId = Model.ClubId as string;
+                                if (item.Value == selectedId)
+                                {
+                                    <option value="@item.Value" selected>
+                                        @item.Text
+                                    </option>
+                                }
+                                else
+                                {
+                                    <option value="@item.Value">
+                                        @item.Text
+                                    </option>
+                                }
+                            }
+                        </select>
+                    </div>*@
                 <div class="input-field-common">
                     <label for="" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
                         @CRS.ADMIN.APPLICATION.Resources.Resource.Club
                     </label>
-                    <select id="default_select3" style="width: 100%;" class="text-[#B7B7B7] h-[44px] clubDDL" name="ClubId">
+                    <select id="default_select3 larges" style="width: 100%;" class="select text-[#B7B7B7] h-[44px] clubDDL" name="ClubId">
                         @foreach (var item in ViewBag.ClubDDL as IEnumerable<SelectListItem>)
                         {
                             var selectedId = Model.ClubId as string;
@@ -116,6 +141,7 @@
                         }
                     </select>
                 </div>
+
                 <div class="input-field-common">
                     <label for="" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
                         @CRS.ADMIN.APPLICATION.Resources.Resource.Display_Order
@@ -249,24 +275,50 @@
                                 }-->
 
 
-                            @*}
-                            else
-                            {*@
-                            <tr class="bg-white border-b" id="templateRow">
-                                <td class="p-[12px]">
-                                    @rowCount
-                                </td>
+                                @*}
+                                    else
+                                    {*@
+                                <tr class="bg-white border-b" id="templateRow">
+                                    <td class="p-[12px]">
+                                        @rowCount
+                                    </td>
 
-                                <td class="p-[12px]">
-                                    <div class="input-field-common add-new-select-rm">
-                                        <select id="" style="width: 100%;"
-                                                class="default_select text-[#B7B7B7] h-[44px] hostDDL" name="HostDDLByClubId">
-                                            @*@{
-                                                    var ss1 = (Model.HostDDLByClubId != null && Model.HostDDLByClubId.Length > 0 && @rowCount >= 0 && @rowCount <= Model.HostDDLByClubId.Length) ? Model.HostDDLByClubId[@rowCount - 1] : null;
-                                                }
-                                                @foreach (var item in ViewBag.HostDDLBYClubId as IEnumerable<SelectListItem>)
+                                    <td class="p-[12px]">
+                                        <div class="input-field-common add-new-select-rm">
+                                            <select id="" style="width: 100%;"
+                                                    class="default_select text-[#B7B7B7] h-[44px] hostDDL" name="HostDDLByClubId">
+                                                @*@{
+                                                        var ss1 = (Model.HostDDLByClubId != null && Model.HostDDLByClubId.Length > 0 && @rowCount >= 0 && @rowCount <= Model.HostDDLByClubId.Length) ? Model.HostDDLByClubId[@rowCount - 1] : null;
+                                                    }
+                                                    @foreach (var item in ViewBag.HostDDLBYClubId as IEnumerable<SelectListItem>)
+                                                    {
+                                                        var selectedId = ss1 as string;
+                                                        if (item.Value == selectedId)
+                                                        {
+                                                            <option value="@item.Value" selected>
+                                                                @item.Text
+                                                            </option>
+                                                        }
+                                                        else
+                                                        {
+                                                            <option value="@item.Value">
+                                                                @item.Text
+                                                            </option>
+                                                        }
+                                                    }*@
+                                            </select>
+                                        </div>
+                                    </td>
+                                    <td class="p-[12px]">
+                                        <div class="input-field-common add-new-select-rm">
+                                            <select id="" style="width: 100%;"
+                                                    class=" default_select text-[#B7B7B7] h-[44px] displayOrderDDL" name="DisplayOrderDDL">
+                                                @foreach (var item in ViewBag.DisplayOrderDDL as IEnumerable<SelectListItem>)
                                                 {
-                                                    var selectedId = ss1 as string;
+
+                                                    // var ss = (Model.DisplayOrderDDL != null && Model.DisplayOrderDDL.Length > 0 && @rowCount >= 0 && @rowCount < Model.DisplayOrderId.Length) ? Model.DisplayOrderDDL[@rowCount] : null;
+
+                                                    var selectedId = ViewBag.DisplayOrderDDL as string;
                                                     if (item.Value == selectedId)
                                                     {
                                                         <option value="@item.Value" selected>
@@ -279,49 +331,23 @@
                                                             @item.Text
                                                         </option>
                                                     }
-                                                }*@
-                                        </select>
-                                    </div>
-                                </td>
-                                <td class="p-[12px]">
-                                    <div class="input-field-common add-new-select-rm">
-                                        <select id="" style="width: 100%;"
-                                                class=" default_select text-[#B7B7B7] h-[44px] displayOrderDDL" name="DisplayOrderDDL">
-                                            @foreach (var item in ViewBag.DisplayOrderDDL as IEnumerable<SelectListItem>)
-                                            {
-
-                                               // var ss = (Model.DisplayOrderDDL != null && Model.DisplayOrderDDL.Length > 0 && @rowCount >= 0 && @rowCount < Model.DisplayOrderId.Length) ? Model.DisplayOrderDDL[@rowCount] : null;
-
-                                                var selectedId = ViewBag.DisplayOrderDDL as string;
-                                                if (item.Value == selectedId)
-                                                {
-                                                    <option value="@item.Value" selected>
-                                                        @item.Text
-                                                    </option>
                                                 }
-                                                else
-                                                {
-                                                    <option value="@item.Value">
-                                                        @item.Text
-                                                    </option>
-                                                }
-                                            }
-                                        </select>
-                                    </div>
-                                </td>
-                                <td class="p-[12px]">
-                                    <div class="flex gap-[7px] justify-center ">
-                                        @*<div>
-                                                <i class="fa-regular fa-pen-to-square text-[#989898] cursor-pointer"></i>
-                                            </div>*@
-                                        <div>
-                                            <i class="fa-solid fa-trash-can text-primary-100 cursor-pointer"></i>
+                                            </select>
                                         </div>
-                                    </div>
-                                </td>
-                            </tr>
-                            rowCount++;
-                            @*}*@
+                                    </td>
+                                    <td class="p-[12px]">
+                                        <div class="flex gap-[7px] justify-center ">
+                                            @*<div>
+                                                    <i class="fa-regular fa-pen-to-square text-[#989898] cursor-pointer"></i>
+                                                </div>*@
+                                            <div>
+                                                <i class="fa-solid fa-trash-can text-primary-100 cursor-pointer"></i>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                rowCount++;
+                                @*}*@
 
                             }
                         </tbody>
@@ -346,7 +372,13 @@
 
 @section scripts{
     <!--toggle button event-->
+    <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
     <script>
+        //$(document).ready(function () {
+        //    $('#large[name="ClubId"]').select2({
+        //        width: 'resolve'
+        //    });
+        //});
         // JavaScript to handle the toggle functionality
         var toggle = document.getElementById('toggle');
         var toggleDiv = document.getElementById('toggleDiv');
@@ -547,6 +579,9 @@ return false;
         $(document).ready(function () {
             $('select').select2({
                 minimumResultsForSearch: Infinity
+            });
+            $('.clubDDL').select2({
+                width: 'resolve'
             });
         });
     </script>

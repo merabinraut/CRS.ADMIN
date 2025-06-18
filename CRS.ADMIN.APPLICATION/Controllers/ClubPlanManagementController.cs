@@ -124,7 +124,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
 
                             planIdentity.StaticDataValue = planIdentity.StaticDataValue.EncryptParameter(); // Call your encryption method here
                             if (planIdentity.name.ToLower() == "plan" ||
-                                 planIdentity.name.ToLower() == "lastordertime" ||
+                                 //planIdentity.name.ToLower() == "lastordertime" ||
                                  planIdentity.name.ToLower() == "lastentrytime")
                             {
                                 planIdentity.IdentityDescription = planIdentity.IdentityDescription.EncryptParameter();
