@@ -148,7 +148,7 @@ namespace CRS.ADMIN.REPOSITORY.HostManagement
             //SQL += ",@HostName=" + _DAO.FilterString(Request.HostName);
             SQL += ",@HostName=N" + _DAO.FilterString(Request.HostName);
             SQL += ",@HostNameJapanese=N" + _DAO.FilterString(Request.HostNameJapanese);
-            SQL += ",@Position=N" + _DAO.FilterString(Request.Position);
+            SQL += string.IsNullOrEmpty(Request.Position) ? ",@Position=" + _DAO.FilterString(Request.Position) : ",@Position=N" + _DAO.FilterString(Request.Position); 
             //SQL += string.IsNullOrEmpty(Request.OtherPositionRemark) ? ",@OtherPositionRemark=" + _DAO.FilterString(Request.OtherPositionRemark) : ",@OtherPositionRemark=N" + _DAO.FilterString(Request.OtherPositionRemark);
             SQL += !string.IsNullOrEmpty(Request.Rank?.ToString()) ? ",@Rank=" + Request.Rank : "";
             SQL += ",@DOB=" + "'" + Request.DOB + "'";

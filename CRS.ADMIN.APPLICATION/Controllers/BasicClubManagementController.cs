@@ -1,4 +1,5 @@
-﻿using CRS.ADMIN.APPLICATION.Helper;
+﻿using CRS.ADMIN.APPLICATION.CustomHelpers;
+using CRS.ADMIN.APPLICATION.Helper;
 using CRS.ADMIN.APPLICATION.Library;
 using CRS.ADMIN.APPLICATION.Middleware;
 using CRS.ADMIN.APPLICATION.Models;
@@ -15,6 +16,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -275,6 +277,8 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                         Message = dbResponse.Message ?? "Failed",
                         Title = dbResponse.Code == CRS.ADMIN.SHARED.ResponseCode.Success ? NotificationMessage.SUCCESS.ToString() : NotificationMessage.INFORMATION.ToString()
                     });
+                    string apiUrl = ConfigurationManager.AppSettings["RevalidateApiUrl"];
+                    string apiResponse = ExternalApiCallHelpers.CallApi(apiUrl, HttpMethod.Get);
                     return redirectresult;
                 }
                 else
@@ -1077,6 +1081,8 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                         Title = dbResponse.Code == CRS.ADMIN.SHARED.ResponseCode.Success ? NotificationMessage.SUCCESS.ToString() : NotificationMessage.INFORMATION.ToString()
                     });
                     _sqlTransactionHandler.CommitTransaction();
+                    string apiUrl = ConfigurationManager.AppSettings["RevalidateApiUrl"];
+                    string apiResponse = ExternalApiCallHelpers.CallApi(apiUrl, HttpMethod.Get);
                     return redirectresult;
                 }
                 catch (Exception ex)
