@@ -265,36 +265,48 @@
                             </div>
 
                             @*Icon Image*@
-                            <div>
-                                <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
-                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Icon_Image
+                        <div>
+                            <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Icon_Image
+                            </label>
+                            <div class="file-upload-common">
+                                <label for="file_input_business_icon" class="custom-file-upload w-[128px] flex-none text-ellipsis-customer ">
+                                    <span>
+                                        @CRS.ADMIN.APPLICATION.Resources.Resource.Choose_Icons
+                                    </span>
                                 </label>
-                                <div class="file-upload-common">
-                                    <label for="file_input_business_icon" class="custom-file-upload w-[128px] flex-none text-ellipsis-customer ">
-                                        <span>
-                                            @CRS.ADMIN.APPLICATION.Resources.Resource.Choose_Icons
-                                        </span>
-                                    </label>
-                                    <input id="file_input_business_icon" class="file-input" type="file" name="HostIconImageFile" value="@Model.HostIconImage"
-                                           style="display:none;">
-                                    <p id="file_name_bussiness_certificate"
-                                       class="file-name w-max h-[23px] overflow-hidden pl-2 text-xs text-[#686868] leading-[25px]">
-                                        @if (string.IsNullOrEmpty(Model.HostIconImage))
-                                        {
-                                            @CRS.ADMIN.APPLICATION.Resources.Resource.No_File_Choosen
-                                        }
-                                        else
-                                        {
-                                            string fileName1 = Path.GetFileName(Model.HostIconImage);
-                                            @fileName1
-                                        }
-                                </div>
-                                <div class="text-xs text-error mt-[8px]">
-                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Note:
-                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Image_should_be_in_HEIF_format
-                                    @CRS.ADMIN.APPLICATION.Resources.Resource.and_Maximum_file_size_is_5_MB .
+                                <input id="file_input_business_icon" class="file-input" type="file" name="HostIconImageFile" value="@Model.HostIconImage"
+                                       style="display:none;">
+                                <p id="file_name_bussiness_certificate"
+                                   class="file-name w-max h-[23px] overflow-hidden pl-2 text-xs text-[#686868] leading-[25px]">
+                                    @if (string.IsNullOrEmpty(Model.HostIconImage))
+                                    {
+                                        @CRS.ADMIN.APPLICATION.Resources.Resource.No_File_Choosen
+                                    }
+                                    else
+                                    {
+                                        string fileName1 = Path.GetFileName(Model.HostIconImage);
+                                        @fileName1
+                                    }
+                            </div>
+                            <!-- Modal for cropping -->
+                            <div id="cropModalIcon" class="hidden fixed inset-0 bg-gray-800 bg-opacity-75 flex items-center justify-center">
+                                <div class="bg-white p-4 rounded-lg max-w-lg w-full max-h-[80vh] overflow-auto">
+                                    <div class="mb-4">
+                                        <img id="imageToCropIcon" src="" alt="Image to crop" class="max-w-full">
+                                    </div>
+                                    <div class="flex justify-end">
+                                        <button id="cropImageButtonIcon" class="bg-blue-500 text-white px-4 py-2 rounded-md">Crop</button>
+                                        <button id="cancelCropButtonIcon" class="ml-2 bg-gray-500 text-white px-4 py-2 rounded-md">Cancel</button>
+                                    </div>
                                 </div>
                             </div>
+                            <div class="text-xs text-error mt-[8px]">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Note:
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Image_should_be_in_HEIF_format
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.and_Maximum_file_size_is_5_MB .
+                            </div>
+                        </div>
 
                             @*----------*@
 
@@ -905,6 +917,13 @@
         const fileInput = document.getElementById('file_input_business_certificate');
         const fileNameDisplay = document.getElementById('file_input_business_certificate');
 
+        const modalIcon = document.getElementById('cropModalIcon');
+        const imageToCropIcon = document.getElementById('imageToCropIcon');
+        const fileInputIcon = document.getElementById('file_input_business_icon');
+        const fileNameDisplayIcon = document.getElementById('file_name_bussiness_certificate');
+
+
+        //------------------Start profile image --------------------//
         fileInput.addEventListener('change', function (event) {
             const file = event.target.files[0];
             if (file) {
@@ -979,5 +998,86 @@
                 cropper = null;
             }
         });
+
+        //------------------------End profile image ---------------------//
+
+        //------------------------Start Icon image ----------------------//
+
+        fileInputIcon.addEventListener('change', function (event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    imageToCropIcon.src = e.target.result;
+                    modalIcon.style.display = 'flex';
+
+                    if (cropper) {
+                        cropper.replace(e.target.result);
+                    } else {
+                        cropper = new Cropper(imageToCropIcon, {
+                            //aspectRatio: 298 / 181, // Maintain aspect ratio
+                            aspectRatio: 116 / 116,
+                            viewMode: 1,
+                            background: false,
+                            zoomable: true,
+                            scalable: true,
+                            responsive: true,
+                            autoCropArea: 1,
+                        });
+                    }
+
+                    fileNameDisplayIcon.textContent = file.name;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        document.getElementById('cropImageButtonIcon').addEventListener('click', function (event) {
+            event.preventDefault();
+            if (cropper) {
+                // Get a higher resolution cropped canvas
+                const canvas = cropper.getCroppedCanvas({
+                    //width: 1600, // Increased width for high resolution
+                    //height: 800, // Increased height for high resolution
+                    width: 316, // Increased width for high resolution
+                    height: 394, // Increased height for high resolution
+                    imageSmoothingEnabled: true,
+                    imageSmoothingQuality: 'high',
+                });
+
+                if (canvas) {
+                    canvas.toBlob(function (blob) {
+                        const formData = new FormData();
+                        formData.append('croppedImage', blob);
+                        console.log('Cropped image ready to upload', formData);
+
+                        const reader = new FileReader();
+                        reader.onload = function () {
+                            const dataUrl = reader.result;
+                            const dataTransfer = new DataTransfer();
+                            const file = new File([blob], "croppedImage.jpg", { type: "image/jpeg" });
+                            dataTransfer.items.add(file);
+                            fileInputIcon.files = dataTransfer.files;
+                        };
+                        reader.readAsDataURL(blob);
+
+                        modalIcon.style.display = 'none';
+                        cropper.destroy();
+                        cropper = null;
+                    }, 'image/jpeg', 0.95);
+                }
+            }
+        });
+
+        document.getElementById('cancelCropButtonIcon').addEventListener('click', function () {
+            modalIcon.style.display = 'none';
+            $('#file_input_logo').val('');
+            if (cropper) {
+                cropper.destroy();
+                cropper = null;
+            }
+        });
+        //---------------------End Icon image --------------------//
+
     });
 </script>

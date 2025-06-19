@@ -155,7 +155,8 @@ namespace CRS.ADMIN.REPOSITORY.HostManagement
             SQL += ",@ConstellationGroup=" + _DAO.FilterString(Request.ConstellationGroup);
             SQL += ",@Height=" + _DAO.FilterString(Request.Height);
             SQL += ",@BloodType=" + _DAO.FilterString(Request.BloodType);
-            SQL += ",@PreviousOccupation=N" + _DAO.FilterString(Request.PreviousOccupation);
+            SQL += string.IsNullOrEmpty(Request.PreviousOccupation) ? ",@PreviousOccupation=" + _DAO.FilterString(Request.PreviousOccupation) : ",@PreviousOccupation=N" + _DAO.FilterString(Request.PreviousOccupation);
+            //SQL += ",@PreviousOccupation=N" + _DAO.FilterString(Request.PreviousOccupation);
             SQL += ",@LiquorStrength=" + _DAO.FilterString(Request.LiquorStrength);
             //SQL += ",@WebsiteLink=" + _DAO.FilterString(Request.WebsiteLink);
 
