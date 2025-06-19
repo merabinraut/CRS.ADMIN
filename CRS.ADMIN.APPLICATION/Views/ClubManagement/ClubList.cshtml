@@ -1211,6 +1211,172 @@
             }
         });
         $(document).ready(function () {
+            let cropper;
+            const modal = document.getElementById('cropModal');
+            const imageToCrop = document.getElementById('imageToCrop');
+            const fileInput = document.getElementById('file_input_logo');
+            const fileNameDisplay = document.getElementById('file_input_logo');
+
+            const modalCover = document.getElementById('cropModalCover');
+            const imageToCropCover = document.getElementById('imageToCropCover');
+            const fileInputCover = document.getElementById('file_input_cover');
+            const fileNameDisplayCover = document.getElementById('file_input_cover');
+
+
+            //------------------Start Logo image --------------------//
+            fileInput.addEventListener('change', function (event) {
+                const file = event.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function (e) {
+                        imageToCrop.src = e.target.result;
+                        modal.style.display = 'flex';
+                        document.getElementById('large').style.visibility = 'hidden';
+                        if (cropper) {
+                            cropper.replace(e.target.result);
+                        } else {
+                            cropper = new Cropper(imageToCrop, {
+                                //aspectRatio: 298 / 181, // Maintain aspect ratio
+                                aspectRatio: 116 / 116,
+                                viewMode: 1,
+                                background: false,
+                                zoomable: true,
+                                scalable: true,
+                                responsive: true,
+                                autoCropArea: 1,
+                            });
+                        }
+
+                        fileNameDisplay.textContent = file.name;
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+
+            document.getElementById('cropImageButton').addEventListener('click', function (event) {
+                event.preventDefault();
+                if (cropper) {
+                    // Get a higher resolution cropped canvas
+                    const canvas = cropper.getCroppedCanvas({
+                        //width: 1600, // Increased width for high resolution
+                        //height: 800, // Increased height for high resolution
+                        width: 316, // Increased width for high resolution
+                        height: 394, // Increased height for high resolution
+                        imageSmoothingEnabled: true,
+                        imageSmoothingQuality: 'high',
+                    });
+
+                    if (canvas) {
+                        canvas.toBlob(function (blob) {
+                            const formData = new FormData();
+                            formData.append('croppedImage', blob);
+                            console.log('Cropped image ready to upload', formData);
+
+                            const reader = new FileReader();
+                            reader.onload = function () {
+                                const dataUrl = reader.result;
+                                const dataTransfer = new DataTransfer();
+                                const file = new File([blob], "croppedImage.jpg", { type: "image/jpeg" });
+                                dataTransfer.items.add(file);
+                                fileInput.files = dataTransfer.files;
+                            };
+                            reader.readAsDataURL(blob);
+
+                            modal.style.display = 'none';
+                            cropper.destroy();
+                            cropper = null;
+                        }, 'image/jpeg', 0.95);
+                    }
+                }
+            });
+
+            document.getElementById('cancelCropButton').addEventListener('click', function () {
+                modal.style.display = 'none';
+                $('#file_input_logo').val('');
+                if (cropper) {
+                    cropper.destroy();
+                    cropper = null;
+                }
+            });
+
+            //------------------------End Logo image ---------------------//
+
+            //------------------------Start Cover image ----------------------//
+
+            fileInputCover.addEventListener('change', function (event) {
+                const file = event.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function (e) {
+                        imageToCropCover.src = e.target.result;
+                        modalCover.style.display = 'flex';
+                        document.getElementById('large').style.visibility = 'hidden';
+                        if (cropper) {
+                            cropper.replace(e.target.result);
+                        } else {
+                            cropper = new Cropper(imageToCropCover, {
+                                aspectRatio: 298 / 181, // Maintain aspect ratio
+                                //aspectRatio: 116 / 116,
+                                viewMode: 1,
+                                background: false,
+                                zoomable: true,
+                                scalable: true,
+                                responsive: true,
+                                autoCropArea: 1,
+                            });
+                        }
+
+                        fileNameDisplayCover.textContent = file.name;
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+
+            document.getElementById('cropImageButtonCover').addEventListener('click', function (event) {
+                event.preventDefault();
+                if (cropper) {
+                    // Get a higher resolution cropped canvas
+                    const canvas = cropper.getCroppedCanvas({
+                        width: 1600, // Increased width for high resolution
+                        height: 800, // Increased height for high resolution                    
+                        imageSmoothingEnabled: true,
+                        imageSmoothingQuality: 'high',
+                    });
+
+                    if (canvas) {
+                        canvas.toBlob(function (blob) {
+                            const formData = new FormData();
+                            formData.append('croppedImage', blob);
+                            console.log('Cropped image ready to upload', formData);
+
+                            const reader = new FileReader();
+                            reader.onload = function () {
+                                const dataUrl = reader.result;
+                                const dataTransfer = new DataTransfer();
+                                const file = new File([blob], "croppedImage.jpg", { type: "image/jpeg" });
+                                dataTransfer.items.add(file);
+                                fileInputCover.files = dataTransfer.files;
+                            };
+                            reader.readAsDataURL(blob);
+
+                            modalCover.style.display = 'none';
+                            cropper.destroy();
+                            cropper = null;
+                        }, 'image/jpeg', 0.95);
+                    }
+                }
+            });
+
+            document.getElementById('cancelCropButtonCover').addEventListener('click', function () {
+                modalCover.style.display = 'none';
+                $('#file_input_logo').val('');
+                if (cropper) {
+                    cropper.destroy();
+                    cropper = null;
+                }
+                return false;
+            });
+            //---------------------End Cover image --------------------//
             var validator = $('#ManageClubForm').validate({              
                 errorClass: 'invalid',
                 errorElement: 'div',
@@ -1834,7 +2000,6 @@
              });
          })
 $("#LineFormSubmit").click(function () {
-    debugger;
     var image = $("#file_name_line_group").text().trim().toLowerCase(); //$("input[name='Logo_Certificate']").val();
     if (image == "no file choosen" || image == "ファイルが選択されていません" || image == "") {
         $('span.field-validation-valid[data-valmsg-for="qrImage"]').text('@CRS.ADMIN.APPLICATION.Resources.Resource.Required');

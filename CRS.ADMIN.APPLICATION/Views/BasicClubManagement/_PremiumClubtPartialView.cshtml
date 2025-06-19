@@ -35,6 +35,41 @@
             font-weight: 500;
             line-height: 100%;
         }
+    #cropModal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+    }
+
+    #imageToCrop {
+        max-width: 90%;
+        max-height: 80vh;
+    }
+
+    #cropModalCover {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+    }
+
+    #imageToCropCover {
+        max-width: 90%;
+        max-height: 80vh;
+    }
 </style>
 
 
@@ -61,7 +96,7 @@
     }
 </style>
 
-
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.css">
 <div id="add-new-host-club" class="drawer-close-disable  flex justify-end fixed top-0 right-0 z-40 h-screen overflow-y-auto transition-transform translate-x-full "
      tabindex="-1" aria-labelledby="drawer-right-label">
     <div class="bg-white w-[863px] drawer-container relative">
@@ -294,6 +329,18 @@
                                         </p>
 
                                     </div>
+                                    <!-- Modal for cropping -->
+                                    <div id="cropModal" class="hidden fixed inset-0 bg-gray-800 bg-opacity-75 flex items-center justify-center">
+                                        <div class="bg-white p-4 rounded-lg max-w-lg w-full max-h-[80vh] overflow-auto">
+                                            <div class="mb-4">
+                                                <img id="imageToCrop" src="" alt="Image to crop" class="max-w-full">
+                                            </div>
+                                            <div class="flex justify-end">
+                                                <button id="cropImageButton" class="bg-blue-500 text-white px-4 py-2 rounded-md">Crop</button>
+                                                <button type="button" id="cancelCropButton" class="ml-2 bg-gray-500 text-white px-4 py-2 rounded-md">Cancel</button>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <div class="text-xs text-error mt-[8px]">
                                         @CRS.ADMIN.APPLICATION.Resources.Resource.Note:
                                         @CRS.ADMIN.APPLICATION.Resources.Resource.Image_should_be_in_HEIF_format
@@ -326,6 +373,18 @@
                                                 @fileName
                                             }
                                         </p>
+                                    </div>
+                                    <!-- Modal for cropping -->
+                                    <div id="cropModalCover" class="hidden fixed inset-0 bg-gray-800 bg-opacity-75 flex items-center justify-center">
+                                        <div class="bg-white p-4 rounded-lg max-w-lg w-full max-h-[80vh] overflow-auto">
+                                            <div class="mb-4">
+                                                <img id="imageToCropCover" src="" alt="Image to crop" class="max-w-full">
+                                            </div>
+                                            <div class="flex justify-end">
+                                                <button id="cropImageButtonCover" class="bg-blue-500 text-white px-4 py-2 rounded-md">Crop</button>
+                                                <button type="button" id="cancelCropButtonCover" class="ml-2 bg-gray-500 text-white px-4 py-2 rounded-md">Cancel</button>
+                                            </div>
+                                        </div>
                                     </div>
                                     <div class="text-xs text-error mt-[8px]">
                                         @CRS.ADMIN.APPLICATION.Resources.Resource.Note:
@@ -1533,7 +1592,7 @@
 
     </div>
 </div>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js"></script>
 <script>
     $(document).ready(function () {
         // Initialize Select2

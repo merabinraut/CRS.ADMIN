@@ -369,7 +369,6 @@
     });
 
         function updateApiResponseMessage(i) {
-            debugger;
             const page_size = @ViewBag.PageSize;
             const SearchFilter = '@Model.SearchFilter';
             const start_index_val = @ViewBag.StartIndex;
@@ -395,7 +394,6 @@
     </script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            debugger;
              const page_size = @ViewBag.PageSize;
              const total_data = @ViewBag.TotalData;
              const start_index_val = @ViewBag.StartIndex;
@@ -410,13 +408,11 @@
             LoadPagination(page_size, total_data, start_index_val, URL);
             if ('@ViewBag.CategoryKey' != '')
             {
-                debugger;
                 $('#large[name="Category"]').val('@ViewBag.CategoryKey').trigger('change');
 
             }
             if ('@ViewBag.UserCategoryKey' != '')
             {
-                debugger;
                 $('#large[name="UserCategory"]').val('@ViewBag.UserCategoryKey').trigger('change');
 
             }
