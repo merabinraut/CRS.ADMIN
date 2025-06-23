@@ -8,12 +8,24 @@
 
 <style>
 
+    .note-modal-backdrop{
+        display:none!important
+    }
+    .note-modal-footer{
+        height: 65px !important
+    }
+    .note-modal-footer .note-btn {
+       float: right;
+       background-color: #d75a8b;
+       color: white;
+       padding-bottom :32px;
+     }
 
-    /*.custom-br {
-        display: block;
-        height: 8px;*/ /* Control the vertical space */
-    /*content: '';
-    }*/
+    .note-btn-primary.focus, .note-btn-primary:focus, .note-btn-primary:hover {
+        background-color: #d75a8b !important;
+        color: white;
+        padding-bottom: 32px;
+    }
 </style>
 
 
@@ -247,11 +259,35 @@
         
         }
         $(document).ready(function () {
+           $.extend($.summernote.options.buttons, {
+        insertCustomLink: function (context) {
+            const ui = $.summernote.ui;
+            return ui.button({
+                contents: '<i class="note-icon-link"/> Insert Link',
+                tooltip: 'Insert Link (no popup)',
+                click: function () {
+                    const selectedText = window.getSelection().toString();
+                    const url = prompt('Enter the URL:');
+
+                    if (selectedText && url) {
+                        const linkHTML = `<a href="${url}" target="_blank">${selectedText}</a>`;
+                        $('#summernote').summernote('pasteHTML', linkHTML);
+                    } else {
+                        alert('Please select text and provide a valid URL.');
+                    }
+                }
+            }).render();
+        }
+           });
+           
+
             $('#summernote').summernote({
                 height: 200, // Set minimum height
                 placeholder: 'Start writing here...',
                 toolbar: [
                     ['style', ['bold', 'italic', 'underline']], // Toolbar customization
+                    //['customLink', ['insertCustomLink']]
+                    ['insert', ['link']]
                 ],
                 callbacks: {
                     onInit: function () {
@@ -274,9 +310,16 @@
                         // Insert cleaned text manually
                         $('#summernote').summernote('pasteHTML', pastedData);
                     }
+                
                 }
             });
+            $('#summernote').on('summernote.link.create', function (we, url) {
+                setTimeout(() => {
+                    $('#summernote').next('.note-editor').find(`a[href="${url}"]`).attr('target', '_blank');
+                }, 0);
+            });
         });
+       
         document.addEventListener('DOMContentLoaded', function () {
             const page_size = @ViewBag.PageSize;
             const total_data = @ViewBag.TotalData;
