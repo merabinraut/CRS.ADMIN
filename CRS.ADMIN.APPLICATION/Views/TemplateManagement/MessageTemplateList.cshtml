@@ -26,6 +26,9 @@
         color: white;
         padding-bottom: 32px;
     }
+    .note-modal-body .checkbox .sn-checkbox-use-protocol {
+        display: none !important;
+    }
 </style>
 
 
@@ -123,7 +126,15 @@
                                             </div>
                                         </th>
 
-
+                                        <th scope="col" class="p-[12px]">
+                                            <div class="flex w-max">
+                                                @CRS.ADMIN.APPLICATION.Resources.Resource.Subject
+                                                <div class="relative pl-[5px]">
+                                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                                </div>
+                                            </div>
+                                        </th>
                                         <th scope="col" class="p-[12px]">
                                             <div class="flex w-max">
                                                 @CRS.ADMIN.APPLICATION.Resources.Resource.Created_On
@@ -134,14 +145,14 @@
                                             </div>
                                         </th>
                                         @*<th scope="col" class="p-[12px]">
-                                                <div class="flex w-max">
-                                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Status
-                                                    <div class="relative pl-[5px]">
-                                                        <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
-                                                        <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
-                                                    </div>
-                                                </div>
-                                            </th>*@
+            <div class="flex w-max">
+                @CRS.ADMIN.APPLICATION.Resources.Resource.Status
+                <div class="relative pl-[5px]">
+                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                </div>
+            </div>
+        </th>*@
                                         <th scope="col" class="p-[12px]">
                                             <div class="flex w-max">
                                                 @CRS.ADMIN.APPLICATION.Resources.Resource.Action
@@ -161,46 +172,49 @@
                                             int SN = 1;
                                             foreach (var item in Model.GetTemplateMessageList)
                                             {
-                                                <tr class="bg-white border-b ">
-                                                    <td class="p-[12px]">
-                                                        @SN
-                                                    </td>
-                                                    <td class="p-[12px]">
-                                                        @item.userType
-                                                    </td>
-                                                    <td class="p-[12px]">
-                                                        @item.contentCategory
-                                                    </td>
-                                                    <td class="p-[12px]">
-                                                        @item.contentType
-                                                    </td>
-                                                    <td class="p-[12px]">
-                                                        @item.createdDate
-                                                    </td>
-                                                    @*<td class="p-[12px]">
-                                                            @if (!string.IsNullOrEmpty(item.Status) && item.Status.Trim().ToUpper() == "A")
-                                                            {
-                                                                <div class="approved">
-                                                                    Active
-                                                                </div>
-                                                            }
-                                                            else
-                                                            {
-                                                                <div class="blocked">
-                                                                    Blocked
-                                                                </div>
-                                                            }
-                                                        </td>*@
+                                                                        <tr class="bg-white border-b ">
+                                                                            <td class="p-[12px]">
+                                                                                @SN
+                                                                            </td>
+                                                                            <td class="p-[12px]">
+                                                                                @item.userType
+                                                                            </td>
+                                                                            <td class="p-[12px]">
+                                                                                @item.contentCategory
+                                                                            </td>
+                                                                            <td class="p-[12px]">
+                                                                                @item.contentType
+                                                                            </td>
+                                                                            <td class="p-[12px]">
+                                                                                @item.subject
+                                                                            </td>
+                                                                            <td class="p-[12px]">
+                                                                                @item.createdDate
+                                                                            </td>
+                                                                            @*<td class="p-[12px]">
+            @if (!string.IsNullOrEmpty(item.Status) && item.Status.Trim().ToUpper() == "A")
+            {
+                <div class="approved">
+                    Active
+                </div>
+            }
+            else
+            {
+                <div class="blocked">
+                    Blocked
+                </div>
+            }
+        </td>*@
 
-                                                    <td class="p-[12px]">
-                                                        <div class="flex gap-[7px]">
-                                                            @*<i class="las la-eye text-[20px] cursor-pointer text-[#A6A6A6]" onclick="ViewCategory('@item.RoleTypeId','@item.CategoryId');"></i>*@
-                                                            <i class="las la-edit text-[20px] cursor-pointer text-[#A6A6A6]" onclick="EditTemplate('@item.Id');"></i>
+                                                                            <td class="p-[12px]">
+                                                                                <div class="flex gap-[7px]">
+                                                                                    @*<i class="las la-eye text-[20px] cursor-pointer text-[#A6A6A6]" onclick="ViewCategory('@item.RoleTypeId','@item.CategoryId');"></i>*@
+                                                                                    <i class="las la-edit text-[20px] cursor-pointer text-[#A6A6A6]" onclick="EditTemplate('@item.Id');"></i>
 
 
-                                                        </div>
-                                                    </td>
-                                                </tr>
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>
                                                 SN++;
                                             }
                                         }
@@ -315,9 +329,14 @@
             });
             $('#summernote').on('summernote.link.create', function (we, url) {
                 setTimeout(() => {
+                  
                     $('#summernote').next('.note-editor').find(`a[href="${url}"]`).attr('target', '_blank');
                 }, 0);
             });
+
+            setTimeout(function () {
+                $('.sn-checkbox-use-protocol').hide();
+            }, 500);
         });
        
         document.addEventListener('DOMContentLoaded', function () {
