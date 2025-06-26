@@ -39,6 +39,7 @@ namespace CRS.ADMIN.APPLICATION.Models.TemplateMessage
         public string createdDate { get; set; }
         public string updatedDate { get; set; }
         public string messageBody { get; set; }
-        public int TotalRecords { get; set; }
+        public int TotalRecords { get; set; } 
+        public bool State { get; set; }
     }
 }

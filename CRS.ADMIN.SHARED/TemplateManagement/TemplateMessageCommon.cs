@@ -20,6 +20,7 @@ namespace CRS.ADMIN.SHARED.TemplateManagement
         public string updatedDate { get; set; }
         public string messageBody { get; set; }
         public int TotalRecords { get; set; }
+        public bool State { get; set; }
     }
     public class ManageTemplateCommon: Common
     {      

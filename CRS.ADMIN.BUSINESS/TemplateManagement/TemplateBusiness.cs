@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using CRS.ADMIN.SHARED.TemplateManagement;
 using CRS.ADMIN.SHARED.PaginationManagement;
+using DocumentFormat.OpenXml.Office2010.Excel;
 
 namespace CRS.ADMIN.BUSINESS.TemplateManagement
 {
@@ -31,6 +32,11 @@ namespace CRS.ADMIN.BUSINESS.TemplateManagement
         public ManageTemplateCommon GetTemplateDetails(string Id = "")
         {
             return _REPO.GetTemplateDetails(Id);
+        }
+
+        public CommonDbResponse ManageToggleState(bool isOn, string id)
+        {
+            return _REPO.ManageToggleState(isOn, id);
         }
     }
 }

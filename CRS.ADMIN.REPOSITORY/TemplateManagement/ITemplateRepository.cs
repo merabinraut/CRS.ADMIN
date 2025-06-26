@@ -14,5 +14,6 @@ namespace CRS.ADMIN.REPOSITORY.TemplateManagement
         CommonDbResponse ManageTemplate(ManageTemplateCommon objManageTemplateCommon);
         List<TemplateMessageCommon> GetTemplateList(PaginationFilterCommon objPaginationFilterCommon);
         ManageTemplateCommon GetTemplateDetails(string Id = "");
+        CommonDbResponse ManageToggleState(bool isOn, string id);
     }
 }
