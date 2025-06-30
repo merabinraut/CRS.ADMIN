@@ -192,16 +192,15 @@
                                                 </div>
                                             </div>
                                         </th>
-
-                                        @*<th scope="col" class="p-[12px]">
-                                                <div class="flex w-max">
-                                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Status
-                                                    <div class="relative pl-[5px]">
-                                                        <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
-                                                        <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
-                                                    </div>
+                                        <th scope="col" class="p-[12px]">
+                                            <div class="flex w-max">
+                                                @CRS.ADMIN.APPLICATION.Resources.Resource.Status
+                                                <div class="relative pl-[5px]">
+                                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
                                                 </div>
-                                            </th>*@
+                                            </div>
+                                        </th>
                                         <th scope="col" class="p-[12px]">
                                             <div class="flex w-max">
                                                 @CRS.ADMIN.APPLICATION.Resources.Resource.Action
@@ -256,8 +255,6 @@
                                                         </td>*@
                                                     <td class="p-[12px]">
                                                         <div class="flex gap-[7px]">
-                                                            @*<i class="las la-eye text-[20px] cursor-pointer text-[#A6A6A6]" onclick="ViewCategory('@item.RoleTypeId','@item.CategoryId');"></i>*@
-                                                            <i class="las la-edit text-[20px] cursor-pointer text-[#A6A6A6]" onclick="EditTemplate('@item.Id');"></i>
                                                             <input name="__RequestVerificationToken" type="hidden" value="TOKEN_VALUE" />
                                                             <label class="toggle">
                                                                 @if (@item.State == true)
@@ -271,6 +268,25 @@
 
                                                                 <span class="slider"></span>
                                                             </label>
+                                                        </div>
+                                                    </td>
+                                                    <td class="p-[12px]">
+                                                        <div class="flex gap-[7px]">
+                                                            @*<i class="las la-eye text-[20px] cursor-pointer text-[#A6A6A6]" onclick="ViewCategory('@item.RoleTypeId','@item.CategoryId');"></i>*@
+                                                            <i class="las la-edit text-[20px] cursor-pointer text-[#A6A6A6]" onclick="EditTemplate('@item.Id');"></i>
+                                                            @*<input name="__RequestVerificationToken" type="hidden" value="TOKEN_VALUE" />
+                                                            <label class="toggle">
+                                                                @if (@item.State == true)
+                                                                {
+                                                                    <input type="checkbox" class="btnToggle" id="btnToggle_@SN" name="btnToggle" value="" data-id="@item.Id" checked />
+                                                                }
+                                                                else
+                                                                {
+                                                                    <input type="checkbox" class="btnToggle" id="btnToggle_@SN" name="btnToggle" value="" data-id="@item.Id" />
+                                                                }
+
+                                                                <span class="slider"></span>
+                                                            </label>*@
                                                         </div>
                                                     </td>
                                                 </tr>
