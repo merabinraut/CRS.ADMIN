@@ -2946,4 +2946,8 @@
     <value>追加</value>
     <comment>Line Group Management</comment>
   </data>
+  <data name="Crop" xml:space="preserve">
+    <value>作物</value>
+    <comment>Club Management</comment>
+  </data>
 </root>

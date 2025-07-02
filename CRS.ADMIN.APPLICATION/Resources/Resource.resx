@@ -2972,4 +2972,8 @@
     <value>Submit</value>
     <comment>Line Group Management</comment>
   </data>
+  <data name="Crop" xml:space="preserve">
+    <value>Crop</value>
+    <comment>Club Management</comment>
+  </data>
 </root>
