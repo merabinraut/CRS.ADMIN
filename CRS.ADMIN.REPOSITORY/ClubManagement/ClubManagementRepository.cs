@@ -188,7 +188,7 @@ namespace CRS.ADMIN.REPOSITORY.ClubManagement
                     CompanyAddress = _DAO.ParseColumnValue(dbResponse, "CompanyAddress").ToString(),
                     BusinessLicenseNumber = _DAO.ParseColumnValue(dbResponse, "BusinessLicenseNumber").ToString(),
                     LicenseIssuedDate = !string.IsNullOrEmpty(_DAO.ParseColumnValue(dbResponse, "LicenseIssuedDate").ToString()) ? Convert.ToDateTime(_DAO.ParseColumnValue(dbResponse, "LicenseIssuedDate")).ToString("yyyy/MM/dd") : _DAO.ParseColumnValue(dbResponse, "LicenseIssuedDate").ToString(),
-                    ClosingDate = _DAO.ParseColumnValue(dbResponse, "ClosingDate").ToString(),
+                    //ClosingDate = _DAO.ParseColumnValue(dbResponse, "ClosingDate").ToString(),
                     Representative1_ContactName = _DAO.ParseColumnValue(dbResponse, "Representative1_ContactName").ToString(),
                     Representative1_Email = _DAO.ParseColumnValue(dbResponse, "Representative1_Email").ToString(),
                     Representative1_MobileNo = _DAO.ParseColumnValue(dbResponse, "Representative1_MobileNo").ToString(),
@@ -285,7 +285,7 @@ namespace CRS.ADMIN.REPOSITORY.ClubManagement
                     CompanyAddress = _DAO.ParseColumnValue(dbResponse, "CompanyAddress").ToString(),
                     BusinessLicenseNumber = _DAO.ParseColumnValue(dbResponse, "BusinessLicenseNumber").ToString(),
                     LicenseIssuedDate = !string.IsNullOrEmpty(_DAO.ParseColumnValue(dbResponse, "LicenseIssuedDate").ToString()) ? Convert.ToDateTime(_DAO.ParseColumnValue(dbResponse, "LicenseIssuedDate")).ToString("yyyy/MM/dd") : _DAO.ParseColumnValue(dbResponse, "LicenseIssuedDate").ToString(),
-                    ClosingDate = _DAO.ParseColumnValue(dbResponse, "ClosingDate").ToString(),
+                    //ClosingDate = _DAO.ParseColumnValue(dbResponse, "ClosingDate").ToString(),
 
                     Representative1_ContactName = _DAO.ParseColumnValue(dbResponse, "Representative1_ContactName").ToString(),
                     Representative1_Email = _DAO.ParseColumnValue(dbResponse, "Representative1_Email").ToString(),
@@ -396,7 +396,7 @@ namespace CRS.ADMIN.REPOSITORY.ClubManagement
             SQL += ",@CompanyAddress=" + (!string.IsNullOrEmpty(Request.CompanyAddress) ? "N" + _DAO.FilterString(Request.CompanyAddress) : _DAO.FilterString(Request.CompanyAddress));
             SQL += ",@BusinessLicenseNumber=" + _DAO.FilterString(Request.BusinessLicenseNumber);
             SQL += ",@LicenseIssuedDate=" + _DAO.FilterString(Request.LicenseIssuedDate);
-            SQL += ",@ClosingDate=" + _DAO.FilterString(Request.ClosingDate);
+            //SQL += ",@ClosingDate=" + _DAO.FilterString(Request.ClosingDate);
             SQL += ",@CeoNameKatakana=" + (!string.IsNullOrEmpty(Request.CeoFurigana) ? "N" + _DAO.FilterString(Request.CeoFurigana) : _DAO.FilterString(Request.CeoFurigana));
             SQL += ",@CompanyRegistry=" + _DAO.FilterString(Request.CorporateRegistryDocument);
             SQL += ",@DocumentType=" + _DAO.FilterString(Request.IdentificationType);
@@ -580,7 +580,7 @@ namespace CRS.ADMIN.REPOSITORY.ClubManagement
                     CompanyAddress = _DAO.ParseColumnValue(dbResponse, "CompanyAddress").ToString(),
                     BusinessLicenseNumber = _DAO.ParseColumnValue(dbResponse, "BusinessLicenseNumber").ToString(),
                     LicenseIssuedDate = !string.IsNullOrEmpty(_DAO.ParseColumnValue(dbResponse, "LicenseIssuedDate").ToString()) ? Convert.ToDateTime(_DAO.ParseColumnValue(dbResponse, "LicenseIssuedDate")).ToString("yyyy/MM/dd") : _DAO.ParseColumnValue(dbResponse, "LicenseIssuedDate").ToString(),
-                    ClosingDate = _DAO.ParseColumnValue(dbResponse, "ClosingDate").ToString(),
+                    //ClosingDate = _DAO.ParseColumnValue(dbResponse, "ClosingDate").ToString(),
                     Representative1_ContactName = _DAO.ParseColumnValue(dbResponse, "Representative1_ContactName").ToString(),
                     Representative1_Email = _DAO.ParseColumnValue(dbResponse, "Representative1_Email").ToString(),
                     Representative1_MobileNo = _DAO.ParseColumnValue(dbResponse, "Representative1_MobileNo").ToString(),
