@@ -134,7 +134,7 @@ namespace CRS.ADMIN.REPOSITORY.BasicClubManagement
                     LastOrderTime = _DAO.ParseColumnValue(dbResponse, "LastOrderTime").ToString(),
                     Holiday = _DAO.ParseColumnValue(dbResponse, "Holiday").ToString(),
                     OthersHoliday = _DAO.ParseColumnValue(dbResponse, "OtherHoliday").ToString(),
-                    ClosingDate = _DAO.ParseColumnValue(dbResponse, "ClosingDate").ToString(),
+                    //ClosingDate = _DAO.ParseColumnValue(dbResponse, "ClosingDate").ToString(),
                     GoogleMap = _DAO.ParseColumnValue(dbResponse, "LocationURL").ToString(),
 
                 };
@@ -233,7 +233,7 @@ namespace CRS.ADMIN.REPOSITORY.BasicClubManagement
                     CompanyAddress = _DAO.ParseColumnValue(dbResponse, "CompanyAddress").ToString(),
                     BusinessLicenseNumber = _DAO.ParseColumnValue(dbResponse, "BusinessLicenseNumber").ToString(),
                     LicenseIssuedDate = !string.IsNullOrEmpty(_DAO.ParseColumnValue(dbResponse, "LicenseIssuedDate").ToString()) ? Convert.ToDateTime(_DAO.ParseColumnValue(dbResponse, "LicenseIssuedDate")).ToString("yyyy/MM/dd") : _DAO.ParseColumnValue(dbResponse, "LicenseIssuedDate").ToString(),
-                    ClosingDate = _DAO.ParseColumnValue(dbResponse, "ClosingDate").ToString(),
+                    //ClosingDate = _DAO.ParseColumnValue(dbResponse, "ClosingDate").ToString(),
                     Representative1_ContactName = _DAO.ParseColumnValue(dbResponse, "Representative1_ContactName").ToString(),
                     Representative1_Email = _DAO.ParseColumnValue(dbResponse, "Representative1_Email").ToString(),
                     Representative1_MobileNo = _DAO.ParseColumnValue(dbResponse, "Representative1_MobileNo").ToString(),
@@ -318,7 +318,7 @@ namespace CRS.ADMIN.REPOSITORY.BasicClubManagement
             SQL += ",@companyAddress=" + (!string.IsNullOrEmpty(Request.CompanyAddress) ? "N" + _DAO.FilterString(Request.CompanyAddress) : _DAO.FilterString(Request.CompanyAddress));
             SQL += ",@businessLicenseNumber=" + _DAO.FilterString(Request.BusinessLicenseNumber);
             SQL += ",@licenseIssuedDate=" + _DAO.FilterString(Request.LicenseIssuedDate);
-            SQL += ",@closingDate=" + _DAO.FilterString(Request.ClosingDate);
+            //SQL += ",@closingDate=" + _DAO.FilterString(Request.ClosingDate);
             SQL += ",@ceoNameKatakana=" + (!string.IsNullOrEmpty(Request.CeoFurigana) ? "N" + _DAO.FilterString(Request.CeoFurigana) : _DAO.FilterString(Request.CeoFurigana));
             SQL += ",@companyRegistry=" + _DAO.FilterString(Request.CorporateRegistryDocument);
             SQL += ",@documentType=" + _DAO.FilterString(Request.IdentificationType);
