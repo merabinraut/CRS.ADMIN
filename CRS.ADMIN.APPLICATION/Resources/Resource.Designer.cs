@@ -1753,6 +1753,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Crop.
+        /// </summary>
+        public static string Crop {
+            get {
+                return ResourceManager.GetString("Crop", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Current Category.
         /// </summary>
         public static string Current_Category {

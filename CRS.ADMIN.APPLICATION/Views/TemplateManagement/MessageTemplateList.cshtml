@@ -1,4 +1,4 @@
-@model CRS.ADMIN.APPLICATION.Models.TemplateMessage.TemplateMessageModel
+﻿@model CRS.ADMIN.APPLICATION.Models.TemplateMessage.TemplateMessageModel
 @{
     ViewBag.Title = "Event List";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -8,27 +8,75 @@
 
 <style>
 
-    .note-modal-backdrop{
-        display:none!important
+    .note-modal-backdrop {
+        display: none !important
     }
-    .note-modal-footer{
+
+    .note-modal-footer {
         height: 65px !important
     }
-    .note-modal-footer .note-btn {
-       float: right;
-       background-color: #d75a8b;
-       color: white;
-       padding-bottom :32px;
-     }
+
+        .note-modal-footer .note-btn {
+            float: right;
+            background-color: #d75a8b;
+            color: white;
+            padding-bottom: 32px;
+        }
 
     .note-btn-primary.focus, .note-btn-primary:focus, .note-btn-primary:hover {
         background-color: #d75a8b !important;
         color: white;
         padding-bottom: 32px;
     }
+
     .note-modal-body .checkbox .sn-checkbox-use-protocol {
         display: none !important;
     }
+
+    .toggle {
+        position: relative;
+        display: inline-block;
+        width: 20px;
+        height: 14px;
+        margin-top: 3px;
+    }
+
+        .toggle input {
+            display: none;
+        }
+
+    .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #c4c0c0;
+        transition: 0.3s;
+        border-radius: 14px;
+    }
+
+        /* Knob */
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 10px;
+            width: 10px;
+            left: 2px;
+            top: 2px;
+            background-color: #fff;
+            transition: 0.3s;
+            border-radius: 50%;
+        }
+
+    .toggle input:checked + .slider {
+        background-color: #D75A8B;
+    }
+
+        .toggle input:checked + .slider:before {
+            transform: translateX(6px);
+        }
 </style>
 
 
@@ -144,15 +192,15 @@
                                                 </div>
                                             </div>
                                         </th>
-                                        @*<th scope="col" class="p-[12px]">
-            <div class="flex w-max">
-                @CRS.ADMIN.APPLICATION.Resources.Resource.Status
-                <div class="relative pl-[5px]">
-                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
-                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
-                </div>
-            </div>
-        </th>*@
+                                        <th scope="col" class="p-[12px]">
+                                            <div class="flex w-max">
+                                                @CRS.ADMIN.APPLICATION.Resources.Resource.Status
+                                                <div class="relative pl-[5px]">
+                                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                                </div>
+                                            </div>
+                                        </th>
                                         <th scope="col" class="p-[12px]">
                                             <div class="flex w-max">
                                                 @CRS.ADMIN.APPLICATION.Resources.Resource.Action
@@ -172,49 +220,76 @@
                                             int SN = 1;
                                             foreach (var item in Model.GetTemplateMessageList)
                                             {
-                                                                        <tr class="bg-white border-b ">
-                                                                            <td class="p-[12px]">
-                                                                                @SN
-                                                                            </td>
-                                                                            <td class="p-[12px]">
-                                                                                @item.userType
-                                                                            </td>
-                                                                            <td class="p-[12px]">
-                                                                                @item.contentCategory
-                                                                            </td>
-                                                                            <td class="p-[12px]">
-                                                                                @item.contentType
-                                                                            </td>
-                                                                            <td class="p-[12px]">
-                                                                                @item.subject
-                                                                            </td>
-                                                                            <td class="p-[12px]">
-                                                                                @item.createdDate
-                                                                            </td>
-                                                                            @*<td class="p-[12px]">
-            @if (!string.IsNullOrEmpty(item.Status) && item.Status.Trim().ToUpper() == "A")
-            {
-                <div class="approved">
-                    Active
-                </div>
-            }
-            else
-            {
-                <div class="blocked">
-                    Blocked
-                </div>
-            }
-        </td>*@
+                                                <tr class="bg-white border-b ">
+                                                    <td class="p-[12px]">
+                                                        @SN
+                                                    </td>
+                                                    <td class="p-[12px]">
+                                                        @item.userType
+                                                    </td>
+                                                    <td class="p-[12px]">
+                                                        @item.contentCategory
+                                                    </td>
+                                                    <td class="p-[12px]">
+                                                        @item.contentType
+                                                    </td>
+                                                    <td class="p-[12px]">
+                                                        @item.subject
+                                                    </td>
+                                                    <td class="p-[12px]">
+                                                        @item.createdDate
+                                                    </td>
+                                                    @*<td class="p-[12px]">
+                                                            @if (!string.IsNullOrEmpty(item.Status) && item.Status.Trim().ToUpper() == "A")
+                                                            {
+                                                                <div class="approved">
+                                                                    Active
+                                                                </div>
+                                                            }
+                                                            else
+                                                            {
+                                                                <div class="blocked">
+                                                                    Blocked
+                                                                </div>
+                                                            }
+                                                        </td>*@
+                                                    <td class="p-[12px]">
+                                                        <div class="flex gap-[7px]">
+                                                            <input name="__RequestVerificationToken" type="hidden" value="TOKEN_VALUE" />
+                                                            <label class="toggle">
+                                                                @if (@item.State == true)
+                                                                {
+                                                                    <input type="checkbox" class="btnToggle" id="btnToggle_@SN" name="btnToggle" value="" data-id="@item.Id" checked />
+                                                                }
+                                                                else
+                                                                {
+                                                                    <input type="checkbox" class="btnToggle" id="btnToggle_@SN" name="btnToggle" value="" data-id="@item.Id" />
+                                                                }
 
-                                                                            <td class="p-[12px]">
-                                                                                <div class="flex gap-[7px]">
-                                                                                    @*<i class="las la-eye text-[20px] cursor-pointer text-[#A6A6A6]" onclick="ViewCategory('@item.RoleTypeId','@item.CategoryId');"></i>*@
-                                                                                    <i class="las la-edit text-[20px] cursor-pointer text-[#A6A6A6]" onclick="EditTemplate('@item.Id');"></i>
+                                                                <span class="slider"></span>
+                                                            </label>
+                                                        </div>
+                                                    </td>
+                                                    <td class="p-[12px]">
+                                                        <div class="flex gap-[7px]">
+                                                            @*<i class="las la-eye text-[20px] cursor-pointer text-[#A6A6A6]" onclick="ViewCategory('@item.RoleTypeId','@item.CategoryId');"></i>*@
+                                                            <i class="las la-edit text-[20px] cursor-pointer text-[#A6A6A6]" onclick="EditTemplate('@item.Id');"></i>
+                                                            @*<input name="__RequestVerificationToken" type="hidden" value="TOKEN_VALUE" />
+                                                            <label class="toggle">
+                                                                @if (@item.State == true)
+                                                                {
+                                                                    <input type="checkbox" class="btnToggle" id="btnToggle_@SN" name="btnToggle" value="" data-id="@item.Id" checked />
+                                                                }
+                                                                else
+                                                                {
+                                                                    <input type="checkbox" class="btnToggle" id="btnToggle_@SN" name="btnToggle" value="" data-id="@item.Id" />
+                                                                }
 
-
-                                                                                </div>
-                                                                            </td>
-                                                                        </tr>
+                                                                <span class="slider"></span>
+                                                            </label>*@
+                                                        </div>
+                                                    </td>
+                                                </tr>
                                                 SN++;
                                             }
                                         }
@@ -261,7 +336,29 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote-lite.min.js"></script>
     <script>
-        // Initialize Froala Editor
+        $(document).on('change', '.btnToggle', function () {
+            const $checkbox = $(this);
+            const isChecked = $checkbox.is(':checked');
+            const id = $checkbox.data('id');
+            const $row = $checkbox.closest('tr');
+            const token = $('input[name="__RequestVerificationToken"]').val();
+            $.ajax({
+                url: '/TemplateManagement/UpdateToggleState',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({ isOn: isChecked, id: id }),
+                headers: {
+                    '__RequestVerificationToken': token
+                },
+                success: function (response) {
+                    window.location.href = "/TemplateManagement/MessageTemplateList";
+                },
+                error: function (xhr, status, error) {
+                    window.location.href = "/TemplateManagement/MessageTemplateList";
+                }
+            });
+        });
+
         let editorInstance;
 
         function insertAtCursor() {
@@ -270,7 +367,7 @@
             //editorInstance.html.insert(selectedValue);
             $('#summernote').summernote('focus'); // Ensure the editor is focused
             $('#summernote').summernote('insertText', selectedValue);
-        
+
         }
         $(document).ready(function () {
            $.extend($.summernote.options.buttons, {
@@ -293,7 +390,7 @@
             }).render();
         }
            });
-           
+
 
             $('#summernote').summernote({
                 height: 200, // Set minimum height
@@ -324,12 +421,12 @@
                         // Insert cleaned text manually
                         $('#summernote').summernote('pasteHTML', pastedData);
                     }
-                
+
                 }
             });
             $('#summernote').on('summernote.link.create', function (we, url) {
                 setTimeout(() => {
-                  
+
                     $('#summernote').next('.note-editor').find(`a[href="${url}"]`).attr('target', '_blank');
                 }, 0);
             });
@@ -337,8 +434,10 @@
             setTimeout(function () {
                 $('.sn-checkbox-use-protocol').hide();
             }, 500);
+
+
         });
-       
+
         document.addEventListener('DOMContentLoaded', function () {
             const page_size = @ViewBag.PageSize;
             const total_data = @ViewBag.TotalData;
@@ -347,33 +446,6 @@
             let search_filter = $('#default-search').val();
             URL = addQueryParam(URL, 'SearchFilter', search_filter);
             LoadPagination(page_size, total_data, start_index_val, URL);
-            //editorInstance = new FroalaEditor('#froala-editor', {
-            //    events: {
-            //        'initialized': function () {
-            //            const body = $('input[name="messageBody"]').val();
-            //            if (body) {
-            //                this.html.set(body); // 'this' refers to the editor instance
-            //            }
-            //        },
-            //        'paste.before': function (e, editor) {
-            //            const clipboardData = e.clipboardData || window.clipboardData;
-            //            let pastedData = clipboardData.getData('text/plain'); // Get plain text
-            //            pastedData = pastedData.trim(); // Trim whitespace
-            //            pastedData = pastedData.replace(/\s+/g, ' '); // Normalize spaces
-            //            editor.html.insert(pastedData); // Insert cleaned data manually
-            //            e.preventDefault(); // Prevent the default paste action
-            //        }
-            //    },
-            //    heightMin: 200, // Optional: Minimum height for the editor
-            //    toolbarButtons: ['bold', 'italic', 'underline'],
-            //    pluginsEnabled: [], // Optional: List plugins you want to enable
-            //    fontSize: {
-            //        options: ['8', '10', '12']
-            //    },
-            //    inlineMode: false // Disable inline mode if not required
-            //});
-
-
         });
         function cleanContent(content) {
             // Create a temporary DOM element
@@ -393,7 +465,7 @@
             const content = $('#summernote').summernote('code');
 
             $('#editorContent[name="messageBody"]').val(content);
-            
+
             $("#ManageTemplateEmailForm").submit();
         }
         function EditTemplate(i)

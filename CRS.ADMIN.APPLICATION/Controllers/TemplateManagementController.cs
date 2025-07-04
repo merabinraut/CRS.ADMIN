@@ -116,6 +116,24 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             return RedirectToAction("MessageTemplateList", "TemplateManagement");
         }
 
+        [HttpPost]
+        public ActionResult UpdateToggleState(bool isOn, string id)
+        {
+            if (!string.IsNullOrEmpty(id))
+                id = id.DecryptParameter();
+
+            var dbResponse = _BUSS.ManageToggleState(isOn, id);
+
+            var response = new CommonDbResponse();
+            response = dbResponse;
+            this.AddNotificationMessage(new NotificationModel()
+            {
+                NotificationType = response.Code == CRS.ADMIN.SHARED.ResponseCode.Success ? NotificationMessage.SUCCESS : NotificationMessage.INFORMATION,
+                Message = response.Message ?? "Something went wrong. Please try again later",
+                Title = response.Code == CRS.ADMIN.SHARED.ResponseCode.Success ? NotificationMessage.SUCCESS.ToString() : NotificationMessage.INFORMATION.ToString()
+            });
+            return Json(response.SetMessageInTempData(this));
+        }
 
         [HttpGet]
         public ActionResult ManageTemplate(string Id = "", string SearchFilter = "", int StartIndex = 0, int PageSize = 10)

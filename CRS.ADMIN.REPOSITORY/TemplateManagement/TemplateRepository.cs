@@ -69,6 +69,7 @@ namespace CRS.ADMIN.REPOSITORY.TemplateManagement
                         subject = Convert.ToString(_DAO.ParseColumnValue(item, "subject")),
                         messageBody = Convert.ToString(_DAO.ParseColumnValue(item, "body")),
                         createdDate = Convert.ToString(_DAO.ParseColumnValue(item, "createdDate")),
+                        State = Convert.ToBoolean(_DAO.ParseColumnValue(item, "state")),
                         Id = Convert.ToString(_DAO.ParseColumnValue(item, "Id")),
                         TotalRecords = Convert.ToInt32(_DAO.ParseColumnValue(item, "TotalRecords").ToString()),
                     });
@@ -97,6 +98,15 @@ namespace CRS.ADMIN.REPOSITORY.TemplateManagement
                 };
             }
             return new ManageTemplateCommon();
+        }
+
+        public CommonDbResponse ManageToggleState(bool isOn, string id)
+        {
+            string SQL = "EXEC sproc_tbl_message_templates ";           
+                SQL += "@flag = 'STATE' ,";
+                SQL += "@isToggleState = N" + _DAO.FilterString(isOn.ToString()) + ",";
+                SQL += "@sno = N" + _DAO.FilterString(id) + "";
+            return _DAO.ParseCommonDbResponse(SQL);
         }
     }
 }
