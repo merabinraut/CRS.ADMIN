@@ -24,7 +24,7 @@ namespace CRS.ADMIN.BUSINESS.ApiResponseMessage
             return _REPO.ApiResponseMessageDetail(MessageId);
         }
 
-        public List<ApiResponseMessageCommon> ApiResponseMessageList(PaginationFilterCommon Request)
+        public List<ApiResponseMessageCommon> ApiResponseMessageList(ApiResponseMessageFilterCommon Request)
         {
             return _REPO.ApiResponseMessageList(Request);
         }

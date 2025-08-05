@@ -24,89 +24,89 @@
             <div class="flex flex-col  gap-8">
                 @using (Html.BeginForm("ReservationLedgerDetail", "ReservationLedger", FormMethod.Get))
                 {
-                <input name="Date" value="@ViewBag.Date" hidden />
-                <div class="flex justify-between ">
-                    @*@using (Html.BeginForm("ReservationLedgerDetail", "ReservationLedger", FormMethod.Get))
-                        {*@
-                    @*<input name="FromDate" value="@ViewBag.ClubId" hidden />
-                        <input name="FromDate" value="@ViewBag.FromDate" hidden />
-                        <input name="ToDate" value="@ViewBag.ToDate" hidden />*@
-                    <div class="relative input-search-wrapper">
-                        <div class="absolute inset-y-0 left-0 flex items-center pl-[16px] pointer-events-none">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21"
-                                 fill="none">
-                                <path d="M17.5 18L13.875 14.375M15.8333 9.66667C15.8333 13.3486 12.8486 16.3333 9.16667 16.3333C5.48477 16.3333 2.5 13.3486 2.5 9.66667C2.5 5.98477 5.48477 3 9.16667 3C12.8486 3 15.8333 5.98477 15.8333 9.66667Z"
-                                      stroke="#667085" stroke-width="1.66667" stroke-linecap="round"
-                                      stroke-linejoin="round">
-                                </path>
-                            </svg>
+                    <input name="Date" value="@ViewBag.Date" hidden />
+                    <div class="flex justify-between ">
+                        @*@using (Html.BeginForm("ReservationLedgerDetail", "ReservationLedger", FormMethod.Get))
+                            {*@
+                        @*<input name="FromDate" value="@ViewBag.ClubId" hidden />
+                            <input name="FromDate" value="@ViewBag.FromDate" hidden />
+                            <input name="ToDate" value="@ViewBag.ToDate" hidden />*@
+                        <div class="relative input-search-wrapper">
+                            <div class="absolute inset-y-0 left-0 flex items-center pl-[16px] pointer-events-none">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21"
+                                     fill="none">
+                                    <path d="M17.5 18L13.875 14.375M15.8333 9.66667C15.8333 13.3486 12.8486 16.3333 9.16667 16.3333C5.48477 16.3333 2.5 13.3486 2.5 9.66667C2.5 5.98477 5.48477 3 9.16667 3C12.8486 3 15.8333 5.98477 15.8333 9.66667Z"
+                                          stroke="#667085" stroke-width="1.66667" stroke-linecap="round"
+                                          stroke-linejoin="round">
+                                    </path>
+                                </svg>
+                            </div>
+                            <input type="search" id="default-search"
+                                   class="input-search block w-full "
+                                   placeholder="@CRS.ADMIN.APPLICATION.Resources.Resource.Search"
+                                   name="searchText" value="@ViewBag.SearchText">
                         </div>
-                        <input type="search" id="default-search"
-                               class="input-search block w-full "
-                               placeholder="@CRS.ADMIN.APPLICATION.Resources.Resource.Search"
-                               name="searchText" value="@ViewBag.SearchText">
-                    </div>
 
-                    @*}*@
-                    <div class="flex gap-4">
+                        @*}*@
+                        <div class="flex gap-4">
+                        </div>
                     </div>
-                </div>
-                <br />
-                <div class="mb-4">
-                    <div id="filter" class="export-button h-[40px] text-[#3E3E3E] w-max" onclick="showFilterContainer()">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21" fill="none">
-                            <path d="M5 10.5H15M2.5 5.5H17.5M7.5 15.5H12.5" stroke="#3E3E3E" stroke-width="1.67"
-                                  stroke-linecap="round" stroke-linejoin="round" />
-                        </svg>
-                        @CRS.ADMIN.APPLICATION.Resources.Resource.Filter_By
-                    </div>
+                    <br />
+                    <div class="mb-4">
+                        <div id="filter" class="export-button h-[40px] text-[#3E3E3E] w-max" onclick="showFilterContainer()">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21" fill="none">
+                                <path d="M5 10.5H15M2.5 5.5H17.5M7.5 15.5H12.5" stroke="#3E3E3E" stroke-width="1.67"
+                                      stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Filter_By
+                        </div>
 
-                    <div id="filter-container" class="px-6 py-5 rounded-[5px] border border-[#D0D5DD]" style="display: none;">
-                        <form action="/ReservationLedger/ReservationLedgerDetail" method="get" id="filter-id">
-                            <input name="ClubId" value="@ViewBag.ClubId" hidden />
-                            <div class="flex flex-col gap-4">
-                                <div class="flex text-[#3E3E3E] gap-1 items-center">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="20"
-                                         height="21" viewBox="0 0 20 21" fill="none">
-                                        <path d="M5 10.5H15M2.5 5.5H17.5M7.5 15.5H12.5" stroke="#3E3E3E" stroke-width="1.67"
-                                              stroke-linecap="round" stroke-linejoin="round" />
-                                    </svg>
-                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Filter_By
-                                </div>
-
-                                <div class="grid grid-cols-3 gap-[27px]">
-                                    <div class="input-field-common">
-                                        <label class="block mb-[12px] text-sm font-medium text-secondary-100 ">
-                                            @CRS.ADMIN.APPLICATION.Resources.Resource.From_Date
-                                        </label>
-                                        <input type="text" class="w-full" placeholder="@CRS.ADMIN.APPLICATION.Resources.Resource.From_Date" name="FromDate" id="FromDate" value="@ViewBag.FromDate" readonly>
-                                    </div>
-                                    <div class="input-field-common">
-                                        <label class="block mb-[12px] text-sm font-medium text-secondary-100 ">
-                                            @CRS.ADMIN.APPLICATION.Resources.Resource.To_Date
-                                        </label>
-                                        <input type="text" class="w-full" placeholder="@CRS.ADMIN.APPLICATION.Resources.Resource.To_Date" name="ToDate" id="ToDate" value="@ViewBag.ToDate" readonly>
+                        <div id="filter-container" class="px-6 py-5 rounded-[5px] border border-[#D0D5DD]" style="display: none;">
+                            <form action="/ReservationLedger/ReservationLedgerDetail" method="get" id="filter-id">
+                                <input name="ClubId" value="@ViewBag.ClubId" hidden />
+                                <div class="flex flex-col gap-4">
+                                    <div class="flex text-[#3E3E3E] gap-1 items-center">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20"
+                                             height="21" viewBox="0 0 20 21" fill="none">
+                                            <path d="M5 10.5H15M2.5 5.5H17.5M7.5 15.5H12.5" stroke="#3E3E3E" stroke-width="1.67"
+                                                  stroke-linecap="round" stroke-linejoin="round" />
+                                        </svg>
+                                        @CRS.ADMIN.APPLICATION.Resources.Resource.Filter_By
                                     </div>
 
-                                </div>
-                            </div>
-                            <div class=" flex gap-4 mt-4">
-                                <button id="cancelFilter" class="btn btn-primary-normal gap-1 rounded-[4px]"
-                                        onclick="window.location.href='@Url.Action("ReservationLedgerDetail", "ReservationLedger")';" type="button">
-                                    <i class="las la-times"></i>@CRS.ADMIN.APPLICATION.Resources.Resource.Cancel
-                                </button>
+                                    <div class="grid grid-cols-3 gap-[27px]">
+                                        <div class="input-field-common">
+                                            <label class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                                                @CRS.ADMIN.APPLICATION.Resources.Resource.From_Date
+                                            </label>
+                                            <input type="text" class="w-full" placeholder="@CRS.ADMIN.APPLICATION.Resources.Resource.From_Date" name="FromDate" id="FromDate" value="@ViewBag.FromDate" readonly>
+                                        </div>
+                                        <div class="input-field-common">
+                                            <label class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                                                @CRS.ADMIN.APPLICATION.Resources.Resource.To_Date
+                                            </label>
+                                            <input type="text" class="w-full" placeholder="@CRS.ADMIN.APPLICATION.Resources.Resource.To_Date" name="ToDate" id="ToDate" value="@ViewBag.ToDate" readonly>
+                                        </div>
 
-                                <button id="SubmitFilter" class="btn btn-primary-default gap-1 rounded-[4px]" type="submit">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="19"
-                                         viewBox="0 0 18 19" fill="none">
-                                        <path d="M5.25 14.75V10.25H12.75V14.75H14.25V6.371L12.129 4.25H3.75V14.75H5.25ZM3 2.75H12.75L15.75 5.75V15.5C15.75 15.6989 15.671 15.8897 15.5303 16.0303C15.3897 16.171 15.1989 16.25 15 16.25H3C2.80109 16.25 2.61032 16.171 2.46967 16.0303C2.32902 15.8897 2.25 15.6989 2.25 15.5V3.5C2.25 3.30109 2.32902 3.11032 2.46967 2.96967C2.61032 2.82902 2.80109 2.75 3 2.75ZM6.75 11.75V14.75H11.25V11.75H6.75Z"
-                                              fill="white" />
-                                    </svg> @CRS.ADMIN.APPLICATION.Resources.Resource.Apply
-                                </button>
-                            </div>
-                        </form>
+                                    </div>
+                                </div>
+                                <div class=" flex gap-4 mt-4">
+                                    <button id="cancelFilter" class="btn btn-primary-normal gap-1 rounded-[4px]"
+                                            onclick="window.location.href='@Url.Action("ReservationLedgerDetail", "ReservationLedger")';" type="button">
+                                        <i class="las la-times"></i>@CRS.ADMIN.APPLICATION.Resources.Resource.Cancel
+                                    </button>
+
+                                    <button id="SubmitFilter" class="btn btn-primary-default gap-1 rounded-[4px]" type="submit">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="19"
+                                             viewBox="0 0 18 19" fill="none">
+                                            <path d="M5.25 14.75V10.25H12.75V14.75H14.25V6.371L12.129 4.25H3.75V14.75H5.25ZM3 2.75H12.75L15.75 5.75V15.5C15.75 15.6989 15.671 15.8897 15.5303 16.0303C15.3897 16.171 15.1989 16.25 15 16.25H3C2.80109 16.25 2.61032 16.171 2.46967 16.0303C2.32902 15.8897 2.25 15.6989 2.25 15.5V3.5C2.25 3.30109 2.32902 3.11032 2.46967 2.96967C2.61032 2.82902 2.80109 2.75 3 2.75ZM6.75 11.75V14.75H11.25V11.75H6.75Z"
+                                                  fill="white" />
+                                        </svg> @CRS.ADMIN.APPLICATION.Resources.Resource.Apply
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
                     </div>
-                </div>
                 }
 
                 <div class="bg-white  ">
@@ -129,6 +129,15 @@
                                             <th scope="col" class="p-[12px]">
                                                 <div class="flex w-max">
                                                     S.N
+                                                    <div class="relative pl-[5px]">
+                                                        <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                                        <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                                    </div>
+                                                </div>
+                                            </th>
+                                            <th scope="col" class="p-[12px]">
+                                                <div class="flex w-max">
+                                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Res_ID
                                                     <div class="relative pl-[5px]">
                                                         <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
                                                         <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
@@ -162,7 +171,15 @@
                                                     </div>
                                                 </div>
                                             </th>
-
+                                            <th scope="col" class="p-[12px]">
+                                                <div class="flex w-max">
+                                                    @CRS.ADMIN.APPLICATION.Resources.Resource.CreatedDate
+                                                    <div class="relative pl-[5px]">
+                                                        <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                                        <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                                    </div>
+                                                </div>
+                                            </th>
                                             <th scope="col" class="p-[12px]">
                                                 <div class="flex w-max">
                                                     @CRS.ADMIN.APPLICATION.Resources.Resource.Visit_Date
@@ -202,6 +219,15 @@
                                             <th scope="col" class="p-[12px]">
                                                 <div class="flex w-max">
                                                     @CRS.ADMIN.APPLICATION.Resources.Resource.Transaction_Status
+                                                    <div class="relative pl-[5px]">
+                                                        <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                                        <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                                    </div>
+                                                </div>
+                                            </th>
+                                            <th scope="col" class="p-[12px]">
+                                                <div class="flex w-max">
+                                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Admin_Remarks
                                                     <div class="relative pl-[5px]">
                                                         <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
                                                         <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
@@ -291,7 +317,7 @@
                                             </th>
                                             <th scope="col" class="p-[12px]">
                                                 <div class="flex w-max">
-                                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Admin_Remarks
+                                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Action
                                                     <div class="relative pl-[5px]">
                                                         <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
                                                         <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
@@ -304,151 +330,167 @@
                                         @{
                                             foreach (var paymentLedger in Model)
                                             {
-                                            <tr class="bg-white border-b ">
-                                                <td class="p-[12px] w-max">
-                                                    @paymentLedger.SNO
-                                                </td>
-                                                <td class="p-[12px] w-max">
-                                                    <div class="round-image-text flex gap-[12px] w-max ">
-                                                        <img class="w-[32px] h-[32px] rounded-full"
-                                                             src="@paymentLedger.CustomerImage" />
+                                                <tr class="bg-white border-b ">
+                                                    <td class="p-[12px] w-max">
+                                                        @paymentLedger.SNO
+                                                    </td>
+                                                    <td class="p-[12px] w-max">
+                                                        @paymentLedger.InvoiceId
+                                                    </td>
+                                                    <td class="p-[12px] w-max">
+                                                        <div class="round-image-text flex gap-[12px] w-max ">
+                                                            <img class="w-[32px] h-[32px] rounded-full"
+                                                                 src="@paymentLedger.CustomerImage" />
 
-                                                        <div class="flex justify-between w-full">
-                                                            <div class="text-image grid flex-none">
-                                                                <div class="text-sm font-semibold text-[#101828] ">
-                                                                    @paymentLedger.CustomerName
-                                                                </div>
-                                                                <div class='text-sm  text-[#667085] '>
-                                                                    @paymentLedger.CustomerNickName
+                                                            <div class="flex justify-between w-full">
+                                                                <div class="text-image grid flex-none">
+                                                                    <div class="text-sm font-semibold text-[#101828] ">
+                                                                        @paymentLedger.CustomerName
+                                                                    </div>
+                                                                    <div class='text-sm  text-[#667085] '>
+                                                                        @paymentLedger.CustomerNickName
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                </td>
-                                                <td class="p-[12px] w-max">
+                                                    </td>
+                                                    <td class="p-[12px] w-max">
 
-                                                    <div class="plan-b">
-                                                        @paymentLedger.PlanName
-                                                    </div>
+                                                        <div class="plan-b">
+                                                            @paymentLedger.PlanName
+                                                        </div>
 
-                                                </td>
-                                                <td class="p-[12px] w-max">
-                                                    @paymentLedger.NoOfPeople
-                                                </td>
+                                                    </td>
+                                                    <td class="p-[12px] w-max">
+                                                        @paymentLedger.NoOfPeople
+                                                    </td>
+                                                    <td class="p-[12px] w-max">
+                                                        <div class="w-max ">@paymentLedger.CreatedDate</div>
 
-                                                <td class="p-[12px] w-max">
-                                                    <div class="w-max ">@paymentLedger.VisitDate</div>
+                                                    </td>
+                                                    <td class="p-[12px] w-max">
+                                                        <div class="w-max ">@paymentLedger.VisitDate</div>
 
-                                                </td>
-                                                <td class="p-[12px] w-max">
-                                                    <div class="w-max ">@paymentLedger.VisitTime</div>
+                                                    </td>
+                                                    <td class="p-[12px] w-max">
+                                                        <div class="w-max ">@paymentLedger.VisitTime</div>
 
-                                                </td>
-                                                <td class="p-[12px] w-max">
-                                                    <div class="plan-b w-max">
-                                                        @if (paymentLedger.PaymentType?.ToLower() == "on site payment")
+                                                    </td>
+                                                    <td class="p-[12px] w-max">
+                                                        <div class="plan-b w-max">
+                                                            @if (paymentLedger.PaymentType?.ToLower() == "on site payment")
                                                             {
-                                                        @CRS.ADMIN.APPLICATION.Resources.Resource.On_Site_Payment
+                                                                @CRS.ADMIN.APPLICATION.Resources.Resource.On_Site_Payment
                                                             }
                                                             else
                                                             {
-                                                        @paymentLedger.PaymentType
+                                                                @paymentLedger.PaymentType
                                                             }
 
-                                                    </div>
-                                                </td>
-                                                <td class="p-[12px] w-max">
-                                                    <div class="w-max ">
-                                                        @if (paymentLedger.ClubVerification?.ToLower() == "verified")
+                                                        </div>
+                                                    </td>
+                                                    <td class="p-[12px] w-max">
+                                                        <div class="w-max ">
+                                                            @if (paymentLedger.ClubVerification?.ToLower() == "verified")
                                                             {
-                                                        @CRS.ADMIN.APPLICATION.Resources.Resource.Verified
+                                                                @CRS.ADMIN.APPLICATION.Resources.Resource.Verified
                                                             }
                                                             else if (paymentLedger.ClubVerification?.ToLower() == "pending")
                                                             {
-                                                        @CRS.ADMIN.APPLICATION.Resources.Resource.Pending
+                                                                @CRS.ADMIN.APPLICATION.Resources.Resource.Pending
                                                             }
                                                             else if (paymentLedger.ClubVerification?.ToLower() == "rejected")
                                                             {
-                                                        @CRS.ADMIN.APPLICATION.Resources.Resource.Rejected
+                                                                @CRS.ADMIN.APPLICATION.Resources.Resource.Rejected
                                                             }
                                                             else
                                                             {
-                                                        @paymentLedger.ClubVerification
+                                                                @paymentLedger.ClubVerification
                                                             }
-                                                    </div>
-                                                </td>
-                                                <td class="p-[12px] w-max">
-                                                    <div class="w-max ">
-                                                        @if (paymentLedger.TransactionStatus?.ToLower() == "success")
+                                                        </div>
+                                                    </td>
+                                                    <td class="p-[12px] w-max">
+                                                        <div class="w-max ">
+                                                            @if (paymentLedger.TransactionStatus?.ToLower() == "success")
                                                             {
-                                                        @CRS.ADMIN.APPLICATION.Resources.Resource.Success
+                                                                @CRS.ADMIN.APPLICATION.Resources.Resource.Success
                                                             }
                                                             else if (paymentLedger.TransactionStatus?.ToLower() == "rejected")
                                                             {
-                                                        @CRS.ADMIN.APPLICATION.Resources.Resource.Rejected
+                                                                @CRS.ADMIN.APPLICATION.Resources.Resource.Rejected
                                                             }
                                                             else if (paymentLedger.TransactionStatus?.ToLower() == "cancelled")
                                                             {
-                                                        @CRS.ADMIN.APPLICATION.Resources.Resource.Cancel
+                                                                @CRS.ADMIN.APPLICATION.Resources.Resource.Cancel
                                                             }
                                                             else if (paymentLedger.TransactionStatus?.ToLower() == "pending")
                                                             {
-                                                        @CRS.ADMIN.APPLICATION.Resources.Resource.Pending
+                                                                @CRS.ADMIN.APPLICATION.Resources.Resource.Pending
                                                             }
                                                             else
                                                             {
-                                                        @paymentLedger.TransactionStatus
+                                                                @paymentLedger.TransactionStatus
                                                             }
 
 
-                                                    </div>
-                                                </td>
-                                                <td class="p-[12px] w-max">
-                                                    <div class="w-max ">
-                                                        @if (paymentLedger.ReservationType?.ToLower() == "first booking")
+                                                        </div>
+                                                    </td>
+                                                    <td class="p-[12px] w-max">
+                                                        <div class="w-max text-[#1976D2]"> @(paymentLedger.TransactionStatus.ToLower() == "cancelled" ? paymentLedger.AdminRemarks : "")</div>
+                                                    </td>
+
+                                                    <td class="p-[12px] w-max">
+                                                        <div class="w-max ">
+                                                            @if (paymentLedger.ReservationType?.ToLower() == "first booking")
                                                             {
-                                                        @CRS.ADMIN.APPLICATION.Resources.Resource.First_Booking
+                                                                @CRS.ADMIN.APPLICATION.Resources.Resource.First_Booking
                                                             }
                                                             else if (paymentLedger.ReservationType?.ToLower() == "regular booking")
                                                             {
-                                                        @CRS.ADMIN.APPLICATION.Resources.Resource.Regular_Booking
+                                                                @CRS.ADMIN.APPLICATION.Resources.Resource.Regular_Booking
                                                             }
                                                             else
                                                             {
-                                                        @paymentLedger.ReservationType
+                                                                @paymentLedger.ReservationType
                                                             }
 
-                                                    </div>
-                                                </td>
-                                                <td class="p-[12px] w-max">
-                                                    <div class="w-max text-[#1976D2]">¥@paymentLedger.PlanAmount</div>
+                                                        </div>
+                                                    </td>
+                                                    <td class="p-[12px] w-max">
+                                                        <div class="w-max text-[#1976D2]">¥@paymentLedger.PlanAmount</div>
 
-                                                </td>
-                                                <td class="p-[12px] w-max">
-                                                    <div class="w-max text-[#1976D2] ">¥@paymentLedger.TotalPlanAmount</div>
-                                                </td>
-                                                <td class="p-[12px] w-max">
-                                                    <div class="w-max text-[#1976D2] ">¥@paymentLedger.TotalClubPlanAmount</div>
-                                                </td>
-                                                <td class="p-[12px] w-max">
-                                                    <div class="w-max text-[#1976D2] ">¥@paymentLedger.AdminPlanCommissionAmount</div>
-                                                </td>
-                                                <td class="p-[12px] w-max">
-                                                    <div class="w-max text-[#1976D2] ">¥@paymentLedger.TotalAdminPlanCommissionAmount</div>
-                                                </td>
-                                                <td class="p-[12px] w-max">
-                                                    <div class="w-max text-[#1976D2] ">¥@paymentLedger.AdminCommissionAmount</div>
-                                                </td>
-                                                <td class="p-[12px] w-max">
-                                                    <div class="w-max text-[#1976D2] ">¥@paymentLedger.TotalAdminCommissionAmount</div>
-                                                </td>
-                                                <td class="p-[12px] w-max">
-                                                    <div class="w-max text-[#1976D2] ">¥@paymentLedger.TotalAdminPayableAmount</div>
-                                                </td>
-                                                <td class="p-[12px] w-max">
-                                                    <div class="w-max  ">@paymentLedger.AdminRemarks</div>
-                                                </td>
-                                            </tr>
+                                                    </td>
+                                                    <td class="p-[12px] w-max">
+                                                        <div class="w-max text-[#1976D2] ">¥@paymentLedger.TotalPlanAmount</div>
+                                                    </td>
+                                                    <td class="p-[12px] w-max">
+                                                        <div class="w-max text-[#1976D2] ">¥@paymentLedger.TotalClubPlanAmount</div>
+                                                    </td>
+                                                    <td class="p-[12px] w-max">
+                                                        <div class="w-max text-[#1976D2] ">¥@paymentLedger.AdminPlanCommissionAmount</div>
+                                                    </td>
+                                                    <td class="p-[12px] w-max">
+                                                        <div class="w-max text-[#1976D2] ">¥@paymentLedger.TotalAdminPlanCommissionAmount</div>
+                                                    </td>
+                                                    <td class="p-[12px] w-max">
+                                                        <div class="w-max text-[#1976D2] ">¥@paymentLedger.AdminCommissionAmount</div>
+                                                    </td>
+                                                    <td class="p-[12px] w-max">
+                                                        <div class="w-max text-[#1976D2] ">¥@paymentLedger.TotalAdminCommissionAmount</div>
+                                                    </td>
+                                                    <td class="p-[12px] w-max">
+                                                        <div class="w-max text-[#1976D2] ">¥@paymentLedger.TotalAdminPayableAmount</div>
+                                                    </td>
+                                                    <td class="">
+                                                        @if (paymentLedger.TransactionStatus?.ToLower() == "pending" && paymentLedger.ClubVerification?.ToLower() == "pending")
+                                                        {
+                                                            <img src="/Content/assets/images/checked-status.svg" alt="status" class="cursor-pointer h-[100px] aspect-square" onclick="VerifyStatusFunction('@paymentLedger.Id','@paymentLedger.ClubId');" data-modal-target="check-status-confirmation" data-modal-toggle="check-status-confirmation">
+
+                                                        }
+
+                                                        @*<div class="w-max  ">@paymentLedger.AdminRemarks</div>*@
+                                                    </td>
+                                                </tr>
                                             }
                                         }
                                     </tbody>
@@ -478,9 +520,131 @@
     @*@Html.Partial("_CustomDate")*@
 </div>
 
+<div id="check-status-confirmation" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 hidden w-full
+     p-4 overflow-x-hidden overflow-y-auto
+     md:inset-0 h-[calc(100%-1rem)] max-h-full " style="align-items: flex-start;">
+    <div class="relative max-w-2xl max-h-full w-[412px] px-4 pt-[40px] pb-[46px] mt-24">
+        <!-- Modal content -->
+        <div class="relative bg-white rounded-lg shadow">
+            <!-- Modal header -->
+            <button type="button"
+                    class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center absolute top-[24px] right-[20px] "
+                    data-modal-hide="check-status-confirmation">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="25" viewBox="0 0 24 25" fill="none">
+                    <rect y="0.621094" width="24" height="24" rx="12" fill="#FAFAFA" />
+                    <path d="M5.41406 4.95703L4.33594 6.03516L10.9219 12.6211L4.33594 19.207L5.41406 20.2852L12 13.6992L18.5859 20.2852L19.6641 19.207L13.0781 12.6211L19.6641 6.03516L18.5859 4.95703L12 11.543L5.41406 4.95703Z"
+                          fill="#7A7A7A" />
+                </svg>
+            </button>
+            <!-- Modal body -->
+            <div class="grid gap-2 px-[20px] py-4">
+                <div class="text-[#333] font-semibold pb-[11px] border-b border-[#eeeeee]">来店コード確認</div>
+                @*<div class="grid gap-[10px] text-[#062937] mb-[15px]">
+                            来店コード確認
+                    </div>*@
+                <!-- OTP Input Field -->
+                <div class="">
+                    <label for="otp" class="block mb-[12px] text-sm font-medium text-secondary-text-2">来店コードを入力:</label>
+                    <input type="text" id="otp" class="w-full" name="otp" placeholder="来店コードを入力" maxlength="6" minlength="6" required oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+                </div>
+                <div class="flex justify-end">
+                    <div class="flex gap-2 justify-end mt-[45px]">
+                        <input id="request_id" value="" hidden />
+                        <div class="btn btn-secondary w-[110px]" data-modal-hide="check-status-confirmation">@CRS.ADMIN.APPLICATION.Resources.Resource.No</div>
+                        <div class="btn btn-primary w-[110px]" onclick="VerifyOTPCode()" data-val1="" data-val2="" data-modal-target="status-confirmation" data-modal-toggle="status-confirmation" id="check_status_id">@CRS.ADMIN.APPLICATION.Resources.Resource.Yes</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="status-confirmation" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 hidden w-full
+     p-4 overflow-x-hidden overflow-y-auto
+     md:inset-0 h-[calc(100%-1rem)] max-h-full " style="align-items: flex-start;">
+    <div class="relative max-w-2xl max-h-full w-[412px] px-4 pt-[40px] pb-[46px] mt-24">
+        <!-- Modal content -->
+        <div class="relative bg-white rounded-lg shadow">
+            <!-- Modal header -->
+            <button type="button"
+                    class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center absolute top-[24px] right-[20px] clsCancelConfirmation"
+                    data-modal-hide="status-confirmation">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="25" viewBox="0 0 24 25" fill="none">
+                    <rect y="0.621094" width="24" height="24" rx="12" fill="#FAFAFA" />
+                    <path d="M5.41406 4.95703L4.33594 6.03516L10.9219 12.6211L4.33594 19.207L5.41406 20.2852L12 13.6992L18.5859 20.2852L19.6641 19.207L13.0781 12.6211L19.6641 6.03516L18.5859 4.95703L12 11.543L5.41406 4.95703Z"
+                          fill="#7A7A7A" />
+                </svg>
+            </button>
+            <!-- Modal body -->
+            <div class="grid gap-2 px-[20px] py-4">
+                <div class="text-[#333] font-semibold pb-[11px] border-b border-[#eeeeee]">@CRS.ADMIN.APPLICATION.Resources.Resource.Confirmation</div>
+                <div class="text-[14px] text-secondary-text-2 text-start" id="confirmationMessage">
+                    訪問コードの確認を行ってもよろしいですか？
+                </div>
+                <div class="flex justify-end">
+                    <div class="flex gap-2 justify-end mt-[45px]">
+                        <input id="request_id" value="" hidden />
+                        <div class="btn btn-secondary w-[110px] clsCancelConfirmation" data-modal-hide="status-confirmation">@CRS.ADMIN.APPLICATION.Resources.Resource.No</div>
+                        <div class="btn btn-primary w-[110px]" onclick="ConfirmCode()" data-val-confirm1="" data-val-confirm2="" id="status_id">@CRS.ADMIN.APPLICATION.Resources.Resource.Yes</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 @section scripts{
     <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
     <script>
+        function VerifyStatusFunction(id, agentid)
+        {
+           const modalTarget = document.querySelector("[data-modal-target='check-status-confirmation']");
+           const modal = document.getElementById("check-status-confirmation");
+           modal.classList.remove("hidden");
+           $('#check_status_id').attr('data-val1', id);
+           $('#check_status_id').attr('data-val2', agentid);
+           $("#check-status-confirmation").show();
+           $("#otp").val("");
+           modal.classList.remove("hidden"); // If using Tailwind or similar
+           modal.setAttribute("aria-hidden", "false");
+        }
+        function VerifyOTPCode() {
+            var otp = document.getElementById("otp").value;
+            const modalTarget = document.querySelector("[data-modal-target='status-confirmation']");
+            const modal = document.getElementById("status-confirmation");
+            $('#status_id').attr('data-val-confirm1', otp);
+            $("#check-status-confirmation").css("display", "none");
+            modal.classList.remove("hidden"); // If using Tailwind or similar
+            modal.setAttribute("aria-hidden", "false");
+        }
+        function ConfirmCode() {
+          const id = $('#check_status_id').attr('data-val1');
+          const agentId = $('#check_status_id').attr('data-val2');
+          const code = $('#status_id').attr('data-val-confirm1');
+          let search_filter = $('#default-search').val();
+          const start_index_val = @ViewBag.StartIndex;
+          const page_size = @ViewBag.PageSize;
+          let ClubId = '@ViewBag.ClubId';
+          let FromDate = '@ViewBag.FromDate';
+          let ToDate = '@ViewBag.ToDate';
+          let Date1 = '@ViewBag.Date';
+          $.ajax({
+               type: "POST",
+               url: '@Url.Action("VerifyOTPClubCode", "ReservationLedger")',
+              data: {
+                   'reservationId': id, 'agentId': agentId, 'code': code
+              },
+              success: function (response) {
+                  window.location.href = '/ReservationLedger/ReservationLedgerDetail?SearchFilter=' + search_filter + '&StartIndex=' + start_index_val + '&PageSize=' + page_size + '&ClubId=' + ClubId + '&FromDate=' + FromDate + '&ToDate=' + ToDate + '&Date=' + Date1  ;
+                  //window.location.reload();
+               },
+              error: function (error) {
+                  window.location.href = '/ReservationLedger/ReservationLedgerDetail?SearchFilter=' + search_filter + '&StartIndex=' + start_index_val + '&PageSize=' + page_size + '&ClubId=' + ClubId + '&FromDate=' + FromDate + '&ToDate=' + ToDate + '&Date=' + Date1;                  //window.location.reload();
+               }
+           })
+        }
+        $(document).on("click", ".clsCancelConfirmation", function () {
+            $("[modal-backdrop]").hide();
+        });
+
         document.addEventListener('DOMContentLoaded', function () {
                 const page_size = @ViewBag.PageSize;
                 const total_data = @ViewBag.TotalData;
@@ -497,10 +661,10 @@
                 LoadPagination(page_size, total_data, start_index_val, URL);
 
                 var currentDate = new Date();
-            var lastThreeMonths = new Date();
-            var Future14days = new Date();
-            lastThreeMonths.setMonth(currentDate.getMonth() - 3);
-            Future14days.setDate(currentDate.getDate() + 14);
+                var lastThreeMonths = new Date();
+                var Future14days = new Date();
+                lastThreeMonths.setMonth(currentDate.getMonth() - 3);
+                Future14days.setDate(currentDate.getDate() + 14);
 
                  $("#FromDate").val("@ViewBag.FromDate");
                  jQuery(function ($) {
@@ -561,6 +725,7 @@
                          defaultDate: '@ViewBag.ToDate'
                      });
                  });
-            });
+        });
+
     </script>
 }

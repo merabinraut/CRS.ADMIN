@@ -164,7 +164,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                         Title = NotificationMessage.INFORMATION.ToString()
                     });
 
-                    TempData["ManageClubModel"] = model;
+                    TempData["ManageAffiliateModel"] = model;
                     TempData["RenderId"] = "Manage";
                     return RedirectToAction("Index", "AffiliateManagement");
                 }

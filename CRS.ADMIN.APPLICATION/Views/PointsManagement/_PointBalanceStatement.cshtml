@@ -135,7 +135,7 @@
             </div>
         </div>
 
-        <div class="input-field-common filteroutlinepadding">
+        @*<div class="input-field-common filteroutlinepadding">
             <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
                 @CRS.ADMIN.APPLICATION.Resources.Resource.Transfer_Type
             </label>
@@ -161,7 +161,7 @@
             <span class="error">
                 @Html.ValidationMessageFor(m => m.TransferTypeList)
             </span>
-        </div>
+        </div>*@
 
         <div class="input-field-common mb-[20px]" id="tagInput1">
             <div class="input-field-common filteroutlinepadding">
@@ -202,10 +202,10 @@
                 </span>
             </div>
         </div>
-        <br />
+        @*<br />*@
         <div>
-            <div class="py-4 flex justify-start mx-[18px]">
-                <div class="flex gap-6">
+            <div class="py-10 flex justify-start mx-[18px]">
+                <div class="flex gap-6 filteroutlinepadding">
                     <button class="btn btn-secondary rounded-[4px]" type="button" data-drawer-hide="add-new-points-request"
                             aria-controls="add-new-points-request" onclick="CancelFunction();">
                         @CRS.ADMIN.APPLICATION.Resources.Resource.Cancel
@@ -401,7 +401,7 @@
     </div>
 </div>
 <script>
-
+   
     function GetUserNameByUser_Type() {
     //$('#large[name="UserTypeList"]').change(function () {
         var UserTypeId = $('#UserTypeList[name="UserTypeList"]').find("option:selected").val();
@@ -420,10 +420,14 @@
                         $('#UserNameList[name="UserNameList"]').append($("<option>").val(value.Value).text(value.Text));
                     });
                     $('#UserNameList[name="UserNameList"]').prop("disabled", false);
+                    $('#UserNameList[name="UserNameList"]').select2({
+                        width: 'resolve'
+                    });
                 }
                 else {
                     $('#UserNameList[name="UserNameList"]').empty();
                 }
+                
             },
             error: function (ex) {
                 alert('Failed to retrive details.' + ex);

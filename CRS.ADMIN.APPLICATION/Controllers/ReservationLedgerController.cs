@@ -81,8 +81,11 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             Response.ForEach(x =>
                 {
                     x.ClubId = x.ClubId.EncryptParameter();
+                    x.InvoiceId = x.InvoiceId;
+                    x.Id = x.Id.EncryptParameter();                   
                     x.CustomerImage = ImageHelper.ProcessedImage(x.CustomerImage);
                     x.VisitDate = !string.IsNullOrEmpty(x.VisitDate) ? DateTime.Parse(x.VisitDate).ToString("yyyy'年'MM'月'dd'日'"):x.VisitDate;
+                    x.CreatedDate = !string.IsNullOrEmpty(x.CreatedDate) ? DateTime.Parse(x.CreatedDate).ToString("yyyy'年'MM'月'dd'日'") : x.CreatedDate;
                     x.PlanAmount = Convert.ToInt64(x.PlanAmount).ToString("N0");
                     x.TotalPlanAmount = Convert.ToInt64(x.TotalPlanAmount).ToString("N0");
                     x.TotalClubPlanAmount = Convert.ToInt64(x.TotalClubPlanAmount).ToString("N0");
@@ -95,7 +98,6 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             );
             ViewBag.IsBackAllowed = true;
             ViewBag.BackButtonURL = "/ReservationLedger/ReservationLedgerList";
-
             ViewBag.ClubId = ClubId;
             ViewBag.SearchText = SearchText;
             ViewBag.FromDate = FromDate;
@@ -105,6 +107,55 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             ViewBag.Date = Date;
             ViewBag.TotalData = dbResponse != null && dbResponse.Any() ? dbResponse[0].TotalRecords : 0;
             return View(Response);
+        }
+
+        [HttpPost]
+        public JsonResult VerifyOTPClubCode(string reservationId, string agentId, string code)
+        {
+            var response = new CommonDbResponse();
+            var aId = !string.IsNullOrEmpty(agentId) ? agentId.DecryptParameter() : null;
+            var rId = !string.IsNullOrEmpty(reservationId) ? reservationId.DecryptParameter() : null;
+            if (string.IsNullOrEmpty(aId))
+            {
+                this.AddNotificationMessage(new NotificationModel()
+                {
+                    NotificationType = NotificationMessage.INFORMATION,
+                    Message = "Invalid details",
+                    Title = NotificationMessage.INFORMATION.ToString(),
+                });
+            }
+            if (string.IsNullOrEmpty(rId))
+            {
+                this.AddNotificationMessage(new NotificationModel()
+                {
+                    NotificationType = NotificationMessage.INFORMATION,
+                    Message = "Reservation Id is required",
+                    Title = NotificationMessage.INFORMATION.ToString(),
+                });
+            }
+            if (string.IsNullOrEmpty(code))
+            {
+                this.AddNotificationMessage(new NotificationModel()
+                {
+                    NotificationType = NotificationMessage.INFORMATION,
+                    Message = "Confirmation code is required",
+                    Title = NotificationMessage.INFORMATION.ToString(),
+                });
+            }
+            var commonRequest = new Common()
+            {
+                ActionIP = ApplicationUtilities.GetIP(),
+                ActionUser = ApplicationUtilities.GetSessionValue("Username").ToString()
+            };        
+            var dbResponse = _business.VerifyCode(rId, aId, code, commonRequest);
+            response = dbResponse;
+            this.AddNotificationMessage(new NotificationModel()
+            {
+                NotificationType = response.Code == CRS.ADMIN.SHARED.ResponseCode.Success ? NotificationMessage.SUCCESS : NotificationMessage.INFORMATION,
+                Message = response.Message ?? "Something went wrong. Please try again later",
+                Title = response.Code == CRS.ADMIN.SHARED.ResponseCode.Success ? NotificationMessage.SUCCESS.ToString() : NotificationMessage.INFORMATION.ToString()
+            });
+            return Json(dbResponse.Message, JsonRequestBehavior.AllowGet);
         }
     }
 }

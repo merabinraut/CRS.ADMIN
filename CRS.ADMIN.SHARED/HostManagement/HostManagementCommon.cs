@@ -46,7 +46,7 @@ namespace CRS.ADMIN.SHARED.HostManagement
         public string Address { get; set; }
         public string HostNameJapanese { get; set; }
         public string HostIntroduction { get; set; }
-        public string OtherPositionRemark { get; set; }
+       // public string OtherPositionRemark { get; set; }
         public List<HostIdentityDataCommon> HostIdentityDataModel { get; set; } = new List<HostIdentityDataCommon>();
     }
     public class HostIdentityDataCommon

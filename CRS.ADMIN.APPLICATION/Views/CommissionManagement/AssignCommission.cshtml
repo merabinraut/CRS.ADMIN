@@ -12,9 +12,9 @@
         @Html.AntiForgeryToken()
         <div class="card-body">
             <div class="row">
-                @Html.NDropDownListFor(model => model.AgentId, new SelectList(ViewBag.ClubList, "Value", "Text"), new { @class = "form-control select2", @id = "AgentId", autocomplete = "off" }, 4)
+                @Html.NDropDownListFor(model => model.AgentId, new SelectList(ViewBag.ClubList, "Value", "Text"), new { @class = "form-control", @id = "AgentId", autocomplete = "off" }, 4)
                 @Html.NTextBoxFor(model => model.CurrentCategory, new { @class = "form-control", disabled = "disabled", @id = "CurrentCategory", autocomplete = "off" }, 4)
-                @Html.NDropDownListFor(model => model.CategoryId, new SelectList(ViewBag.CommissionCategoryList, "Value", "Text"), new { @class = "form-control select2", autocomplete = "off" }, 4)
+                @Html.NDropDownListFor(model => model.CategoryId, new SelectList(ViewBag.CommissionCategoryList, "Value", "Text"), new { @class = "form-control", @id = "CategoryId", autocomplete = "off" }, 4)
             </div>
             <br />
             <div class="row">
@@ -46,6 +46,7 @@
 </div>
 @section Scripts{
     <script>
+       
         $("#AgentId").change(function () {
             var AgentId = $("#AgentId").val();
             $.ajax({
@@ -58,6 +59,9 @@
                     if (response.length > 0) {
                         $.each(response, function (i, value) {
                             $("#CurrentCategory").val(value.Text);
+                        });
+                        $('#CategoryId[name="CategoryId"]').select2({
+                            width: 'resolve'
                         });
                     }
                     else {

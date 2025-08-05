@@ -38,8 +38,10 @@ using CRS.ADMIN.BUSINESS.ScheduleManagement;
 using CRS.ADMIN.BUSINESS.SMSLog;
 using CRS.ADMIN.BUSINESS.StaffManagement;
 using CRS.ADMIN.BUSINESS.StaticDataManagement;
+using CRS.ADMIN.BUSINESS.TemplateManagement;
 using CRS.ADMIN.BUSINESS.WithdrawalRequest;
 using CRS.ADMIN.BUSINESS.WithdrawSetup;
+using CRS.ADMIN.REPOSITORY.TemplateManagement;
 using System.Web.Mvc;
 using Unity;
 using Unity.AspNet.Mvc;
@@ -100,6 +102,7 @@ namespace CRS.ADMIN.APPLICATION
             container.RegisterType<IChargeManagementBusiness, ChargeManagementBusiness>();
             container.RegisterType<IGroupManagementBusiness, GroupManagementBusiness>();
             container.RegisterType<IApiResponseMessageBusiness, ApiResponseMessageBusiness>();
+            container.RegisterType<ITemplateBusiness, TemplateBusiness>();
 
             return container;
         }

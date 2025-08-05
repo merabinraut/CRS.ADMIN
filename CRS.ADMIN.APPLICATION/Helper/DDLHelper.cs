@@ -77,6 +77,22 @@ namespace CRS.ADMIN.APPLICATION.Helper
                     dbResponse = _CommonBuss.GetDropDownLanguage("23", search1, search2, "");
                     dbResponse.ForEach(item => { response.Add(item.StaticValue.EncryptParameter(), GetLocalizedLabel(item, culture)); });
                     return response;
+                case "CONTENTCATEGORY":
+                    dbResponse = _CommonBuss.GetDropDownLanguage("26", search1, search2, "");
+                    dbResponse.ForEach(item => { response.Add(item.StaticValue.EncryptParameter(), GetLocalizedLabel(item, culture)); });
+                    return response;
+                case "CONTENTTYPE":
+                    dbResponse = _CommonBuss.GetDropDownLanguage("27", search1, search2, "");
+                    dbResponse.ForEach(item => { response.Add(item.StaticValue.EncryptParameter(), GetLocalizedLabel(item, culture)); });
+                    return response;
+                case "FIELDTYPE":
+                    dbResponse = _CommonBuss.GetDropDownLanguage("28", search1, search2, "");
+                    dbResponse.ForEach(item => { response.Add(item.StaticValue, GetLocalizedLabel(item, culture)); });
+                    return response;
+                case "USERTYPEALL":
+                    dbResponse = _CommonBuss.GetDropDownLanguage("29", search1, search2, "");
+                    dbResponse.ForEach(item => { response.Add(item.StaticValue.EncryptParameter(), GetLocalizedLabel(item, culture)); });
+                    return response;
                 default:
                     return response;
             }

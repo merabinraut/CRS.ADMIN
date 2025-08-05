@@ -313,6 +313,7 @@
     <Compile Include="Controllers\SMSLogController.cs" />
     <Compile Include="Controllers\StaffManagementController.cs" />
     <Compile Include="Controllers\StaticDataManagementController.cs" />
+    <Compile Include="Controllers\TemplateManagementController.cs" />
     <Compile Include="Controllers\WithdrawalRequestController.cs" />
     <Compile Include="Controllers\WithdrawSetupController.cs" />
     <Compile Include="CustomHelpers\CustomHtmlHelpers.cs" />
@@ -380,6 +381,7 @@
     <Compile Include="Models\StaffManagement\StaffManagementModel.cs" />
     <Compile Include="Models\StaticDataManagement\StaticDataManagementModel.cs" />
     <Compile Include="Models\TagManagement\TagManagementModel.cs" />
+    <Compile Include="Models\TemplateMessage\TemplateMessageModel.cs" />
     <Compile Include="Models\WithdrawalRequest\WithdrawalRequestModel.cs" />
     <Compile Include="Models\Withdraw\WithdrawSetupModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -394,8 +396,10 @@
       <DependentUpon>Resource.Ja.resx</DependentUpon>
     </Compile>
     <Compile Include="Services\CognitoService.cs" />
+    <Content Include="App_Data\AmazonConfigruation.json" />
     <None Include="Views\ClubManagement\_ManageLineGroupPartialView.cshtml" />
     <None Include="Views\ChargeManagement\_ManageChargeCategoryDetails.cshtml" />
+    <Content Include="Content\assets\images\checked-status.svg" />
     <Content Include="Content\assets\images\line.svg" />
     <Content Include="Content\assets_new\images\group_management_svg.png" />
     <Content Include="Views\ChargeManagement\ChargeCategoryDetails.cshtml" />
@@ -405,7 +409,6 @@
     <Content Include="Views\ApiResponseMessage\ApiResponseMessageList.cshtml" />
     <Content Include="Views\ApiResponseMessage\_AddResponseMessage.cshtml" />
     <Content Include="Views\ApiResponseMessage\_EditResponseMessage.cshtml" />
-    <Content Include="App_Data\AmazonConfigruation.json" />
     <None Include="Views\ApiResponseMessage\_DisplayResponseMessage.cshtml" />
     <None Include="Views\BasicClubManagement\_PremiumClubtPartialView.cshtml" />
     <Content Include="Content\assets\images\conversion.svg" />
@@ -434,6 +437,7 @@
     <Content Include="Views\GroupManagement\_ManageSubGroupClub.cshtml" />
     <Content Include="Views\GroupManagement\GroupGallery.cshtml" />
     <Content Include="Views\GroupManagement\_ManageGroupGallery.cshtml" />
+    <Content Include="Views\PointsManagement\_GetSystemTransferReportAsync.cshtml" />
     <None Include="Views\PromotionManagement\_ManageAdvertisementPartialView.cshtml" />
     <None Include="Views\PromotionManagement\_AdvertisementList.cshtml" />
     <Content Include="Content\assets\images\TickIcon.svg" />
@@ -2816,6 +2820,8 @@
     <Content Include="Views\WithdrawSetup\_ManageWithdrawsetupPartial.cshtml" />
     <Content Include="Views\WithdrawalRequest\WithdrawalRequestMonthlyList.cshtml" />
     <Content Include="Views\WithdrawalRequest\WithdrawalDetailList.cshtml" />
+    <Content Include="Views\TemplateManagement\MessageTemplateList.cshtml" />
+    <Content Include="Views\TemplateManagement\_ManageTemplate.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

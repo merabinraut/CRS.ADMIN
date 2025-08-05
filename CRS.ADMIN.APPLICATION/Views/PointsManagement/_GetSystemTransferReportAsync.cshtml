@@ -374,7 +374,7 @@
     </div>
 </div>
 <script>
-
+   
     function GetUserNameByUserType() {
     //$('#large[name="UserTypeList"]').change(function () {
         var UserTypeId = $('#User_type[name="User_type"]').find("option:selected").val().trim();
@@ -393,6 +393,9 @@
                         $('#User_name[name="User_name"]').append($("<option>").val(value.Value).text(value.Text));
                     });
                     $('#User_name[name="User_name"]').prop("disabled", false);
+                    $('#User_name[name="User_name"]').select2({
+                        width: 'resolve'
+                    });
                 }
                 else {
                     $('#User_name[name="User_name"]').empty();

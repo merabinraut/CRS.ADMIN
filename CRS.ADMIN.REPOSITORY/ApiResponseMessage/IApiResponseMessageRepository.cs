@@ -16,7 +16,7 @@ namespace CRS.ADMIN.REPOSITORY.ApiResponseMessage
         CommonDbResponse StoreApiResponseMessage(ApiResponseMessageCommon Request);
         CommonDbResponse UpdateApiResponseMessage(ApiResponseMessageCommon Request);
 
-        List<ApiResponseMessageCommon> ApiResponseMessageList(PaginationFilterCommon Request);
+        List<ApiResponseMessageCommon> ApiResponseMessageList(ApiResponseMessageFilterCommon Request);
 
         ApiResponseMessageCommon ApiResponseMessageDetail(string MessageId="");
 

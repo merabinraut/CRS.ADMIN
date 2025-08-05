@@ -192,7 +192,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
         {
             // Simulate an async operation
             await Task.Delay(100); // Simulating async delay
-                                   // Here, you would typically get the amount from a database or another service
+                                 // Here, you would typically get the amount from a database or another service
              var amount = _BUSS.GetAdminBalance();
             //var amount = "1,555,678,832,567,156,145";
             return Json(new { amount = $"¥ {amount} " }, JsonRequestBehavior.AllowGet);
