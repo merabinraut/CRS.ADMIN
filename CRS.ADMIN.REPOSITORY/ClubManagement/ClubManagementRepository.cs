@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Transactions;
 
 namespace CRS.ADMIN.REPOSITORY.ClubManagement
 {
@@ -49,7 +50,9 @@ namespace CRS.ADMIN.REPOSITORY.ClubManagement
                         holdStatus = _DAO.ParseColumnValue(item, "holdStatus").ToString(),
                         //LandLineCode = _DAO.ParseColumnValue(item, "LandLineCode").ToString(),
                         SNO = Convert.ToInt32(_DAO.ParseColumnValue(item, "SNO").ToString()),
-                        LineGroupId = _DAO.ParseColumnValue(item, "lineGroupId").ToString()
+                        LineGroupId = _DAO.ParseColumnValue(item, "lineGroupId").ToString(),
+                        subDomainURL = _DAO.ParseColumnValue(item, "subDomainURL").ToString(),
+                        subDomainName = _DAO.ParseColumnValue(item, "subDomainName").ToString(),
                     });
                 }
             }
@@ -988,7 +991,6 @@ namespace CRS.ADMIN.REPOSITORY.ClubManagement
             }
             return response;
         }
-
         #endregion
 
         #region Manage gallery
@@ -1029,13 +1031,9 @@ namespace CRS.ADMIN.REPOSITORY.ClubManagement
             SQL += ",@ActionIP=" + _DAO.FilterString(Request.ActionIP);
             return _DAO.ParseCommonDbResponse(SQL);
         }
-
-
-
         #endregion
 
         #region Event Management
-
         public List<EventListCommon> GetEventList(PaginationFilterCommon Request, string AgentId)
         {
             var response = new List<EventListCommon>();
@@ -1072,8 +1070,6 @@ namespace CRS.ADMIN.REPOSITORY.ClubManagement
             }
             return response;
         }
-
-
         public CommonDbResponse ManageEvent(EventCommon Request)
         {
             string SQL = "EXEC sproc_event_management ";
@@ -1098,7 +1094,6 @@ namespace CRS.ADMIN.REPOSITORY.ClubManagement
             SQL += ",@ActionPlatform=" + _DAO.FilterString(Request.ActionPlatform);
             return _DAO.ParseCommonDbResponse(SQL);
         }
-
         public EventCommon GetEventDetails(string AgentId, string EventId)
         {
             string SQL = "EXEC sproc_event_management @Flag='ged'";
@@ -1123,7 +1118,6 @@ namespace CRS.ADMIN.REPOSITORY.ClubManagement
             return new EventCommon();
         }
         #endregion
-
         #region
         public ManageManagerCommon GetManagerDetails(string AgentId)
         {
@@ -1158,7 +1152,6 @@ namespace CRS.ADMIN.REPOSITORY.ClubManagement
 
         }
         #endregion
-
         public CommonDbResponse ManageClubCognitoDetail(string clubId, string loginId, string cognitoUserId, SqlConnection connection = null, SqlTransaction transaction = null)
         {
             string sp_name = "sproc_admin_update_club_cognito_detail ";
@@ -1168,7 +1161,6 @@ namespace CRS.ADMIN.REPOSITORY.ClubManagement
             var _sqlTransactionHandler = new RepositoryDaoWithTransaction(connection, transaction);
             return _sqlTransactionHandler.ParseCommonDbResponse(sp_name);
         }
-
         #region Line Group
         public LineGroupCommon GetLineGroupDetails(string agentId, string groupId)
         {
@@ -1198,6 +1190,39 @@ namespace CRS.ADMIN.REPOSITORY.ClubManagement
             
             return _DAO.ParseCommonDbResponse(SQL);
         }
+        public CommonDbResponse AddSubDomain(SubDomainCommon request, SqlConnection connection = null, SqlTransaction transaction = null)
+        {
+            string SQL = "EXEC sproc_admin_manage_subdomain";
+            SQL += " @agentId=" + _DAO.FilterString(request.clubId);
+            SQL += ",@subDomainName=" + _DAO.FilterString(request.SubDomainName);
+            SQL += ",@subDomainUrl=" + _DAO.FilterString(request.SubDomainUrl);
+            SQL += ",@description=" + _DAO.FilterString(request.Description);
+            SQL += ",@password=" + _DAO.FilterString(request.password);
+            var _sqlTransactionHandler = new RepositoryDaoWithTransaction(connection, transaction);
+            return _sqlTransactionHandler.ParseCommonDbResponse(SQL);
+            //return _DAO.ParseCommonDbResponse(SQL);
+        }
+        public SubDomainCommon GetSubDomainDetails(string agentId)
+        {
+            string SQL = "EXEC sproc_admin_get_subdomain_update";
+            SQL += " @agentId=" + _DAO.FilterString(agentId);
+            var dbResponse = _DAO.ExecuteDataRow(SQL);
+
+            if (dbResponse != null)
+            {
+                return new SubDomainCommon()
+                {
+                    code = _DAO.ParseColumnValue(dbResponse, "code").ToString(),
+                    SubDomainName = _DAO.ParseColumnValue(dbResponse, "SubDomainName").ToString(),
+                    SubDomainUrl = _DAO.ParseColumnValue(dbResponse, "SubDomainUrl").ToString(),
+                    Description = _DAO.ParseColumnValue(dbResponse, "Description").ToString(),
+                    email = _DAO.ParseColumnValue(dbResponse, "email").ToString(),
+                };
+            }
+            return new SubDomainCommon();
+        }
+
+    
         #endregion
     }
 }

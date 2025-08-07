@@ -7,6 +7,7 @@
     var _ManageTag = Model.ManageTag as CRS.ADMIN.APPLICATION.Models.TagManagement.ManageTag;
     var _ManageManager = Model.ManageManager as CRS.ADMIN.APPLICATION.Models.ClubManagerModel.ManageManagerModel;
     var _lineGroupModel = Model.LineGroupModel as CRS.ADMIN.APPLICATION.Models.ClubManagement.LineGroupModel;
+    var _subDomainModel = Model.subDomainModel as CRS.ADMIN.APPLICATION.Models.ClubManagement.SubDomainModel;
     var ss = "";
 }
 
@@ -106,6 +107,7 @@
 <!-- add new host from -->
 @Html.Partial("_ManageTagPartialView", _ManageTag)
 @Html.Partial("_ManageManagerPartialView", _ManageManager)
+@Html.Partial("_ManageSubDomainPartialView", _subDomainModel)
 <!-- Confirmation  -->
 <div id="add-new-host-modal-save" tabindex="-1" aria-hidden="true"
      class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full"
@@ -858,10 +860,10 @@
              placeholder: "@CRS.ADMIN.APPLICATION.Resources.Resource.Select"
             }).change(function () {
                 var value = $('#large[name="OthersHoliday"]').val();
-           
+
            if (value === null || value.length === 0) {
                $('#large[name="OthersHoliday"]').next('.select2-container').find('.select2-search--inline .select2-search__field').css('display', 'block');
-           } else {               
+           } else {
                $('#large[name="OthersHoliday"]').next('.select2-container').find('.select2-search--inline .select2-search__field').css('display', 'none');
            }
 
@@ -891,6 +893,10 @@
             }
             else if (PopUpRenderValue != null && PopUpRenderValue != "" && PopUpRenderValue == "ManageLineGroup") {
                 var element = document.getElementById('add-new-line-group');
+                element.classList.remove('translate-x-full');
+            }
+            else if (PopUpRenderValue != null && PopUpRenderValue != "" && PopUpRenderValue == "DomainModel") {
+                var element = document.getElementById('manage-sub-domain');
                 element.classList.remove('translate-x-full');
             }
             var tag1Status = $('#Tag1Status').val();
@@ -1338,7 +1344,7 @@
                     // Get a higher resolution cropped canvas
                     const canvas = cropper.getCroppedCanvas({
                         width: 1600, // Increased width for high resolution
-                        height: 800, // Increased height for high resolution                    
+                        height: 800, // Increased height for high resolution
                         imageSmoothingEnabled: true,
                         imageSmoothingQuality: 'high',
                     });
@@ -1377,7 +1383,7 @@
                 return false;
             });
             //---------------------End Cover image --------------------//
-            var validator = $('#ManageClubForm').validate({              
+            var validator = $('#ManageClubForm').validate({
                 errorClass: 'invalid',
                 errorElement: 'div',
                 errorPlacement: function (error, element) {
@@ -1525,7 +1531,7 @@
                        required: '@CRS.ADMIN.APPLICATION.Resources.Resource.Required'
                     },
                 }
-                 
+
             });
 
 
@@ -1597,7 +1603,7 @@
             document.getElementById("ManageClubForm").submit();
         }
 
-        
+
         function ManageClubGetDetailsFunction(i) {
             let search_filter = $('#default-search').val();
             const start_index_val = @ViewBag.StartIndex;
@@ -1611,6 +1617,11 @@
             const page_size = @ViewBag.PageSize;
             window.location.href = '/ClubManagement/ManageManager?AgentId=' + i + '&SearchFilter=' + search_filter + '&StartIndex=' + start_index_val + '&PageSize=' + page_size;
         }
+
+    function ManageClubSubDomain(i) {
+        window.location.href = '/ClubManagement/ManageSubDomain?AgentId=' + i;
+    }
+
 
         function CancelFunction() {
             location.reload();

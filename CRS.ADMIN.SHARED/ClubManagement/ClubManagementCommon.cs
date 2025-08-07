@@ -23,6 +23,8 @@ namespace CRS.ADMIN.SHARED.ClubManagement
         public string holdStatus { get; set; }
         public string LandLineCode { get; set; }
         public string LineGroupId {get; set; }
+        public string subDomainURL { get; set; }
+        public string subDomainName { get; set; }
 
     }
 

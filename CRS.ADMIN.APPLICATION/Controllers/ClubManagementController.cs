@@ -11,12 +11,17 @@ using CRS.ADMIN.SHARED;
 using CRS.ADMIN.SHARED.ClubManagement;
 using CRS.ADMIN.SHARED.Middleware.AmazonCognitoModel;
 using CRS.ADMIN.SHARED.PaginationManagement;
+using DocumentFormat.OpenXml.Office2010.Excel;
+using DocumentFormat.OpenXml.Wordprocessing;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Data.SqlClient;
+using System.Drawing.Printing;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -39,7 +44,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
         [HttpGet]
         public ActionResult ClubList(string TabValue = "", string SearchFilter = "", int StartIndex = 0, int PageSize = 10, int StartIndex2 = 0, int PageSize2 = 10, int StartIndex3 = 0, int PageSize3 = 10)
         {
-            
+
             ViewBag.SearchFilter = SearchFilter;
             Session["CurrentURL"] = "/ClubManagement/ClubList";
             string RenderId = "";
@@ -48,6 +53,10 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             var response = new ClubManagementCommonModel();
             if (TempData.ContainsKey("ManageClubModel")) response.ManageClubModel = TempData["ManageClubModel"] as ManageClubModel;
             else response.ManageClubModel = new ManageClubModel();
+
+            if (TempData.ContainsKey("SubDomainModel")) response.subDomainModel = TempData["SubDomainModel"] as SubDomainModel;
+            else response.subDomainModel = new SubDomainModel();
+
             if (TempData.ContainsKey("RenderId")) RenderId = TempData["RenderId"].ToString();
             if (TempData.ContainsKey("ManageTagModel")) response.ManageTag = TempData["ManageTagModel"] as ManageTag;
             else response.ManageTag = new ManageTag();
@@ -62,6 +71,8 @@ namespace CRS.ADMIN.APPLICATION.Controllers
 
             if (TempData.ContainsKey("LineGroupModel")) response.LineGroupModel = TempData["LineGroupModel"] as LineGroupModel;
             else response.LineGroupModel = new LineGroupModel();
+
+
             //****************************  Start Approved List  **************************************//
 
             if (TabValue == "")
@@ -595,7 +606,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             {
                 ModelState.Remove("LocationDDL");
             }
-           
+
             if (!string.IsNullOrEmpty(Model.holdId))
             {
                 redirectresult = RedirectToAction("ClubList", "ClubManagement", new
@@ -701,10 +712,10 @@ namespace CRS.ADMIN.APPLICATION.Controllers
               //string.IsNullOrEmpty(Model.KYCDocument) ||
               string.IsNullOrEmpty(Model.Logo) ||
               string.IsNullOrEmpty(Model.CoverPhoto) ||
-              string.IsNullOrEmpty(Model.Gallery) 
-              //string.IsNullOrEmpty(Model.KYCDocumentBack) ||
-              //string.IsNullOrEmpty(Model.PassportPhoto) ||
-              //string.IsNullOrEmpty(Model.InsurancePhoto)
+              string.IsNullOrEmpty(Model.Gallery)
+           //string.IsNullOrEmpty(Model.KYCDocumentBack) ||
+           //string.IsNullOrEmpty(Model.PassportPhoto) ||
+           //string.IsNullOrEmpty(Model.InsurancePhoto)
            )
                 {
                     bool allowRedirect = false;
@@ -2155,7 +2166,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 if (!string.IsNullOrEmpty(groupId))
                 {
                     var id = agentId.DecryptParameter();
-                    
+
                     // var lineid = groupId.DecryptParameter();
                     if (string.IsNullOrEmpty(id))
                     {
@@ -2169,7 +2180,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                         });
                         return RedirectToAction("ClubList", "ClubManagement", new { SearchFilter = searchFilter, StartIndex = startIndex, PageSize = pageSize });
                     }
-                    
+
                     var dbResponse = _BUSS.GetLineGroupDetails(id, groupId);
                     model = dbResponse.MapObject<LineGroupModel>();
                     model.clubId = agentId;
@@ -2186,11 +2197,11 @@ namespace CRS.ADMIN.APPLICATION.Controllers
         public async Task<ActionResult> ManageLineGroup(LineGroupModel Model, HttpPostedFileBase qrImage_certificate)
         {
             string fileName = string.Empty;
-            string ErrorMessage = string.Empty;       
+            string ErrorMessage = string.Empty;
             if (ModelState.IsValid)
             {
                 LineGroupCommon commonModel = Model.MapObject<LineGroupCommon>();
-                commonModel.clubId = !string.IsNullOrEmpty(Model.clubId) ? Model.clubId.DecryptParameter() : null;             
+                commonModel.clubId = !string.IsNullOrEmpty(Model.clubId) ? Model.clubId.DecryptParameter() : null;
                 if (string.IsNullOrEmpty(commonModel.clubId))
                 {
                     this.AddNotificationMessage(new NotificationModel()
@@ -2205,33 +2216,33 @@ namespace CRS.ADMIN.APPLICATION.Controllers
 
                 }
                 string qrImageFileName = string.Empty;
-               
-                    if (qrImage_certificate != null)
+
+                if (qrImage_certificate != null)
+                {
+
+                    var allowedContentType = AllowedImageContentType();
+                    var contentType = qrImage_certificate.ContentType;
+                    var ext = Path.GetExtension(qrImage_certificate.FileName);
+                    if (allowedContentType.Contains(contentType.ToLower()))
                     {
-
-                        var allowedContentType = AllowedImageContentType();
-                        var contentType = qrImage_certificate.ContentType;
-                        var ext = Path.GetExtension(qrImage_certificate.FileName);
-                        if (allowedContentType.Contains(contentType.ToLower()))
-                        {
-                            qrImageFileName = $"{AWSBucketFolderNameModel.CLUB}/ClubLineGroupQR_{DateTime.Now.ToString("yyyyMMddHHmmssffff")}{ext.ToLower()}";
-                            commonModel.qrImage = $"/{qrImageFileName}";
-                        }
-                        else
-                        {
-                            this.AddNotificationMessage(new NotificationModel()
-                            {
-                                NotificationType = NotificationMessage.INFORMATION,
-                                Message = "Invalid image format.",
-                                Title = NotificationMessage.INFORMATION.ToString(),
-                            });
-
-                            return RedirectToAction("ClubList", "ClubManagement", new { SearchFilter = Model.searchFilter, StartIndex = Model.startIndex, PageSize = Model.pageSize });
-
-                        }
+                        qrImageFileName = $"{AWSBucketFolderNameModel.CLUB}/ClubLineGroupQR_{DateTime.Now.ToString("yyyyMMddHHmmssffff")}{ext.ToLower()}";
+                        commonModel.qrImage = $"/{qrImageFileName}";
                     }
-                
-               
+                    else
+                    {
+                        this.AddNotificationMessage(new NotificationModel()
+                        {
+                            NotificationType = NotificationMessage.INFORMATION,
+                            Message = "Invalid image format.",
+                            Title = NotificationMessage.INFORMATION.ToString(),
+                        });
+
+                        return RedirectToAction("ClubList", "ClubManagement", new { SearchFilter = Model.searchFilter, StartIndex = Model.startIndex, PageSize = Model.pageSize });
+
+                    }
+                }
+
+
                 var dbResponse = _BUSS.ManageLineGroup(commonModel);
                 if (dbResponse != null && dbResponse.Code == 0)
                 {
@@ -2278,6 +2289,124 @@ namespace CRS.ADMIN.APPLICATION.Controllers
         }
         #endregion
 
+        [HttpGet]
+        [OverrideActionFilters]
+        public ActionResult ManageSubDomain(string agentId = "", string searchFilter = "", int startIndex = 0, int pageSize = 10)
+        {
+           var culture= System.Threading.Thread.CurrentThread.CurrentCulture.ToString();
+            //if (!string.IsNullOrEmpty(agentId))
+            //    agentId = agentId.DecryptParameter();
 
+            SubDomainModel model = new SubDomainModel();
+            if (string.IsNullOrEmpty(agentId))
+            {
+                this.AddNotificationMessage(new NotificationModel()
+                {
+                    NotificationType = NotificationMessage.INFORMATION,
+                    Message = "Invalid club details",
+                    Title = NotificationMessage.INFORMATION.ToString(),
+                });
+                return RedirectToAction("ClubList", "ClubManagement", new { SearchFilter = searchFilter, StartIndex = startIndex, PageSize = pageSize });
+            }
+            var response = _BUSS.GetSubDomainDetails(agentId.DecryptParameter());
+            model.SearchFilter = searchFilter;
+            model.StartIndex = startIndex;
+            model.PageSize = pageSize;
+            if (response.code == "0")
+            {
+                model.SubDomainUrl = response.SubDomainUrl;
+                model.SubDomainName = response.SubDomainName;
+                model.Description = response.Description;
+            }
+            model.clubId = agentId;
+            TempData["SubDomainModel"] = model;
+            TempData["RenderId"] = "DomainModel";
+            //return PartialView("_ManageSubDomain", model);
+            return RedirectToAction("ClubList", "ClubManagement", new { SearchFilter = searchFilter, StartIndex = startIndex, PageSize = pageSize });
+        }
+        bool IsValidSubdomain(string subdomain)
+        {
+            var regex = new Regex("^[a-zA-Z0-9][a-zA-Z0-9_-]{0,61}[a-zA-Z0-9]$");
+            return regex.IsMatch(subdomain);
+        }
+        [HttpPost]
+        [OverrideActionFilters]
+        public async Task<ActionResult> ManageSubDomain(SubDomainModel request)
+        {
+            var culture = Request.Cookies["culture"]?.Value;
+            culture = string.IsNullOrEmpty(culture) ? "ja" : culture;
+            if (!string.IsNullOrEmpty(request.clubId))
+                request.clubId = request.clubId.DecryptParameter();
+
+            if (!IsValidSubdomain(request.SubDomainName))
+            {
+                this.AddNotificationMessage(new NotificationModel()
+                {
+                    NotificationType = NotificationMessage.ERROR,
+                    Message = "Invalid sub domain",
+                    Title = NotificationMessage.ERROR.ToString(),
+                });
+                return RedirectToAction("ClubList", "ClubManagement");
+            }
+            var _sqlTransactionHandler = new RepositoryDaoWithTransaction(null, null);
+            _sqlTransactionHandler.BeginTransaction();
+
+            var domainUrl = ConfigurationManager.AppSettings["domainUrl"] ?? "example.com";
+            request.SubDomainUrl = $"{request.SubDomainName}.{domainUrl}";
+
+            var requestMapped = request.MapObject<SubDomainCommon>();
+
+            var ceoDetails = _BUSS.GetSubDomainDetails(request.clubId);
+
+            if(ceoDetails.code=="0" && !string.IsNullOrEmpty(ceoDetails.email) && string.IsNullOrEmpty(ceoDetails.SubDomainUrl))
+            {
+                Random rand = new Random();
+                int randomNumber = rand.Next(0, 5000000); // Generates number between 0 and 4,999,999
+                string password = "PASS" + randomNumber.ToString("D4").Substring(randomNumber.ToString("D4").Length - 4);
+                requestMapped.password=password;
+                var resetPasswordResponse =await _amazonCognitoMiddleware.SetPasswordAsync(new CRS.ADMIN.SHARED.Middleware.AmazonCognitoModel.Password.SetPasswordModel.Request
+                {
+                    Username = ceoDetails.email,
+                    Password = password,
+                    IsPermanent = true
+                });
+                if (resetPasswordResponse?.Code != CRS.ADMIN.SHARED.Middleware.AmazonCognitoModel.ResponseCode.Success)
+                {
+                    this.AddNotificationMessage(new NotificationModel()
+                    {
+                        NotificationType = NotificationMessage.INFORMATION,
+                        Message = "Something went wrong. Please try again later",
+                        Title = NotificationMessage.INFORMATION.ToString()
+                    });
+                    _sqlTransactionHandler.RollbackTransaction();
+                    return RedirectToAction("ClubList", "ClubManagement");
+                }
+            }
+
+            var response = _BUSS.AddSubDomain(requestMapped);
+
+            if (string.IsNullOrEmpty(request.clubId))
+            {
+                this.AddNotificationMessage(new NotificationModel()
+                {
+                    NotificationType = NotificationMessage.INFORMATION,
+                    Message = "Invalid club details",
+                    Title = NotificationMessage.INFORMATION.ToString(),
+                });
+                _sqlTransactionHandler.RollbackTransaction();
+                return RedirectToAction("ClubList", "ClubManagement");
+            }
+            if (response.Code == 0)
+            {
+                AddNotificationMessage(new NotificationModel()
+                {
+                    NotificationType = NotificationMessage.SUCCESS,
+                    Message = response.Message ?? "Message Added Successfully",
+                    Title = NotificationMessage.SUCCESS.ToString()
+                });
+            }
+            _sqlTransactionHandler.CommitTransaction();
+            return RedirectToAction("ClubList", "ClubManagement");
+        }
     }
 }

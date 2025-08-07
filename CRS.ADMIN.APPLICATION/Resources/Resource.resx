@@ -2976,4 +2976,12 @@
     <value>Crop</value>
     <comment>Club Management</comment>
   </data>
+  <data name="Sub Domain Name" xml:space="preserve">
+    <value>Sub Domain Name</value>
+    <comment>Club Management</comment>
+  </data>
+  <data name="Sub Domain URL" xml:space="preserve">
+    <value>Sub Domain URL</value>
+    <comment>Club Management</comment>
+  </data>
 </root>
