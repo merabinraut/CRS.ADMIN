@@ -1217,6 +1217,7 @@ namespace CRS.ADMIN.REPOSITORY.ClubManagement
                     SubDomainUrl = _DAO.ParseColumnValue(dbResponse, "SubDomainUrl").ToString(),
                     Description = _DAO.ParseColumnValue(dbResponse, "Description").ToString(),
                     email = _DAO.ParseColumnValue(dbResponse, "email").ToString(),
+                    mobileNumber = _DAO.ParseColumnValue(dbResponse, "mobileNumber").ToString(),
                 };
             }
             return new SubDomainCommon();

@@ -1,4 +1,5 @@
-﻿using CRS.ADMIN.APPLICATION.CustomHelpers;
+﻿using Aspose.Cells;
+using CRS.ADMIN.APPLICATION.CustomHelpers;
 using CRS.ADMIN.APPLICATION.Helper;
 using CRS.ADMIN.APPLICATION.Library;
 using CRS.ADMIN.APPLICATION.Middleware;
@@ -2360,17 +2361,26 @@ namespace CRS.ADMIN.APPLICATION.Controllers
 
             if(ceoDetails.code=="0" && !string.IsNullOrEmpty(ceoDetails.email) && string.IsNullOrEmpty(ceoDetails.SubDomainUrl))
             {
-                Random rand = new Random();
-                int randomNumber = rand.Next(0, 5000000); // Generates number between 0 and 4,999,999
-                string password = "PASS" + randomNumber.ToString("D4").Substring(randomNumber.ToString("D4").Length - 4);
-                requestMapped.password=password;
-                var resetPasswordResponse =await _amazonCognitoMiddleware.SetPasswordAsync(new CRS.ADMIN.SHARED.Middleware.AmazonCognitoModel.Password.SetPasswordModel.Request
+               //Random rand = new Random();
+               //int randomNumber = rand.Next(0, 5000000); // Generates number between 0 and 4,999,999
+               //string password = "PASS" + randomNumber.ToString("D4").Substring(randomNumber.ToString("D4").Length - 4);
+                requestMapped.password= Helper.Helper.GenerateRandomPassword(12);
+                var countryCode = ConfigurationManager.AppSettings["CountryCode"];
+                var createAccount = await _amazonCognitoMiddleware.AdminCreateUserAsync(new CRS.ADMIN.SHARED.Middleware.AmazonCognitoModel.SignUp.SignUpModel.Request
                 {
-                    Username = ceoDetails.email,
-                    Password = password,
-                    IsPermanent = true
+                     Username = ceoDetails.email,
+                     Password = requestMapped.password,
+                     AttributeType = new List<CRS.ADMIN.SHARED.Middleware.AmazonCognitoModel.SignUp.SignUpModel.AttributeType>
+                        {
+                            new CRS.ADMIN.SHARED.Middleware.AmazonCognitoModel.SignUp.SignUpModel.AttributeType
+                            {
+                                Name = AttributeTypeName.Email,
+                                Value =ceoDetails?.email
+                            }
+                        }
                 });
-                if (resetPasswordResponse?.Code != CRS.ADMIN.SHARED.Middleware.AmazonCognitoModel.ResponseCode.Success)
+
+                if (createAccount?.Code != CRS.ADMIN.SHARED.Middleware.AmazonCognitoModel.ResponseCode.Success)
                 {
                     this.AddNotificationMessage(new NotificationModel()
                     {

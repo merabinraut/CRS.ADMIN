@@ -324,6 +324,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helper\DDLHelper.cs" />
+    <Compile Include="Helper\Helper.cs" />
     <Compile Include="Helper\ImageHelper.cs" />
     <Compile Include="Library\ApplicationUtilities.cs" />
     <Compile Include="Library\ManageLanguage.cs" />
