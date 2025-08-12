@@ -2294,7 +2294,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
         [OverrideActionFilters]
         public ActionResult ManageSubDomain(string agentId = "", string searchFilter = "", int startIndex = 0, int pageSize = 10)
         {
-           var culture= System.Threading.Thread.CurrentThread.CurrentCulture.ToString();
+            var culture = System.Threading.Thread.CurrentThread.CurrentCulture.ToString();
             //if (!string.IsNullOrEmpty(agentId))
             //    agentId = agentId.DecryptParameter();
 
@@ -2352,48 +2352,53 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             var _sqlTransactionHandler = new RepositoryDaoWithTransaction(null, null);
             _sqlTransactionHandler.BeginTransaction();
 
+            var ceoDetails = _BUSS.GetSubDomainDetails(request.clubId);
+            var countryCode = ConfigurationManager.AppSettings["CountryCode"];
             var domainUrl = ConfigurationManager.AppSettings["domainUrl"] ?? "example.com";
             request.SubDomainUrl = $"{request.SubDomainName}.{domainUrl}";
 
             var requestMapped = request.MapObject<SubDomainCommon>();
-
-            var ceoDetails = _BUSS.GetSubDomainDetails(request.clubId);
-
-            if(ceoDetails.code=="0" && !string.IsNullOrEmpty(ceoDetails.email) && string.IsNullOrEmpty(ceoDetails.SubDomainUrl))
+            requestMapped.password = Helper.Helper.GenerateRandomPassword(12);
+            if (ceoDetails.code == "0" && !string.IsNullOrEmpty(ceoDetails.email) && string.IsNullOrEmpty(ceoDetails.SubDomainUrl))
             {
-               //Random rand = new Random();
-               //int randomNumber = rand.Next(0, 5000000); // Generates number between 0 and 4,999,999
-               //string password = "PASS" + randomNumber.ToString("D4").Substring(randomNumber.ToString("D4").Length - 4);
-                requestMapped.password= Helper.Helper.GenerateRandomPassword(12);
-                var countryCode = ConfigurationManager.AppSettings["CountryCode"];
-                var createAccount = await _amazonCognitoMiddleware.AdminCreateUserAsync(new CRS.ADMIN.SHARED.Middleware.AmazonCognitoModel.SignUp.SignUpModel.Request
+                var response = _BUSS.AddSubDomain(requestMapped);
+                if (response.Code == 0)
                 {
-                     Username = ceoDetails.email,
-                     Password = requestMapped.password,
-                     AttributeType = new List<CRS.ADMIN.SHARED.Middleware.AmazonCognitoModel.SignUp.SignUpModel.AttributeType>
+                    var abd = response.Extra4;
+                    _amazonCognitoMiddleware.SetConfigNameViaUserType("affiliate");
+                    var createAccount = await _amazonCognitoMiddleware.AdminCreateUserAsync(new CRS.ADMIN.SHARED.Middleware.AmazonCognitoModel.SignUp.SignUpModel.Request
+                    {
+                        Username = response?.Extra2, //response.Extra3,
+                        Password = requestMapped.password,
+                        AttributeType = new List<CRS.ADMIN.SHARED.Middleware.AmazonCognitoModel.SignUp.SignUpModel.AttributeType>
                         {
                             new CRS.ADMIN.SHARED.Middleware.AmazonCognitoModel.SignUp.SignUpModel.AttributeType
                             {
                                 Name = AttributeTypeName.Email,
-                                Value =ceoDetails?.email
+                                Value =response?.Extra2
                             }
                         }
-                });
-
-                if (createAccount?.Code != CRS.ADMIN.SHARED.Middleware.AmazonCognitoModel.ResponseCode.Success)
-                {
-                    this.AddNotificationMessage(new NotificationModel()
-                    {
-                        NotificationType = NotificationMessage.INFORMATION,
-                        Message = "Something went wrong. Please try again later",
-                        Title = NotificationMessage.INFORMATION.ToString()
                     });
-                    _sqlTransactionHandler.RollbackTransaction();
-                    return RedirectToAction("ClubList", "ClubManagement");
+                    if (createAccount?.Code != CRS.ADMIN.SHARED.Middleware.AmazonCognitoModel.ResponseCode.Success)
+                    {
+                        this.AddNotificationMessage(new NotificationModel()
+                        {
+                            NotificationType = NotificationMessage.INFORMATION,
+                            Message = "Something went wrong. Please try again later",
+                            Title = NotificationMessage.INFORMATION.ToString()
+                        });
+                        _sqlTransactionHandler.RollbackTransaction();
+                        return RedirectToAction("ClubList", "ClubManagement");
+                    }
+
+                    AddNotificationMessage(new NotificationModel()
+                    {
+                        NotificationType = NotificationMessage.SUCCESS,
+                        Message = response.Message ?? "Message Added Successfully",
+                        Title = NotificationMessage.SUCCESS.ToString()
+                    });
                 }
             }
-
-            var response = _BUSS.AddSubDomain(requestMapped);
 
             if (string.IsNullOrEmpty(request.clubId))
             {
@@ -2406,15 +2411,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 _sqlTransactionHandler.RollbackTransaction();
                 return RedirectToAction("ClubList", "ClubManagement");
             }
-            if (response.Code == 0)
-            {
-                AddNotificationMessage(new NotificationModel()
-                {
-                    NotificationType = NotificationMessage.SUCCESS,
-                    Message = response.Message ?? "Message Added Successfully",
-                    Title = NotificationMessage.SUCCESS.ToString()
-                });
-            }
+
             _sqlTransactionHandler.CommitTransaction();
             return RedirectToAction("ClubList", "ClubManagement");
         }
