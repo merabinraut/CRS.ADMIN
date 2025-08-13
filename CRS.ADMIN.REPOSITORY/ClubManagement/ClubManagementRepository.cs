@@ -1198,9 +1198,24 @@ namespace CRS.ADMIN.REPOSITORY.ClubManagement
             SQL += ",@subDomainUrl=" + _DAO.FilterString(request.SubDomainUrl);
             SQL += ",@description=" + _DAO.FilterString(request.Description);
             SQL += ",@password=" + _DAO.FilterString(request.password);
+            SQL += ",@cognitoUserId=" + _DAO.FilterString(request.cognitoUserId);
             var _sqlTransactionHandler = new RepositoryDaoWithTransaction(connection, transaction);
             return _sqlTransactionHandler.ParseCommonDbResponse(SQL);
             //return _DAO.ParseCommonDbResponse(SQL);
+        }
+        public CommonDbResponse UpdateSubDomain(SubDomainCommon request, SqlConnection connection = null, SqlTransaction transaction = null)
+        {
+            string SQL = "EXEC sproc_admin_manage_subdomain";
+            SQL += " @agentId=" + _DAO.FilterString(request.clubId);
+            SQL += ",@subDomainName=" + _DAO.FilterString(request.SubDomainName);
+            SQL += ",@subDomainUrl=" + _DAO.FilterString(request.SubDomainUrl);
+            SQL += ",@description=" + _DAO.FilterString(request.Description);
+            SQL += ",@password=" + _DAO.FilterString(request.password);
+            SQL += ",@cognitoUserId=" + _DAO.FilterString(request.cognitoUserId);
+
+            //var _sqlTransactionHandler = new RepositoryDaoWithTransaction(connection, transaction);
+            //return _sqlTransactionHandler.ParseCommonDbResponse(SQL);
+            return _DAO.ParseCommonDbResponse(SQL);
         }
         public SubDomainCommon GetSubDomainDetails(string agentId)
         {
@@ -1223,7 +1238,7 @@ namespace CRS.ADMIN.REPOSITORY.ClubManagement
             return new SubDomainCommon();
         }
 
-    
+      
         #endregion
     }
 }

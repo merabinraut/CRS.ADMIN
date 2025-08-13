@@ -157,5 +157,10 @@ namespace CRS.ADMIN.BUSINESS.ClubManagement
         {
             return _REPO.GetSubDomainDetails(agentId);
         }
+
+        public CommonDbResponse UpdateSubDomain(SubDomainCommon requestMapped)
+        {
+            return _REPO.UpdateSubDomain(requestMapped);
+        }
     }
 }

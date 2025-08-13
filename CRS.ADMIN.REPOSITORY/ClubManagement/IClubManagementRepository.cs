@@ -53,5 +53,6 @@ namespace CRS.ADMIN.REPOSITORY.ClubManagement
         CommonDbResponse ManageLineGroup(LineGroupCommon request);
         CommonDbResponse AddSubDomain(SubDomainCommon request, SqlConnection connection = null, SqlTransaction transaction = null);
         SubDomainCommon GetSubDomainDetails(string agentId);
+        CommonDbResponse UpdateSubDomain(SubDomainCommon requestMapped, SqlConnection connection = null, SqlTransaction transaction = null);
     }
 }

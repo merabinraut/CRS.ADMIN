@@ -1,4 +1,6 @@
-﻿using Aspose.Cells;
+﻿using Amazon.CognitoIdentityProvider.Model;
+using Amazon.Extensions.CognitoAuthentication;
+using Aspose.Cells;
 using CRS.ADMIN.APPLICATION.CustomHelpers;
 using CRS.ADMIN.APPLICATION.Helper;
 using CRS.ADMIN.APPLICATION.Library;
@@ -2364,7 +2366,6 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 var response = _BUSS.AddSubDomain(requestMapped);
                 if (response.Code == 0)
                 {
-                    var abd = response.Extra4;
                     _amazonCognitoMiddleware.SetConfigNameViaUserType("affiliate");
                     var createAccount = await _amazonCognitoMiddleware.AdminCreateUserAsync(new CRS.ADMIN.SHARED.Middleware.AmazonCognitoModel.SignUp.SignUpModel.Request
                     {
@@ -2390,7 +2391,9 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                         _sqlTransactionHandler.RollbackTransaction();
                         return RedirectToAction("ClubList", "ClubManagement");
                     }
-
+                    requestMapped.cognitoUserId = createAccount?.Data.MapObjects<CRS.ADMIN.SHARED.Middleware.AmazonCognitoModel.SignUp.SignUpModel.AdminCreateUserResponse>().FirstOrDefault(x => x.Name == CRS.ADMIN.SHARED.Middleware.AmazonCognitoModel.AttributeTypeName.Sub)?.Value;
+                    var resp =_BUSS.UpdateSubDomain(requestMapped);
+                    _sqlTransactionHandler.CommitTransaction();
                     AddNotificationMessage(new NotificationModel()
                     {
                         NotificationType = NotificationMessage.SUCCESS,

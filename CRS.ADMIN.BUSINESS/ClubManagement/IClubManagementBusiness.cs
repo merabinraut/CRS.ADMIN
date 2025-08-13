@@ -51,5 +51,6 @@ namespace CRS.ADMIN.BUSINESS.ClubManagement
         CommonDbResponse ManageLineGroup(LineGroupCommon request);
         CommonDbResponse AddSubDomain(SubDomainCommon request);
         SubDomainCommon GetSubDomainDetails(string agentId);
+        CommonDbResponse UpdateSubDomain(SubDomainCommon requestMapped);
     }
 }

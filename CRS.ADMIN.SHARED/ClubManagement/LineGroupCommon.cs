@@ -24,6 +24,7 @@ namespace CRS.ADMIN.SHARED.ClubManagement
         public string password { get; set; }
         public string email { get; set; }
         public string mobileNumber { get; set; }
+        public string cognitoUserId { get; set; }
         public int StartIndex { get; set; }
         public int PageSize { get; set; }
         public string code { get; set; }
