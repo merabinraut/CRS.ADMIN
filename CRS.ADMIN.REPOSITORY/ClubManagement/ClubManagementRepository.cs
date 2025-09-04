@@ -1228,6 +1228,7 @@ namespace CRS.ADMIN.REPOSITORY.ClubManagement
                 return new SubDomainCommon()
                 {
                     code = _DAO.ParseColumnValue(dbResponse, "code").ToString(),
+                    clubCode = _DAO.ParseColumnValue(dbResponse, "clubCode").ToString(),
                     SubDomainName = _DAO.ParseColumnValue(dbResponse, "SubDomainName").ToString(),
                     SubDomainUrl = _DAO.ParseColumnValue(dbResponse, "SubDomainUrl").ToString(),
                     Description = _DAO.ParseColumnValue(dbResponse, "Description").ToString(),

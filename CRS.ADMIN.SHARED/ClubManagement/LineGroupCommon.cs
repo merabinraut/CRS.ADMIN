@@ -17,6 +17,7 @@ namespace CRS.ADMIN.SHARED.ClubManagement
     public class SubDomainCommon 
     {
         public string clubId { get; set; }
+        public string clubCode { get; set; }
         public string SubDomainName { get; set; }
         public string SubDomainUrl { get; set; }
         public string Description { get; set; }

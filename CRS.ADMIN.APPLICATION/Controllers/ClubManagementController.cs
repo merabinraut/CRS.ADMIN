@@ -2356,8 +2356,8 @@ namespace CRS.ADMIN.APPLICATION.Controllers
 
             var ceoDetails = _BUSS.GetSubDomainDetails(request.clubId);
             var countryCode = ConfigurationManager.AppSettings["CountryCode"];
-            var domainUrl = ConfigurationManager.AppSettings["domainUrl"] ?? "example.com";
-            request.SubDomainUrl = $"{request.SubDomainName}.{domainUrl}";
+            var domainUrl = ConfigurationManager.AppSettings["domainUrl"];
+            request.SubDomainUrl = $"{request.SubDomainName}.{domainUrl}/{ceoDetails.clubCode}/host";
 
             var requestMapped = request.MapObject<SubDomainCommon>();
             requestMapped.password = Helper.Helper.GenerateRandomPassword(12);
@@ -2402,7 +2402,10 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                     });
                 }
             }
-
+            if(!string.IsNullOrEmpty(request.SubDomainUrl) && !string.IsNullOrEmpty(request.SubDomainName))
+            {
+                _BUSS.AddSubDomain(requestMapped);
+            }
             if (string.IsNullOrEmpty(request.clubId))
             {
                 this.AddNotificationMessage(new NotificationModel()
@@ -2414,7 +2417,6 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 _sqlTransactionHandler.RollbackTransaction();
                 return RedirectToAction("ClubList", "ClubManagement");
             }
-
             _sqlTransactionHandler.CommitTransaction();
             return RedirectToAction("ClubList", "ClubManagement");
         }
