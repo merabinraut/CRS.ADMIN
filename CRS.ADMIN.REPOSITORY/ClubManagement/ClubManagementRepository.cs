@@ -1213,9 +1213,9 @@ namespace CRS.ADMIN.REPOSITORY.ClubManagement
             SQL += ",@password=" + _DAO.FilterString(request.password);
             SQL += ",@cognitoUserId=" + _DAO.FilterString(request.cognitoUserId);
 
-            //var _sqlTransactionHandler = new RepositoryDaoWithTransaction(connection, transaction);
-            //return _sqlTransactionHandler.ParseCommonDbResponse(SQL);
-            return _DAO.ParseCommonDbResponse(SQL);
+            var _sqlTransactionHandler = new RepositoryDaoWithTransaction(connection, transaction);
+            return _sqlTransactionHandler.ParseCommonDbResponse(SQL);
+            // return _DAO.ParseCommonDbResponse(SQL);
         }
         public SubDomainCommon GetSubDomainDetails(string agentId)
         {

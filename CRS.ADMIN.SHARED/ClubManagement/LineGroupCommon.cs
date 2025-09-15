@@ -31,4 +31,14 @@ namespace CRS.ADMIN.SHARED.ClubManagement
         public string code { get; set; }
 
     }
+
+
+    public class subDomainResponseCommon : CommonDbResponse
+    {
+        public string Extra1 { get; set; }
+        public string Extra2 { get; set; }
+        public string Extra3 { get; set; }
+        public string cognitoUserId { get; set; }
+
+    }
 }

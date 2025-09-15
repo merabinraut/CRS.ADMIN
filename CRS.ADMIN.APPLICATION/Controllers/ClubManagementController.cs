@@ -2361,9 +2361,10 @@ namespace CRS.ADMIN.APPLICATION.Controllers
 
             var requestMapped = request.MapObject<SubDomainCommon>();
             requestMapped.password = Helper.Helper.GenerateRandomPassword(12);
+            var response = _BUSS.AddSubDomain(requestMapped);
+
             if (ceoDetails.code == "0" && !string.IsNullOrEmpty(ceoDetails.email) && string.IsNullOrEmpty(ceoDetails.SubDomainUrl))
             {
-                var response = _BUSS.AddSubDomain(requestMapped);
                 if (response.Code == 0)
                 {
                     _amazonCognitoMiddleware.SetConfigNameViaUserType("affiliate");
@@ -2392,17 +2393,58 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                         return RedirectToAction("ClubList", "ClubManagement");
                     }
                     requestMapped.cognitoUserId = createAccount?.Data.MapObjects<CRS.ADMIN.SHARED.Middleware.AmazonCognitoModel.SignUp.SignUpModel.AdminCreateUserResponse>().FirstOrDefault(x => x.Name == CRS.ADMIN.SHARED.Middleware.AmazonCognitoModel.AttributeTypeName.Sub)?.Value;
-                    var resp =_BUSS.UpdateSubDomain(requestMapped);
+                    var resp = _BUSS.UpdateSubDomain(requestMapped);
                     _sqlTransactionHandler.CommitTransaction();
                     AddNotificationMessage(new NotificationModel()
                     {
                         NotificationType = NotificationMessage.SUCCESS,
-                        Message = response.Message ?? "Message Added Successfully",
+                        Message = response.Message ?? "Subdomain added successfully",
                         Title = NotificationMessage.SUCCESS.ToString()
                     });
+                    return RedirectToAction("ClubList", "ClubManagement");
                 }
             }
-            if(!string.IsNullOrEmpty(request.SubDomainUrl) && !string.IsNullOrEmpty(request.SubDomainName))
+            if (ceoDetails.code == "0" && !string.IsNullOrEmpty(ceoDetails.email) && string.IsNullOrEmpty(response.Extra4))
+            {
+                _amazonCognitoMiddleware.SetConfigNameViaUserType("affiliate");
+                var createAccount = await _amazonCognitoMiddleware.AdminCreateUserAsync(new CRS.ADMIN.SHARED.Middleware.AmazonCognitoModel.SignUp.SignUpModel.Request
+                {
+                    Username = response?.Extra2, //response.Extra3,
+                    Password = requestMapped.password,
+                    AttributeType = new List<CRS.ADMIN.SHARED.Middleware.AmazonCognitoModel.SignUp.SignUpModel.AttributeType>
+                        {
+                            new CRS.ADMIN.SHARED.Middleware.AmazonCognitoModel.SignUp.SignUpModel.AttributeType
+                            {
+                                Name = AttributeTypeName.Email,
+                                Value =response?.Extra2
+                            }
+                        }
+                });
+                if (createAccount?.Code != CRS.ADMIN.SHARED.Middleware.AmazonCognitoModel.ResponseCode.Success)
+                {
+                    this.AddNotificationMessage(new NotificationModel()
+                    {
+                        NotificationType = NotificationMessage.INFORMATION,
+                        Message = "Something went wrong. Please try again later",
+                        Title = NotificationMessage.INFORMATION.ToString()
+                    });
+                    _sqlTransactionHandler.RollbackTransaction();
+                    return RedirectToAction("ClubList", "ClubManagement");
+                }
+                requestMapped.cognitoUserId = createAccount?.Data.MapObjects<CRS.ADMIN.SHARED.Middleware.AmazonCognitoModel.SignUp.SignUpModel.AdminCreateUserResponse>().FirstOrDefault(x => x.Name == CRS.ADMIN.SHARED.Middleware.AmazonCognitoModel.AttributeTypeName.Sub)?.Value;
+                var resp = _BUSS.UpdateSubDomain(requestMapped);
+               // _sqlTransactionHandler.CommitTransaction();
+                AddNotificationMessage(new NotificationModel()
+                {
+                    NotificationType = NotificationMessage.SUCCESS,
+                    Message = response.Message ?? "Subdomain updated successfully",
+                    Title = NotificationMessage.SUCCESS.ToString()
+                });
+                return RedirectToAction("ClubList", "ClubManagement");
+            }
+            //var getAffiliateResponse = await _BUSS.GetAffiliateDetails();
+
+            if (!string.IsNullOrEmpty(request.SubDomainUrl) && !string.IsNullOrEmpty(request.SubDomainName))
             {
                 _BUSS.AddSubDomain(requestMapped);
             }
@@ -2417,6 +2459,12 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 _sqlTransactionHandler.RollbackTransaction();
                 return RedirectToAction("ClubList", "ClubManagement");
             }
+            AddNotificationMessage(new NotificationModel()
+            {
+                NotificationType = NotificationMessage.SUCCESS,
+                Message = response.Message ?? "Subdomain updated successfully",
+                Title = NotificationMessage.SUCCESS.ToString()
+            });
             _sqlTransactionHandler.CommitTransaction();
             return RedirectToAction("ClubList", "ClubManagement");
         }
