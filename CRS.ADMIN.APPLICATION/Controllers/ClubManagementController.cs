@@ -2359,9 +2359,29 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             var domainUrl = ConfigurationManager.AppSettings["domainUrl"];
             request.SubDomainUrl = $"{request.SubDomainName}.{domainUrl}/{ceoDetails.clubCode}/host";
 
+            if (!string.IsNullOrEmpty(request.SubDomainName) && !string.Equals(request.SubDomainName, ceoDetails.SubDomainName, StringComparison.OrdinalIgnoreCase))
+            {
+                try
+                {
+                    await VercelHelper.AddSubdomainAsync(request.SubDomainName);
+                    await VercelHelper.RemoveSubdomainAsync(ceoDetails.SubDomainName);
+                }
+                catch (Exception ex)
+                {
+                    AddNotificationMessage(new NotificationModel()
+                    {
+                        NotificationType = NotificationMessage.WARNING,
+                        Message = ex.Message ?? NotificationMessage.WARNING.ToString(),
+                        Title = NotificationMessage.WARNING.ToString()
+                    });
+                    _sqlTransactionHandler.RollbackTransaction();
+                    return RedirectToAction("ClubList", "ClubManagement");
+                }
+            }
+
             var requestMapped = request.MapObject<SubDomainCommon>();
             requestMapped.password = Helper.Helper.GenerateRandomPassword(12);
-            var response = _BUSS.AddSubDomain(requestMapped);
+            var response = _BUSS.AddSubDomain(requestMapped, _sqlTransactionHandler.GetCurrentConnection(), _sqlTransactionHandler.GetCurrentTransaction());
 
             if (ceoDetails.code == "0" && !string.IsNullOrEmpty(ceoDetails.email) && string.IsNullOrEmpty(ceoDetails.SubDomainUrl))
             {
@@ -2393,7 +2413,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                         return RedirectToAction("ClubList", "ClubManagement");
                     }
                     requestMapped.cognitoUserId = createAccount?.Data.MapObjects<CRS.ADMIN.SHARED.Middleware.AmazonCognitoModel.SignUp.SignUpModel.AdminCreateUserResponse>().FirstOrDefault(x => x.Name == CRS.ADMIN.SHARED.Middleware.AmazonCognitoModel.AttributeTypeName.Sub)?.Value;
-                    var resp = _BUSS.UpdateSubDomain(requestMapped);
+                    var resp = _BUSS.UpdateSubDomain(requestMapped, _sqlTransactionHandler.GetCurrentConnection(), _sqlTransactionHandler.GetCurrentTransaction());
                     _sqlTransactionHandler.CommitTransaction();
                     AddNotificationMessage(new NotificationModel()
                     {
@@ -2423,9 +2443,9 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 if (createAccount?.Code == CRS.ADMIN.SHARED.Middleware.AmazonCognitoModel.ResponseCode.Success)
                 {
                     requestMapped.cognitoUserId = createAccount?.Data.MapObjects<CRS.ADMIN.SHARED.Middleware.AmazonCognitoModel.SignUp.SignUpModel.AdminCreateUserResponse>().FirstOrDefault(x => x.Name == CRS.ADMIN.SHARED.Middleware.AmazonCognitoModel.AttributeTypeName.Sub)?.Value;
-                    var resp = _BUSS.UpdateSubDomain(requestMapped);
-                }        
-               // _sqlTransactionHandler.CommitTransaction();
+                    var resp = _BUSS.UpdateSubDomain(requestMapped, _sqlTransactionHandler.GetCurrentConnection(), _sqlTransactionHandler.GetCurrentTransaction());
+                }
+                // _sqlTransactionHandler.CommitTransaction();
                 AddNotificationMessage(new NotificationModel()
                 {
                     NotificationType = NotificationMessage.SUCCESS,
@@ -2438,7 +2458,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
 
             if (!string.IsNullOrEmpty(request.SubDomainUrl) && !string.IsNullOrEmpty(request.SubDomainName))
             {
-                _BUSS.AddSubDomain(requestMapped);
+                _BUSS.AddSubDomain(requestMapped, _sqlTransactionHandler.GetCurrentConnection(), _sqlTransactionHandler.GetCurrentTransaction());
             }
             if (string.IsNullOrEmpty(request.clubId))
             {

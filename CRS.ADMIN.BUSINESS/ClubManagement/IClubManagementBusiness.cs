@@ -49,8 +49,8 @@ namespace CRS.ADMIN.BUSINESS.ClubManagement
         CommonDbResponse ManageClubCognitoDetail(string clubId, string loginId, string cognitoUserId, SqlConnection connection = null, SqlTransaction transaction = null);
         LineGroupCommon GetLineGroupDetails(string agentId, string groupId);
         CommonDbResponse ManageLineGroup(LineGroupCommon request);
-        CommonDbResponse AddSubDomain(SubDomainCommon request);
+        CommonDbResponse AddSubDomain(SubDomainCommon request, SqlConnection connection = null, SqlTransaction transaction = null);
         SubDomainCommon GetSubDomainDetails(string agentId);
-        CommonDbResponse UpdateSubDomain(SubDomainCommon requestMapped);
+        CommonDbResponse UpdateSubDomain(SubDomainCommon requestMapped, SqlConnection connection = null, SqlTransaction transaction = null);
     }
 }

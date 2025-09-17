@@ -148,7 +148,7 @@ namespace CRS.ADMIN.BUSINESS.ClubManagement
             return _REPO.ManageLineGroup(request);
         }
 
-        public CommonDbResponse AddSubDomain(SubDomainCommon request)
+        public CommonDbResponse AddSubDomain(SubDomainCommon request, SqlConnection connection = null, SqlTransaction transaction = null)
         {
             return _REPO.AddSubDomain(request);
         }
@@ -158,7 +158,7 @@ namespace CRS.ADMIN.BUSINESS.ClubManagement
             return _REPO.GetSubDomainDetails(agentId);
         }
 
-        public CommonDbResponse UpdateSubDomain(SubDomainCommon requestMapped)
+        public CommonDbResponse UpdateSubDomain(SubDomainCommon requestMapped ,SqlConnection connection = null, SqlTransaction transaction = null)
         {
             return _REPO.UpdateSubDomain(requestMapped);
         }
