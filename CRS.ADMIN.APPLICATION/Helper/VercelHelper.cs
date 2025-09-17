@@ -20,6 +20,9 @@ namespace CRS.ADMIN.APPLICATION.Helper
         /// </summary>
         public static async Task<string> AddSubdomainAsync(string subdomain)
         {
+            if (string.IsNullOrEmpty(subdomain))
+                throw new Exception($"Invalid subdomain");
+
             using (var client = new HttpClient())
             {
                 client.DefaultRequestHeaders.Authorization =
@@ -46,6 +49,9 @@ namespace CRS.ADMIN.APPLICATION.Helper
         /// </summary>
         public static async Task<string> RemoveSubdomainAsync(string subdomain)
         {
+            if (string.IsNullOrEmpty(subdomain))
+                throw new Exception($"Invalid subdomain");
+
             using (var client = new HttpClient())
             {
                 client.DefaultRequestHeaders.Authorization =

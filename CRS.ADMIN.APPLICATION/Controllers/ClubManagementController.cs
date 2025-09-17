@@ -2364,7 +2364,10 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 try
                 {
                     await VercelHelper.AddSubdomainAsync(request.SubDomainName);
-                    await VercelHelper.RemoveSubdomainAsync(ceoDetails.SubDomainName);
+                    if (!string.IsNullOrEmpty(ceoDetails.SubDomainName))
+                    {
+                        await VercelHelper.RemoveSubdomainAsync(ceoDetails.SubDomainName);
+                    }
                 }
                 catch (Exception ex)
                 {
