@@ -16,9 +16,9 @@ namespace CRS.ADMIN.BUSINESS.CommissionManagement
             return _REPO.GetCategoryAssignedList(CategoryId);
         }
 
-        public List<CommissionCategoryCommon> GetCategoryList()
+        public List<CommissionCategoryCommon> GetCategoryList(string searchText)
         {
-            return _REPO.GetCategoryList();
+            return _REPO.GetCategoryList(searchText);
         }
 
         public CommissionCategoryCommon GetCategoryById(string categoryId)

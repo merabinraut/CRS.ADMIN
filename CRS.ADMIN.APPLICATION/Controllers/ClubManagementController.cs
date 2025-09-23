@@ -2404,47 +2404,45 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                             }
                         }
                     });
-                    if (createAccount?.Code != CRS.ADMIN.SHARED.Middleware.AmazonCognitoModel.ResponseCode.Success)
+                    if (createAccount?.Code == CRS.ADMIN.SHARED.Middleware.AmazonCognitoModel.ResponseCode.Success)
                     {
-                        this.AddNotificationMessage(new NotificationModel()
+                        //this.AddNotificationMessage(new NotificationModel()
+                        //{
+                        //    NotificationType = NotificationMessage.INFORMATION,
+                        //    Message = "Something went wrong. Please try again later",
+                        //    Title = NotificationMessage.INFORMATION.ToString()
+                        //});
+                        //_sqlTransactionHandler.RollbackTransaction();
+                        //return RedirectToAction("ClubList", "ClubManagement");
+                        requestMapped.cognitoUserId = createAccount?.Data.MapObjects<CRS.ADMIN.SHARED.Middleware.AmazonCognitoModel.SignUp.SignUpModel.AdminCreateUserResponse>().FirstOrDefault(x => x.Name == CRS.ADMIN.SHARED.Middleware.AmazonCognitoModel.AttributeTypeName.Sub)?.Value;
+                        var markEmailAsVerifiedResponse = await _amazonCognitoMiddleware.MarkEmailAsVerifiedAsync(new CRS.ADMIN.SHARED.Middleware.AmazonCognitoModel.UserManagement.MarkEmailAsVerifiedModel.Request
                         {
-                            NotificationType = NotificationMessage.INFORMATION,
-                            Message = "Something went wrong. Please try again later",
-                            Title = NotificationMessage.INFORMATION.ToString()
+                            Username = requestMapped.cognitoUserId,
+                            Email = response?.Extra2
                         });
-                        _sqlTransactionHandler.RollbackTransaction();
-                        return RedirectToAction("ClubList", "ClubManagement");
-                    }
-
-                    requestMapped.cognitoUserId = createAccount?.Data.MapObjects<CRS.ADMIN.SHARED.Middleware.AmazonCognitoModel.SignUp.SignUpModel.AdminCreateUserResponse>().FirstOrDefault(x => x.Name == CRS.ADMIN.SHARED.Middleware.AmazonCognitoModel.AttributeTypeName.Sub)?.Value;
-                    var markEmailAsVerifiedResponse = await _amazonCognitoMiddleware.MarkEmailAsVerifiedAsync(new CRS.ADMIN.SHARED.Middleware.AmazonCognitoModel.UserManagement.MarkEmailAsVerifiedModel.Request
-                    {
-                        Username = requestMapped.cognitoUserId, 
-                        Email = response?.Extra2
-                    });
-
-                    if (markEmailAsVerifiedResponse?.Code != CRS.ADMIN.SHARED.Middleware.AmazonCognitoModel.ResponseCode.Success)
-                    {
-                        this.AddNotificationMessage(new NotificationModel()
+                        if (markEmailAsVerifiedResponse?.Code != CRS.ADMIN.SHARED.Middleware.AmazonCognitoModel.ResponseCode.Success)
                         {
-                            NotificationType = NotificationMessage.INFORMATION,
-                            Message = "Something went wrong. Please try again later",
-                            Title = NotificationMessage.INFORMATION.ToString()
-                        });
-                        _sqlTransactionHandler.RollbackTransaction();
-                        return RedirectToAction("ClubList", "ClubManagement");
+                            this.AddNotificationMessage(new NotificationModel()
+                            {
+                                NotificationType = NotificationMessage.INFORMATION,
+                                Message = "Something went wrong. Please try again later",
+                                Title = NotificationMessage.INFORMATION.ToString()
+                            });
+                            _sqlTransactionHandler.RollbackTransaction();
+                            return RedirectToAction("ClubList", "ClubManagement");
+                        }                      
                     }
-
                     var resp = _BUSS.UpdateSubDomain(requestMapped, _sqlTransactionHandler.GetCurrentConnection(), _sqlTransactionHandler.GetCurrentTransaction());
 
-                    _sqlTransactionHandler.CommitTransaction();
-                    AddNotificationMessage(new NotificationModel()
-                    {
-                        NotificationType = NotificationMessage.SUCCESS,
-                        Message = response.Message ?? "Subdomain added successfully",
-                        Title = NotificationMessage.SUCCESS.ToString()
-                    });
-                    return RedirectToAction("ClubList", "ClubManagement");
+                    //_sqlTransactionHandler.CommitTransaction();
+                    //AddNotificationMessage(new NotificationModel()
+                    //{
+                    //    NotificationType = NotificationMessage.SUCCESS,
+                    //    Message = response.Message ?? "Subdomain added successfully",
+                    //    Title = NotificationMessage.SUCCESS.ToString()
+                    //});
+                    //return RedirectToAction("ClubList", "ClubManagement");
+
                 }
             }
             if (ceoDetails.code == "0" && !string.IsNullOrEmpty(ceoDetails.email) && string.IsNullOrEmpty(response.Extra4))
@@ -2472,7 +2470,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 AddNotificationMessage(new NotificationModel()
                 {
                     NotificationType = NotificationMessage.SUCCESS,
-                    Message = response.Message ?? "Subdomain updated successfully",
+                    Message = response.Message ?? "Subdomain added successfully",
                     Title = NotificationMessage.SUCCESS.ToString()
                 });
                 return RedirectToAction("ClubList", "ClubManagement");

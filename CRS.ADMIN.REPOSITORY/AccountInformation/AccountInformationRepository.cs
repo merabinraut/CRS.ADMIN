@@ -25,8 +25,8 @@ namespace CRS.ADMIN.REPOSITORY.AccountInformation
         {
             var response = new List<AccountInformationCommonResponse>();
             string SQL = "EXEC sproc_get_affiliate_account_information ";
-            SQL += !string.IsNullOrEmpty(paginationFilterCommon.SearchFilter) ? ",@SearchFilter=N" + _dao.FilterString(paginationFilterCommon.SearchFilter) : string.Empty;
-            SQL += !string.IsNullOrEmpty(request.fromDate) ? "@fromDate=" + _dao.FilterString(request.fromDate) : "@fromDate=NULL";
+            SQL += !string.IsNullOrEmpty(paginationFilterCommon.SearchFilter) ? " @SearchFilter=N" + _dao.FilterString(paginationFilterCommon.SearchFilter) : string.Empty;
+            SQL += !string.IsNullOrEmpty(request.fromDate) ? ",@fromDate=" + _dao.FilterString(request.fromDate) : "@fromDate=NULL";
             SQL += !string.IsNullOrEmpty(request.toDate) ? " ,@toDate=" + _dao.FilterString(request.toDate) : " ,@toDate =NULL";
             SQL += " ,@Skip=" + paginationFilterCommon.Skip;
             SQL += ",@Take=" + paginationFilterCommon.Take;

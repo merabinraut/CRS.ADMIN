@@ -7,7 +7,7 @@ namespace CRS.ADMIN.REPOSITORY.CommissionManagement
     public interface ICommissionManagementRepository
     {
         #region Commission Category
-        List<CommissionCategoryCommon> GetCategoryList();
+        List<CommissionCategoryCommon> GetCategoryList(string searchText);
         CommissionCategoryCommon GetCategoryById(string categoryId);
         List<CommissionAssignedClubsCommon> GetCategoryAssignedList(string CategoryId);
         CommonDbResponse ManageCommissionCategory(ManageCommissionCategoryCommon Request);
