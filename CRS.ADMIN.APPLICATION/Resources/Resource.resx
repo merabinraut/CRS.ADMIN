@@ -2976,4 +2976,20 @@
     <value>Crop</value>
     <comment>Club Management</comment>
   </data>
+  <data name="Plan Request" xml:space="preserve">
+    <value>Plan Request</value>
+    <comment>Plan Management</comment>
+  </data>
+  <data name="Plan Setup" xml:space="preserve">
+    <value>Plan Setup</value>
+    <comment>Plan Management</comment>
+  </data>
+  <data name="PlanRequestConfirmationMessage" xml:space="preserve">
+    <value>Are you sure want to approve club plan request ?</value>
+    <comment>Plan Management</comment>
+  </data>
+  <data name="PlanRequestRejectConfirmation" xml:space="preserve">
+    <value>Are you sure want to reject club plan request ?</value>
+    <comment>Plan Management</comment>
+  </data>
 </root>

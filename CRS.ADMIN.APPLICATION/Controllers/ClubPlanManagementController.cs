@@ -63,8 +63,8 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             else response.ManageClubPlanModel = new ManageClubPlanModel();
             if (TempData.ContainsKey("RenderId")) RenderId = TempData["RenderId"].ToString();
             ViewBag.PopUpRenderValue = !string.IsNullOrEmpty(RenderId) ? RenderId : null;
-            response.ClubId = aId; ;
-            response.ManageClubPlanModel.ClubId = aId; ;         
+            response.ClubId = aId;
+            response.ManageClubPlanModel.ClubId = aId;     
             ViewBag.TimeIntervalList = Dropdown(ApplicationUtilities.LoadDropdownValuesList("PLANTIMEINTERVAL", aId, culture) as List<MultipleItemCommon>, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---");
            // ViewBag.TimeIntervalList = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownValuesList("PLANTIMEINTERVAL", aId,culture) as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---"); 
             ViewBag.PlansList = ApplicationUtilities.LoadDropdownList("CLUBPLANS") as Dictionary<string, string>;

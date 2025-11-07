@@ -41,6 +41,21 @@ namespace CRS.ADMIN.BUSINESS.PlanManagement
         {
             return _repository.GetDDL(StaticType);
         }
+
+        public List<PlanRequesResponseListCommon> GetPlanRequestList(PaginationFilterCommon dbRequest)
+        {
+            return _repository.GetPlanRequestList(dbRequest);
+        }
+
+        public CommonDbResponse ApprovePlanRequest(string sno, string type, string planId)
+        {
+            return _repository.ApprovePlanRequest(sno,type,planId);
+        }
+
+        public PlanRequesResponseListCommon GetPlanRequestDetails(string clubId, string planId)
+        {
+            return _repository.GetPlanRequestDetails(clubId, planId);
+        }
         #endregion
     }
 }

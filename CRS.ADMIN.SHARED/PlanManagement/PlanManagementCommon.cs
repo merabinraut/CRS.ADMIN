@@ -24,4 +24,19 @@ namespace CRS.ADMIN.SHARED.PlanManagement
         public string StrikePrice { get; set; }
         public string IsStrikeOut { get; set; }
     }
+    public class PlanRequesResponseListCommon : PaginationResponseCommon
+    {
+        public string clubName { get; set; }
+        public string clubId { get; set; }
+        public string planId { get; set; }
+        public string plantype { get; set; }
+        public string planTitle { get; set; }
+        public string planTime { get; set; }
+        public string planPrice { get; set; }
+        public string numberOfPeople { get; set; }
+        public string requestDate { get; set; }
+        public string planStatus { get; set; }
+
+    }
+
 }

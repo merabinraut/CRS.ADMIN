@@ -2950,4 +2950,20 @@
     <value>作物</value>
     <comment>Club Management</comment>
   </data>
+  <data name="Plan Request" xml:space="preserve">
+    <value>計画の依頼</value>
+    <comment>Plan Management</comment>
+  </data>
+  <data name="Plan Setup" xml:space="preserve">
+    <value>計画の設定</value>
+    <comment>Plan Management</comment>
+  </data>
+  <data name="PlanRequestConfirmationMessage" xml:space="preserve">
+    <value>この店舗プラン申請を承認しますか？</value>
+    <comment>Plan Management</comment>
+  </data>
+  <data name="PlanRequestRejectConfirmation" xml:space="preserve">
+    <value>この店舗プラン申請を拒否しますか？</value>
+    <comment>Plan Management</comment>
+  </data>
 </root>

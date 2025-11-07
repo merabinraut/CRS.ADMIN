@@ -438,6 +438,9 @@
     <Content Include="Views\GroupManagement\GroupGallery.cshtml" />
     <Content Include="Views\GroupManagement\_ManageGroupGallery.cshtml" />
     <Content Include="Views\PointsManagement\_GetSystemTransferReportAsync.cshtml" />
+    <Content Include="Views\PlanManagement\_OwnPlanByClubPartialView.cshtml" />
+    <Content Include="Views\PlanManagement\_PlanListPartialView.cshtml" />
+    <Content Include="Views\PlanManagement\_ManageClubPlan.cshtml" />
     <None Include="Views\PromotionManagement\_ManageAdvertisementPartialView.cshtml" />
     <None Include="Views\PromotionManagement\_AdvertisementList.cshtml" />
     <Content Include="Content\assets\images\TickIcon.svg" />

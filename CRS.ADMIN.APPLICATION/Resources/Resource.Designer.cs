@@ -4509,6 +4509,24 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Plan Request.
+        /// </summary>
+        public static string Plan_Request {
+            get {
+                return ResourceManager.GetString("Plan Request", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Plan Setup.
+        /// </summary>
+        public static string Plan_Setup {
+            get {
+                return ResourceManager.GetString("Plan Setup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Plan Title.
         /// </summary>
         public static string Plan_Title {
@@ -4523,6 +4541,24 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         public static string Plan_Type {
             get {
                 return ResourceManager.GetString("Plan Type", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure want to approve club plan request ?.
+        /// </summary>
+        public static string PlanRequestConfirmationMessage {
+            get {
+                return ResourceManager.GetString("PlanRequestConfirmationMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure want to reject club plan request ?.
+        /// </summary>
+        public static string PlanRequestRejectConfirmation {
+            get {
+                return ResourceManager.GetString("PlanRequestRejectConfirmation", resourceCulture);
             }
         }
         
