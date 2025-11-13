@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Drawing.Drawing2D;
 using System.Linq;
+using System.Numerics;
 
 namespace CRS.ADMIN.REPOSITORY.PlanManagement
 {
@@ -225,7 +226,7 @@ namespace CRS.ADMIN.REPOSITORY.PlanManagement
             string SQL = "EXEC apiproc_clp_get_club_own_plan_details";
             SQL += " @clubId=" + _dao.FilterString(clubId);
             SQL += ",@planId=" + _dao.FilterString(planId);
-            SQL += ",@ActionUser=" + _dao.FilterString("admin");
+            SQL += ",@ActionUserId=" + _dao.FilterString("admin");
             SQL += ",@actionPlatform=" + _dao.FilterString("web");
             var dataTable = _dao.ExecuteDataTable(SQL);
             if (dataTable != null && dataTable.Rows.Count > 0)
@@ -237,15 +238,42 @@ namespace CRS.ADMIN.REPOSITORY.PlanManagement
                     clubId = dataTable.Rows[0]["clubId"].ToString(),
                     planId = dataTable.Rows[0]["planId"].ToString(),
                     plantype = dataTable.Rows[0]["plantype"].ToString(),
-                    planTitle = dataTable.Rows[0]["planTitle"].ToString(),
+                    planTitle = dataTable.Rows[0]["PlanName"].ToString(),
                     planTime = dataTable.Rows[0]["planTime"].ToString(),
                     planPrice = dataTable.Rows[0]["planPrice"].ToString(),
                     numberOfPeople = dataTable.Rows[0]["numberOfPeople"].ToString(),
                     requestDate = dataTable.Rows[0]["requestDate"].ToString(),
                     planStatus = dataTable.Rows[0]["planStatus"].ToString(),
+                    nomination = dataTable.Rows[0]["nomination"].ToString(),
+                    lastEntryTime = dataTable.Rows[0]["lastEntrytime"].ToString(),
                 };
             }
             return new PlanRequesResponseListCommon();
+        }
+
+        public List<StaticDataCommon> GetTimeInterval(string clubId)
+        {
+            string SQL = "EXEC sproc_admin_get_time_interval_list";
+            SQL += " @StaticType=" + _dao.FilterString(clubId);
+            var dbResponse = _dao.ExecuteDataTable(SQL);
+            if (dbResponse != null && dbResponse.Rows.Count > 0) return _dao.DataTableToListObject<StaticDataCommon>(dbResponse).ToList();
+            return new List<StaticDataCommon>();
+        }
+
+        public CommonDbResponse ManageClubPlan(PlanRequesRequestCommon requestMapped)
+        {
+            string SQL = "EXEC apiproc_clp_approve_club_plan_by_admin";
+            SQL += " @clubId=" + _dao.FilterString(requestMapped.clubId);
+            SQL += " @planId=" + _dao.FilterString(requestMapped.planId);
+            SQL += ",@planPrice=" + _dao.FilterString(requestMapped.planPrice);
+            SQL += ",@numberNomination=" + _dao.FilterString(requestMapped.nomination);
+            SQL += ",@lastEntryTime=" + _dao.FilterString(requestMapped.planTime);
+            SQL += ",@noOfPeople=" + _dao.FilterString(requestMapped.numberOfPeople);
+            SQL += ",@actionUserId=" + _dao.FilterString("admin");
+            SQL += ",@actionIP=" + _dao.FilterString("::1");
+            SQL += ",@actionPlatform=" + _dao.FilterString("web");
+            var dbResponse = _dao.ParseCommonDbResponse(SQL);
+            return dbResponse;
         }
         #endregion
     }

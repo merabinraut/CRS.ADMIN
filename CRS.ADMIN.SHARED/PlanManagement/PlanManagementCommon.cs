@@ -1,4 +1,5 @@
-﻿using CRS.ADMIN.SHARED.PaginationManagement;
+﻿using CRS.ADMIN.SHARED.Middleware.AmazonCognitoModel;
+using CRS.ADMIN.SHARED.PaginationManagement;
 using System.Web;
 
 namespace CRS.ADMIN.SHARED.PlanManagement
@@ -36,7 +37,29 @@ namespace CRS.ADMIN.SHARED.PlanManagement
         public string numberOfPeople { get; set; }
         public string requestDate { get; set; }
         public string planStatus { get; set; }
+        public string nomination { get; set; }
+        public string lastEntryTime { get; set; }
 
+    }
+
+    public class PlanRequesRequestCommon 
+    {
+        public string clubName { get; set; }
+        public string clubId { get; set; }
+        public string planId { get; set; }
+        public string plantype { get; set; }
+        public string planTitle { get; set; }
+        public string planTime { get; set; }
+        public string planPrice { get; set; }
+        public string numberOfPeople { get; set; }
+        public string requestDate { get; set; }
+        public string planStatus { get; set; }
+        public string nomination { get; set; }
+
+    }
+    public class EntryTimeInterval 
+    {
+        public string entryTime { get; set; }
     }
 
 }

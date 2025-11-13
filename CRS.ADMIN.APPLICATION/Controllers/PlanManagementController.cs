@@ -32,7 +32,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
         }
 
         [HttpGet]
-        public ActionResult PlanList(string TabValue = "", string SearchFilter = "", int StartIndex = 0, int PageSize = 10)
+        public ActionResult PlanList(string TabValue = "", string SearchFilter = "", int StartIndex = 0, int PageSize = 10, string ClubId = "")
         {
             ViewBag.SearchFilter = SearchFilter;
             Session["CurrentURL"] = "/PlanManagement/PlanList";
@@ -49,6 +49,11 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             var timeDictionary = GetDictionaryFromResponse(_business.GetDDL("8"), culture);
             var liquorDictionary = GetDictionaryFromResponse(_business.GetDDL("9"), culture);
             var planCategoryDictionary = GetDictionaryFromResponse(_business.GetDDL("35"), culture);
+            if (!string.IsNullOrEmpty(ClubId))
+            {
+                var EntryTimeDBResponse = _business.GetTimeInterval(ClubId.DecryptParameter());
+            }
+            var entryTimeDictionary = !string.IsNullOrEmpty(ClubId) ? GetDictionaryFromResponse(_business.GetTimeInterval(ClubId.DecryptParameter()), culture) : null;
             #endregion
             if (TabValue == "")
             {
@@ -83,7 +88,9 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 };
                 var planRequestLists = _business.GetPlanRequestList(dbRequest);
                 ResModel.ClubPlanResponseModel = planRequestLists.MapObjects<PlanRequesResponseListModel>();
-                if (TempData.ContainsKey("PlanManagementModel")) ResModel.PlanMgmt = TempData["PlanManagementModel"] as PlanManagementModel;
+                if (TempData.ContainsKey("ClubPlanManagementModel")) ResModel.clubPlanManageModel = TempData["ClubPlanManagementModel"] as PlanRequesResponseListModel;
+                if (TempData.ContainsKey("PlanRenderId")) RenderId = TempData["PlanRenderId"].ToString();
+                ViewBag.PopUpClubManageValue = !string.IsNullOrEmpty(RenderId) ? RenderId : null;
                 ViewBag.TotalData = planRequestLists != null && planRequestLists.Any() ? planRequestLists[0].TotalRecords : 0;
             }
             ViewBag.SearchFilter = SearchFilter;
@@ -91,6 +98,10 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             ViewBag.PageSize = PageSize;
             ViewBag.PlanList = ApplicationUtilities.SetDDLValue(planTypeDictionary as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---");
             ViewBag.TimeList = ApplicationUtilities.SetDDLValue(timeDictionary as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---");
+            if (!string.IsNullOrEmpty(ClubId))
+            {
+                ViewBag.EntryTimeList = ApplicationUtilities.SetDDLValue(entryTimeDictionary as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---");
+            }
             ViewBag.LiquorList = ApplicationUtilities.SetDDLValue(liquorDictionary as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---");
             ViewBag.PlanCategoryDDL = ApplicationUtilities.SetDDLValue(planCategoryDictionary as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---");
             ResModel.TabValue = TabValue;
@@ -129,7 +140,6 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             TempData["RenderId"] = "ApproveRejected";
             return RedirectToAction("PlanList", "PlanManagement", new { TabValue = "02" });
         }
-        [HttpGet]
         public ActionResult ManageClubPlan(string clubId, string planId)
         {
             clubId = clubId.DecryptParameter();
@@ -146,15 +156,53 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             }
             var getClbPlanDetails = _business.GetPlanRequestDetails(clubId, planId);
             var resp = getClbPlanDetails.MapObject<PlanRequesResponseListModel>();
+
+
             resp.planId = resp.planId.EncryptParameter();
-            resp.planTime = resp.planTime.EncryptParameter();
+            resp.planTime = resp.planTime;
+            resp.lastEntryTime = getClbPlanDetails.lastEntryTime.EncryptParameter();
             resp.plantype = resp.plantype.EncryptParameter();
             resp.numberOfPeople = resp.numberOfPeople;
             resp.nomination = resp.nomination;
             resp.clubId = resp.clubId.EncryptParameter();
             TempData["ClubPlanManagementModel"] = resp;
-            TempData["RenderId"] = "ManageClubPlan";
-            return RedirectToAction("PlanList", "PlanManagement",new {TabValue ="02" });
+            TempData["PlanRenderId"] = "ManageClubPlan";
+            return RedirectToAction("PlanList", "PlanManagement", new { TabValue = "02", ClubId = resp.clubId });
+        }
+        [HttpPost]
+        public ActionResult ManageClubPlan(PlanRequesResponseListModel request)
+        {
+            if (string.IsNullOrEmpty(request.clubId) && string.IsNullOrEmpty(request.clubId) && string.IsNullOrEmpty(request.numberOfPeople.ToString()) && string.IsNullOrEmpty(request.nomination.ToString()) && string.IsNullOrEmpty(request.planTime))
+            {
+                this.AddNotificationMessage(new NotificationModel()
+                {
+                    NotificationType = NotificationMessage.INFORMATION,
+                    Message = "Invalid request",
+                    Title = NotificationMessage.INFORMATION.ToString(),
+                });
+                return RedirectToAction("PlanList", "PlanManagement", new { TabValue = "02" });
+            }
+           
+            var requestMapped = request.MapObject<PlanRequesRequestCommon>();
+            requestMapped.clubId = request.clubId.DecryptParameter();
+            requestMapped.planId = request.planId.DecryptParameter();
+            var getClbPlanDetails = _business.ManageClubPlan(requestMapped);
+            var resp = getClbPlanDetails.MapObject<PlanRequesResponseListModel>();
+
+
+            resp.planId = resp.planId.EncryptParameter();
+            resp.planTime = resp.planTime;
+            resp.plantype = resp.plantype.EncryptParameter();
+            resp.numberOfPeople = resp.numberOfPeople;
+            resp.nomination = resp.nomination;
+            resp.clubId = resp.clubId.EncryptParameter();
+            this.AddNotificationMessage(new NotificationModel()
+            {
+                NotificationType = NotificationMessage.SUCCESS,
+                Message = getClbPlanDetails.Message ?? "Success",
+                Title = NotificationMessage.SUCCESS.ToString(),
+            });
+            return RedirectToAction("PlanList", "PlanManagement", new { TabValue = "02" });
         }
         public ActionResult PlanDetails(string id = "")
         {

@@ -247,16 +247,20 @@
     @section scripts{
         <script>
             $(document).ready(function () {
-                debugger;
             $('select').select2({
                 minimumResultsForSearch: Infinity
             })
             var PopUpRenderValue = '@ViewBag.PopUpRenderValue';
+            var PopUpClubManageValue = '@ViewBag.PopUpClubManageValue';
             if (PopUpRenderValue != null && PopUpRenderValue != "" && PopUpRenderValue == "Manage") {
-            var element = document.getElementById('add-new-host-club');
-            element.classList.remove('translate-x-full');
+                var element = document.getElementById('add-new-host-club');
+                element.classList.remove('translate-x-full');
                 }
-                debugger;
+            else if (PopUpClubManageValue == "ManageClubPlan") {
+                element1 = document.getElementById('add-manage-club-own-plan');
+                element1.classList.remove('translate-x-full');
+           /* if (PopUpClubManageValue == "ManageClubPlan")*/
+            }
                 let tabValue = "@ViewBag.TabValue" ?? "";
                 if (tabValue === "02") {
                     const link1 = document.getElementById('tab1Link');
@@ -293,9 +297,11 @@
                 window.location.reload();
             });
 
-        function editPlanDetail(id) {
+            function editPlanDetail(id) {
+                debugger;
             window.location.href = '/PlanManagement/ManagePlan?planId=' + id;
-        }
+            }
+
         function deletePlan(id) {
             $.ajax({
                 type: 'POST',
@@ -339,7 +345,6 @@
         </script>
         <script>
 
-            debugger;
             document.getElementById('tab1Link').style.color = '#D75A8B';
             document.getElementById('tab1Link').style.borderBottom = '#D75A8B 2px solid';
 
@@ -364,7 +369,6 @@
                         content.style.display = 'none';
                     }
                 });
-                debugger;
                 // Apply the visual style (color + border) for the selected link and reset others
                 if (selectedLinkId === 'tab1Link') {
                     const link1 = document.getElementById('tab1Link');
@@ -406,7 +410,6 @@
 
             function openApproveRequestModal(sno, type, planId)
             {
-                    debugger;
                     const modalTarget = document.querySelector("[data-modal-target='approve-confirmation-plan-request']");
                     const confirmationMessageElement = document.getElementById("confirmationRequestMessage");
                     const contentApprove = "@Html.Raw(CRS.ADMIN.APPLICATION.Resources.Resource.PlanRequestConfirmationMessage)";
@@ -424,7 +427,6 @@
         <script>
 
             function ApproveRequestedPlanFunction() {
-                debugger;
                      const sno = $('#approve_ids1').attr('data-vals1');
                      const type = $('#approve_ids1').attr('data-vals2');
                      const planId = $('#approve_ids1').attr('data-vals3');
@@ -444,7 +446,6 @@
         </script>
         <script>
             function openApproveRejectedRequestModal(clubId, type, planId) {
-                debugger;
                 const $modal = $("#reject-confirmation-plan-request");
                 const $message = $("#confirmationRequestMessage");
                  const $approveBtn = $("#approve_ids1");
@@ -459,7 +460,6 @@
         }
 
       function RejectedRequestedPlanFunction() {
-          debugger;
                const sno = $('#approve_ids1').attr('data-vals1');
                const type = $('#approve_ids1').attr('data-vals2');
                const planId = $('#approve_ids1').attr('data-vals3');
@@ -511,7 +511,19 @@
         + '&StartIndex=' + start_index_val2
         + '&PageSize=' + page_size2;
     //window.location.href = '/PlanManagement/ApproveRequestedPlanList?Sno=' + i + '&type=' + j + '&planId=' + k+ '&SearchFilter=' + search_filter2 + '&StartIndex=' + start_index_val2 + '&PageSize=' + page_size2;
-}
-
+            }
+            function EditClubOwnPlan(ClubId, planId) {
+                window.location.href = '/PlanManagement/ManageClubPlan?clubId=' + ClubId + '&planId=' + planId;
+            }
+            document.getElementById('ClubPlanCloseId').addEventListener('click',
+                function (event) {
+                    event.preventDefault();
+                    window.location.reload();
+                });
+            document.getElementById('ClubPlanCancelId').addEventListener('click',
+                function (event) {
+                    event.preventDefault();
+                    window.location.reload();
+                });
         </script>
     }

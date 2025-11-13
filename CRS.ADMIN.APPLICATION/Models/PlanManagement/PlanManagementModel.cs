@@ -42,6 +42,7 @@ namespace CRS.ADMIN.APPLICATION.Models.PlanManagement
         public string nomination {  get; set; }
         public string requestDate {  get; set; }
         public string planStatus {  get; set; }
+        public string lastEntryTime {  get; set; }
 
     }
 
