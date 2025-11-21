@@ -262,9 +262,9 @@ namespace CRS.ADMIN.REPOSITORY.PlanManagement
 
         public CommonDbResponse ManageClubPlan(PlanRequesRequestCommon requestMapped)
         {
-            string SQL = "EXEC apiproc_clp_approve_club_plan_by_admin";
+            string SQL = "EXEC sproc_admin_update_club_plan";
             SQL += " @clubId=" + _dao.FilterString(requestMapped.clubId);
-            SQL += " @planId=" + _dao.FilterString(requestMapped.planId);
+            SQL += ",@planId=" + _dao.FilterString(requestMapped.planId);
             SQL += ",@planPrice=" + _dao.FilterString(requestMapped.planPrice);
             SQL += ",@numberNomination=" + _dao.FilterString(requestMapped.nomination);
             SQL += ",@lastEntryTime=" + _dao.FilterString(requestMapped.planTime);

@@ -114,7 +114,7 @@
                         <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
                             @CRS.ADMIN.APPLICATION.Resources.Resource.NoOfPeople
                         </label>
-                        <select name="NoOfPeople" class=" default_select select-common block w-full "
+                        <select name="numberOfPeople" class=" default_select select-common block w-full "
                                 style="width: 100%;">
                             @for (int i = 1; i <= 10; i++)
                             {
@@ -139,7 +139,7 @@
                         <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
                             @CRS.ADMIN.APPLICATION.Resources.Resource.Price
                         </label>
-                        @Html.TextBoxFor(model => model.planPrice, new { @class = "w-full rounded-[4px]", @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.Price, @style = "border-radius:4px !important;height : 10px", @onkeypress = "return isNumber(event)", autocomplete = "off", @maxLength = "7" })
+                        @Html.TextBoxFor(model => model.planPrice, new { @class = "w-full rounded-[4px]", @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.Price, @style = "border-radius:4px !important;height : 40px", @onkeypress = "return isNumber(event)", autocomplete = "off", @maxLength = "7" })
                         <span class="error">
                             @Html.ValidationMessageFor(m => m.planPrice)
                         </span>
