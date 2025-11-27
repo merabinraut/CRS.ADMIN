@@ -1,7 +1,7 @@
 ﻿@model CRS.ADMIN.APPLICATION.Models.PromotionManagement.PromotionManagementModel
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.css">
 <style>
-   /* #cropModal {
+    /* #cropModal {
         display: none;
         position: fixed;
         top: 0;
@@ -111,8 +111,8 @@
                                     <img id="imageToCrop" src="" alt="Image to crop" class="max-w-full">
                                 </div>
                                 <div class="flex justify-end">
-                                    <button id="cropImageButton" class="bg-blue-500 text-white px-4 py-2 rounded-md">Crop</button>
-                                    <button id="cancelCropButton" class="ml-2 bg-gray-500 text-white px-4 py-2 rounded-md">Cancel</button>
+                                    <button id="cropImageButton" class="bg-blue-500 text-white px-4 py-2 rounded-md">@CRS.ADMIN.APPLICATION.Resources.Resource.Crop</button>
+                                    <button id="cancelCropButton" class="ml-2 bg-gray-500 text-white px-4 py-2 rounded-md">@CRS.ADMIN.APPLICATION.Resources.Resource.Cancel</button>
                                 </div>
                             </div>
                         </div>
@@ -285,7 +285,8 @@
             }
         });
 
-        document.getElementById('cancelCropButton').addEventListener('click', function () {
+        document.getElementById('cancelCropButton').addEventListener('click', function (e) {
+            e.preventDefault();
             modal.style.display = 'none';
             $('#file_input_logo').val('');
             if (cropper) {

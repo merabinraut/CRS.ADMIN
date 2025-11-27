@@ -13,10 +13,11 @@ namespace CRS.ADMIN.REPOSITORY.CommissionManagement
         public CommissionManagementRepository() => _DAO = new RepositoryDao();
 
         #region Commission Category
-        public List<CommissionCategoryCommon> GetCategoryList()
+        public List<CommissionCategoryCommon> GetCategoryList(string search)
         {
             var response = new List<CommissionCategoryCommon>();
             string SQL = "EXEC sproc_commission_category_management @Flag='gccl'";
+            SQL += ",@searchText=" + _DAO.FilterString(search);
             var dbResponse = _DAO.ExecuteDataTable(SQL);
             if (dbResponse != null && dbResponse.Rows.Count > 0)
             {

@@ -5787,6 +5787,24 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sub Domain Name.
+        /// </summary>
+        public static string Sub_Domain_Name {
+            get {
+                return ResourceManager.GetString("Sub Domain Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sub Domain URL.
+        /// </summary>
+        public static string Sub_Domain_URL {
+            get {
+                return ResourceManager.GetString("Sub Domain URL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Are you sure you want to delete this  club.
         /// </summary>
         public static string Sub_Group_Club_delete {

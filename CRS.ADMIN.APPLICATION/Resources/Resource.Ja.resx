@@ -2966,4 +2966,12 @@
     <value>この店舗プラン申請を拒否しますか？</value>
     <comment>Plan Management</comment>
   </data>
+  <data name="Sub Domain Name" xml:space="preserve">
+    <value>サブドメイン名</value>
+    <comment>Club Management</comment>
+  </data>
+  <data name="Sub Domain URL" xml:space="preserve">
+    <value>店舗URL</value>
+    <comment>Club Management</comment>
+  </data>
 </root>

@@ -1,0 +1,101 @@
+@model CRS.ADMIN.APPLICATION.Models.ClubManagement.SubDomainModel
+<div id="manage-sub-domain"
+     class="drawer-close-disable  flex justify-end fixed top-0 right-0 z-40 h-screen overflow-y-auto transition-transform translate-x-full"
+     tabindex="-1" aria-labelledby="manage-sub-domain" aria-modal="true" role="dialog">
+    <div class="bg-white w-[616px] drawer-container relative">
+        <div class="drawer-form-container sticky top-0 z-[5] ">
+            <div class="drawer-form flex justify-between bg-secondary-color-pink py-[16px] px-[24px] h-[56px]">
+                <div>
+                    Manage Sub Domain
+                </div>
+                <button type="button" data-drawer-hide="manage-sub-domain" aria-controls="manage-sub-domain"
+                        class="text-[20px]">
+                    <i class="las la-window-close text-white" onclick="CancelFunction()"></i>
+                </button>
+            </div>
+        </div>
+        <div class="p-[24px]">
+            @using (Html.BeginForm("ManageSubDomain", "ClubManagement", FormMethod.Post, new { @id = "ManageSubDomainForm", enctype = "multipart/form-data" }))
+            {
+                @Html.AntiForgeryToken()
+                <div class="py-4 grid gap-6">
+                    <div class="input-field-common" id="tagInput3">
+                        <div class="input-field-common">
+                            <input type="text" value="@Model.clubId" name="clubId" hidden />
+                            <label for="date" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Sub_Domain_Name
+                            </label>
+                            @Html.TextBoxFor(model => model.SubDomainName, new
+                       {
+                           @class = "w-full",
+                           @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.Sub_Domain_Name,
+                           autocomplete = "off",
+                           @maxLength = "25",
+                           @value = Model.SubDomainName
+                       })
+                            <span class="error">
+                                @Html.ValidationMessageFor(m => m.SubDomainName)
+                            </span>
+                        </div>
+                    </div>
+
+                    @*<div class="input-field-common" id="tagInput4">
+                            <div class="input-field-common">
+                                <label for="date" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Sub_Domain_URL
+                                </label>
+                                @Html.TextBoxFor(model => model.SubDomainUrl, new
+                           {
+                               @class = "w-full",
+                               @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.Sub_Domain_URL,
+                               autocomplete = "off",
+                               @maxLength = "200"
+                           })
+                                <span class="error">
+                                    @Html.ValidationMessageFor(m => m.SubDomainUrl)
+                                </span>
+
+                            </div>
+                        </div>*@
+
+                    <div class="input-field-common" id="tagInput4">
+                        <div class="input-field-common">
+                            <label for="date" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Description
+                            </label>
+                            @Html.TextAreaFor(model => model.Description, new
+                       {
+                           @class = "w-full",
+                           @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.Description,
+                           autocomplete = "off",
+                           @maxLength = "200",
+                           row = 4,
+                           cols = 5
+                       })
+                            <span class="error">
+                                @Html.ValidationMessageFor(m => m.Description)
+                            </span>
+
+                        </div>
+                    </div>
+                </div>
+                <!-- for submit button -->
+                <div class="py-4 flex justify-end">
+                    <div class="flex gap-6">
+                        <button class="btn btn-secondary rounded-[4px]" type="button" data-drawer-hide="add-new-host-tag"
+                                aria-controls="add-new-host-tag" onclick="CancelFunction();">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Cancel
+                        </button>
+                        <button class="btn btn-primary-default rounded-[4px]" type="submit"> @CRS.ADMIN.APPLICATION.Resources.Resource.Submit</button>
+
+
+                    </div>
+
+                </div>
+            }
+        </div>
+    </div>
+</div>
+<script>
+
+</script>

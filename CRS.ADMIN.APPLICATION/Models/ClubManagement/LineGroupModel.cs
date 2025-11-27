@@ -22,4 +22,16 @@ namespace CRS.ADMIN.APPLICATION.Models.ClubManagement
         public int startIndex { get; set; }
         public int pageSize { get; set; }
     }
+    public class SubDomainModel
+    {
+        public string clubId { get; set; }
+        [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Required")]
+        public string SubDomainName { get; set; }
+        public string SubDomainUrl { get; set; }
+        [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Required")]
+        public string Description { get; set; }
+        public string SearchFilter { get; set; }
+        public int StartIndex { get; set; }
+        public int PageSize { get; set; }
+    }
 }

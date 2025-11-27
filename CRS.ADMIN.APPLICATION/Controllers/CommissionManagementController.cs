@@ -21,13 +21,13 @@ namespace CRS.ADMIN.APPLICATION.Controllers
 
         #region Commission Category
         [HttpGet]
-        public ActionResult CategoryList()
+        public ActionResult CategoryList(string search)
         {
             var viewModel = new CommissionCategoryRazorViewModel();
             var culture = Request.Cookies["culture"]?.Value;
             culture = string.IsNullOrEmpty(culture) ? "ja" : culture;
             Session["CurrentURL"] = "/CommissionManagement/CategoryList";
-            var dbResponse = _CategoryBuss.GetCategoryList();
+            var dbResponse = _CategoryBuss.GetCategoryList(search);
             dbResponse.ForEach(x => x.CategoryId = x.CategoryId.EncryptParameter());
 
             viewModel.CommissionCategoryModelGrid = dbResponse.MapObjects<CommissionCategoryModel>();
