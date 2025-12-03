@@ -2485,6 +2485,10 @@
     <value>キャンペーン値段</value>
     <comment>Plan Management</comment>
   </data>
+  <data name="DeleteCustomPlan" xml:space="preserve">
+    <value>店舗独自プランを削除してもよろしいですか？
+ </value>
+  </data>
   <data name="Stripe" xml:space="preserve">
     <value>ストライプ</value>
     <comment>Dashboard</comment>
@@ -2913,17 +2917,6 @@
   <data name="Res ID" xml:space="preserve">
     <value>予約ID</value>
   </data>
-  <data name="Manager" xml:space="preserve">
-    <value />
-  </data>
-  <data name="PlanFee" xml:space="preserve">
-    <value>プラン金</value>
-    <comment>ClubManagement</comment>
-  </data>
-  <data name="Withdrawal Request" xml:space="preserve">
-    <value>引き出しリクエスト</value>
-    <comment>Withdrawal Request</comment>
-  </data>
   <data name="Total Premium Club" xml:space="preserve">
     <value>契約店</value>
   </data>
@@ -2973,5 +2966,16 @@
   <data name="Sub Domain URL" xml:space="preserve">
     <value>店舗URL</value>
     <comment>Club Management</comment>
+  </data>
+  <data name="Manager" xml:space="preserve">
+    <value />
+  </data>
+  <data name="PlanFee" xml:space="preserve">
+    <value>プラン金</value>
+    <comment>ClubManagement</comment>
+  </data>
+  <data name="Withdrawal Request" xml:space="preserve">
+    <value>引き出しリクエスト</value>
+    <comment>Withdrawal Request</comment>
   </data>
 </root>

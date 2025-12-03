@@ -1897,6 +1897,24 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string Delete_Custom_Plan {
+            get {
+                return ResourceManager.GetString("Delete Custom Plan", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DeleteCustomPlan.
+        /// </summary>
+        public static string DeleteCustomPlan {
+            get {
+                return ResourceManager.GetString("DeleteCustomPlan", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Description.
         /// </summary>
         public static string Description {
@@ -5747,24 +5765,6 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         public static string Strike_Out {
             get {
                 return ResourceManager.GetString("Strike Out", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to .
-        /// </summary>
-        public static string String {
-            get {
-                return ResourceManager.GetString("String", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to .
-        /// </summary>
-        public static string String1 {
-            get {
-                return ResourceManager.GetString("String1", resourceCulture);
             }
         }
         

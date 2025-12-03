@@ -2499,10 +2499,11 @@
     <value>Strike Out</value>
     <comment>Plan Management</comment>
   </data>
-  <data name="String" xml:space="preserve">
-    <value />
+  <data name="DeleteCustomPlan" xml:space="preserve">
+    <value>DeleteCustomPlan</value>
+    <comment>Plan Management</comment>
   </data>
-  <data name="String1" xml:space="preserve">
+  <data name="Delete Custom Plan" xml:space="preserve">
     <value />
   </data>
   <data name="String2" xml:space="preserve">
