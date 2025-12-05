@@ -199,6 +199,7 @@ namespace CRS.ADMIN.REPOSITORY.PlanManagement
                         planTime = item["planTime"].ToString(),
                         planPrice = item["planPrice"].ToString(),
                         numberOfPeople = item["numberOfPeople"].ToString(),
+                        nomination = item["Nomination"].ToString(),
                         requestDate = item["requestDate"].ToString(),
                         planStatus = item["planStatus"].ToString(),
                         TotalRecords = Convert.ToInt32(_dao.ParseColumnValue(item, "TotalRecords").ToString()),

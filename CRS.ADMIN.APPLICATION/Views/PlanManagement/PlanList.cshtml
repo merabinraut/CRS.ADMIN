@@ -163,7 +163,7 @@
                     <div class="text-[#333] font-semibold pb-[11px] border-b border-[#eeeeee]">@CRS.ADMIN.APPLICATION.Resources.Resource.Confirmation</div>
                     <div class="grid gap-[20px] text-[#062937] mb-[45px]">
                         <div class="text-[14px] text-secondary-text-2 text-start" id="deleteRequestMessage">
-                            @CRS.ADMIN.APPLICATION.Resources.Resource.PlanRequestConfirmationMessage
+                            @*@CRS.ADMIN.APPLICATION.Resources.Resource.PlanRequestConfirmationMessage*@店舗独自プランを削除してもよろしいですか？;
                         </div>
                     </div>
                     <div class="flex justify-end">
@@ -285,7 +285,6 @@
 
                 }
         });
-
         document.getElementById('CloseId').addEventListener('click',
             function (event) {
                 event.preventDefault();
@@ -296,7 +295,6 @@
                 event.preventDefault();
                 window.location.reload();
             });
-
             function editPlanDetail(id) {
                 debugger;
             window.location.href = '/PlanManagement/ManagePlan?planId=' + id;
@@ -326,7 +324,7 @@
                 const total_data = @ViewBag.TotalData;
                 const start_index_val = @ViewBag.StartIndex;
                 let URL = "/PlanManagement/PlanList";
-                let search_filter = $('#default-search').val();
+                let search_filter = $('#default-search-plan_list').val();
                 URL = addQueryParam(URL, 'SearchFilter', search_filter);
                 LoadPagination(page_size, total_data, start_index_val, URL);
             });
@@ -485,7 +483,8 @@
           const $modal = $("#delete-plan-request");
           const $message = $("#confirmationRequestMessage");
            const $approveBtn = $("#approve_ids1");
-            const contentApprove = "Are you sure you want to delete this club plan ?";
+          // const contentApprove = "Are you sure you want to delete this club plan ?";
+           const contentApprove = "Are you sure you want to delete the store’s custom plan";
             $message.text(contentApprove);
             $approveBtn.attr({
             "data-vals1": clubId,
@@ -496,7 +495,6 @@
         }
 
     function DeleteClubPlanFunction() {
-    debugger;
          const sno = $('#approve_ids1').attr('data-vals1');
          const type = $('#approve_ids1').attr('data-vals2');
          const planId = $('#approve_ids1').attr('data-vals3');

@@ -445,6 +445,7 @@
     <Content Include="Views\PlanManagement\_OwnPlanByClubPartialView.cshtml" />
     <Content Include="Views\PlanManagement\_PlanListPartialView.cshtml" />
     <Content Include="Views\PlanManagement\_ManageClubPlan.cshtml" />
+    <Content Include="Views\Inquiries\_GetInquiriesDetails.cshtml" />
     <None Include="Views\PromotionManagement\_ManageAdvertisementPartialView.cshtml" />
     <None Include="Views\PromotionManagement\_AdvertisementList.cshtml" />
     <Content Include="Content\assets\images\TickIcon.svg" />

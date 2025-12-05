@@ -139,7 +139,7 @@
                         <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
                             @CRS.ADMIN.APPLICATION.Resources.Resource.Price
                         </label>
-                        @Html.TextBoxFor(model => model.planPrice, new { @class = "w-full rounded-[4px]", @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.Price, @style = "border-radius:4px !important;height : 40px", @onkeypress = "return isNumber(event)", autocomplete = "off", @maxLength = "7" })
+                        @Html.TextBoxFor(model => model.planPrice, new { @class = "w-full rounded-[4px]", @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.Price, @style = "border-radius:4px !important;height : 40px", @onkeypress = "return isNumber(event)", autocomplete = "off", @maxLength = "5" })
                         <span class="error">
                             @Html.ValidationMessageFor(m => m.planPrice)
                         </span>

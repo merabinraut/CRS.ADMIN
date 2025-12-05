@@ -23,5 +23,6 @@ namespace CRS.ADMIN.BUSINESS.HostManagement
         #endregion
 
         CommonDbResponse UploadHostImage(string ClubName, string LocationId, string HostName, string ImagePath);
+        InquiryListCommon GetInquiryDetailsAsync(string inquiryId);
     }
 }

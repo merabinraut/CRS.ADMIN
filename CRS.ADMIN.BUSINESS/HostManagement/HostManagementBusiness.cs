@@ -2,6 +2,7 @@
 using CRS.ADMIN.SHARED;
 using CRS.ADMIN.SHARED.HostManagement;
 using CRS.ADMIN.SHARED.PaginationManagement;
+using DocumentFormat.OpenXml.Spreadsheet;
 using System.Collections.Generic;
 
 namespace CRS.ADMIN.BUSINESS.HostManagement
@@ -65,6 +66,11 @@ namespace CRS.ADMIN.BUSINESS.HostManagement
         public CommonDbResponse UploadHostImage(string ClubName, string LocationId, string HostName, string ImagePath)
         {
             return _REPO.UploadHostImage(ClubName, LocationId, HostName, ImagePath);
+        }
+
+        public InquiryListCommon GetInquiryDetailsAsync(string inquiryId)
+        {
+            return _REPO.GetInquiryDetailsAsync(inquiryId);
         }
     }
 }
