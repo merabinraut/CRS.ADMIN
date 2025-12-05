@@ -1,13 +1,16 @@
 ﻿using CRS.ADMIN.SHARED;
 using CRS.ADMIN.SHARED.HostManagement;
 using CRS.ADMIN.SHARED.PaginationManagement;
+using CRS.ADMIN.SHARED.PlanManagement;
 using DocumentFormat.OpenXml.Office2016.Excel;
 using DocumentFormat.OpenXml.Spreadsheet;
+using DocumentFormat.OpenXml.Wordprocessing;
 using Syncfusion.XlsIO.Implementation.PivotAnalysis;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Numerics;
 
 namespace CRS.ADMIN.REPOSITORY.HostManagement
 {
@@ -284,5 +287,28 @@ namespace CRS.ADMIN.REPOSITORY.HostManagement
             return _DAO.ParseCommonDbResponse(SQL);
         }
 
+        public InquiryListCommon GetInquiryDetailsAsync(string inquiryId)
+        {
+            string SQL = "EXEC sproc_admin_get_customer_enquiry_details";
+            SQL += " @inqueryId=" + _DAO.FilterString(inquiryId);      
+            var dataTable = _DAO.ExecuteDataTable(SQL);
+            if (dataTable != null && dataTable.Rows.Count > 0)
+            {
+                return new InquiryListCommon()
+                {
+                    id = dataTable.Rows[0]["id"].ToString(),
+                    InquiryId = dataTable.Rows[0]["InquiryId"].ToString(),
+                    FullName = dataTable.Rows[0]["FullName"].ToString(),
+                    PhoneNumber = dataTable.Rows[0]["PhoneNumber"].ToString(),
+                    InquiryType = dataTable.Rows[0]["InquiryType"].ToString(),
+                    EmailAddress = dataTable.Rows[0]["EmailAddress"].ToString(),
+                    Subject = dataTable.Rows[0]["Subject"].ToString(),
+                    Message = dataTable.Rows[0]["Message"].ToString(),
+                    PostedDate = dataTable.Rows[0]["PostedDate"].ToString(),
+                    Attachments = dataTable.Rows[0]["Attachments"].ToString()
+                };
+            }
+            return new InquiryListCommon();
+        }
     }
 }
