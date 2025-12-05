@@ -1,4 +1,5 @@
-﻿using CRS.ADMIN.APPLICATION.Helper;
+﻿using CRS.ADMIN.APPLICATION.CustomHelpers;
+using CRS.ADMIN.APPLICATION.Helper;
 using CRS.ADMIN.APPLICATION.Library;
 using CRS.ADMIN.APPLICATION.Models;
 using CRS.ADMIN.APPLICATION.Models.ClubManagement;
@@ -12,8 +13,10 @@ using CRS.ADMIN.SHARED.PlanManagement;
 using Microsoft.Ajax.Utilities;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data.Entity.Core.Metadata.Edm;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -126,6 +129,8 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                     Message = "Saved successfully",
                     Title = NotificationMessage.SUCCESS.ToString()
                 });
+                string apiUrl = ConfigurationManager.AppSettings["RevalidateApiUrl"];
+                string apiResponse = ExternalApiCallHelpers.CallApi(apiUrl, HttpMethod.Get);
                 TempData["ApproveRejected"] = common;
                 TempData["RenderId"] = "ApproveRejected";
                 return RedirectToAction("PlanList", "PlanManagement", new { TabValue = "02" });
@@ -202,6 +207,9 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 Message = getClbPlanDetails.Message ?? "Success",
                 Title = NotificationMessage.SUCCESS.ToString(),
             });
+            string apiUrl = ConfigurationManager.AppSettings["RevalidateApiUrl"];
+            string apiResponse = ExternalApiCallHelpers.CallApi(apiUrl, HttpMethod.Get);
+
             return RedirectToAction("PlanList", "PlanManagement", new { TabValue = "02" });
         }
         public ActionResult PlanDetails(string id = "")
@@ -381,7 +389,9 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 NotificationType = NotificationMessage.INFORMATION,
                 Message = serviceResp.Message ?? "Failed",
                 Title = NotificationMessage.INFORMATION.ToString()
-            });
+            }); 
+            string apiUrl = ConfigurationManager.AppSettings["RevalidateApiUrl"];
+            string apiResponse = ExternalApiCallHelpers.CallApi(apiUrl, HttpMethod.Get);
             TempData["PlanManagementModel"] = model;
             TempData["RenderId"] = "Manage";
             return RedirectToAction("PlanList", "PlanManagement");
@@ -415,6 +425,8 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                     Message = DbResponse.Message,
                     Title = NotificationMessage.SUCCESS.ToString()
                 });
+                string apiUrl = ConfigurationManager.AppSettings["RevalidateApiUrl"];
+                string apiResponse = ExternalApiCallHelpers.CallApi(apiUrl, HttpMethod.Get);
             }
             else
             {
