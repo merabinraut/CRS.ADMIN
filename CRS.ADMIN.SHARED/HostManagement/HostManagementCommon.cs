@@ -72,6 +72,7 @@ namespace CRS.ADMIN.SHARED.HostManagement
         public string Message { get; set; }
         public string Subject { get; set; }
         public string Attachments { get; set; }
+        public string AttachmentName { get; set; }
         public string PostedDate { get; set; }
         public string ActionDate { get; set; }
         public string ActionBy { get; set; }
