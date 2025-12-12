@@ -305,7 +305,8 @@ namespace CRS.ADMIN.REPOSITORY.HostManagement
                     Subject = dataTable.Rows[0]["Subject"].ToString(),
                     Message = dataTable.Rows[0]["Message"].ToString(),
                     PostedDate = dataTable.Rows[0]["PostedDate"].ToString(),
-                    Attachments = dataTable.Rows[0]["Attachments"].ToString()
+                    Attachments = dataTable.Rows[0]["Attachments"].ToString(),
+                    AttachmentName = dataTable.Rows[0]["AttachmentName"].ToString()
                 };
             }
             return new InquiryListCommon();

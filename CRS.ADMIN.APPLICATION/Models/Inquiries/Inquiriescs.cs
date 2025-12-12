@@ -22,6 +22,7 @@ namespace CRS.ADMIN.APPLICATION.Models.Inquiries
         public string Posted_Date { get; set; }
         public string Action { get; set; }
         public string Attachments { get; set; }
+        public string AttachmentName { get; set; }
 
     }
     public class InquiryListModel
