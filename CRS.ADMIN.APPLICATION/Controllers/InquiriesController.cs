@@ -42,7 +42,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             var inquiriesDetails = _buss.GetInquiryDetailsAsync(inquiryId);
             var response = inquiriesDetails.MapObject<InquiriesModel>();
             ViewBag.imagename = response.FullName;
-            response.Attachments = ImageHelper.ProcessedImage(response.Attachments);
+            response.Attachments = !string.IsNullOrEmpty(response.Attachments) ? ImageHelper.ProcessedImage(response.Attachments) : null;
             ViewBag.InqueryId = response.InquiryId;
             TempData["DetailsModel"] = response;
             return PartialView("_GetInquiriesDetails", response);

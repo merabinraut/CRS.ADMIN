@@ -253,7 +253,6 @@
             method: 'GET',
             data: { inquiryId: InquiryId },
             success: function (response) {
-                debugger;
                 modal.removeClass('loading');
                 $('#get-inquiries-details-id').html(response);
             },
@@ -264,14 +263,11 @@
             }
         });
         }
-
         document.getElementById('ClubPlanCloseId_5').addEventListener('click',
             function (event) {
                 event.preventDefault();
                 window.location.reload();
             });
-
-
     </script>
 
 }
