@@ -325,6 +325,25 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                     return Json(dbResponse.Message, JsonRequestBehavior.AllowGet);
                 }
 
+                try
+                {
+                    if (!string.IsNullOrEmpty(response.Extra2))
+                    {
+                        await VercelHelper.RemoveSubdomainAsync(response.Extra2);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    AddNotificationMessage(new NotificationModel()
+                    {
+                        NotificationType = NotificationMessage.WARNING,
+                        Message = ex.Message ?? NotificationMessage.WARNING.ToString(),
+                        Title = NotificationMessage.WARNING.ToString()
+                    });
+                    _sqlTransactionHandler.RollbackTransaction();
+                    return Json(dbResponse.Message, JsonRequestBehavior.AllowGet);
+                }
+
                 var adminDeleteAccountResponse = await _amazonCognitoMiddleware.AdminDeleteAccountAsync(new CRS.ADMIN.SHARED.Middleware.AmazonCognitoModel.UserManagement.AdminDeleteAccountModel.Request
                 {
                     userName = response.Extra1
@@ -2431,7 +2450,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                             });
                             _sqlTransactionHandler.RollbackTransaction();
                             return RedirectToAction("ClubList", "ClubManagement");
-                        }                      
+                        }
                     }
                     var resp = _BUSS.UpdateSubDomain(requestMapped, _sqlTransactionHandler.GetCurrentConnection(), _sqlTransactionHandler.GetCurrentTransaction());
 
