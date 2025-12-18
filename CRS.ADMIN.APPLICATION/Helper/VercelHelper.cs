@@ -69,5 +69,30 @@ namespace CRS.ADMIN.APPLICATION.Helper
                 return result;
             }
         }
+
+        /// <summary>
+        /// Checks whether a subdomain exists in the Vercel project.
+        /// </summary>
+        public static async Task<bool> SubdomainExistsAsync(string subdomain)
+        {
+            if (string.IsNullOrEmpty(subdomain))
+                return false;
+
+            using (var client = new HttpClient())
+            {
+                client.DefaultRequestHeaders.Authorization =
+                    new AuthenticationHeaderValue("Bearer", _token);
+
+                var domainName = $"{subdomain}{_domain}";
+                var url = $"https://api.vercel.com/v9/projects/{_projectId}/domains/{domainName}?teamId={_teamId}";
+
+                var response = await client.GetAsync(url);
+
+                if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
+                    return false;
+
+                return response.IsSuccessStatusCode;
+            }
+        }
     }
 }
