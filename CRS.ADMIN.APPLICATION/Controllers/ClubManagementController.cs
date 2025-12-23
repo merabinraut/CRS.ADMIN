@@ -2351,7 +2351,8 @@ namespace CRS.ADMIN.APPLICATION.Controllers
         bool IsValidSubdomain(string subdomain)
         {
             // var regex = new Regex("^[a-zA-Z0-9][a-zA-Z0-9_-]{0,61}[a-zA-Z0-9]$");
-            var regex = new Regex(@"^(?!-)[a-zA-Z0-9_-]{1,63}(?<!-)$");
+            //var regex = new Regex(@"^(?!-)[a-zA-Z0-9_-]{1,63}(?<!-)$");
+            var regex = new Regex(@"^(?!-)[a-zA-Z0-9-]{1,63}(?<!-)$");
             return regex.IsMatch(subdomain);
         }
         [HttpPost]
