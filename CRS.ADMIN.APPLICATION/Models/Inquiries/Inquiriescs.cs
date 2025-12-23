@@ -23,6 +23,7 @@ namespace CRS.ADMIN.APPLICATION.Models.Inquiries
         public string Action { get; set; }
         public string Attachments { get; set; }
         public string AttachmentName { get; set; }
+        public string CompanyName { get; set; }
 
     }
     public class InquiryListModel

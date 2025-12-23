@@ -76,5 +76,6 @@ namespace CRS.ADMIN.SHARED.HostManagement
         public string PostedDate { get; set; }
         public string ActionDate { get; set; }
         public string ActionBy { get; set; }
+        public string CompanyName { get; set; }
     }
 }
