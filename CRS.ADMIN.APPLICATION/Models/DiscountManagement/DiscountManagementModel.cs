@@ -63,17 +63,15 @@ namespace CRS.ADMIN.APPLICATION.Models.DiscountManagement
         public string categoryId { get; set; }
         public string subCategoryId { get; set; }
         [Required]
-        public long FromAmount { get; set; }
+        public long? FromAmount { get; set; }
         [Required]
-        public long ToAmount { get; set; }
+        public long? ToAmount { get; set; }
         [Required]
         public string DiscountType { get; set; }
         [Required]
-        public int Value { get; set; }
-        [Required]
-        public decimal MinValue { get; set; }
-        [Required]
-        public decimal MaxValue { get; set; }
+        public int? Value { get; set; }
+        public decimal? MinValue { get; set; }
+        public decimal? MaxValue { get; set; }
         public string categoryName { get; set; }
         public List<SelectListItem> discountTypeList { get; set; } = new List<SelectListItem>();
 

@@ -340,6 +340,12 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             if (!string.IsNullOrEmpty(requestModel.subCategoryId))
                 requestModel.subCategoryId = requestModel.subCategoryId.DecryptParameter();
             var viewModel = new DiscountSubCategoryManagementRequestModel();
+            if(requestModel.DiscountType.DecryptParameter()=="F")
+            {
+                ModelState.AddModelError("MinValue", "MinValue is required");
+                ModelState.AddModelError("MaxValue", "MinValue is required");
+
+            }
             if (ModelState.IsValid)
             {
                 var mappedRequest = requestModel.MapObject<DiscountSubCategoryManagementRequestCommon>();
