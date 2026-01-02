@@ -328,7 +328,9 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 {
                     if (!string.IsNullOrEmpty(response.Extra2))
                     {
-                        await VercelHelper.RemoveSubdomainAsync(response.Extra2);
+                        var exists = await VercelHelper.SubdomainExistsAsync(response.Extra2);
+                        if (exists)
+                            await VercelHelper.RemoveSubdomainAsync(response.Extra2);
                     }
                 }
                 catch (Exception ex)
@@ -2348,7 +2350,8 @@ namespace CRS.ADMIN.APPLICATION.Controllers
         bool IsValidSubdomain(string subdomain)
         {
             // var regex = new Regex("^[a-zA-Z0-9][a-zA-Z0-9_-]{0,61}[a-zA-Z0-9]$");
-            var regex = new Regex(@"^(?!-)[a-zA-Z0-9_-]{1,63}(?<!-)$");
+            //var regex = new Regex(@"^(?!-)[a-zA-Z0-9_-]{1,63}(?<!-)$");
+            var regex = new Regex(@"^(?!-)[a-zA-Z0-9-]{1,63}(?<!-)$");
             return regex.IsMatch(subdomain);
         }
         [HttpPost]
@@ -2382,11 +2385,13 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             {
                 try
                 {
-                    await VercelHelper.AddSubdomainAsync(request.SubDomainName);
                     if (!string.IsNullOrEmpty(ceoDetails.SubDomainName))
                     {
-                        await VercelHelper.RemoveSubdomainAsync(ceoDetails.SubDomainName);
+                        var exists = await VercelHelper.SubdomainExistsAsync(ceoDetails.SubDomainName);
+                        if (exists)
+                            await VercelHelper.RemoveSubdomainAsync(ceoDetails.SubDomainName);
                     }
+                    await VercelHelper.AddSubdomainAsync(request.SubDomainName);
                 }
                 catch (Exception ex)
                 {
