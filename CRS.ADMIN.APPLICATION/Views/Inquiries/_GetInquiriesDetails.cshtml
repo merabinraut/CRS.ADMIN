@@ -84,6 +84,19 @@
                             </div>
                         </div>
                         <div class="flex">
+                            <div class="w-[128px]"> Company Name :</div>
+                            <div class="flex-1">
+                                @if (Model != null && !string.IsNullOrEmpty(Model.CompanyName))
+                                {
+                                    @Model.CompanyName
+                                }
+                                else
+                                {
+                                    @:N/A
+                                }
+                            </div>
+                        </div>
+                        <div class="flex">
                             <div class="w-[128px]"> Subject :</div>
                             <div class="flex-1">
                                 @if (Model != null && !string.IsNullOrEmpty(Model.Subject))
