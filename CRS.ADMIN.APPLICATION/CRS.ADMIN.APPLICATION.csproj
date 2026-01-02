@@ -292,6 +292,7 @@
     <Compile Include="Controllers\GroupManagementController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\HostManagementController.cs" />
+    <Compile Include="Controllers\DiscountManagementController.cs" />
     <Compile Include="Controllers\InquiriesController.cs" />
     <Compile Include="Controllers\LanguageManagementController.cs" />
     <Compile Include="Controllers\LocationManagementController.cs" />
@@ -353,6 +354,7 @@
     <Compile Include="Models\CommissionManagement\CommissionSetupModel.cs" />
     <Compile Include="Models\CommonConfigurationModel.cs" />
     <Compile Include="Models\CustomerManagement\CustomerManagementModel.cs" />
+    <Compile Include="Models\DiscountManagement\DiscountManagementModel.cs" />
     <Compile Include="Models\EmailLog\EmailLogModel.cs" />
     <Compile Include="Models\ErrorLog\ErrorLogModel.cs" />
     <Compile Include="Models\GroupManagement\GroupInfoModel.cs" />
@@ -446,6 +448,12 @@
     <Content Include="Views\PlanManagement\_PlanListPartialView.cshtml" />
     <Content Include="Views\PlanManagement\_ManageClubPlan.cshtml" />
     <Content Include="Views\Inquiries\_GetInquiriesDetails.cshtml" />
+    <Content Include="Views\DiscountManagement\index.cshtml" />
+    <Content Include="Views\DiscountManagement\_DiscountCategoryPartialView.cshtml" />
+    <Content Include="Views\DiscountManagement\_ManageDiscountCategoryPartialView.cshtml" />
+    <Content Include="Views\DiscountManagement\_DiscountCategoryDetailsPartialView.cshtml" />
+    <Content Include="Views\DiscountManagement\GetCategoryDetailsList.cshtml" />
+    <Content Include="Views\DiscountManagement\_ManageDiscountSubCategoryPartialView.cshtml" />
     <None Include="Views\PromotionManagement\_ManageAdvertisementPartialView.cshtml" />
     <None Include="Views\PromotionManagement\_AdvertisementList.cshtml" />
     <Content Include="Content\assets\images\TickIcon.svg" />

@@ -22,9 +22,6 @@
 
         </div>
 
-
-
-        <!-- container  -->
         <div id="tab1" class="tab-content-plane ">
             <div class="flex flex-col gap-8">
                 <div id="tab1" class="tab-content">
@@ -49,203 +46,196 @@
                             @Html.Partial("_PlanListPartialView", Model)
                         }
                     </div>
-                    @*<div id="request1" class="pane" style="display: none;">
-                            <a href="@Url.Action("PlanList", "PlanManagement", new { TabValue ="02" })">
-                                @Html.Partial("_OwnPlanByClubPartialView", Model.ClubPlanResponseModel)
-                            </a>
-                        </div>*@
-
                     <div class="pane" id="request1" style="display: none;">
-                        <!-- Removed the <a href=…> so we don't trigger a redirect -->
                         @Html.Partial("_OwnPlanByClubPartialView", Model.ClubPlanResponseModel)
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
-    <div id="approve-confirmation-plan-request" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 hidden w-full
+</div>
+<div id="approve-confirmation-plan-request" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 hidden w-full
      p-4 overflow-x-hidden overflow-y-auto
      md:inset-0 h-[calc(100%-1rem)] max-h-full " style="align-items: flex-start;">
-        <div class="relative max-w-2xl max-h-full w-[412px] px-4 pt-[40px] pb-[46px] mt-24">
-            <!-- Modal content -->
-            <div class="relative bg-white rounded-lg shadow">
-                <!-- Modal header -->
-                <button type="button"
-                        class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center absolute top-[24px] right-[20px] "
-                        data-modal-hide="approve-confirmation-plan-request">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="25" viewBox="0 0 24 25" fill="none">
-                        <rect y="0.621094" width="24" height="24" rx="12" fill="#FAFAFA" />
-                        <path d="M5.41406 4.95703L4.33594 6.03516L10.9219 12.6211L4.33594 19.207L5.41406 20.2852L12 13.6992L18.5859 20.2852L19.6641 19.207L13.0781 12.6211L19.6641 6.03516L18.5859 4.95703L12 11.543L5.41406 4.95703Z"
-                              fill="#7A7A7A" />
-                    </svg>
-                </button>
-                <!-- Modal body -->
-                <div class="grid gap-6 px-[20px] py-8">
-                    <div class="text-[#333] font-semibold pb-[11px] border-b border-[#eeeeee]">@CRS.ADMIN.APPLICATION.Resources.Resource.Confirmation</div>
-                    <div class="grid gap-[20px] text-[#062937] mb-[45px]">
-                        <div class="text-[14px] text-secondary-text-2 text-start" id="confirmationRequestMessage">
-                            @CRS.ADMIN.APPLICATION.Resources.Resource.PlanRequestConfirmationMessage
-                        </div>
+    <div class="relative max-w-2xl max-h-full w-[412px] px-4 pt-[40px] pb-[46px] mt-24">
+        <!-- Modal content -->
+        <div class="relative bg-white rounded-lg shadow">
+            <!-- Modal header -->
+            <button type="button"
+                    class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center absolute top-[24px] right-[20px] "
+                    data-modal-hide="approve-confirmation-plan-request">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="25" viewBox="0 0 24 25" fill="none">
+                    <rect y="0.621094" width="24" height="24" rx="12" fill="#FAFAFA" />
+                    <path d="M5.41406 4.95703L4.33594 6.03516L10.9219 12.6211L4.33594 19.207L5.41406 20.2852L12 13.6992L18.5859 20.2852L19.6641 19.207L13.0781 12.6211L19.6641 6.03516L18.5859 4.95703L12 11.543L5.41406 4.95703Z"
+                          fill="#7A7A7A" />
+                </svg>
+            </button>
+            <!-- Modal body -->
+            <div class="grid gap-6 px-[20px] py-8">
+                <div class="text-[#333] font-semibold pb-[11px] border-b border-[#eeeeee]">@CRS.ADMIN.APPLICATION.Resources.Resource.Confirmation</div>
+                <div class="grid gap-[20px] text-[#062937] mb-[45px]">
+                    <div class="text-[14px] text-secondary-text-2 text-start" id="confirmationRequestMessage">
+                        @CRS.ADMIN.APPLICATION.Resources.Resource.PlanRequestConfirmationMessage
                     </div>
-                    <div class="flex justify-end">
-                        <div class="flex gap-2 justify-end mt-[45px]">
-                            <input id="request_ids" value="" hidden />
-                            <div class="btn btn-secondary w-[110px]" id="approve_ids1" data-modal-hide="approve-confirmation-plan-request">@CRS.ADMIN.APPLICATION.Resources.Resource.clubNo</div>
-                            <div class="btn btn-primary w-[110px]" onclick="ApproveRequestedPlanFunction()" data-vals1="" data-vals2="" data-vals3="" id="approve_ids1">@CRS.ADMIN.APPLICATION.Resources.Resource.clubYes</div>
-                        </div>
+                </div>
+                <div class="flex justify-end">
+                    <div class="flex gap-2 justify-end mt-[45px]">
+                        <input id="request_ids" value="" hidden />
+                        <div class="btn btn-secondary w-[110px]" id="approve_ids1" data-modal-hide="approve-confirmation-plan-request">@CRS.ADMIN.APPLICATION.Resources.Resource.clubNo</div>
+                        <div class="btn btn-primary w-[110px]" onclick="ApproveRequestedPlanFunction()" data-vals1="" data-vals2="" data-vals3="" id="approve_ids1">@CRS.ADMIN.APPLICATION.Resources.Resource.clubYes</div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
 
 
 
-    <div id="reject-confirmation-plan-request" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 hidden w-full
+<div id="reject-confirmation-plan-request" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 hidden w-full
      p-4 overflow-x-hidden overflow-y-auto
      md:inset-0 h-[calc(100%-1rem)] max-h-full shadow " style="
     align-items: flex-start;
     justify-content:center">
-        <div class="relative max-w-2xl max-h-full w-[412px] px-4 pt-[40px] pb-[46px] mt-24">
-            <!-- Modal content -->
-            <div class="relative bg-white rounded-lg shadow">
-                <!-- Modal header -->
-                <button type="button"
-                        class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center absolute top-[24px] right-[20px] "
-                        data-modal-hide="reject-confirmation-plan-request">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="25" viewBox="0 0 24 25" fill="none">
-                        <rect y="0.621094" width="24" height="24" rx="12" fill="#FAFAFA" />
-                        <path d="M5.41406 4.95703L4.33594 6.03516L10.9219 12.6211L4.33594 19.207L5.41406 20.2852L12 13.6992L18.5859 20.2852L19.6641 19.207L13.0781 12.6211L19.6641 6.03516L18.5859 4.95703L12 11.543L5.41406 4.95703Z"
-                              fill="#7A7A7A" />
-                    </svg>
-                </button>
-                <!-- Modal body -->
-                <div class="grid gap-6 px-[20px] py-8">
-                    <div class="text-[#333] font-semibold pb-[11px] border-b border-[#eeeeee]">@CRS.ADMIN.APPLICATION.Resources.Resource.Confirmation</div>
-                    <div class="grid gap-[20px] text-[#062937] mb-[45px]">
-                        <div class="text-[14px] text-secondary-text-2 text-start" id="RejectedRequestMessage">
-                            @CRS.ADMIN.APPLICATION.Resources.Resource.PlanRequestRejectConfirmation
-                        </div>
+    <div class="relative max-w-2xl max-h-full w-[412px] px-4 pt-[40px] pb-[46px] mt-24">
+        <!-- Modal content -->
+        <div class="relative bg-white rounded-lg shadow">
+            <!-- Modal header -->
+            <button type="button"
+                    class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center absolute top-[24px] right-[20px] "
+                    data-modal-hide="reject-confirmation-plan-request">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="25" viewBox="0 0 24 25" fill="none">
+                    <rect y="0.621094" width="24" height="24" rx="12" fill="#FAFAFA" />
+                    <path d="M5.41406 4.95703L4.33594 6.03516L10.9219 12.6211L4.33594 19.207L5.41406 20.2852L12 13.6992L18.5859 20.2852L19.6641 19.207L13.0781 12.6211L19.6641 6.03516L18.5859 4.95703L12 11.543L5.41406 4.95703Z"
+                          fill="#7A7A7A" />
+                </svg>
+            </button>
+            <!-- Modal body -->
+            <div class="grid gap-6 px-[20px] py-8">
+                <div class="text-[#333] font-semibold pb-[11px] border-b border-[#eeeeee]">@CRS.ADMIN.APPLICATION.Resources.Resource.Confirmation</div>
+                <div class="grid gap-[20px] text-[#062937] mb-[45px]">
+                    <div class="text-[14px] text-secondary-text-2 text-start" id="RejectedRequestMessage">
+                        @CRS.ADMIN.APPLICATION.Resources.Resource.PlanRequestRejectConfirmation
                     </div>
-                    <div class="flex justify-end">
-                        <div class="flex gap-2 justify-end mt-[45px]">
-                            <input id="request_ids" value="" hidden />
-                            <div class="btn btn-secondary w-[110px]" id="approve_ids1" data-modal-hide="reject-confirmation-plan-request">@CRS.ADMIN.APPLICATION.Resources.Resource.clubNo</div>
-                            <div class="btn btn-primary w-[110px]" onclick="RejectedRequestedPlanFunction()" data-vals1="" data-vals2="" data-vals3="" id="approve_ids1">@CRS.ADMIN.APPLICATION.Resources.Resource.clubYes</div>
-                        </div>
+                </div>
+                <div class="flex justify-end">
+                    <div class="flex gap-2 justify-end mt-[45px]">
+                        <input id="request_ids" value="" hidden />
+                        <div class="btn btn-secondary w-[110px]" id="approve_ids1" data-modal-hide="reject-confirmation-plan-request">@CRS.ADMIN.APPLICATION.Resources.Resource.clubNo</div>
+                        <div class="btn btn-primary w-[110px]" onclick="RejectedRequestedPlanFunction()" data-vals1="" data-vals2="" data-vals3="" id="approve_ids1">@CRS.ADMIN.APPLICATION.Resources.Resource.clubYes</div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
 
 
 
-    <div id="delete-plan-request" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 hidden w-full
+<div id="delete-plan-request" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 hidden w-full
      p-4 overflow-x-hidden overflow-y-auto
      md:inset-0 h-[calc(100%-1rem)] max-h-full " style="align-items: flex-start;">
-        <div class="relative max-w-2xl max-h-full w-[412px] px-4 pt-[40px] pb-[46px] mt-24">
-            <!-- Modal content -->
-            <div class="relative bg-white rounded-lg shadow">
-                <!-- Modal header -->
-                <button type="button"
-                        class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center absolute top-[24px] right-[20px] "
-                        data-modal-hide="delete-plan-request">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="25" viewBox="0 0 24 25" fill="none">
-                        <rect y="0.621094" width="24" height="24" rx="12" fill="#FAFAFA" />
-                        <path d="M5.41406 4.95703L4.33594 6.03516L10.9219 12.6211L4.33594 19.207L5.41406 20.2852L12 13.6992L18.5859 20.2852L19.6641 19.207L13.0781 12.6211L19.6641 6.03516L18.5859 4.95703L12 11.543L5.41406 4.95703Z"
-                              fill="#7A7A7A" />
-                    </svg>
-                </button>
-                <!-- Modal body -->
-                <div class="grid gap-6 px-[20px] py-8">
-                    <div class="text-[#333] font-semibold pb-[11px] border-b border-[#eeeeee]">@CRS.ADMIN.APPLICATION.Resources.Resource.Confirmation</div>
-                    <div class="grid gap-[20px] text-[#062937] mb-[45px]">
-                        <div class="text-[14px] text-secondary-text-2 text-start" id="deleteRequestMessage">
-                            @*@CRS.ADMIN.APPLICATION.Resources.Resource.PlanRequestConfirmationMessage*@店舗独自プランを削除してもよろしいですか？;
-                        </div>
+    <div class="relative max-w-2xl max-h-full w-[412px] px-4 pt-[40px] pb-[46px] mt-24">
+        <!-- Modal content -->
+        <div class="relative bg-white rounded-lg shadow">
+            <!-- Modal header -->
+            <button type="button"
+                    class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center absolute top-[24px] right-[20px] "
+                    data-modal-hide="delete-plan-request">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="25" viewBox="0 0 24 25" fill="none">
+                    <rect y="0.621094" width="24" height="24" rx="12" fill="#FAFAFA" />
+                    <path d="M5.41406 4.95703L4.33594 6.03516L10.9219 12.6211L4.33594 19.207L5.41406 20.2852L12 13.6992L18.5859 20.2852L19.6641 19.207L13.0781 12.6211L19.6641 6.03516L18.5859 4.95703L12 11.543L5.41406 4.95703Z"
+                          fill="#7A7A7A" />
+                </svg>
+            </button>
+            <!-- Modal body -->
+            <div class="grid gap-6 px-[20px] py-8">
+                <div class="text-[#333] font-semibold pb-[11px] border-b border-[#eeeeee]">@CRS.ADMIN.APPLICATION.Resources.Resource.Confirmation</div>
+                <div class="grid gap-[20px] text-[#062937] mb-[45px]">
+                    <div class="text-[14px] text-secondary-text-2 text-start" id="deleteRequestMessage">
+                        @*@CRS.ADMIN.APPLICATION.Resources.Resource.PlanRequestConfirmationMessage*@店舗独自プランを削除してもよろしいですか？;
                     </div>
-                    <div class="flex justify-end">
-                        <div class="flex gap-2 justify-end mt-[45px]">
-                            <input id="request_ids" value="" hidden />
-                            <div class="btn btn-secondary w-[110px]" id="approve_ids1" data-modal-hide="delete-plan-request">@CRS.ADMIN.APPLICATION.Resources.Resource.clubNo</div>
-                            <div class="btn btn-primary w-[110px]" onclick="ApproveRequestedPlanFunction()" data-vals1="" data-vals2="" data-vals3="" id="approve_ids1">@CRS.ADMIN.APPLICATION.Resources.Resource.clubYes</div>
-                        </div>
+                </div>
+                <div class="flex justify-end">
+                    <div class="flex gap-2 justify-end mt-[45px]">
+                        <input id="request_ids" value="" hidden />
+                        <div class="btn btn-secondary w-[110px]" id="approve_ids1" data-modal-hide="delete-plan-request">@CRS.ADMIN.APPLICATION.Resources.Resource.clubNo</div>
+                        <div class="btn btn-primary w-[110px]" onclick="ApproveRequestedPlanFunction()" data-vals1="" data-vals2="" data-vals3="" id="approve_ids1">@CRS.ADMIN.APPLICATION.Resources.Resource.clubYes</div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
 
 
 
 
-    <!-- Confirmation  -->
-    <div id="add-new-host-modal-save" tabindex="-1" aria-hidden="true"
-         class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
-        <div class="relative max-w-2xl max-h-full w-[412px] px-4 pt-[40px] pb-[46px]">
-            <!-- Modal content -->
-            <div class="relative bg-white rounded-lg shadow">
-                <!-- Modal header -->
+<!-- Confirmation  -->
+<div id="add-new-host-modal-save" tabindex="-1" aria-hidden="true"
+     class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
+    <div class="relative max-w-2xl max-h-full w-[412px] px-4 pt-[40px] pb-[46px]">
+        <!-- Modal content -->
+        <div class="relative bg-white rounded-lg shadow">
+            <!-- Modal header -->
 
-                <button type="button"
-                        class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center absolute top-[24px] right-[20px] "
-                        data-modal-hide="add-new-host-modal-save">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="25" viewBox="0 0 24 25" fill="none">
-                        <rect y="0.621094" width="24" height="24" rx="12" fill="#FAFAFA" />
-                        <path d="M5.41406 4.95703L4.33594 6.03516L10.9219 12.6211L4.33594 19.207L5.41406 20.2852L12 13.6992L18.5859 20.2852L19.6641 19.207L13.0781 12.6211L19.6641 6.03516L18.5859 4.95703L12 11.543L5.41406 4.95703Z"
-                              fill="#7A7A7A" />
-                    </svg>
-                </button>
-                <!-- Modal body -->
-                <div class="grid gap-6 px-[20px] py-8">
-                    <div class="flex justify-center mb-4">
-                        <img src="~/Content/assets_new/images/save-check.svg" />
+            <button type="button"
+                    class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center absolute top-[24px] right-[20px] "
+                    data-modal-hide="add-new-host-modal-save">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="25" viewBox="0 0 24 25" fill="none">
+                    <rect y="0.621094" width="24" height="24" rx="12" fill="#FAFAFA" />
+                    <path d="M5.41406 4.95703L4.33594 6.03516L10.9219 12.6211L4.33594 19.207L5.41406 20.2852L12 13.6992L18.5859 20.2852L19.6641 19.207L13.0781 12.6211L19.6641 6.03516L18.5859 4.95703L12 11.543L5.41406 4.95703Z"
+                          fill="#7A7A7A" />
+                </svg>
+            </button>
+            <!-- Modal body -->
+            <div class="grid gap-6 px-[20px] py-8">
+                <div class="flex justify-center mb-4">
+                    <img src="~/Content/assets_new/images/save-check.svg" />
+                </div>
+                <div class="grid gap-[20px] text-[#062937] mb-[44px]">
+                    <div class="text-base text-secondary-text-2 text-center font-semibold">
+                        Success
                     </div>
-                    <div class="grid gap-[20px] text-[#062937] mb-[44px]">
-                        <div class="text-base text-secondary-text-2 text-center font-semibold">
-                            Success
-                        </div>
-                        <div class="text-[14px] text-secondary-text-2 text-center">
-                            Congratulations, you just added a new plan.
-                        </div>
+                    <div class="text-[14px] text-secondary-text-2 text-center">
+                        Congratulations, you just added a new plan.
                     </div>
-                    <div class="flex justify-end">
-                        <div class="flex gap-8">
-                            <button data-modal-hide="add-new-host-modal-save"
-                                    class="btn btn-primary-normal rounded-[4px] text-sm gap-2 w-[130px]"
-                                    data-drawer-target="add-new-host-club" data-drawer-show="add-new-host-club"
-                                    data-drawer-placement="right" data-drawer-backdrop="false"
-                                    aria-controls="drawer-disabled-backdrop">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16"
-                                     height="16" viewBox="0 0 16 16" fill="none">
-                                    <path d="M8 1.5C4.41602 1.5 1.5 4.41602 1.5 8C1.5 11.584 4.41602 14.5 8 14.5C11.584 14.5 14.5 11.584 14.5 8C14.5 4.41602 11.584 1.5 8 1.5ZM8 2.5C11.043 2.5 13.5 4.95703 13.5 8C13.5 11.043 11.043 13.5 8 13.5C4.95703 13.5 2.5 11.043 2.5 8C2.5 4.95703 4.95703 2.5 8 2.5ZM7.5 5V7.5H5V8.5H7.5V11H8.5V8.5H11V7.5H8.5V5H7.5Z"
-                                          fill="#D75A8B" />
-                                </svg>Add New
-                            </button>
+                </div>
+                <div class="flex justify-end">
+                    <div class="flex gap-8">
+                        <button data-modal-hide="add-new-host-modal-save"
+                                class="btn btn-primary-normal rounded-[4px] text-sm gap-2 w-[130px]"
+                                data-drawer-target="add-new-host-club" data-drawer-show="add-new-host-club"
+                                data-drawer-placement="right" data-drawer-backdrop="false"
+                                aria-controls="drawer-disabled-backdrop">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16"
+                                 height="16" viewBox="0 0 16 16" fill="none">
+                                <path d="M8 1.5C4.41602 1.5 1.5 4.41602 1.5 8C1.5 11.584 4.41602 14.5 8 14.5C11.584 14.5 14.5 11.584 14.5 8C14.5 4.41602 11.584 1.5 8 1.5ZM8 2.5C11.043 2.5 13.5 4.95703 13.5 8C13.5 11.043 11.043 13.5 8 13.5C4.95703 13.5 2.5 11.043 2.5 8C2.5 4.95703 4.95703 2.5 8 2.5ZM7.5 5V7.5H5V8.5H7.5V11H8.5V8.5H11V7.5H8.5V5H7.5Z"
+                                      fill="#D75A8B" />
+                            </svg>Add New
+                        </button>
 
-                            <button class="btn btn-primary-default rounded-[4px] px-4 w-max gap-2"
-                                    data-modal-hide="add-new-host-modal-save">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="17"
-                                     height="16" viewBox="0 0 17 16" fill="none">
-                                    <path d="M5.71997 7.33117H13.8346V8.6645H5.71997L9.29597 12.2405L8.3533 13.1832L3.16797 7.99783L8.3533 2.8125L9.29597 3.75517L5.71997 7.33117Z"
-                                          fill="white" />
-                                </svg>Back
-                            </button>
-                        </div>
+                        <button class="btn btn-primary-default rounded-[4px] px-4 w-max gap-2"
+                                data-modal-hide="add-new-host-modal-save">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="17"
+                                 height="16" viewBox="0 0 17 16" fill="none">
+                                <path d="M5.71997 7.33117H13.8346V8.6645H5.71997L9.29597 12.2405L8.3533 13.1832L3.16797 7.99783L8.3533 2.8125L9.29597 3.75517L5.71997 7.33117Z"
+                                      fill="white" />
+                            </svg>Back
+                        </button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
 
-    <!--Manage Plan-->
-    @Html.Partial("_ManagePlan", _PlanModel)
-    @Html.Partial("_ManageClubPlan", _ClubPlanModel)
-    <!--Manage Plan-->
-    @section scripts{
-        <script>
+<!--Manage Plan-->
+@Html.Partial("_ManagePlan", _PlanModel)
+@Html.Partial("_ManageClubPlan", _ClubPlanModel)
+<!--Manage Plan-->
+@section scripts{
+    <script>
             $(document).ready(function () {
             $('select').select2({
                 minimumResultsForSearch: Infinity
@@ -317,8 +307,8 @@
                 }
             });
         }
-        </script>
-        <script>
+    </script>
+    <script>
         document.addEventListener('DOMContentLoaded', function () {
                 const page_size = @ViewBag.PageSize;
                 const total_data = @ViewBag.TotalData;
@@ -328,20 +318,20 @@
                 URL = addQueryParam(URL, 'SearchFilter', search_filter);
                 LoadPagination(page_size, total_data, start_index_val, URL);
             });
-        </script>
+    </script>
 
-        <script>
-            function toggleInputField() {
-                var inputField = document.getElementById('txtInputField');
-                if (document.getElementById('chkShowInput').checked) {
-                    inputField.style.display = 'block';
-                } else {
-                    inputField.style.display = 'none';
-                }
+    <script>
+        function toggleInputField() {
+            var inputField = document.getElementById('txtInputField');
+            if (document.getElementById('chkShowInput').checked) {
+                inputField.style.display = 'block';
+            } else {
+                inputField.style.display = 'none';
             }
+        }
 
-        </script>
-        <script>
+    </script>
+    <script>
 
             document.getElementById('tab1Link').style.color = '#D75A8B';
             document.getElementById('tab1Link').style.borderBottom = '#D75A8B 2px solid';
@@ -421,8 +411,8 @@
                     modal.setAttribute("aria-hidden", "false");
             }
 
-        </script>
-        <script>
+    </script>
+    <script>
 
             function ApproveRequestedPlanFunction() {
                      const sno = $('#approve_ids1').attr('data-vals1');
@@ -441,8 +431,8 @@
                 //window.location.href = '/PlanManagement/ApproveRequestedPlanList?Sno=' + i + '&type=' + j + '&planId=' + k+ '&SearchFilter=' + search_filter2 + '&StartIndex=' + start_index_val2 + '&PageSize=' + page_size2;
             }
 
-        </script>
-        <script>
+    </script>
+    <script>
             function openApproveRejectedRequestModal(clubId, type, planId) {
                 const $modal = $("#reject-confirmation-plan-request");
                 const $message = $("#confirmationRequestMessage");
@@ -474,10 +464,10 @@
           //window.location.href = '/PlanManagement/ApproveRequestedPlanList?Sno=' + i + '&type=' + j + '&planId=' + k+ '&SearchFilter=' + search_filter2 + '&StartIndex=' + start_index_val2 + '&PageSize=' + page_size2;
       }
 
-        </script>
+    </script>
 
 
-        <script>
+    <script>
        function DeleteClubPlanModal(clubId, type, planId) {
           debugger;
           const $modal = $("#delete-plan-request");
@@ -523,5 +513,5 @@
                     event.preventDefault();
                     window.location.reload();
                 });
-        </script>
-    }
+    </script>
+}

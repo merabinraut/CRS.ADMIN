@@ -143,7 +143,6 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             if (!string.IsNullOrEmpty(clubCategory) && clubCategory.ToUpper() == "BASIC")
             {
                 redirectresult = RedirectToAction("BasicClubManagementList", "BasicClubManagement");
-
             }
             else
             {

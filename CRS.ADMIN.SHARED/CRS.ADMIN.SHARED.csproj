@@ -120,6 +120,7 @@
     <Compile Include="CommonDbResponse.cs" />
     <Compile Include="Common.cs" />
     <Compile Include="CustomerManagement\CustomerManagementCommon.cs" />
+    <Compile Include="DiscountManagementCommon\DiscountManagementCommon.cs" />
     <Compile Include="EmailLog\EmailLogModelCommon.cs" />
     <Compile Include="ErrorLog\ErrorLogCommon.cs" />
     <Compile Include="GroupManagement\GroupInfoModelCommon.cs" />

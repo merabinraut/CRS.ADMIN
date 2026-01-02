@@ -1,0 +1,174 @@
+﻿@model CRS.ADMIN.APPLICATION.Models.DiscountManagement.DiscountSubCategoryManagementRequestModel
+<!-- add new host from -->
+<div id="add-new-discount-sub-category"
+     class="drawer-close-disable  flex justify-end fixed top-0 right-0 z-40 h-screen overflow-y-auto transition-transform translate-x-full "
+     tabindex="-1" aria-labelledby="drawer-right-label">
+    <div class="bg-white w-[616px] drawer-container relative">
+        <div class="drawer-form-container sticky top-0 z-[5] ">
+            <div class="drawer-form flex justify-between bg-secondary-color-pink py-[16px] px-[24px] h-[56px]">
+                <div>
+                    @CRS.ADMIN.APPLICATION.Resources.Resource.Edit_Plan
+                </div>
+                <button type="button" data-drawer-hide="add-new-discount-sub-category" aria-controls="add-new-discount-sub-category"
+                        class="text-[20px]" id="CloseId">
+                    <i class="las la-window-close text-white"></i>
+                </button>
+            </div>
+        </div>
+        @using (Html.BeginForm("ManageDiscountSubCategoryDetails", "DiscountManagement", FormMethod.Post, new { @id = "ManageSubCategoryForm", enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+            if (!string.IsNullOrEmpty(Model.categoryId))
+            {
+                @Html.HiddenFor(model => model.categoryId)
+            }
+            if (!string.IsNullOrEmpty(Model.categoryName))
+            {
+                @Html.HiddenFor(model => model.categoryName)
+            }
+            if (!string.IsNullOrEmpty(Model.subCategoryId))
+            {
+                @Html.HiddenFor(model => model.subCategoryId)
+            }
+            <div class="p-[24px]">
+                <div class=" py-4 grid gap-5">
+                    <div class="input-field-common">
+                        <label class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.FromAmount
+                        </label>
+                        @Html.TextBoxFor(model => model.FromAmount, new { @class = "w-full rounded-[4px]", @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.FromAmount, @style = "border-radius:4px !important", @onkeypress = "return isNumber(event)", autocomplete = "off", @maxLength = "10" })
+                        <span class="error">
+                            @Html.ValidationMessageFor(m => m.FromAmount)
+                        </span>
+                    </div>
+                    <div class="input-field-common">
+                        <label class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.ToAmount
+                        </label>
+                        @Html.TextBoxFor(model => model.ToAmount, new { @class = "w-full rounded-[4px]", @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.ToAmount, @style = "border-radius:4px !important", @onkeypress = "return isNumber(event)", autocomplete = "off", @maxLength = "10" })
+                        <span class="error">
+                            @Html.ValidationMessageFor(m => m.ToAmount)
+                        </span>
+                    </div>
+                    @*<div class="input-field-common">
+                        <label class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.DiscountType
+                        </label> 
+                        @Html.TextBoxFor(model => model.DiscountType, new { @class = "w-full rounded-[4px]", @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.DiscountType, @style = "border-radius:4px !important", @onkeypress = "return isAlphabetWithSpace(event)", autocomplete = "off", @maxLength = "50" })
+                        <span class="error">
+                            @Html.ValidationMessageFor(m => m.DiscountType)
+                        </span>
+                    </div>*@
+                    @*</div>*@
+                    <div class="input-field-common">
+                        <label class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.DiscountType
+                        </label>
+                        <select id="large" name="DiscountType" class=" default_select select-common block w-full "
+                                style="width: text-2%;">
+                            @foreach (var item in Model.discountTypeList as IEnumerable<SelectListItem>)
+                            {
+                                var selectedId = ViewBag.discountTypeIdKey as string;
+                                if (item.Value == selectedId)
+                                {
+                                    <option value="@item.Value" selected>
+                                        @item.Text
+                                    </option>
+                                }
+                                else
+                                {
+                                    <option value="@item.Value">
+                                        @item.Text
+                                    </option>
+                                }
+                            }
+                        </select>
+                        <span class="error">
+                            @Html.ValidationMessageFor(model => model.DiscountType)
+                        </span>
+                    </div>
+                    <div class="input-field-common">
+                        <label class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Value
+                        </label>
+                        @Html.TextBoxFor(model => model.Value, new { @class = "w-full rounded-[4px]", @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.Value, @style = "border-radius:4px !important", @onkeypress = "return isNumber(event)", autocomplete = "off", @maxLength = "10" })
+                        <span class="error">
+                            @Html.ValidationMessageFor(m => m.Value)
+                        </span>
+                    </div>
+                    <div class="input-field-common">
+                        <label class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Min_Value
+                        </label>
+                        @Html.TextBoxFor(model => model.MinValue, new { @class = "w-full rounded-[4px]", @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.Min_Value, @style = "border-radius:4px !important", @onkeypress = "return isNumber(event)", autocomplete = "off", @maxLength = "10" })
+                        <span class="error">
+                            @Html.ValidationMessageFor(m => m.MinValue)
+                        </span>
+                    </div>
+                    <div class="input-field-common">
+                        <label class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Max_Value
+                        </label>
+                        @Html.TextBoxFor(model => model.MaxValue, new { @class = "w-full rounded-[4px]", @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.Max_Value, @style = "border-radius:4px !important", @onkeypress = "return isNumber(event)", autocomplete = "off", @maxLength = "10" })
+                        <span class="error">
+                            @Html.ValidationMessageFor(m => m.MaxValue)
+                        </span>
+                    </div>
+                    <div class="flex justify-end ">
+                        <div class="flex gap-6">
+                            <button class="resetForm btn btn-primary-normal rounded-[4px] px-8 text-sm"
+                                    data-drawer-hide="add-new-discount-category" id="CancelId" type="button">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Cancel
+                            </button>
+                            <button class="resetForm btn btn-primary-default px-8 rounded-[4px]  text-sm leading-[10px]"
+                                    id="saveData" type="submit">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Submit
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+<style>
+
+    input[type="checkbox"] {
+        color: #fff;
+        appearance: none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        width: 16px;
+        height: 16px;
+        border: 2px solid red;
+        border-radius: 0px;
+        outline: none;
+        cursor: pointer;
+    }
+
+        /* Custom tick mark */
+        input[type="checkbox"]::before {
+            content: "";
+            display: inline-block;
+            width: 10px;
+            height: 5px;
+            border-left: 2px solid transparent; /* Color of the tick mark */
+            border-bottom: 2px solid transparent; /* Color of the tick mark */
+            transform: rotate(-45deg);
+            position: relative;
+            top: -8px;
+            left: 2px;
+        }
+
+        input[type="checkbox"]:checked {
+            border: 2px solid #D75A8B;
+        }
+            /* Change tick mark color when checkbox is checked */
+            input[type="checkbox"]:checked::before {
+                border-color: #D75A8B; /* Change this color to whatever you want */
+            }
+</style>
+<script>
+ 
+</script>
+

@@ -1,5 +1,7 @@
 ﻿using CRS.ADMIN.SHARED;
 using CRS.ADMIN.SHARED.CommissionManagement;
+using CRS.ADMIN.SHARED.DiscountManagementCommon;
+using CRS.ADMIN.SHARED.PaginationManagement;
 using System.Collections.Generic;
 
 namespace CRS.ADMIN.REPOSITORY.CommissionManagement
@@ -24,6 +26,19 @@ namespace CRS.ADMIN.REPOSITORY.CommissionManagement
         #region Assign Commission
         CommonDbResponse AssignCommission(AssignCommissionCommon Request);
         List<AdminCommissionCommon> GetAdminCommissionList();
+        #endregion
+
+
+        #region Discount management
+        List<DiscountManagementCommon> GetDiscountCategoryList(PaginationFilterCommon discountRequest);
+        CommonDbResponse ManageDiscountCategory(DiscountManagementRequestCommon mappedRequest);
+        DiscountManagementCommon GetDiscountDetails(DiscountManagementRequestCommon common);
+        CommonDbResponse ChangeDiscountCategoryStatus(string categoryId,string subCategoryId, string status, string actionUser, string actionIP);
+        List<DiscountCategoryDetailsResponseCommon> GetDiscountSubCategoryList(string categoryId, PaginationFilterCommon discountRequest);
+        CommonDbResponse ManageDiscountSubCategory(DiscountSubCategoryManagementRequestCommon mappedRequest);
+        DiscountCategoryDetailsResponseCommon GetSubCategoryDiscountDetails(DiscountSubCategoryRequestCommon common);
+        AssignDiscountCommon GetSubCategoryDetails(string agentId);
+        CommonDbResponse AssignDiscount(AssignDiscountCommon requestMapped);
         #endregion
     }
 }

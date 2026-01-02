@@ -393,10 +393,6 @@
     <value>この料金カテゴリーのスラブを一時停止してもよろしいですか？</value>
     <comment>Charge Management</comment>
   </data>
-  <data name="Are you sure you want to unblock this club" xml:space="preserve">
-    <value>この店舗のブロックを解除してもよろしいですか？</value>
-    <comment>Club Management</comment>
-  </data>
   <data name="Are you sure you want to unsuspend this charge category slab?" xml:space="preserve">
     <value>この料金カテゴリーのスラブの一時停止を解除してもよろしいですか？</value>
     <comment>Charge Management</comment>
@@ -2446,7 +2442,8 @@
     <comment>StaticDataManagement</comment>
   </data>
   <data name="StaticDataManagement" xml:space="preserve">
-    <value />
+    <value>静的データ管理
+</value>
     <comment>StaticDataManagement</comment>
   </data>
   <data name="StaticDataType" xml:space="preserve">
@@ -2849,10 +2846,6 @@
     <value>このグループを削除してもよろしいですか</value>
     <comment>Group Management</comment>
   </data>
-  <data name="Are you sure you want to unblock this group" xml:space="preserve">
-    <value>このグループのブロックを解除してもよろしいですか</value>
-    <comment>Group Management</comment>
-  </data>
   <data name="Note: If you block this group, clubs under any of its subgroups will no longer be visible as part of the group." xml:space="preserve">
     <value>注意: このグループをブロックすると、サブグループに属するクラブはグループの一部として表示されなくなります。</value>
     <comment>Group Management</comment>
@@ -2967,15 +2960,30 @@
     <value>店舗URL</value>
     <comment>Club Management</comment>
   </data>
-  <data name="Manager" xml:space="preserve">
-    <value />
+  <data name="DiscountManagement" xml:space="preserve">
+    <value>割引管理
+</value>
   </data>
-  <data name="PlanFee" xml:space="preserve">
-    <value>プラン金</value>
-    <comment>ClubManagement</comment>
+  <data name="DiscountCategory" xml:space="preserve">
+    <value>割引カテゴリー
+</value>
   </data>
-  <data name="Withdrawal Request" xml:space="preserve">
-    <value>引き出しリクエスト</value>
-    <comment>Withdrawal Request</comment>
+  <data name="AssignDiscount" xml:space="preserve">
+    <value>割引の割り当て
+</value>
+  </data>
+  <data name="ManageDiscountSetting" xml:space="preserve">
+    <value>割引設定の管理
+</value>
+  </data>
+  <data name="DiscountType" xml:space="preserve">
+    <value>割引タイプ
+</value>
+  </data>
+  <data name="New_Discount_Category" xml:space="preserve">
+    <value>新しい割引カテゴリ</value>
+  </data>
+  <data name="Current_Discount_Category" xml:space="preserve">
+    <value>現在の割引カテゴリ</value>
   </data>
 </root>
