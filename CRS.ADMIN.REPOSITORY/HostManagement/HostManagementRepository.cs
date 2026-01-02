@@ -301,6 +301,7 @@ namespace CRS.ADMIN.REPOSITORY.HostManagement
                     FullName = dataTable.Rows[0]["FullName"].ToString(),
                     PhoneNumber = dataTable.Rows[0]["PhoneNumber"].ToString(),
                     InquiryType = dataTable.Rows[0]["InquiryType"].ToString(),
+                    CompanyName = dataTable.Rows[0]["CompanyName"].ToString(),
                     EmailAddress = dataTable.Rows[0]["EmailAddress"].ToString(),
                     Subject = dataTable.Rows[0]["Subject"].ToString(),
                     Message = dataTable.Rows[0]["Message"].ToString(),
