@@ -52,12 +52,12 @@ namespace CRS.ADMIN.SHARED.DiscountManagementCommon
     {
         public string categoryId { get; set; }
         public string subCategoryId { get; set; }
-        public long FromAmount { get; set; }
-        public long ToAmount { get; set; }
+        public long? FromAmount { get; set; }
+        public long? ToAmount { get; set; }
         public string DiscountType { get; set; }
-        public int Value { get; set; }
-        public decimal MinValue { get; set; }
-        public decimal MaxValue { get; set; }
+        public int? Value { get; set; }
+        public decimal? MinValue { get; set; }
+        public decimal? MaxValue { get; set; }
     }
 
 

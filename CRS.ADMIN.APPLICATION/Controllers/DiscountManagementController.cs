@@ -171,9 +171,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                     NotificationType = NotificationMessage.SUCCESS,
                     Message = dbResp.Message,
                     Title = NotificationMessage.SUCCESS.ToString(),
-                });
-                TempData["DiscountCategoryManagementModel"] = viewModel;
-                TempData["RenderId"] = "Manage";
+                });            
                 return RedirectToAction("Index", "DiscountManagement");
             }
             else
@@ -340,10 +338,10 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             if (!string.IsNullOrEmpty(requestModel.subCategoryId))
                 requestModel.subCategoryId = requestModel.subCategoryId.DecryptParameter();
             var viewModel = new DiscountSubCategoryManagementRequestModel();
-            if(requestModel.DiscountType.DecryptParameter()=="F")
+            if(requestModel.DiscountType.DecryptParameter()=="P")
             {
-                ModelState.AddModelError("MinValue", "MinValue is required");
-                ModelState.AddModelError("MaxValue", "MinValue is required");
+                ModelState.Remove("MinValue");
+                ModelState.Remove("MaxValue");
 
             }
             if (ModelState.IsValid)

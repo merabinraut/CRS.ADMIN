@@ -337,8 +337,8 @@ namespace CRS.ADMIN.REPOSITORY.CommissionManagement
             SQL += ",@ToAmount=" + mappedRequest.ToAmount;
             SQL += ",@DiscountType=" + mappedRequest.DiscountType;
             SQL += ",@Value=" + mappedRequest.Value;
-            SQL += ",@MinValue=" + mappedRequest.MinValue;
-            SQL += ",@MaxValue=" + mappedRequest.MaxValue;
+            SQL += ",@MinValue=" + (mappedRequest.MinValue ?? 0); ;
+            SQL += ",@MaxValue=" + (mappedRequest.MaxValue ?? 0);
             SQL += ",@ActionIp=" + _DAO.FilterString(mappedRequest.ActionIP);
             SQL += ",@CreatedBy=" + _DAO.FilterString(mappedRequest.ActionUser);
             SQL += ",@actionPlatform=" + _DAO.FilterString(mappedRequest.ActionPlatform);
