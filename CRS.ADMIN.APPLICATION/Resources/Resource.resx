@@ -3000,4 +3000,8 @@
     <value>Current Discount Category</value>
     <comment>Current Discount Category</comment>
   </data>
+  <data name="Are you sure you want to unblock this club" xml:space="preserve">
+    <value>Are you sure you want to unblock this club</value>
+    <comment>Are you sure you want to unblock this club</comment>
+  </data>
 </root>

@@ -19,7 +19,7 @@ namespace CRS.ADMIN.APPLICATION.Resources {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "18.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Resource {
@@ -705,6 +705,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         public static string Are_you_sure_you_want_to_suspend_this_charge_category_slab_ {
             get {
                 return ResourceManager.GetString("Are you sure you want to suspend this charge category slab?", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to unblock this club.
+        /// </summary>
+        public static string Are_you_sure_you_want_to_unblock_this_club {
+            get {
+                return ResourceManager.GetString("Are you sure you want to unblock this club", resourceCulture);
             }
         }
         

@@ -2986,4 +2986,7 @@
   <data name="Current_Discount_Category" xml:space="preserve">
     <value>現在の割引カテゴリ</value>
   </data>
+  <data name="Are you sure you want to unblock this club" xml:space="preserve">
+    <value>「このクラブのブロックを解除しますか？」</value>
+  </data>
 </root>
