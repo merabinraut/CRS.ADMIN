@@ -2,7 +2,13 @@
 @{
     ViewBag.Title = "Plan List";
     Layout = "~/Views/Shared/_Layout.cshtml";
+
     var _categoryModel = Model.discountCategoryModel as CRS.ADMIN.APPLICATION.Models.DiscountManagement.DiscountManagementModel;
+
+    if (_categoryModel == null)
+    {
+        _categoryModel = new CRS.ADMIN.APPLICATION.Models.DiscountManagement.DiscountManagementModel();
+    }
     var tempData = TempData["ListModel"] as List<CRS.ADMIN.APPLICATION.Models.DiscountManagement.DiscountManagementListResponseModel>;
 }
 <div class="px-8 py-4">
@@ -258,7 +264,8 @@
               });
 
            $('.ClubDDLList').change(function () {
-            var agentId = document.getElementsByName("ClubDDLList")[0].value;
+               var agentId = document.getElementsByName("ClubDDLList")[0].value;
+               debugger;
             $.ajax({
                 type: 'POST',
                 async: true,
@@ -267,10 +274,9 @@
                 data: { '__RequestVerificationToken': RequestVerificationToken, agentId },
                 success: function (data)
                 {
-                 var currentDiscountDDL = $(".CurrentDiscountCategoryDDL");
-                  currentDiscountDDL.empty().append('<option value="" disabled selected>@CRS.ADMIN.APPLICATION.Resources.Resource.Current_Discount_Category</option>');
-
-                    $('#DiscountCategoryName').val(data.commissionLists[0].Text);
+                   var currentDiscountDDL = $(".CurrentDiscountCategoryDDL");
+                   currentDiscountDDL.empty().append('<option value="" disabled selected>@CRS.ADMIN.APPLICATION.Resources.Resource.Current_Discount_Category</option>');
+                   $('#DiscountCategoryName').val(data.commissionLists[0].Text);
                 },
                 error: function (ex) {
                     toastr.info('Failed to retrive current commission category.');

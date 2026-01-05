@@ -51,7 +51,9 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                     x.CreatedDate = x.CreatedDate;
                     x.UpdatedDate = x.UpdatedDate;
                 });
-                if (TempData.ContainsKey("DiscountCategoryManagementModel")) discountModel.discountCategoryModel = TempData["DiscountCategoryManagementModel"] as DiscountManagementModel;
+                if (TempData.ContainsKey("DiscountCategoryManagementModel"))
+                    discountModel.discountCategoryModel = TempData["DiscountCategoryManagementModel"] as DiscountManagementModel;
+
                 if (TempData.ContainsKey("RenderId")) RenderId = TempData["RenderId"].ToString();
                 ViewBag.PopUpRenderValue = !string.IsNullOrEmpty(RenderId) ? RenderId : null;
                 ViewBag.PopUpRenderValue = !string.IsNullOrEmpty(RenderId) ? RenderId : null;
@@ -171,7 +173,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                     NotificationType = NotificationMessage.SUCCESS,
                     Message = dbResp.Message,
                     Title = NotificationMessage.SUCCESS.ToString(),
-                });            
+                });
                 return RedirectToAction("Index", "DiscountManagement");
             }
             else
@@ -282,6 +284,8 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             ViewBag.DiscountCategoryId = categoryId;
             discountSubCategoryModel.discountSubCategoryModel.categoryName = categoryName;
             discountSubCategoryModel.discountSubCategoryModel.categoryId = categoryId;
+            ViewBag.BackButtonURL = "/DiscountManagement/Index";
+            ViewBag.IsBackAllowed = true;
             return View(discountSubCategoryModel);
         }
         [HttpGet]
@@ -315,6 +319,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             TempData["DiscountsubCategoryManagementModel"] = viewModel;
             TempData["RenderId"] = "ManageSubCategory";
             TempData["discountTypeId"] = respMapped.DiscountType.EncryptParameter();
+         
             return RedirectToAction("GetCategoryDetailsList", "DiscountManagement", new { categoryId = i.EncryptParameter(), categoryName = k });
         }
 
@@ -338,7 +343,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             if (!string.IsNullOrEmpty(requestModel.subCategoryId))
                 requestModel.subCategoryId = requestModel.subCategoryId.DecryptParameter();
             var viewModel = new DiscountSubCategoryManagementRequestModel();
-            if(requestModel.DiscountType.DecryptParameter()=="P")
+            if (requestModel.DiscountType.DecryptParameter() == "P")
             {
                 ModelState.Remove("MinValue");
                 ModelState.Remove("MaxValue");
@@ -378,7 +383,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             this.AddNotificationMessage(new NotificationModel()
             {
                 NotificationType = NotificationMessage.ERROR,
-                Message =  "Invalid request",
+                Message = "Invalid request",
                 Title = NotificationMessage.ERROR.ToString(),
             });
             TempData["DiscountCategoryManagementModel"] = viewModel;

@@ -1015,7 +1015,7 @@ namespace CRS.ADMIN.APPLICATION.Library
                     dbResponse.ForEach(item => { response.Add(item.Key.EncryptParameter(), item.Value); });
                     return response;
                 case "DISCOUNTCATEGORYVIACLUBDDL":
-                    dbResponse = _CommonBuss.GetDropDown("012", search1, search2);
+                    dbResponse = _CommonBuss.GetDropDown("063", search1, search2);
                     dbResponse.ForEach(item => { response.Add(item.Key.EncryptParameter(), item.Value); });
                     return response;
                 case "CLUBLIST":
