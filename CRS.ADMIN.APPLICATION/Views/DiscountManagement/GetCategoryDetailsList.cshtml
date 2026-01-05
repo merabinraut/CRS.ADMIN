@@ -151,18 +151,26 @@
 @section scripts{
     <script>
         function EditDiscountSubCategory(id, j, k) {
-            debugger;
             window.location.href = '/DiscountManagement/ManageDiscountSubCategoryDetails?categoryId=' + id + '&subCategoryId=' + j + '&categoryName=' + k;
         }
         function isNumber(event) {
             var charCode = event.which ? event.which : event.keyCode;
-            if ((charCode >= 48 && charCode <= 57) ||
-                charCode === 46 ||
-                charCode === 8) {
+            var inputValue = event.target.value;
+
+            if (charCode === 8) {  
                 return true;
+            }
+
+            if (charCode >= 48 && charCode <= 57 || charCode === 46) {
+                if (charCode === 46) {
+                    return false;
+                }
+                return true; 
             }
             return false;
         }
+
+
     </script>
     <script>
         $(document).ready(function () {
@@ -263,8 +271,7 @@
 
 
        function deleteSubDiscountSubCategory(categoryId, SubCategoryId, categoryName, status) {
-        debugger;
-           const $modal = $("#delete-sub-category-confirmation");
+       const $modal = $("#delete-sub-category-confirmation");
         const $message = $("#confirmationRequestMessage");
            const $approveBtn = $("#delete_ids2");
         const contentApprove = "Are you sure you want to delete this slab ?";
@@ -280,7 +287,6 @@
 
 
    function DeleteDiscountCategoryFunction() {
-    debugger;
     const categoryId = $('#delete_ids2').attr('data-vals1');
         const SubCategoryId = $('#delete_ids2').attr('data-vals2');
         const categoryName = $('#delete_ids2').attr('data-vals3');

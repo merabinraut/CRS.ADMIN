@@ -37,7 +37,7 @@
                         <label class="block mb-[12px] text-sm font-medium text-secondary-100 ">
                             @CRS.ADMIN.APPLICATION.Resources.Resource.Category_Description
                         </label>
-                        @Html.TextBoxFor(model => model.description, new { @class = "w-full rounded-[4px]", @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.Description, @style = "border-radius:4px !important", @onkeypress = "return isAlphabetWithSpace(event)", autocomplete = "off", @maxLength = "50" })
+                        @Html.TextBoxFor(model => model.description, new { @class = "w-full rounded-[4px]", @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.Description, @style = "border-radius:4px !important", @onkeypress = "return isAlphabetWithSpace(event)", autocomplete = "off", @maxLength = "200" })
                         <span class="error">
                             @Html.ValidationMessageFor(m => m.description)
                         </span>

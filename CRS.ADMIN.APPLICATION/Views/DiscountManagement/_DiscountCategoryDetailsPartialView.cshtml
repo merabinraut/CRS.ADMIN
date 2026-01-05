@@ -156,9 +156,18 @@
                                 @item.ToAmount
                             </td>
                             <td class="p-[12px]">
-                                <div class="pending">
-                                    @item.DiscountType
-                                </div>
+                                @if (!string.IsNullOrEmpty(item.Status) && item.DiscountType.ToUpper().Trim() == "FLAT")
+                                {
+                                    <div class="w-max  plan-platinum gap-2">
+                                        FLAT
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="w-max plan-b  gap-2">
+                                        PERCENTAGE
+                                    </div>
+                                }                            
                             </td>
                             <td class="p-[12px]">
                                 @item.Value
