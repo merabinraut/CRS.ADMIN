@@ -343,7 +343,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             if (!string.IsNullOrEmpty(requestModel.subCategoryId))
                 requestModel.subCategoryId = requestModel.subCategoryId.DecryptParameter();
             var viewModel = new DiscountSubCategoryManagementRequestModel();
-            if (requestModel.DiscountType.DecryptParameter() == "P")
+            if (requestModel.DiscountType.DecryptParameter() == "F")
             {
                 ModelState.Remove("MinValue");
                 ModelState.Remove("MaxValue");

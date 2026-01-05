@@ -65,7 +65,7 @@
                             @CRS.ADMIN.APPLICATION.Resources.Resource.DiscountType
                         </label>
                         <select id="large" name="DiscountType" class=" default_select select-common block w-full "
-                                style="width: text-2%;">
+                                style="width: text-2%;"  onchange="toggleMinMaxValues()">
                             @foreach (var item in Model.discountTypeList as IEnumerable<SelectListItem>)
                             {
                                 var selectedId = ViewBag.discountTypeIdKey as string;
@@ -96,7 +96,8 @@
                             @Html.ValidationMessageFor(m => m.Value)
                         </span>
                     </div>
-                    <div class="input-field-common">
+
+                    <div class="input-field-common"  id="minValueDiv">
                         <label class="block mb-[12px] text-sm font-medium text-secondary-100 ">
                             @CRS.ADMIN.APPLICATION.Resources.Resource.Min_Value
                         </label>
@@ -105,7 +106,7 @@
                             @Html.ValidationMessageFor(m => m.MinValue)
                         </span>
                     </div>
-                    <div class="input-field-common">
+                    <div class="input-field-common"  id="maxValueDiv">
                         <label class="block mb-[12px] text-sm font-medium text-secondary-100 ">
                             @CRS.ADMIN.APPLICATION.Resources.Resource.Max_Value
                         </label>
@@ -169,6 +170,23 @@
             }
 </style>
 <script>
- 
+    function toggleMinMaxValues() {
+        var discountType = document.getElementById('DiscountType').value;
+        var minValueDiv = document.getElementById('minValueDiv');
+        var maxValueDiv = document.getElementById('maxValueDiv');
+
+        if (discountType === 'F') {
+            minValueDiv.style.display = 'none';
+            maxValueDiv.style.display = 'none';
+        } else {
+            minValueDiv.style.display = 'block';
+            maxValueDiv.style.display = 'block';
+        }
+    }
+
+    // Call the function on page load to set initial visibility based on the current value
+    window.onload = function () {
+        toggleMinMaxValues();
+    };
 </script>
 
