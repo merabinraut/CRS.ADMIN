@@ -316,8 +316,8 @@ namespace CRS.ADMIN.REPOSITORY.CommissionManagement
                         Status = _DAO.ParseColumnValue(item, "Status").ToString(),
                         DiscountType = _DAO.ParseColumnValue(item, "DiscountType").ToString(),
                         Value = Convert.ToInt32(_DAO.ParseColumnValue(item, "Value").ToString()),
-                        MinValue = Convert.ToDecimal(_DAO.ParseColumnValue(item, "MinValue").ToString()),
-                        MaxValue = Convert.ToDecimal(_DAO.ParseColumnValue(item, "MaxValue").ToString()),
+                        MinValue = Convert.ToInt32(_DAO.ParseColumnValue(item, "MinValue").ToString()),
+                        MaxValue = Convert.ToInt32(_DAO.ParseColumnValue(item, "MaxValue").ToString()),
                         TotalRecords = Convert.ToInt32(_DAO.ParseColumnValue(item, "TotalRecords").ToString()),
                         createdDate = _DAO.ParseColumnValue(item, "createdDate").ToString(),
                         updatedDate = _DAO.ParseColumnValue(item, "updatedDate").ToString(),
@@ -362,8 +362,8 @@ namespace CRS.ADMIN.REPOSITORY.CommissionManagement
                     ToAmount = Convert.ToInt32(dbResponse.Rows[0]["ToAmount"]?.ToString()),
                     DiscountType = dbResponse.Rows[0]["DiscountType"]?.ToString(),
                     Value = Convert.ToInt32(dbResponse.Rows[0]["Value"]?.ToString()),
-                    MinValue = Convert.ToDecimal(dbResponse.Rows[0]["MinValue"]?.ToString()),
-                    MaxValue = Convert.ToDecimal(dbResponse.Rows[0]["MaxValue"]?.ToString())
+                    MinValue = Convert.ToInt32(dbResponse.Rows[0]["MinValue"]?.ToString()),
+                    MaxValue = Convert.ToInt32(dbResponse.Rows[0]["MaxValue"]?.ToString())
                 };
             }
             return new DiscountCategoryDetailsResponseCommon();

@@ -38,8 +38,8 @@ namespace CRS.ADMIN.SHARED.DiscountManagementCommon
         public long ToAmount { get; set; }
         public string DiscountType { get; set; }
         public int Value { get; set; }
-        public decimal MinValue { get; set; }
-        public decimal MaxValue { get; set; }
+        public long MinValue { get; set; }
+        public long MaxValue { get; set; }
         public string Status { get; set; }
         public int TotalRecords { get; set; }
         public int SNO { get; set; }

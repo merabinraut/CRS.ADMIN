@@ -70,8 +70,8 @@ namespace CRS.ADMIN.APPLICATION.Models.DiscountManagement
         public string DiscountType { get; set; }
         [Required]
         public int? Value { get; set; }
-        public decimal? MinValue { get; set; }
-        public decimal? MaxValue { get; set; }
+        public long? MinValue { get; set; }
+        public long? MaxValue { get; set; }
         public string categoryName { get; set; }
         public List<SelectListItem> discountTypeList { get; set; } = new List<SelectListItem>();
 
