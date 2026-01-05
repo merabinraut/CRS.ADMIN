@@ -117,10 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Account Holder Name" xml:space="preserve">
-    <value>口座名義人名</value>
-    <comment>Account Information</comment>
-  </data>
   <data name="Account Information" xml:space="preserve">
     <value>アカウント情報</value>
     <comment>Account Information</comment>
@@ -2985,5 +2981,16 @@
   </data>
   <data name="Current_Discount_Category" xml:space="preserve">
     <value>現在の割引カテゴリ</value>
+  </data>
+  <data name="Account Holder Name" xml:space="preserve">
+    <value>口座名義人名</value>
+    <comment>Account Information</comment>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="Are_you_sure_you_want_to_block_this_club" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
+  <data name="Are_you_sure_you_want_to_unblock_this_club" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
   </data>
 </root>
