@@ -349,6 +349,18 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 ModelState.Remove("MaxValue");
 
             }
+            if (requestModel.DiscountType.DecryptParameter() == "P")
+            {
+                if (string.IsNullOrEmpty(requestModel.MinValue.ToString()))
+                {
+                    ModelState.AddModelError("MinValue", "MinValue is required.");
+                }
+
+                if (string.IsNullOrEmpty(requestModel.MaxValue.ToString()))
+                {
+                    ModelState.AddModelError("MaxValue", "MaxValue is required.");
+                }
+            }
             if (ModelState.IsValid)
             {
                 var mappedRequest = requestModel.MapObject<DiscountSubCategoryManagementRequestCommon>();

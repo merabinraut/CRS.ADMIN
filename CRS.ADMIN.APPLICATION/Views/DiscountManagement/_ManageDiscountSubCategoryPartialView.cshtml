@@ -65,7 +65,7 @@
                             @CRS.ADMIN.APPLICATION.Resources.Resource.DiscountType
                         </label>
                         <select id="large" name="DiscountType" class=" default_select select-common block w-full "
-                                style="width: text-2%;"  onchange="toggleMinMaxValues()">
+                                style="width: text-2%;">
                             @foreach (var item in Model.discountTypeList as IEnumerable<SelectListItem>)
                             {
                                 var selectedId = ViewBag.discountTypeIdKey as string;
@@ -97,7 +97,7 @@
                         </span>
                     </div>
 
-                    <div class="input-field-common"  id="minValueDiv">
+                    <div class="input-field-common">
                         <label class="block mb-[12px] text-sm font-medium text-secondary-100 ">
                             @CRS.ADMIN.APPLICATION.Resources.Resource.Min_Value
                         </label>
@@ -106,7 +106,7 @@
                             @Html.ValidationMessageFor(m => m.MinValue)
                         </span>
                     </div>
-                    <div class="input-field-common"  id="maxValueDiv">
+                    <div class="input-field-common">
                         <label class="block mb-[12px] text-sm font-medium text-secondary-100 ">
                             @CRS.ADMIN.APPLICATION.Resources.Resource.Max_Value
                         </label>
