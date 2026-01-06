@@ -718,6 +718,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to unblock this group.
+        /// </summary>
+        public static string Are_you_sure_you_want_to_unblock_this_group {
+            get {
+                return ResourceManager.GetString("Are you sure you want to unblock this group", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Are you sure you want to unsuspend this charge category slab?.
         /// </summary>
         public static string Are_you_sure_you_want_to_unsuspend_this_charge_category_slab_ {

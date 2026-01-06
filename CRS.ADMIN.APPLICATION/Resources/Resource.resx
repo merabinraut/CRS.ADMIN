@@ -3004,4 +3004,8 @@
     <value>Are you sure you want to unblock this club</value>
     <comment>Club Management</comment>
   </data>
+  <data name="Are you sure you want to unblock this group" xml:space="preserve">
+    <value>Are you sure you want to unblock this group</value>
+    <comment>Group management</comment>
+  </data>
 </root>

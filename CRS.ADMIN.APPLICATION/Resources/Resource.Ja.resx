@@ -2990,4 +2990,8 @@
     <value>このクラブのブロックを解除してもいいですか
 </value>
   </data>
+  <data name="Are you sure you want to unblock this group" xml:space="preserve">
+    <value>このグループのブロックを解除してもいいですか
+</value>
+  </data>
 </root>
