@@ -150,10 +150,10 @@
                                 @item.SNO
                             </td>
                             <td class="p-[12px]">
-                                @item.FromAmount
+                                @item.FromAmount.ToString("N0")
                             </td>
                             <td class="p-[12px]">
-                                @item.ToAmount
+                                @item.ToAmount.ToString("N0")
                             </td>
                             <td class="p-[12px]">
                                 @if (!string.IsNullOrEmpty(item.Status) && item.DiscountType.ToUpper().Trim() == "FLAT")
@@ -173,10 +173,10 @@
                                 @item.Value
                             </td>
                             <td class="p-[12px]">
-                                @item.MinValue
+                                @item.MinValue.ToString("N0")
                             </td>
                             <td class="p-[12px]">
-                                @item.MaxValue
+                                @item.MaxValue.ToString("N0")
                             </td>
                             <td class="p-[12px]">
                                 @if (!string.IsNullOrEmpty(item.Status) && item.Status.ToUpper().Trim() == "A")
