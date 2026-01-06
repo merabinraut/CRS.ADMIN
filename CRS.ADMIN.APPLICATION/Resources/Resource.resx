@@ -3000,12 +3000,8 @@
     <value>Account Holder Name</value>
     <comment>Account Information</comment>
   </data>
-  <data name="Are_you_sure_you_want_to_block_this_club" xml:space="preserve">
-    <value>Are you sure you want to block this club</value>
-    <comment>このクラブをブロックしてもいいですか</comment>
-  </data>
-  <data name="Are_you_sure_you_want_to_unblock_this_club" xml:space="preserve">
+  <data name="Are you sure you want to unblock this club" xml:space="preserve">
     <value>Are you sure you want to unblock this club</value>
-    <comment>このクラブをアンブロックしてもいいですか</comment>
+    <comment>Club Management</comment>
   </data>
 </root>

@@ -225,7 +225,6 @@
           $('select').select2({
               minimumResultsForSearch: Infinity
           })
-              debugger;
               $('#large1[name="NewDiscountCategoryDDL"]').select2({
                   width: 'resolve'
               });
@@ -266,7 +265,6 @@
 
            $('.ClubDDLList').change(function () {
                var agentId = document.getElementsByName("ClubDDLList")[0].value;
-               debugger;
             $.ajax({
                 type: 'POST',
                 async: true,
@@ -398,7 +396,6 @@
             window.location.href = '/DiscountManagement/ManageDiscountCategory?categoryId=' + id;
         }
         function openCategoryBlockEventModal(categoryId, status) {
-            debugger;
             const $modal = $("#block-discount-category");
             const $message = $("#confirmationRequestMessage");
             const $approveBtn = $("#block_ids1");
@@ -412,7 +409,6 @@
         }
 
         function BlockDiscountCategoryFunction() {
-            debugger;
             const categoryId = $('#block_ids1').attr('data-vals1');
             const status = $('#block_ids1').attr('data-vals2');
             let search_filter2 = $('#default-search-plan-request').val();
@@ -427,7 +423,6 @@
         }
 
     function openCategoryUnBlockEventModal(categoryId, status) {
-       debugger;
        const $modal = $("#unblock-discount-category");
        const $message = $("#confirmationRequestMessage");
        const $approveBtn = $("#block_ids1");
@@ -441,7 +436,6 @@
     }
 
    function UnBlockDiscountCategoryFunction() {
-       debugger;
        const categoryId = $('#block_ids1').attr('data-vals1');
        const status = $('#block_ids1').attr('data-vals2');
        let search_filter2 = $('#default-search-plan-request').val();
@@ -456,7 +450,6 @@
         }
 
   function deleteDiscountCategory(categoryId, status) {
-    debugger;
     const $modal = $("#unblock-discount-category");
     const $message = $("#confirmationRequestMessage");
       const $approveBtn = $("#delete_ids1");
@@ -470,7 +463,6 @@
     }
 
 function DeleteDiscountCategoryFunction() {
-    debugger;
     const categoryId = $('#delete_ids1').attr('data-vals1');
     const status = $('#delete_ids1').attr('data-vals2');
     let search_filter2 = $('#default-search-plan-request').val();

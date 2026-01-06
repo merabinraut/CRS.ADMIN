@@ -646,6 +646,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to block this club?.
+        /// </summary>
+        public static string Are_you_sure_you_want_to_block_this_club {
+            get {
+                return ResourceManager.GetString("Are you sure you want to block this club", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Are you sure you want to block this group.
         /// </summary>
         public static string Are_you_sure_you_want_to_block_this_group {
@@ -704,7 +713,7 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         /// </summary>
         public static string Are_you_sure_you_want_to_unblock_this_club {
             get {
-                return ResourceManager.GetString("Are_you_sure_you_want_to_unblock_this_club", resourceCulture);
+                return ResourceManager.GetString("Are you sure you want to unblock this club", resourceCulture);
             }
         }
         

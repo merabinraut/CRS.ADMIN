@@ -270,7 +270,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             if (TempData.ContainsKey("RenderId")) RenderId = TempData["RenderId"].ToString();
             discountSubCategoryModel.discountSubCategoryModel.discountTypeList =
              ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("COMMISSIONPERCENTAGETYPELIST", "", culture)
-                 as Dictionary<string, string>, "", culture.ToLower() == "ja" ? "--- ?? ---" : "--- Select ---");
+                 as Dictionary<string, string>, "", culture.ToLower() == "ja" ? "---" + Resources.Resource.Select + "---" : "--- Select ---");
 
             ViewBag.PopUpRenderValue = !string.IsNullOrEmpty(RenderId) ? RenderId : null;
             ViewBag.TotalData = discountSubCategoryList != null && discountSubCategoryList.Any() ? discountSubCategoryList[0].TotalRecords : 0;
@@ -319,7 +319,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             TempData["DiscountsubCategoryManagementModel"] = viewModel;
             TempData["RenderId"] = "ManageSubCategory";
             TempData["discountTypeId"] = respMapped.DiscountType.EncryptParameter();
-         
+
             return RedirectToAction("GetCategoryDetailsList", "DiscountManagement", new { categoryId = i.EncryptParameter(), categoryName = k });
         }
 
