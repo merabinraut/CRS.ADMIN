@@ -185,8 +185,8 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                     Title = NotificationMessage.ERROR.ToString(),
                 });
             }
-            TempData["DiscountCategoryManagementModel"] = viewModel;
-            TempData["RenderId"] = "Manage";
+            //TempData["DiscountCategoryManagementModel"] = viewModel;
+            //TempData["RenderId"] = "Manage";
             return RedirectToAction("Index", "DiscountManagement");
         }
 
@@ -302,6 +302,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                     Message = "Invalid request",
                     Title = NotificationMessage.INFORMATION.ToString(),
                 });
+
                 return RedirectToAction("Index", "DiscountManagement");
             }
             var viewModel = new DiscountSubCategoryManagementRequestModel();
@@ -326,12 +327,15 @@ namespace CRS.ADMIN.APPLICATION.Controllers
         [HttpPost]
         public ActionResult ManageDiscountSubCategoryDetails(DiscountSubCategoryManagementRequestModel requestModel)
         {
+            var viewModel = new DiscountSubCategoryManagementRequestModel();
             if (!string.IsNullOrEmpty(requestModel.categoryId))
             {
                 requestModel.categoryId = requestModel.categoryId.DecryptParameter();
             }
             else
             {
+                TempData["DiscountCategoryManagementModel"] = viewModel;
+                TempData["RenderId"] = "Manage";
                 this.AddNotificationMessage(new NotificationModel()
                 {
                     NotificationType = NotificationMessage.INFORMATION,
@@ -342,7 +346,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             }
             if (!string.IsNullOrEmpty(requestModel.subCategoryId))
                 requestModel.subCategoryId = requestModel.subCategoryId.DecryptParameter();
-            var viewModel = new DiscountSubCategoryManagementRequestModel();
+          
             if (requestModel.DiscountType.DecryptParameter() == "F")
             {
                 ModelState.Remove("MinValue");

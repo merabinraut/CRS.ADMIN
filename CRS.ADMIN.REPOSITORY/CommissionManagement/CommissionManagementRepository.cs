@@ -256,8 +256,8 @@ namespace CRS.ADMIN.REPOSITORY.CommissionManagement
         {
             string SQL = string.IsNullOrEmpty(mappedRequest.categoryId) ? "EXEC sproc_manage_discount_category" : "sproc_update_discount_category";
             SQL += " @categoryId=" + _DAO.FilterString(mappedRequest.categoryId);
-            SQL += ",@categoryName=" + _DAO.FilterString(mappedRequest.categoryName);
-            SQL += ",@categoryDescription=" + _DAO.FilterString(mappedRequest.description);
+            SQL += ",@categoryName=N" + _DAO.FilterString(mappedRequest.categoryName);
+            SQL += ",@categoryDescription=N" + _DAO.FilterString(mappedRequest.description);
             SQL += ",@actionUser=" + _DAO.FilterString(mappedRequest.ActionUser);
             SQL += ",@actionIP=" + _DAO.FilterString(mappedRequest.ActionIP);
             SQL += ",@actionPlatform=" + _DAO.FilterString("web");
