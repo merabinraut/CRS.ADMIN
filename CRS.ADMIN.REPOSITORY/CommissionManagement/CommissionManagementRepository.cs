@@ -300,7 +300,7 @@ namespace CRS.ADMIN.REPOSITORY.CommissionManagement
             sql += !string.IsNullOrEmpty(discountRequest.SearchFilter) ? " @SearchFilter=N" + _DAO.FilterString(discountRequest.SearchFilter) : null;
             sql += !string.IsNullOrEmpty(discountRequest.SearchFilter) ? ",@Skip=" + discountRequest.Skip : "@Skip=" + discountRequest.Skip;
             sql += ",@Take=" + discountRequest.Take;
-            sql += ",@categoryId=" + categoryId;
+            sql += !string.IsNullOrEmpty(categoryId) ? ",@categoryId=" + categoryId : ",@categoryId=N''";
             var dbResponse = _DAO.ExecuteDataTable(sql);
             if (dbResponse != null && dbResponse.Rows.Count > 0)
             {

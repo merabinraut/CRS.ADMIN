@@ -154,7 +154,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const page_size = @ViewBag.PageSize;
     const total_data = @ViewBag.TotalData;
     const start_index_val = @ViewBag.StartIndex;
-    let URL = "/DiscountManagement/index";
+    let URL = "/DiscountManagement/GetCategoryDetailsList";
     let search_filter = $('#default-search-discount-sub-category-list').val();
     URL = addQueryParam(URL, 'SearchFilter', search_filter);
     LoadPagination(page_size, total_data, start_index_val, URL);

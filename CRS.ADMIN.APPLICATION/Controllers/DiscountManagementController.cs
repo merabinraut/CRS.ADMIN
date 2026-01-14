@@ -230,7 +230,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
         }
 
         [HttpGet]
-        public ActionResult GetCategoryDetailsList(string categoryId, string categoryName, string SearchFilter = "", int StartIndex = 0, int PageSize = 10)
+        public ActionResult GetCategoryDetailsList(string categoryId="", string categoryName="", string SearchFilter = "", int StartIndex = 0, int PageSize = 10)
         {
             ViewBag.SearchFilter = SearchFilter;
             Session["CurrentURL"] = "/DiscountManagement/GetCategoryDetailsList";
