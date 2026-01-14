@@ -219,7 +219,38 @@
 </div>
 
 @section scripts{
-    
+    <script>
+ document.addEventListener('DOMContentLoaded', function () {
+     const page_size = @ViewBag.PageSize;
+     const total_data = @ViewBag.TotalData;
+     const start_index_val = @ViewBag.StartIndex;
+     let URL = "/DiscountManagement/GetCategoryDetailsList";
+     let search_filter = $('#default-search-discount-category-list').val();
+     URL = addQueryParam(URL, 'SearchFilter', search_filter);
+     LoadPagination(page_size, total_data, start_index_val, URL);
+ });
+    </script>
+
+
+    <script>
+
+        document.addEventListener("DOMContentLoaded", function () {
+            var content = document.getElementById("long-content");
+            var btn = document.querySelector(".see-more-btn1");
+        });
+    </script>
+
+    <style>
+        .content-container {
+            max-width: 500px;
+        }
+
+        .see-more-btn {
+            margin-top: 10px;
+            cursor: pointer;
+        }
+    </style>
+
     <script>
           $(document).ready(function () {
           $('select').select2({

@@ -65,7 +65,7 @@
                     <div class="flex gap-2 justify-end mt-[45px]">
                         <input id="request_ids" value="" hidden />
                         <div class="btn btn-secondary w-[110px]" id="block_ids2" data-modal-hide="block-discount-sub-category">@CRS.ADMIN.APPLICATION.Resources.Resource.clubNo</div>
-                        <div class="btn btn-primary w-[110px]" onclick="BlockDiscountSubCategoryFunction()" data-vals1="" data-vals2="" data-vals3="" data-vals4=""  id="block_ids2">@CRS.ADMIN.APPLICATION.Resources.Resource.clubYes</div>
+                        <div class="btn btn-primary w-[110px]" onclick="BlockDiscountSubCategoryFunction()" data-vals1="" data-vals2="" data-vals3="" data-vals4="" id="block_ids2">@CRS.ADMIN.APPLICATION.Resources.Resource.clubYes</div>
                     </div>
                 </div>
             </div>
@@ -136,7 +136,7 @@
                     <div class="flex gap-2 justify-end mt-[45px]">
                         <input id="request_ids" value="" hidden />
                         <div class="btn btn-secondary w-[110px]" id="delete_ids2" data-modal-hide="delete-sub-category-confirmation">@CRS.ADMIN.APPLICATION.Resources.Resource.clubNo</div>
-                        <div class="btn btn-primary w-[110px]" onclick="DeleteDiscountCategoryFunction()" data-vals1="" data-vals2="" data-vals3="" data-vals4=""  id="delete_ids2">@CRS.ADMIN.APPLICATION.Resources.Resource.clubYes</div>
+                        <div class="btn btn-primary w-[110px]" onclick="DeleteDiscountCategoryFunction()" data-vals1="" data-vals2="" data-vals3="" data-vals4="" id="delete_ids2">@CRS.ADMIN.APPLICATION.Resources.Resource.clubYes</div>
                     </div>
                 </div>
             </div>
@@ -150,6 +150,42 @@
 
 @section scripts{
     <script>
+document.addEventListener('DOMContentLoaded', function () {
+    const page_size = @ViewBag.PageSize;
+    const total_data = @ViewBag.TotalData;
+    const start_index_val = @ViewBag.StartIndex;
+    let URL = "/DiscountManagement/index";
+    let search_filter = $('#default-search-discount-sub-category-list').val();
+    URL = addQueryParam(URL, 'SearchFilter', search_filter);
+    LoadPagination(page_size, total_data, start_index_val, URL);
+});
+    </script>
+
+
+    <script>
+
+        document.addEventListener("DOMContentLoaded", function () {
+            var content = document.getElementById("long-content");
+            var btn = document.querySelector(".see-more-btn1");
+        });
+    </script>
+
+    <style>
+        .content-container {
+            max-width: 500px;
+        }
+
+        .see-more-btn {
+            margin-top: 10px;
+            cursor: pointer;
+        }
+    </style>
+
+
+
+
+
+    <script>
         function EditDiscountSubCategory(id, j, k) {
             window.location.href = '/DiscountManagement/ManageDiscountSubCategoryDetails?categoryId=' + id + '&subCategoryId=' + j + '&categoryName=' + k;
         }
@@ -157,7 +193,7 @@
             var charCode = event.which ? event.which : event.keyCode;
             var inputValue = event.target.value;
 
-            if (charCode === 8) {  
+            if (charCode === 8) {
                 return true;
             }
 
@@ -165,19 +201,17 @@
                 if (charCode === 46) {
                     return false;
                 }
-                return true; 
+                return true;
             }
             return false;
         }
-
-
     </script>
     <script>
         $(document).ready(function () {
             $('select').select2({
                 minimumResultsForSearch: Infinity
             })
-          
+
             var PopUpRenderValue = '@ViewBag.PopUpRenderValue';
             var PopUpClubManageValue = '@ViewBag.PopUpClubManageValue';
             if (PopUpRenderValue != null && PopUpRenderValue != "" && PopUpRenderValue == "ManageSubCategory") {

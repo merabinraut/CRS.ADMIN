@@ -10,7 +10,7 @@
         </div>
 
         <input type="search"
-               id="default-search-plan_list"
+               id="default-search-discount-category-list"
                class="input-search block w-full "
                placeholder="@CRS.ADMIN.APPLICATION.Resources.Resource.Search"
                value="@ViewBag.SearchFilter"
@@ -163,13 +163,18 @@
                                     </div>
                                     @if (item.CategoryName.ToUpper() != "DEFAULT")
                                     {
-                                        <div>
-                                            <i class="fa-regular fa-pen-to-square text-[#989898] cursor-pointer" onclick="editDiscountCategory('@item.CategoryId')"></i>
-                                        </div>
                                         if (item.Status.ToUpper() == "A")
                                         {
                                             <div onclick="openCategoryBlockEventModal('@item.CategoryId','B')" data-modal-target="block-discount-category" data-modal-toggle="block-discount-category">
                                                 <i class="fa-solid fa-lock text-primary-100 cursor-pointer"></i>
+                                            </div>
+                                            <div>
+                                                <i class="fa-regular fa-pen-to-square text-[#989898] cursor-pointer" onclick="editDiscountCategory('@item.CategoryId')"></i>
+                                            </div>
+                                            <div>
+                                                <div onclick="deleteDiscountCategory('@item.CategoryId','D')" data-modal-target="delete-category-confirmation" data-modal-toggle="delete-category-confirmation">
+                                                    <i class="fa-solid fa-trash-can text-primary-100 cursor-pointer"></i>
+                                                </div>
                                             </div>
                                         }
                                         if (item.Status.ToUpper() == "B")
@@ -178,12 +183,6 @@
                                                 <i class="fa-solid fa-unlock text-primary-100 cursor-pointer"></i>
                                             </div>
                                         }
-                                        <div>
-                                            <div onclick="deleteDiscountCategory('@item.CategoryId','D')" data-modal-target="delete-category-confirmation" data-modal-toggle="delete-category-confirmation">
-                                                <i class="fa-solid fa-trash-can text-primary-100 cursor-pointer"></i>
-                                            </div>
-                                        </div>
-
                                     }
                                 </div>
                             </td>
