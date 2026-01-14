@@ -37,7 +37,7 @@ namespace CRS.ADMIN.SHARED.DiscountManagementCommon
         public long FromAmount { get; set; }
         public long ToAmount { get; set; }
         public string DiscountType { get; set; }
-        public int Value { get; set; }
+        public long Value { get; set; }
         public long MinValue { get; set; }
         public long MaxValue { get; set; }
         public string Status { get; set; }
@@ -55,9 +55,9 @@ namespace CRS.ADMIN.SHARED.DiscountManagementCommon
         public long? FromAmount { get; set; }
         public long? ToAmount { get; set; }
         public string DiscountType { get; set; }
-        public int? Value { get; set; }
-        public decimal? MinValue { get; set; }
-        public decimal? MaxValue { get; set; }
+        public long? Value { get; set; }
+        public long? MinValue { get; set; }
+        public long? MaxValue { get; set; }
     }
 
 

@@ -311,13 +311,13 @@ namespace CRS.ADMIN.REPOSITORY.CommissionManagement
                         CategoryId = _DAO.ParseColumnValue(item, "CategoryId").ToString(),
                         SubCategoryId = _DAO.ParseColumnValue(item, "SubCategoryId").ToString(),
                         categoryName = _DAO.ParseColumnValue(item, "CategoryName").ToString(),
-                        FromAmount = Convert.ToInt32(_DAO.ParseColumnValue(item, "FromAmount").ToString()),
-                        ToAmount = Convert.ToInt32(_DAO.ParseColumnValue(item, "ToAmount").ToString()),
+                        FromAmount = Convert.ToInt64(_DAO.ParseColumnValue(item, "FromAmount").ToString()),
+                        ToAmount = Convert.ToInt64(_DAO.ParseColumnValue(item, "ToAmount").ToString()),
                         Status = _DAO.ParseColumnValue(item, "Status").ToString(),
                         DiscountType = _DAO.ParseColumnValue(item, "DiscountType").ToString(),
                         Value = Convert.ToInt32(_DAO.ParseColumnValue(item, "Value").ToString()),
-                        MinValue = Convert.ToInt32(_DAO.ParseColumnValue(item, "MinValue").ToString()),
-                        MaxValue = Convert.ToInt32(_DAO.ParseColumnValue(item, "MaxValue").ToString()),
+                        MinValue = Convert.ToInt64(_DAO.ParseColumnValue(item, "MinValue").ToString()),
+                        MaxValue = Convert.ToInt64(_DAO.ParseColumnValue(item, "MaxValue").ToString()),
                         TotalRecords = Convert.ToInt32(_DAO.ParseColumnValue(item, "TotalRecords").ToString()),
                         createdDate = _DAO.ParseColumnValue(item, "createdDate").ToString(),
                         updatedDate = _DAO.ParseColumnValue(item, "updatedDate").ToString(),
@@ -358,12 +358,12 @@ namespace CRS.ADMIN.REPOSITORY.CommissionManagement
                     CategoryId = dbResponse.Rows[0]["CategoryId"]?.ToString(),
                     SubCategoryId = dbResponse.Rows[0]["SubCategoryId"]?.ToString(),
                     categoryName = dbResponse.Rows[0]["categoryName"]?.ToString(),
-                    FromAmount = Convert.ToInt32(dbResponse.Rows[0]["FromAmount"]?.ToString()),
-                    ToAmount = Convert.ToInt32(dbResponse.Rows[0]["ToAmount"]?.ToString()),
+                    FromAmount = Convert.ToInt64(dbResponse.Rows[0]["FromAmount"]?.ToString()),
+                    ToAmount = Convert.ToInt64(dbResponse.Rows[0]["ToAmount"]?.ToString()),
                     DiscountType = dbResponse.Rows[0]["DiscountType"]?.ToString(),
-                    Value = Convert.ToInt32(dbResponse.Rows[0]["Value"]?.ToString()),
-                    MinValue = Convert.ToInt32(dbResponse.Rows[0]["MinValue"]?.ToString()),
-                    MaxValue = Convert.ToInt32(dbResponse.Rows[0]["MaxValue"]?.ToString())
+                    Value = Convert.ToInt64(dbResponse.Rows[0]["Value"]?.ToString()),
+                    MinValue = Convert.ToInt64(dbResponse.Rows[0]["MinValue"]?.ToString()),
+                    MaxValue = Convert.ToInt64(dbResponse.Rows[0]["MaxValue"]?.ToString())
                 };
             }
             return new DiscountCategoryDetailsResponseCommon();
