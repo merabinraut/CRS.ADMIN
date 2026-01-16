@@ -30,6 +30,7 @@
             {
                 @Html.HiddenFor(model => model.subCategoryId)
             }
+          
             <div class="p-[24px]">
                 <div class=" py-4 grid gap-5">
                     <div class="input-field-common">
@@ -53,7 +54,7 @@
                     @*<div class="input-field-common">
                         <label class="block mb-[12px] text-sm font-medium text-secondary-100 ">
                             @CRS.ADMIN.APPLICATION.Resources.Resource.DiscountType
-                        </label> 
+                        </label>
                         @Html.TextBoxFor(model => model.DiscountType, new { @class = "w-full rounded-[4px]", @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.DiscountType, @style = "border-radius:4px !important", @onkeypress = "return isAlphabetWithSpace(event)", autocomplete = "off", @maxLength = "50" })
                         <span class="error">
                             @Html.ValidationMessageFor(m => m.DiscountType)

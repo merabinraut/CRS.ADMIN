@@ -49,7 +49,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                     x.Description = x.Description;
                     x.Status = x.Status;
                     x.CreatedDate = x.CreatedDate;
-                    x.UpdatedDate = x.UpdatedDate;
+                    x.UpdatedDate = x.UpdatedDate;                    
                 });
                 if (TempData.ContainsKey("DiscountCategoryManagementModel"))
                     discountModel.discountCategoryModel = TempData["DiscountCategoryManagementModel"] as DiscountManagementModel;
@@ -230,13 +230,15 @@ namespace CRS.ADMIN.APPLICATION.Controllers
         }
 
         [HttpGet]
-        public ActionResult GetCategoryDetailsList(string categoryId="", string categoryName="", string SearchFilter = "", int StartIndex = 0, int PageSize = 10)
+        public ActionResult GetCategoryDetailsList(string categoryId = "", string categoryName = "", string SearchFilter = "", int StartIndex = 0, int PageSize = 10)
         {
             ViewBag.SearchFilter = SearchFilter;
             Session["CurrentURL"] = "/DiscountManagement/GetCategoryDetailsList";
             var culture = Request.Cookies["culture"]?.Value;
             culture = string.IsNullOrEmpty(culture) ? "ja" : culture;
             string RenderId = "";
+            categoryName = !string.IsNullOrEmpty(categoryName) ? categoryName : TempData["CategoryName"].ToString();
+            categoryId = !string.IsNullOrEmpty(categoryId) ? categoryId : TempData["CategoryId"].ToString();
             if (!string.IsNullOrEmpty(categoryId))
             {
                 categoryId = categoryId.DecryptParameter();
@@ -284,8 +286,13 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             ViewBag.DiscountCategoryId = categoryId;
             discountSubCategoryModel.discountSubCategoryModel.categoryName = categoryName;
             discountSubCategoryModel.discountSubCategoryModel.categoryId = categoryId;
-            ViewBag.BackButtonURL = "/DiscountManagement/Index";
+            ViewBag.BackButtonURL = "/DiscountManagement/Index?StartIndex=" + StartIndex + "&PageSize=" + PageSize;
             ViewBag.IsBackAllowed = true;
+            TempData["CategoryName"] = categoryName;
+            TempData["CategoryId"] = categoryId.EncryptParameter();
+            TempData["StartIndex"] = StartIndex;
+            TempData["PageSize"] = PageSize;
+            TempData["SearchFilter"] = SearchFilter;
             return View(discountSubCategoryModel);
         }
         [HttpGet]
@@ -321,7 +328,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             TempData["RenderId"] = "ManageSubCategory";
             TempData["discountTypeId"] = respMapped.DiscountType.EncryptParameter();
 
-            return RedirectToAction("GetCategoryDetailsList", "DiscountManagement", new { categoryId = i.EncryptParameter(), categoryName = k });
+            return RedirectToAction("GetCategoryDetailsList", "DiscountManagement", new { categoryId = i.EncryptParameter(), categoryName = k,StartIndex = TempData["StartIndex"] ,PageSize = TempData["PageSize"] , SearchFilter = TempData["SearchFilter"] });
         }
 
         [HttpPost]
@@ -346,7 +353,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             }
             if (!string.IsNullOrEmpty(requestModel.subCategoryId))
                 requestModel.subCategoryId = requestModel.subCategoryId.DecryptParameter();
-          
+
             if (requestModel.DiscountType.DecryptParameter() == "F")
             {
                 ModelState.Remove("MinValue");
@@ -381,7 +388,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                     });
                     TempData["DiscountCategoryManagementModel"] = viewModel;
                     TempData["RenderId"] = "Manage";
-                    return RedirectToAction("GetCategoryDetailsList", "DiscountManagement", new { categoryId = requestModel.categoryId.EncryptParameter(), categoryName = requestModel.categoryName });
+                    return RedirectToAction("GetCategoryDetailsList", "DiscountManagement", new { categoryId = requestModel.categoryId.EncryptParameter(), categoryName = requestModel.categoryName, StartIndex = TempData["StartIndex"], PageSize = TempData["PageSize"], SearchFilter = TempData["SearchFilter"] });
                 }
                 else
                 {
@@ -394,7 +401,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 }
                 TempData["DiscountCategoryManagementModel"] = viewModel;
                 TempData["RenderId"] = "Manage";
-                return RedirectToAction("GetCategoryDetailsList", "DiscountManagement", new { categoryId = requestModel.categoryId.EncryptParameter(), categoryName = requestModel.categoryName });
+                return RedirectToAction("GetCategoryDetailsList", "DiscountManagement", new { categoryId = requestModel.categoryId.EncryptParameter(), categoryName = requestModel.categoryName, StartIndex = TempData["StartIndex"], PageSize = TempData["PageSize"], SearchFilter = TempData["SearchFilter"] });
             }
             this.AddNotificationMessage(new NotificationModel()
             {
@@ -404,7 +411,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             });
             TempData["DiscountCategoryManagementModel"] = viewModel;
             TempData["RenderId"] = "Manage";
-            return RedirectToAction("GetCategoryDetailsList", "DiscountManagement", new { categoryId = requestModel.categoryId.EncryptParameter(), categoryName = requestModel.categoryName });
+            return RedirectToAction("GetCategoryDetailsList", "DiscountManagement", new { categoryId = requestModel.categoryId.EncryptParameter(), categoryName = requestModel.categoryName, StartIndex = TempData["StartIndex"], PageSize = TempData["PageSize"], SearchFilter = TempData["SearchFilter"] });
         }
 
         public ActionResult DiscountSubCategoryStatus(string categoryId, string subCategoryId, string categoryName, string status, string SearchFilter = "", int StartIndex = 0, int PageSize = 10)
@@ -444,7 +451,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                     Message = response.Message,
                     Title = NotificationMessage.SUCCESS.ToString(),
                 });
-                return RedirectToAction("GetCategoryDetailsList", "DiscountManagement", new { categoryId = categoryId.EncryptParameter(), categoryName = categoryName });
+                return RedirectToAction("GetCategoryDetailsList", "DiscountManagement", new { categoryId = categoryId.EncryptParameter(), categoryName = categoryName, StartIndex = TempData["StartIndex"], PageSize = TempData["PageSize"], SearchFilter = TempData["SearchFilter"] });
             }
             else
             {
@@ -455,7 +462,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                     Title = NotificationMessage.ERROR.ToString(),
                 });
             }
-            return RedirectToAction("GetCategoryDetailsList", "DiscountManagement", new { categoryId = categoryId, categoryName = categoryName });
+            return RedirectToAction("GetCategoryDetailsList", "DiscountManagement", new { categoryId = categoryId, categoryName = categoryName, StartIndex = TempData["StartIndex"], PageSize = TempData["PageSize"], SearchFilter = TempData["SearchFilter"] });
         }
     }
 }

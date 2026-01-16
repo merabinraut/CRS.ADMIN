@@ -75,6 +75,7 @@ namespace CRS.ADMIN.APPLICATION.Models.DiscountManagement
         public string categoryName { get; set; }
         public List<SelectListItem> discountTypeList { get; set; } = new List<SelectListItem>();
 
+
     }
 
     public class DiscountSubCategoryRequestModel
