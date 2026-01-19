@@ -1,7 +1,9 @@
 ﻿
+using CRS.ADMIN.APPLICATION.Resources;
 using DocumentFormat.OpenXml.Wordprocessing;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Linq;
@@ -13,17 +15,22 @@ namespace CRS.ADMIN.APPLICATION.Models.DiscountManagement
     public class DiscountManagementModel
     {
         public string categoryId { get; set; }
-        public string categoryName {  get; set; }
-        public string description { get; set; }       
+        [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Required")]
+        [MaxLength(30, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Maximum_50_characters_allowed")]
+        public string categoryName { get; set; }
+        [DisplayName("Description")]
+        [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Required")]
+        [MaxLength(30, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Maximum_300_characters_allowed")]
+        public string description { get; set; }
     }
 
-    public class DiscountManagementListResponseModel 
+    public class DiscountManagementListResponseModel
     {
         public string ListType { get; set; }
         public string TabValue { get; set; }
-        public DiscountManagementModel discountCategoryModel =new DiscountManagementModel();
-        public List<DiscountManagementResponseModel> listDiscountManagement =new List<DiscountManagementResponseModel>();
-        public List<DiscountCategoryDetailsResponseModel> listDiscountSubCategoryManagement =new List<DiscountCategoryDetailsResponseModel>();
+        public DiscountManagementModel discountCategoryModel = new DiscountManagementModel();
+        public List<DiscountManagementResponseModel> listDiscountManagement = new List<DiscountManagementResponseModel>();
+        public List<DiscountCategoryDetailsResponseModel> listDiscountSubCategoryManagement = new List<DiscountCategoryDetailsResponseModel>();
         public DiscountSubCategoryManagementRequestModel discountSubCategoryModel = new DiscountSubCategoryManagementRequestModel();
         public AssignDiscountModel assignDiscountModel = new AssignDiscountModel();
     }
@@ -59,7 +66,7 @@ namespace CRS.ADMIN.APPLICATION.Models.DiscountManagement
     }
     public class DiscountSubCategoryManagementRequestModel
     {
-       
+
         public string categoryId { get; set; }
         public string subCategoryId { get; set; }
         [Required]
