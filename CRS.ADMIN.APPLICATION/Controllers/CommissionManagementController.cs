@@ -97,24 +97,19 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                     Message = dbResponse.Message ?? "Something went wrong",
                     Title = NotificationMessage.ERROR.ToString(),
                 });
-
                 return RedirectToAction("CategoryList");
             }
-
             var errorMessages = ModelState.Where(x => x.Value.Errors.Count > 0)
                         .SelectMany(x => x.Value.Errors.Select(e => $"{e.ErrorMessage}"))
                         .ToList();
-
             var notificationModels = errorMessages.Select(errorMessage => new NotificationModel
             {
                 NotificationType = NotificationMessage.ERROR,
                 Message = errorMessage,
                 Title = NotificationMessage.ERROR.ToString(),
             }).ToArray();
-
             AddNotificationMessage(notificationModels);
-
-            return View(Request);
+            return RedirectToAction("CategoryList");
         }
 
         [HttpGet]
