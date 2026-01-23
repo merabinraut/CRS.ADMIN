@@ -1,30 +1,15 @@
-﻿using CRS.ADMIN.APPLICATION.Helper;
-using CRS.ADMIN.APPLICATION.Library;
-using CRS.ADMIN.APPLICATION.Models.HostManagement;
-using CRS.ADMIN.SHARED.PaginationManagement;
+﻿using CRS.ADMIN.APPLICATION.Library;
 using CRS.ADMIN.SHARED;
 using System.Collections.Generic;
 using System.Web.Mvc;
 using CRS.ADMIN.APPLICATION.Models.ClubManagement;
 using CRS.ADMIN.SHARED.ClubManagement;
-using static Google.Apis.Requests.BatchRequest;
-using CRS.ADMIN.BUSINESS.ClubManagement;
 using System.Net.Http;
 using CRS.ADMIN.BUSINESS.ClubPlanManagement;
-using System.Net;
-using System.IO;
-using System.Xml.Serialization;
 using System.Web.UI.WebControls;
-using CRS.ADMIN.APPLICATION.Models;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Web;
 using System;
-using CRS.ADMIN.APPLICATION.Models.PointSetup;
-using CRS.ADMIN.SHARED.PointSetup;
-using System.Numerics;
-using System.Text.RegularExpressions;
-using DocumentFormat.OpenXml.Vml.Spreadsheet;
 
 namespace CRS.ADMIN.APPLICATION.Controllers
 {

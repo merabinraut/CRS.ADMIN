@@ -34,6 +34,7 @@ namespace CRS.ADMIN.REPOSITORY.CommissionManagement
                         CreatedByFullName = _DAO.ParseColumnValue(item, "CreatedByFullname").ToString(),
                         CreatedByUsername = _DAO.ParseColumnValue(item, "CreatedByUsername").ToString(),
                         CreatedByImage = _DAO.ParseColumnValue(item, "CreatedByImage").ToString(),
+                        IsDefault = Convert.ToBoolean(_DAO.ParseColumnValue(item, "IsDelete")),
                     });
                 }
             }
@@ -255,9 +256,12 @@ namespace CRS.ADMIN.REPOSITORY.CommissionManagement
         public CommonDbResponse ManageDiscountCategory(DiscountManagementRequestCommon mappedRequest)
         {
             string SQL = string.IsNullOrEmpty(mappedRequest.categoryId) ? "EXEC sproc_manage_discount_category" : "sproc_update_discount_category";
+            string categoryName = string.IsNullOrEmpty(mappedRequest.categoryName) ? "''" : "N" + _DAO.FilterString(mappedRequest.categoryName);
+            string description = string.IsNullOrEmpty(mappedRequest.description) ? "''" : "N" + _DAO.FilterString(mappedRequest.description);
+
             SQL += " @categoryId=" + _DAO.FilterString(mappedRequest.categoryId);
-            SQL += ",@categoryName=N" + _DAO.FilterString(mappedRequest.categoryName);
-            SQL += ",@categoryDescription=N" + _DAO.FilterString(mappedRequest.description);
+            SQL += ",@categoryName=" + categoryName;
+            SQL += ",@categoryDescription=" + description;
             SQL += ",@actionUser=" + _DAO.FilterString(mappedRequest.ActionUser);
             SQL += ",@actionIP=" + _DAO.FilterString(mappedRequest.ActionIP);
             SQL += ",@actionPlatform=" + _DAO.FilterString("web");

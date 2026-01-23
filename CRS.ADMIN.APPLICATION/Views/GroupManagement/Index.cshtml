@@ -140,7 +140,7 @@
                                         </path>
                                     </svg>
                                 </div>
-                                <input type="search" id="default-search" class="input-search block w-full " placeholder="Search" value="@Model.SearchFilter" name="SearchFilter">
+                                <input type="search" id="default-search-group" class="input-search block w-full " placeholder="Search" value="@Model.SearchFilter" name="SearchFilter">
                             </div>
                         </form>
                         <div class="btn btn-primary gap-[8px] h-[40px]" data-drawer-target="add-group"
@@ -232,7 +232,7 @@
                                             foreach (var item in Model.GetGroupList)
                                             {
                                                 <tr class="bg-white border-b ">
-                                                    <td class="p-[12px]">@sn</td>
+                                                    <td class="p-[12px]">@item.sno</td>
                                                     <td class="p-[12px]">
                                                         <div class="round-image-text flex gap-[12px] w-max">
                                                             <img class="w-[32px] h-[32px] rounded-full" src="@item.groupImage" />
@@ -471,7 +471,7 @@
         const total_data = @ViewBag.TotalRecords;
         const start_index_val = @ViewBag.StartIndex;
         let URL = "/GroupManagement/Index";
-        let search_filter = $('#default-search').val();
+        let search_filter = $('#default-search-group').val();
         URL = addQueryParam(URL, 'SearchFilter', search_filter);
         LoadPagination(page_size, total_data, start_index_val, URL);
        });

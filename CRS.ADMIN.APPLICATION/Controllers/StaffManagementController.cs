@@ -120,7 +120,12 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                     return RedirectToAction("StaffList");
                 }
             }
-
+            AddNotificationMessage(new NotificationModel()
+            {
+                NotificationType = NotificationMessage.ERROR,
+                Message = "Invalid request",
+                Title = NotificationMessage.ERROR.ToString()
+            });
             TempData["ManageStaffModel"] = Model;
             TempData["RenderId"] = "Manage";
             return RedirectToAction("StaffList");

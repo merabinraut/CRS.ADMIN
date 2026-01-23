@@ -28,5 +28,6 @@
         public string CreatedByFullName { get; set; }
         public string CreatedByUsername { get; set; }
         public string CreatedByImage { get; set; }
+        public bool IsDefault { get; set; }
     }
 }

@@ -187,7 +187,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             response.SearchFilter = !string.IsNullOrEmpty(SearchFilter) ? SearchFilter : null;
             return View(response);
         }
-
+ 
         [HttpGet]
         public ActionResult ManageClub(string AgentId = "", string SearchFilter = "", int StartIndex = 0, int PageSize = 10)
         {
@@ -384,6 +384,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 return Json(JsonRequestBehavior.AllowGet);
             }
         }
+
         [HttpPost, ValidateAntiForgeryToken]
         public JsonResult BlockClub(string AgentId)
         {
@@ -414,6 +415,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             });
             return Json(dbResponse.Message, JsonRequestBehavior.AllowGet);
         }
+
         [HttpPost, ValidateAntiForgeryToken]
         public ActionResult UnBlockClub(string AgentId, string status)
         {

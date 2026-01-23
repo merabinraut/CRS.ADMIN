@@ -2994,4 +2994,13 @@
     <value>このグループのブロックを解除してもいいですか
 </value>
   </data>
+  <data name="Are_you_sure_you_want_to_unblock_this_charge_category" xml:space="preserve">
+    <value>「この請求カテゴリのブロックを解除してもよろしいですか？」</value>
+  </data>
+  <data name="Are_you_sure_you_want_to_delete_this_charge_category" xml:space="preserve">
+    <value>「この請求カテゴリを削除してもよろしいですか？」</value>
+  </data>
+  <data name="Are_you_sure_you_want_to_block_this_charge_category" xml:space="preserve">
+    <value>「この請求カテゴリをブロックしてもよろしいですか？」</value>
+  </data>
 </root>
