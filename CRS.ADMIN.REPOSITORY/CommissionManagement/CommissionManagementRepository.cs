@@ -34,7 +34,7 @@ namespace CRS.ADMIN.REPOSITORY.CommissionManagement
                         CreatedByFullName = _DAO.ParseColumnValue(item, "CreatedByFullname").ToString(),
                         CreatedByUsername = _DAO.ParseColumnValue(item, "CreatedByUsername").ToString(),
                         CreatedByImage = _DAO.ParseColumnValue(item, "CreatedByImage").ToString(),
-                        IsDefault = Convert.ToBoolean(_DAO.ParseColumnValue(item, "IsDelete")),
+                        IsDefault = bool.Parse(_DAO.ParseColumnValue(item, "IsDefault").ToString()),
                     });
                 }
             }
