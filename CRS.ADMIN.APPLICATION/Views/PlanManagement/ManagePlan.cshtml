@@ -22,6 +22,7 @@
             <fieldset class="md-3">
                 <div class="row">
                     @Html.NTextBoxFor(model => model.PlanName, new { @class = "form-control", autocomplete = "off", @onkeypress = "return isAlphabateOnly(event)", @maxlength = "50", @placeholder = "Enter plan name" }, 2)
+                    @Html.NTextBoxFor(model => model.PlanNameEnglish, new { @class = "form-control", autocomplete = "off", @onkeypress = "return isAlphabateOnly(event)", @maxlength = "50", @placeholder = "Enter plan english name" }, 2)
                     @Html.NDropDownListFor(model => model.PlanType, new SelectList(ViewBag.PlanList, "Value", "Text"), new { @class = "form-control select2", @id = "AgentId", autocomplete = "off" }, 2)
                     @Html.NDropDownListFor(model => model.PlanTime, new SelectList(ViewBag.TimeList, "Value", "Text"), new { @class = "form-control select2", @id = "AgentId", autocomplete = "off" }, 2)
                     @Html.NTextBoxFor(model => model.Price, new { @class = "form-control", autocomplete = "off", @onkeypress = "return isDecimalWith2DecimalPlace(event,this)", @maxlength = "300", @placeholder = "Enter Price" }, 2)

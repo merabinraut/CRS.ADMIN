@@ -34,15 +34,15 @@ namespace CRS.ADMIN.APPLICATION.Models.PlanManagement
         public string planId { get; set; } = "0";
         public string clubName { get; set; }
         public string clubId { get; set; }
-        public string plantype {  get; set; }
-        public string planTitle {  get; set; }
-        public string planTime {  get; set; }
-        public string planPrice {  get; set; }
-        public int numberOfPeople {  get; set; }
-        public string nomination {  get; set; }
-        public string requestDate {  get; set; }
-        public string planStatus {  get; set; }
-        public string lastEntryTime {  get; set; }
+        public string plantype { get; set; }
+        public string planTitle { get; set; }
+        public string planTime { get; set; }
+        public string planPrice { get; set; }
+        public int numberOfPeople { get; set; }
+        public string nomination { get; set; }
+        public string requestDate { get; set; }
+        public string planStatus { get; set; }
+        public string lastEntryTime { get; set; }
 
     }
 
@@ -54,6 +54,9 @@ namespace CRS.ADMIN.APPLICATION.Models.PlanManagement
         [DisplayName("Plan Name")]
         [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Required")]
         public string PlanName { get; set; }
+        [DisplayName("Plan Name English")]
+        [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Required")]
+        public string PlanNameEnglish { get; set; }
         [DisplayName("Plan Category")]
         [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Required")]
         public string PlanCategory { get; set; }

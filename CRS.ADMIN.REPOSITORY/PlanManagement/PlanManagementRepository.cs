@@ -121,8 +121,8 @@ namespace CRS.ADMIN.REPOSITORY.PlanManagement
                     PlanCategory = dataTable.Rows[0]["PlanCategory"].ToString(),
                     NoOfPeople = !string.IsNullOrEmpty(dataTable.Rows[0]["NoOfPeople"].ToString()) ? Convert.ToInt32(dataTable.Rows[0]["NoOfPeople"].ToString()) : 0,
                     StrikePrice = dataTable.Rows[0]["StrikePrice"].ToString(),
-                    IsStrikeOut = dataTable.Rows[0]["IsStrikeOut"].ToString()
-
+                    IsStrikeOut = dataTable.Rows[0]["IsStrikeOut"].ToString(),
+                    PlanNameEnglish = dataTable.Rows[0]["PlanNameEnglish"].ToString()
                 };
             }
             return new PlanManagementCommon();
@@ -153,6 +153,7 @@ namespace CRS.ADMIN.REPOSITORY.PlanManagement
             sql += ", @NoOfPeople=" + planManagementCommon.NoOfPeople;
             sql += ", @StrikePrice=" + _dao.FilterString(planManagementCommon.StrikePrice);
             sql += ", @IsStrikeOut=" + _dao.FilterString(planManagementCommon.IsStrikeOut);
+            sql += ", @PlanNameEnglish=" + _dao.FilterString(planManagementCommon.PlanNameEnglish);
             return _dao.ParseCommonDbResponse(sql);
         }
 

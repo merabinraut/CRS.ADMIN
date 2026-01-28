@@ -3020,4 +3020,8 @@
     <value>Are you sure you want to block this charge category</value>
     <comment>confirmationBlock</comment>
   </data>
+  <data name="Plan Name English" xml:space="preserve">
+    <value>Plan Name English</value>
+    <comment>Plan Management</comment>
+  </data>
 </root>
