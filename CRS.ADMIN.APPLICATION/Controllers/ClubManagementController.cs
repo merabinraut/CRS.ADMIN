@@ -187,7 +187,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             response.SearchFilter = !string.IsNullOrEmpty(SearchFilter) ? SearchFilter : null;
             return View(response);
         }
- 
+
         [HttpGet]
         public ActionResult ManageClub(string AgentId = "", string SearchFilter = "", int StartIndex = 0, int PageSize = 10)
         {
@@ -2381,7 +2381,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             var ceoDetails = _BUSS.GetSubDomainDetails(request.clubId);
             var countryCode = ConfigurationManager.AppSettings["CountryCode"];
             var domainUrl = ConfigurationManager.AppSettings["domainUrl"];
-            request.SubDomainUrl = $"{request.SubDomainName}.{domainUrl}/{ceoDetails.clubCode}/host";
+            request.SubDomainUrl = $"{request.SubDomainName}.{domainUrl}/{ceoDetails.clubCode}";
 
             if (!string.IsNullOrEmpty(request.SubDomainName) && !string.Equals(request.SubDomainName, ceoDetails.SubDomainName, StringComparison.OrdinalIgnoreCase))
             {
