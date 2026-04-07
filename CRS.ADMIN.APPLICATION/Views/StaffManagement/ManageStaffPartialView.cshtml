@@ -168,14 +168,17 @@
     </div>
 
 </div>
+
 <script>
     $(document).ready(function () {
         $('form').submit(function (e) {
             var userNameInput = $('#UserName'); 
             var userNameValue = userNameInput.val().trim();
+            var errorSpan = userNameInput.closest('.input-field-common').find('.error');
 
             if (userNameValue === "") {
                 e.preventDefault();
+                errorSpan.show(); 
                 return false;
             }
         });

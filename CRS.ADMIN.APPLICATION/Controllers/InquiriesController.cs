@@ -37,6 +37,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             ViewBag.TotalData = listInquiry != null && listInquiry.Any() ? listInquiry[0].TotalRecords : 0;
             return View();
         }
+
         public ActionResult GetInquiriesDetailsView(string inquiryId = "")
         {
             var inquiriesDetails = _buss.GetInquiryDetailsAsync(inquiryId);
