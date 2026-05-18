@@ -2840,6 +2840,10 @@
     <Content Include="Views\WithdrawalRequest\WithdrawalDetailList.cshtml" />
     <Content Include="Views\TemplateManagement\MessageTemplateList.cshtml" />
     <Content Include="Views\TemplateManagement\_ManageTemplate.cshtml" />
+    <Content Include="Views\StaticDataManagement\Index.cshtml" />
+    <Content Include="Views\StaticDataManagement\StaticDataIndex.cshtml" />
+    <Content Include="Views\StaticDataManagement\_ManageStaticData.cshtml" />
+    <Content Include="Views\StaticDataManagement\_ManageStaticDataType.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
