@@ -1322,10 +1322,11 @@ namespace CRS.ADMIN.REPOSITORY.ClubManagement
             return _sqlTransactionHandler.ParseCommonDbResponse(SQL);
             // return _DAO.ParseCommonDbResponse(SQL);
         }
-        public SubDomainCommon GetSubDomainDetails(string agentId)
+        public SubDomainCommon GetSubDomainDetails(string agentId, string SubDomainName)
         {
             string SQL = "EXEC sproc_admin_get_subdomain_update";
             SQL += " @agentId=" + _DAO.FilterString(agentId);
+            SQL += ",@subDomainName=" + _DAO.FilterString(SubDomainName);
             var dbResponse = _DAO.ExecuteDataRow(SQL);
 
             if (dbResponse != null)
@@ -1338,6 +1339,7 @@ namespace CRS.ADMIN.REPOSITORY.ClubManagement
                     SubDomainUrl = _DAO.ParseColumnValue(dbResponse, "SubDomainUrl").ToString(),
                     Description = _DAO.ParseColumnValue(dbResponse, "Description").ToString(),
                     email = _DAO.ParseColumnValue(dbResponse, "email").ToString(),
+                    isSubdomainNameExists = Convert.ToBoolean(_DAO.ParseColumnValue(dbResponse, "isSubdomainNameExists")),
                     mobileNumber = _DAO.ParseColumnValue(dbResponse, "mobileNumber").ToString(),
                 };
             }

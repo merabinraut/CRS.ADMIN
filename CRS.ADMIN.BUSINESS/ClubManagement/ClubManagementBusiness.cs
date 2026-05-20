@@ -153,9 +153,9 @@ namespace CRS.ADMIN.BUSINESS.ClubManagement
             return _REPO.AddSubDomain(request);
         }
 
-        public SubDomainCommon GetSubDomainDetails(string agentId)
+        public SubDomainCommon GetSubDomainDetails(string agentId,string SubDomainName)
         {
-            return _REPO.GetSubDomainDetails(agentId);
+            return _REPO.GetSubDomainDetails(agentId,SubDomainName);
         }
 
         public CommonDbResponse UpdateSubDomain(SubDomainCommon requestMapped ,SqlConnection connection = null, SqlTransaction transaction = null)

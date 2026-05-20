@@ -52,7 +52,7 @@ namespace CRS.ADMIN.REPOSITORY.ClubManagement
         LineGroupCommon GetLineGroupDetails(string agentId, string groupId);
         CommonDbResponse ManageLineGroup(LineGroupCommon request);
         CommonDbResponse AddSubDomain(SubDomainCommon request, SqlConnection connection = null, SqlTransaction transaction = null);
-        SubDomainCommon GetSubDomainDetails(string agentId);
+        SubDomainCommon GetSubDomainDetails(string agentId, string SubDomainName);
         CommonDbResponse UpdateSubDomain(SubDomainCommon requestMapped, SqlConnection connection = null, SqlTransaction transaction = null);
     }
 }
