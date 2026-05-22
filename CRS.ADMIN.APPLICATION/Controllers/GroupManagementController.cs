@@ -299,8 +299,8 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                     NotificationType = response.Code == ResponseCode.Warning ? NotificationMessage.WARNING : NotificationMessage.INFORMATION,
                     Message = response.Message ?? "something went wrong. Please try again later",
                     Title = response.Code == ResponseCode.Warning ? NotificationMessage.WARNING.ToString() : NotificationMessage.INFORMATION.ToString(),
-                });
-                return Json(response.Message, JsonRequestBehavior.AllowGet);
+                });                return Json(response.Message, JsonRequestBehavior.AllowGet);
+
             }
 
         }
