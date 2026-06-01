@@ -1,0 +1,783 @@
+﻿@model CRS.ADMIN.APPLICATION.Models.HostManagement.ManageHostModel
+
+@{
+    var rankList = ViewBag.RankDDL as IEnumerable<SelectListItem> ?? Enumerable.Empty<SelectListItem>();
+    var heightList = ViewBag.HeightDDL as IEnumerable<SelectListItem> ?? Enumerable.Empty<SelectListItem>();
+    var zodiacList = ViewBag.ZodiacSignsDDL as IEnumerable<SelectListItem> ?? Enumerable.Empty<SelectListItem>();
+    var birthPlaceList = ViewBag.BirthPlaceDDL as IEnumerable<SelectListItem> ?? Enumerable.Empty<SelectListItem>();
+    var bloodGroupList = ViewBag.BloodGroupDDL as IEnumerable<SelectListItem> ?? Enumerable.Empty<SelectListItem>();
+
+    var selectedRank = ViewBag.RankDDLKey as string;
+    var selectedHeight = ViewBag.HeightDDLKey as string;
+    var selectedZodiac = ViewBag.ZodiacSignsDDLKey as string;
+    var selectedBirthPlace = ViewBag.BirthPlaceDDLKey as string;
+    var selectedBloodGroup = ViewBag.BloodGroupDDLKey as string;
+
+    DateTime date = (!string.IsNullOrEmpty(Model.DOB) && Model.DOB.Trim().ToUpper() != "YYYY-MM-DD")
+        ? Convert.ToDateTime(Model.DOB)
+        : DateTime.Now;
+
+    int splitYear = date.Year;
+    int splitMonth = date.Month;
+    int splitDay = date.Day;
+}
+
+<style>
+    .profile-section-title {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 18px;
+        font-size: 16px;
+        font-weight: 700;
+        color: #111827;
+        text-transform: uppercase;
+    }
+
+        .profile-section-title::after {
+            content: "";
+            flex: 1;
+            height: 1px;
+            background: #eeeeee;
+        }
+
+    .skill-range {
+        width: 100%;
+        height: 32px;
+        appearance: none;
+        background: transparent;
+        cursor: pointer;
+        position: relative;
+        z-index: 2;
+        margin: 0;
+    }
+
+        .skill-range::-webkit-slider-runnable-track {
+            height: 2px;
+            background: linear-gradient( to right, #d94f86 0%, #d94f86 var(--progress, 50%), #dddddd var(--progress, 50%), #dddddd 100% );
+        }
+
+        .skill-range::-webkit-slider-thumb {
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            background: #d94f86;
+            border-radius: 50%;
+            border: none;
+            margin-top: -9px;
+        }
+
+        .skill-range::-moz-range-track {
+            height: 2px;
+            background: #dddddd;
+        }
+
+        .skill-range::-moz-range-progress {
+            height: 2px;
+            background: #d94f86;
+        }
+
+        .skill-range::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            background: #d94f86;
+            border-radius: 50%;
+            border: none;
+        }
+
+    .range-dots {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 7px;
+        display: flex;
+        justify-content: space-between;
+        pointer-events: none;
+        z-index: 1;
+    }
+
+        .range-dots span {
+            width: 16px;
+            height: 16px;
+            background: #dddddd;
+            border-radius: 999px;
+        }
+
+            .range-dots span.active {
+                background: #d94f86;
+            }
+</style>
+
+<div id="add-new-host"
+     class="drawer-close-disable flex justify-end fixed top-0 right-0 z-40 h-screen overflow-y-auto transition-transform translate-x-full"
+     tabindex="-1"
+     aria-labelledby="drawer-right-label">
+
+    <div class="bg-white w-[574px] drawer-container relative">
+
+        <div class="drawer-form-container sticky top-0 z-[5]">
+            <div class="drawer-form flex justify-between items-center bg-secondary-color-pink py-[16px] px-[24px] h-[56px]">
+                <div class="text-white font-semibold">
+                    Manage Host Profile
+                </div>
+
+                <button type="button"
+                        data-drawer-hide="add-new-host"
+                        aria-controls="add-new-host"
+                        class="text-[20px]">
+                    <i class="las la-window-close text-white" onclick="CancelFunction();"></i>
+                </button>
+            </div>
+        </div>
+
+        <div class="p-[24px]">
+            @using (Html.BeginForm("ManageHost", "HostManagement", FormMethod.Post, new { @id = "ManageHostForm", enctype = "multipart/form-data" }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.HiddenFor(model => model.AgentId)
+                @Html.HiddenFor(model => model.HostLogo)
+
+                if (!string.IsNullOrEmpty(Model.HostId))
+                {
+                    @Html.HiddenFor(model => model.HostId)
+                }
+
+                <div class="profile-section-title">
+                    Profile
+                </div>
+
+                <div class="grid grid-cols-2 gap-x-[20px] gap-y-[16px]">
+
+                    <div class="input-field-common">
+                        <label class="block mb-[12px] text-sm font-medium text-secondary-100">
+                            Name <span class="text-error">*</span>
+                        </label>
+
+                        @Html.TextBoxFor(model => model.HostName, new
+                        {
+                            @class = "w-full",
+                            @placeholder = "Name",
+                            autocomplete = "off",
+                            maxlength = "100"
+                        })
+
+                        <span class="error">
+                            @Html.ValidationMessageFor(m => m.HostName)
+                        </span>
+                    </div>
+
+                    <div class="input-field-common">
+                        <label class="block mb-[12px] text-sm font-medium text-secondary-100">
+                            Romanization <span class="text-error">*</span>
+                        </label>
+
+                        <input type="text"
+                               name="Romanization"
+                               id="Romanization"
+                               class="w-full"
+                               placeholder="Romanization"
+                               autocomplete="off"
+                               maxlength="100"
+                               value="@(ViewBag.Romanization ?? "")" />
+
+                        <span class="error">
+                            @Html.ValidationMessage("Romanization")
+                        </span>
+                    </div>
+
+                    <div class="input-field-common">
+                        <label class="block mb-[12px] text-sm font-medium text-secondary-100">
+                            Position
+                        </label>
+
+                        @Html.TextBoxFor(model => model.Position, new
+                        {
+                            @class = "w-full",
+                            @placeholder = "Enter Position",
+                            autocomplete = "off",
+                            maxlength = "100"
+                        })
+
+                        <span class="error">
+                            @Html.ValidationMessageFor(m => m.Position)
+                        </span>
+                    </div>
+
+                    <div class="input-field-common">
+                        <label class="block mb-[12px] text-sm font-medium text-secondary-100">
+                            Rank
+                        </label>
+
+                        <select class="select-common block w-full" name="Rank">
+                            <option value="">Select</option>
+
+                            @foreach (var item in rankList)
+                            {
+                                if (item.Value == selectedRank)
+                                {
+                                    <option value="@item.Value" selected>@item.Text</option>
+                                }
+                                else
+                                {
+                                    <option value="@item.Value">@item.Text</option>
+                                }
+                            }
+                        </select>
+
+                        <span class="error">
+                            @Html.ValidationMessageFor(m => m.Rank)
+                        </span>
+                    </div>
+                </div>
+
+                <div class="mt-[18px]">
+                    <label class="block mb-[12px] text-sm font-medium text-secondary-text-2">
+                        Profile Image
+                    </label>
+
+                    <div class="file-upload-common">
+                        <label for="HostLogoFile" class="custom-file-upload w-[128px] flex-none text-ellipsis-customer">
+                            <span>Choose Images</span>
+                        </label>
+
+                        <input id="HostLogoFile"
+                               class="file-input"
+                               type="file"
+                               name="HostLogoFile"
+                               accept=".heif,.heic,image/heif,image/heic"
+                               style="display:none;" />
+
+                        <p id="host_logo_file_name"
+                           class="file-name w-max h-[23px] overflow-hidden pl-2 text-xs text-[#686868] leading-[25px]">
+                            @if (string.IsNullOrEmpty(Model.HostLogo))
+                            {
+                                @:No File Choosen
+                            }
+                            else
+                            {
+                                @System.IO.Path.GetFileName(Model.HostLogo)
+                            }
+                        </p>
+                    </div>
+
+                    <div class="text-xs text-error mt-[8px]">
+                        Note: Image should be HEIF format and Maximum file size is 5 MB.
+                    </div>
+                </div>
+
+                <div class="divider-common"></div>
+
+                <div class="grid gap-[16px]">
+
+                    <div class="input-field-common">
+                        <label class="block mb-[12px] text-sm font-medium text-secondary-100">
+                            Birth Date
+                        </label>
+
+                        <div class="select-date-common flex gap-[16px]">
+                            <select class="select-common block w-[100px]" name="BirthYearKey">
+                                <option value="">YYYY</option>
+
+                                @{
+                                    DateTime currentDate = DateTime.Now;
+                                    int currentYear = currentDate.Year;
+                                    int startYear = currentYear - 200;
+
+                                    for (int year = currentYear; year >= startYear; year--)
+                                    {
+                                        if ((!string.IsNullOrEmpty(Model.DOB) && Model.DOB.Trim().ToUpper() != "YYYY-MM-DD") && splitYear == year)
+                                        {
+                                            <option value="@year" selected>@year</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@year">@year</option>
+                                        }
+                                    }
+                                }
+                            </select>
+
+                            <select class="select-common block w-[100px]" name="BirthMonthKey">
+                                <option value="">MM</option>
+
+                                @for (int month = 1; month <= 12; month++)
+                                {
+                                    if ((!string.IsNullOrEmpty(Model.DOB) && Model.DOB.Trim().ToUpper() != "YYYY-MM-DD") && splitMonth == month)
+                                    {
+                                        <option value="@month" selected>@month</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@month">@month</option>
+                                    }
+                                }
+                            </select>
+
+                            <select class="select-common block w-[100px]" name="BirthDayKey">
+                                <option value="">DD</option>
+
+                                @for (int day = 1; day <= 31; day++)
+                                {
+                                    if ((!string.IsNullOrEmpty(Model.DOB) && Model.DOB.Trim().ToUpper() != "YYYY-MM-DD") && splitDay == day)
+                                    {
+                                        <option value="@day" selected>@day</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@day">@day</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-x-[20px] gap-y-[16px]">
+
+                        <div class="input-field-common">
+                            <label class="block mb-[12px] text-sm font-medium text-secondary-100">
+                                Height
+                            </label>
+
+                            @*<select class="select-common block w-full" name="Height">
+            <option value="">please select</option>
+
+            @foreach (var item in heightList)
+            {
+                if (item.Value == selectedHeight)
+                {
+                    <option value="@item.Value" selected>@item.Text</option>
+                }
+                else
+                {
+                    <option value="@item.Value">@item.Text</option>
+                }
+            }
+        </select>
+
+        <span class="error">
+            @Html.ValidationMessageFor(m => m.Height)
+        </span>*@
+                            <input type="text"
+                                   name="Height"
+                                   id="Height"
+                                   class="w-full"
+                                   placeholder="Height"
+                                   autocomplete="off"
+                                   maxlength="10"
+                                   value="@(ViewBag.MBTI ?? "")" />
+
+                            <span class="error">
+                                @Html.ValidationMessage("MBTI")
+                            </span>
+                        </div>
+
+                        <div class="input-field-common">
+                            <label class="block mb-[12px] text-sm font-medium text-secondary-100">
+                                Constellation
+                            </label>
+
+                            <select class="select-common block w-full" name="ZodiacSignsDDLKey">
+                                <option value="">please select</option>
+
+                                @foreach (var item in zodiacList)
+                                {
+                                    if (item.Value == selectedZodiac)
+                                    {
+                                        <option value="@item.Value" selected>@item.Text</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@item.Value">@item.Text</option>
+                                    }
+                                }
+                            </select>
+
+                            <span class="error">
+                                @Html.ValidationMessageFor(m => m.ConstellationGroup)
+                            </span>
+                        </div>
+
+                        <div class="input-field-common">
+                            <label class="block mb-[12px] text-sm font-medium text-secondary-100">
+                                Birth Place
+                            </label>
+
+                            <select class="select-common block w-full" name="BirthPlaceKey">
+                                <option value="">please select</option>
+
+                                @foreach (var item in birthPlaceList)
+                                {
+                                    if (item.Value == selectedBirthPlace)
+                                    {
+                                        <option value="@item.Value" selected>@item.Text</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@item.Value">@item.Text</option>
+                                    }
+                                }
+                            </select>
+
+                            <span class="error">
+                                @Html.ValidationMessage("BirthPlaceKey")
+                            </span>
+                        </div>
+
+                        <div class="input-field-common">
+                            <label class="block mb-[12px] text-sm font-medium text-secondary-100">
+                                Blood Type
+                            </label>
+
+                            <select class="select-common block w-full" name="BloodGroupDDLKey">
+                                <option value="">please select</option>
+
+                                @foreach (var item in bloodGroupList)
+                                {
+                                    if (item.Value == selectedBloodGroup)
+                                    {
+                                        <option value="@item.Value" selected>@item.Text</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@item.Value">@item.Text</option>
+                                    }
+                                }
+                            </select>
+
+                            <span class="error">
+                                @Html.ValidationMessage("BloodGroupDDLKey")
+                            </span>
+                        </div>
+
+                        <div class="input-field-common">
+                            <label class="block mb-[12px] text-sm font-medium text-secondary-100">
+                                MBTI
+                            </label>
+
+                            <input type="text"
+                                   name="MBTI"
+                                   id="MBTI"
+                                   class="w-full"
+                                   placeholder="MBTI"
+                                   autocomplete="off"
+                                   maxlength="10"
+                                   value="@(ViewBag.MBTI ?? "")" />
+
+                            <span class="error">
+                                @Html.ValidationMessage("MBTI")
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="divider-common"></div>
+
+                <div class="profile-section-title">
+                    Title
+                </div>
+
+                <div class="grid grid-cols-2 gap-x-[20px] gap-y-[16px]">
+                    <div class="input-field-common">
+                        <input type="text"
+                               name="HostTitle"
+                               id="HostTitle"
+                               class="w-full"
+                               placeholder="Title"
+                               autocomplete="off"
+                               maxlength="100"
+                               value="@(ViewBag.HostTitle ?? "")" />
+
+                        <span class="error">
+                            @Html.ValidationMessage("HostTitle")
+                        </span>
+                    </div>
+                </div>
+
+                <div class="divider-common"></div>
+
+                <div class="profile-section-title">
+                    SNS
+                </div>
+
+                <div class="social-links-form grid grid-cols-2 gap-x-[20px] gap-y-[16px]">
+
+                    <div class="input-field-common">
+                        <label class="block mb-[12px] text-sm font-medium text-secondary-100">
+                            LINE
+                        </label>
+
+                        @Html.TextBoxFor(model => model.Line, new
+                        {
+                            @class = "w-full",
+                            @placeholder = "https://lin.ee/",
+                            autocomplete = "off"
+                        })
+
+                        <span class="error">
+                            @Html.ValidationMessageFor(m => m.Line)
+                        </span>
+                    </div>
+
+                    <div class="input-field-common">
+                        <label class="block mb-[12px] text-sm font-medium text-secondary-100">
+                            Instagram
+                        </label>
+
+                        @Html.TextBoxFor(model => model.InstagramLink, new
+                        {
+                            @class = "w-full",
+                            @placeholder = "instagram.com/",
+                            autocomplete = "off"
+                        })
+
+                        <span class="error">
+                            @Html.ValidationMessageFor(m => m.InstagramLink)
+                        </span>
+                    </div>
+
+                    <div class="input-field-common">
+                        <label class="block mb-[12px] text-sm font-medium text-secondary-100">
+                            TikTok
+                        </label>
+
+                        @Html.TextBoxFor(model => model.TiktokLink, new
+                        {
+                            @class = "w-full",
+                            @placeholder = "https://www.tiktok.com/",
+                            autocomplete = "off"
+                        })
+
+                        <span class="error">
+                            @Html.ValidationMessageFor(m => m.TiktokLink)
+                        </span>
+                    </div>
+
+                    <div class="input-field-common">
+                        <label class="block mb-[12px] text-sm font-medium text-secondary-100">
+                            X
+                        </label>
+
+                        @Html.TextBoxFor(model => model.TwitterLink, new
+                        {
+                            @class = "w-full",
+                            @placeholder = "https://twitter.com/",
+                            autocomplete = "off"
+                        })
+
+                        <span class="error">
+                            @Html.ValidationMessageFor(m => m.TwitterLink)
+                        </span>
+                    </div>
+                </div>
+
+                <div class="divider-common"></div>
+
+                <div class="profile-section-title">
+                    Skills and Self-Assessment (5-point scale)
+                </div>
+
+                <div class="grid gap-[28px]">
+
+                    <div class="skill-item">
+                        <div class="border-l-[4px] border-[#cfd8dc] pl-[12px] mb-[14px] text-sm font-semibold text-secondary-100">
+                            Appearance and overall impression
+                        </div>
+
+                        <div class="relative h-[34px]">
+                            <input type="range"
+                                   class="skill-range"
+                                   name="AppearanceScore"
+                                   min="1"
+                                   max="5"
+                                   step="1"
+                                   value="@(ViewBag.AppearanceScore ?? 3)" />
+
+                            <div class="range-dots">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </div>
+                        </div>
+
+                        <div class="flex justify-between text-xs text-secondary-100 mt-[6px]">
+                            <span>Cute style</span>
+                            <span>Cool style</span>
+                        </div>
+
+                        <div class="range-value text-xs text-[#686868] mt-[6px]">
+                            Selected: <strong>3</strong>/5
+                        </div>
+                    </div>
+
+                    <div class="skill-item">
+                        <div class="border-l-[4px] border-[#cfd8dc] pl-[12px] mb-[14px] text-sm font-semibold text-secondary-100">
+                            Conversation Style
+                        </div>
+
+                        <div class="relative h-[34px]">
+                            <input type="range"
+                                   class="skill-range"
+                                   name="ConversationScore"
+                                   min="1"
+                                   max="5"
+                                   step="1"
+                                   value="@(ViewBag.ConversationScore ?? 3)" />
+
+                            <div class="range-dots">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </div>
+                        </div>
+
+                        <div class="flex justify-between text-xs text-secondary-100 mt-[6px]">
+                            <span>Listener</span>
+                            <span>Speaker</span>
+                        </div>
+
+                        <div class="range-value text-xs text-[#686868] mt-[6px]">
+                            Selected: <strong>3</strong>/5
+                        </div>
+                    </div>
+
+                    <div class="skill-item">
+                        <div class="border-l-[4px] border-[#cfd8dc] pl-[12px] mb-[14px] text-sm font-semibold text-secondary-100">
+                            Beverage Tolerance
+                        </div>
+
+                        <div class="relative h-[34px]">
+                            <input type="range"
+                                   class="skill-range"
+                                   name="BeverageToleranceScore"
+                                   min="1"
+                                   max="5"
+                                   step="1"
+                                   value="@(ViewBag.BeverageToleranceScore ?? 3)" />
+
+                            <div class="range-dots">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </div>
+                        </div>
+
+                        <div class="flex justify-between text-xs text-secondary-100 mt-[6px]">
+                            <span>Low</span>
+                            <span>High</span>
+                        </div>
+
+                        <div class="range-value text-xs text-[#686868] mt-[6px]">
+                            Selected: <strong>3</strong>/5
+                        </div>
+                    </div>
+
+                    <div class="skill-item">
+                        <div class="border-l-[4px] border-[#cfd8dc] pl-[12px] mb-[14px] text-sm font-semibold text-secondary-100">
+                            Atmosphere
+                        </div>
+
+                        <div class="relative h-[34px]">
+                            <input type="range"
+                                   class="skill-range"
+                                   name="AtmosphereScore"
+                                   min="1"
+                                   max="5"
+                                   step="1"
+                                   value="@(ViewBag.AtmosphereScore ?? 3)" />
+
+                            <div class="range-dots">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </div>
+                        </div>
+
+                        <div class="flex justify-between text-xs text-secondary-100 mt-[6px]">
+                            <span>Healing</span>
+                            <span>Liven Things Up</span>
+                        </div>
+
+                        <div class="range-value text-xs text-[#686868] mt-[6px]">
+                            Selected: <strong>3</strong>/5
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex justify-end py-[16px] ">
+                    <div class="flex gap-[24px]">
+                        <div class="btn btn-secondary" data-drawer-hide="add-new-host" aria-controls="add-new-host" onclick="CancelFunction();">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Cancel
+                        </div>
+                        <div class="btn btn-primary">
+                            <button type="submit">@CRS.ADMIN.APPLICATION.Resources.Resource.Submit</button>
+
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const ranges = document.querySelectorAll(".skill-range");
+
+        ranges.forEach(function (range) {
+            const updateRange = function () {
+                const min = Number(range.min);
+                const max = Number(range.max);
+                const value = Number(range.value);
+                const percent = ((value - min) / (max - min)) * 100;
+
+                range.style.setProperty("--progress", percent + "%");
+
+                const skillItem = range.closest(".skill-item");
+                const valueText = skillItem.querySelector(".range-value strong");
+                const dots = skillItem.querySelectorAll(".range-dots span");
+
+                if (valueText) {
+                    valueText.textContent = value;
+                }
+
+                dots.forEach(function (dot, index) {
+                    dot.classList.toggle("active", index < value);
+                });
+            };
+
+            range.addEventListener("input", updateRange);
+            updateRange();
+        });
+
+        const hostLogoInput = document.getElementById("HostLogoFile");
+        const hostLogoFileName = document.getElementById("host_logo_file_name");
+
+        if (hostLogoInput && hostLogoFileName) {
+            hostLogoInput.addEventListener("change", function () {
+                if (hostLogoInput.files && hostLogoInput.files.length > 0) {
+                    const file = hostLogoInput.files[0];
+                    const maxSize = 5 * 1024 * 1024;
+
+                    if (file.size > maxSize) {
+                        alert("Maximum file size is 5 MB.");
+                        hostLogoInput.value = "";
+                        hostLogoFileName.textContent = "No File Choosen";
+                        return;
+                    }
+
+                    hostLogoFileName.textContent = file.name;
+                } else {
+                    hostLogoFileName.textContent = "No File Choosen";
+                }
+            });
+        }
+    });
+</script>

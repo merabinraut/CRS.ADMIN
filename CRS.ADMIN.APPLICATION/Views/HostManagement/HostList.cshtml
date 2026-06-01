@@ -39,8 +39,8 @@
             </form>
             <div class="flex gap-6">
                 @*<div class="export-button h-[40px]" onclick="exportCSVExcel();">
-                        <img src="~/Content/assets_new/images/club/download-solid.svg"> @CRS.ADMIN.APPLICATION.Resources.Resource.Export
-                    </div>*@
+                    <img src="~/Content/assets_new/images/club/download-solid.svg"> @CRS.ADMIN.APPLICATION.Resources.Resource.Export
+                </div>*@
                 <div class="btn btn-primary gap-[8px] h-[40px]" data-drawer-target="add-new-host" data-drawer-show="add-new-host"
                      data-drawer-placement="right" data-drawer-backdrop="false" aria-controls="drawer-disabled-backdrop">
                     <img src="~/Content/assets_new/images/plus-circle-solid.svg" />
@@ -81,14 +81,14 @@
                                 </div>
                             </th>
                             @*<th scope="col" class="p-[12px]">
-                                    <div class="flex  w-max">
-                                        @CRS.ADMIN.APPLICATION.Resources.Resource.Ratings
-                                        <div class="relative pl-[5px]">
-                                            <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
-                                            <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
-                                        </div>
+                                <div class="flex  w-max">
+                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Ratings
+                                    <div class="relative pl-[5px]">
+                                        <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                        <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
                                     </div>
-                                </th>*@
+                                </div>
+                            </th>*@
 
                             <th scope="col" class="p-[12px]">
                                 <div class="flex  w-max">
@@ -159,9 +159,9 @@
                                         </div>
                                     </td>
                                     @*<td class="p-[12px]">
-                                            @item.Ratings
+                                        @item.Ratings
 
-                                        </td>*@
+                                    </td>*@
                                     <td class="p-[12px]">
                                         @item.TotalVisitors
 
@@ -240,7 +240,8 @@
         </div>
 
         <!-- drawer component -->
-        @Html.Partial("_ManageHostPartialView", _ManageHostModel)
+        @*@Html.Partial("_ManageHostPartialView", _ManageHostModel)*@
+        @Html.Partial("_ManageNewHostPartialView", _ManageHostModel)
     </div>
 </div>
 @section scripts
