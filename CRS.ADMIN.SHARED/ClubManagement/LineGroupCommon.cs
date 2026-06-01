@@ -29,6 +29,7 @@ namespace CRS.ADMIN.SHARED.ClubManagement
         public int StartIndex { get; set; }
         public int PageSize { get; set; }
         public string code { get; set; }
+        public bool isSubdomainNameExists { get; set; }
 
     }
 

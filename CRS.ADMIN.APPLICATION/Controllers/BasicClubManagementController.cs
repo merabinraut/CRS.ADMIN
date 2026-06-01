@@ -497,6 +497,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 model = dbResponse.MapObject<ManagePremiumClubModel>();
                 model.AgentId = model.AgentId.EncryptParameter();
                 model.LocationDDL = !string.IsNullOrEmpty(model.LocationId) ? model.LocationId.EncryptParameter() : null;
+                model.LocationId = model.LocationId.EncryptParameter();
                 model.BusinessTypeDDL = !string.IsNullOrEmpty(model.BusinessType) ? model.BusinessType.EncryptParameter() : null;
                 model.Prefecture = !string.IsNullOrEmpty(model.Prefecture) ? model.Prefecture.EncryptParameter() : null;
                 model.IdentificationType = !string.IsNullOrEmpty(model.IdentificationType) ? model.IdentificationType.EncryptParameter() : null;
@@ -974,7 +975,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                         return redirectresult;
                     }
                 }
-                //commonModel.LocationId = LocationDDL?.DecryptParameter();
+                commonModel.LocationId = commonModel.LocationId?.DecryptParameter();
                 commonModel.BusinessType = BusinessTypeDDL?.DecryptParameter();
                 commonModel.Prefecture = commonModel.Prefecture?.DecryptParameter();
                 commonModel.ClosingDate = commonModel.ClosingDate?.DecryptParameter();

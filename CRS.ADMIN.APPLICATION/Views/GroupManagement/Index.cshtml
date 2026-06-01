@@ -503,9 +503,11 @@
         }*@
 
         function BlockGroup() {
+            debugger;
             const groupId = $('#block_id').attr('data-val1');
             var requestVerificationToken = $('input[name="__RequestVerificationToken"]').val();
-            let search_filter = $('#default-search').val();
+            //let search_filter = $('#default-search').val();
+            let search_filter = $('#default-search-group').val() || '';
             const start_index_val = @ViewBag.StartIndex;
             const page_size = @ViewBag.PageSize;
 
@@ -528,7 +530,9 @@
         function UnblockGroup() {
             const groupId = $('#unblock_id').attr('data-val1');
             var requestVerificationToken = $('input[name="__RequestVerificationToken"]').val();
-            let search_filter = $('#default-search').val();
+            //let search_filter = $('#default-search').val();
+            let search_filter = $('#default-search-group').val() || '';
+
             const start_index_val = @ViewBag.StartIndex;
             const page_size = @ViewBag.PageSize;
 

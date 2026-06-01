@@ -187,7 +187,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             response.SearchFilter = !string.IsNullOrEmpty(SearchFilter) ? SearchFilter : null;
             return View(response);
         }
- 
+
         [HttpGet]
         public ActionResult ManageClub(string AgentId = "", string SearchFilter = "", int StartIndex = 0, int PageSize = 10)
         {
@@ -1294,7 +1294,6 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             }
             else
             {
-
                 var dbResponseInfo = _BUSS.GetClubPendingDetails("", Id, "");
                 //var dbAvailabilityInfo = _BUSS.GetAvailabilityList(cId);
                 ResponseModel = dbResponseInfo.MapObject<ManageClubModel>();
@@ -2333,7 +2332,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 });
                 return RedirectToAction("ClubList", "ClubManagement", new { SearchFilter = searchFilter, StartIndex = startIndex, PageSize = pageSize });
             }
-            var response = _BUSS.GetSubDomainDetails(agentId.DecryptParameter());
+            var response = _BUSS.GetSubDomainDetails(agentId.DecryptParameter(),"");
             model.SearchFilter = searchFilter;
             model.StartIndex = startIndex;
             model.PageSize = pageSize;
@@ -2378,10 +2377,22 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             var _sqlTransactionHandler = new RepositoryDaoWithTransaction(null, null);
             _sqlTransactionHandler.BeginTransaction();
 
-            var ceoDetails = _BUSS.GetSubDomainDetails(request.clubId);
+            var ceoDetails = _BUSS.GetSubDomainDetails(request.clubId,request.SubDomainName);
+
+            if(ceoDetails.isSubdomainNameExists == true)
+            {
+                this.AddNotificationMessage(new NotificationModel()
+                {
+                    NotificationType = NotificationMessage.ERROR,
+                    Message = "Duplicate sub domain name",
+                    Title = NotificationMessage.ERROR.ToString(),
+                });
+                //_sqlTransactionHandler.RollbackTransaction();
+                return RedirectToAction("ClubList", "ClubManagement");
+            }
             var countryCode = ConfigurationManager.AppSettings["CountryCode"];
             var domainUrl = ConfigurationManager.AppSettings["domainUrl"];
-            request.SubDomainUrl = $"{request.SubDomainName}.{domainUrl}/{ceoDetails.clubCode}/host";
+            request.SubDomainUrl = $"{request.SubDomainName}.{domainUrl}/{ceoDetails.clubCode}";
 
             if (!string.IsNullOrEmpty(request.SubDomainName) && !string.Equals(request.SubDomainName, ceoDetails.SubDomainName, StringComparison.OrdinalIgnoreCase))
             {

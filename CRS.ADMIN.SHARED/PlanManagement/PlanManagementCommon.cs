@@ -24,6 +24,7 @@ namespace CRS.ADMIN.SHARED.PlanManagement
         public int NoOfPeople { get; set; }
         public string StrikePrice { get; set; }
         public string IsStrikeOut { get; set; }
+        public string PlanNameEnglish { get; set; }
     }
     public class PlanRequesResponseListCommon : PaginationResponseCommon
     {
@@ -42,7 +43,7 @@ namespace CRS.ADMIN.SHARED.PlanManagement
 
     }
 
-    public class PlanRequesRequestCommon 
+    public class PlanRequesRequestCommon
     {
         public string clubName { get; set; }
         public string clubId { get; set; }
@@ -57,7 +58,7 @@ namespace CRS.ADMIN.SHARED.PlanManagement
         public string nomination { get; set; }
 
     }
-    public class EntryTimeInterval 
+    public class EntryTimeInterval
     {
         public string entryTime { get; set; }
     }
