@@ -579,7 +579,7 @@
             const start_index_val = @ViewBag.StartIndex;
             let search_filter = '@ViewBag.SearchFilter';
             var category ='@Html.Raw(_ManageHostModel.clubCategory)';
-            window.location.href = '/HostManagement/ManageHost?AgentId=' + i + '&HostId=' + j + '&clubCategory=' + category + '&SearchFilter=' + search_filter + '&StartIndex=' + start_index_val + '&PageSize=' + page_size;
+            window.location.href = '/HostManagement/ManageNewHost?AgentId=' + i + '&HostId=' + j + '&clubCategory=' + category + '&SearchFilter=' + search_filter + '&StartIndex=' + start_index_val + '&PageSize=' + page_size;
     }
     </script>
 

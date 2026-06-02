@@ -308,6 +308,167 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             }
         }
 
+
+
+
+        [HttpGet]
+        public ActionResult ManageNewHost(string AgentId, string HostId = null, string clubCategory = null, string SearchFilter = "", int StartIndex = 0, int PageSize = 10)
+        {
+            var culture = Request.Cookies["culture"]?.Value;
+            culture = string.IsNullOrEmpty(culture) ? "ja" : culture;
+            ActionResult redirectresult = null;
+            if (!string.IsNullOrEmpty(clubCategory) && clubCategory.ToUpper() == "BASIC")
+            {
+                redirectresult = RedirectToAction("BasicClubManagementList", "BasicClubManagement");
+            }
+            else
+            {
+                redirectresult = RedirectToAction("ClubList", "ClubManagement");
+            }
+            if (string.IsNullOrEmpty(AgentId))
+            {
+                this.AddNotificationMessage(new NotificationModel()
+                {
+                    NotificationType = NotificationMessage.INFORMATION,
+                    Message = "Invalid details",
+                    Title = NotificationMessage.INFORMATION.ToString(),
+                });
+                return redirectresult;
+            }
+            ManageHostModel model = new ManageHostModel();
+            if (string.IsNullOrEmpty(HostId)) return View(model);
+            else
+            {
+                var aId = AgentId.DecryptParameter();
+                var hId = HostId.DecryptParameter();
+
+                if (string.IsNullOrEmpty(aId))
+                {
+                    this.AddNotificationMessage(new NotificationModel()
+                    {
+                        NotificationType = NotificationMessage.INFORMATION,
+                        Message = "Invalid club details",
+                        Title = NotificationMessage.INFORMATION.ToString(),
+                    });
+                    return redirectresult;
+                }
+                if (string.IsNullOrEmpty(hId))
+                {
+                    this.AddNotificationMessage(new NotificationModel()
+                    {
+                        NotificationType = NotificationMessage.INFORMATION,
+                        Message = "Invalid host details",
+                        Title = NotificationMessage.INFORMATION.ToString(),
+                    });
+                    TempData["RenderId"] = "ManageHost";
+                    return RedirectToAction("HostList", "HostManagement", new
+                    {
+                        AgentId,
+                        clubCategory = clubCategory,
+                        SearchFilter = SearchFilter,
+                        StartIndex = StartIndex,
+                        PageSize = PageSize
+                    });
+                }
+                var dbResponse = _buss.GetHostDetail(aId, hId);
+                model = dbResponse.MapObject<ManageHostModel>();
+                model.AgentId = AgentId;
+                model.HostId = HostId;
+                
+                if (!string.IsNullOrEmpty(model.DOB))
+                {
+                    if (model.DOB != "--")
+                    {
+                        var Dateparts1 = model.DOB.Split('-');
+                        if (model.DOB.Count(c => c == '-') == 2)
+                        {
+                            var parts = model.DOB.Split('-');
+                            if (parts.Length == 3 && !string.IsNullOrEmpty(parts[0]) && string.IsNullOrEmpty(parts[1]) && !string.IsNullOrEmpty(parts[2]))
+                            {
+                                model.BirthYear = parts[0]; 
+                                model.BirthDate = parts[2];
+
+                            }
+                            else
+                            {
+                                DateTime dob;
+                                if (DateTime.TryParseExact(model.DOB, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out dob))
+                                {
+                                    model.BirthYear = dob.Year.ToString();
+                                    model.BirthMonth = dob.Month.ToString("00");
+                                    model.BirthDate = dob.Day.ToString("00");
+
+                                }
+                            }
+                        }
+                        if (model.DOB.StartsWith("--"))
+                        {
+                            model.BirthDate = model.DOB.Substring(2, 2);
+
+                        }
+                        else if (model.DOB.EndsWith("--") && model.DOB.Count(c => c == '-') == 2)
+                        {
+                            model.BirthYear = model.DOB.Substring(0, 4); // Extract year
+
+                        }
+                        else if (model.DOB.StartsWith("-") && model.DOB.Count(c => c == '-') == 2 && string.IsNullOrEmpty(Dateparts1[2]))
+                        {
+                            model.BirthMonth = model.DOB.Substring(1, 2); // Extract month
+
+                        }
+                        else if (model.DOB.StartsWith("-") && model.DOB.Count(c => c == '-') == 2)
+                        {
+                            model.BirthMonth = model.DOB.Substring(1, 2); // Extract month
+                            model.BirthDate = model.DOB.Substring(4, 2);  // Extract day
+
+                        }
+
+
+
+                        else if (model.DOB.EndsWith("-") && model.DOB.Count(c => c == '-') == 2)
+                        {
+                            var parts = model.DOB.Split('-');
+                            model.BirthYear = parts[0];
+                            model.BirthMonth = parts[1];                       
+                        }
+
+                    }
+                }
+
+                model.ConstellationGroup = model.ConstellationGroup?.EncryptParameter();
+                model.BloodType = model.BloodType?.EncryptParameter();
+                model.HostLogo = dbResponse.ImagePath;
+                model.Rank = dbResponse.Rank.EncryptParameter();
+                model.Address = dbResponse.Address.EncryptParameter();             
+               
+                TempData["RenderId"] = "ManageHost";
+                TempData["ManageHostModel"] = model;
+                return RedirectToAction("HostList", "HostManagement", new
+                {
+                    AgentId,
+                    clubCategory = clubCategory,
+                    SearchFilter = SearchFilter,
+                    StartIndex = StartIndex,
+                    PageSize = PageSize
+                });
+            }
+        }
+
+
+        [HttpPost,ValidateAntiForgeryToken]
+        public async Task<ActionResult> ManageNewHost(ManageHostModel requestModel)
+        {
+            return null;
+        }
+
+
+
+
+
+
+
+
+
         [HttpPost, ValidateAntiForgeryToken]
         public async Task<ActionResult> ManageHost(ManageHostModel Model, string ZodiacSignsDDLKey, string BloodGroupDDLKey,
             string LiquorStrengthDDLKey, string BirthYearKey, string BirthMonthKey, string BirthDayKey, HttpPostedFileBase HostLogoFile, HttpPostedFileBase HostIconImageFile)

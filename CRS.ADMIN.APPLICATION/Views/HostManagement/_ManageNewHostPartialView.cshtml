@@ -131,7 +131,7 @@
         </div>
 
         <div class="p-[24px]">
-            @using (Html.BeginForm("ManageHost", "HostManagement", FormMethod.Post, new { @id = "ManageHostForm", enctype = "multipart/form-data" }))
+            @using (Html.BeginForm("ManageNewHost", "HostManagement", FormMethod.Post, new { @id = "ManageHostForm", enctype = "multipart/form-data" }))
             {
                 @Html.AntiForgeryToken()
                 @Html.HiddenFor(model => model.AgentId)
@@ -150,13 +150,13 @@
 
                     <div class="input-field-common">
                         <label class="block mb-[12px] text-sm font-medium text-secondary-100">
-                            Name <span class="text-error">*</span>
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Host_Name (@CRS.ADMIN.APPLICATION.Resources.Resource.English)<span class="text-error">*</span>
                         </label>
 
                         @Html.TextBoxFor(model => model.HostName, new
                         {
                             @class = "w-full",
-                            @placeholder = "Name",
+                            @placeholder = CRS.ADMIN.APPLICATION.Resources.Resource.Host_Name,
                             autocomplete = "off",
                             maxlength = "100"
                         })
@@ -168,36 +168,33 @@
 
                     <div class="input-field-common">
                         <label class="block mb-[12px] text-sm font-medium text-secondary-100">
-                            Romanization <span class="text-error">*</span>
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Host_Name (@CRS.ADMIN.APPLICATION.Resources.Resource.Japanese) <span class="text-error">*</span>
                         </label>
 
-                        <input type="text"
-                               name="Romanization"
-                               id="Romanization"
-                               class="w-full"
-                               placeholder="Romanization"
-                               autocomplete="off"
-                               maxlength="100"
-                               value="@(ViewBag.Romanization ?? "")" />
-
+                        @Html.TextBoxFor(model => model.HostNameJapanese, new
+                        {
+                            @class = "w-full",
+                            @placeholder = CRS.ADMIN.APPLICATION.Resources.Resource.Host_Name,
+                            autocomplete = "off",
+                            maxlength = "100"
+                        })
                         <span class="error">
-                            @Html.ValidationMessage("Romanization")
+                            @Html.ValidationMessageFor(m => m.HostNameJapanese)
                         </span>
                     </div>
 
                     <div class="input-field-common">
                         <label class="block mb-[12px] text-sm font-medium text-secondary-100">
-                            Position
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Position
                         </label>
 
                         @Html.TextBoxFor(model => model.Position, new
-                        {
-                            @class = "w-full",
-                            @placeholder = "Enter Position",
-                            autocomplete = "off",
-                            maxlength = "100"
-                        })
-
+                         {
+                             @class = "w-full",
+                             @placeholder = CRS.ADMIN.APPLICATION.Resources.Resource.Position,
+                             autocomplete = "off",
+                             maxlength = "150"
+                         })
                         <span class="error">
                             @Html.ValidationMessageFor(m => m.Position)
                         </span>
@@ -205,25 +202,27 @@
 
                     <div class="input-field-common">
                         <label class="block mb-[12px] text-sm font-medium text-secondary-100">
-                            Rank
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Rank
                         </label>
 
-                        <select class="select-common block w-full" name="Rank">
-                            <option value="">Select</option>
-
-                            @foreach (var item in rankList)
+                        <select id="large" class="select-common block w-full " name="Rank">
+                            @foreach (var item in ViewBag.RankDDL as IEnumerable<SelectListItem>)
                             {
-                                if (item.Value == selectedRank)
+                                var selectedId = ViewBag.RankDDLKey as string;
+                                if (item.Value == selectedId)
                                 {
-                                    <option value="@item.Value" selected>@item.Text</option>
+                                    <option value="@item.Value" selected>
+                                        @item.Text
+                                    </option>
                                 }
                                 else
                                 {
-                                    <option value="@item.Value">@item.Text</option>
+                                    <option value="@item.Value">
+                                        @item.Text
+                                    </option>
                                 }
                             }
                         </select>
-
                         <span class="error">
                             @Html.ValidationMessageFor(m => m.Rank)
                         </span>
@@ -231,37 +230,45 @@
                 </div>
 
                 <div class="mt-[18px]">
-                    <label class="block mb-[12px] text-sm font-medium text-secondary-text-2">
-                        Profile Image
+                    <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
+                        @CRS.ADMIN.APPLICATION.Resources.Resource.ProfileImage
                     </label>
-
                     <div class="file-upload-common">
-                        <label for="HostLogoFile" class="custom-file-upload w-[128px] flex-none text-ellipsis-customer">
-                            <span>Choose Images</span>
+                        <label for="file_input_business_certificate" class="custom-file-upload w-[128px] flex-none text-ellipsis-customer ">
+                            <span>
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Choose_Images
+                            </span>
                         </label>
-
-                        <input id="HostLogoFile"
-                               class="file-input"
-                               type="file"
-                               name="HostLogoFile"
-                               accept=".heif,.heic,image/heif,image/heic"
-                               style="display:none;" />
-
-                        <p id="host_logo_file_name"
+                        <input id="file_input_business_certificate" class="file-input" type="file" name="HostLogoFile" value="@Model.HostLogo"
+                               style="display:none;">
+                        <p id="file_name_bussiness_certificate"
                            class="file-name w-max h-[23px] overflow-hidden pl-2 text-xs text-[#686868] leading-[25px]">
                             @if (string.IsNullOrEmpty(Model.HostLogo))
                             {
-                                @:No File Choosen
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.No_File_Choosen
                             }
                             else
                             {
-                                @System.IO.Path.GetFileName(Model.HostLogo)
+                                string fileName = Path.GetFileName(Model.HostLogo);
+                                @fileName
                             }
-                        </p>
+                    </div>
+                    <div id="cropModal" class="hidden fixed inset-0 bg-gray-800 bg-opacity-75 flex items-center justify-center">
+                        <div class="bg-white p-4 rounded-lg max-w-lg w-full max-h-[80vh] overflow-auto">
+                            <div class="mb-4">
+                                <img id="imageToCrop" src="" alt="Image to crop" class="max-w-full">
+                            </div>
+                            <div class="flex justify-end">
+                                <button id="cropImageButton" class="bg-blue-500 text-white px-4 py-2 rounded-md">@CRS.ADMIN.APPLICATION.Resources.Resource.Crop</button>
+                                <button type="button" id="cancelCropButton" class="ml-2 bg-gray-500 text-white px-4 py-2 rounded-md">@CRS.ADMIN.APPLICATION.Resources.Resource.Cancel</button>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="text-xs text-error mt-[8px]">
-                        Note: Image should be HEIF format and Maximum file size is 5 MB.
+                        @CRS.ADMIN.APPLICATION.Resources.Resource.Note:
+                        @CRS.ADMIN.APPLICATION.Resources.Resource.Image_should_be_in_HEIF_format
+                        @CRS.ADMIN.APPLICATION.Resources.Resource.and_Maximum_file_size_is_5_MB .
                     </div>
                 </div>
 
@@ -283,17 +290,17 @@
                                     int currentYear = currentDate.Year;
                                     int startYear = currentYear - 200;
 
-                                    for (int year = currentYear; year >= startYear; year--)
-                                    {
-                                        if ((!string.IsNullOrEmpty(Model.DOB) && Model.DOB.Trim().ToUpper() != "YYYY-MM-DD") && splitYear == year)
+                                        for (int year = currentYear; year >= startYear; year--)
                                         {
-                                            <option value="@year" selected>@year</option>
+                                            if ((!string.IsNullOrEmpty(Model.DOB) && Model.DOB.Trim().ToUpper() != "YYYY-MM-DD") && splitYear == year)
+                                            {
+                                                <option value="@year" selected>@year</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@year">@year</option>
+                                            }
                                         }
-                                        else
-                                        {
-                                            <option value="@year">@year</option>
-                                        }
-                                    }
                                 }
                             </select>
 
@@ -336,39 +343,17 @@
                         <div class="input-field-common">
                             <label class="block mb-[12px] text-sm font-medium text-secondary-100">
                                 Height
-                            </label>
-
-                            @*<select class="select-common block w-full" name="Height">
-            <option value="">please select</option>
-
-            @foreach (var item in heightList)
-            {
-                if (item.Value == selectedHeight)
-                {
-                    <option value="@item.Value" selected>@item.Text</option>
-                }
-                else
-                {
-                    <option value="@item.Value">@item.Text</option>
-                }
-            }
-        </select>
-
-        <span class="error">
-            @Html.ValidationMessageFor(m => m.Height)
-        </span>*@
-                            <input type="text"
-                                   name="Height"
-                                   id="Height"
-                                   class="w-full"
-                                   placeholder="Height"
-                                   autocomplete="off"
-                                   maxlength="10"
-                                   value="@(ViewBag.MBTI ?? "")" />
-
-                            <span class="error">
-                                @Html.ValidationMessage("MBTI")
-                            </span>
+                            </label>                                  
+                                @Html.TextBoxFor(model => model.Height, new
+                                {
+                                    @class = "w-full",
+                                    @placeholder = "Enter Height",
+                                    autocomplete = "off",
+                                    maxlength = "20"
+                                })
+                                <span class="error">
+                                    @Html.ValidationMessageFor(m => m.Height)
+                                </span>
                         </div>
 
                         <div class="input-field-common">
@@ -401,25 +386,27 @@
                             <label class="block mb-[12px] text-sm font-medium text-secondary-100">
                                 Birth Place
                             </label>
-
-                            <select class="select-common block w-full" name="BirthPlaceKey">
-                                <option value="">please select</option>
-
-                                @foreach (var item in birthPlaceList)
+                            <select id="large" class="select-common block w-full " name="BirthPlace">
+                                @foreach (var item in ViewBag.BirthPlaceDdl as IEnumerable<SelectListItem>)
                                 {
-                                    if (item.Value == selectedBirthPlace)
+                                    var selectedId = ViewBag.BirthPlacekey as string;
+                                    if (item.Value == selectedId)
                                     {
-                                        <option value="@item.Value" selected>@item.Text</option>
+                                        <option value="@item.Value" selected>
+                                            @item.Text
+                                        </option>
                                     }
                                     else
                                     {
-                                        <option value="@item.Value">@item.Text</option>
+                                        <option value="@item.Value">
+                                            @item.Text
+                                        </option>
                                     }
                                 }
                             </select>
 
                             <span class="error">
-                                @Html.ValidationMessage("BirthPlaceKey")
+                                @Html.ValidationMessageFor(m => m.Address)
                             </span>
                         </div>
 
@@ -453,19 +440,17 @@
                             <label class="block mb-[12px] text-sm font-medium text-secondary-100">
                                 MBTI
                             </label>
-
-                            <input type="text"
-                                   name="MBTI"
-                                   id="MBTI"
-                                   class="w-full"
-                                   placeholder="MBTI"
-                                   autocomplete="off"
-                                   maxlength="10"
-                                   value="@(ViewBag.MBTI ?? "")" />
-
+                            @Html.TextBoxFor(model => model.MBTI, new
+                            {
+                                @class = "w-full",
+                                @placeholder = "Enter MBTI",
+                                autocomplete = "off",
+                                maxlength = "50"
+                            })
                             <span class="error">
-                                @Html.ValidationMessage("MBTI")
+                                @Html.ValidationMessageFor(m => m.MBTI)
                             </span>
+
                         </div>
                     </div>
                 </div>
@@ -478,17 +463,15 @@
 
                 <div class="grid grid-cols-2 gap-x-[20px] gap-y-[16px]">
                     <div class="input-field-common">
-                        <input type="text"
-                               name="HostTitle"
-                               id="HostTitle"
-                               class="w-full"
-                               placeholder="Title"
-                               autocomplete="off"
-                               maxlength="100"
-                               value="@(ViewBag.HostTitle ?? "")" />
-
+                        @Html.TextBoxFor(model => model.Title, new
+                        {
+                            @class = "w-full",
+                            @placeholder = "Enter Title",
+                            autocomplete = "off",
+                            maxlength = "50"
+                        })
                         <span class="error">
-                            @Html.ValidationMessage("HostTitle")
+                            @Html.ValidationMessageFor(m => m.Title)
                         </span>
                     </div>
                 </div>
@@ -556,14 +539,12 @@
                         <label class="block mb-[12px] text-sm font-medium text-secondary-100">
                             X
                         </label>
-
-                        @Html.TextBoxFor(model => model.TwitterLink, new
-                        {
-                            @class = "w-full",
-                            @placeholder = "https://twitter.com/",
-                            autocomplete = "off"
-                        })
-
+                            @Html.TextBoxFor(model => model.TwitterLink, new
+                            {
+                                @class = "w-full",
+                                @placeholder = "https://twitter.com/",
+                                autocomplete = "off"
+                            })
                         <span class="error">
                             @Html.ValidationMessageFor(m => m.TwitterLink)
                         </span>
@@ -590,7 +571,7 @@
                                    min="1"
                                    max="5"
                                    step="1"
-                                   value="@(ViewBag.AppearanceScore ?? 3)" />
+                                   value="@(ViewBag.AppearanceScore ?? 1)" />
 
                             <div class="range-dots">
                                 <span></span>
@@ -607,7 +588,7 @@
                         </div>
 
                         <div class="range-value text-xs text-[#686868] mt-[6px]">
-                            Selected: <strong>3</strong>/5
+                            Selected: <strong id="appreanceScoreValue" name="appreanceScoreValue" value="1">1</strong>/5
                         </div>
                     </div>
 
@@ -623,7 +604,7 @@
                                    min="1"
                                    max="5"
                                    step="1"
-                                   value="@(ViewBag.ConversationScore ?? 3)" />
+                                   value="@(ViewBag.ConversationScore ?? 1)" />
 
                             <div class="range-dots">
                                 <span></span>
@@ -640,7 +621,7 @@
                         </div>
 
                         <div class="range-value text-xs text-[#686868] mt-[6px]">
-                            Selected: <strong>3</strong>/5
+                            Selected: <strong  id="conversationScoreValue" name="conversationScoreValue" value="1">1</strong>/5
                         </div>
                     </div>
 
@@ -656,7 +637,7 @@
                                    min="1"
                                    max="5"
                                    step="1"
-                                   value="@(ViewBag.BeverageToleranceScore ?? 3)" />
+                                   value="@(ViewBag.BeverageToleranceScore ?? 1)" />
 
                             <div class="range-dots">
                                 <span></span>
@@ -673,7 +654,7 @@
                         </div>
 
                         <div class="range-value text-xs text-[#686868] mt-[6px]">
-                            Selected: <strong>3</strong>/5
+                            Selected: <strong id="beverageToleranceScoreValue" name="beverageToleranceScoreValue" value="1">1</strong>/5
                         </div>
                     </div>
 
@@ -689,7 +670,7 @@
                                    min="1"
                                    max="5"
                                    step="1"
-                                   value="@(ViewBag.AtmosphereScore ?? 3)" />
+                                   value="@(ViewBag.AtmosphereScore ?? 1)" />
 
                             <div class="range-dots">
                                 <span></span>
@@ -706,7 +687,7 @@
                         </div>
 
                         <div class="range-value text-xs text-[#686868] mt-[6px]">
-                            Selected: <strong>3</strong>/5
+                            Selected: <strong id="atmosphereScoreValue" name="atmosphereScoreValue" value="1">1</strong>/5
                         </div>
                     </div>
                 </div>

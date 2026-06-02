@@ -110,6 +110,20 @@ namespace CRS.ADMIN.APPLICATION.Models.HostManagement
         public string clubCategory { get; set; }
         //public string OtherPositionRemark { get; set; }        
         public List<HostIdentityDataModel> HostIdentityDataModel { get; set; } = new List<HostIdentityDataModel>();
+      
+        
+        public int appreanceScoreValue { get; set; }
+        public int conversationScoreValue { get; set; }
+        public int beverageToleranceScoreValue { get; set; }
+        public int atmosphereScoreValue { get; set; }
+
+        [Display(Name = "MBTI")]
+        public string MBTI { get; set; }
+
+        [Display(Name = "Title")]
+        public string Title { get; set; }
+
+
     }
     public class HostIdentityDataModel
     {
@@ -122,4 +136,89 @@ namespace CRS.ADMIN.APPLICATION.Models.HostManagement
         public string IdentityLabelEnglish { get; set; }
         public string InputType { get; set; }
     }
+
+
+
+    #region Manage New Host
+    public class ManageNewHostModel
+    {
+        private const double MinHeight = 135.00;
+        private const double MaxHeight = 220.00;
+        public string AgentId { get; set; }
+        public string HostId { get; set; }
+
+        [Display(Name = "Host Name")]
+        [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Required")]
+        [MaxLength(100, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Maximum_100_characters_allowed")]
+        public string HostName { get; set; }
+
+        [Display(Name = "Host Name Japanese")]
+        [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Required")]
+        [MaxLength(100, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Maximum_100_characters_allowed")]
+        public string HostNameJapanese { get; set; }
+
+        [Display(Name = "Position")]
+        public string Position { get; set; }
+
+
+        [Display(Name = "Rank")]
+        public string Rank { get; set; }
+
+
+        [Display(Name = "Date of Birth")]
+        public string DOB { get; set; }
+
+
+        [Display(Name = "Height")]
+        [Range(MinHeight, MaxHeight, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Height_should_be_in_between_135_220_cm")]
+        [RegularExpression("^(?:\\d+|\\d+\\.\\d{1,2})$", ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Height_should_be_in_between_135_220_cm")]
+        public string Height { get; set; }
+
+        [Display(Name = "Constellation Group")]
+        public string ConstellationGroup { get; set; }
+
+
+        [Display(Name = "Birth Place")]
+        public string BirthPlace { get; set; }
+
+
+        [Display(Name = "Blood Type")]
+        public string BloodType { get; set; }
+
+        [Display(Name = "MBTI")]
+        public string MBTI { get; set; }
+
+        [Display(Name = "Title")]
+        public string Title { get; set; }
+      
+      
+        [DisplayName("Tiktok")]
+        public string TiktokLink { get; set; }
+
+        [DisplayName("Twitter")]
+        public string TwitterLink { get; set; }
+
+        [DisplayName("Instagram")]
+        public string InstagramLink { get; set; }
+
+        [DisplayName("Line")]
+        public string Line { get; set; }
+
+
+        public string BirthYear { get; set; }
+        public string BirthMonth { get; set; }
+        public string BirthDate { get; set; }
+        public string HostLogo { get; set; }
+        public string clubCategory { get; set; }
+
+
+        public int appreanceScoreValue { get; set; }
+        public int conversationScoreValue { get; set; }
+        public int beverageToleranceScoreValue { get; set; }
+        public int atmosphereScoreValue { get; set; }
+    }
+    #endregion
+
+
+
 }
