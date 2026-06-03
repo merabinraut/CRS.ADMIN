@@ -3005,4 +3005,25 @@
   <data name="Plan Name English" xml:space="preserve">
     <value>プラン名（英語）</value>
   </data>
+  <data name="Profile_Detail" xml:space="preserve">
+    <value>プロフィール</value>
+  </data>
+  <data name="Title_detail" xml:space="preserve">
+    <value>タイトル</value>
+  </data>
+  <data name="Skills_and_assessment" xml:space="preserve">
+    <value>スキル・自己評価 (5段階評価)</value>
+  </data>
+  <data name="Constellation" xml:space="preserve">
+    <value>星座</value>
+  </data>
+  <data name="Cute_style" xml:space="preserve">
+    <value>かわいい系</value>
+  </data>
+  <data name="Appearance_and_overall_impression" xml:space="preserve">
+    <value>見た目・雰囲気の印象</value>
+  </data>
+  <data name="Cool_style" xml:space="preserve">
+    <value>かっこいい系</value>
+  </data>
 </root>

@@ -108,6 +108,12 @@
             }
 </style>
 
+<link href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css" rel="stylesheet" />
+
+
+
+
+
 <div id="add-new-host"
      class="drawer-close-disable flex justify-end fixed top-0 right-0 z-40 h-screen overflow-y-auto transition-transform translate-x-full"
      tabindex="-1"
@@ -118,7 +124,7 @@
         <div class="drawer-form-container sticky top-0 z-[5]">
             <div class="drawer-form flex justify-between items-center bg-secondary-color-pink py-[16px] px-[24px] h-[56px]">
                 <div class="text-white font-semibold">
-                    Manage Host Profile
+                    @CRS.ADMIN.APPLICATION.Resources.Resource.Manage_Host
                 </div>
 
                 <button type="button"
@@ -136,15 +142,15 @@
                 @Html.AntiForgeryToken()
                 @Html.HiddenFor(model => model.AgentId)
                 @Html.HiddenFor(model => model.HostLogo)
-
+                @Html.HiddenFor(model => model.clubCategory)
                 if (!string.IsNullOrEmpty(Model.HostId))
                 {
                     @Html.HiddenFor(model => model.HostId)
                 }
 
-                <div class="profile-section-title">
-                    Profile
-                </div>
+            <div class="profile-section-title">
+                @CRS.ADMIN.APPLICATION.Resources.Resource.Profile_Detail
+            </div>
 
                 <div class="grid grid-cols-2 gap-x-[20px] gap-y-[16px]">
 
@@ -229,48 +235,52 @@
                     </div>
                 </div>
 
+
+                //Image Cropper
+            
+                <!-- Cropping Section (optimized) -->
                 <div class="mt-[18px]">
                     <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
                         @CRS.ADMIN.APPLICATION.Resources.Resource.ProfileImage
                     </label>
+
                     <div class="file-upload-common">
-                        <label for="file_input_business_certificate" class="custom-file-upload w-[128px] flex-none text-ellipsis-customer ">
-                            <span>
-                                @CRS.ADMIN.APPLICATION.Resources.Resource.Choose_Images
-                            </span>
+                        <label for="file_input_business_certificate" class="custom-file-upload w-[128px] flex-none cursor-pointer">
+                            <span>@CRS.ADMIN.APPLICATION.Resources.Resource.Choose_Images</span>
                         </label>
-                        <input id="file_input_business_certificate" class="file-input" type="file" name="HostLogoFile" value="@Model.HostLogo"
-                               style="display:none;">
-                        <p id="file_name_bussiness_certificate"
-                           class="file-name w-max h-[23px] overflow-hidden pl-2 text-xs text-[#686868] leading-[25px]">
-                            @if (string.IsNullOrEmpty(Model.HostLogo))
-                            {
-                                @CRS.ADMIN.APPLICATION.Resources.Resource.No_File_Choosen
-                            }
-                            else
-                            {
-                                string fileName = Path.GetFileName(Model.HostLogo);
-                                @fileName
-                            }
+                        <input id="file_input_business_certificate" type="file" name="HostLogoFile" accept="image/*" style="display:none;">
+                        <p id="file_name_bussiness_certificate" class="file-name w-max h-[23px] overflow-hidden pl-2 text-xs text-[#686868] leading-[25px]">
+                            @(string.IsNullOrEmpty(Model.HostLogo) ?
+              CRS.ADMIN.APPLICATION.Resources.Resource.No_File_Choosen :
+              Path.GetFileName(Model.HostLogo))
+                        </p>
                     </div>
-                    <div id="cropModal" class="hidden fixed inset-0 bg-gray-800 bg-opacity-75 flex items-center justify-center">
+
+                    <!-- Crop Modal -->
+                    <div id="cropModal" class="hidden fixed inset-0 bg-gray-800 bg-opacity-75 flex items-center justify-center z-50">
                         <div class="bg-white p-4 rounded-lg max-w-lg w-full max-h-[80vh] overflow-auto">
                             <div class="mb-4">
-                                <img id="imageToCrop" src="" alt="Image to crop" class="max-w-full">
+                                <img id="imageToCrop" src="" class="max-w-full">
                             </div>
-                            <div class="flex justify-end">
-                                <button id="cropImageButton" class="bg-blue-500 text-white px-4 py-2 rounded-md">@CRS.ADMIN.APPLICATION.Resources.Resource.Crop</button>
-                                <button type="button" id="cancelCropButton" class="ml-2 bg-gray-500 text-white px-4 py-2 rounded-md">@CRS.ADMIN.APPLICATION.Resources.Resource.Cancel</button>
+                            <div class="flex justify-end gap-2">
+                                <button id="cropImageButton" class="bg-blue-500 text-white px-4 py-2 rounded-md">
+                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Crop
+                                </button>
+                                <button id="cancelCropButton" class="bg-gray-500 text-white px-4 py-2 rounded-md">
+                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Cancel
+                                </button>
                             </div>
                         </div>
                     </div>
 
-                    <div class="text-xs text-error mt-[8px]">
-                        @CRS.ADMIN.APPLICATION.Resources.Resource.Note:
-                        @CRS.ADMIN.APPLICATION.Resources.Resource.Image_should_be_in_HEIF_format
-                        @CRS.ADMIN.APPLICATION.Resources.Resource.and_Maximum_file_size_is_5_MB .
+                    <!-- Cropped Preview -->
+                    <div class="mt-2">
+                        <img id="croppedPreview" src="@Model.HostLogo" class="max-w-[150px] border rounded hidden">
                     </div>
                 </div>
+
+
+                //Image Cropper
 
                 <div class="divider-common"></div>
 
@@ -278,7 +288,7 @@
 
                     <div class="input-field-common">
                         <label class="block mb-[12px] text-sm font-medium text-secondary-100">
-                            Birth Date
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Birth_Date
                         </label>
 
                         <div class="select-date-common flex gap-[16px]">
@@ -290,17 +300,17 @@
                                     int currentYear = currentDate.Year;
                                     int startYear = currentYear - 200;
 
-                                        for (int year = currentYear; year >= startYear; year--)
+                                    for (int year = currentYear; year >= startYear; year--)
+                                    {
+                                        if ((!string.IsNullOrEmpty(Model.DOB) && Model.DOB.Trim().ToUpper() != "YYYY-MM-DD") && splitYear == year)
                                         {
-                                            if ((!string.IsNullOrEmpty(Model.DOB) && Model.DOB.Trim().ToUpper() != "YYYY-MM-DD") && splitYear == year)
-                                            {
-                                                <option value="@year" selected>@year</option>
-                                            }
-                                            else
-                                            {
-                                                <option value="@year">@year</option>
-                                            }
+                                            <option value="@year" selected>@year</option>
                                         }
+                                        else
+                                        {
+                                            <option value="@year">@year</option>
+                                        }
+                                    }
                                 }
                             </select>
 
@@ -342,27 +352,27 @@
 
                         <div class="input-field-common">
                             <label class="block mb-[12px] text-sm font-medium text-secondary-100">
-                                Height
-                            </label>                                  
-                                @Html.TextBoxFor(model => model.Height, new
-                                {
-                                    @class = "w-full",
-                                    @placeholder = "Enter Height",
-                                    autocomplete = "off",
-                                    maxlength = "20"
-                                })
-                                <span class="error">
-                                    @Html.ValidationMessageFor(m => m.Height)
-                                </span>
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Height
+                            </label>
+                            @Html.TextBoxFor(model => model.Height, new
+                            {
+                                @class = "w-full",
+                                @placeholder = "Enter Height",
+                                autocomplete = "off",
+                                maxlength = "20"
+                            })
+                            <span class="error">
+                                @Html.ValidationMessageFor(m => m.Height)
+                            </span>
                         </div>
 
                         <div class="input-field-common">
                             <label class="block mb-[12px] text-sm font-medium text-secondary-100">
-                                Constellation
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Constellation
                             </label>
 
                             <select class="select-common block w-full" name="ZodiacSignsDDLKey">
-                                <option value="">please select</option>
+                                <option value="">@CRS.ADMIN.APPLICATION.Resources.Resource.Select</option>
 
                                 @foreach (var item in zodiacList)
                                 {
@@ -384,9 +394,9 @@
 
                         <div class="input-field-common">
                             <label class="block mb-[12px] text-sm font-medium text-secondary-100">
-                                Birth Place
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.BirthPlace
                             </label>
-                            <select id="large" class="select-common block w-full " name="BirthPlace">
+                            <select id="large" class="select-common block w-full " name="BirthPlaceDDLKey">
                                 @foreach (var item in ViewBag.BirthPlaceDdl as IEnumerable<SelectListItem>)
                                 {
                                     var selectedId = ViewBag.BirthPlacekey as string;
@@ -412,11 +422,11 @@
 
                         <div class="input-field-common">
                             <label class="block mb-[12px] text-sm font-medium text-secondary-100">
-                                Blood Type
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Blood_Type
                             </label>
 
                             <select class="select-common block w-full" name="BloodGroupDDLKey">
-                                <option value="">please select</option>
+                                <option value="">  @CRS.ADMIN.APPLICATION.Resources.Resource.Select</option>
 
                                 @foreach (var item in bloodGroupList)
                                 {
@@ -458,7 +468,7 @@
                 <div class="divider-common"></div>
 
                 <div class="profile-section-title">
-                    Title
+                    @CRS.ADMIN.APPLICATION.Resources.Resource.Title_detail
                 </div>
 
                 <div class="grid grid-cols-2 gap-x-[20px] gap-y-[16px]">
@@ -479,14 +489,14 @@
                 <div class="divider-common"></div>
 
                 <div class="profile-section-title">
-                    SNS
+                    @CRS.ADMIN.APPLICATION.Resources.Resource.SNS
                 </div>
 
                 <div class="social-links-form grid grid-cols-2 gap-x-[20px] gap-y-[16px]">
 
                     <div class="input-field-common">
                         <label class="block mb-[12px] text-sm font-medium text-secondary-100">
-                            LINE
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Line
                         </label>
 
                         @Html.TextBoxFor(model => model.Line, new
@@ -503,7 +513,7 @@
 
                     <div class="input-field-common">
                         <label class="block mb-[12px] text-sm font-medium text-secondary-100">
-                            Instagram
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Instagram
                         </label>
 
                         @Html.TextBoxFor(model => model.InstagramLink, new
@@ -520,7 +530,7 @@
 
                     <div class="input-field-common">
                         <label class="block mb-[12px] text-sm font-medium text-secondary-100">
-                            TikTok
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Tiktok
                         </label>
 
                         @Html.TextBoxFor(model => model.TiktokLink, new
@@ -537,14 +547,14 @@
 
                     <div class="input-field-common">
                         <label class="block mb-[12px] text-sm font-medium text-secondary-100">
-                            X
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Twitter
                         </label>
-                            @Html.TextBoxFor(model => model.TwitterLink, new
-                            {
-                                @class = "w-full",
-                                @placeholder = "https://twitter.com/",
-                                autocomplete = "off"
-                            })
+                        @Html.TextBoxFor(model => model.TwitterLink, new
+                        {
+                            @class = "w-full",
+                            @placeholder = "https://twitter.com/",
+                            autocomplete = "off"
+                        })
                         <span class="error">
                             @Html.ValidationMessageFor(m => m.TwitterLink)
                         </span>
@@ -554,14 +564,14 @@
                 <div class="divider-common"></div>
 
                 <div class="profile-section-title">
-                    Skills and Self-Assessment (5-point scale)
+                    @CRS.ADMIN.APPLICATION.Resources.Resource.Skills_and_assessment
                 </div>
 
                 <div class="grid gap-[28px]">
 
                     <div class="skill-item">
                         <div class="border-l-[4px] border-[#cfd8dc] pl-[12px] mb-[14px] text-sm font-semibold text-secondary-100">
-                            Appearance and overall impression
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Appearance_and_overall_impression
                         </div>
 
                         <div class="relative h-[34px]">
@@ -583,13 +593,14 @@
                         </div>
 
                         <div class="flex justify-between text-xs text-secondary-100 mt-[6px]">
-                            <span>Cute style</span>
-                            <span>Cool style</span>
+                            <span> @CRS.ADMIN.APPLICATION.Resources.Resource.Cute_style</span>
+                            <span> @CRS.ADMIN.APPLICATION.Resources.Resource.Cool_style</span>
                         </div>
 
                         <div class="range-value text-xs text-[#686868] mt-[6px]">
-                            Selected: <strong id="appreanceScoreValue" name="appreanceScoreValue" value="1">1</strong>/5
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Select: <strong id="appreanceScoreValue" name="appreanceScoreValue" value="1">1</strong>/5
                         </div>
+                        <input type="hidden" class="score-hidden" id="appreanceScoreInput" name="appreanceScoreValue" value="1" />
                     </div>
 
                     <div class="skill-item">
@@ -621,8 +632,10 @@
                         </div>
 
                         <div class="range-value text-xs text-[#686868] mt-[6px]">
-                            Selected: <strong  id="conversationScoreValue" name="conversationScoreValue" value="1">1</strong>/5
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Select: <strong id="conversationScoreValue" name="conversationScoreValue" value="1">1</strong>/5
                         </div>
+                        <input type="hidden" class="score-hidden" id="conversationScoreInput" name="conversationScoreValue" value="1" />
+
                     </div>
 
                     <div class="skill-item">
@@ -654,8 +667,10 @@
                         </div>
 
                         <div class="range-value text-xs text-[#686868] mt-[6px]">
-                            Selected: <strong id="beverageToleranceScoreValue" name="beverageToleranceScoreValue" value="1">1</strong>/5
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Select: <strong id="beverageToleranceScoreValue" name="beverageToleranceScoreValue" value="1">1</strong>/5
                         </div>
+                        <input type="hidden" class="score-hidden" id="beverageToleranceScoreInput" name="beverageToleranceScoreValue" value="1" />
+
                     </div>
 
                     <div class="skill-item">
@@ -687,8 +702,10 @@
                         </div>
 
                         <div class="range-value text-xs text-[#686868] mt-[6px]">
-                            Selected: <strong id="atmosphereScoreValue" name="atmosphereScoreValue" value="1">1</strong>/5
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Select: <strong id="atmosphereScoreValue" name="atmosphereScoreValue" value="1">1</strong>/5
                         </div>
+                        <input type="hidden" class="score-hidden" id="atmosphereScoreInput" name="atmosphereScoreValue" value="1" />
+
                     </div>
                 </div>
 
@@ -707,6 +724,7 @@
         </div>
     </div>
 </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
 
 <script>
     document.addEventListener("DOMContentLoaded", function () {
@@ -724,9 +742,12 @@
                 const skillItem = range.closest(".skill-item");
                 const valueText = skillItem.querySelector(".range-value strong");
                 const dots = skillItem.querySelectorAll(".range-dots span");
+                const hiddenInput = skillItem.querySelector(".score-hidden");
+
 
                 if (valueText) {
                     valueText.textContent = value;
+                    hiddenInput.value = value;
                 }
 
                 dots.forEach(function (dot, index) {
@@ -737,28 +758,118 @@
             range.addEventListener("input", updateRange);
             updateRange();
         });
+    });
+</script>
 
-        const hostLogoInput = document.getElementById("HostLogoFile");
-        const hostLogoFileName = document.getElementById("host_logo_file_name");
 
-        if (hostLogoInput && hostLogoFileName) {
-            hostLogoInput.addEventListener("change", function () {
-                if (hostLogoInput.files && hostLogoInput.files.length > 0) {
-                    const file = hostLogoInput.files[0];
-                    const maxSize = 5 * 1024 * 1024;
+<script>
+    const input = document.getElementById("file_input_business_certificate");
+    const fileName = document.getElementById("file_name_bussiness_certificate");
+    const modal = document.getElementById("cropModal");
+    const image = document.getElementById("imageToCrop");
+    const cropBtn = document.getElementById("cropImageButton");
+    const cancelBtn = document.getElementById("cancelCropButton");
 
-                    if (file.size > maxSize) {
-                        alert("Maximum file size is 5 MB.");
-                        hostLogoInput.value = "";
-                        hostLogoFileName.textContent = "No File Choosen";
-                        return;
-                    }
+    let cropper = null;
+    let currentFile = null;
 
-                    hostLogoFileName.textContent = file.name;
-                } else {
-                    hostLogoFileName.textContent = "No File Choosen";
-                }
-            });
+    input.addEventListener("change", function () {
+
+        if (!input.files || !input.files[0]) return;
+
+        const file = input.files[0];
+        currentFile = file;
+
+        if (cropper) {
+            cropper.destroy();
+            cropper = null;
         }
+
+        if (file.size > 5 * 1024 * 1024) {
+            alert("File must be less than 5 MB");
+            input.value = "";
+            fileName.textContent = "No File Choosen";
+            return;
+        }
+
+        fileName.textContent = file.name;
+
+        const reader = new FileReader();
+
+        reader.onload = function (e) {
+            image.src = "";
+            modal.classList.remove("hidden");
+            image.src = e.target.result;
+            image.onload = function () {
+
+                if (cropper) {
+                    cropper.destroy();
+                    cropper = null;
+                }
+
+                cropper = new Cropper(image, {
+                    aspectRatio: NaN,       
+                    viewMode: 2,          
+                    dragMode: "move",
+                    autoCropArea: 0.9,
+
+                    background: false,
+                    responsive: true,
+
+                    cropBoxMovable: true,
+                    cropBoxResizable: true,
+
+                    guides: true,
+                    center: true,
+                    highlight: false,
+
+                    minContainerWidth: 400,
+                    minContainerHeight: 500
+                });
+            };
+        };
+        reader.readAsDataURL(file);
+    });
+
+    cancelBtn.addEventListener("click", function () {
+        modal.classList.add("hidden");
+        input.value = "";
+        fileName.textContent = "No File Choosen";
+        image.src = "";
+        if (cropper) {
+            cropper.destroy();
+            cropper = null;
+        }
+    });
+
+    cropBtn.addEventListener("click", function () {
+        if (!cropper) return;
+        const canvas = cropper.getCroppedCanvas({
+            fillColor: "#fff",
+            imageSmoothingEnabled: true,
+            imageSmoothingQuality: "high",
+            maxWidth: 2000,
+            maxHeight: 3000
+        });
+
+        canvas.toBlob(function (blob) {
+            if (blob.size > 5 * 1024 * 1024) {
+                alert("Cropped image exceeds 5MB. Please crop smaller area.");
+                return;
+            }
+            const file = new File([blob], currentFile.name, {
+                type: "image/png"
+            });
+            const dataTransfer = new DataTransfer();
+            dataTransfer.items.add(file);
+            input.files = dataTransfer.files;
+            fileName.textContent = file.name;
+            modal.classList.add("hidden");
+            image.src = "";
+            if (cropper) {
+                cropper.destroy();
+                cropper = null;
+            }
+        }, "image/png", 1);
     });
 </script>

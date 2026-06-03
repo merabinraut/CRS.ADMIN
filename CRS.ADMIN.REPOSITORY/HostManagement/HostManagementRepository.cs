@@ -312,5 +312,41 @@ namespace CRS.ADMIN.REPOSITORY.HostManagement
             }
             return new InquiryListCommon();
         }
+
+        public CommonDbResponse ManageNewHostDetails(ManageHostCommon request)
+        {
+            string SQL = "EXEC sproc_host_new_management @Flag='I' ";
+
+            SQL += ",@AgentId=" + _DAO.FilterString(request.AgentId);
+            SQL += ",@HostId=" + _DAO.FilterString(request.HostId);
+            SQL += ",@HostName=" + _DAO.FilterString(request.HostName);
+            SQL += ",@Position=" + _DAO.FilterString(request.Position);
+            SQL += ",@Rank=" + _DAO.FilterString(request.Rank);
+            SQL += ",@DOB=" + _DAO.FilterString(request.DOB);
+            SQL += ",@ConstellationGroup=" + _DAO.FilterString(request.ConstellationGroup);
+            SQL += ",@Height=" + _DAO.FilterString(request.Height);
+            SQL += ",@BloodType=" + _DAO.FilterString(request.BloodType);
+
+            SQL += ",@TiktokLink=" + _DAO.FilterString(request.TiktokLink);
+            SQL += ",@TwitterLink=" + _DAO.FilterString(request.TwitterLink);
+            SQL += ",@InstagramLink=" + _DAO.FilterString(request.InstagramLink);
+            SQL += ",@Line=" + _DAO.FilterString(request.Line);
+            SQL += ",@ImagePath=" + _DAO.FilterString(request.ImagePath);
+            SQL += ",@Address=" + _DAO.FilterString(request.Address);
+            SQL += ",@HostNameJapanese=" + _DAO.FilterString(request.HostNameJapanese);
+
+            SQL += ",@appreanceScoreValue=" + _DAO.FilterString(request.appreanceScoreValue);
+            SQL += ",@conversationScoreValue=" + _DAO.FilterString(request.conversationScoreValue);
+            SQL += ",@beverageToleranceScoreValue=" + _DAO.FilterString(request.beverageToleranceScoreValue);
+            SQL += ",@atmosphereScoreValue=" + _DAO.FilterString(request.atmosphereScoreValue);
+
+            SQL += ",@MBTI=" + _DAO.FilterString(request.MBTI);
+            SQL += ",@Title=" + _DAO.FilterString(request.Title);
+            SQL += ",@ActionUser=" + _DAO.FilterString(request.ActionUser);
+            SQL += ",@ActionIP=" + _DAO.FilterString(request.ActionIP);
+            SQL += ",@ActionPlatform=" + _DAO.FilterString(request.ActionPlatform);
+
+            return _DAO.ParseCommonDbResponse(SQL);
+        }
     }
 }

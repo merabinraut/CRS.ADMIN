@@ -1,5 +1,6 @@
 ﻿using CRS.ADMIN.SHARED.PaginationManagement;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace CRS.ADMIN.SHARED.HostManagement
 {
@@ -48,6 +49,12 @@ namespace CRS.ADMIN.SHARED.HostManagement
         public string HostIntroduction { get; set; }
        // public string OtherPositionRemark { get; set; }
         public List<HostIdentityDataCommon> HostIdentityDataModel { get; set; } = new List<HostIdentityDataCommon>();
+        public string appreanceScoreValue { get; set; }
+        public string conversationScoreValue { get; set; }
+        public string beverageToleranceScoreValue { get; set; }
+        public string atmosphereScoreValue { get; set; }
+        public string MBTI { get; set; }
+        public string Title { get; set; }
     }
     public class HostIdentityDataCommon
     {

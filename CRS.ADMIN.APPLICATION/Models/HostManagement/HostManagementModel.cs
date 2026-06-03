@@ -112,10 +112,10 @@ namespace CRS.ADMIN.APPLICATION.Models.HostManagement
         public List<HostIdentityDataModel> HostIdentityDataModel { get; set; } = new List<HostIdentityDataModel>();
       
         
-        public int appreanceScoreValue { get; set; }
-        public int conversationScoreValue { get; set; }
-        public int beverageToleranceScoreValue { get; set; }
-        public int atmosphereScoreValue { get; set; }
+        public string appreanceScoreValue { get; set; }
+        public string conversationScoreValue { get; set; }
+        public string beverageToleranceScoreValue { get; set; }
+        public string atmosphereScoreValue { get; set; }
 
         [Display(Name = "MBTI")]
         public string MBTI { get; set; }

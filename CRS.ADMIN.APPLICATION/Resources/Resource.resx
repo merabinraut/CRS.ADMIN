@@ -3024,4 +3024,32 @@
     <value>Plan Name English</value>
     <comment>Plan Management</comment>
   </data>
+  <data name="Profile_Detail" xml:space="preserve">
+    <value>Profile Detail</value>
+    <comment>Profile Detail</comment>
+  </data>
+  <data name="Title_detail" xml:space="preserve">
+    <value>Title Detail</value>
+    <comment>Title Detail</comment>
+  </data>
+  <data name="Skills_and_assessment" xml:space="preserve">
+    <value>Skills and assessment</value>
+    <comment>Skills and assessment</comment>
+  </data>
+  <data name="Constellation" xml:space="preserve">
+    <value>Constellation</value>
+    <comment>Constellation</comment>
+  </data>
+  <data name="Cute_style" xml:space="preserve">
+    <value>Cute style</value>
+    <comment>Cute style</comment>
+  </data>
+  <data name="Appearance_and_overall_impression" xml:space="preserve">
+    <value>Appearance and overall impression</value>
+    <comment>Appearance and overall impression</comment>
+  </data>
+  <data name="Cool_style" xml:space="preserve">
+    <value>Cool style</value>
+    <comment>Cool style</comment>
+  </data>
 </root>
