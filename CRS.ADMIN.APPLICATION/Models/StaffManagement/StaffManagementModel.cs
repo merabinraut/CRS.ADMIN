@@ -27,6 +27,7 @@ namespace CRS.ADMIN.APPLICATION.Models.StaffManagement
         public string Id { get; set; }
         [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Required")]
         [MaxLength(30, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Maximum_length_is_30_characters")]
+        [NoWhitespaceOnly(ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "CannotContainOnlyWhitespace")]
         public string UserName { get; set; }
         [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Required")]
         public string EmailAddress { get; set; }
@@ -34,5 +35,22 @@ namespace CRS.ADMIN.APPLICATION.Models.StaffManagement
         public string MobileNumber { get; set; }
         [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Required")]
         public string RoleId { get; set; }
+    }
+
+    public class NoWhitespaceOnlyAttribute : ValidationAttribute
+    {
+        public NoWhitespaceOnlyAttribute()
+        {
+            ErrorMessage = "The field cannot contain only whitespace.";
+        }
+
+        protected override ValidationResult IsValid(object value, ValidationContext validationContext)
+        {
+            if (value is string str && string.IsNullOrWhiteSpace(str))
+            {
+                return new ValidationResult(ErrorMessage ?? "The field cannot contain only whitespace.");
+            }
+            return ValidationResult.Success;
+        }
     }
 }

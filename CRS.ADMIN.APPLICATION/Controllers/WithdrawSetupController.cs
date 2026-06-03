@@ -1,18 +1,11 @@
 ﻿using CRS.ADMIN.APPLICATION.Library;
-using CRS.ADMIN.APPLICATION.Models.PointsManagement;
-using CRS.ADMIN.BUSINESS.AdminPointManagement;
-using CRS.ADMIN.SHARED.PointsManagement;
 using CRS.ADMIN.SHARED;
 using System.Web.Mvc;
 using CRS.ADMIN.BUSINESS.WithdrawSetup;
 using System.Collections.Generic;
-using System.Text.RegularExpressions;
-using CRS.ADMIN.APPLICATION.Models.ClubManagement;
 using CRS.ADMIN.APPLICATION.Models.Withdraw;
-using CRS.ADMIN.APPLICATION.Models.PointSetup;
 using CRS.ADMIN.SHARED.PointSetup;
 using System.Linq;
-using DocumentFormat.OpenXml.Wordprocessing;
 
 namespace CRS.ADMIN.APPLICATION.Controllers
 {

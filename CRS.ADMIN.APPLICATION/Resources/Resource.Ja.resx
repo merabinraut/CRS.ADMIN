@@ -117,10 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Account Holder Name" xml:space="preserve">
-    <value>口座名義人名</value>
-    <comment>Account Information</comment>
-  </data>
   <data name="Account Information" xml:space="preserve">
     <value>アカウント情報</value>
     <comment>Account Information</comment>
@@ -241,7 +237,7 @@
   </data>
   <data name="Affiliate Withdraw Logs" xml:space="preserve">
     <value>引き出しリクエスト</value>
-    <comment>Withdrawal Request</comment>
+    <comment>このクラブをブロックしてもいいですか</comment>
   </data>
   <data name="AffiliateAutoFilledAddress" xml:space="preserve">
     <value>住所自動入力</value>
@@ -392,10 +388,6 @@
   <data name="Are you sure you want to suspend this charge category slab?" xml:space="preserve">
     <value>この料金カテゴリーのスラブを一時停止してもよろしいですか？</value>
     <comment>Charge Management</comment>
-  </data>
-  <data name="Are you sure you want to unblock this club" xml:space="preserve">
-    <value>この店舗のブロックを解除してもよろしいですか？</value>
-    <comment>Club Management</comment>
   </data>
   <data name="Are you sure you want to unsuspend this charge category slab?" xml:space="preserve">
     <value>この料金カテゴリーのスラブの一時停止を解除してもよろしいですか？</value>
@@ -2446,7 +2438,8 @@
     <comment>StaticDataManagement</comment>
   </data>
   <data name="StaticDataManagement" xml:space="preserve">
-    <value />
+    <value>静的データ管理
+</value>
     <comment>StaticDataManagement</comment>
   </data>
   <data name="StaticDataType" xml:space="preserve">
@@ -2484,6 +2477,10 @@
   <data name="Strike Out" xml:space="preserve">
     <value>キャンペーン値段</value>
     <comment>Plan Management</comment>
+  </data>
+  <data name="DeleteCustomPlan" xml:space="preserve">
+    <value>店舗独自プランを削除してもよろしいですか？
+ </value>
   </data>
   <data name="Stripe" xml:space="preserve">
     <value>ストライプ</value>
@@ -2845,10 +2842,6 @@
     <value>このグループを削除してもよろしいですか</value>
     <comment>Group Management</comment>
   </data>
-  <data name="Are you sure you want to unblock this group" xml:space="preserve">
-    <value>このグループのブロックを解除してもよろしいですか</value>
-    <comment>Group Management</comment>
-  </data>
   <data name="Note: If you block this group, clubs under any of its subgroups will no longer be visible as part of the group." xml:space="preserve">
     <value>注意: このグループをブロックすると、サブグループに属するクラブはグループの一部として表示されなくなります。</value>
     <comment>Group Management</comment>
@@ -2913,17 +2906,6 @@
   <data name="Res ID" xml:space="preserve">
     <value>予約ID</value>
   </data>
-  <data name="Manager" xml:space="preserve">
-    <value />
-  </data>
-  <data name="PlanFee" xml:space="preserve">
-    <value>プラン金</value>
-    <comment>ClubManagement</comment>
-  </data>
-  <data name="Withdrawal Request" xml:space="preserve">
-    <value>引き出しリクエスト</value>
-    <comment>Withdrawal Request</comment>
-  </data>
   <data name="Total Premium Club" xml:space="preserve">
     <value>契約店</value>
   </data>
@@ -2949,5 +2931,78 @@
   <data name="Crop" xml:space="preserve">
     <value>作物</value>
     <comment>Club Management</comment>
+  </data>
+  <data name="Plan Request" xml:space="preserve">
+    <value>計画の依頼</value>
+    <comment>Plan Management</comment>
+  </data>
+  <data name="Plan Setup" xml:space="preserve">
+    <value>計画の設定</value>
+    <comment>Plan Management</comment>
+  </data>
+  <data name="PlanRequestConfirmationMessage" xml:space="preserve">
+    <value>この店舗プラン申請を承認しますか？</value>
+    <comment>Plan Management</comment>
+  </data>
+  <data name="PlanRequestRejectConfirmation" xml:space="preserve">
+    <value>この店舗プラン申請を拒否しますか？</value>
+    <comment>Plan Management</comment>
+  </data>
+  <data name="Sub Domain Name" xml:space="preserve">
+    <value>サブドメイン名</value>
+    <comment>Club Management</comment>
+  </data>
+  <data name="Sub Domain URL" xml:space="preserve">
+    <value>店舗URL</value>
+    <comment>Club Management</comment>
+  </data>
+  <data name="DiscountManagement" xml:space="preserve">
+    <value>割引管理
+</value>
+  </data>
+  <data name="DiscountCategory" xml:space="preserve">
+    <value>割引カテゴリー
+</value>
+  </data>
+  <data name="AssignDiscount" xml:space="preserve">
+    <value>割引の割り当て
+</value>
+  </data>
+  <data name="ManageDiscountSetting" xml:space="preserve">
+    <value>割引設定の管理
+</value>
+  </data>
+  <data name="DiscountType" xml:space="preserve">
+    <value>割引タイプ
+</value>
+  </data>
+  <data name="New_Discount_Category" xml:space="preserve">
+    <value>新しい割引カテゴリ</value>
+  </data>
+  <data name="Current_Discount_Category" xml:space="preserve">
+    <value>現在の割引カテゴリ</value>
+  </data>
+  <data name="Account Holder Name" xml:space="preserve">
+    <value>口座名義人名</value>
+    <comment>Account Information</comment>
+  </data>
+  <data name="Are you sure you want to unblock this club" xml:space="preserve">
+    <value>このクラブのブロックを解除してもいいですか
+</value>
+  </data>
+  <data name="Are you sure you want to unblock this group" xml:space="preserve">
+    <value>このグループのブロックを解除してもいいですか</value>
+  </data>
+  <data name="Are_you_sure_you_want_to_unblock_this_charge_category" xml:space="preserve">
+    <value>「この請求カテゴリのブロックを解除してもよろしいですか？」</value>
+  </data>
+  <data name="Are_you_sure_you_want_to_delete_this_charge_category" xml:space="preserve">
+    <value>「この請求カテゴリを削除してもよろしいですか？」</value>
+  </data>
+  <data name="Are_you_sure_you_want_to_block_this_charge_category" xml:space="preserve">
+    <value>「この請求カテゴリをブロックしてもよろしいですか？」</value>
+  </data>
+  <data name="Plan Name English" xml:space="preserve">
+    <value>プラン名（英語）</value>
   </data>
 </root>

@@ -164,6 +164,15 @@
                                             </th>
                                             <th scope="col" class="p-[12px]">
                                                 <div class="flex w-max">
+                                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Plan_Type
+                                                    <div class="relative pl-[5px]">
+                                                        <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                                        <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                                    </div>
+                                                </div>
+                                            </th>
+                                            <th scope="col" class="p-[12px]">
+                                                <div class="flex w-max">
                                                     @CRS.ADMIN.APPLICATION.Resources.Resource.People
                                                     <div class="relative pl-[5px]">
                                                         <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
@@ -330,167 +339,174 @@
                                         @{
                                             foreach (var paymentLedger in Model)
                                             {
-                                                <tr class="bg-white border-b ">
-                                                    <td class="p-[12px] w-max">
-                                                        @paymentLedger.SNO
-                                                    </td>
-                                                    <td class="p-[12px] w-max">
-                                                        @paymentLedger.InvoiceId
-                                                    </td>
-                                                    <td class="p-[12px] w-max">
-                                                        <div class="round-image-text flex gap-[12px] w-max ">
-                                                            <img class="w-[32px] h-[32px] rounded-full"
-                                                                 src="@paymentLedger.CustomerImage" />
+                                                                                <tr class="bg-white border-b ">
+                                                                                    <td class="p-[12px] w-max">
+                                                                                        @paymentLedger.SNO
+                                                                                    </td>
+                                                                                    <td class="p-[12px] w-max">
+                                                                                        @paymentLedger.InvoiceId
+                                                                                    </td>
+                                                                                    <td class="p-[12px] w-max">
+                                                                                        <div class="round-image-text flex gap-[12px] w-max ">
+                                                                                            <img class="w-[32px] h-[32px] rounded-full"
+                                                                                                 src="@paymentLedger.CustomerImage" />
 
-                                                            <div class="flex justify-between w-full">
-                                                                <div class="text-image grid flex-none">
-                                                                    <div class="text-sm font-semibold text-[#101828] ">
-                                                                        @paymentLedger.CustomerName
-                                                                    </div>
-                                                                    <div class='text-sm  text-[#667085] '>
-                                                                        @paymentLedger.CustomerNickName
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td class="p-[12px] w-max">
+                                                                                            <div class="flex justify-between w-full">
+                                                                                                <div class="text-image grid flex-none">
+                                                                                                    <div class="text-sm font-semibold text-[#101828] ">
+                                                                                                        @paymentLedger.CustomerName
+                                                                                                    </div>
+                                                                                                    <div class='text-sm  text-[#667085] '>
+                                                                                                        @paymentLedger.CustomerNickName
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </td>
+                                                                                    <td class="p-[12px] w-max">
 
-                                                        <div class="plan-b">
-                                                            @paymentLedger.PlanName
-                                                        </div>
+                                                                                        <div class="plan-b">
+                                                                                            @paymentLedger.PlanName
+                                                                                        </div>
 
-                                                    </td>
-                                                    <td class="p-[12px] w-max">
-                                                        @paymentLedger.NoOfPeople
-                                                    </td>
-                                                    <td class="p-[12px] w-max">
-                                                        <div class="w-max ">@paymentLedger.CreatedDate</div>
+                                                                                    </td>
+                                                                                    <td class="p-[12px] w-max">
 
-                                                    </td>
-                                                    <td class="p-[12px] w-max">
-                                                        <div class="w-max ">@paymentLedger.VisitDate</div>
+                                                                                        <div class="">
+                                                                                            @paymentLedger.planType  
+                                                                                        </div>
+                                                                                    </td>
 
-                                                    </td>
-                                                    <td class="p-[12px] w-max">
-                                                        <div class="w-max ">@paymentLedger.VisitTime</div>
+                                                                                    <td class="p-[12px] w-max">
+                                                                                        @paymentLedger.NoOfPeople
+                                                                                    </td>
+                                                                                    <td class="p-[12px] w-max">
+                                                                                        <div class="w-max ">@paymentLedger.CreatedDate</div>
 
-                                                    </td>
-                                                    <td class="p-[12px] w-max">
-                                                        <div class="plan-b w-max">
-                                                            @if (paymentLedger.PaymentType?.ToLower() == "on site payment")
-                                                            {
-                                                                @CRS.ADMIN.APPLICATION.Resources.Resource.On_Site_Payment
-                                                            }
-                                                            else
-                                                            {
-                                                                @paymentLedger.PaymentType
-                                                            }
+                                                                                    </td>
+                                                                                    <td class="p-[12px] w-max">
+                                                                                        <div class="w-max ">@paymentLedger.VisitDate</div>
 
-                                                        </div>
-                                                    </td>
-                                                    <td class="p-[12px] w-max">
-                                                        <div class="w-max ">
-                                                            @if (paymentLedger.ClubVerification?.ToLower() == "verified")
-                                                            {
-                                                                @CRS.ADMIN.APPLICATION.Resources.Resource.Verified
-                                                            }
-                                                            else if (paymentLedger.ClubVerification?.ToLower() == "pending")
-                                                            {
-                                                                @CRS.ADMIN.APPLICATION.Resources.Resource.Pending
-                                                            }
-                                                            else if (paymentLedger.ClubVerification?.ToLower() == "rejected")
-                                                            {
-                                                                @CRS.ADMIN.APPLICATION.Resources.Resource.Rejected
-                                                            }
-                                                            else
-                                                            {
-                                                                @paymentLedger.ClubVerification
-                                                            }
-                                                        </div>
-                                                    </td>
-                                                    <td class="p-[12px] w-max">
-                                                        <div class="w-max ">
-                                                            @if (paymentLedger.TransactionStatus?.ToLower() == "success")
-                                                            {
-                                                                @CRS.ADMIN.APPLICATION.Resources.Resource.Success
-                                                            }
-                                                            else if (paymentLedger.TransactionStatus?.ToLower() == "rejected")
-                                                            {
-                                                                @CRS.ADMIN.APPLICATION.Resources.Resource.Rejected
-                                                            }
-                                                            else if (paymentLedger.TransactionStatus?.ToLower() == "cancelled")
-                                                            {
-                                                                @CRS.ADMIN.APPLICATION.Resources.Resource.Cancel
-                                                            }
-                                                            else if (paymentLedger.TransactionStatus?.ToLower() == "pending")
-                                                            {
-                                                                @CRS.ADMIN.APPLICATION.Resources.Resource.Pending
-                                                            }
-                                                            else
-                                                            {
-                                                                @paymentLedger.TransactionStatus
-                                                            }
+                                                                                    </td>
+                                                                                    <td class="p-[12px] w-max">
+                                                                                        <div class="w-max ">@paymentLedger.VisitTime</div>
+
+                                                                                    </td>
+                                                                                    <td class="p-[12px] w-max">
+                                                                                        <div class="plan-b w-max">
+                                                                                            @if (paymentLedger.PaymentType?.ToLower() == "on site payment")
+                                                                                            {
+                                                                                                @CRS.ADMIN.APPLICATION.Resources.Resource.On_Site_Payment
+                                                                                            }
+                                                                                            else
+                                                                                            {
+                                                                                                @paymentLedger.PaymentType
+                                                                                            }
+
+                                                                                        </div>
+                                                                                    </td>
+                                                                                    <td class="p-[12px] w-max">
+                                                                                        <div class="w-max ">
+                                                                                            @if (paymentLedger.ClubVerification?.ToLower() == "verified")
+                                                                                            {
+                                                                                                @CRS.ADMIN.APPLICATION.Resources.Resource.Verified
+                                                                                            }
+                                                                                            else if (paymentLedger.ClubVerification?.ToLower() == "pending")
+                                                                                            {
+                                                                                                @CRS.ADMIN.APPLICATION.Resources.Resource.Pending
+                                                                                            }
+                                                                                            else if (paymentLedger.ClubVerification?.ToLower() == "rejected")
+                                                                                            {
+                                                                                                @CRS.ADMIN.APPLICATION.Resources.Resource.Rejected
+                                                                                            }
+                                                                                            else
+                                                                                            {
+                                                                                                @paymentLedger.ClubVerification
+                                                                                            }
+                                                                                        </div>
+                                                                                    </td>
+                                                                                    <td class="p-[12px] w-max">
+                                                                                        <div class="w-max ">
+                                                                                            @if (paymentLedger.TransactionStatus?.ToLower() == "success")
+                                                                                            {
+                                                                                                @CRS.ADMIN.APPLICATION.Resources.Resource.Success
+                                                                                            }
+                                                                                            else if (paymentLedger.TransactionStatus?.ToLower() == "rejected")
+                                                                                            {
+                                                                                                @CRS.ADMIN.APPLICATION.Resources.Resource.Rejected
+                                                                                            }
+                                                                                            else if (paymentLedger.TransactionStatus?.ToLower() == "cancelled")
+                                                                                            {
+                                                                                                @CRS.ADMIN.APPLICATION.Resources.Resource.Cancel
+                                                                                            }
+                                                                                            else if (paymentLedger.TransactionStatus?.ToLower() == "pending")
+                                                                                            {
+                                                                                                @CRS.ADMIN.APPLICATION.Resources.Resource.Pending
+                                                                                            }
+                                                                                            else
+                                                                                            {
+                                                                                                @paymentLedger.TransactionStatus
+                                                                                            }
 
 
-                                                        </div>
-                                                    </td>
-                                                    <td class="p-[12px] w-max">
-                                                        <div class="w-max text-[#1976D2]"> @(paymentLedger.TransactionStatus.ToLower() == "cancelled" ? paymentLedger.AdminRemarks : "")</div>
-                                                    </td>
+                                                                                        </div>
+                                                                                    </td>
+                                                                                    <td class="p-[12px] w-max">
+                                                                                        <div class="w-max text-[#1976D2]"> @(paymentLedger.TransactionStatus.ToLower() == "cancelled" ? paymentLedger.AdminRemarks : "")</div>
+                                                                                    </td>
 
-                                                    <td class="p-[12px] w-max">
-                                                        <div class="w-max ">
-                                                            @if (paymentLedger.ReservationType?.ToLower() == "first booking")
-                                                            {
-                                                                @CRS.ADMIN.APPLICATION.Resources.Resource.First_Booking
-                                                            }
-                                                            else if (paymentLedger.ReservationType?.ToLower() == "regular booking")
-                                                            {
-                                                                @CRS.ADMIN.APPLICATION.Resources.Resource.Regular_Booking
-                                                            }
-                                                            else
-                                                            {
-                                                                @paymentLedger.ReservationType
-                                                            }
+                                                                                    <td class="p-[12px] w-max">
+                                                                                        <div class="w-max ">
+                                                                                            @if (paymentLedger.ReservationType?.ToLower() == "first booking")
+                                                                                            {
+                                                                                                @CRS.ADMIN.APPLICATION.Resources.Resource.First_Booking
+                                                                                            }
+                                                                                            else if (paymentLedger.ReservationType?.ToLower() == "regular booking")
+                                                                                            {
+                                                                                                @CRS.ADMIN.APPLICATION.Resources.Resource.Regular_Booking
+                                                                                            }
+                                                                                            else
+                                                                                            {
+                                                                                                @paymentLedger.ReservationType
+                                                                                            }
 
-                                                        </div>
-                                                    </td>
-                                                    <td class="p-[12px] w-max">
-                                                        <div class="w-max text-[#1976D2]">¥@paymentLedger.PlanAmount</div>
+                                                                                        </div>
+                                                                                    </td>
+                                                                                    <td class="p-[12px] w-max">
+                                                                                        <div class="w-max text-[#1976D2]">¥@paymentLedger.PlanAmount</div>
 
-                                                    </td>
-                                                    <td class="p-[12px] w-max">
-                                                        <div class="w-max text-[#1976D2] ">¥@paymentLedger.TotalPlanAmount</div>
-                                                    </td>
-                                                    <td class="p-[12px] w-max">
-                                                        <div class="w-max text-[#1976D2] ">¥@paymentLedger.TotalClubPlanAmount</div>
-                                                    </td>
-                                                    <td class="p-[12px] w-max">
-                                                        <div class="w-max text-[#1976D2] ">¥@paymentLedger.AdminPlanCommissionAmount</div>
-                                                    </td>
-                                                    <td class="p-[12px] w-max">
-                                                        <div class="w-max text-[#1976D2] ">¥@paymentLedger.TotalAdminPlanCommissionAmount</div>
-                                                    </td>
-                                                    <td class="p-[12px] w-max">
-                                                        <div class="w-max text-[#1976D2] ">¥@paymentLedger.AdminCommissionAmount</div>
-                                                    </td>
-                                                    <td class="p-[12px] w-max">
-                                                        <div class="w-max text-[#1976D2] ">¥@paymentLedger.TotalAdminCommissionAmount</div>
-                                                    </td>
-                                                    <td class="p-[12px] w-max">
-                                                        <div class="w-max text-[#1976D2] ">¥@paymentLedger.TotalAdminPayableAmount</div>
-                                                    </td>
-                                                    <td class="">
-                                                        @if (paymentLedger.TransactionStatus?.ToLower() == "pending" && paymentLedger.ClubVerification?.ToLower() == "pending")
-                                                        {
-                                                            <img src="/Content/assets/images/checked-status.svg" alt="status" class="cursor-pointer h-[100px] aspect-square" onclick="VerifyStatusFunction('@paymentLedger.Id','@paymentLedger.ClubId');" data-modal-target="check-status-confirmation" data-modal-toggle="check-status-confirmation">
+                                                                                    </td>
+                                                                                    <td class="p-[12px] w-max">
+                                                                                        <div class="w-max text-[#1976D2] ">¥@paymentLedger.TotalPlanAmount</div>
+                                                                                    </td>
+                                                                                    <td class="p-[12px] w-max">
+                                                                                        <div class="w-max text-[#1976D2] ">¥@paymentLedger.TotalClubPlanAmount</div>
+                                                                                    </td>
+                                                                                    <td class="p-[12px] w-max">
+                                                                                        <div class="w-max text-[#1976D2] ">¥@paymentLedger.AdminPlanCommissionAmount</div>
+                                                                                    </td>
+                                                                                    <td class="p-[12px] w-max">
+                                                                                        <div class="w-max text-[#1976D2] ">¥@paymentLedger.TotalAdminPlanCommissionAmount</div>
+                                                                                    </td>
+                                                                                    <td class="p-[12px] w-max">
+                                                                                        <div class="w-max text-[#1976D2] ">¥@paymentLedger.AdminCommissionAmount</div>
+                                                                                    </td>
+                                                                                    <td class="p-[12px] w-max">
+                                                                                        <div class="w-max text-[#1976D2] ">¥@paymentLedger.TotalAdminCommissionAmount</div>
+                                                                                    </td>
+                                                                                    <td class="p-[12px] w-max">
+                                                                                        <div class="w-max text-[#1976D2] ">¥@paymentLedger.TotalAdminPayableAmount</div>
+                                                                                    </td>
+                                                                                    <td class="">
+                                                                                        @if (paymentLedger.TransactionStatus?.ToLower() == "pending" && paymentLedger.ClubVerification?.ToLower() == "pending")
+                                                                                        {
+                                                                                            <img src="/Content/assets/images/checked-status.svg" alt="status" class="cursor-pointer h-[100px] aspect-square" onclick="VerifyStatusFunction('@paymentLedger.Id','@paymentLedger.ClubId');" data-modal-target="check-status-confirmation" data-modal-toggle="check-status-confirmation">
 
-                                                        }
+                                                                                        }
 
-                                                        @*<div class="w-max  ">@paymentLedger.AdminRemarks</div>*@
-                                                    </td>
-                                                </tr>
+                                                                                        @*<div class="w-max  ">@paymentLedger.AdminRemarks</div>*@
+                                                                                    </td>
+                                                                                </tr>
                                             }
                                         }
                                     </tbody>

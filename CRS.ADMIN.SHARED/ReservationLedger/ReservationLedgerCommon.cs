@@ -19,6 +19,7 @@ namespace CRS.ADMIN.SHARED.ReservationLedger
         public string CustomerName { get; set; }
         public string CustomerNickName { get; set; }
         public string PlanName { get; set; }
+        public string planType { get; set; }
         public string NoOfPeople { get; set; }
         public string VisitTime { get; set; }
         public string VisitDate { get; set; }

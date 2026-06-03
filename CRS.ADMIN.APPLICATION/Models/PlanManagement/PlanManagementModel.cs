@@ -8,11 +8,17 @@ namespace CRS.ADMIN.APPLICATION.Models.PlanManagement
 {
     public class PlansManagementModel
     {
+
+        public string ListType { get; set; }
+        public string TabValue { get; set; }
         public List<PlanListsModel> PlanListModel { get; set; } = new List<PlanListsModel>();
         public List<PlanManagementModel> PlanManagementModel { get; set; } = new List<PlanManagementModel>();
+        public List<PlanRequesResponseListModel> ClubPlanResponseModel { get; set; } = new List<PlanRequesResponseListModel>();
         public PlanDetailModel PlanDetailModel { get; set; } = new PlanDetailModel();
         public PlanManagementModel PlanMgmt { get; set; } = new PlanManagementModel();
+        public PlanRequesResponseListModel clubPlanManageModel { get; set; } = new PlanRequesResponseListModel();
     }
+
     public class PlanListsModel
     {
         public string PlanTitle { get; set; }
@@ -22,6 +28,25 @@ namespace CRS.ADMIN.APPLICATION.Models.PlanManagement
         public string Nomination { get; set; }
         public string UpdatedDate { get; set; }
     }
+    public class PlanRequesResponseListModel
+    {
+        public string SNO { get; set; } = "0";
+        public string planId { get; set; } = "0";
+        public string clubName { get; set; }
+        public string clubId { get; set; }
+        public string plantype { get; set; }
+        public string planTitle { get; set; }
+        public string planTime { get; set; }
+        public string planPrice { get; set; }
+        public int numberOfPeople { get; set; }
+        public string nomination { get; set; }
+        public string requestDate { get; set; }
+        public string planStatus { get; set; }
+        public string lastEntryTime { get; set; }
+
+    }
+
+
     public class PlanManagementModel
     {
         public string SNO { get; set; } = "0";
@@ -29,6 +54,9 @@ namespace CRS.ADMIN.APPLICATION.Models.PlanManagement
         [DisplayName("Plan Name")]
         [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Required")]
         public string PlanName { get; set; }
+        [DisplayName("Plan Name English")]
+        [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Required")]
+        public string PlanNameEnglish { get; set; }
         [DisplayName("Plan Category")]
         [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Required")]
         public string PlanCategory { get; set; }

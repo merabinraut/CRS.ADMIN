@@ -8,18 +8,37 @@ namespace CRS.ADMIN.APPLICATION.Models.Inquiries
 {
     public class InquiriesModel
     {
-         public string SNO { get; set; }
+        public string SNO { get; set; }
+        public string InquiryId { get; set; }
+        public string FullName { get; set; }
+        public string EmailAddress { get; set; }
+        public string PhoneNumber { get; set; }
+        public string InquiryType { get; set; }
+        public string Subject { get; set; }
+        public string Message { get; set; }
+        public string PostedDate { get; set; }
         public string Nickname { get; set; }
         public string Email { get; set; }
-        public string Message { get; set; }
         public string Posted_Date { get; set; }
         public string Action { get; set; }
+        public string Attachments { get; set; }
+        public string AttachmentName { get; set; }
+        public string CompanyName { get; set; }
+
     }
     public class InquiryListModel
     {
-        public string Sno { get; set; }
+        public string SNO { get; set; }
+        public string id { get; set; }
+        public string InquiryId { get; set; }
+        public string FullName { get; set; }
         public string EmailAddress { get; set; }
+        public string PhoneNumber { get; set; }
+        public string InquiryType { get; set; }
+        public string Attachments { get; set; }
+        public string Subject { get; set; }
         public string Message { get; set; }
+        public string PostedDate { get; set; }
         public string ActionDate { get; set; }
         public string ActionBy { get; set; }
     }

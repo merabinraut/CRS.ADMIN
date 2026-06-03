@@ -147,5 +147,20 @@ namespace CRS.ADMIN.BUSINESS.ClubManagement
         {
             return _REPO.ManageLineGroup(request);
         }
+
+        public CommonDbResponse AddSubDomain(SubDomainCommon request, SqlConnection connection = null, SqlTransaction transaction = null)
+        {
+            return _REPO.AddSubDomain(request);
+        }
+
+        public SubDomainCommon GetSubDomainDetails(string agentId,string SubDomainName)
+        {
+            return _REPO.GetSubDomainDetails(agentId,SubDomainName);
+        }
+
+        public CommonDbResponse UpdateSubDomain(SubDomainCommon requestMapped ,SqlConnection connection = null, SqlTransaction transaction = null)
+        {
+            return _REPO.UpdateSubDomain(requestMapped);
+        }
     }
 }

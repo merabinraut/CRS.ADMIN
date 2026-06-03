@@ -2,20 +2,14 @@
 using CRS.ADMIN.APPLICATION.Library;
 using CRS.ADMIN.APPLICATION.Middleware;
 using CRS.ADMIN.APPLICATION.Models.AffiliateManagement;
-using CRS.ADMIN.APPLICATION.Models.ClubManagement;
 using CRS.ADMIN.BUSINESS.AffiliateManagement;
 using CRS.ADMIN.SHARED;
 using CRS.ADMIN.SHARED.AffiliateManagement;
-using CRS.ADMIN.SHARED.ClubManagement;
 using CRS.ADMIN.SHARED.PaginationManagement;
-using Newtonsoft.Json.Linq;
-using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
-using static Google.Apis.Requests.BatchRequest;
 
 namespace CRS.ADMIN.APPLICATION.Controllers
 {

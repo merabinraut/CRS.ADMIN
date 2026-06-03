@@ -60,12 +60,22 @@ namespace CRS.ADMIN.SHARED.HostManagement
         public string InputType { get; set; }
     }
 
-    public class InquiryListCommon
+    public class InquiryListCommon : PaginationResponseCommon
     {
-        public string Sno {  get; set; }
+        public string SNO { get; set; }
+        public string id { get; set; }
+        public string InquiryId { get; set; }
+        public string FullName { get; set; }
         public string EmailAddress { get; set; }
+        public string PhoneNumber { get; set; }
+        public string InquiryType { get; set; }
         public string Message { get; set; }
+        public string Subject { get; set; }
+        public string Attachments { get; set; }
+        public string AttachmentName { get; set; }
+        public string PostedDate { get; set; }
         public string ActionDate { get; set; }
         public string ActionBy { get; set; }
+        public string CompanyName { get; set; }
     }
 }

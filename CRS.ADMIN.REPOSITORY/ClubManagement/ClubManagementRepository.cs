@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Transactions;
 
 namespace CRS.ADMIN.REPOSITORY.ClubManagement
 {
@@ -49,7 +50,9 @@ namespace CRS.ADMIN.REPOSITORY.ClubManagement
                         holdStatus = _DAO.ParseColumnValue(item, "holdStatus").ToString(),
                         //LandLineCode = _DAO.ParseColumnValue(item, "LandLineCode").ToString(),
                         SNO = Convert.ToInt32(_DAO.ParseColumnValue(item, "SNO").ToString()),
-                        LineGroupId = _DAO.ParseColumnValue(item, "lineGroupId").ToString()
+                        LineGroupId = _DAO.ParseColumnValue(item, "lineGroupId").ToString(),
+                        subDomainURL = _DAO.ParseColumnValue(item, "subDomainURL").ToString(),
+                        subDomainName = _DAO.ParseColumnValue(item, "subDomainName").ToString(),
                     });
                 }
             }
@@ -132,6 +135,13 @@ namespace CRS.ADMIN.REPOSITORY.ClubManagement
             var dbResponse = _DAO.ExecuteDataRow(SQL);
             if (dbResponse != null)
             {
+                var licenseIssuedRaw = _DAO.ParseColumnValue(dbResponse, "LicenseIssuedDate");
+                var licenseIssuedDate = licenseIssuedRaw != null && DateTime.TryParse(licenseIssuedRaw.ToString(), out var dt)
+                                        ? dt.ToString("yyyy/MM/dd")
+                                        : licenseIssuedRaw?.ToString();
+
+                var documentType = _DAO.ParseColumnValue(dbResponse, "DocumentType")?.ToString();
+
                 return new ClubDetailCommon()
                 {
                     AgentId = _DAO.ParseColumnValue(dbResponse, "AgentId").ToString(),
@@ -188,7 +198,7 @@ namespace CRS.ADMIN.REPOSITORY.ClubManagement
                     CompanyAddress = _DAO.ParseColumnValue(dbResponse, "CompanyAddress").ToString(),
                     BusinessLicenseNumber = _DAO.ParseColumnValue(dbResponse, "BusinessLicenseNumber").ToString(),
                     LicenseIssuedDate = !string.IsNullOrEmpty(_DAO.ParseColumnValue(dbResponse, "LicenseIssuedDate").ToString()) ? Convert.ToDateTime(_DAO.ParseColumnValue(dbResponse, "LicenseIssuedDate")).ToString("yyyy/MM/dd") : _DAO.ParseColumnValue(dbResponse, "LicenseIssuedDate").ToString(),
-                    ClosingDate = _DAO.ParseColumnValue(dbResponse, "ClosingDate").ToString(),
+                    //ClosingDate = _DAO.ParseColumnValue(dbResponse, "ClosingDate").ToString(),
                     Representative1_ContactName = _DAO.ParseColumnValue(dbResponse, "Representative1_ContactName").ToString(),
                     Representative1_Email = _DAO.ParseColumnValue(dbResponse, "Representative1_Email").ToString(),
                     Representative1_MobileNo = _DAO.ParseColumnValue(dbResponse, "Representative1_MobileNo").ToString(),
@@ -206,13 +216,15 @@ namespace CRS.ADMIN.REPOSITORY.ClubManagement
                                          ? _DAO.ParseColumnValue(dbResponse, "KYCDocumentBack").ToString()
                                          : null,
 
-                    KYCDocument = (_DAO.ParseColumnValue(dbResponse, "DocumentType").ToString() == "2")
-                                         ? null
-                                         : _DAO.ParseColumnValue(dbResponse, "KYCDocument").ToString(),
-                    KYCDocumentBack = (_DAO.ParseColumnValue(dbResponse, "DocumentType").ToString() == "2")
-                                         ? null
-                                         : _DAO.ParseColumnValue(dbResponse, "KYCDocumentBack").ToString(),
-                    IdentificationType = _DAO.ParseColumnValue(dbResponse, "DocumentType").ToString()
+                    KYCDocument = (documentType == "2")
+                        ? null
+                        : _DAO.ParseColumnValue(dbResponse, "KYCDocument")?.ToString(),
+
+                    KYCDocumentBack = (documentType == "2")
+                        ? null
+                        : _DAO.ParseColumnValue(dbResponse, "KYCDocumentBack")?.ToString(),
+
+                    IdentificationType = documentType
                 };
             }
 
@@ -228,8 +240,12 @@ namespace CRS.ADMIN.REPOSITORY.ClubManagement
             SQL += ",@AgentId=" + _DAO.FilterString(AgentId);
             SQL += ",@holdId=" + _DAO.FilterString(holdId);
             var dbResponse = _DAO.ExecuteDataRow(SQL);
+          
             if (dbResponse != null)
             {
+                var licenseIssuedObj = _DAO.ParseColumnValue(dbResponse, "LicenseIssuedDate");
+                var documentType = _DAO.ParseColumnValue(dbResponse, "DocumentType")?.ToString();
+
                 return new ClubDetailCommon()
                 {
                     AgentId = _DAO.ParseColumnValue(dbResponse, "AgentId").ToString(),
@@ -285,38 +301,27 @@ namespace CRS.ADMIN.REPOSITORY.ClubManagement
                     CompanyAddress = _DAO.ParseColumnValue(dbResponse, "CompanyAddress").ToString(),
                     BusinessLicenseNumber = _DAO.ParseColumnValue(dbResponse, "BusinessLicenseNumber").ToString(),
                     LicenseIssuedDate = !string.IsNullOrEmpty(_DAO.ParseColumnValue(dbResponse, "LicenseIssuedDate").ToString()) ? Convert.ToDateTime(_DAO.ParseColumnValue(dbResponse, "LicenseIssuedDate")).ToString("yyyy/MM/dd") : _DAO.ParseColumnValue(dbResponse, "LicenseIssuedDate").ToString(),
-                    ClosingDate = _DAO.ParseColumnValue(dbResponse, "ClosingDate").ToString(),
+                    //ClosingDate = _DAO.ParseColumnValue(dbResponse, "ClosingDate").ToString(),
 
-                    Representative1_ContactName = _DAO.ParseColumnValue(dbResponse, "Representative1_ContactName").ToString(),
-                    Representative1_Email = _DAO.ParseColumnValue(dbResponse, "Representative1_Email").ToString(),
-                    Representative1_MobileNo = _DAO.ParseColumnValue(dbResponse, "Representative1_MobileNo").ToString(),
-                    Representative1_Furigana = _DAO.ParseColumnValue(dbResponse, "Representative1_Furigana").ToString(),
-                    Representative2_ContactName = _DAO.ParseColumnValue(dbResponse, "Representative2_ContactName").ToString(),
-                    Representative2_Email = _DAO.ParseColumnValue(dbResponse, "Representative2_Email").ToString(),
-                    Representative2_MobileNo = _DAO.ParseColumnValue(dbResponse, "Representative2_MobileNo").ToString(),
-                    Representative2_Furigana = _DAO.ParseColumnValue(dbResponse, "Representative2_Furigana").ToString(),
-                    ClubName = _DAO.ParseColumnValue(dbResponse, "English").ToString(),
-                    CompanyNameFurigana = _DAO.ParseColumnValue(dbResponse, "CompanyNameKatakana").ToString(),
-                    CeoFurigana = _DAO.ParseColumnValue(dbResponse, "CeoNameKatakana").ToString(),
-                    CorporateRegistryDocument = _DAO.ParseColumnValue(dbResponse, "CompanyRegistry").ToString(),
-                    PassportPhoto = (_DAO.ParseColumnValue(dbResponse, "DocumentType").ToString() == "2")
-                                         ? _DAO.ParseColumnValue(dbResponse, "KYCDocument").ToString()
-                                         : null,
-                    InsurancePhoto = (_DAO.ParseColumnValue(dbResponse, "DocumentType").ToString() == "2")
-                                         ? _DAO.ParseColumnValue(dbResponse, "KYCDocumentBack").ToString()
-                                         : null,
+                    PassportPhoto = (documentType == "2")
+                        ? _DAO.ParseColumnValue(dbResponse, "KYCDocument")?.ToString()
+                        : null,
 
-                    KYCDocument = (_DAO.ParseColumnValue(dbResponse, "DocumentType").ToString() == "2")
-                                         ? null
-                                         : _DAO.ParseColumnValue(dbResponse, "KYCDocument").ToString(),
-                    KYCDocumentBack = (_DAO.ParseColumnValue(dbResponse, "DocumentType").ToString() == "2")
-                                         ? null
-                                         : _DAO.ParseColumnValue(dbResponse, "KYCDocumentBack").ToString(),
-                    IdentificationType = _DAO.ParseColumnValue(dbResponse, "DocumentType").ToString()
+                    InsurancePhoto = (documentType == "2")
+                        ? _DAO.ParseColumnValue(dbResponse, "KYCDocumentBack")?.ToString()
+                        : null,
 
+                    KYCDocument = (documentType == "2")
+                        ? null
+                        : _DAO.ParseColumnValue(dbResponse, "KYCDocument")?.ToString(),
+
+                    KYCDocumentBack = (documentType == "2")
+                        ? null
+                        : _DAO.ParseColumnValue(dbResponse, "KYCDocumentBack")?.ToString(),
+
+                    IdentificationType = documentType
                 };
             }
-
 
             return new ClubDetailCommon();
         }
@@ -396,7 +401,7 @@ namespace CRS.ADMIN.REPOSITORY.ClubManagement
             SQL += ",@CompanyAddress=" + (!string.IsNullOrEmpty(Request.CompanyAddress) ? "N" + _DAO.FilterString(Request.CompanyAddress) : _DAO.FilterString(Request.CompanyAddress));
             SQL += ",@BusinessLicenseNumber=" + _DAO.FilterString(Request.BusinessLicenseNumber);
             SQL += ",@LicenseIssuedDate=" + _DAO.FilterString(Request.LicenseIssuedDate);
-            SQL += ",@ClosingDate=" + _DAO.FilterString(Request.ClosingDate);
+            //SQL += ",@ClosingDate=" + _DAO.FilterString(Request.ClosingDate);
             SQL += ",@CeoNameKatakana=" + (!string.IsNullOrEmpty(Request.CeoFurigana) ? "N" + _DAO.FilterString(Request.CeoFurigana) : _DAO.FilterString(Request.CeoFurigana));
             SQL += ",@CompanyRegistry=" + _DAO.FilterString(Request.CorporateRegistryDocument);
             SQL += ",@DocumentType=" + _DAO.FilterString(Request.IdentificationType);
@@ -516,6 +521,12 @@ namespace CRS.ADMIN.REPOSITORY.ClubManagement
             }
             return response;
         }
+        private string Safe(object value)
+        {
+            return value == null || string.IsNullOrEmpty(value.ToString())
+                ? ""
+                : value.ToString();
+        }
         public ClubDetailCommon GetClubDetails(string AgentId, String culture = "")
         {
             var plan = new List<planIdentityDataCommon>();
@@ -523,103 +534,195 @@ namespace CRS.ADMIN.REPOSITORY.ClubManagement
             ClubDetailCommon ClubDetail = new ClubDetailCommon();
             string SQL = "EXEC sproc_club_management_approvalrejection @Flag='gcd'";
             SQL += ",@AgentId=" + _DAO.FilterString(AgentId);
-            var dbResponse = _DAO.ExecuteDataRow(SQL);
+            var dbResponse = _DAO.ExecuteDataRow(SQL);            
             if (dbResponse != null)
             {
+                //return new ClubDetailCommon()
+                //{
+                //    AgentId = _DAO.ParseColumnValue(dbResponse, "AgentId").ToString(),
+                //    UserId = _DAO.ParseColumnValue(dbResponse, "UserId").ToString(),
+                //    LoginId = _DAO.ParseColumnValue(dbResponse, "LoginId").ToString(),
+                //    FirstName = _DAO.ParseColumnValue(dbResponse, "FirstName").ToString(),
+                //    MiddleName = _DAO.ParseColumnValue(dbResponse, "MiddleName").ToString(),
+                //    LastName = _DAO.ParseColumnValue(dbResponse, "LastName").ToString(),
+                //    Email = _DAO.ParseColumnValue(dbResponse, "Email").ToString(),
+                //    MobileNumber = _DAO.ParseColumnValue(dbResponse, "MobileNumber").ToString(),
+                //    ClubName1 = _DAO.ParseColumnValue(dbResponse, "ClubName1").ToString(),
+                //    ClubName2 = _DAO.ParseColumnValue(dbResponse, "ClubName2").ToString(),
+                //    BusinessType = _DAO.ParseColumnValue(dbResponse, "BusinessType").ToString(),
+                //    GroupName = _DAO.ParseColumnValue(dbResponse, "GroupName").ToString(),
+                //    Description = _DAO.ParseColumnValue(dbResponse, "Description").ToString(),
+                //    LocationURL = _DAO.ParseColumnValue(dbResponse, "LocationURL").ToString(),
+                //    Longitude = _DAO.ParseColumnValue(dbResponse, "Longitude").ToString(),
+                //    Latitude = _DAO.ParseColumnValue(dbResponse, "Latitude").ToString(),
+                //    Status = _DAO.ParseColumnValue(dbResponse, "Status").ToString(),
+                //    Logo = _DAO.ParseColumnValue(dbResponse, "Logo").ToString(),
+                //    CoverPhoto = _DAO.ParseColumnValue(dbResponse, "CoverPhoto").ToString(),
+                //    BusinessCertificate = _DAO.ParseColumnValue(dbResponse, "BusinessCertificate").ToString(),
+                //    Gallery = _DAO.ParseColumnValue(dbResponse, "Gallery").ToString(),
+                //    WebsiteLink = _DAO.ParseColumnValue(dbResponse, "WebsiteLink").ToString(),
+                //    TiktokLink = _DAO.ParseColumnValue(dbResponse, "TiktokLink").ToString(),
+                //    TwitterLink = _DAO.ParseColumnValue(dbResponse, "TwitterLink").ToString(),
+                //    InstagramLink = _DAO.ParseColumnValue(dbResponse, "InstagramLink").ToString(),
+                //    LocationId = _DAO.ParseColumnValue(dbResponse, "LocationId").ToString(),
+                //    CompanyName = _DAO.ParseColumnValue(dbResponse, "CompanyName").ToString(),
+                //    LandLineNumber = _DAO.ParseColumnValue(dbResponse, "LandLineNumber").ToString(),
+                //    //LandLineCode = _DAO.ParseColumnValue(dbResponse, "LandLineCode").ToString(),
+                //    Line = _DAO.ParseColumnValue(dbResponse, "Line").ToString(),
+                //    ceoFullName = _DAO.ParseColumnValue(dbResponse, "ceoFullName").ToString(),
+                //    WorkingHrTo = _DAO.ParseColumnValue(dbResponse, "ClubClosingTime").ToString(),
+                //    WorkingHrFrom = _DAO.ParseColumnValue(dbResponse, "ClubOpeningTime").ToString(),
+                //    PostalCode = _DAO.ParseColumnValue(dbResponse, "InputZip").ToString(),
+                //    Drink = _DAO.ParseColumnValue(dbResponse, "VariousDrinksFee").ToString(),
+                //    ExtensionFee = _DAO.ParseColumnValue(dbResponse, "OnSiteNominationFee").ToString(),
+                //    CompanionFee = _DAO.ParseColumnValue(dbResponse, "AccompanyingFee").ToString(),
+                //    DesignationFee = _DAO.ParseColumnValue(dbResponse, "NominationFee").ToString(),
+                //    RegularFee = _DAO.ParseColumnValue(dbResponse, "RegularPrice").ToString(),
+                //    BuildingRoomNo = _DAO.ParseColumnValue(dbResponse, "InputHouseNo").ToString(),
+                //    Street = _DAO.ParseColumnValue(dbResponse, "InputStreet").ToString(),
+                //    City = _DAO.ParseColumnValue(dbResponse, "InputCity").ToString(),
+                //    Prefecture = _DAO.ParseColumnValue(dbResponse, "InputPrefecture").ToString(),
+                //    Tax = _DAO.ParseColumnValue(dbResponse, "Tax").ToString(),
+                //    LastEntryTime = _DAO.ParseColumnValue(dbResponse, "LastEntrySyokai").ToString(),
+                //    LastOrderTime = _DAO.ParseColumnValue(dbResponse, "LastOrderTime").ToString(),
+                //    Holiday = _DAO.ParseColumnValue(dbResponse, "Holiday").ToString(),
+                //    OthersHoliday = _DAO.ParseColumnValue(dbResponse, "OtherHoliday").ToString(),
+                //    GroupName2 = _DAO.ParseColumnValue(dbResponse, "GroupNamekatakana").ToString(),
+                //    CompanyAddress = _DAO.ParseColumnValue(dbResponse, "CompanyAddress").ToString(),
+                //    BusinessLicenseNumber = _DAO.ParseColumnValue(dbResponse, "BusinessLicenseNumber").ToString(),
+                //    LicenseIssuedDate = !string.IsNullOrEmpty(_DAO.ParseColumnValue(dbResponse, "LicenseIssuedDate").ToString()) ? Convert.ToDateTime(_DAO.ParseColumnValue(dbResponse, "LicenseIssuedDate")).ToString("yyyy/MM/dd") : _DAO.ParseColumnValue(dbResponse, "LicenseIssuedDate").ToString(),
+                //    ClosingDate = _DAO.ParseColumnValue(dbResponse, "ClosingDate").ToString(),
+                //    Representative1_ContactName = _DAO.ParseColumnValue(dbResponse, "Representative1_ContactName").ToString(),
+                //    Representative1_Email = _DAO.ParseColumnValue(dbResponse, "Representative1_Email").ToString(),
+                //    Representative1_MobileNo = _DAO.ParseColumnValue(dbResponse, "Representative1_MobileNo").ToString(),
+                //    Representative2_ContactName = _DAO.ParseColumnValue(dbResponse, "Representative2_ContactName").ToString(),
+                //    Representative2_Email = _DAO.ParseColumnValue(dbResponse, "Representative2_Email").ToString(),
+                //    Representative2_MobileNo = _DAO.ParseColumnValue(dbResponse, "Representative2_MobileNo").ToString(),
+                //    GoogleMap = _DAO.ParseColumnValue(dbResponse, "LocationURL").ToString(),
+                //    Representative1_Furigana = _DAO.ParseColumnValue(dbResponse, "Representative1_Furigana").ToString(),
+                //    Representative2_Furigana = _DAO.ParseColumnValue(dbResponse, "Representative2_Furigana").ToString(),
+                //    ClubName = _DAO.ParseColumnValue(dbResponse, "English").ToString(),
+                //    CompanyNameFurigana = _DAO.ParseColumnValue(dbResponse, "CompanyNameKatakana").ToString(),
+                //    CeoFurigana = _DAO.ParseColumnValue(dbResponse, "CeoNameKatakana").ToString(),
+                //    CorporateRegistryDocument = !string.IsNullOrEmpty(_DAO.ParseColumnValue(dbResponse, "CompanyRegistry")?.ToString())?
+                //                               _DAO.ParseColumnValue(dbResponse, "CompanyRegistry").ToString()
+                //                               :null,
+                //    PassportPhoto = !string.IsNullOrEmpty(_DAO.ParseColumnValue(dbResponse, "KYCDocument")?.ToString())
+                //                     ? (_DAO.ParseColumnValue(dbResponse, "DocumentType")?.ToString() == "2"
+                //                         ? _DAO.ParseColumnValue(dbResponse, "KYCDocument")?.ToString()
+                //                         : null)
+                //                     : null,
+                //    InsurancePhoto = !string.IsNullOrEmpty(_DAO.ParseColumnValue(dbResponse, "KYCDocumentBack")?.ToString())
+                //                       ?(_DAO.ParseColumnValue(dbResponse, "DocumentType").ToString() == "2"
+                //                         ? _DAO.ParseColumnValue(dbResponse, "KYCDocumentBack")?.ToString()
+                //                         : null)
+                //                         :null,
+
+                //    KYCDocument = !string.IsNullOrEmpty(_DAO.ParseColumnValue(dbResponse, "KYCDocument")?.ToString())
+                //                       ?(_DAO.ParseColumnValue(dbResponse, "DocumentType").ToString() == "2"
+                //                         ? null
+                //                         : _DAO.ParseColumnValue(dbResponse, "KYCDocument").ToString())
+                //                         :null,
+                //    KYCDocumentBack = !string.IsNullOrEmpty(_DAO.ParseColumnValue(dbResponse, "KYCDocumentBack")?.ToString())
+                //                       ?(_DAO.ParseColumnValue(dbResponse, "DocumentType").ToString() == "2"
+                //                         ? null
+                //                         : _DAO.ParseColumnValue(dbResponse, "KYCDocumentBack").ToString())
+                //                         :null,
+                //    IdentificationType = _DAO.ParseColumnValue(dbResponse, "DocumentType").ToString()
+
+                //};
                 return new ClubDetailCommon()
                 {
-                    AgentId = _DAO.ParseColumnValue(dbResponse, "AgentId").ToString(),
-                    UserId = _DAO.ParseColumnValue(dbResponse, "UserId").ToString(),
-                    LoginId = _DAO.ParseColumnValue(dbResponse, "LoginId").ToString(),
-                    FirstName = _DAO.ParseColumnValue(dbResponse, "FirstName").ToString(),
-                    MiddleName = _DAO.ParseColumnValue(dbResponse, "MiddleName").ToString(),
-                    LastName = _DAO.ParseColumnValue(dbResponse, "LastName").ToString(),
-                    Email = _DAO.ParseColumnValue(dbResponse, "Email").ToString(),
-                    MobileNumber = _DAO.ParseColumnValue(dbResponse, "MobileNumber").ToString(),
-                    ClubName1 = _DAO.ParseColumnValue(dbResponse, "ClubName1").ToString(),
-                    ClubName2 = _DAO.ParseColumnValue(dbResponse, "ClubName2").ToString(),
-                    BusinessType = _DAO.ParseColumnValue(dbResponse, "BusinessType").ToString(),
-                    GroupName = _DAO.ParseColumnValue(dbResponse, "GroupName").ToString(),
-                    Description = _DAO.ParseColumnValue(dbResponse, "Description").ToString(),
-                    LocationURL = _DAO.ParseColumnValue(dbResponse, "LocationURL").ToString(),
-                    Longitude = _DAO.ParseColumnValue(dbResponse, "Longitude").ToString(),
-                    Latitude = _DAO.ParseColumnValue(dbResponse, "Latitude").ToString(),
-                    Status = _DAO.ParseColumnValue(dbResponse, "Status").ToString(),
-                    Logo = _DAO.ParseColumnValue(dbResponse, "Logo").ToString(),
-                    CoverPhoto = _DAO.ParseColumnValue(dbResponse, "CoverPhoto").ToString(),
-                    BusinessCertificate = _DAO.ParseColumnValue(dbResponse, "BusinessCertificate").ToString(),
-                    Gallery = _DAO.ParseColumnValue(dbResponse, "Gallery").ToString(),
-                    WebsiteLink = _DAO.ParseColumnValue(dbResponse, "WebsiteLink").ToString(),
-                    TiktokLink = _DAO.ParseColumnValue(dbResponse, "TiktokLink").ToString(),
-                    TwitterLink = _DAO.ParseColumnValue(dbResponse, "TwitterLink").ToString(),
-                    InstagramLink = _DAO.ParseColumnValue(dbResponse, "InstagramLink").ToString(),
-                    LocationId = _DAO.ParseColumnValue(dbResponse, "LocationId").ToString(),
-                    CompanyName = _DAO.ParseColumnValue(dbResponse, "CompanyName").ToString(),
-                    LandLineNumber = _DAO.ParseColumnValue(dbResponse, "LandLineNumber").ToString(),
-                    //LandLineCode = _DAO.ParseColumnValue(dbResponse, "LandLineCode").ToString(),
-                    Line = _DAO.ParseColumnValue(dbResponse, "Line").ToString(),
-                    ceoFullName = _DAO.ParseColumnValue(dbResponse, "ceoFullName").ToString(),
-                    WorkingHrTo = _DAO.ParseColumnValue(dbResponse, "ClubClosingTime").ToString(),
-                    WorkingHrFrom = _DAO.ParseColumnValue(dbResponse, "ClubOpeningTime").ToString(),
-                    PostalCode = _DAO.ParseColumnValue(dbResponse, "InputZip").ToString(),
-                    Drink = _DAO.ParseColumnValue(dbResponse, "VariousDrinksFee").ToString(),
-                    ExtensionFee = _DAO.ParseColumnValue(dbResponse, "OnSiteNominationFee").ToString(),
-                    CompanionFee = _DAO.ParseColumnValue(dbResponse, "AccompanyingFee").ToString(),
-                    DesignationFee = _DAO.ParseColumnValue(dbResponse, "NominationFee").ToString(),
-                    RegularFee = _DAO.ParseColumnValue(dbResponse, "RegularPrice").ToString(),
-                    BuildingRoomNo = _DAO.ParseColumnValue(dbResponse, "InputHouseNo").ToString(),
-                    Street = _DAO.ParseColumnValue(dbResponse, "InputStreet").ToString(),
-                    City = _DAO.ParseColumnValue(dbResponse, "InputCity").ToString(),
-                    Prefecture = _DAO.ParseColumnValue(dbResponse, "InputPrefecture").ToString(),
-                    Tax = _DAO.ParseColumnValue(dbResponse, "Tax").ToString(),
-                    LastEntryTime = _DAO.ParseColumnValue(dbResponse, "LastEntrySyokai").ToString(),
-                    LastOrderTime = _DAO.ParseColumnValue(dbResponse, "LastOrderTime").ToString(),
-                    Holiday = _DAO.ParseColumnValue(dbResponse, "Holiday").ToString(),
-                    OthersHoliday = _DAO.ParseColumnValue(dbResponse, "OtherHoliday").ToString(),
-                    GroupName2 = _DAO.ParseColumnValue(dbResponse, "GroupNamekatakana").ToString(),
-                    CompanyAddress = _DAO.ParseColumnValue(dbResponse, "CompanyAddress").ToString(),
-                    BusinessLicenseNumber = _DAO.ParseColumnValue(dbResponse, "BusinessLicenseNumber").ToString(),
-                    LicenseIssuedDate = !string.IsNullOrEmpty(_DAO.ParseColumnValue(dbResponse, "LicenseIssuedDate").ToString()) ? Convert.ToDateTime(_DAO.ParseColumnValue(dbResponse, "LicenseIssuedDate")).ToString("yyyy/MM/dd") : _DAO.ParseColumnValue(dbResponse, "LicenseIssuedDate").ToString(),
-                    ClosingDate = _DAO.ParseColumnValue(dbResponse, "ClosingDate").ToString(),
-                    Representative1_ContactName = _DAO.ParseColumnValue(dbResponse, "Representative1_ContactName").ToString(),
-                    Representative1_Email = _DAO.ParseColumnValue(dbResponse, "Representative1_Email").ToString(),
-                    Representative1_MobileNo = _DAO.ParseColumnValue(dbResponse, "Representative1_MobileNo").ToString(),
-                    Representative2_ContactName = _DAO.ParseColumnValue(dbResponse, "Representative2_ContactName").ToString(),
-                    Representative2_Email = _DAO.ParseColumnValue(dbResponse, "Representative2_Email").ToString(),
-                    Representative2_MobileNo = _DAO.ParseColumnValue(dbResponse, "Representative2_MobileNo").ToString(),
-                    GoogleMap = _DAO.ParseColumnValue(dbResponse, "LocationURL").ToString(),
-                    Representative1_Furigana = _DAO.ParseColumnValue(dbResponse, "Representative1_Furigana").ToString(),
-                    Representative2_Furigana = _DAO.ParseColumnValue(dbResponse, "Representative2_Furigana").ToString(),
-                    ClubName = _DAO.ParseColumnValue(dbResponse, "English").ToString(),
-                    CompanyNameFurigana = _DAO.ParseColumnValue(dbResponse, "CompanyNameKatakana").ToString(),
-                    CeoFurigana = _DAO.ParseColumnValue(dbResponse, "CeoNameKatakana").ToString(),
-                    CorporateRegistryDocument = !string.IsNullOrEmpty(_DAO.ParseColumnValue(dbResponse, "CompanyRegistry")?.ToString())?
-                                               _DAO.ParseColumnValue(dbResponse, "CompanyRegistry").ToString()
-                                               :null,
-                    PassportPhoto = !string.IsNullOrEmpty(_DAO.ParseColumnValue(dbResponse, "KYCDocument")?.ToString())
-                                     ? (_DAO.ParseColumnValue(dbResponse, "DocumentType")?.ToString() == "2"
-                                         ? _DAO.ParseColumnValue(dbResponse, "KYCDocument")?.ToString()
-                                         : null)
-                                     : null,
-                    InsurancePhoto = !string.IsNullOrEmpty(_DAO.ParseColumnValue(dbResponse, "KYCDocumentBack")?.ToString())
-                                       ?(_DAO.ParseColumnValue(dbResponse, "DocumentType").ToString() == "2"
-                                         ? _DAO.ParseColumnValue(dbResponse, "KYCDocumentBack")?.ToString()
-                                         : null)
-                                         :null,
+                    AgentId = Safe(_DAO.ParseColumnValue(dbResponse, "AgentId")),
+                    UserId = Safe(_DAO.ParseColumnValue(dbResponse, "UserId")),
+                    LoginId = Safe(_DAO.ParseColumnValue(dbResponse, "LoginId")),
+                    FirstName = Safe(_DAO.ParseColumnValue(dbResponse, "FirstName")),
+                    MiddleName = Safe(_DAO.ParseColumnValue(dbResponse, "MiddleName")),
+                    LastName = Safe(_DAO.ParseColumnValue(dbResponse, "LastName")),
+                    Email = Safe(_DAO.ParseColumnValue(dbResponse, "Email")),
+                    MobileNumber = Safe(_DAO.ParseColumnValue(dbResponse, "MobileNumber")),
+                    ClubName1 = Safe(_DAO.ParseColumnValue(dbResponse, "ClubName1")),
+                    ClubName2 = Safe(_DAO.ParseColumnValue(dbResponse, "ClubName2")),
+                    BusinessType = Safe(_DAO.ParseColumnValue(dbResponse, "BusinessType")),
+                    GroupName = Safe(_DAO.ParseColumnValue(dbResponse, "GroupName")),
+                    Description = Safe(_DAO.ParseColumnValue(dbResponse, "Description")),
+                    LocationURL = Safe(_DAO.ParseColumnValue(dbResponse, "LocationURL")),
+                    Longitude = Safe(_DAO.ParseColumnValue(dbResponse, "Longitude")),
+                    Latitude = Safe(_DAO.ParseColumnValue(dbResponse, "Latitude")),
+                    Status = Safe(_DAO.ParseColumnValue(dbResponse, "Status")),
+                    Logo = Safe(_DAO.ParseColumnValue(dbResponse, "Logo")),
+                    CoverPhoto = Safe(_DAO.ParseColumnValue(dbResponse, "CoverPhoto")),
+                    BusinessCertificate = Safe(_DAO.ParseColumnValue(dbResponse, "BusinessCertificate")),
+                    Gallery = Safe(_DAO.ParseColumnValue(dbResponse, "Gallery")),
+                    WebsiteLink = Safe(_DAO.ParseColumnValue(dbResponse, "WebsiteLink")),
+                    TiktokLink = Safe(_DAO.ParseColumnValue(dbResponse, "TiktokLink")),
+                    TwitterLink = Safe(_DAO.ParseColumnValue(dbResponse, "TwitterLink")),
+                    InstagramLink = Safe(_DAO.ParseColumnValue(dbResponse, "InstagramLink")),
+                    LocationId = Safe(_DAO.ParseColumnValue(dbResponse, "LocationId")),
+                    CompanyName = Safe(_DAO.ParseColumnValue(dbResponse, "CompanyName")),
+                    LandLineNumber = Safe(_DAO.ParseColumnValue(dbResponse, "LandLineNumber")),
+                    Line = Safe(_DAO.ParseColumnValue(dbResponse, "Line")),
+                    ceoFullName = Safe(_DAO.ParseColumnValue(dbResponse, "ceoFullName")),
+                    WorkingHrTo = Safe(_DAO.ParseColumnValue(dbResponse, "ClubClosingTime")),
+                    WorkingHrFrom = Safe(_DAO.ParseColumnValue(dbResponse, "ClubOpeningTime")),
+                    PostalCode = Safe(_DAO.ParseColumnValue(dbResponse, "InputZip")),
+                    Drink = Safe(_DAO.ParseColumnValue(dbResponse, "VariousDrinksFee")),
+                    ExtensionFee = Safe(_DAO.ParseColumnValue(dbResponse, "OnSiteNominationFee")),
+                    CompanionFee = Safe(_DAO.ParseColumnValue(dbResponse, "AccompanyingFee")),
+                    DesignationFee = Safe(_DAO.ParseColumnValue(dbResponse, "NominationFee")),
+                    RegularFee = Safe(_DAO.ParseColumnValue(dbResponse, "RegularPrice")),
+                    BuildingRoomNo = Safe(_DAO.ParseColumnValue(dbResponse, "InputHouseNo")),
+                    Street = Safe(_DAO.ParseColumnValue(dbResponse, "InputStreet")),
+                    City = Safe(_DAO.ParseColumnValue(dbResponse, "InputCity")),
+                    Prefecture = Safe(_DAO.ParseColumnValue(dbResponse, "InputPrefecture")),
+                    Tax = Safe(_DAO.ParseColumnValue(dbResponse, "Tax")),
+                    LastEntryTime = Safe(_DAO.ParseColumnValue(dbResponse, "LastEntrySyokai")),
+                    LastOrderTime = Safe(_DAO.ParseColumnValue(dbResponse, "LastOrderTime")),
+                    Holiday = Safe(_DAO.ParseColumnValue(dbResponse, "Holiday")),
+                    OthersHoliday = Safe(_DAO.ParseColumnValue(dbResponse, "OtherHoliday")),
+                    GroupName2 = Safe(_DAO.ParseColumnValue(dbResponse, "GroupNamekatakana")),
+                    CompanyAddress = Safe(_DAO.ParseColumnValue(dbResponse, "CompanyAddress")),
+                    BusinessLicenseNumber = Safe(_DAO.ParseColumnValue(dbResponse, "BusinessLicenseNumber")),
 
-                    KYCDocument = !string.IsNullOrEmpty(_DAO.ParseColumnValue(dbResponse, "KYCDocument")?.ToString())
-                                       ?(_DAO.ParseColumnValue(dbResponse, "DocumentType").ToString() == "2"
-                                         ? null
-                                         : _DAO.ParseColumnValue(dbResponse, "KYCDocument").ToString())
-                                         :null,
-                    KYCDocumentBack = !string.IsNullOrEmpty(_DAO.ParseColumnValue(dbResponse, "KYCDocumentBack")?.ToString())
-                                       ?(_DAO.ParseColumnValue(dbResponse, "DocumentType").ToString() == "2"
-                                         ? null
-                                         : _DAO.ParseColumnValue(dbResponse, "KYCDocumentBack").ToString())
-                                         :null,
-                    IdentificationType = _DAO.ParseColumnValue(dbResponse, "DocumentType").ToString()
+                    LicenseIssuedDate = DateTime.TryParse(Safe(_DAO.ParseColumnValue(dbResponse, "LicenseIssuedDate")), out var lid)
+                        ? lid.ToString("yyyy/MM/dd")
+                        : "",
 
+                    ClosingDate = Safe(_DAO.ParseColumnValue(dbResponse, "ClosingDate")),
+                    Representative1_ContactName = Safe(_DAO.ParseColumnValue(dbResponse, "Representative1_ContactName")),
+                    Representative1_Email = Safe(_DAO.ParseColumnValue(dbResponse, "Representative1_Email")),
+                    Representative1_MobileNo = Safe(_DAO.ParseColumnValue(dbResponse, "Representative1_MobileNo")),
+                    Representative2_ContactName = Safe(_DAO.ParseColumnValue(dbResponse, "Representative2_ContactName")),
+                    Representative2_Email = Safe(_DAO.ParseColumnValue(dbResponse, "Representative2_Email")),
+                    Representative2_MobileNo = Safe(_DAO.ParseColumnValue(dbResponse, "Representative2_MobileNo")),
+                    GoogleMap = Safe(_DAO.ParseColumnValue(dbResponse, "LocationURL")),
+                    Representative1_Furigana = Safe(_DAO.ParseColumnValue(dbResponse, "Representative1_Furigana")),
+                    Representative2_Furigana = Safe(_DAO.ParseColumnValue(dbResponse, "Representative2_Furigana")),
+                    ClubName = Safe(_DAO.ParseColumnValue(dbResponse, "English")),
+                    CompanyNameFurigana = Safe(_DAO.ParseColumnValue(dbResponse, "CompanyNameKatakana")),
+                    CeoFurigana = Safe(_DAO.ParseColumnValue(dbResponse, "CeoNameKatakana")),
+
+                    CorporateRegistryDocument = Safe(_DAO.ParseColumnValue(dbResponse, "CompanyRegistry")),
+
+                    PassportPhoto = (Safe(_DAO.ParseColumnValue(dbResponse, "DocumentType")) == "2")
+                    ? Safe(_DAO.ParseColumnValue(dbResponse, "KYCDocument"))
+                    : "",
+
+                    InsurancePhoto = (Safe(_DAO.ParseColumnValue(dbResponse, "DocumentType")) == "2")
+                    ? Safe(_DAO.ParseColumnValue(dbResponse, "KYCDocumentBack"))
+                    : "",
+
+                    KYCDocument = (Safe(_DAO.ParseColumnValue(dbResponse, "DocumentType")) != "2")
+                    ? Safe(_DAO.ParseColumnValue(dbResponse, "KYCDocument"))
+                    : "",
+
+                    KYCDocumentBack = (Safe(_DAO.ParseColumnValue(dbResponse, "DocumentType")) != "2")
+                        ? Safe(_DAO.ParseColumnValue(dbResponse, "KYCDocumentBack"))
+                        : "",
+
+                    IdentificationType = Safe(_DAO.ParseColumnValue(dbResponse, "DocumentType"))
                 };
+
             }
             return new ClubDetailCommon();
         }
@@ -993,7 +1096,6 @@ namespace CRS.ADMIN.REPOSITORY.ClubManagement
             }
             return response;
         }
-
         #endregion
 
         #region Manage gallery
@@ -1034,13 +1136,9 @@ namespace CRS.ADMIN.REPOSITORY.ClubManagement
             SQL += ",@ActionIP=" + _DAO.FilterString(Request.ActionIP);
             return _DAO.ParseCommonDbResponse(SQL);
         }
-
-
-
         #endregion
 
         #region Event Management
-
         public List<EventListCommon> GetEventList(PaginationFilterCommon Request, string AgentId)
         {
             var response = new List<EventListCommon>();
@@ -1077,8 +1175,6 @@ namespace CRS.ADMIN.REPOSITORY.ClubManagement
             }
             return response;
         }
-
-
         public CommonDbResponse ManageEvent(EventCommon Request)
         {
             string SQL = "EXEC sproc_event_management ";
@@ -1103,7 +1199,6 @@ namespace CRS.ADMIN.REPOSITORY.ClubManagement
             SQL += ",@ActionPlatform=" + _DAO.FilterString(Request.ActionPlatform);
             return _DAO.ParseCommonDbResponse(SQL);
         }
-
         public EventCommon GetEventDetails(string AgentId, string EventId)
         {
             string SQL = "EXEC sproc_event_management @Flag='ged'";
@@ -1128,7 +1223,6 @@ namespace CRS.ADMIN.REPOSITORY.ClubManagement
             return new EventCommon();
         }
         #endregion
-
         #region
         public ManageManagerCommon GetManagerDetails(string AgentId)
         {
@@ -1163,7 +1257,6 @@ namespace CRS.ADMIN.REPOSITORY.ClubManagement
 
         }
         #endregion
-
         public CommonDbResponse ManageClubCognitoDetail(string clubId, string loginId, string cognitoUserId, SqlConnection connection = null, SqlTransaction transaction = null)
         {
             string sp_name = "sproc_admin_update_club_cognito_detail ";
@@ -1173,7 +1266,6 @@ namespace CRS.ADMIN.REPOSITORY.ClubManagement
             var _sqlTransactionHandler = new RepositoryDaoWithTransaction(connection, transaction);
             return _sqlTransactionHandler.ParseCommonDbResponse(sp_name);
         }
-
         #region Line Group
         public LineGroupCommon GetLineGroupDetails(string agentId, string groupId)
         {
@@ -1203,6 +1295,58 @@ namespace CRS.ADMIN.REPOSITORY.ClubManagement
             
             return _DAO.ParseCommonDbResponse(SQL);
         }
+        public CommonDbResponse AddSubDomain(SubDomainCommon request, SqlConnection connection = null, SqlTransaction transaction = null)
+        {
+            string SQL = "EXEC sproc_admin_manage_subdomain";
+            SQL += " @agentId=" + _DAO.FilterString(request.clubId);
+            SQL += ",@subDomainName=" + _DAO.FilterString(request.SubDomainName);
+            SQL += ",@subDomainUrl=" + _DAO.FilterString(request.SubDomainUrl);
+            SQL += ",@description=" + _DAO.FilterString(request.Description);
+            SQL += ",@password=" + _DAO.FilterString(request.password);
+            SQL += ",@cognitoUserId=" + _DAO.FilterString(request.cognitoUserId);
+            var _sqlTransactionHandler = new RepositoryDaoWithTransaction(connection, transaction);
+            return _sqlTransactionHandler.ParseCommonDbResponse(SQL);
+            //return _DAO.ParseCommonDbResponse(SQL);
+        }
+        public CommonDbResponse UpdateSubDomain(SubDomainCommon request, SqlConnection connection = null, SqlTransaction transaction = null)
+        {
+            string SQL = "EXEC sproc_admin_manage_subdomain";
+            SQL += " @agentId=" + _DAO.FilterString(request.clubId);
+            SQL += ",@subDomainName=" + _DAO.FilterString(request.SubDomainName);
+            SQL += ",@subDomainUrl=" + _DAO.FilterString(request.SubDomainUrl);
+            SQL += ",@description=" + _DAO.FilterString(request.Description);
+            SQL += ",@password=" + _DAO.FilterString(request.password);
+            SQL += ",@cognitoUserId=" + _DAO.FilterString(request.cognitoUserId);
+
+            var _sqlTransactionHandler = new RepositoryDaoWithTransaction(connection, transaction);
+            return _sqlTransactionHandler.ParseCommonDbResponse(SQL);
+            // return _DAO.ParseCommonDbResponse(SQL);
+        }
+        public SubDomainCommon GetSubDomainDetails(string agentId, string SubDomainName)
+        {
+            string SQL = "EXEC sproc_admin_get_subdomain_update";
+            SQL += " @agentId=" + _DAO.FilterString(agentId);
+            SQL += ",@subDomainName=" + _DAO.FilterString(SubDomainName);
+            var dbResponse = _DAO.ExecuteDataRow(SQL);
+
+            if (dbResponse != null)
+            {
+                return new SubDomainCommon()
+                {
+                    code = _DAO.ParseColumnValue(dbResponse, "code").ToString(),
+                    clubCode = _DAO.ParseColumnValue(dbResponse, "clubCode").ToString(),
+                    SubDomainName = _DAO.ParseColumnValue(dbResponse, "SubDomainName").ToString(),
+                    SubDomainUrl = _DAO.ParseColumnValue(dbResponse, "SubDomainUrl").ToString(),
+                    Description = _DAO.ParseColumnValue(dbResponse, "Description").ToString(),
+                    email = _DAO.ParseColumnValue(dbResponse, "email").ToString(),
+                    isSubdomainNameExists = Convert.ToBoolean(_DAO.ParseColumnValue(dbResponse, "isSubdomainNameExists")),
+                    mobileNumber = _DAO.ParseColumnValue(dbResponse, "mobileNumber").ToString(),
+                };
+            }
+            return new SubDomainCommon();
+        }
+
+      
         #endregion
     }
 }

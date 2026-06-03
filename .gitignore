@@ -350,3 +350,5 @@ AmazonConfigruation.json
 /CRS.ADMIN.APPLICATION/Web.config
 /CRS.ADMIN.APPLICATION/Web.Debug.config
 /CRS.ADMIN.APPLICATION/Web.Release.config
+/CRS.ADMIN.APPLICATION/App_Data/app_data/Configuration.json
+/CRS.ADMIN.APPLICATION/App_Data/app_data/Host image 1.csv

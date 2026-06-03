@@ -3,6 +3,7 @@ using CRS.ADMIN.SHARED;
 using CRS.ADMIN.SHARED.PaginationManagement;
 using CRS.ADMIN.SHARED.PlanManagement;
 using System.Collections.Generic;
+using System.Numerics;
 
 namespace CRS.ADMIN.BUSINESS.PlanManagement
 {
@@ -40,6 +41,31 @@ namespace CRS.ADMIN.BUSINESS.PlanManagement
         public List<StaticDataCommon> GetDDL(string StaticType)
         {
             return _repository.GetDDL(StaticType);
+        }
+
+        public List<PlanRequesResponseListCommon> GetPlanRequestList(PaginationFilterCommon dbRequest)
+        {
+            return _repository.GetPlanRequestList(dbRequest);
+        }
+
+        public CommonDbResponse ApprovePlanRequest(string sno, string type, string planId)
+        {
+            return _repository.ApprovePlanRequest(sno,type,planId);
+        }
+
+        public PlanRequesResponseListCommon GetPlanRequestDetails(string clubId, string planId)
+        {
+            return _repository.GetPlanRequestDetails(clubId, planId);
+        }
+
+        public List<StaticDataCommon> GetTimeInterval(string clubId)
+        {
+            return _repository.GetTimeInterval(clubId);
+        }
+
+        public CommonDbResponse ManageClubPlan(PlanRequesRequestCommon requestMapped)
+        {
+            return _repository.ManageClubPlan(requestMapped);
         }
         #endregion
     }

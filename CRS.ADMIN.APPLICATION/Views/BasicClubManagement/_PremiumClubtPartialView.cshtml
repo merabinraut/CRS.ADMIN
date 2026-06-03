@@ -121,6 +121,10 @@
                     {
                         @Html.HiddenFor(model => model.AgentId)
                     }
+                    if (!string.IsNullOrEmpty(Model.LocationId))
+                    {
+                        @Html.HiddenFor(model => model.LocationId)
+                    }
                     if (!string.IsNullOrEmpty(Model.holdId))
                     {
                         @Html.HiddenFor(model => model.holdId)
@@ -161,9 +165,9 @@
                     @Html.HiddenFor(model => model.StartIndex)
                     @Html.HiddenFor(model => model.PageSize)
                     @*if (!string.IsNullOrEmpty(Model.LoginId))
-                        {
-                            @Html.HiddenFor(model => model.LoginId)
-                        }*@
+            {
+                @Html.HiddenFor(model => model.LoginId)
+            }*@
                     <div class="flex gap-2 ">
                         <div class="flex items-center gap-2 profile-steps add-new-host-wizard  active" id="step1">
                             <div class="steps-number ">
@@ -336,8 +340,8 @@
                                                 <img id="imageToCrop" src="" alt="Image to crop" class="max-w-full">
                                             </div>
                                             <div class="flex justify-end">
-                                                <button id="cropImageButton" class="bg-blue-500 text-white px-4 py-2 rounded-md">Crop</button>
-                                                <button type="button" id="cancelCropButton" class="ml-2 bg-gray-500 text-white px-4 py-2 rounded-md">Cancel</button>
+                                                <button id="cropImageButton" class="bg-blue-500 text-white px-4 py-2 rounded-md">@CRS.ADMIN.APPLICATION.Resources.Resource.Crop</button>
+                                                <button type="button" id="cancelCropButton" class="ml-2 bg-gray-500 text-white px-4 py-2 rounded-md">@CRS.ADMIN.APPLICATION.Resources.Resource.Cancel</button>
                                             </div>
                                         </div>
                                     </div>
@@ -381,8 +385,8 @@
                                                 <img id="imageToCropCover" src="" alt="Image to crop" class="max-w-full">
                                             </div>
                                             <div class="flex justify-end">
-                                                <button id="cropImageButtonCover" class="bg-blue-500 text-white px-4 py-2 rounded-md">Crop</button>
-                                                <button type="button" id="cancelCropButtonCover" class="ml-2 bg-gray-500 text-white px-4 py-2 rounded-md">Cancel</button>
+                                                <button id="cropImageButtonCover" class="bg-blue-500 text-white px-4 py-2 rounded-md">@CRS.ADMIN.APPLICATION.Resources.Resource.Crop</button>
+                                                <button type="button" id="cancelCropButtonCover" class="ml-2 bg-gray-500 text-white px-4 py-2 rounded-md">@CRS.ADMIN.APPLICATION.Resources.Resource.Cancel</button>
                                             </div>
                                         </div>
                                     </div>
@@ -1178,8 +1182,8 @@
                                             @CRS.ADMIN.APPLICATION.Resources.Resource.Holiday
                                         </label>
                                         @Html.HiddenFor(m => m.HolidayStr)
-                                           <select id="large" name="holiday" class=" default_select select-common block w-full "
-                                             style="width: 100%;" multiple="multiple" placeholder="Select" >
+                                        <select id="large" name="holiday" class=" default_select select-common block w-full "
+                                                style="width: 100%;" multiple="multiple" placeholder="Select">
                                             @foreach (var item in ViewBag.Holiday as IEnumerable<SelectListItem>)
                                             {
                                                 var selectedId = ViewBag.HolidayIdKey as string;
@@ -1207,20 +1211,20 @@
                                 <!-- for last order -->
                                 <div class="grid grid-cols-3 gap-x-4 gap-y-5">
                                     @*<div class="input-field-common">
-                                        <label for="instagram" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
-                                            @CRS.ADMIN.APPLICATION.Resources.Resource.Last_Order_Time
-                                        </label>*@
-                                        @*@Html.TextBoxFor(model => model.LastOrderTime, new
-                                   {
-                                       @class = "w-full",
-                                       @placeholder = "HH:MM",
-                                       autocomplete = "off",
-                                       @maxLength = "30",
-                                       @type = "time"
-                                   })*@
-                                        @*<span class="error">
-                                            @Html.ValidationMessageFor(m => m.LastOrderTime)
-                                        </span>*@
+                            <label for="instagram" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Last_Order_Time
+                            </label>*@
+                                    @*@Html.TextBoxFor(model => model.LastOrderTime, new
+                            {
+                                @class = "w-full",
+                                @placeholder = "HH:MM",
+                                autocomplete = "off",
+                                @maxLength = "30",
+                                @type = "time"
+                            })*@
+                                    @*<span class="error">
+                                @Html.ValidationMessageFor(m => m.LastOrderTime)
+                            </span>*@
 
                                     @*</div>*@
                                     <div class="input-field-common">

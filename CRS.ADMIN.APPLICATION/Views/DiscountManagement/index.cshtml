@@ -1,0 +1,510 @@
+﻿@model CRS.ADMIN.APPLICATION.Models.DiscountManagement.DiscountManagementListResponseModel
+@{
+    ViewBag.Title = "Plan List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var _categoryModel = Model.discountCategoryModel as CRS.ADMIN.APPLICATION.Models.DiscountManagement.DiscountManagementModel;
+
+    if (_categoryModel == null)
+    {
+        _categoryModel = new CRS.ADMIN.APPLICATION.Models.DiscountManagement.DiscountManagementModel();
+    }
+    var tempData = TempData["ListModel"] as List<CRS.ADMIN.APPLICATION.Models.DiscountManagement.DiscountManagementListResponseModel>;
+}
+<div class="px-8 py-4">
+    @Html.AntiForgeryToken()
+    <div class="flex flex-col  gap-6">
+        <div class="flex justify-between items-center">
+            <div>
+                <div class="heading-title">
+                    @CRS.ADMIN.APPLICATION.Resources.Resource.DiscountManagement
+                </div>
+                <div class="span-title-light-gray">
+                    @CRS.ADMIN.APPLICATION.Resources.Resource.ManageDiscountSetting
+                </div>
+            </div>
+        </div>
+        <div id="tab1" class="tab-content-plane ">
+            <div class="flex flex-col gap-8">
+                <div id="tab1" class="tab-content">
+                    <div class="flex gap-4 mb-8 border-b ">
+
+                        <div id="CategoryLink" class="styleCss px-1 pb-4 cursor-pointer active" onclick="changeCategoryTab('allCategory', 'CategoryLink')">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.DiscountCategory
+                        </div>
+
+                        <div id="AssignLink" class="styleCss px-1 pb-4 cursor-pointer" onclick="changeCategoryTab('requestAssign','AssignLink')">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.AssignDiscount
+                        </div>
+                    </div>
+                    <div class="flex justify-between pb-[24px]">
+
+                    </div>
+                    <div class="pane active table-tab" id="allCategory">
+                        @if (!string.IsNullOrEmpty(Convert.ToString(Model.listDiscountManagement)))
+                        {
+                            @Html.Partial("_DiscountCategoryPartialView", Model)
+                        }
+                    </div>
+                    <div class="pane" id="requestAssign" style="display: none;">
+                        @using (Html.BeginForm("AssignDiscount", "DiscountManagement", new { }, FormMethod.Post, new { @id = "AssignDiscount" }))
+                        {
+                            @Html.AntiForgeryToken()
+
+                            <div class="bg-white">
+                                <div id="tab" class="tab-content-plane">
+                                    <div class="border border-[#D0D5DD] rounded-[5px] px-[22px] py-5 flex flex-col gap-4">
+                                        <div class="py-[10px] text-[#3E3E3E] text-sm font-semibold">
+                                            @*@CRS.ADMIN.APPLICATION.Resources.Resource.Assign_Commission*@
+                                        </div>
+                                        <div class="grid grid-cols-3 gap-x-12 gap-y-4">
+                                            <div class=" input-field-common">
+                                                <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
+                                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Location
+                                                </label>
+                                                <select id="large1" name="LocationDDL1" class=" default_select select-common block w-full LocationDDL1"
+                                                        style="width: 100%;">
+                                                    @foreach (var location in ViewBag.LocationList as IEnumerable<SelectListItem>)
+                                                    {
+                                                        <option value="@location.Value">@location.Text</option>
+                                                    }
+                                                </select>
+                                            </div>
+                                            <div class=" input-field-common">
+                                                <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
+                                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Club
+                                                </label>
+                                                <select id="large1" name="ClubDDLList" class=" default_select select-common block w-full ClubDDLList"
+                                                        style="width: 100%;">
+                                                    <option>@CRS.ADMIN.APPLICATION.Resources.Resource.Select_Club</option>
+                                                </select>
+                                            </div>
+                                            <div class=" input-field-common">
+                                                <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
+                                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Current_Discount_Category
+                                                </label>
+                                                @Html.TextBoxFor(model => model.assignDiscountModel.CategoryName, new { @class = "w-full rounded-[4px]", @id = "DiscountCategoryName", @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.Current_Discount_Category, @style = "border-radius:4px !important", @onkeypress = "return isAlphabetWithSpace(event)", autocomplete = "off", @maxLength = "50", @disabled = true })
+                                            </div>
+                                            <div class=" input-field-common">
+                                                <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
+                                                    @CRS.ADMIN.APPLICATION.Resources.Resource.New_Discount_Category
+                                                </label>
+                                                <select id="large1" name="NewDiscountCategoryDDL" class=" default_select select-common block w-full NewDiscountCategoryDDL"
+                                                        style="width: 100%;">
+                                                    @foreach (var location in ViewBag.CommissionCategoryList as IEnumerable<SelectListItem>)
+                                                    {
+                                                        <option value="@location.Value">@location.Text</option>
+                                                    }
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button onclick="@Url.Action("AssignDiscount", "DiscountManagement")" class="resetForm btn btn-primary-default h-[40px] px-8 rounded-[4px] w-max  text-sm leading-[10px]"
+                                    data-drawer-hide="add-new-commision" data-modal-target="add-new-host-modal-save"
+                                    data-modal-toggle="add-new-host-modal-save" id="btnAssignCommission">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Save
+                            </button>
+                        }
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@Html.Partial("_ManageDiscountCategoryPartialView", _categoryModel)
+
+<div id="delete-category-confirmation" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 hidden w-full
+     p-4 overflow-x-hidden overflow-y-auto
+     md:inset-0 h-[calc(100%-1rem)] max-h-full " style="align-items: flex-start;">
+    <div class="relative max-w-2xl max-h-full w-[412px] px-4 pt-[40px] pb-[46px] mt-24">
+        <!-- Modal content -->
+        <div class="relative bg-white rounded-lg shadow">
+            <!-- Modal header -->
+            <button type="button"
+                    class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center absolute top-[24px] right-[20px] "
+                    data-modal-hide="delete-category-confirmation">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="25" viewBox="0 0 24 25" fill="none">
+                    <rect y="0.621094" width="24" height="24" rx="12" fill="#FAFAFA" />
+                    <path d="M5.41406 4.95703L4.33594 6.03516L10.9219 12.6211L4.33594 19.207L5.41406 20.2852L12 13.6992L18.5859 20.2852L19.6641 19.207L13.0781 12.6211L19.6641 6.03516L18.5859 4.95703L12 11.543L5.41406 4.95703Z"
+                          fill="#7A7A7A" />
+                </svg>
+            </button>
+            <!-- Modal body -->
+            <div class="grid gap-6 px-[20px] py-8">
+                <div class="text-[#333] font-semibold pb-[11px] border-b border-[#eeeeee]">@CRS.ADMIN.APPLICATION.Resources.Resource.Confirmation</div>
+                <div class="grid gap-[20px] text-[#062937] mb-[45px]">
+                    <div class="text-[14px] text-secondary-text-2 text-start" id="deleteRequestMessage">
+                        @*@CRS.ADMIN.APPLICATION.Resources.Resource.PlanRequestConfirmationMessage*@店舗独自プランを削除してもよろしいですか？
+                    </div>
+                </div>
+                <div class="flex justify-end">
+                    <div class="flex gap-2 justify-end mt-[45px]">
+                        <input id="request_ids" value="" hidden />
+                        <div class="btn btn-secondary w-[110px]" id="delete_ids1" data-modal-hide="delete-category-confirmation">@CRS.ADMIN.APPLICATION.Resources.Resource.clubNo</div>
+                        <div class="btn btn-primary w-[110px]" onclick="DeleteDiscountCategoryFunction()" data-vals1="" data-vals2="" data-vals3="" id="delete_ids1">@CRS.ADMIN.APPLICATION.Resources.Resource.clubYes</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="block-discount-category" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 hidden w-full
+     p-4 overflow-x-hidden overflow-y-auto
+     md:inset-0 h-[calc(100%-1rem)] max-h-full " style="align-items: flex-start;">
+    <div class="relative max-w-2xl max-h-full w-[412px] px-4 pt-[40px] pb-[46px] mt-24">
+        <div class="relative bg-white rounded-lg shadow">
+            <button type="button"
+                    class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center absolute top-[24px] right-[20px] "
+                    data-modal-hide="block-discount-category">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="25" viewBox="0 0 24 25" fill="none">
+                    <rect y="0.621094" width="24" height="24" rx="12" fill="#FAFAFA" />
+                    <path d="M5.41406 4.95703L4.33594 6.03516L10.9219 12.6211L4.33594 19.207L5.41406 20.2852L12 13.6992L18.5859 20.2852L19.6641 19.207L13.0781 12.6211L19.6641 6.03516L18.5859 4.95703L12 11.543L5.41406 4.95703Z"
+                          fill="#7A7A7A" />
+                </svg>
+            </button>
+            <div class="grid gap-6 px-[20px] py-8">
+                <div class="text-[#333] font-semibold pb-[11px] border-b border-[#eeeeee]">@CRS.ADMIN.APPLICATION.Resources.Resource.Confirmation</div>
+                <div class="grid gap-[20px] text-[#062937] mb-[45px]">
+                    <div class="text-[14px] text-secondary-text-2 text-start" id="deleteRequestMessage">
+                        @*@CRS.ADMIN.APPLICATION.Resources.Resource.PlanRequestConfirmationMessage*@このカテゴリーをブロックしてもよろしいですか？
+                    </div>
+                </div>
+                <div class="flex justify-end">
+                    <div class="flex gap-2 justify-end mt-[45px]">
+                        <input id="request_ids" value="" hidden />
+                        <div class="btn btn-secondary w-[110px]" id="block_ids1" data-modal-hide="block-discount-category">@CRS.ADMIN.APPLICATION.Resources.Resource.clubNo</div>
+                        <div class="btn btn-primary w-[110px]" onclick="BlockDiscountCategoryFunction()" data-vals1="" data-vals2="" data-vals3="" id="block_ids1">@CRS.ADMIN.APPLICATION.Resources.Resource.clubYes</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="unblock-category-confirmation" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 hidden w-full
+     p-4 overflow-x-hidden overflow-y-auto
+     md:inset-0 h-[calc(100%-1rem)] max-h-full " style="align-items: flex-start;">
+    <div class="relative max-w-2xl max-h-full w-[412px] px-4 pt-[40px] pb-[46px] mt-24">
+        <div class="relative bg-white rounded-lg shadow">
+            <button type="button"
+                    class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center absolute top-[24px] right-[20px] "
+                    data-modal-hide="unblock-category-confirmation">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="25" viewBox="0 0 24 25" fill="none">
+                    <rect y="0.621094" width="24" height="24" rx="12" fill="#FAFAFA" />
+                    <path d="M5.41406 4.95703L4.33594 6.03516L10.9219 12.6211L4.33594 19.207L5.41406 20.2852L12 13.6992L18.5859 20.2852L19.6641 19.207L13.0781 12.6211L19.6641 6.03516L18.5859 4.95703L12 11.543L5.41406 4.95703Z"
+                          fill="#7A7A7A" />
+                </svg>
+            </button>
+            <div class="grid gap-6 px-[20px] py-8">
+                <div class="text-[#333] font-semibold pb-[11px] border-b border-[#eeeeee]">@CRS.ADMIN.APPLICATION.Resources.Resource.Confirmation</div>
+                <div class="grid gap-[20px] text-[#062937] mb-[45px]">
+                    <div class="text-[14px] text-secondary-text-2 text-start" id="deleteRequestMessage">
+                        @*@CRS.ADMIN.APPLICATION.Resources.Resource.PlanRequestConfirmationMessage*@このカテゴリーのブロックを解除してもよろしいですか？
+                    </div>
+                </div>
+                <div class="flex justify-end">
+                    <div class="flex gap-2 justify-end mt-[45px]">
+                        <input id="request_ids" value="" hidden />
+                        <div class="btn btn-secondary w-[110px]" id="block_ids1" data-modal-hide="unblock-category-confirmation">@CRS.ADMIN.APPLICATION.Resources.Resource.clubNo</div>
+                        <div class="btn btn-primary w-[110px]" onclick="UnBlockDiscountCategoryFunction()" data-vals1="" data-vals2="" data-vals3="" id="block_ids1">@CRS.ADMIN.APPLICATION.Resources.Resource.clubYes</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script>
+ document.addEventListener('DOMContentLoaded', function () {
+     const page_size = @ViewBag.PageSize;
+     const total_data = @ViewBag.TotalData;
+     const start_index_val = @ViewBag.StartIndex;
+     let URL = "/DiscountManagement/index";
+     let search_filter = $('#default-search-discount-category-list').val();
+     URL = addQueryParam(URL, 'SearchFilter', search_filter);
+     LoadPagination(page_size, total_data, start_index_val, URL);
+ });
+    </script>
+
+
+    <script>
+
+        document.addEventListener("DOMContentLoaded", function () {
+            var content = document.getElementById("long-content");
+            var btn = document.querySelector(".see-more-btn1");
+        });
+    </script>
+
+    <style>
+        .content-container {
+            max-width: 500px;
+        }
+
+        .see-more-btn {
+            margin-top: 10px;
+            cursor: pointer;
+        }
+    </style>
+
+    <script>
+          $(document).ready(function () {
+          $('select').select2({
+              minimumResultsForSearch: Infinity
+          })
+              $('#large1[name="NewDiscountCategoryDDL"]').select2({
+                  width: 'resolve'
+              });
+              $('#large1[name="ClubDDLList"]').select2({
+                  width: 'resolve'
+              });
+              $('#large1[name="LocationDDL1"]').select2({
+                  width: 'resolve'
+              });
+              var RequestVerificationToken = $('input[name="__RequestVerificationToken"]').val();
+
+              $('.LocationDDL1').change(function () {
+                   $(".ClubDDLList").empty().prepend("<option value='' disabled selected>@CRS.ADMIN.APPLICATION.Resources.Resource.Select_Club</option>");
+                  var locationId = document.getElementsByName("LocationDDL1")[0].value;
+                  var agentId = document.getElementsByName("ClubDDLList")[0].value;
+                if (!Boolean(locationId)) {
+                        toastr.info('Location is required');
+                    return false;
+                }
+                $.ajax({
+                     type: 'POST',
+                     async: true,
+                     url: '@Url.Action("GetDiscountClubListByLocation")',
+                     dataType: 'json',
+                    data: { '__RequestVerificationToken': RequestVerificationToken, locationId ,agentId },
+                    success: function (data) {
+                        $.each(data.clubLists, function (i, ClubDDLList) {
+                            $(".ClubDDLList").append('<option value="' + ClubDDLList.Value + '">' + ClubDDLList.Text + '</option>');
+                         });
+
+                     },
+                     error: function (ex) {
+                        toastr.info('Failed to retrive club.');
+                     }
+                 });
+                 return false;
+              });
+
+           $('.ClubDDLList').change(function () {
+               var agentId = document.getElementsByName("ClubDDLList")[0].value;
+            $.ajax({
+                type: 'POST',
+                async: true,
+                url: '@Url.Action("GetCurrentDiscountByClub")',
+                dataType: 'json',
+                data: { '__RequestVerificationToken': RequestVerificationToken, agentId },
+                success: function (data)
+                {
+                   var currentDiscountDDL = $(".CurrentDiscountCategoryDDL");
+                   currentDiscountDDL.empty().append('<option value="" disabled selected>@CRS.ADMIN.APPLICATION.Resources.Resource.Current_Discount_Category</option>');
+                   $('#DiscountCategoryName').val(data.commissionLists[0].Text);
+                },
+                error: function (ex) {
+                    toastr.info('Failed to retrive current commission category.');
+                }
+            });
+            return false;
+            });
+
+
+
+          var PopUpRenderValue = '@ViewBag.PopUpRenderValue';
+          var PopUpClubManageValue = '@ViewBag.PopUpClubManageValue';
+          if (PopUpRenderValue != null && PopUpRenderValue != "" && PopUpRenderValue == "Manage") {
+              var element = document.getElementById('add-new-discount-category');
+              element.classList.remove('translate-x-full');
+              }
+          else if (PopUpClubManageValue == "ManageAssign") {
+              element1 = document.getElementById('add-manage-discount-category');
+              element1.classList.remove('translate-x-full');
+          }
+              let tabValue = "@ViewBag.TabValue" ?? "";
+              if (tabValue === "02") {
+                  const link1 = document.getElementById('CategoryLink');
+                  const link2 = document.getElementById('AssignLink');
+                  link1.style.color = '';
+                  link1.style.borderBottom = '';
+                  link2.style.color = '#D75A8B';
+                  link2.style.borderBottom = '#D75A8B 2px solid';
+                  document.getElementById('requestAssign').style.display = 'block';
+                  document.getElementById('allCategory').style.display = 'none';
+
+              }
+              else {
+                  const link1 = document.getElementById('CategoryLink');
+                  const link2 = document.getElementById('AssignLink');
+                  link1.style.color = '#D75A8B';
+                  link1.style.borderBottom = '#D75A8B 2px solid';
+                  link2.style.color = '';
+                  link2.style.borderBottom = '';
+                  document.getElementById('requestAssign').style.display = 'none';
+                  document.getElementById('allCategory').style.display = 'block';
+
+              }
+      });
+      document.getElementById('CloseId').addEventListener('click',
+          function (event) {
+              event.preventDefault();
+              window.location.reload();
+          });
+      document.getElementById('CancelId').addEventListener('click',
+          function (event) {
+              event.preventDefault();
+              window.location.reload();
+          });
+    </script>
+
+    <script>
+        document.getElementById('CategoryLink').style.color = '#D75A8B';
+        document.getElementById('CategoryLink').style.borderBottom = '#D75A8B 2px solid';
+
+        function changeCategoryTab(selectedTabId, selectedLinkId) {
+            const tabLinks = document.querySelectorAll('.styleCss');
+            const tabContents = document.querySelectorAll('.pane');
+
+            tabLinks.forEach(link => {
+                if (link.id === selectedLinkId) {
+                    link.classList.add('active');
+                } else {
+                    link.classList.remove('active');
+                }
+            });
+
+            tabContents.forEach(content => {
+                if (content.id === selectedTabId) {
+                    content.style.display = 'block';
+                } else {
+                    content.style.display = 'none';
+                }
+            });
+
+            if (selectedLinkId === 'CategoryLink') {
+                const link1 = document.getElementById('CategoryLink');
+                const link2 = document.getElementById('AssignLink');
+                link1.style.color = '#D75A8B';
+                link1.style.borderBottom = '#D75A8B 2px solid';
+                link2.style.color = '';
+                link2.style.borderBottom = '';
+                let URL2 = "/DiscountManagement/Index";
+                let search_filter2 = $('#default-search-plan_list').val();
+                URL = addQueryParam3(URL2, 'TabValue', '', 'SearchFilter', search_filter2);
+                window.location.href = URL
+            }
+            else if (selectedLinkId === 'AssignLink') {
+                const link1 = document.getElementById('CategoryLink');
+                const link2 = document.getElementById('AssignLink');
+                link1.style.color = '';
+                link1.style.borderBottom = '';
+                link2.style.color = '#D75A8B';
+                link2.style.borderBottom = '#D75A8B 2px solid';
+                let URL2 = "/DiscountManagement/Index";
+                let search_filter2 = $('#default-search-plan-request').val();
+                URL = addQueryParam3(URL2, 'TabValue', '02', 'SearchFilter', search_filter2);
+                window.location.href = URL
+            }
+        }
+        function addQueryParam3(url, paramName, paramValue, paramName2, paramValue2) {
+            if (paramValue != null && paramValue != "") {
+                url += url.includes('?') ? `&${paramName}=${paramValue}` : `?${paramName}=${paramValue}`;
+            }
+            if (paramValue2 != null && paramValue2 != "") {
+                url += url.includes('?') ? `&${paramName2}=${paramValue2}` : `?${paramName2}=${paramValue2}`;
+            }
+            return url;
+        }
+    </script>
+    <script>
+        function editDiscountCategory(id) {
+            window.location.href = '/DiscountManagement/ManageDiscountCategory?categoryId=' + id;
+        }
+        function openCategoryBlockEventModal(categoryId, status) {
+            const $modal = $("#block-discount-category");
+            const $message = $("#confirmationRequestMessage");
+            const $approveBtn = $("#block_ids1");
+            const contentApprove = "Are you sure you want to block this category ?";
+        $message.text(contentApprove);
+        $approveBtn.attr({
+            "data-vals1": categoryId,
+            "data-vals2": status,
+            });
+        $modal.removeClass("hidden").attr("aria-hidden", "false");
+        }
+
+        function BlockDiscountCategoryFunction() {
+            const categoryId = $('#block_ids1').attr('data-vals1');
+            const status = $('#block_ids1').attr('data-vals2');
+            let search_filter2 = $('#default-search-plan-request').val();
+            const start_index_val2 = @ViewBag.StartIndex;
+            const page_size2 = @ViewBag.PageSize;
+            window.location.href = '/DiscountManagement/DiscountCategoryStatusUpdate'
+                + '?CategoryId=' + categoryId
+                + '&status=' + status
+                + '&SearchFilter=' + search_filter2
+                + '&StartIndex=' + start_index_val2
+                + '&PageSize=' + page_size2;
+        }
+
+    function openCategoryUnBlockEventModal(categoryId, status) {
+       const $modal = $("#unblock-discount-category");
+       const $message = $("#confirmationRequestMessage");
+       const $approveBtn = $("#block_ids1");
+       const contentApprove = "Are you sure want to un-block this category?";
+    $message.text(contentApprove);
+    $approveBtn.attr({
+       "data-vals1": categoryId,
+       "data-vals2": status,
+       });
+    $modal.removeClass("hidden").attr("aria-hidden", "false");
+    }
+
+   function UnBlockDiscountCategoryFunction() {
+       const categoryId = $('#block_ids1').attr('data-vals1');
+       const status = $('#block_ids1').attr('data-vals2');
+       let search_filter2 = $('#default-search-plan-request').val();
+       const start_index_val2 = @ViewBag.StartIndex;
+       const page_size2 = @ViewBag.PageSize;
+       window.location.href = '/DiscountManagement/DiscountCategoryStatusUpdate'
+           + '?CategoryId=' + categoryId
+           + '&status=' + status
+           + '&SearchFilter=' + search_filter2
+           + '&StartIndex=' + start_index_val2
+           + '&PageSize=' + page_size2;
+        }
+
+  function deleteDiscountCategory(categoryId, status) {
+    const $modal = $("#unblock-discount-category");
+    const $message = $("#confirmationRequestMessage");
+      const $approveBtn = $("#delete_ids1");
+    const contentApprove = "Are you sure want to un-block this category?";
+    $message.text(contentApprove);
+    $approveBtn.attr({
+    "data-vals1": categoryId,
+    "data-vals2": status,
+    });
+    $modal.removeClass("hidden").attr("aria-hidden", "false");
+    }
+
+function DeleteDiscountCategoryFunction() {
+    const categoryId = $('#delete_ids1').attr('data-vals1');
+    const status = $('#delete_ids1').attr('data-vals2');
+    let search_filter2 = $('#default-search-plan-request').val();
+    const start_index_val2 = @ViewBag.StartIndex;
+    const page_size2 = @ViewBag.PageSize;
+    window.location.href = '/DiscountManagement/DiscountCategoryStatusUpdate'
+        + '?CategoryId=' + categoryId
+        + '&status=' + status
+        + '&SearchFilter=' + search_filter2
+        + '&StartIndex=' + start_index_val2
+        + '&PageSize=' + page_size2;
+    }
+    </script>
+}

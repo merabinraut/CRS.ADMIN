@@ -19,7 +19,7 @@ namespace CRS.ADMIN.APPLICATION.Resources {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "18.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Resource {
@@ -646,11 +646,11 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Are you sure you want to block this charge category?.
+        ///   Looks up a localized string similar to Are you sure you want to block this charge category.
         /// </summary>
-        public static string Are_you_sure_you_want_to_block_this_charge_category_ {
+        public static string Are_you_sure_you_want_to_block_this_charge_category {
             get {
-                return ResourceManager.GetString("Are you sure you want to block this charge category?", resourceCulture);
+                return ResourceManager.GetString("Are_you_sure_you_want_to_block_this_charge_category", resourceCulture);
             }
         }
         
@@ -682,11 +682,11 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Are you sure you want to delete this charge category?.
+        ///   Looks up a localized string similar to Are you sure you want to delete this charge category.
         /// </summary>
-        public static string Are_you_sure_you_want_to_delete_this_charge_category_ {
+        public static string Are_you_sure_you_want_to_delete_this_charge_category {
             get {
-                return ResourceManager.GetString("Are you sure you want to delete this charge category?", resourceCulture);
+                return ResourceManager.GetString("Are_you_sure_you_want_to_delete_this_charge_category", resourceCulture);
             }
         }
         
@@ -727,16 +727,16 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Are you sure you want to unblock this charge category?.
+        ///   Looks up a localized string similar to Are you sure you want to unblock this charge category.
         /// </summary>
-        public static string Are_you_sure_you_want_to_unblock_this_charge_category_ {
+        public static string Are_you_sure_you_want_to_unblock_this_charge_category {
             get {
-                return ResourceManager.GetString("Are you sure you want to unblock this charge category?", resourceCulture);
+                return ResourceManager.GetString("Are_you_sure_you_want_to_unblock_this_charge_category", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Are you sure you want to unblock this club?.
+        ///   Looks up a localized string similar to Are you sure you want to unblock this club.
         /// </summary>
         public static string Are_you_sure_you_want_to_unblock_this_club {
             get {
@@ -822,6 +822,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         public static string Assign_Roles {
             get {
                 return ResourceManager.GetString("Assign Roles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Assign Discount.
+        /// </summary>
+        public static string AssignDiscount {
+            get {
+                return ResourceManager.GetString("AssignDiscount", resourceCulture);
             }
         }
         
@@ -1780,6 +1789,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Current Discount Category.
+        /// </summary>
+        public static string Current_Discount_Category {
+            get {
+                return ResourceManager.GetString("Current_Discount_Category", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Current Password.
         /// </summary>
         public static string Current_Password {
@@ -1897,6 +1915,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to DeleteCustomPlan.
+        /// </summary>
+        public static string DeleteCustomPlan {
+            get {
+                return ResourceManager.GetString("DeleteCustomPlan", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Description.
         /// </summary>
         public static string Description {
@@ -1947,6 +1974,33 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         public static string Designation_Fee {
             get {
                 return ResourceManager.GetString("Designation Fee", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Discount Category.
+        /// </summary>
+        public static string DiscountCategory {
+            get {
+                return ResourceManager.GetString("DiscountCategory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Discount Management.
+        /// </summary>
+        public static string DiscountManagement {
+            get {
+                return ResourceManager.GetString("DiscountManagement", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Discount Type.
+        /// </summary>
+        public static string DiscountType {
+            get {
+                return ResourceManager.GetString("DiscountType", resourceCulture);
             }
         }
         
@@ -3598,6 +3652,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Manage Discount Setting.
+        /// </summary>
+        public static string ManageDiscountSetting {
+            get {
+                return ResourceManager.GetString("ManageDiscountSetting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Manage Email Logs.
         /// </summary>
         public static string ManageEmailLogs {
@@ -3913,6 +3976,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to New Discount Category.
+        /// </summary>
+        public static string New_Discount_Category {
+            get {
+                return ResourceManager.GetString("New_Discount_Category", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to New Host.
         /// </summary>
         public static string New_Host {
@@ -4127,15 +4199,6 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         public static string Order {
             get {
                 return ResourceManager.GetString("Order", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to .
-        /// </summary>
-        public static string Other {
-            get {
-                return ResourceManager.GetString("Other", resourceCulture);
             }
         }
         
@@ -4509,6 +4572,33 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Plan Name English.
+        /// </summary>
+        public static string Plan_Name_English {
+            get {
+                return ResourceManager.GetString("Plan Name English", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Plan Request.
+        /// </summary>
+        public static string Plan_Request {
+            get {
+                return ResourceManager.GetString("Plan Request", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Plan Setup.
+        /// </summary>
+        public static string Plan_Setup {
+            get {
+                return ResourceManager.GetString("Plan Setup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Plan Title.
         /// </summary>
         public static string Plan_Title {
@@ -4523,6 +4613,24 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         public static string Plan_Type {
             get {
                 return ResourceManager.GetString("Plan Type", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure want to approve club plan request ?.
+        /// </summary>
+        public static string PlanRequestConfirmationMessage {
+            get {
+                return ResourceManager.GetString("PlanRequestConfirmationMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure want to reject club plan request ?.
+        /// </summary>
+        public static string PlanRequestRejectConfirmation {
+            get {
+                return ResourceManager.GetString("PlanRequestRejectConfirmation", resourceCulture);
             }
         }
         
@@ -5715,38 +5823,29 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
-        /// </summary>
-        public static string String {
-            get {
-                return ResourceManager.GetString("String", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to .
-        /// </summary>
-        public static string String1 {
-            get {
-                return ResourceManager.GetString("String1", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to .
-        /// </summary>
-        public static string String2 {
-            get {
-                return ResourceManager.GetString("String2", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Stripe.
         /// </summary>
         public static string Stripe {
             get {
                 return ResourceManager.GetString("Stripe", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sub Domain Name.
+        /// </summary>
+        public static string Sub_Domain_Name {
+            get {
+                return ResourceManager.GetString("Sub Domain Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sub Domain URL.
+        /// </summary>
+        public static string Sub_Domain_URL {
+            get {
+                return ResourceManager.GetString("Sub Domain URL", resourceCulture);
             }
         }
         

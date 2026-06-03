@@ -1,5 +1,7 @@
 ﻿using CRS.ADMIN.SHARED;
 using CRS.ADMIN.SHARED.CommissionManagement;
+using CRS.ADMIN.SHARED.DiscountManagementCommon;
+using CRS.ADMIN.SHARED.PaginationManagement;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -13,10 +15,11 @@ namespace CRS.ADMIN.REPOSITORY.CommissionManagement
         public CommissionManagementRepository() => _DAO = new RepositoryDao();
 
         #region Commission Category
-        public List<CommissionCategoryCommon> GetCategoryList()
+        public List<CommissionCategoryCommon> GetCategoryList(string search)
         {
             var response = new List<CommissionCategoryCommon>();
             string SQL = "EXEC sproc_commission_category_management @Flag='gccl'";
+            SQL += ",@searchText=" + _DAO.FilterString(search);
             var dbResponse = _DAO.ExecuteDataTable(SQL);
             if (dbResponse != null && dbResponse.Rows.Count > 0)
             {
@@ -31,6 +34,7 @@ namespace CRS.ADMIN.REPOSITORY.CommissionManagement
                         CreatedByFullName = _DAO.ParseColumnValue(item, "CreatedByFullname").ToString(),
                         CreatedByUsername = _DAO.ParseColumnValue(item, "CreatedByUsername").ToString(),
                         CreatedByImage = _DAO.ParseColumnValue(item, "CreatedByImage").ToString(),
+                        IsDefault = bool.Parse(_DAO.ParseColumnValue(item, "IsDefault").ToString()),
                     });
                 }
             }
@@ -52,7 +56,7 @@ namespace CRS.ADMIN.REPOSITORY.CommissionManagement
                     CategoryName = dbResponse.Rows[0]["CategoryName"]?.ToString(),
                     Description = dbResponse.Rows[0]["Description"]?.ToString(),
                     Status = dbResponse.Rows[0]["Status"]?.ToString(),
-                    CreatedDate =  dbResponse.Rows[0]["CreatedDate"]?.ToString(),
+                    CreatedDate = dbResponse.Rows[0]["CreatedDate"]?.ToString(),
                     CreatedByFullName = dbResponse.Rows[0]["CreatedByFullname"]?.ToString(),
                     CreatedByUsername = dbResponse.Rows[0]["CreatedByUsername"]?.ToString(),
                     CreatedByImage = dbResponse.Rows[0]["CreatedByImage"]?.ToString(),
@@ -217,7 +221,186 @@ namespace CRS.ADMIN.REPOSITORY.CommissionManagement
             if (dbResponseInfo != null && dbResponseInfo.Rows.Count > 0) return _DAO.DataTableToListObject<AdminCommissionCommon>(dbResponseInfo).ToList();
             return new List<AdminCommissionCommon>();
         }
+        #endregion
 
+        #region Discount management 
+
+        public List<DiscountManagementCommon> GetDiscountCategoryList(PaginationFilterCommon discountRequest)
+        {
+            var response = new List<DiscountManagementCommon>();
+            string sql = "EXEC sproc_discount_category_management ";
+            sql += !string.IsNullOrEmpty(discountRequest.SearchFilter) ? " @SearchFilter=N" + _DAO.FilterString(discountRequest.SearchFilter) : null;
+            sql += !string.IsNullOrEmpty(discountRequest.SearchFilter) ? ",@Skip=" + discountRequest.Skip : "@Skip = " + discountRequest.Skip;
+            sql += ",@Take=" + discountRequest.Take;
+            var dbResponse = _DAO.ExecuteDataTable(sql);
+            if (dbResponse != null && dbResponse.Rows.Count > 0)
+            {
+                foreach (DataRow item in dbResponse.Rows)
+                {
+                    response.Add(new DiscountManagementCommon()
+                    {
+                        CategoryId = _DAO.ParseColumnValue(item, "CategoryId").ToString(),
+                        CategoryName = _DAO.ParseColumnValue(item, "CategoryName").ToString(),
+                        Description = _DAO.ParseColumnValue(item, "Description").ToString(),
+                        Status = _DAO.ParseColumnValue(item, "Status").ToString(),
+                        CreatedDate = _DAO.ParseColumnValue(item, "CreatedDate").ToString(),
+                        UpdatedDate = _DAO.ParseColumnValue(item, "UpdatedDate").ToString(),
+                        TotalRecords = Convert.ToInt32(_DAO.ParseColumnValue(item, "TotalRecords").ToString()),
+                        SNO = Convert.ToInt32(_DAO.ParseColumnValue(item, "SNO").ToString())
+                    });
+                }
+            }
+            return response;
+        }
+
+        public CommonDbResponse ManageDiscountCategory(DiscountManagementRequestCommon mappedRequest)
+        {
+            string SQL = string.IsNullOrEmpty(mappedRequest.categoryId) ? "EXEC sproc_manage_discount_category" : "sproc_update_discount_category";
+            string categoryName = string.IsNullOrEmpty(mappedRequest.categoryName) ? "''" : "N" + _DAO.FilterString(mappedRequest.categoryName);
+            string description = string.IsNullOrEmpty(mappedRequest.description) ? "''" : "N" + _DAO.FilterString(mappedRequest.description);
+
+            SQL += " @categoryId=" + _DAO.FilterString(mappedRequest.categoryId);
+            SQL += ",@categoryName=" + categoryName;
+            SQL += ",@categoryDescription=" + description;
+            SQL += ",@actionUser=" + _DAO.FilterString(mappedRequest.ActionUser);
+            SQL += ",@actionIP=" + _DAO.FilterString(mappedRequest.ActionIP);
+            SQL += ",@actionPlatform=" + _DAO.FilterString("web");
+            return _DAO.ParseCommonDbResponse(SQL);
+        }
+
+        public DiscountManagementCommon GetDiscountDetails(DiscountManagementRequestCommon common)
+        {
+            var SQL = "sproc_discount_detail_management ";
+            SQL += " @categoryId=" + _DAO.FilterString(common.categoryId);
+            var dbResponse = _DAO.ExecuteDataTable(SQL);
+            if (dbResponse != null && dbResponse.Rows.Count > 0)
+            {
+                return new DiscountManagementCommon()
+                {
+                    CategoryId = dbResponse.Rows[0]["CategoryId"]?.ToString(),
+                    CategoryName = dbResponse.Rows[0]["CategoryName"]?.ToString(),
+                    Description = dbResponse.Rows[0]["Description"]?.ToString()
+                };
+            }
+            return new DiscountManagementCommon();
+        }
+
+        public CommonDbResponse ChangeDiscountCategoryStatus(string categoryId, string subCategoryId, string status, string actionUser, string actionIP)
+        {
+            var SQL = string.IsNullOrEmpty(subCategoryId) ? "EXEC sproc_update_discount_category_status" : "EXEC sproc_update_discount_sub_category_status";
+            SQL += " @CategoryId=" + _DAO.FilterString(categoryId);
+            SQL += ",@SubCategoryId=" + _DAO.FilterString(subCategoryId);
+            SQL += ",@status=" + _DAO.FilterString(status);
+            SQL += ",@actionUser=" + _DAO.FilterString(actionUser);
+            SQL += ",@actionIP=" + _DAO.FilterString(actionIP);
+            SQL += ",@actionPlatform=" + _DAO.FilterString("web");
+            return _DAO.ParseCommonDbResponse(SQL);
+        }
+
+        public List<DiscountCategoryDetailsResponseCommon> GetDiscountSubCategoryList(string categoryId, PaginationFilterCommon discountRequest)
+        {
+            var response = new List<DiscountCategoryDetailsResponseCommon>();
+            string sql = "EXEC sproc_discount_sub_category_list ";
+            sql += !string.IsNullOrEmpty(discountRequest.SearchFilter) ? " @SearchFilter=N" + _DAO.FilterString(discountRequest.SearchFilter) : null;
+            sql += !string.IsNullOrEmpty(discountRequest.SearchFilter) ? ",@Skip=" + discountRequest.Skip : "@Skip=" + discountRequest.Skip;
+            sql += ",@Take=" + discountRequest.Take;
+            sql += !string.IsNullOrEmpty(categoryId) ? ",@categoryId=" + categoryId : ",@categoryId=N''";
+            var dbResponse = _DAO.ExecuteDataTable(sql);
+            if (dbResponse != null && dbResponse.Rows.Count > 0)
+            {
+                foreach (DataRow item in dbResponse.Rows)
+                {
+                    response.Add(new DiscountCategoryDetailsResponseCommon()
+                    {
+                        CategoryId = _DAO.ParseColumnValue(item, "CategoryId").ToString(),
+                        SubCategoryId = _DAO.ParseColumnValue(item, "SubCategoryId").ToString(),
+                        categoryName = _DAO.ParseColumnValue(item, "CategoryName").ToString(),
+                        FromAmount = Convert.ToInt64(_DAO.ParseColumnValue(item, "FromAmount").ToString()),
+                        ToAmount = Convert.ToInt64(_DAO.ParseColumnValue(item, "ToAmount").ToString()),
+                        Status = _DAO.ParseColumnValue(item, "Status").ToString(),
+                        DiscountType = _DAO.ParseColumnValue(item, "DiscountType").ToString(),
+                        Value = Convert.ToInt32(_DAO.ParseColumnValue(item, "Value").ToString()),
+                        MinValue = Convert.ToInt64(_DAO.ParseColumnValue(item, "MinValue").ToString()),
+                        MaxValue = Convert.ToInt64(_DAO.ParseColumnValue(item, "MaxValue").ToString()),
+                        TotalRecords = Convert.ToInt32(_DAO.ParseColumnValue(item, "TotalRecords").ToString()),
+                        createdDate = _DAO.ParseColumnValue(item, "createdDate").ToString(),
+                        updatedDate = _DAO.ParseColumnValue(item, "updatedDate").ToString(),
+                        SNO = Convert.ToInt32(_DAO.ParseColumnValue(item, "SNO").ToString())
+                    });
+                }
+            }
+            return response;
+        }
+
+        public CommonDbResponse ManageDiscountSubCategory(DiscountSubCategoryManagementRequestCommon mappedRequest)
+        {
+            var SQL = "EXEC sproc_manage_discount_sub_category";
+            SQL += " @CategoryId=" + _DAO.FilterString(mappedRequest.categoryId);
+            SQL += ",@SubCategoryId=" + _DAO.FilterString(mappedRequest.subCategoryId);
+            SQL += ",@FromAmount=" + mappedRequest.FromAmount;
+            SQL += ",@ToAmount=" + mappedRequest.ToAmount;
+            SQL += ",@DiscountType=" + mappedRequest.DiscountType;
+            SQL += ",@Value=" + mappedRequest.Value;
+            SQL += ",@MinValue=" + (mappedRequest.MinValue ?? 0); ;
+            SQL += ",@MaxValue=" + (mappedRequest.MaxValue ?? 0);
+            SQL += ",@ActionIp=" + _DAO.FilterString(mappedRequest.ActionIP);
+            SQL += ",@CreatedBy=" + _DAO.FilterString(mappedRequest.ActionUser);
+            SQL += ",@actionPlatform=" + _DAO.FilterString(mappedRequest.ActionPlatform);
+            return _DAO.ParseCommonDbResponse(SQL);
+        }
+
+        public DiscountCategoryDetailsResponseCommon GetSubCategoryDiscountDetails(DiscountSubCategoryRequestCommon common)
+        {
+            var SQL = "sproc_discount_sub_category_detail_management ";
+            SQL += " @categoryId=" + _DAO.FilterString(common.categoryId);
+            SQL += ",@subCategoryId=" + _DAO.FilterString(common.subCategoryId);
+            var dbResponse = _DAO.ExecuteDataTable(SQL);
+            if (dbResponse != null && dbResponse.Rows.Count > 0)
+            {
+                return new DiscountCategoryDetailsResponseCommon()
+                {
+                    CategoryId = dbResponse.Rows[0]["CategoryId"]?.ToString(),
+                    SubCategoryId = dbResponse.Rows[0]["SubCategoryId"]?.ToString(),
+                    categoryName = dbResponse.Rows[0]["categoryName"]?.ToString(),
+                    FromAmount = Convert.ToInt64(dbResponse.Rows[0]["FromAmount"]?.ToString()),
+                    ToAmount = Convert.ToInt64(dbResponse.Rows[0]["ToAmount"]?.ToString()),
+                    DiscountType = dbResponse.Rows[0]["DiscountType"]?.ToString(),
+                    Value = Convert.ToInt64(dbResponse.Rows[0]["Value"]?.ToString()),
+                    MinValue = Convert.ToInt64(dbResponse.Rows[0]["MinValue"]?.ToString()),
+                    MaxValue = Convert.ToInt64(dbResponse.Rows[0]["MaxValue"]?.ToString())
+                };
+            }
+            return new DiscountCategoryDetailsResponseCommon();
+        }
+
+        public AssignDiscountCommon GetSubCategoryDetails(string agentId)
+        {
+            var SQL = "sproc_dropdown_management ";
+            SQL += " @flag=" + _DAO.FilterString("CAT");
+            SQL += ",@SearchField1=" + _DAO.FilterString(agentId);
+            SQL += ",@SearchField2=" + _DAO.FilterString("");
+            var dbResponse = _DAO.ExecuteDataTable(SQL);
+            if (dbResponse != null && dbResponse.Rows.Count > 0)
+            {
+                return new AssignDiscountCommon()
+                {
+                    CategoryId = dbResponse.Rows[0]["Value"]?.ToString(),
+                    CategoryName = dbResponse.Rows[0]["TEXT"]?.ToString(),
+                };
+            }
+            return new AssignDiscountCommon();
+        }
+
+        public CommonDbResponse AssignDiscount(AssignDiscountCommon requestMapped)
+        {
+            var SQL = "EXEC sproc_assign_discount_category_to_club";
+            SQL += " @CategoryId=" + _DAO.FilterString(requestMapped.CategoryId);
+            SQL += ",@clubId=" + _DAO.FilterString(requestMapped.AgentId);
+            SQL += ",@ActionIp=" + _DAO.FilterString(requestMapped.ActionIP);
+            SQL += ",@CreatedBy=" + _DAO.FilterString(requestMapped.ActionUser);
+            SQL += ",@ActionPlatform=" + _DAO.FilterString(requestMapped.ActionPlatform);
+            return _DAO.ParseCommonDbResponse(SQL);
+        }
         #endregion
     }
 }

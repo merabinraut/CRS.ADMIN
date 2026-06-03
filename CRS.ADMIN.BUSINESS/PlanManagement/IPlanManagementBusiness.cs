@@ -14,6 +14,11 @@ namespace CRS.ADMIN.BUSINESS.PlanManagement
         CommonDbResponse EnableDisablePlans(PlanManagementCommon planManagement);
         #region DDL
         List<StaticDataCommon> GetDDL(string StaticType);
+        List<PlanRequesResponseListCommon> GetPlanRequestList(PaginationFilterCommon dbRequest);
+        CommonDbResponse ApprovePlanRequest(string sno, string type, string planId);
+        PlanRequesResponseListCommon GetPlanRequestDetails(string clubId, string planId);
+        List<StaticDataCommon> GetTimeInterval(string clubId);
+        CommonDbResponse ManageClubPlan(PlanRequesRequestCommon requestMapped);
         #endregion
     }
 }

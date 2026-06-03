@@ -1,14 +1,10 @@
-
 using CRS.ADMIN.APPLICATION.Library;
-using CRS.ADMIN.APPLICATION.Models.PointsManagement;
 using CRS.ADMIN.BUSINESS.AdminPointManagement;
-using CRS.ADMIN.SHARED.PointsManagement;
 using CRS.ADMIN.SHARED;
 using System.Web.Mvc;
 using CRS.ADMIN.APPLICATION.Models.AdminPointManagement;
 using CRS.ADMIN.SHARED.AdminPointManagement;
 using CRS.ADMIN.SHARED.PaginationManagement;
-
 namespace CRS.ADMIN.APPLICATION.Controllers
 {
     public class AdminPointManagementController : BaseController
@@ -49,7 +45,6 @@ namespace CRS.ADMIN.APPLICATION.Controllers
         [HttpPost, ValidateAntiForgeryToken]
         public ActionResult ManagePointRequest(ManagePointRequestModel objManagePointRequestModel)
         {
-
             var culture = System.Threading.Thread.CurrentThread.CurrentCulture.ToString();
             string ErrorMessage = string.Empty;
             if (ModelState.IsValid)

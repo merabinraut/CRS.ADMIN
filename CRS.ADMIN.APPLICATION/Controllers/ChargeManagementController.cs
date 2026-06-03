@@ -31,14 +31,14 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             PaginationFilterCommon dbRequest = new PaginationFilterCommon()
             {
                 Skip = 0,
-                Take = 10,               
+                Take = 10,
             };
-            var dbResponseModel = _chargeManagementBusiness.GetChargeCategory(null,null, dbRequest);
+            var dbResponseModel = _chargeManagementBusiness.GetChargeCategory(null, null, dbRequest);
             var filteredItems = dbResponseModel
-           .Where(item => item.agentTypeValue == "6" )
+           .Where(item => item.agentTypeValue == "6")
            .ToList();
 
-            response.ChargeTypeList= dbResponseModel.MapObjects<ChargeCategoryManagementModel>();
+            response.ChargeTypeList = dbResponseModel.MapObjects<ChargeCategoryManagementModel>();
             response.ChargeTypeList.ForEach(x =>
             {
                 x.agentTypeValue = x?.agentTypeValue?.EncryptParameter();
@@ -47,12 +47,12 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             var dictionary = new Dictionary<string, string>();
             filteredItems.ForEach(item => { dictionary.Add(item.agentTypeValue.EncryptParameter(), item.agentType); });
             ViewBag.RoleTypeList = ApplicationUtilities.SetDDLValue(dictionary, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---");
-            ViewBag.UserList = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("USERTYPENAME", response.ChargeTypeList.FirstOrDefault().agentTypeValue.DecryptParameter()) as Dictionary<string, string>,"", culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---", false);
+            ViewBag.UserList = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("USERTYPENAME", response.ChargeTypeList.FirstOrDefault().agentTypeValue.DecryptParameter()) as Dictionary<string, string>, "", culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---", false);
             var emptydictionary = new Dictionary<string, string>();
             ViewBag.ChargeCategory = ApplicationUtilities.SetDDLValue(emptydictionary, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---");
             return View(response);
         }
-        public ActionResult ChargeCategoryType(string agentTypeValue,string agentType="" ,string SearchFilter = "", int StartIndex = 0, int PageSize = 10)
+        public ActionResult ChargeCategoryType(string agentTypeValue, string agentType = "", string SearchFilter = "", int StartIndex = 0, int PageSize = 10)
         {
             Session["CurrentURL"] = "/ChargeManagement/Index";
             string RenderId = "";
@@ -73,18 +73,18 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 SearchFilter = !string.IsNullOrEmpty(SearchFilter) ? SearchFilter : null
             };
             objChargeTypeModel.SearchFilter = SearchFilter;
-            var dbResponseModel = _chargeManagementBusiness.GetChargeCategory(agentTypeValue?.DecryptParameter(),null, dbRequest);
+            var dbResponseModel = _chargeManagementBusiness.GetChargeCategory(agentTypeValue?.DecryptParameter(), null, dbRequest);
             objChargeTypeModel.CategoryTypeList = dbResponseModel.MapObjects<ChargeCategoryManagementModel>();
             objChargeTypeModel.CategoryTypeList.ForEach(x =>
             {
                 x.agentTypeValue = x?.agentTypeValue?.EncryptParameter();
-                x.categoryId= x?.categoryId?.EncryptParameter();
+                x.categoryId = x?.categoryId?.EncryptParameter();
             });
             ViewBag.RoleName = agentType;
             objChargeTypeModel.agentTypeValue = agentTypeValue;
             ViewBag.StartIndex = StartIndex;
             ViewBag.PageSize = PageSize;
-            ViewBag.TotalData = dbResponseModel != null && dbResponseModel.Any() ? dbResponseModel[0].TotalRecords : 0;                
+            ViewBag.TotalData = dbResponseModel != null && dbResponseModel.Any() ? dbResponseModel[0].TotalRecords : 0;
             return View(objChargeTypeModel);
         }
         [HttpPost, ValidateAntiForgeryToken]
@@ -109,7 +109,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             if (ModelState.IsValid)
             {
                 ChargeCategoryManagementCommon commonModel = Model.MapObject<ChargeCategoryManagementCommon>();
-                commonModel.agentType= Model.agentTypeValue.DecryptParameter();
+                commonModel.agentType = Model.agentTypeValue.DecryptParameter();
                 commonModel.ActionUser = ApplicationUtilities.GetSessionValue("Username").ToString();
                 commonModel.ActionIP = ApplicationUtilities.GetIP();
                 if (!string.IsNullOrEmpty(commonModel.categoryId))
@@ -139,7 +139,6 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 var dbResponse = _chargeManagementBusiness.CreateChargeCategory(commonModel);
                 if (dbResponse != null && dbResponse.Code == 0)
                 {
-
                     this.AddNotificationMessage(new NotificationModel()
                     {
                         NotificationType = dbResponse.Code == ResponseCode.Success ? NotificationMessage.SUCCESS : NotificationMessage.INFORMATION,
@@ -232,7 +231,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                         Skip = 0,
                         Take = 10,
                     };
-                    var dbResponse = _chargeManagementBusiness.GetChargeCategoryDetails(agentTypeValue?.DecryptParameter(),categoryId?.DecryptParameter(), dbRequest);
+                    var dbResponse = _chargeManagementBusiness.GetChargeCategoryDetails(agentTypeValue?.DecryptParameter(), categoryId?.DecryptParameter(), dbRequest);
                     model = dbResponse.MapObject<ManageChargeCategoryModel>();
                     model.agentTypeValue = model.agentTypeValue.EncryptParameter();
                     model.categoryId = model.categoryId.EncryptParameter();
@@ -312,13 +311,13 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                             Message = dbResponse.Message ?? "Failed",
                             Title = NotificationMessage.INFORMATION.ToString()
                         });
-                       
+
                         return RedirectToAction("ChargeCategoryType", "ChargeManagement", new
                         {
                             agentTypeValue = agentTypeValue
                         });
                     }
-                  
+
                 }
             }
             return RedirectToAction("ChargeCategoryType", "ChargeManagement", new
@@ -328,7 +327,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
         }
         #endregion
         #region ChargeCategoryDetail
-        public ActionResult ChargeCategoryDetails(string agentTypeValue, string categoryId,string categoryName, string SearchFilter = "", int StartIndex = 0, int PageSize = 10)
+        public ActionResult ChargeCategoryDetails(string agentTypeValue, string categoryId, string categoryName, string SearchFilter = "", int StartIndex = 0, int PageSize = 10)
         {
             Session["CurrentURL"] = "/ChargeManagement/Index";
             var culture = Request.Cookies["culture"]?.Value;
@@ -343,11 +342,11 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 Skip = StartIndex,
                 Take = PageSize,
             };
-            var dbResponseModel = _chargeManagementBusiness.GetCharge(categoryId.DecryptParameter(), null,dbRequest);
+            var dbResponseModel = _chargeManagementBusiness.GetCharge(categoryId.DecryptParameter(), null, dbRequest);
             response.ChargeCategoryDetailsList = dbResponseModel.MapObjects<ChargeManagementModel>();
             response.ChargeCategoryDetailsList.ForEach(x =>
             {
-                x.categoryId = x?.categoryId?.EncryptParameter(); 
+                x.categoryId = x?.categoryId?.EncryptParameter();
                 x.categoryDetailId = x?.categoryDetailId?.EncryptParameter();
             });
             if (TempData.ContainsKey("ManageChargeDetailsModel")) response.ManageChargeDetails = TempData["ManageChargeDetailsModel"] as ManageChargeDetailsModel;
@@ -383,7 +382,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
 
                 return RedirectToAction("ChargeCategoryDetails", "ChargeManagement", new
                 {
-                    agentTypeValue=Model.agentTypeValue,
+                    agentTypeValue = Model.agentTypeValue,
                     categoryId = Model.categoryId,
                     categoryName = Model.categoryName
                 });
@@ -393,7 +392,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             {
                 ChargeManagementCommon commonModel = Model.MapObject<ChargeManagementCommon>();
                 commonModel.categoryId = Model.categoryId.DecryptParameter();
-                commonModel.chargeType = Model.chargeType.DecryptParameter();                               
+                commonModel.chargeType = Model.chargeType.DecryptParameter();
                 commonModel.ActionUser = ApplicationUtilities.GetSessionValue("Username").ToString();
                 commonModel.ActionIP = ApplicationUtilities.GetIP();
                 if (!string.IsNullOrEmpty(commonModel.categoryDetailId))
@@ -480,7 +479,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
         }
 
         [HttpGet]
-        public ActionResult ManageChargeCategoryDetails(string agentTypeValue, string categoryId = "", string categoryDetailId = "",string categoryName="")
+        public ActionResult ManageChargeCategoryDetails(string agentTypeValue, string categoryId = "", string categoryDetailId = "", string categoryName = "")
         {
             ManageChargeDetailsModel model = new ManageChargeDetailsModel();
             var culture = System.Threading.Thread.CurrentThread.CurrentCulture.ToString();
@@ -523,7 +522,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                             categoryName = categoryName
                         });
                     }
-                  
+
                     var dbResponse = _chargeManagementBusiness.GetChargeDetails(id, catid);
                     model = dbResponse.MapObject<ManageChargeDetailsModel>();
                     model.categoryDetailId = model.categoryDetailId.EncryptParameter();
@@ -543,7 +542,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             });
         }
         [HttpGet]
-        public ActionResult ManageChargeDetailStatus(string agentTypeValue, string categoryId = "", string categoryDetailId = "", string categoryName = "",string status="")
+        public ActionResult ManageChargeDetailStatus(string agentTypeValue, string categoryId = "", string categoryDetailId = "", string categoryName = "", string status = "")
         {
             var culture = System.Threading.Thread.CurrentThread.CurrentCulture.ToString();
 
@@ -578,7 +577,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                         });
                         return RedirectToAction("ChargeCategoryDetails", "ChargeManagement", new
                         {
-                            agentTypeValue =agentTypeValue,
+                            agentTypeValue = agentTypeValue,
                             categoryId = categoryId,
                             categoryName = categoryName
                         });
@@ -649,26 +648,26 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 categoryNamelist = new SelectList(categoryNamelist, "Value", "Text")
             };
 
-           
+
             return Json(data, JsonRequestBehavior.AllowGet);
 
         }
         [HttpGet, OverrideActionFilters]
-        public JsonResult GetcategoryByUserId(string agentTypeValue,string agentId)
+        public JsonResult GetcategoryByUserId(string agentTypeValue, string agentId)
         {
             string currentChargeCategory = null;
             List<SelectListItem> categoryNamelist = new List<SelectListItem>();
             agentTypeValue = !string.IsNullOrEmpty(agentTypeValue) ? agentTypeValue.DecryptParameter() : "6";
             agentId = !string.IsNullOrEmpty(agentId) ? agentId.DecryptParameter() : null;
-            if (!string.IsNullOrEmpty(agentTypeValue))              
-            categoryNamelist = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("CHARGECATEGORY", agentTypeValue, agentId) as Dictionary<string, string>, "--- Select ---");
-            var dbresponse=_chargeManagementBusiness.GetCurrentCategory(agentTypeValue, agentId);
-            
+            if (!string.IsNullOrEmpty(agentTypeValue))
+                categoryNamelist = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("CHARGECATEGORY", agentTypeValue, agentId) as Dictionary<string, string>, "--- Select ---");
+            var dbresponse = _chargeManagementBusiness.GetCurrentCategory(agentTypeValue, agentId);
+
             var data = new
             {
-                currentChargeCategory= dbresponse.Extra1,
+                currentChargeCategory = dbresponse.Extra1,
                 categoryNamelist = new SelectList(categoryNamelist, "Value", "Text")
-            };           
+            };
             return Json(data, JsonRequestBehavior.AllowGet);
 
         }
@@ -717,8 +716,8 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             if (ModelState.IsValid)
             {
                 var dbResponse = new CommonDbResponse();
-                PointSetupCommon objPointSetupCommon = new PointSetupCommon();                               
-                    dbResponse = _chargeManagementBusiness.AssignCategory(Model.agentTypeValue.DecryptParameter(), Model.AgentId.DecryptParameter(), Model.newChargeCategoryId.DecryptParameter());
+                PointSetupCommon objPointSetupCommon = new PointSetupCommon();
+                dbResponse = _chargeManagementBusiness.AssignCategory(Model.agentTypeValue.DecryptParameter(), Model.AgentId.DecryptParameter(), Model.newChargeCategoryId.DecryptParameter());
                 if (dbResponse.Code == 0)
                 {
                     this.AddNotificationMessage(new NotificationModel()

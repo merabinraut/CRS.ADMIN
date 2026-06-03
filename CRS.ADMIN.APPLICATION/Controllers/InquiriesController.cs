@@ -1,6 +1,10 @@
+using CRS.ADMIN.APPLICATION.Helper;
 using CRS.ADMIN.APPLICATION.Library;
 using CRS.ADMIN.APPLICATION.Models.Inquiries;
 using CRS.ADMIN.BUSINESS.HostManagement;
+using CsvHelper;
+using System.IO;
+using System.Linq;
 using System.Web.Mvc;
 
 namespace CRS.ADMIN.APPLICATION.Controllers
@@ -13,18 +17,36 @@ namespace CRS.ADMIN.APPLICATION.Controllers
         {
             _buss = buss;
         }
-        public ActionResult Index(string SearchFilter = "", int StartIndex = 0, int PageSize = 10)
+        public ActionResult Index(string inquiryId = "", string SearchFilter = "", int StartIndex = 0, int PageSize = 10)
         {
             ViewBag.SearchFilter = SearchFilter;
             Session["CurrentURL"] = "/Inquiries/Index";
-
-            var listInquiry = _buss.GetInquiryListAsync(SearchFilter,StartIndex,PageSize);
+            if (!string.IsNullOrEmpty(inquiryId))
+            {
+                var inquiriesDetails = _buss.GetInquiryDetailsAsync(inquiryId);
+                var response = inquiriesDetails.MapObject<InquiriesModel>();
+                ViewBag.InqueryId = response.InquiryId;
+                TempData["DetailsModel"] = response;
+                return PartialView("_GetInquiriesDetails", response);
+            }
+            var listInquiry = _buss.GetInquiryListAsync(SearchFilter, StartIndex, PageSize);
             var mappedResponse = listInquiry.MapObjects<InquiryListModel>();
             TempData["ListModel"] = mappedResponse;
-            ViewBag.StartIndex = 1;
-            ViewBag.PageSize = 10;
-            ViewBag.TotalData = 10;
+            ViewBag.StartIndex = StartIndex;
+            ViewBag.PageSize = PageSize;
+            ViewBag.TotalData = listInquiry != null && listInquiry.Any() ? listInquiry[0].TotalRecords : 0;
             return View();
+        }
+
+        public ActionResult GetInquiriesDetailsView(string inquiryId = "")
+        {
+            var inquiriesDetails = _buss.GetInquiryDetailsAsync(inquiryId);
+            var response = inquiriesDetails.MapObject<InquiriesModel>();
+            ViewBag.imagename = response.FullName;
+            response.Attachments = !string.IsNullOrEmpty(response.Attachments) ? ImageHelper.ProcessedImage(response.Attachments) : null;
+            ViewBag.InqueryId = response.InquiryId;
+            TempData["DetailsModel"] = response;
+            return PartialView("_GetInquiriesDetails", response);
         }
     }
 }
