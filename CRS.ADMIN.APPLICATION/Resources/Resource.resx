@@ -3052,4 +3052,40 @@
     <value>Cool style</value>
     <comment>Cool style</comment>
   </data>
+  <data name="Conversation_style" xml:space="preserve">
+    <value>Conversation style</value>
+    <comment>Conversation style</comment>
+  </data>
+  <data name="Listener" xml:space="preserve">
+    <value>Listener</value>
+    <comment>Listener</comment>
+  </data>
+  <data name="Speaker" xml:space="preserve">
+    <value>Speaker</value>
+    <comment>Speaker</comment>
+  </data>
+  <data name="The_atmosphere" xml:space="preserve">
+    <value>The atmosphere when we're together</value>
+    <comment>The atmosphere when we're together</comment>
+  </data>
+  <data name="healing" xml:space="preserve">
+    <value>Healing</value>
+    <comment>Healing</comment>
+  </data>
+  <data name="Liven_things_up" xml:space="preserve">
+    <value>Liven things up</value>
+    <comment>Liven things up</comment>
+  </data>
+  <data name="Alcohol_tolerance" xml:space="preserve">
+    <value>Alcohol tolerance</value>
+    <comment>Alcohol tolerance</comment>
+  </data>
+  <data name="I_can_not_drink" xml:space="preserve">
+    <value>I can't drink.</value>
+    <comment>I can't drink.</comment>
+  </data>
+  <data name="Drinkable" xml:space="preserve">
+    <value>Drinkable</value>
+    <comment>Drinkable</comment>
+  </data>
 </root>

@@ -3026,4 +3026,31 @@
   <data name="Cool_style" xml:space="preserve">
     <value>かっこいい系</value>
   </data>
+  <data name="Conversation_style" xml:space="preserve">
+    <value>会話のスタイル</value>
+  </data>
+  <data name="Listener" xml:space="preserve">
+    <value>聞き役</value>
+  </data>
+  <data name="Speaker" xml:space="preserve">
+    <value>話し役</value>
+  </data>
+  <data name="The_atmosphere" xml:space="preserve">
+    <value>一緒にいる時の空気感</value>
+  </data>
+  <data name="healing" xml:space="preserve">
+    <value>癒し</value>
+  </data>
+  <data name="Liven_things_up" xml:space="preserve">
+    <value>盛り上げ</value>
+  </data>
+  <data name="Alcohol_tolerance" xml:space="preserve">
+    <value>お酒の強さ</value>
+  </data>
+  <data name="I_can_not_drink" xml:space="preserve">
+    <value>飲めない</value>
+  </data>
+  <data name="Drinkable" xml:space="preserve">
+    <value>飲める</value>
+  </data>
 </root>

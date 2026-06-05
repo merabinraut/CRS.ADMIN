@@ -13,9 +13,21 @@
     var selectedBirthPlace = ViewBag.BirthPlaceDDLKey as string;
     var selectedBloodGroup = ViewBag.BloodGroupDDLKey as string;
 
-    DateTime date = (!string.IsNullOrEmpty(Model.DOB) && Model.DOB.Trim().ToUpper() != "YYYY-MM-DD")
-        ? Convert.ToDateTime(Model.DOB)
-        : DateTime.Now;
+    //DateTime date = (!string.IsNullOrEmpty(Model.DOB) && Model.DOB.Trim().ToUpper() != "YYYY-MM-DD")
+    //    ? Convert.ToDateTime(Model.DOB)
+    //    : DateTime.Now;
+    DateTime date;
+
+    if (!string.IsNullOrWhiteSpace(Model.DOB) &&
+        Model.DOB.Trim().ToUpper() != "YYYY-MM-DD" &&
+        DateTime.TryParse(Model.DOB, out date))
+    {
+        // date parsed successfully
+    }
+    else
+    {
+        date = DateTime.Now;
+    }
 
     int splitYear = date.Year;
     int splitMonth = date.Month;
@@ -109,10 +121,6 @@
 </style>
 
 <link href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css" rel="stylesheet" />
-
-
-
-
 
 <div id="add-new-host"
      class="drawer-close-disable flex justify-end fixed top-0 right-0 z-40 h-screen overflow-y-auto transition-transform translate-x-full"
@@ -581,7 +589,7 @@
                                    min="1"
                                    max="5"
                                    step="1"
-                                   value="@(ViewBag.AppearanceScore ?? 1)" />
+                                   value="@(Model.appreanceScoreValue ?? "1")" />
 
                             <div class="range-dots">
                                 <span></span>
@@ -598,14 +606,14 @@
                         </div>
 
                         <div class="range-value text-xs text-[#686868] mt-[6px]">
-                            @CRS.ADMIN.APPLICATION.Resources.Resource.Select: <strong id="appreanceScoreValue" name="appreanceScoreValue" value="1">1</strong>/5
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Select: <strong id="appreanceScoreValue" name="appreanceScoreValue" value="1">@(Model.appreanceScoreValue ?? "1")</strong>/5
                         </div>
-                        <input type="hidden" class="score-hidden" id="appreanceScoreInput" name="appreanceScoreValue" value="1" />
+                        <input type="hidden" class="score-hidden" id="appreanceScoreInput" name="appreanceScoreValue" value="@(Model.appreanceScoreValue ?? "1")" />
                     </div>
 
                     <div class="skill-item">
                         <div class="border-l-[4px] border-[#cfd8dc] pl-[12px] mb-[14px] text-sm font-semibold text-secondary-100">
-                            Conversation Style
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Conversation_style 
                         </div>
 
                         <div class="relative h-[34px]">
@@ -615,7 +623,7 @@
                                    min="1"
                                    max="5"
                                    step="1"
-                                   value="@(ViewBag.ConversationScore ?? 1)" />
+                                   value="@(Model.conversationScoreValue ?? "1")" />
 
                             <div class="range-dots">
                                 <span></span>
@@ -627,20 +635,20 @@
                         </div>
 
                         <div class="flex justify-between text-xs text-secondary-100 mt-[6px]">
-                            <span>Listener</span>
-                            <span>Speaker</span>
+                            <span> @CRS.ADMIN.APPLICATION.Resources.Resource.Listener </span>
+                            <span> @CRS.ADMIN.APPLICATION.Resources.Resource.Speaker </span>
                         </div>
 
                         <div class="range-value text-xs text-[#686868] mt-[6px]">
-                            @CRS.ADMIN.APPLICATION.Resources.Resource.Select: <strong id="conversationScoreValue" name="conversationScoreValue" value="1">1</strong>/5
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Select: <strong id="conversationScoreValue" name="conversationScoreValue" value="1">@(Model.conversationScoreValue ?? "1")</strong>/5
                         </div>
-                        <input type="hidden" class="score-hidden" id="conversationScoreInput" name="conversationScoreValue" value="1" />
+                        <input type="hidden" class="score-hidden" id="conversationScoreInput" name="conversationScoreValue" value="@(Model.conversationScoreValue ?? "1")" />
 
                     </div>
 
                     <div class="skill-item">
                         <div class="border-l-[4px] border-[#cfd8dc] pl-[12px] mb-[14px] text-sm font-semibold text-secondary-100">
-                            Beverage Tolerance
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Alcohol_tolerance
                         </div>
 
                         <div class="relative h-[34px]">
@@ -650,7 +658,7 @@
                                    min="1"
                                    max="5"
                                    step="1"
-                                   value="@(ViewBag.BeverageToleranceScore ?? 1)" />
+                                   value="@(Model.beverageToleranceScoreValue ?? "1")" />
 
                             <div class="range-dots">
                                 <span></span>
@@ -662,20 +670,20 @@
                         </div>
 
                         <div class="flex justify-between text-xs text-secondary-100 mt-[6px]">
-                            <span>Low</span>
-                            <span>High</span>
+                            <span>@CRS.ADMIN.APPLICATION.Resources.Resource.I_can_not_drink</span>
+                            <span>@CRS.ADMIN.APPLICATION.Resources.Resource.Drinkable</span>
                         </div>
 
                         <div class="range-value text-xs text-[#686868] mt-[6px]">
-                            @CRS.ADMIN.APPLICATION.Resources.Resource.Select: <strong id="beverageToleranceScoreValue" name="beverageToleranceScoreValue" value="1">1</strong>/5
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Select: <strong id="beverageToleranceScoreValue" name="beverageToleranceScoreValue" value="1">@(Model.beverageToleranceScoreValue ?? "1")</strong>/5
                         </div>
-                        <input type="hidden" class="score-hidden" id="beverageToleranceScoreInput" name="beverageToleranceScoreValue" value="1" />
+                        <input type="hidden" class="score-hidden" id="beverageToleranceScoreInput" name="beverageToleranceScoreValue" value="@(Model.beverageToleranceScoreValue ?? "1")" />
 
                     </div>
 
                     <div class="skill-item">
                         <div class="border-l-[4px] border-[#cfd8dc] pl-[12px] mb-[14px] text-sm font-semibold text-secondary-100">
-                            Atmosphere
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.The_atmosphere
                         </div>
 
                         <div class="relative h-[34px]">
@@ -685,7 +693,7 @@
                                    min="1"
                                    max="5"
                                    step="1"
-                                   value="@(ViewBag.AtmosphereScore ?? 1)" />
+                                   value="@(Model.atmosphereScoreValue ?? "1")" />
 
                             <div class="range-dots">
                                 <span></span>
@@ -697,14 +705,14 @@
                         </div>
 
                         <div class="flex justify-between text-xs text-secondary-100 mt-[6px]">
-                            <span>Healing</span>
-                            <span>Liven Things Up</span>
+                            <span>@CRS.ADMIN.APPLICATION.Resources.Resource.healing</span>
+                            <span>@CRS.ADMIN.APPLICATION.Resources.Resource.Liven_things_up</span>
                         </div>
 
                         <div class="range-value text-xs text-[#686868] mt-[6px]">
-                            @CRS.ADMIN.APPLICATION.Resources.Resource.Select: <strong id="atmosphereScoreValue" name="atmosphereScoreValue" value="1">1</strong>/5
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Select: <strong id="atmosphereScoreValue" name="atmosphereScoreValue" value="1">@(Model.atmosphereScoreValue ?? "1")</strong>/5
                         </div>
-                        <input type="hidden" class="score-hidden" id="atmosphereScoreInput" name="atmosphereScoreValue" value="1" />
+                        <input type="hidden" class="score-hidden" id="atmosphereScoreInput" name="atmosphereScoreValue" value="@(Model.atmosphereScoreValue ?? "1")" />
 
                     </div>
                 </div>

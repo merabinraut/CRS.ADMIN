@@ -309,9 +309,6 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             }
         }
 
-
-
-
         [HttpGet]
         public ActionResult ManageNewHost(string AgentId, string HostId = null, string clubCategory = null, string SearchFilter = "", int StartIndex = 0, int PageSize = 10)
         {
@@ -441,6 +438,9 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 model.HostLogo = dbResponse.ImagePath;
                 model.Rank = dbResponse.Rank.EncryptParameter();
                 model.Address = dbResponse.Address.EncryptParameter();
+                model.MBTI = dbResponse.MBTI;
+                model.Title = dbResponse.Title;
+        
 
                 TempData["RenderId"] = "ManageHost";
                 TempData["ManageHostModel"] = model;
@@ -582,12 +582,6 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             TempData["ManageHostModel"] = requestModel;
             return RedirectToAction("HostList", "HostManagement", new { AgentId = requestModel.AgentId, clubCategory = requestModel.clubCategory });
         }
-
-
-
-
-
-
 
 
 
