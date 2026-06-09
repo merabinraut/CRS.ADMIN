@@ -1,4 +1,16 @@
 ﻿@model CRS.ADMIN.APPLICATION.Models.HostManagement.ManageHostModel
+@using System.IO
+@using System.Text.Json
+
+
+@{
+    var hasHostLogo = !string.IsNullOrWhiteSpace(Model.HostLogo);
+    var hostLogoFileName = hasHostLogo
+        ? Path.GetFileName(Model.HostLogo)
+        : CRS.ADMIN.APPLICATION.Resources.Resource.No_File_Choosen;
+}
+
+
 
 @{
     var rankList = ViewBag.RankDDL as IEnumerable<SelectListItem> ?? Enumerable.Empty<SelectListItem>();
@@ -118,9 +130,26 @@
             .range-dots span.active {
                 background: #d94f86;
             }
+
+
+    .cropper-container {
+        max-width: 100% !important;
+    }
+
+    .cropper-wrap-box,
+    .cropper-canvas,
+    .cropper-drag-box {
+        max-width: 100% !important;
+    }
+
+    #imageToCrop {
+        display: block;
+        max-width: 100%;
+    }
 </style>
 
-<link href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.2/cropper.min.css" />
+
 
 <div id="add-new-host"
      class="drawer-close-disable flex justify-end fixed top-0 right-0 z-40 h-screen overflow-y-auto transition-transform translate-x-full"
@@ -156,9 +185,9 @@
                     @Html.HiddenFor(model => model.HostId)
                 }
 
-            <div class="profile-section-title">
-                @CRS.ADMIN.APPLICATION.Resources.Resource.Profile_Detail
-            </div>
+                <div class="profile-section-title">
+                    @CRS.ADMIN.APPLICATION.Resources.Resource.Profile_Detail
+                </div>
 
                 <div class="grid grid-cols-2 gap-x-[20px] gap-y-[16px]">
 
@@ -245,45 +274,63 @@
 
 
                 //Image Cropper
-            
-                <!-- Cropping Section (optimized) -->
+
+
                 <div class="mt-[18px]">
-                    <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
+                    <label class="block mb-[12px] text-sm font-medium text-secondary-text-2">
                         @CRS.ADMIN.APPLICATION.Resources.Resource.ProfileImage
                     </label>
 
                     <div class="file-upload-common">
-                        <label for="file_input_business_certificate" class="custom-file-upload w-[128px] flex-none cursor-pointer">
+                        <label for="file_input_business_certificate"
+                               class="custom-file-upload w-[128px] flex-none cursor-pointer">
                             <span>@CRS.ADMIN.APPLICATION.Resources.Resource.Choose_Images</span>
                         </label>
-                        <input id="file_input_business_certificate" type="file" name="HostLogoFile" accept="image/*" style="display:none;">
-                        <p id="file_name_bussiness_certificate" class="file-name w-max h-[23px] overflow-hidden pl-2 text-xs text-[#686868] leading-[25px]">
-                            @(string.IsNullOrEmpty(Model.HostLogo) ?
-              CRS.ADMIN.APPLICATION.Resources.Resource.No_File_Choosen :
-              Path.GetFileName(Model.HostLogo))
+
+                        <input id="file_input_business_certificate"
+                               type="file"
+                               name="HostLogoFile"
+                               accept="image/*"
+                               style="display:none;" />
+
+                        <p id="file_name_bussiness_certificate"
+                           class="file-name w-max h-[23px] overflow-hidden pl-2 text-xs text-[#686868] leading-[25px]">
+                            @hostLogoFileName
                         </p>
                     </div>
 
-                    <!-- Crop Modal -->
-                    <div id="cropModal" class="hidden fixed inset-0 bg-gray-800 bg-opacity-75 flex items-center justify-center z-50">
-                        <div class="bg-white p-4 rounded-lg max-w-lg w-full max-h-[80vh] overflow-auto">
-                            <div class="mb-4">
-                                <img id="imageToCrop" src="" class="max-w-full">
-                            </div>
-                            <div class="flex justify-end gap-2">
-                                <button id="cropImageButton" class="bg-blue-500 text-white px-4 py-2 rounded-md">
-                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Crop
-                                </button>
-                                <button id="cancelCropButton" class="bg-gray-500 text-white px-4 py-2 rounded-md">
-                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Cancel
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Cropped Preview -->
                     <div class="mt-2">
-                        <img id="croppedPreview" src="@Model.HostLogo" class="max-w-[150px] border rounded hidden">
+                        <img id="croppedPreview"
+                             src="@(hasHostLogo ? Model.HostLogo : "")"
+                             class="max-w-[150px] border rounded @(hasHostLogo ? "" : "hidden")"  hidden/>
+                    </div>
+                </div>
+
+                <!-- Crop Modal -->
+                <div id="cropModal"
+                     class="hidden fixed inset-0 bg-gray-800 bg-opacity-75 flex items-center justify-center z-50">
+
+                    <div class="bg-white p-4 rounded-lg max-w-lg w-full max-h-[80vh] overflow-auto">
+
+                        <div id="cropImageWrapper" class="mb-4">
+                            <img id="imageToCrop"
+                                 src=""
+                                 class="max-w-full block" hidden />
+                        </div>
+
+                        <div class="flex justify-end gap-2">
+                            <button id="cropImageButton"
+                                    type="button"
+                                    class="bg-blue-500 text-white px-4 py-2 rounded-md">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Crop
+                            </button>
+
+                            <button id="cancelCropButton"
+                                    type="button"
+                                    class="bg-gray-500 text-white px-4 py-2 rounded-md">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Cancel
+                            </button>
+                        </div>
                     </div>
                 </div>
 
@@ -613,7 +660,7 @@
 
                     <div class="skill-item">
                         <div class="border-l-[4px] border-[#cfd8dc] pl-[12px] mb-[14px] text-sm font-semibold text-secondary-100">
-                            @CRS.ADMIN.APPLICATION.Resources.Resource.Conversation_style 
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Conversation_style
                         </div>
 
                         <div class="relative h-[34px]">
@@ -732,8 +779,8 @@
         </div>
     </div>
 </div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.2/cropper.min.js"></script>
 <script>
     document.addEventListener("DOMContentLoaded", function () {
         const ranges = document.querySelectorAll(".skill-range");
@@ -770,114 +817,236 @@
 </script>
 
 
+
 <script>
-    const input = document.getElementById("file_input_business_certificate");
-    const fileName = document.getElementById("file_name_bussiness_certificate");
-    const modal = document.getElementById("cropModal");
-    const image = document.getElementById("imageToCrop");
-    const cropBtn = document.getElementById("cropImageButton");
-    const cancelBtn = document.getElementById("cancelCropButton");
+    (function () {
+        const input = document.getElementById("file_input_business_certificate");
+        const fileName = document.getElementById("file_name_bussiness_certificate");
+        const modal = document.getElementById("cropModal");
+        const cropBtn = document.getElementById("cropImageButton");
+        const cancelBtn = document.getElementById("cancelCropButton");
+        const imageToCrop = document.getElementById("imageToCrop");
+        const cropImageWrapper = document.getElementById("cropImageWrapper");
+        const preview = document.getElementById("croppedPreview");
+        const form = input ? input.closest("form") : null;
 
-    let cropper = null;
-    let currentFile = null;
-
-    input.addEventListener("change", function () {
-
-        if (!input.files || !input.files[0]) return;
-
-        const file = input.files[0];
-        currentFile = file;
-
-        if (cropper) {
-            cropper.destroy();
-            cropper = null;
-        }
-
-        if (file.size > 5 * 1024 * 1024) {
-            alert("File must be less than 5 MB");
-            input.value = "";
-            fileName.textContent = "No File Choosen";
+        if (!input || !modal || !cropBtn || !cancelBtn || !imageToCrop || !cropImageWrapper || !preview) {
             return;
         }
 
-        fileName.textContent = file.name;
-
-        const reader = new FileReader();
-
-        reader.onload = function (e) {
-            image.src = "";
-            modal.classList.remove("hidden");
-            image.src = e.target.result;
-            image.onload = function () {
-
-                if (cropper) {
-                    cropper.destroy();
-                    cropper = null;
-                }
-
-                cropper = new Cropper(image, {
-                    aspectRatio: NaN,       
-                    viewMode: 2,          
-                    dragMode: "move",
-                    autoCropArea: 0.9,
-
-                    background: false,
-                    responsive: true,
-
-                    cropBoxMovable: true,
-                    cropBoxResizable: true,
-
-                    guides: true,
-                    center: true,
-                    highlight: false,
-
-                    minContainerWidth: 400,
-                    minContainerHeight: 500
-                });
-            };
-        };
-        reader.readAsDataURL(file);
-    });
-
-    cancelBtn.addEventListener("click", function () {
-        modal.classList.add("hidden");
-        input.value = "";
-        fileName.textContent = "No File Choosen";
-        image.src = "";
-        if (cropper) {
-            cropper.destroy();
-            cropper = null;
+        if (input.dataset.cropperInitialized === "true") {
+            return;
         }
-    });
 
-    cropBtn.addEventListener("click", function () {
-        if (!cropper) return;
-        const canvas = cropper.getCroppedCanvas({
-            fillColor: "#fff",
-            imageSmoothingEnabled: true,
-            imageSmoothingQuality: "high",
-            maxWidth: 2000,
-            maxHeight: 3000
-        });
+        input.dataset.cropperInitialized = "true";
 
-        canvas.toBlob(function (blob) {
-            if (blob.size > 5 * 1024 * 1024) {
-                alert("Cropped image exceeds 5MB. Please crop smaller area.");
-                return;
-            }
-            const file = new File([blob], currentFile.name, {
-                type: "image/png"
-            });
-            const dataTransfer = new DataTransfer();
-            dataTransfer.items.add(file);
-            input.files = dataTransfer.files;
-            fileName.textContent = file.name;
-            modal.classList.add("hidden");
-            image.src = "";
+        const maxFileSize = 5 * 1024 * 1024;
+
+        const noFileChosenText = @Html.Raw(JsonSerializer.Serialize(CRS.ADMIN.APPLICATION.Resources.Resource.No_File_Choosen));
+        const originalPreviewUrl = preview.getAttribute("src") || "";
+        const originalFileName = fileName ? fileName.textContent : noFileChosenText;
+
+        let cropper = null;
+        let currentFile = null;
+        let croppedFile = null;
+        let previewObjectUrl = null;
+
+        function destroyCropper() {
             if (cropper) {
                 cropper.destroy();
                 cropper = null;
             }
-        }, "image/png", 1);
-    });
+
+            const oldCropperContainers = cropImageWrapper.querySelectorAll(".cropper-container");
+            oldCropperContainers.forEach(function (container) {
+                container.remove();
+            });
+
+            imageToCrop.className = "max-w-full block";
+            imageToCrop.style.cssText = "";
+        }
+
+        function clearCropImage() {
+            imageToCrop.onload = null;
+            imageToCrop.onerror = null;
+            imageToCrop.removeAttribute("src");
+        }
+
+        function closeModal() {
+            modal.classList.add("hidden");
+            destroyCropper();
+            clearCropImage();
+        }
+
+        function openModal() {
+            modal.classList.remove("hidden");
+        }
+
+        function resetFileInput() {
+            input.value = "";
+            currentFile = null;
+        }
+
+        function setInputFile(file) {
+            const dataTransfer = new DataTransfer();
+            dataTransfer.items.add(file);
+            input.files = dataTransfer.files;
+        }
+
+        function setPreview(src, isObjectUrl) {
+            if (previewObjectUrl) {
+                URL.revokeObjectURL(previewObjectUrl);
+                previewObjectUrl = null;
+            }
+
+            if (!src) {
+                preview.removeAttribute("src");
+                preview.classList.add("hidden");
+                return;
+            }
+
+            preview.src = src;
+            preview.classList.remove("hidden");
+
+            if (isObjectUrl) {
+                previewObjectUrl = src;
+            }
+        }
+
+        input.addEventListener("change", function () {
+            if (!input.files || !input.files[0]) {
+                return;
+            }
+
+            const file = input.files[0];
+
+            if (!file.type.startsWith("image/")) {
+                alert("Please select a valid image file.");
+                resetFileInput();
+                return;
+            }
+
+            if (file.size > maxFileSize) {
+                alert("File must be less than 5 MB.");
+                resetFileInput();
+                return;
+            }
+
+            currentFile = file;
+            croppedFile = null;
+
+            if (fileName) {
+                fileName.textContent = file.name;
+            }
+
+            const reader = new FileReader();
+
+            reader.onload = function (e) {
+                destroyCropper();
+                clearCropImage();
+
+                imageToCrop.onload = function () {
+                    destroyCropper();
+
+                    cropper = new Cropper(imageToCrop, {
+                        aspectRatio: NaN,
+                        viewMode: 2,
+                        dragMode: "move",
+                        autoCropArea: 0.9,
+                        background: false,
+                        responsive: true,
+                        cropBoxMovable: true,
+                        cropBoxResizable: true,
+                        guides: true,
+                        center: true,
+                        highlight: false,
+                        minContainerWidth: 400,
+                        minContainerHeight: 500
+                    });
+                };
+
+                imageToCrop.src = e.target.result;
+                openModal();
+            };
+
+            reader.readAsDataURL(file);
+        });
+
+        cancelBtn.addEventListener("click", function (e) {
+            e.preventDefault();
+
+            closeModal();
+
+            if (!croppedFile) {
+                resetFileInput();
+
+                if (fileName) {
+                    fileName.textContent = originalFileName || noFileChosenText;
+                }
+
+                if (originalPreviewUrl) {
+                    setPreview(originalPreviewUrl, false);
+                } else {
+                    setPreview("", false);
+                }
+            }
+        });
+
+        cropBtn.addEventListener("click", function (e) {
+            e.preventDefault();
+
+            if (!cropper || !currentFile) {
+                return;
+            }
+
+            const canvas = cropper.getCroppedCanvas({
+                fillColor: "#fff",
+                imageSmoothingEnabled: true,
+                imageSmoothingQuality: "high",
+                maxWidth: 2000,
+                maxHeight: 3000
+            });
+
+            if (!canvas) {
+                return;
+            }
+
+            canvas.toBlob(function (blob) {
+                if (!blob) {
+                    return;
+                }
+
+                if (blob.size > maxFileSize) {
+                    alert("Cropped image exceeds 5 MB.");
+                    return;
+                }
+
+                const fileNameWithoutExtension = currentFile.name.replace(/\.[^/.]+$/, "");
+                const newFileName = fileNameWithoutExtension + ".png";
+
+                croppedFile = new File([blob], newFileName, {
+                    type: "image/png"
+                });
+
+                setInputFile(croppedFile);
+
+                const previewUrl = URL.createObjectURL(croppedFile);
+                setPreview(previewUrl, true);
+
+                if (fileName) {
+                    fileName.textContent = croppedFile.name;
+                }
+
+                closeModal();
+            }, "image/png");
+        });
+
+        if (form) {
+            form.addEventListener("submit", function () {
+                if (croppedFile) {
+                    setInputFile(croppedFile);
+                }
+            });
+        }
+    })();
 </script>
