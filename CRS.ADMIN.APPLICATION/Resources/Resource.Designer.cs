@@ -3931,6 +3931,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to MBTI Type.
+        /// </summary>
+        public static string mbti {
+            get {
+                return ResourceManager.GetString("mbti", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Menu Management.
         /// </summary>
         public static string Menu_Management {

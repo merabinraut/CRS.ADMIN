@@ -3053,4 +3053,7 @@
   <data name="Drinkable" xml:space="preserve">
     <value>飲める</value>
   </data>
+  <data name="mbti" xml:space="preserve">
+    <value>MBTI性格</value>
+  </data>
 </root>

@@ -335,11 +335,11 @@ namespace CRS.ADMIN.REPOSITORY.HostManagement
             SQL += ",@AgentId=" + _DAO.FilterString(request.AgentId);
             SQL += ",@HostId=" + _DAO.FilterString(request.HostId);
             SQL += ",@HostName=N" + _DAO.FilterString(request.HostName);
-            SQL += ",@Position=" + _DAO.FilterString(request.Position);
-            SQL += ",@Rank=" + _DAO.FilterString(request.Rank);
+            SQL += ",@Position=N" + _DAO.FilterString(request.Position);
+            SQL += ",@Rank=N" + _DAO.FilterString(request.Rank);
             SQL += ",@DOB=" + _DAO.FilterString(request.DOB);
-            SQL += ",@ConstellationGroup=" + _DAO.FilterString(request.ConstellationGroup);
-            SQL += ",@Height=" + _DAO.FilterString(request.Height);
+            SQL += ",@ConstellationGroup=N" + _DAO.FilterString(request.ConstellationGroup);
+            SQL += ",@Height=N" + _DAO.FilterString(request.Height);
             SQL += ",@BloodType=" + _DAO.FilterString(request.BloodType);
 
             SQL += ",@TiktokLink=" + _DAO.FilterString(request.TiktokLink);

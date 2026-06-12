@@ -3088,4 +3088,8 @@
     <value>Drinkable</value>
     <comment>Drinkable</comment>
   </data>
+  <data name="mbti" xml:space="preserve">
+    <value>MBTI Type</value>
+    <comment>MBTI Type</comment>
+  </data>
 </root>
