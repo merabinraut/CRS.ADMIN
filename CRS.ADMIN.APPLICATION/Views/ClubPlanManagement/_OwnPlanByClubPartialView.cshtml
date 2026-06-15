@@ -1,0 +1,200 @@
+﻿@model List<CRS.ADMIN.APPLICATION.Models.PlanManagement.PlanRequesResponseListModel>
+<div class="flex justify-between pb-[24px]">
+    @*@Html.HiddenFor(model => model.ListType)*@
+    <form action="/PlanManagement/PlanList" method="get">
+        <input type="hidden" name="TabValue" value="02" />
+        <input type="hidden" name="StartIndex" value="@ViewBag.StartIndex" />
+        <input type="hidden" name="PageSize" value="@ViewBag.PageSize" />
+    </form>
+</div>
+<div class="flex gap-6">
+
+</div>
+
+<div class="table-tab">
+    <div class="px-[16px] py-[12px] flex justify-between entry-export-container">
+        <div class="flex items-center select-entries" id="ShowEntries-Id-request">
+        </div>
+    </div>
+    <div class="relative overflow-x-auto">
+        <table class="w-full text-left club-table" id="club-req-table-id">
+            <thead class="club-table-thead">
+                <tr>
+                    <th scope="col" class="p-[12px]">
+                        <div class="flex w-max">
+                            S.N
+                            <div class="relative pl-[5px]">
+                                <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] text-[#c3b6b9]"></i>
+                            </div>
+                        </div>
+                    </th>
+                    <th scope="col" class="p-[12px]">
+                        <div class="flex w-max">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Plan_Type
+                            <div class="relative pl-[5px]">
+                                <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] text-[#c3b6b9]"></i>
+                            </div>
+                        </div>
+                    </th>
+                    <th scope="col" class="p-[12px]">
+                        <div class="flex w-max">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Plan_Title
+                            <div class="relative pl-[5px]">
+                                <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] text-[#c3b6b9]"></i>
+                            </div>
+                        </div>
+                    </th>
+                    <th scope="col" class="p-[12px]">
+                        <div class="flex w-max">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Price
+                            <div class="relative pl-[5px]">
+                                <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] text-[#c3b6b9]"></i>
+                            </div>
+                        </div>
+                    </th>
+                    <th scope="col" class="p-[12px]">
+                        <div class="flex w-max">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Nomination
+                            <div class="relative pl-[5px]">
+                                <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] text-[#c3b6b9]"></i>
+                            </div>
+                        </div>
+                    </th>
+                    <th scope="col" class="p-[12px]">
+                        <div class="flex w-max">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.RequestedDate
+                            <div class="relative pl-[5px]">
+                                <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] text-[#c3b6b9]"></i>
+                            </div>
+                        </div>
+                    </th>
+                    <th scope="col" class="p-[12px]">
+                        <div class="flex w-max">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Status
+                            <div class="relative pl-[5px]">
+                                <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] text-[#c3b6b9]"></i>
+                            </div>
+                        </div>
+                    </th>
+                    <th scope="col" class="p-[12px] text-center">
+                        <div class="flex w-max justify-center mx-auto">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Action
+                            <div class="relative pl-[5px]">
+                                <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] text-[#c3b6b9]"></i>
+                            </div>
+                        </div>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    int count = 1;
+                    if (Model != null && Model.Any())
+                    {
+                        foreach (var item in Model)
+                        {
+                            <tr class="bg-white border-b">
+                                <td class="p-[12px]">@count</td>
+                                <td class="p-[12px]">
+                                    @if (!string.IsNullOrEmpty(item.plantype) &&
+                                         item.plantype.ToUpper().Trim() == "BASIC")
+                                    {
+                                        <div class="pending">@item.plantype</div>
+                                    }
+                                    else
+                                    {
+                                        @item.plantype
+                                    }
+                                </td>
+                                <td class="p-[12px]">@item.planTitle</td>
+                                <td class="p-[12px]">@item.planPrice</td>
+                                <td class="p-[12px]">@item.numberOfPeople</td>
+                                <td class="p-[12px]">
+                                    <div class="w-max">@item.requestDate</div>
+                                </td>
+                                <td class="p-[12px]">
+                                    @if (item.planStatus == "P")
+                                    {
+                                        <div class="pending">PENDING</div>
+                                    }
+                                    else if (item.planStatus == "A")
+                                    {
+                                        <div class="approved">APPROVED</div>
+                                    }
+                                    else
+                                    {
+                                        <div class="rejected">REJECTED</div>
+                                    }
+                                </td>
+                                <td class="p-[12px]">
+                                    <div class="flex gap-[7px] justify-center text-[16px]">
+                                        @if (item.planStatus == "P")
+                                        {
+                                            <div onclick="openApproveRequestModal('@item.clubId','A','@item.planId');" data-modal-target="approve-confirmation-plan-request" data-modal-toggle="approve-confirmation-plan-request" style="cursor: pointer;">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                                    <path d="M3.75 3.75V20.25H20.25V3.75H3.75ZM5.25 5.25H18.75V18.75H5.25V5.25ZM15.9609 8.46094L10.5 13.9219L8.03906 11.4609L6.96094 12.5391L9.96094 15.5391L10.5 16.0547L11.0391 15.5391L17.0391 9.53906L15.9609 8.46094Z" fill="#28A745" />
+                                                </svg>
+                                            </div>
+                                            <div onclick="openApproveRejectedRequestModal('@item.clubId','R','@item.planId')" data-modal-target="reject-confirmation-plan-request" data-modal-toggle="reject-confirmation-plan-request" style="cursor: pointer;">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                                    <path d="M3.75 3.75V20.25H20.25V3.75H3.75ZM5.25 5.25H18.75V18.75H5.25V5.25ZM8.76562 7.73438L7.71094 8.78906L10.9219 12L7.66406 15.2578L8.71875 16.3125L11.9766 13.0547L15.2109 16.2891L16.2656 15.2344L13.0312 12L16.2188 8.8125L15.1641 7.75781L11.9766 10.9453L8.76562 7.73438Z" fill="#CB3F3F" />
+                                                </svg>
+                                            </div>
+                                        }
+                                        @if (item.planStatus == "A")
+                                        {
+                                            <i class="fa-regular fa-pen-to-square text-[#989898] cursor-pointer"
+                                               onclick="EditClubOwnPlan('@item.clubId','@item.planId','@ViewBag.AgentId');"></i>
+                                            <i class="las la-trash-alt text-[20px] cursor-pointer text-[#CB3F3F]"
+                                               onclick="DeleteClubPlanModal('@item.clubId','D','@item.planId');" data-modal-target="delete-plan-request" data-modal-toggle="delete-plan-request"></i>
+                                        }
+                                        @if (item.planStatus == "R")
+                                        {
+                                            <i class="las la-trash-alt text-[20px] cursor-pointer text-[#CB3F3F]"
+                                               onclick="DeleteClubPlanModal('@item.clubId','D','@item.planId');" data-modal-target="delete-plan-request" data-modal-toggle="delete-plan-request"></i>
+                                        }
+                                        @if (item.planStatus == "D")
+                                        {
+                                            <i class="las la-trash-alt text-[20px] cursor-pointer text-[#CB3F3F]"
+                                               onclick="DeleteClubPlanModal('@item.clubId','D','@item.planId');" data-modal-target="delete-plan-request" data-modal-toggle="delete-plan-request"></i>
+                                        }
+                                    </div>
+                                </td>
+                            </tr>
+                            count++;
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="8" class="p-[12px] text-center text-gray-400">
+                                No plan requests found.
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="pagination-club">
+
+        <div class="show-entry" id="Entries-Id-request"></div>
+        <div class="flex gap-[12px]">
+            <div class="btn btn-secondary-box-shadow" id="prev-btn-request">
+                @CRS.ADMIN.APPLICATION.Resources.Resource.Previous
+            </div>
+            <div class="flex gap-[12px]" id="pagination-id-request"></div>
+            <div class="btn btn-secondary-box-shadow" id="next-btn-request">
+                @CRS.ADMIN.APPLICATION.Resources.Resource.Next
+            </div>
+        </div>
+    </div>
+</div>

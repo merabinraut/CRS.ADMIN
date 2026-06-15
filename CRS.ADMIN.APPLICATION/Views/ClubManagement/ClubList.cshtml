@@ -9,7 +9,7 @@
     var _lineGroupModel = Model.LineGroupModel as CRS.ADMIN.APPLICATION.Models.ClubManagement.LineGroupModel;
     var _subDomainModel = Model.subDomainModel as CRS.ADMIN.APPLICATION.Models.ClubManagement.SubDomainModel;
     var ss = "";
-}
+}   
 
 <div class="px-8 py-4">
     @Html.AntiForgeryToken()
@@ -1690,7 +1690,10 @@
             return url;
         }
         function PlanRedirectFunction(i) {
-            window.location.href = '/ClubPlanManagement/ClubPlanList?AgentId=' + i;
+            window.location.href = '/ClubPlanManagement/ClubPlanList?AgentId=' + i + '&TapValue=01';
+        }
+        function EditClubOwnPlan(clubId, planId, agentId) {
+            window.location.href = '/ClubPlanManagement/ClubPlanList?AgentId=' + agentId + '&TapValue=02&clubId=' + clubId + '&planId=' + planId;
         }
         function LineGroupFunction(i, j) {
              let search_filter = $('#default-search').val();

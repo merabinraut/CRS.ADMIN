@@ -7,6 +7,7 @@ using DocumentFormat.OpenXml.Wordprocessing;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using CRS.ADMIN.APPLICATION.Models.PlanManagement;
 
 namespace CRS.ADMIN.APPLICATION.Models.ClubManagement
 {
@@ -305,6 +306,9 @@ namespace CRS.ADMIN.APPLICATION.Models.ClubManagement
         public string ClubId { get; set; }
         public ManageClubPlanModel ManageClubPlanModel { get; set; }
         public List<ClubplanListModel> planList { get; set; } = new List<ClubplanListModel>();
+        public List<PlanManagementModel> PlanManagementModel { get; set; } = new List<PlanManagementModel>();
+        public List<PlanRequesResponseListModel> ClubPlanResponseModel { get; set; } = new List<PlanRequesResponseListModel>();
+        public PlanRequesResponseListModel clubPlanManageModel { get; set; } = new PlanRequesResponseListModel();
     }
     public class ManageClubPlanModel
     {

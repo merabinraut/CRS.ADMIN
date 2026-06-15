@@ -83,13 +83,19 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             }
             if (TabValue == "02")
             {
+                if (PageSize <= 0) PageSize = 10;
+                if (StartIndex < 0) StartIndex = 0;
                 PaginationFilterCommon dbRequest = new PaginationFilterCommon()
                 {
                     Skip = StartIndex,
                     Take = PageSize,
                     SearchFilter = !string.IsNullOrEmpty(SearchFilter) ? SearchFilter : null
                 };
-                var planRequestLists = _business.GetPlanRequestList(dbRequest);
+                var planRequestLists = _business.GetPlanRequestList(dbRequest) ?? new List<PlanRequesResponseListCommon>();
+                if (planRequestLists.Count > PageSize)
+                {
+                    planRequestLists = planRequestLists.Skip(StartIndex).Take(PageSize).ToList();
+                }
                 ResModel.ClubPlanResponseModel = planRequestLists.MapObjects<PlanRequesResponseListModel>();
                 if (TempData.ContainsKey("ClubPlanManagementModel")) ResModel.clubPlanManageModel = TempData["ClubPlanManagementModel"] as PlanRequesResponseListModel;
                 if (TempData.ContainsKey("PlanRenderId")) RenderId = TempData["PlanRenderId"].ToString();
@@ -164,8 +170,8 @@ namespace CRS.ADMIN.APPLICATION.Controllers
 
 
             resp.planId = resp.planId.EncryptParameter();
-            resp.planTime = resp.planTime;
-            resp.lastEntryTime = getClbPlanDetails.lastEntryTime.EncryptParameter();
+            resp.planTime = getClbPlanDetails.planTime;
+            resp.lastEntryTime = getClbPlanDetails.lastEntryTime;
             resp.plantype = resp.plantype.EncryptParameter();
             resp.numberOfPeople = resp.numberOfPeople;
             resp.nomination = resp.nomination;
@@ -177,7 +183,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
         [HttpPost]
         public ActionResult ManageClubPlan(PlanRequesResponseListModel request)
         {
-            if (string.IsNullOrEmpty(request.clubId) && string.IsNullOrEmpty(request.clubId) && string.IsNullOrEmpty(request.numberOfPeople.ToString()) && string.IsNullOrEmpty(request.nomination.ToString()) && string.IsNullOrEmpty(request.planTime))
+            if (string.IsNullOrEmpty(request.clubId) || string.IsNullOrEmpty(request.planId) || request.numberOfPeople <= 0 || string.IsNullOrEmpty(request.nomination) || string.IsNullOrEmpty(request.planTime))
             {
                 this.AddNotificationMessage(new NotificationModel()
                 {

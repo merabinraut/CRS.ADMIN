@@ -1,6 +1,7 @@
 ﻿using CRS.ADMIN.REPOSITORY.ClubPlanManagement;
 using CRS.ADMIN.SHARED;
 using CRS.ADMIN.SHARED.ClubManagement;
+using CRS.ADMIN.SHARED.PlanManagement;
 using System.Collections.Generic;
 
 namespace CRS.ADMIN.BUSINESS.ClubPlanManagement
@@ -31,6 +32,10 @@ namespace CRS.ADMIN.BUSINESS.ClubPlanManagement
         public CommonDbResponse BlockUnblockPlan(ClubplanListCommon objClubplanListCommon = null, string ActionUser = null, string ActionIp = null)
         {
             return _REPO.BlockUnblockPlan(objClubplanListCommon, ActionUser, ActionIp);
+        }
+        public List<PlanRequesResponseListCommon> GetClubOwnPlanList(string culture, string clubId)
+        {
+            return _REPO.GetClubOwnPlanList(culture, clubId);
         }
     }
 }

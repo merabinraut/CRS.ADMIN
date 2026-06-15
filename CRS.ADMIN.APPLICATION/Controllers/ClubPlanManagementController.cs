@@ -1,37 +1,70 @@
-﻿using CRS.ADMIN.APPLICATION.Library;
-using CRS.ADMIN.SHARED;
-using System.Collections.Generic;
-using System.Web.Mvc;
+using CRS.ADMIN.APPLICATION.CustomHelpers;
+using CRS.ADMIN.APPLICATION.Library;
 using CRS.ADMIN.APPLICATION.Models.ClubManagement;
-using CRS.ADMIN.SHARED.ClubManagement;
-using System.Net.Http;
+using CRS.ADMIN.APPLICATION.Models.PlanManagement;
 using CRS.ADMIN.BUSINESS.ClubPlanManagement;
-using System.Web.UI.WebControls;
-using System.Linq;
-using System.Threading.Tasks;
+using CRS.ADMIN.BUSINESS.PlanManagement;
+using CRS.ADMIN.SHARED;
+using CRS.ADMIN.SHARED.ClubManagement;
+using CRS.ADMIN.SHARED.PlanManagement;
 using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.Linq;
+using System.Net.Http;
+using System.Threading.Tasks;
+using System.Web.Mvc;
+using System.Web.UI.WebControls;
 
 namespace CRS.ADMIN.APPLICATION.Controllers
 {
     public class ClubPlanManagementController : BaseController
     {
         private readonly IClubPlanManagementBusiness _BUSS;
-        private readonly HttpClient _httpClient;
-        public ClubPlanManagementController(IClubPlanManagementBusiness BUSS)
+        private readonly IPlanManagementBusiness _planBusiness;
+        public ClubPlanManagementController(IClubPlanManagementBusiness BUSS, IPlanManagementBusiness planBusiness)
         {
             _BUSS = BUSS;
-
+            _planBusiness = planBusiness;
         }
-        public ActionResult ClubPlanList(string AgentId, string SearchFilter = "", int StartIndex = 0, int PageSize = 10)
+        [HttpGet]
+        public ActionResult ClubPlanList(string AgentId, string TapValue = "", string SearchFilter = "", int StartIndex = 0, int PageSize = 10, string clubId = "", string planId = "", string Sno = "", string type = "")
         {
             var culture = Request.Cookies["culture"]?.Value;
             culture = string.IsNullOrEmpty(culture) ? "ja" : culture;
             ViewBag.AgentId = AgentId;
+            ViewBag.TapValue = TapValue;
+            ViewBag.TabValue = TapValue;
             ViewBag.SearchFilter = SearchFilter;
             ViewBag.IsBackAllowed = true;
             ViewBag.BackButtonURL = "/ClubManagement/ClubList";
             string RenderId = "";
             var aId = !string.IsNullOrEmpty(AgentId) ? AgentId.DecryptParameter() : null;
+            if (!string.IsNullOrEmpty(Sno) && !string.IsNullOrEmpty(type) && !string.IsNullOrEmpty(planId))
+            {
+                var planRequestResponse = _planBusiness.ApprovePlanRequest(Sno, type, planId);
+                if (planRequestResponse != null && planRequestResponse.Code == 0)
+                {
+                    this.AddNotificationMessage(new NotificationModel()
+                    {
+                        NotificationType = NotificationMessage.SUCCESS,
+                        Message = planRequestResponse.Message ?? "Saved successfully",
+                        Title = NotificationMessage.SUCCESS.ToString()
+                    });
+                    string apiUrl = ConfigurationManager.AppSettings["RevalidateApiUrl"];
+                    ExternalApiCallHelpers.CallApi(apiUrl, HttpMethod.Get);
+                }
+                else
+                {
+                    this.AddNotificationMessage(new NotificationModel()
+                    {
+                        NotificationType = NotificationMessage.ERROR,
+                        Message = planRequestResponse?.Message ?? "Bad request",
+                        Title = NotificationMessage.ERROR.ToString()
+                    });
+                }
+                return RedirectToAction("ClubPlanList", "ClubPlanManagement", new { AgentId, TapValue = "02" });
+            }
             if (string.IsNullOrEmpty(aId))
             {
                 this.AddNotificationMessage(new NotificationModel()
@@ -50,9 +83,12 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             ViewBag.PopUpRenderValue = !string.IsNullOrEmpty(RenderId) ? RenderId : null;
             response.ClubId = aId;
             response.ManageClubPlanModel.ClubId = aId;     
+
             ViewBag.TimeIntervalList = Dropdown(ApplicationUtilities.LoadDropdownValuesList("PLANTIMEINTERVAL", aId, culture) as List<MultipleItemCommon>, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---");
-           // ViewBag.TimeIntervalList = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownValuesList("PLANTIMEINTERVAL", aId,culture) as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---"); 
+            ViewBag.EntryTimeList = ViewBag.TimeIntervalList;
+            ViewBag.TimeList = ApplicationUtilities.SetDDLValue(GetDictionaryFromResponse(_planBusiness.GetDDL("8"), culture), null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---");
             ViewBag.PlansList = ApplicationUtilities.LoadDropdownList("CLUBPLANS") as Dictionary<string, string>;
+
             List<ClubplanListCommon> ClubplanListCommon = _BUSS.GetClubPlanList(culture, aId);
             response.planList = ClubplanListCommon.MapObjects<ClubplanListModel>();
             if (response.planList.Count > 0)
@@ -65,6 +101,53 @@ namespace CRS.ADMIN.APPLICATION.Controllers
 
                 });
             }
+
+            List<PlanRequesResponseListCommon> planRequestList = _BUSS.GetClubOwnPlanList(culture, aId);
+            response.ClubPlanResponseModel = planRequestList.MapObjects<PlanRequesResponseListModel>();
+
+            if (response.ClubPlanResponseModel != null && response.ClubPlanResponseModel.Any())
+            {
+                response.ClubPlanResponseModel.ForEach(item =>
+                {
+                    item.clubId = !string.IsNullOrEmpty(item.clubId)
+                        ? item.clubId.EncryptParameter() : item.clubId;
+                    item.planId = !string.IsNullOrEmpty(item.planId)
+                        ? item.planId.EncryptParameter() : item.planId;
+                });
+            }
+
+            string planRenderId = "";
+            if (TempData.ContainsKey("ClubPlanManagementModel"))
+                response.clubPlanManageModel = TempData["ClubPlanManagementModel"] as PlanRequesResponseListModel;
+            if (TempData.ContainsKey("PlanRenderId")) planRenderId = TempData["PlanRenderId"].ToString();
+
+            if (string.IsNullOrEmpty(planRenderId) && !string.IsNullOrEmpty(clubId) && !string.IsNullOrEmpty(planId))
+            {
+                var decryptedClubId = clubId.DecryptParameter();
+                var decryptedPlanId = planId.DecryptParameter();
+                if (!string.IsNullOrEmpty(decryptedClubId) && !string.IsNullOrEmpty(decryptedPlanId))
+                {
+                    var getClbPlanDetails = _planBusiness.GetPlanRequestDetails(decryptedClubId, decryptedPlanId);
+                    var resp = getClbPlanDetails.MapObject<PlanRequesResponseListModel>();
+                    resp.planId = resp.planId.EncryptParameter();
+                    resp.planTime = getClbPlanDetails.planTime;
+                    resp.lastEntryTime = getClbPlanDetails.lastEntryTime;
+                    resp.plantype = resp.plantype.EncryptParameter();
+                    resp.numberOfPeople = resp.numberOfPeople;
+                    resp.nomination = resp.nomination;
+                    resp.clubId = resp.clubId.EncryptParameter();
+                    response.clubPlanManageModel = resp;
+                    planRenderId = "ManageClubPlan";
+                    if (string.IsNullOrEmpty(TapValue))
+                    {
+                        TapValue = "02";
+                        ViewBag.TapValue = TapValue;
+                        ViewBag.TabValue = TapValue;
+                    }
+                }
+            }
+
+            ViewBag.PopUpClubManageValue = !string.IsNullOrEmpty(planRenderId) ? planRenderId : null;
 
             bool isexception = false;
             if (string.IsNullOrEmpty(ViewBag.PopUpRenderValue))
@@ -106,7 +189,6 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                     {
                         try
                         {
-
                             planIdentity.StaticDataValue = planIdentity.StaticDataValue.EncryptParameter(); // Call your encryption method here
                             if (planIdentity.name.ToLower() == "plan" ||
                                  //planIdentity.name.ToLower() == "lastordertime" ||
@@ -138,7 +220,25 @@ namespace CRS.ADMIN.APPLICATION.Controllers
           
             ViewBag.StartIndex = StartIndex;
             ViewBag.PageSize = PageSize;
-            ViewBag.TotalData = 0;
+            if(TapValue == "02")
+            {
+                ViewBag.TotalData = response.ClubPlanResponseModel != null ? response.ClubPlanResponseModel.Count : 0;
+                if(response.ClubPlanResponseModel !=null && response.ClubPlanResponseModel.Any())
+                {
+                    response.ClubPlanResponseModel = response.ClubPlanResponseModel
+                        .Skip(StartIndex)
+                        .Take(PageSize)
+                        .ToList();
+                }
+            }
+            else 
+            {
+                ViewBag.TotalData = response.planList.Count;
+                response.planList = response.planList
+                    .Skip(StartIndex)
+                    .Take(PageSize)
+                    .ToList();
+            }
             response.ClubId = response.ClubId.EncryptParameter();
             response.ManageClubPlanModel.ClubId = response.ClubId;
             return View(response);
@@ -483,6 +583,45 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 AgentId = AgentId
             });
 
+        }
+
+        [HttpPost, ValidateAntiForgeryToken]
+        public ActionResult ClubPlanList(PlanRequesResponseListModel request, string AgentId = "")
+        {
+            if (string.IsNullOrEmpty(request.clubId) || string.IsNullOrEmpty(request.planId) || request.numberOfPeople <= 0 || string.IsNullOrEmpty(request.nomination) || string.IsNullOrEmpty(request.planTime))
+            {
+                this.AddNotificationMessage(new NotificationModel()
+                {
+                    NotificationType = NotificationMessage.INFORMATION,
+                    Message = "Invalid request",
+                    Title = NotificationMessage.INFORMATION.ToString(),
+                });
+                return RedirectToAction("ClubPlanList", "ClubPlanManagement", new { AgentId = AgentId, TapValue = "02" });
+            }
+
+            var requestMapped = request.MapObject<PlanRequesRequestCommon>();
+            requestMapped.clubId = request.clubId.DecryptParameter();
+            requestMapped.planId = request.planId.DecryptParameter();
+            var dbResponse = _planBusiness.ManageClubPlan(requestMapped);
+            this.AddNotificationMessage(new NotificationModel()
+            {
+                NotificationType = NotificationMessage.SUCCESS,
+                Message = dbResponse.Message ?? "Success",
+                Title = NotificationMessage.SUCCESS.ToString(),
+            });
+            string apiUrl = ConfigurationManager.AppSettings["RevalidateApiUrl"];
+            ExternalApiCallHelpers.CallApi(apiUrl, HttpMethod.Get);
+            return RedirectToAction("ClubPlanList", "ClubPlanManagement", new { AgentId = AgentId, TapValue = "02" });
+        }
+
+        Dictionary<string, string> GetDictionaryFromResponse(List<StaticDataCommon> response, string culture)
+        {
+            Dictionary<string, string> dictionary = new Dictionary<string, string>();
+            foreach (var item in response)
+            {
+                dictionary.Add(item.StaticValue.EncryptParameter(), culture == "en" ? item.StaticLabelEnglish : item.StaticLabelJapanese);
+            }
+            return dictionary;
         }
 
         public static List<SelectListItem> Dropdown(List<MultipleItemCommon> obj, string selectedVal, string defLabel = "", bool isTextAsValue = false,string status="")

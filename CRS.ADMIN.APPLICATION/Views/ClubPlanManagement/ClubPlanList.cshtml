@@ -1,14 +1,17 @@
-@model CRS.ADMIN.APPLICATION.Models.ClubManagement.ManageClubPlanCommonModel
+﻿@model CRS.ADMIN.APPLICATION.Models.ClubManagement.ManageClubPlanCommonModel
 @{
     ViewBag.Title = "Club Plan List";
     Layout = "~/Views/Shared/_Layout.cshtml";
-    var _ManageClubPlanModel = Model.ManageClubPlanModel as CRS.ADMIN.APPLICATION.Models.ClubManagement.ManageClubPlanModel;
+    var _ManageClubPlanModel = Model.ManageClubPlanModel
+        as CRS.ADMIN.APPLICATION.Models.ClubManagement.ManageClubPlanModel;
+    var _ClubPlanModel = Model.clubPlanManageModel
+        as CRS.ADMIN.APPLICATION.Models.PlanManagement.PlanRequesResponseListModel;
 }
 
 <div class="px-8 py-4">
     @Html.AntiForgeryToken()
-    <!-- title  -->
-    <div class="flex flex-col  gap-6">
+
+    <div class="flex flex-col gap-6">
         <div>
             <div class="heading-title">
                 @CRS.ADMIN.APPLICATION.Resources.Resource.Plan_list
@@ -17,314 +20,502 @@
                 @CRS.ADMIN.APPLICATION.Resources.Resource.Club_Management_Supporting_Text
             </div>
         </div>
-        <div class="flex justify-between pb-[24px]">
-            @*<form action="/HostManagement/HostList" method="get">
-                    <div class="relative input-search-wrapper">
-                        <div class="absolute inset-y-0 left-0 flex items-center pl-[16px] pointer-events-none">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21" fill="none">
-                                <path d="M17.5 18L13.875 14.375M15.8333 9.66667C15.8333 13.3486 12.8486 16.3333 9.16667 16.3333C5.48477 16.3333 2.5 13.3486 2.5 9.66667C2.5 5.98477 5.48477 3 9.16667 3C12.8486 3 15.8333 5.98477 15.8333 9.66667Z"
-                                      stroke="#667085" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round" />
-                            </svg>
-                        </div>
-                        <input name="AgentId" value="@ViewBag.AgentId" hidden />
-                        <input type="search"
-                               id="default-search"
-                               class="input-search block w-full "
-                               placeholder="@CRS.ADMIN.APPLICATION.Resources.Resource.Search"
-                               value="@ViewBag.SearchFilter"
-                               name="SearchFilter">
-                        <input type="submit" value="Submit" hidden>
-                    </div>
-                </form>*@
-            <div class="flex gap-6">
-                @*<div class="export-button h-[40px]" onclick="exportCSVExcel();">
-                        <img src="~/Content/assets_new/images/club/download-solid.svg"> @CRS.ADMIN.APPLICATION.Resources.Resource.Export
-                    </div>*@
-                <div class="btn btn-primary gap-[8px] h-[40px]" data-drawer-target="add-club-plan" data-drawer-show="add-club-plan"
-                     data-drawer-placement="right" data-drawer-backdrop="false" aria-controls="drawer-disabled-backdrop">
+        <div class="flex gap-4 border-b">
+            <div id="tab1Link"
+                 class="styleCss px-1 pb-4 cursor-pointer"
+                 onclick="changeTabV1('all', 'tab1Link')">
+                @CRS.ADMIN.APPLICATION.Resources.Resource.Plan_Setup
+            </div>
+            <div id="tab2Link"
+                 class="styleCss px-1 pb-4 cursor-pointer"
+                 onclick="changeTabV1('request1', 'tab2Link')">
+                @CRS.ADMIN.APPLICATION.Resources.Resource.Plan_Request
+            </div>
+        </div>
+        <div class="pane" id="all" style="display:none;">
+
+            <div class="flex justify-end mb-4">
+                <div class="btn btn-primary gap-[8px] h-[40px]"
+                     data-drawer-target="add-club-plan"
+                     data-drawer-show="add-club-plan"
+                     data-drawer-placement="right"
+                     data-drawer-backdrop="false"
+                     aria-controls="drawer-disabled-backdrop">
                     <img src="~/Content/assets_new/images/plus-circle-solid.svg" />
                     @CRS.ADMIN.APPLICATION.Resources.Resource.Add_New
                 </div>
             </div>
-
-        </div>
-        <div class="table-tab">
-            <div class="px-[16px] py-[12px] flex justify-between entry-export-container">
-                <div class="flex items-center select-entries" id="ShowEntries-Id">
+            <div class="table-tab">
+                <div class="px-[16px] py-[12px] flex justify-between entry-export-container">
+                    <div class="flex items-center select-entries" id="ShowEntries-Id"></div>
                 </div>
-                @*<div class="export-button h-[40px]" onclick="exportExcel('table-id', 'Host')">
-                        <img src="~/Content/assets_new/images/club/download-solid.svg"> @CRS.ADMIN.APPLICATION.Resources.Resource.Export
-                    </div>*@
-            </div>
 
-            <div class="relative overflow-x-auto">
-                <table class="w-full  text-left club-table" id="table-id">
-                    <thead class="club-table-thead">
-                        <tr>
-                            <th scope="col" class="p-[12px]">
-                                <div class="flex  w-max">
-                                    S.N
-                                    <div class="relative pl-[5px]">
-                                        <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
-                                        <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
-                                    </div>
-                                </div>
-                            </th>
-                            <th scope="col" class="p-[12px]">
-                                <div class="flex  w-max">
-                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Plan_Name
-                                    <div class="relative pl-[5px]">
-                                        <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
-                                        <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
-                                    </div>
-                                </div>
-                            </th>
-
-
-                            @*<th scope="col" class="p-[12px]">
-                                    <div class="flex  w-max">
-                                        @CRS.ADMIN.APPLICATION.Resources.Resource.Last_Order_Time
+                <div class="relative overflow-x-auto">
+                    <table class="w-full text-left club-table" id="table-id">
+                        <thead class="club-table-thead">
+                            <tr>
+                                <th scope="col" class="p-[12px]">
+                                    <div class="flex w-max">
+                                        S.N
                                         <div class="relative pl-[5px]">
                                             <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
-                                            <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                            <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] text-[#c3b6b9]"></i>
                                         </div>
                                     </div>
-                                </th>*@
-                            <th scope="col" class="p-[12px]">
-                                <div class="flex  w-max">
-                                    @CRS.ADMIN.APPLICATION.Resources.Resource.LastEntryTime
-                                    <div class="relative pl-[5px]">
-                                        <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
-                                        <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
-                                    </div>
-                                </div>
-                            </th>
-                            <th scope="col" class="p-[12px]">
-                                <div class="flex  w-max">
-                                    @CRS.ADMIN.APPLICATION.Resources.Resource.NoOfPeople
-                                    <div class="relative pl-[5px]">
-                                        <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
-                                        <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
-                                    </div>
-                                </div>
-                            </th>
-                            <th scope="col" class="p-[12px]">
-                                <div class="flex  w-max">
-                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Status
-                                    <div class="relative pl-[5px]">
-                                        <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
-                                        <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
-                                    </div>
-                                </div>
-                            </th>
-                            <th scope="col" class="p-[12px]">
-                                <div class="flex  w-max">
-                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Created_On
-                                    <div class="relative pl-[5px]">
-                                        <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
-                                        <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
-                                    </div>
-                                </div>
-                            </th>
-                            <th scope="col" class="p-[12px]">
-                                <div class="flex  w-max">
-                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Updated_On
-                                    <div class="relative pl-[5px]">
-                                        <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
-                                        <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
-                                    </div>
-                                </div>
-                            </th>
-
-                            <th scope="col" class="p-[12px]">
-                                <div class="flex  w-max justify-center">
-                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Action
-                                    <div class="relative pl-[5px]">
-                                        <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
-                                        <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
-                                    </div>
-                                </div>
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @{
-                            int SN = 1;
-                            foreach (var item in Model.planList)
-                            {
-                                <tr class="bg-white border-b ">
-                                    <td class="p-[12px]">
-                                        @SN
-                                    </td>
-
-                                    <td class="p-[12px]">
-                                        @item.PlanName
-                                    </td>
-
-                                    @*<td class="p-[12px]">
-                                            @item.LastOrderTime
-                                        </td>*@
-                                    <td class="p-[12px]">
-                                        @item.LastEntryTime
-                                    </td>
-                                    <td class="p-[12px]">
-                                        @item.NoofPeople
-                                    </td>
-                                    <td class="p-[12px]">
-                                        <div class="w-max">
-                                            @item.Status
+                                </th>
+                                <th scope="col" class="p-[12px]">
+                                    <div class="flex w-max">
+                                        @CRS.ADMIN.APPLICATION.Resources.Resource.Plan_Name
+                                        <div class="relative pl-[5px]">
+                                            <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                            <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] text-[#c3b6b9]"></i>
                                         </div>
-                                    </td>
-                                    <td class="p-[12px]">
-                                        <div class="w-max">
-                                            @item.CreatedDate
+                                    </div>
+                                </th>
+                                <th scope="col" class="p-[12px]">
+                                    <div class="flex w-max">
+                                        @CRS.ADMIN.APPLICATION.Resources.Resource.LastEntryTime
+                                        <div class="relative pl-[5px]">
+                                            <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                            <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] text-[#c3b6b9]"></i>
                                         </div>
-                                    </td>
-                                    <td class="p-[12px]">
-                                        <div class="w-max">
-                                            @item.UpdatedDate
+                                    </div>
+                                </th>
+                                <th scope="col" class="p-[12px]">
+                                    <div class="flex w-max">
+                                        @CRS.ADMIN.APPLICATION.Resources.Resource.NoOfPeople
+                                        <div class="relative pl-[5px]">
+                                            <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                            <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] text-[#c3b6b9]"></i>
                                         </div>
-                                    </td>
-                                    <td class="p-[12px]">
-                                        <div class="flex gap-[7px]">
-                                            <i class="las la-edit text-[20px] cursor-pointer text-[#A6A6A6]" onclick="ManageClubPlanFunction('@Model.ClubId','@item.Id');"></i>
-                                            @if (item.Status.Trim().ToUpper() == "A")
+                                    </div>
+                                </th>
+                                <th scope="col" class="p-[12px]">
+                                    <div class="flex w-max">
+                                        @CRS.ADMIN.APPLICATION.Resources.Resource.Status
+                                        <div class="relative pl-[5px]">
+                                            <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                            <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] text-[#c3b6b9]"></i>
+                                        </div>
+                                    </div>
+                                </th>
+                                <th scope="col" class="p-[12px]">
+                                    <div class="flex w-max">
+                                        @CRS.ADMIN.APPLICATION.Resources.Resource.Created_On
+                                        <div class="relative pl-[5px]">
+                                            <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                            <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] text-[#c3b6b9]"></i>
+                                        </div>
+                                    </div>
+                                </th>
+                                <th scope="col" class="p-[12px]">
+                                    <div class="flex w-max">
+                                        @CRS.ADMIN.APPLICATION.Resources.Resource.Updated_On
+                                        <div class="relative pl-[5px]">
+                                            <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                            <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] text-[#c3b6b9]"></i>
+                                        </div>
+                                    </div>
+                                </th>
+                                <th scope="col" class="p-[12px]">
+                                    <div class="flex w-max justify-center">
+                                        @CRS.ADMIN.APPLICATION.Resources.Resource.Action
+                                        <div class="relative pl-[5px]">
+                                            <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                            <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] text-[#c3b6b9]"></i>
+                                        </div>
+                                    </div>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                int SN = 1;
+                                foreach (var item in Model.planList)
+                                {
+                                    <tr class="bg-white border-b">
+                                        <td class="p-[12px]">@SN</td>
+                                        <td class="p-[12px]">@item.PlanName</td>
+                                        <td class="p-[12px]">@item.LastEntryTime</td>
+                                        <td class="p-[12px]">@item.NoofPeople</td>
+                                        <td class="p-[12px]">
+                                            @if (item.Status == "A")
                                             {
-                                                <div onclick="BlockFunction('@Model.ClubId','@item.Id')">
-                                                    <i class="fa-solid fa-lock text-primary-100 cursor-pointer"></i>
+                                                <div class="approved">
+                                                    Active
                                                 </div>
-
-                                                @*<i class="las la-trash-alt text-[20px] cursor-pointer text-[#CB3F3F]" title="Block Club Plan" onclick="BlockFunction('@Model.ClubId','@item.Id')"></i>*@
-
                                             }
-                                            else
+                                            @if (item.Status == "B")
                                             {
-                                                <div onclick="UnBlockFunction('@Model.ClubId','@item.Id')">
-                                                    <i class="fa-solid fa-unlock text-primary-100 cursor-pointer"></i>
+                                                <div class="blocked">
+                                                    Blocked
                                                 </div>
-                                                @*<i class="las la-unlock cursor-pointer text-[#697DBF] text-[18px]" title="Unblock Club Plan" onclick="UnBlockFunction('@Model.ClubId','@item.Id')"></i>*@
-
                                             }
-
-
-                                        </div>
-                                    </td>
-                                </tr>
-                                SN++;
+                                            @*<div class="w-max">@item.Status</div>*@
+                                        </td>
+                                        <td class="p-[12px]">
+                                            <div class="w-max">@item.CreatedDate</div>
+                                        </td>
+                                        <td class="p-[12px]">
+                                            <div class="w-max">@item.UpdatedDate</div>
+                                        </td>
+                                        <td class="p-[12px]">
+                                            <div class="flex gap-[7px]">
+                                                <i class="las la-edit text-[20px] cursor-pointer text-[#A6A6A6]"
+                                                   onclick="ManageClubPlanFunction('@Model.ClubId','@item.Id');"></i>
+                                                @if (item.Status.Trim().ToUpper() == "A")
+                                                {
+                                                    <div onclick="BlockFunction('@Model.ClubId','@item.Id')">
+                                                        <i class="fa-solid fa-lock text-primary-100 cursor-pointer"></i>
+                                                    </div>
+                                                }
+                                                else
+                                                {
+                                                    <div onclick="UnBlockFunction('@Model.ClubId','@item.Id')">
+                                                        <i class="fa-solid fa-unlock text-primary-100 cursor-pointer"></i>
+                                                    </div>
+                                                }
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    SN++;
+                                }
                             }
-                        }
-                    </tbody>
-                </table>
-
-            </div>
-            <div class="pagination-club">
-                <div class="show-entry" id="Entries-Id">
+                        </tbody>
+                    </table>
                 </div>
-                <div class="flex gap-[12px]">
-                    <div class="btn btn-secondary-box-shadow" id="prev-btn">
-                        @CRS.ADMIN.APPLICATION.Resources.Resource.Previous
+
+                <div class="pagination-club">
+                    <div class="show-entry" id="Entries-Id"></div>
+                    <div class="flex gap-[12px]">
+                        <div class="btn btn-secondary-box-shadow" id="prev-btn">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Previous
+                        </div>
+                        <div class="flex gap-[12px]" id="pagination-id"></div>
+                        <div class="btn btn-secondary-box-shadow" id="next-btn">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Next
+                        </div>
                     </div>
-                    <div class="flex gap-[12px]" id="pagination-id">
+                </div>
+            </div>
+
+        </div>
+        <div class="pane" id="request1" style="display:none;">
+            @Html.Partial("_OwnPlanByClubPartialView", Model.ClubPlanResponseModel)
+        </div>
+        @Html.Partial("_ManageClubPlan", _ClubPlanModel)
+        @Html.Partial("_ManageClubPlanPartialView", _ManageClubPlanModel)
+
+    </div>
+</div>
+
+<div id="approve-confirmation-plan-request" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full shadow" style="align-items: flex-start; justify-content:center">
+    <div class="relative max-w-2xl max-h-full w-[412px] px-4 pt-[40px] pb-[46px] mt-24">
+        <div class="relative bg-white rounded-lg shadow">
+            <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center absolute top-[24px] right-[20px]" data-modal-hide="approve-confirmation-plan-request">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="25" viewBox="0 0 24 25" fill="none">
+                    <rect y="0.621094" width="24" height="24" rx="12" fill="#FAFAFA" />
+                    <path d="M5.41406 4.95703L4.33594 6.03516L10.9219 12.6211L4.33594 19.207L5.41406 20.2852L12 13.6992L18.5859 20.2852L19.6641 19.207L13.0781 12.6211L19.6641 6.03516L18.5859 4.95703L12 11.543L5.41406 4.95703Z" fill="#7A7A7A" />
+                </svg>
+            </button>
+            <div class="grid gap-6 px-[20px] py-8">
+                <div class="text-[#333] font-semibold pb-[11px] border-b border-[#eeeeee]">@CRS.ADMIN.APPLICATION.Resources.Resource.Confirmation</div>
+                <div class="grid gap-[20px] text-[#062937] mb-[45px]">
+                    <div class="text-[14px] text-secondary-text-2 text-start" id="confirmationRequestMessage">
+                        @CRS.ADMIN.APPLICATION.Resources.Resource.PlanRequestConfirmationMessage
                     </div>
-                    <div class="btn btn-secondary-box-shadow" id="next-btn">
-                        @CRS.ADMIN.APPLICATION.Resources.Resource.Next
+                </div>
+                <div class="flex justify-end">
+                    <div class="flex gap-2 justify-end mt-[45px]">
+                        <div class="btn btn-secondary w-[110px]" data-modal-hide="approve-confirmation-plan-request">@CRS.ADMIN.APPLICATION.Resources.Resource.clubNo</div>
+                        <div class="btn btn-primary w-[110px]" onclick="ApproveRequestedPlanFunction()" id="approve_ids1">@CRS.ADMIN.APPLICATION.Resources.Resource.clubYes</div>
                     </div>
                 </div>
             </div>
         </div>
-
-        <!-- drawer component -->
-        @Html.Partial("_ManageClubPlanPartialView", _ManageClubPlanModel)
     </div>
 </div>
-<link href="https://cdn.syncfusion.com/ej2/material.css" rel="stylesheet">
 
+<div id="reject-confirmation-plan-request" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full shadow" style="align-items: flex-start; justify-content:center">
+    <div class="relative max-w-2xl max-h-full w-[412px] px-4 pt-[40px] pb-[46px] mt-24">
+        <div class="relative bg-white rounded-lg shadow">
+            <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center absolute top-[24px] right-[20px]" data-modal-hide="reject-confirmation-plan-request">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="25" viewBox="0 0 24 25" fill="none">
+                    <rect y="0.621094" width="24" height="24" rx="12" fill="#FAFAFA" />
+                    <path d="M5.41406 4.95703L4.33594 6.03516L10.9219 12.6211L4.33594 19.207L5.41406 20.2852L12 13.6992L18.5859 20.2852L19.6641 19.207L13.0781 12.6211L19.6641 6.03516L18.5859 4.95703L12 11.543L5.41406 4.95703Z" fill="#7A7A7A" />
+                </svg>
+            </button>
+            <div class="grid gap-6 px-[20px] py-8">
+                <div class="text-[#333] font-semibold pb-[11px] border-b border-[#eeeeee]">@CRS.ADMIN.APPLICATION.Resources.Resource.Confirmation</div>
+                <div class="grid gap-[20px] text-[#062937] mb-[45px]">
+                    <div class="text-[14px] text-secondary-text-2 text-start" id="RejectedRequestMessage">
+                        @CRS.ADMIN.APPLICATION.Resources.Resource.PlanRequestRejectConfirmation
+                    </div>
+                </div>
+                <div class="flex justify-end">
+                    <div class="flex gap-2 justify-end mt-[45px]">
+                        <div class="btn btn-secondary w-[110px]" data-modal-hide="reject-confirmation-plan-request">@CRS.ADMIN.APPLICATION.Resources.Resource.clubNo</div>
+                        <div class="btn btn-primary w-[110px]" onclick="RejectedRequestedPlanFunction()" id="reject_confirm_btn">@CRS.ADMIN.APPLICATION.Resources.Resource.clubYes</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
-@section scripts
-{
+<div id="delete-plan-request" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full" style="align-items: flex-start;">
+    <div class="relative max-w-2xl max-h-full w-[412px] px-4 pt-[40px] pb-[46px] mt-24">
+        <div class="relative bg-white rounded-lg shadow">
+            <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center absolute top-[24px] right-[20px]" data-modal-hide="delete-plan-request">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="25" viewBox="0 0 24 25" fill="none">
+                    <rect y="0.621094" width="24" height="24" rx="12" fill="#FAFAFA" />
+                    <path d="M5.41406 4.95703L4.33594 6.03516L10.9219 12.6211L4.33594 19.207L5.41406 20.2852L12 13.6992L18.5859 20.2852L19.6641 19.207L13.0781 12.6211L19.6641 6.03516L18.5859 4.95703L12 11.543L5.41406 4.95703Z" fill="#7A7A7A" />
+                </svg>
+            </button>
+            <div class="grid gap-6 px-[20px] py-8">
+                <div class="text-[#333] font-semibold pb-[11px] border-b border-[#eeeeee]">@CRS.ADMIN.APPLICATION.Resources.Resource.Confirmation</div>
+                <div class="grid gap-[20px] text-[#062937] mb-[45px]">
+                    <div class="text-[14px] text-secondary-text-2 text-start" id="deleteRequestMessage">
+                        Are you sure you want to delete the store's custom plan?
+                    </div>
+                </div>
+                <div class="flex justify-end">
+                    <div class="flex gap-2 justify-end mt-[45px]">
+                        <div class="btn btn-secondary w-[110px]" id="delete_cancel_btn" data-modal-hide="delete-plan-request">@CRS.ADMIN.APPLICATION.Resources.Resource.clubNo</div>
+                        <div class="btn btn-primary w-[110px]" onclick="DeleteClubPlanFunction()" id="delete_confirm_btn">@CRS.ADMIN.APPLICATION.Resources.Resource.clubYes</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<link href="https://cdn.syncfusion.com/ej2/material.css" rel="stylesheet" />
+
+@section scripts {
     <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
     <script src="https://cdn.syncfusion.com/ej2/dist/ej2.min.js"></script>
     <script>
 
         var PopUpRenderValue = '@ViewBag.PopUpRenderValue';
-        function CancelFunction() {
-            location.reload();
-        }
-        function ManageClubPlanFunction(i, j) {
-            window.location.href = '/ClubPlanManagement/ManageClubPlan?AgentId=' + i + '&Id=' + j
-        }
-        function BlockFunction(i, j) {
-            window.location.href = '/ClubPlanManagement/BlockUnblockPlan?AgentId=' + i + '&Id=' + j + '&Status=B'
-        }
-        function UnBlockFunction(i, j) {
-            window.location.href = '/ClubPlanManagement/BlockUnblockPlan?AgentId=' + i + '&Id=' + j + '&Status=A'
-        }
-      if (PopUpRenderValue != null && PopUpRenderValue != "" && PopUpRenderValue == "Manage") {
-        var element = document.getElementById('add-club-plan');
-         element.classList.remove('translate-x-full');
-     }
+        var PopUpClubManageValue = '@ViewBag.PopUpClubManageValue';
+        var AgentId          = '@ViewBag.AgentId';
+        var TabValue         = '@ViewBag.TabValue';
 
-  document.addEventListener('DOMContentLoaded', function () {
-          const page_size = @ViewBag.PageSize;
-          const total_data = @ViewBag.TotalData;
-          const start_index_val = @ViewBag.StartIndex;
-          let URL = "/HostManagement/HostList";
-          let search_filter = '@ViewBag.SearchFilter';
-          let AgentId = '@ViewBag.AgentId';
-          URL = addQueryParam(URL, 'SearchFilter', search_filter);
-          URL = addQueryParam(URL, 'AgentId', AgentId);
-          LoadPagination(page_size, total_data, start_index_val, URL);
-  });
+        function addQueryParam(url, key, value) {
+            if (value == null || value === '') return url;
+            return url + (url.includes('?') ? '&' : '?') + key + '=' + value;
+        }
+        // Helper function to dynamically calculate and render pagination UI
+        function RefreshPaginationLayout(currentTabCode) {
+            var paginationURL = '/ClubPlanManagement/ClubPlanList';
+            paginationURL = addQueryParam(paginationURL, 'AgentId', AgentId);
+            paginationURL = addQueryParam(paginationURL, 'SearchFilter', '@ViewBag.SearchFilter');
+            paginationURL = addQueryParam(paginationURL, 'TapValue', currentTabCode);
+
+            if (currentTabCode === '02') {
+                LoadPagination(
+                    @ViewBag.PageSize,
+                    @ViewBag.TotalData,
+                    @ViewBag.StartIndex,
+                    paginationURL,
+                    'pagination-id-request',   
+                    'prev-btn-request',        
+                    'next-btn-request',        
+                    'ShowEntries-Id-request',  
+                    'Entries-Id-request'       
+                );
+            } else {
+                LoadPagination(
+                    @ViewBag.PageSize,
+                    @ViewBag.TotalData,
+                    @ViewBag.StartIndex,
+                    paginationURL
+                );
+            }
+        }
+
+        // ── Tab Logic ─────────────────────────────────────────
+        function setActiveTab(linkId, tabId) {
+            document.querySelectorAll('.styleCss').forEach(function (el) {
+                el.classList.remove('active');
+                el.style.color        = '';
+                el.style.borderBottom = '';
+            });
+            document.querySelectorAll('.pane').forEach(function (el) {
+                el.style.display = 'none';
+                el.classList.remove('active');
+            });
+            var link = document.getElementById(linkId);
+            if (link) {
+                link.classList.add('active');
+                link.style.color        = '#D75A8B';
+                link.style.borderBottom = '2px solid #D75A8B';
+            }
+            var pane = document.getElementById(tabId);
+            if (pane) {
+                pane.style.display = 'block';
+                pane.classList.add('active');
+            }
+        }
+
+        function changeTabV1(tabId, linkId) {
+    var tap = (tabId === 'request1') ? '02' : '01';
+    window.location.href = '/ClubPlanManagement/ClubPlanList'
+        + '?AgentId='  + encodeURIComponent(AgentId)
+        + '&TapValue=' + tap
+        + '&StartIndex=0'
+        + '&PageSize=10';
+}
+
+
+        // ── Action Functions ──────────────────────────────────
+        function CancelFunction() { location.reload(); }
+
+        function ManageClubPlanFunction(agentId, id) {
+            window.location.href = '/ClubPlanManagement/ManageClubPlan?AgentId=' + agentId + '&Id=' + id;
+        }
+        function BlockFunction(agentId, id) {
+            window.location.href = '/ClubPlanManagement/BlockUnblockPlan?AgentId=' + agentId + '&Id=' + id + '&Status=B';
+        }
+        function UnBlockFunction(agentId, id) {
+            window.location.href = '/ClubPlanManagement/BlockUnblockPlan?AgentId=' + agentId + '&Id=' + id + '&Status=A';
+        }
+        function EditClubOwnPlan(clubId, planId, agentId) {
+            window.location.href = '/ClubPlanManagement/ClubPlanList?AgentId=' + agentId + '&TapValue=02&clubId=' + clubId + '&planId=' + planId;
+        }
+
+        function openApproveRequestModal(sno, type, planId) {
+            const confirmationMessageElement = document.getElementById("confirmationRequestMessage");
+            confirmationMessageElement.textContent = "@Html.Raw(CRS.ADMIN.APPLICATION.Resources.Resource.PlanRequestConfirmationMessage)";
+            const modal = document.getElementById("approve-confirmation-plan-request");
+            modal.classList.remove("hidden");
+            $('#approve_ids1').attr('data-vals1', sno);
+            $('#approve_ids1').attr('data-vals2', type);
+            $('#approve_ids1').attr('data-vals3', planId);
+            modal.setAttribute("aria-hidden", "false");
+        }
+
+        function ApproveRequestedPlanFunction() {
+            const sno = $('#approve_ids1').attr('data-vals1');
+            const type = $('#approve_ids1').attr('data-vals2');
+            const planId = $('#approve_ids1').attr('data-vals3');
+            window.location.href = '/ClubPlanManagement/ClubPlanList?AgentId=' + AgentId + '&TapValue=02&Sno=' + sno + '&type=' + type + '&planId=' + planId;
+        }
+
+        function openApproveRejectedRequestModal(clubId, type, planId) {
+            const $modal = $("#reject-confirmation-plan-request");
+            const contentApprove = "@Html.Raw(CRS.ADMIN.APPLICATION.Resources.Resource.PlanRequestRejectConfirmation)";
+            $("#RejectedRequestMessage").text(contentApprove);
+            $("#reject_confirm_btn").attr({
+                "data-vals1": clubId,
+                "data-vals2": type,
+                "data-vals3": planId
+            });
+            $modal.removeClass("hidden").attr("aria-hidden", "false");
+        }
+
+        function RejectedRequestedPlanFunction() {
+            const sno = $('#reject_confirm_btn').attr('data-vals1');
+            const type = $('#reject_confirm_btn').attr('data-vals2');
+            const planId = $('#reject_confirm_btn').attr('data-vals3');
+            window.location.href = '/ClubPlanManagement/ClubPlanList?AgentId=' + AgentId + '&TapValue=02&Sno=' + sno + '&type=' + type + '&planId=' + planId;
+        }
+
+        function DeleteClubPlanModal(clubId, type, planId) {
+            const $modal = $("#delete-plan-request");
+            const $confirmBtn = $("#delete_confirm_btn");
+            $confirmBtn.attr({
+                "data-vals1": clubId,
+                "data-vals2": type,
+                "data-vals3": planId
+            });
+            $modal.removeClass("hidden").attr("aria-hidden", "false");
+        }
+
+        function DeleteClubPlanFunction() {
+            const sno = $('#delete_confirm_btn').attr('data-vals1');
+            const type = $('#delete_confirm_btn').attr('data-vals2');
+            const planId = $('#delete_confirm_btn').attr('data-vals3');
+            window.location.href = '/ClubPlanManagement/ClubPlanList?AgentId=' + AgentId + '&TapValue=02&Sno=' + sno + '&type=' + type + '&planId=' + planId;
+        }
+
+        // ── DOM Ready ─────────────────────────────────────────
+        document.addEventListener('DOMContentLoaded', function () {
+
+            // Open drawer if needed
+            if (PopUpRenderValue === 'Manage') {
+                var drawer = document.getElementById('add-club-plan');
+                if (drawer) drawer.classList.remove('translate-x-full');
+            }
+            else if (PopUpClubManageValue === 'ManageClubPlan') {
+                var editDrawer = document.getElementById('add-manage-club-own-plan');
+                if (editDrawer) editDrawer.classList.remove('translate-x-full');
+            }
+
+            // Set correct tab on load
+            if (TabValue === '02') {
+                setActiveTab('tab2Link', 'request1');
+                RefreshPaginationLayout('02');
+            } else {
+                setActiveTab('tab1Link', 'all');  // default
+                RefreshPaginationLayout('01');
+            }
+
+            @*// Pagination
+            var paginationURL = '/ClubPlanManagement/ClubPlanList';
+            paginationURL = addQueryParam(paginationURL, 'AgentId', AgentId);
+            paginationURL = addQueryParam(paginationURL, 'SearchFilter', '@ViewBag.SearchFilter');
+            LoadPagination(@ViewBag.PageSize, @ViewBag.TotalData, @ViewBag.StartIndex, paginationURL);*@
+        });
+
+        var clubPlanCloseBtn = document.getElementById('ClubPlanCloseId');
+        if (clubPlanCloseBtn) {
+            clubPlanCloseBtn.addEventListener('click', function (event) {
+                event.preventDefault();
+                window.location.href = '/ClubPlanManagement/ClubPlanList?AgentId=' + AgentId + '&TapValue=02';
+            });
+        }
+        var clubPlanCancelBtn = document.getElementById('ClubPlanCancelId');
+        if (clubPlanCancelBtn) {
+            clubPlanCancelBtn.addEventListener('click', function (event) {
+                event.preventDefault();
+                window.location.href = '/ClubPlanManagement/ClubPlanList?AgentId=' + AgentId + '&TapValue=02';
+            });
+        }
+
+        // ── jQuery Ready ──────────────────────────────────────
         $(document).ready(function () {
+            $('select').select2({
+                minimumResultsForSearch: Infinity
+            });
             $(".selectplan").change(function () {
-                var $this = this.name;
-                var value = $('[name="' + $this + '"]').val();
-                const selector = '.field-validation-valid[data-valmsg-for="' + $this + '"]';
-                if (value != "" ) {
-                    isvalid = false;
-                    $(selector).text('');
+                var name = this.name;
+                var val  = $('[name="' + name + '"]').val();
+                if (val !== '') {
+                    $('.field-validation-valid[data-valmsg-for="' + name + '"]').text('');
                 }
             });
-            $(".IdentityDescription").find("input[type='checkbox']:not(.input-validation-error)");
+
             $(".toogle1").change(function () {
-                var nameAttributeValue = this.name;
-                if (this.checked) {
-                    $('input[name="' + nameAttributeValue + '"]').val('A');
-                } else {
-
-                    $('input[name="' + nameAttributeValue + '"]').val('B');
-                }
+                $('input[name="' + this.name + '"]').val(this.checked ? 'A' : 'B');
             });
 
-
-        });
-        $('#submit-id-plan').click(function (event) {
-            var isvalid = true;
-            event.preventDefault();
-            var rows = $('#container .plans select');
-            rows.each(function (index, element) {
-                var ss = $(element).attr('id');
-                var name = $(element).attr('name');
-                var value = $('[name="' + name + '"]').val();
-                const selector = '.field-validation-valid[data-valmsg-for="' + name + '"]';
-                if (value == null || value == "") {
-                    isvalid = false;
-                    $(selector).text('@CRS.ADMIN.APPLICATION.Resources.Resource.Required');
-                }
-
+            $('#submit-id-plan').click(function (e) {
+                e.preventDefault();
+                var isvalid = true;
+                $('#container .plans select').each(function () {
+                    var name = $(this).attr('name');
+                    var val  = $('[name="' + name + '"]').val();
+                    if (!val) {
+                        isvalid = false;
+                        $('.field-validation-valid[data-valmsg-for="' + name + '"]')
+                            .text('@CRS.ADMIN.APPLICATION.Resources.Resource.Required');
+                    }
+                });
+                if (isvalid) $('#ManageClubPlanForm').submit();
             });
-            if (isvalid == false) {
-                return false;
-            }
-            else {
-                $('#ManageClubPlanForm').submit();
-            }
-
         });
-
-
 
     </script>
-
-
 }

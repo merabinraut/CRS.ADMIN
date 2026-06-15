@@ -1,7 +1,7 @@
 let pageSize = 0;
 let TotalData = 0;
 let startIndexVal = 0;
-let URL = "#";
+let paginationURL = "#";
 function LoadPagination(PageSize, Total_Data, start_IndexVal, url, pagination_container_id = "pagination-id",
     prev_button_id = "prev-btn", next_button_id = "next-btn", show_entries_container_id = "ShowEntries-Id", entries_container_id = "Entries-Id") {
     const paginationContainer = document.getElementById(pagination_container_id);
@@ -12,7 +12,7 @@ function LoadPagination(PageSize, Total_Data, start_IndexVal, url, pagination_co
     pageSize = PageSize;
     TotalData = Total_Data;
     startIndexVal = start_IndexVal;
-    URL = url;
+    paginationURL = url;
     const currentPage = Math.ceil((startIndexVal + 1) / pageSize);
     const TotalPages = Math.ceil(TotalData / pageSize);
     if (TotalData > 0) {
@@ -130,22 +130,21 @@ function RedirectFunction(currentPage, i, j, page_size) {
         currentPage = 1;
 
     const startIndex = (currentPage - 1) * page_size;
-    let separator = URL.includes('?') ? '&' : '?';
-    window.location.href = URL + separator + `${i}=${startIndex}&${j}=${page_size}`;
+    let separator = paginationURL.includes('?') ? '&' : '?';
+    window.location.href = paginationURL + separator + `${i}=${startIndex}&${j}=${page_size}`;
 };
 
 function handleSelectChange(selectElement, i, j) {
-    let separator = URL.includes('?') ? '&' : '?';
-    window.location.href = URL + separator + `${i}=${0}&${j}=${selectElement.value}`;
+    let separator = paginationURL.includes('?') ? '&' : '?';
+    window.location.href = paginationURL + separator + `${i}=${0}&${j}=${selectElement.value}`;
 }
 
 function addQueryParam(url, paramName, paramValue) {
-    if (paramValue != null && paramValue != "") {
+    if (paramValue != null && paramValue != '') {
         // Check if it's the first parameter, if so, use "?" else use "&"
-        url += url.includes('?') ? `&${paramName}=${paramValue}` : `?${paramName}=${paramValue}`;
-    }
-    if (URL.includes('?')) {
-        URL = URL.replace('?', '');
+        url += url.includes('?')
+            ? `&${paramName}=${encodeURIComponent(paramValue)}`
+            : `?${paramName}=${encodeURIComponent(paramValue)}`;
     }
     return url;
 }

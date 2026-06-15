@@ -1,5 +1,6 @@
-﻿using CRS.ADMIN.SHARED;
+using CRS.ADMIN.SHARED;
 using CRS.ADMIN.SHARED.ClubManagement;
+using CRS.ADMIN.SHARED.PlanManagement;
 using CRS.ADMIN.SHARED.PointSetup;
 using DocumentFormat.OpenXml.Office2016.Excel;
 using System;
@@ -238,6 +239,48 @@ namespace CRS.ADMIN.REPOSITORY.ClubPlanManagement
             SQL += ",@ActionUser=" + _DAO.FilterString(ActionUser);
             return _DAO.ParseCommonDbResponse(SQL);
         }
+        public List<PlanRequesResponseListCommon> GetClubOwnPlanList(string culture, string clubId)
+        {
+            var response = new List<PlanRequesResponseListCommon>();
+            try
+            {
+                string SQL = "EXEC apiproc_admin_get_club_own_plan_list";
+                SQL += " @clubId=" + _DAO.FilterString(!string.IsNullOrEmpty(clubId) ? clubId : null);
+
+                //string SQL = "EXEC sproc_club_plan_list @Flag='own_plan'";
+                //SQL += ",@AgentId=" + _DAO.FilterString(!string.IsNullOrEmpty(clubId) ? clubId : null);
+        
+                var dbResponse = _DAO.ExecuteDataTable(SQL);
+                if (dbResponse != null && dbResponse.Rows.Count > 0)
+                {
+                    int sno = 1;
+                    foreach (DataRow item in dbResponse.Rows)
+                    {
+                        response.Add(new PlanRequesResponseListCommon()
+                        {
+                            SNO = sno,
+                            clubId = _DAO.ParseColumnValue(item, "clubId")?.ToString(),
+                            clubName = _DAO.ParseColumnValue(item, "clubName")?.ToString(),
+                            plantype = _DAO.ParseColumnValue(item, "plantype")?.ToString(),
+                            planTitle = _DAO.ParseColumnValue(item, "planTitle")?.ToString(),
+                            planPrice = _DAO.ParseColumnValue(item, "planPrice")?.ToString(),
+                            numberOfPeople = _DAO.ParseColumnValue(item, "numberOfPeople")?.ToString(),
+                            requestDate = _DAO.ParseColumnValue(item, "requestDate")?.ToString(),
+                            planStatus = _DAO.ParseColumnValue(item, "planStatus")?.ToString(),
+                            planId = _DAO.ParseColumnValue(item, "planId")?.ToString(),
+                            lastEntryTime = _DAO.ParseColumnValue(item, "lastEntryTime")?.ToString(),
+                        });
+                        sno++;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                // log if needed
+            }
+            return response;
+        }
+
     }
 
 }

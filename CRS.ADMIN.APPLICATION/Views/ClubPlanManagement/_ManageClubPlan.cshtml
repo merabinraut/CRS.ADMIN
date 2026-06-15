@@ -1,0 +1,166 @@
+@model CRS.ADMIN.APPLICATION.Models.PlanManagement.PlanRequesResponseListModel
+<div id="add-manage-club-own-plan"
+     class="drawer-close-disable  flex justify-end fixed top-0 right-0 z-40 h-screen overflow-y-auto transition-transform translate-x-full "
+     tabindex="-1" aria-labelledby="drawer-right-label">
+    <div class="bg-white w-[616px] drawer-container relative">
+        <div class="drawer-form-container sticky top-0 z-[5] ">
+            <div class="drawer-form flex justify-between bg-secondary-color-pink py-[16px] px-[24px] h-[56px]">
+                <div>
+                    @CRS.ADMIN.APPLICATION.Resources.Resource.Edit_Plan
+                </div>
+                <button type="button" data-drawer-hide="add-manage-club-own-plan" aria-controls="add-manage-club-own-plan"
+                        class="text-[20px]" id="ClubPlanCloseId">
+                    <i class="las la-window-close text-white"></i>
+                </button>
+            </div>
+        </div>
+        @using (Html.BeginForm("ClubPlanList", "ClubPlanManagement", FormMethod.Post, new { @id = "ManageClubOwnPlanForm", enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+            <input type="hidden" name="AgentId" value="@ViewBag.AgentId" />
+            if (!string.IsNullOrEmpty(Model.planId))
+            {
+                @Html.HiddenFor(model => model.planId)
+            }
+            if (!string.IsNullOrEmpty(Model.clubId))
+            {
+                @Html.HiddenFor(model => model.clubId)
+            }
+            <div class="p-[24px]  gap-1">
+                <div class=" py-4 grid grid-cols-3 gap-5">
+                    <div class="input-field-common">
+                        <label class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Plan_Name
+                        </label>
+                        @Html.TextBoxFor(model => model.planTitle, new { @class = "w-full rounded-[4px]", @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.Plan_Name, @style = "border-radius:4px !important", @onkeypress = "return isAlphabetWithSpace(event)", autocomplete = "off", @maxLength = "50", disabled = true })
+                        <span class="error">
+                            @Html.ValidationMessageFor(m => m.planTitle)
+                        </span>
+                    </div>
+
+                    <div class="input-field-common">
+                        <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.LastEntryTime
+                        </label>
+                        <select id="large" name="PlanTime" class=" default_select select-common block w-full "
+                                style="width: 100%;">
+                            @if (ViewBag.EntryTimeList == null)
+                            {
+                                foreach (var item in ViewBag.TimeList as IEnumerable<SelectListItem>)
+                                {
+                                    var selectedId = Model.planTime as string;
+                                    if (item.Value == selectedId)
+                                    {
+                                        <option value="@item.Value" selected>@item.Text</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@item.Value">
+                                            @item.Text
+                                        </option>
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                foreach (var item in ViewBag.EntryTimeList as IEnumerable<SelectListItem>)
+                                {
+                                    var selectedId = Model.lastEntryTime as string;
+                                    if (item.Value == selectedId)
+                                    {
+                                        <option value="@item.Text" selected>@item.Text</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@item.Text">
+                                            @item.Text
+                                        </option>
+                                    }
+                                }
+                            }
+
+                        </select>
+                        <span class="error">
+                            @Html.ValidationMessageFor(m => m.lastEntryTime)
+                        </span>
+                    </div>
+
+                    <div class="input-field-common">
+                        <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Nomination
+                        </label>
+                        <select id="large" name="Nomination" class=" default_select select-common block w-full "
+                                style="width: 100%;">
+                            @for (int i = 1; i <= 10; i++)
+                            {
+                                var selectedId = Model.nomination as string;
+                                if (i.ToString() == selectedId)
+                                {
+                                    <option value="@i" selected>@i</option>
+                                }
+                                else
+                                {
+                                    <option value="@i">
+                                        @i
+                                    </option>
+                                }
+                            }
+                        </select>
+                        <span class="error">
+                            @Html.ValidationMessageFor(m => m.nomination)
+                        </span>
+                    </div>
+
+                    <div class="input-field-common">
+                        <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.NoOfPeople
+                        </label>
+                        <select name="numberOfPeople" class=" default_select select-common block w-full "
+                                style="width: 100%;">
+                            @for (int i = 1; i <= 10; i++)
+                            {
+                                var selectedId = Model.numberOfPeople;
+                                if (i == selectedId)
+                                {
+                                    <option value="@i" selected>@i</option>
+                                }
+                                else
+                                {
+                                    <option value="@i">
+                                        @i
+                                    </option>
+                                }
+                            }
+                        </select>
+                        <span class="error">
+                            @Html.ValidationMessageFor(m => m.numberOfPeople)
+                        </span>
+                    </div>
+                    <div class="input-field-common">
+                        <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Price
+                        </label>
+                        @Html.TextBoxFor(model => model.planPrice, new { @class = "w-full rounded-[4px]", @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.Price, @style = "border-radius:4px !important;height : 40px", @onkeypress = "return isNumber(event)", autocomplete = "off", @maxLength = "5" })
+                        <span class="error">
+                            @Html.ValidationMessageFor(m => m.planPrice)
+                        </span>
+                    </div>
+
+
+                </div>
+            </div>
+            <div class="flex justify-end ">
+                <div class="flex gap-6">
+                    <button class="resetForm btn btn-primary-normal rounded-[4px] px-8 text-sm"
+                            data-drawer-hide="add-manage-club-own-plan" id="ClubPlanCancelId" type="button">
+                        @CRS.ADMIN.APPLICATION.Resources.Resource.Cancel
+                    </button>
+                    <button class="resetForm btn btn-primary-default px-8 rounded-[4px]  text-sm leading-[10px]"
+                            id="saveData" type="submit">
+                        @CRS.ADMIN.APPLICATION.Resources.Resource.Submit
+                    </button>
+                </div>
+            </div>
+        }
+    </div>
+</div>

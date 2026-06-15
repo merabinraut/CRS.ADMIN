@@ -2,7 +2,10 @@
 <!-- add new host from -->
 <div class="flex justify-between pb-[24px]">
     @*@Html.HiddenFor(model => model.ListType)*@
-    <form action="/PlanManagement/PlanList?TabValue=" 02" method="get">
+    <form action="/PlanManagement/PlanList" method="get">
+        <input type="hidden" name="TabValue" value="02" />
+        <input type="hidden" name="StartIndex" value="@ViewBag.StartIndex" />
+        <input type="hidden" name="PageSize" value="@ViewBag.PageSize" />
         <div class="relative input-search-wrapper flex justify-between">
             <div class="absolute inset-y-0 left-0 flex items-center pl-[16px] pointer-events-none">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21" fill="none">
@@ -23,9 +26,9 @@
 <div class="flex gap-6">
 
 </div>
-<div class="table-tab" id="all">
+<div class="table-tab">
     <div class="px-[16px] py-[12px] flex justify-between entry-export-container">
-        <div class="flex items-center select-entries" id="ShowEntries-Id">
+        <div class="flex items-center select-entries" id="ShowEntries-Id-request">
         </div>
     </div>
     <div class="relative overflow-x-auto">
@@ -193,10 +196,15 @@
                                         @*<i class="las la-edit text-[20px] cursor-pointer text-[#A6A6A6]" onclick=" return EditClubOwnPlan('@item.clubId.EncryptParameter()','@item.planId.EncryptParameter()');"></i>*@
                                         <i class=" las la-trash-alt text-[20px] cursor-pointer text-[#CB3F3F]" onclick="DeleteClubPlanModal('@item.clubId.EncryptParameter()','D','@item.planId.EncryptParameter()');" data-modal-target="delete-plan-request" data-modal-toggle="delete-plan-request"></i>
                                     }
+                                    @if (item.planStatus == "R")
+                                    {
+                                        <i class=" las la-trash-alt text-[20px] cursor-pointer text-[#CB3F3F]" onclick="DeleteClubPlanModal('@item.clubId.EncryptParameter()','D','@item.planId.EncryptParameter()');" data-modal-target="delete-plan-request" data-modal-toggle="delete-plan-request"></i>
+                                    }
                                     @if (item.planStatus == "B")
                                     {
                                         <i class=" las la-trash-alt text-[20px] cursor-pointer text-[#CB3F3F]" onclick="DeleteClubPlanModal('@item.clubId.EncryptParameter()','D','@item.planId.EncryptParameter()');" data-modal-target="delete-plan-request" data-modal-toggle="delete-plan-request"></i>
                                     }
+
                                 </div>
                             </td>
                         </tr>
@@ -206,15 +214,13 @@
         </table>
     </div>
     <div class="pagination-club">
-        <div class="show-entry" id="Entries-Id">
-        </div>
+        <div class="show-entry" id="Entries-Id-request"></div>
         <div class="flex gap-[12px]">
-            <div class="btn btn-secondary-box-shadow" id="prev-btn">
+            <div class="btn btn-secondary-box-shadow" id="prev-btn-request">
                 @CRS.ADMIN.APPLICATION.Resources.Resource.Previous
             </div>
-            <div class="flex gap-[12px]" id="pagination-id">
-            </div>
-            <div class="btn btn-secondary-box-shadow" id="next-btn">
+            <div class="flex gap-[12px]" id="pagination-id-request"></div>
+            <div class="btn btn-secondary-box-shadow" id="next-btn-request">
                 @CRS.ADMIN.APPLICATION.Resources.Resource.Next
             </div>
         </div>

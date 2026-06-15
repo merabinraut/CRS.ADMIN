@@ -159,8 +159,8 @@
                 <div class="flex justify-end">
                     <div class="flex gap-2 justify-end mt-[45px]">
                         <input id="request_ids" value="" hidden />
-                        <div class="btn btn-secondary w-[110px]" id="approve_ids1" data-modal-hide="delete-plan-request">@CRS.ADMIN.APPLICATION.Resources.Resource.clubNo</div>
-                        <div class="btn btn-primary w-[110px]" onclick="ApproveRequestedPlanFunction()" data-vals1="" data-vals2="" data-vals3="" id="approve_ids1">@CRS.ADMIN.APPLICATION.Resources.Resource.clubYes</div>
+                        <div class="btn btn-secondary w-[110px]" id="delete_cancel_btn" data-modal-hide="delete-plan-request">@CRS.ADMIN.APPLICATION.Resources.Resource.clubNo</div>
+                        <div class="btn btn-primary w-[110px]" onclick="DeleteClubPlanFunction()" data-vals1="" data-vals2="" data-vals3="" id="delete_confirm_btn">@CRS.ADMIN.APPLICATION.Resources.Resource.clubYes</div>
                     </div>
                 </div>
             </div>
@@ -241,7 +241,8 @@
                 minimumResultsForSearch: Infinity
             })
             var PopUpRenderValue = '@ViewBag.PopUpRenderValue';
-            var PopUpClubManageValue = '@ViewBag.PopUpClubManageValue';
+                var PopUpClubManageValue = '@ViewBag.PopUpClubManageValue';
+
             if (PopUpRenderValue != null && PopUpRenderValue != "" && PopUpRenderValue == "Manage") {
                 var element = document.getElementById('add-new-host-club');
                 element.classList.remove('translate-x-full');
@@ -249,8 +250,8 @@
             else if (PopUpClubManageValue == "ManageClubPlan") {
                 element1 = document.getElementById('add-manage-club-own-plan');
                 element1.classList.remove('translate-x-full');
-           /* if (PopUpClubManageValue == "ManageClubPlan")*/
             }
+
                 let tabValue = "@ViewBag.TabValue" ?? "";
                 if (tabValue === "02") {
                     const link1 = document.getElementById('tab1Link');
@@ -308,15 +309,46 @@
         }
     </script>
     <script>
+
         document.addEventListener('DOMContentLoaded', function () {
-                const page_size = @ViewBag.PageSize;
-                const total_data = @ViewBag.TotalData;
-                const start_index_val = @ViewBag.StartIndex;
-                let URL = "/PlanManagement/PlanList";
-                let search_filter = $('#default-search-plan_list').val();
+            const page_size = @(ViewBag.PageSize ?? 10);
+            const total_data = @(ViewBag.TotalData ?? 0);
+            const start_index_val = @(ViewBag.StartIndex ?? 0);
+            let tabValue = "@ViewBag.TabValue";
+
+            let URL = "/PlanManagement/PlanList";
+            let pagination_container_id = "pagination-id";
+            let prev_button_id = "prev-btn";
+            let next_button_id = "next-btn";
+            let show_entries_container_id = "ShowEntries-Id";
+            let entries_container_id = "Entries-Id";
+
+            if (tabValue === "02")
+            {
+                let search_filter = $('#default-search-plan-request').val() || '';
+                URL = addQueryParam(URL, 'TabValue', '02')
                 URL = addQueryParam(URL, 'SearchFilter', search_filter);
-                LoadPagination(page_size, total_data, start_index_val, URL);
-            });
+
+                // use request-specific pagination IDs
+                pagination_container_id = "pagination-id-request";
+                prev_button_id = "prev-btn-request";
+                next_button_id = "next-btn-request";
+                show_entries_container_id = "ShowEntries-Id-request";
+                entries_container_id = "Entries-Id-request";
+            }
+            else
+            {
+                let search_filter = $('#default-search-plan_list').val() || '';
+                URL = addQueryParam(URL, 'SearchFilter', search_filter);
+
+            }            
+            setTimeout(function () {
+                LoadPagination(page_size, total_data, start_index_val, URL, pagination_container_id, prev_button_id, next_button_id, show_entries_container_id, entries_container_id);
+
+
+            }, 100);
+           
+        });
     </script>
 
     <script>
@@ -469,12 +501,12 @@
     <script>
        function DeleteClubPlanModal(clubId, type, planId) {
           const $modal = $("#delete-plan-request");
-          const $message = $("#confirmationRequestMessage");
-           const $approveBtn = $("#approve_ids1");
+          const $message = $("#deleteRequestMessage");
+           const $confirmBtn = $("#delete_confirm_btn");
           // const contentApprove = "Are you sure you want to delete this club plan ?";
            const contentApprove = "Are you sure you want to delete the store’s custom plan";
             $message.text(contentApprove);
-            $approveBtn.attr({
+            $confirmBtn.attr({
             "data-vals1": clubId,
             "data-vals2": type,
             "data-vals3": planId
@@ -483,9 +515,9 @@
         }
 
     function DeleteClubPlanFunction() {
-         const sno = $('#approve_ids1').attr('data-vals1');
-         const type = $('#approve_ids1').attr('data-vals2');
-         const planId = $('#approve_ids1').attr('data-vals3');
+         const sno = $('#delete_confirm_btn').attr('data-vals1');
+         const type = $('#delete_confirm_btn').attr('data-vals2');
+         const planId = $('#delete_confirm_btn').attr('data-vals3');
          let search_filter2 = $('#default-search-plan-request').val();
         const start_index_val2 = @ViewBag.StartIndex;
     const page_size2 = @ViewBag.PageSize;
@@ -496,7 +528,6 @@
         + '&SearchFilter=' + search_filter2
         + '&StartIndex=' + start_index_val2
         + '&PageSize=' + page_size2;
-    //window.location.href = '/PlanManagement/ApproveRequestedPlanList?Sno=' + i + '&type=' + j + '&planId=' + k+ '&SearchFilter=' + search_filter2 + '&StartIndex=' + start_index_val2 + '&PageSize=' + page_size2;
             }
             function EditClubOwnPlan(ClubId, planId) {
                 window.location.href = '/PlanManagement/ManageClubPlan?clubId=' + ClubId + '&planId=' + planId;

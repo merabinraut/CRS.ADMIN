@@ -28,6 +28,7 @@ namespace CRS.ADMIN.SHARED.PlanManagement
     }
     public class PlanRequesResponseListCommon : PaginationResponseCommon
     {
+        public int SNO { get; set; }
         public string clubName { get; set; }
         public string clubId { get; set; }
         public string planId { get; set; }
