@@ -354,9 +354,8 @@ namespace CRS.ADMIN.REPOSITORY.HostManagement
             SQL += ",@conversationScoreValue=" + _DAO.FilterString(request.conversationScoreValue);
             SQL += ",@beverageToleranceScoreValue=" + _DAO.FilterString(request.beverageToleranceScoreValue);
             SQL += ",@atmosphereScoreValue=" + _DAO.FilterString(request.atmosphereScoreValue);
-
-            SQL += ",@MBTI=N" + _DAO.FilterString(request.MBTI);
-            SQL += ",@Title=N" + _DAO.FilterString(request.Title);
+            SQL += ",@MBTI=" + (!string.IsNullOrEmpty(request.MBTI)? "N" + _DAO.FilterString(request.MBTI) + "": "NULL");
+            SQL += ",@Title=" + (!string.IsNullOrEmpty(request.Title) ? "N" + _DAO.FilterString(request.Title) + "" : "NULL");
             SQL += ",@ActionUser=N" + _DAO.FilterString(request.ActionUser);
             SQL += ",@ActionIP=" + _DAO.FilterString(request.ActionIP);
             SQL += ",@ActionPlatform=" + _DAO.FilterString(request.ActionPlatform);
