@@ -3005,4 +3005,55 @@
   <data name="Plan Name English" xml:space="preserve">
     <value>プラン名（英語）</value>
   </data>
+  <data name="Profile_Detail" xml:space="preserve">
+    <value>プロフィール</value>
+  </data>
+  <data name="Title_detail" xml:space="preserve">
+    <value>タイトル</value>
+  </data>
+  <data name="Skills_and_assessment" xml:space="preserve">
+    <value>スキル・自己評価 (5段階評価)</value>
+  </data>
+  <data name="Constellation" xml:space="preserve">
+    <value>星座</value>
+  </data>
+  <data name="Cute_style" xml:space="preserve">
+    <value>かわいい系</value>
+  </data>
+  <data name="Appearance_and_overall_impression" xml:space="preserve">
+    <value>見た目・雰囲気の印象</value>
+  </data>
+  <data name="Cool_style" xml:space="preserve">
+    <value>かっこいい系</value>
+  </data>
+  <data name="Conversation_style" xml:space="preserve">
+    <value>会話のスタイル</value>
+  </data>
+  <data name="Listener" xml:space="preserve">
+    <value>聞き役</value>
+  </data>
+  <data name="Speaker" xml:space="preserve">
+    <value>話し役</value>
+  </data>
+  <data name="The_atmosphere" xml:space="preserve">
+    <value>一緒にいる時の空気感</value>
+  </data>
+  <data name="healing" xml:space="preserve">
+    <value>癒し</value>
+  </data>
+  <data name="Liven_things_up" xml:space="preserve">
+    <value>盛り上げ</value>
+  </data>
+  <data name="Alcohol_tolerance" xml:space="preserve">
+    <value>お酒の強さ</value>
+  </data>
+  <data name="I_can_not_drink" xml:space="preserve">
+    <value>飲めない</value>
+  </data>
+  <data name="Drinkable" xml:space="preserve">
+    <value>飲める</value>
+  </data>
+  <data name="mbti" xml:space="preserve">
+    <value>MBTI性格</value>
+  </data>
 </root>

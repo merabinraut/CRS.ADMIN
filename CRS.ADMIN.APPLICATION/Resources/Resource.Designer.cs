@@ -19,7 +19,7 @@ namespace CRS.ADMIN.APPLICATION.Resources {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "18.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Resource {
@@ -547,6 +547,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Alcohol tolerance.
+        /// </summary>
+        public static string Alcohol_tolerance {
+            get {
+                return ResourceManager.GetString("Alcohol_tolerance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to All.
         /// </summary>
         public static string All {
@@ -588,6 +597,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         public static string Api_Response_Message_List {
             get {
                 return ResourceManager.GetString("Api Response Message List", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Appearance and overall impression.
+        /// </summary>
+        public static string Appearance_and_overall_impression {
+            get {
+                return ResourceManager.GetString("Appearance_and_overall_impression", resourceCulture);
             }
         }
         
@@ -1636,6 +1654,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Constellation.
+        /// </summary>
+        public static string Constellation {
+            get {
+                return ResourceManager.GetString("Constellation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Constellation Group.
         /// </summary>
         public static string Constellation_Group {
@@ -1681,6 +1708,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Conversation style.
+        /// </summary>
+        public static string Conversation_style {
+            get {
+                return ResourceManager.GetString("Conversation_style", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Converted Customers.
         /// </summary>
         public static string Converted_Customers {
@@ -1695,6 +1731,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         public static string Converted_Date {
             get {
                 return ResourceManager.GetString("Converted Date", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cool style.
+        /// </summary>
+        public static string Cool_style {
+            get {
+                return ResourceManager.GetString("Cool_style", resourceCulture);
             }
         }
         
@@ -1870,6 +1915,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cute style.
+        /// </summary>
+        public static string Cute_style {
+            get {
+                return ResourceManager.GetString("Cute_style", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Dashboard.
         /// </summary>
         public static string Dashboard {
@@ -2028,6 +2082,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         public static string Drink {
             get {
                 return ResourceManager.GetString("Drink", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Drinkable.
+        /// </summary>
+        public static string Drinkable {
+            get {
+                return ResourceManager.GetString("Drinkable", resourceCulture);
             }
         }
         
@@ -2608,6 +2671,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Healing.
+        /// </summary>
+        public static string healing {
+            get {
+                return ResourceManager.GetString("healing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Height.
         /// </summary>
         public static string Height {
@@ -2739,6 +2811,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         public static string Http_Status_Code {
             get {
                 return ResourceManager.GetString("Http Status Code", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to I can&apos;t drink..
+        /// </summary>
+        public static string I_can_not_drink {
+            get {
+                return ResourceManager.GetString("I_can_not_drink", resourceCulture);
             }
         }
         
@@ -3180,6 +3261,24 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         public static string Liquor_Strength {
             get {
                 return ResourceManager.GetString("Liquor Strength", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Listener.
+        /// </summary>
+        public static string Listener {
+            get {
+                return ResourceManager.GetString("Listener", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Liven things up.
+        /// </summary>
+        public static string Liven_things_up {
+            get {
+                return ResourceManager.GetString("Liven_things_up", resourceCulture);
             }
         }
         
@@ -3828,6 +3927,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         public static string May {
             get {
                 return ResourceManager.GetString("May", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MBTI Type.
+        /// </summary>
+        public static string mbti {
+            get {
+                return ResourceManager.GetString("mbti", resourceCulture);
             }
         }
         
@@ -4842,6 +4950,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Profile Detail.
+        /// </summary>
+        public static string Profile_Detail {
+            get {
+                return ResourceManager.GetString("Profile_Detail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Profile Image.
         /// </summary>
         public static string ProfileImage {
@@ -5643,6 +5760,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Skills and assessment.
+        /// </summary>
+        public static string Skills_and_assessment {
+            get {
+                return ResourceManager.GetString("Skills_and_assessment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Skill Sets.
         /// </summary>
         public static string SkillSets {
@@ -5693,6 +5819,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         public static string Social_Links {
             get {
                 return ResourceManager.GetString("Social Links", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Speaker.
+        /// </summary>
+        public static string Speaker {
+            get {
+                return ResourceManager.GetString("Speaker", resourceCulture);
             }
         }
         
@@ -5958,6 +6093,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The atmosphere when we&apos;re together.
+        /// </summary>
+        public static string The_atmosphere {
+            get {
+                return ResourceManager.GetString("The_atmosphere", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The field must be a 11-digit number.
         /// </summary>
         public static string The_field_must_be_a_11_digit_number {
@@ -6044,6 +6188,15 @@ namespace CRS.ADMIN.APPLICATION.Resources {
         public static string Title {
             get {
                 return ResourceManager.GetString("Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Title Detail.
+        /// </summary>
+        public static string Title_detail {
+            get {
+                return ResourceManager.GetString("Title_detail", resourceCulture);
             }
         }
         

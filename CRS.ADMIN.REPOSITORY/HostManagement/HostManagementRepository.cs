@@ -91,7 +91,7 @@ namespace CRS.ADMIN.REPOSITORY.HostManagement
                         SNO = i,
                         Height = _DAO.ParseColumnValue(item, "Height").ToString(),
                         Address = _DAO.ParseColumnValue(item, "Address").ToString()
-                       
+
                     });
                     i++;
                 }
@@ -105,39 +105,54 @@ namespace CRS.ADMIN.REPOSITORY.HostManagement
             SQL += ",@AgentId=" + _DAO.FilterString(AgentId);
             SQL += ",@HostId=" + _DAO.FilterString(HostId);
             var dbResponse = _DAO.ExecuteDataRow(SQL);
+
+            string SQL1 = "EXEC sproc_host_management @Flag='gsl_ases'";
+            SQL1 += ",@AgentId=" + _DAO.FilterString(AgentId);
+            SQL1 += ",@HostId=" + _DAO.FilterString(HostId);
+            var dbResponse1 = _DAO.ExecuteDataRow(SQL1);
+
             if (dbResponse != null)
             {
                 Response = new ManageHostCommon()
                 {
-                    AgentId = _DAO.ParseColumnValue(dbResponse, "AgentId").ToString(),
-                    HostId = _DAO.ParseColumnValue(dbResponse, "HostId").ToString(),
-                    HostName = _DAO.ParseColumnValue(dbResponse, "HostName").ToString(),
-                    Position = _DAO.ParseColumnValue(dbResponse, "Position").ToString(),
-                    DOB = _DAO.ParseColumnValue(dbResponse, "DOB").ToString(),
-                    ConstellationGroup = _DAO.ParseColumnValue(dbResponse, "ConstellationGroup").ToString(),
-                    Height = _DAO.ParseColumnValue(dbResponse, "Height").ToString(),
-                    BloodType = _DAO.ParseColumnValue(dbResponse, "BloodType").ToString(),
-                    PreviousOccupation = _DAO.ParseColumnValue(dbResponse, "PreviousOccupation").ToString(),
-                    LiquorStrength = _DAO.ParseColumnValue(dbResponse, "LiquorStrength").ToString(),
-                    InstagramLink = _DAO.ParseColumnValue(dbResponse, "InstagramLink").ToString(),
-                    TiktokLink = _DAO.ParseColumnValue(dbResponse, "TiktokLink").ToString(),
-                    TwitterLink = _DAO.ParseColumnValue(dbResponse, "TwitterLink").ToString(),
-                    Rank = _DAO.ParseColumnValue(dbResponse, "Rank").ToString(),
-                    Line = _DAO.ParseColumnValue(dbResponse, "Line").ToString(),
-                    ImagePath = _DAO.ParseColumnValue(dbResponse, "ImagePath").ToString(),
-                    IconImagePath = _DAO.ParseColumnValue(dbResponse, "IconImagePath").ToString(),
-                    Address = _DAO.ParseColumnValue(dbResponse, "Address").ToString(),
-                    HostNameJapanese = _DAO.ParseColumnValue(dbResponse, "HostNameJapanese").ToString(),
-                    HostIntroduction = _DAO.ParseColumnValue(dbResponse, "HostIntroduction").ToString(),
-                    //OtherPositionRemark = _DAO.ParseColumnValue(dbResponse, "OtherPosition").ToString(),
+                    AgentId = _DAO.ParseColumnValue(dbResponse, "AgentId")?.ToString() ?? string.Empty,
+                    HostId = _DAO.ParseColumnValue(dbResponse, "HostId")?.ToString() ?? string.Empty,
+                    HostName = _DAO.ParseColumnValue(dbResponse, "HostName")?.ToString() ?? string.Empty,
+                    Position = _DAO.ParseColumnValue(dbResponse, "Position")?.ToString() ?? string.Empty,
+                    DOB = _DAO.ParseColumnValue(dbResponse, "DOB")?.ToString() ?? string.Empty,
+                    ConstellationGroup = _DAO.ParseColumnValue(dbResponse, "ConstellationGroup")?.ToString() ?? string.Empty,
+                    Height = _DAO.ParseColumnValue(dbResponse, "Height")?.ToString() ?? string.Empty,
+                    BloodType = _DAO.ParseColumnValue(dbResponse, "BloodType")?.ToString() ?? string.Empty,
+                    PreviousOccupation = _DAO.ParseColumnValue(dbResponse, "PreviousOccupation")?.ToString() ?? string.Empty,
+                    LiquorStrength = _DAO.ParseColumnValue(dbResponse, "LiquorStrength")?.ToString() ?? string.Empty,
+                    InstagramLink = _DAO.ParseColumnValue(dbResponse, "InstagramLink")?.ToString() ?? string.Empty,
+                    TiktokLink = _DAO.ParseColumnValue(dbResponse, "TiktokLink")?.ToString() ?? string.Empty,
+                    TwitterLink = _DAO.ParseColumnValue(dbResponse, "TwitterLink")?.ToString() ?? string.Empty,
+                    Rank = _DAO.ParseColumnValue(dbResponse, "Rank")?.ToString() ?? string.Empty,
+                    Line = _DAO.ParseColumnValue(dbResponse, "Line")?.ToString() ?? string.Empty,
+                    ImagePath = _DAO.ParseColumnValue(dbResponse, "ImagePath")?.ToString() ?? string.Empty,
+                    IconImagePath = _DAO.ParseColumnValue(dbResponse, "IconImagePath")?.ToString() ?? string.Empty,
+                    Address = _DAO.ParseColumnValue(dbResponse, "Address")?.ToString() ?? string.Empty,
+                    HostNameJapanese = _DAO.ParseColumnValue(dbResponse, "HostNameJapanese")?.ToString() ?? string.Empty,
+                    HostIntroduction = _DAO.ParseColumnValue(dbResponse, "HostIntroduction")?.ToString() ?? string.Empty,
+                    MBTI = _DAO.ParseColumnValue(dbResponse, "MBTI")?.ToString() ?? string.Empty,
+                    Title = _DAO.ParseColumnValue(dbResponse, "Title")?.ToString() ?? string.Empty,
+
+                    appreanceScoreValue = _DAO.ParseColumnValue(dbResponse1, "AppearanceAndOverallImpression")?.ToString() ?? string.Empty,
+                    conversationScoreValue = _DAO.ParseColumnValue(dbResponse1, "ConversationStyle")?.ToString() ?? string.Empty,
+                    beverageToleranceScoreValue = _DAO.ParseColumnValue(dbResponse1, "AlcoholTolerance")?.ToString() ?? string.Empty,
+                    atmosphereScoreValue = _DAO.ParseColumnValue(dbResponse1, "Atmosphere")?.ToString() ?? string.Empty,
                 };
 
                 string SQL2 = "EXEC sproc_host_identity_detail_management @Flag = 'ghid'";
                 SQL2 += ",@ClubId=" + _DAO.FilterString(AgentId);
                 SQL2 += ",@HostId=" + _DAO.FilterString(HostId);
                 var dbResponse2 = _DAO.ExecuteDataTable(SQL2);
+
                 if (dbResponse2 != null && dbResponse2.Rows.Count > 0) Response.HostIdentityDataModel = _DAO.DataTableToListObject<HostIdentityDataCommon>(dbResponse2).ToList();
             }
+
+
             return Response;
         }
 
@@ -151,7 +166,7 @@ namespace CRS.ADMIN.REPOSITORY.HostManagement
             //SQL += ",@HostName=" + _DAO.FilterString(Request.HostName);
             SQL += ",@HostName=N" + _DAO.FilterString(Request.HostName);
             SQL += ",@HostNameJapanese=N" + _DAO.FilterString(Request.HostNameJapanese);
-            SQL += string.IsNullOrEmpty(Request.Position) ? ",@Position=" + _DAO.FilterString(Request.Position) : ",@Position=N" + _DAO.FilterString(Request.Position); 
+            SQL += string.IsNullOrEmpty(Request.Position) ? ",@Position=" + _DAO.FilterString(Request.Position) : ",@Position=N" + _DAO.FilterString(Request.Position);
             //SQL += string.IsNullOrEmpty(Request.OtherPositionRemark) ? ",@OtherPositionRemark=" + _DAO.FilterString(Request.OtherPositionRemark) : ",@OtherPositionRemark=N" + _DAO.FilterString(Request.OtherPositionRemark);
             SQL += !string.IsNullOrEmpty(Request.Rank?.ToString()) ? ",@Rank=" + Request.Rank : "";
             SQL += ",@DOB=" + "'" + Request.DOB + "'";
@@ -283,14 +298,14 @@ namespace CRS.ADMIN.REPOSITORY.HostManagement
             SQL += ",@locationId=" + _DAO.FilterString(LocationId);
             SQL += ",@host_name=" + _DAO.FilterString(HostName);
             SQL += ",@imagePath=" + _DAO.FilterString(ImagePath);
-        
+
             return _DAO.ParseCommonDbResponse(SQL);
         }
 
         public InquiryListCommon GetInquiryDetailsAsync(string inquiryId)
         {
             string SQL = "EXEC sproc_admin_get_customer_enquiry_details";
-            SQL += " @inqueryId=" + _DAO.FilterString(inquiryId);      
+            SQL += " @inqueryId=" + _DAO.FilterString(inquiryId);
             var dataTable = _DAO.ExecuteDataTable(SQL);
             if (dataTable != null && dataTable.Rows.Count > 0)
             {
@@ -311,6 +326,41 @@ namespace CRS.ADMIN.REPOSITORY.HostManagement
                 };
             }
             return new InquiryListCommon();
+        }
+
+        public CommonDbResponse ManageNewHostDetails(ManageHostCommon request)
+        {
+            string SQL = "EXEC sproc_host_new_management ";
+            SQL += !string.IsNullOrEmpty(request.HostId) ? "@Flag='U'" : "@Flag='I'";
+            SQL += ",@AgentId=" + _DAO.FilterString(request.AgentId);
+            SQL += ",@HostId=" + _DAO.FilterString(request.HostId);
+            SQL += ",@HostName=N" + _DAO.FilterString(request.HostName);
+            SQL += ",@Position=N" + _DAO.FilterString(request.Position);
+            SQL += ",@Rank=N" + _DAO.FilterString(request.Rank);
+            SQL += ",@DOB=" + _DAO.FilterString(request.DOB);
+            SQL += ",@ConstellationGroup=N" + _DAO.FilterString(request.ConstellationGroup);
+            SQL += ",@Height=N" + _DAO.FilterString(request.Height);
+            SQL += ",@BloodType=" + _DAO.FilterString(request.BloodType);
+
+            SQL += ",@TiktokLink=" + _DAO.FilterString(request.TiktokLink);
+            SQL += ",@TwitterLink=" + _DAO.FilterString(request.TwitterLink);
+            SQL += ",@InstagramLink=" + _DAO.FilterString(request.InstagramLink);
+            SQL += ",@Line=" + _DAO.FilterString(request.Line);
+            SQL += ",@ImagePath=" + _DAO.FilterString(request.ImagePath);
+            SQL += ",@Address=N" + _DAO.FilterString(request.Address);
+            SQL += ",@HostNameJapanese=N" + _DAO.FilterString(request.HostNameJapanese);
+
+            SQL += ",@appreanceScoreValue=" + _DAO.FilterString(request.appreanceScoreValue);
+            SQL += ",@conversationScoreValue=" + _DAO.FilterString(request.conversationScoreValue);
+            SQL += ",@beverageToleranceScoreValue=" + _DAO.FilterString(request.beverageToleranceScoreValue);
+            SQL += ",@atmosphereScoreValue=" + _DAO.FilterString(request.atmosphereScoreValue);
+            SQL += ",@MBTI=" + (!string.IsNullOrEmpty(request.MBTI)? "N" + _DAO.FilterString(request.MBTI) + "": "NULL");
+            SQL += ",@Title=" + (!string.IsNullOrEmpty(request.Title) ? "N" + _DAO.FilterString(request.Title) + "" : "NULL");
+            SQL += ",@ActionUser=N" + _DAO.FilterString(request.ActionUser);
+            SQL += ",@ActionIP=" + _DAO.FilterString(request.ActionIP);
+            SQL += ",@ActionPlatform=" + _DAO.FilterString(request.ActionPlatform);
+
+            return _DAO.ParseCommonDbResponse(SQL);
         }
     }
 }

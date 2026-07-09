@@ -24,5 +24,6 @@ namespace CRS.ADMIN.BUSINESS.HostManagement
 
         CommonDbResponse UploadHostImage(string ClubName, string LocationId, string HostName, string ImagePath);
         InquiryListCommon GetInquiryDetailsAsync(string inquiryId);
+        CommonDbResponse ManageNewHostDetails(ManageHostCommon requestCommon);
     }
 }
