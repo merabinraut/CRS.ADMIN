@@ -335,11 +335,17 @@ namespace CRS.ADMIN.REPOSITORY.HostManagement
             SQL += ",@AgentId=" + _DAO.FilterString(request.AgentId);
             SQL += ",@HostId=" + _DAO.FilterString(request.HostId);
             SQL += ",@HostName=N" + _DAO.FilterString(request.HostName);
-            SQL += ",@Position=N" + _DAO.FilterString(request.Position);
-            SQL += ",@Rank=N" + _DAO.FilterString(request.Rank);
+
+            SQL += ",@Position=" + (string.IsNullOrEmpty(request.Position) ? "null" : "N" + _DAO.FilterString(request.Position) + "");
+            SQL += ",@Rank=" + (string.IsNullOrEmpty(request.Rank) ? "0" : "N" + _DAO.FilterString(request.Rank) + "");
+
+
+
             SQL += ",@DOB=" + _DAO.FilterString(request.DOB);
+
             SQL += ",@ConstellationGroup=N" + _DAO.FilterString(request.ConstellationGroup);
-            SQL += ",@Height=N" + _DAO.FilterString(request.Height);
+            SQL += ",@Height=" + (string.IsNullOrEmpty(request.Height) ? "null" : "N" + _DAO.FilterString(request.Height) + "");
+
             SQL += ",@BloodType=" + _DAO.FilterString(request.BloodType);
 
             SQL += ",@TiktokLink=" + _DAO.FilterString(request.TiktokLink);
@@ -347,15 +353,19 @@ namespace CRS.ADMIN.REPOSITORY.HostManagement
             SQL += ",@InstagramLink=" + _DAO.FilterString(request.InstagramLink);
             SQL += ",@Line=" + _DAO.FilterString(request.Line);
             SQL += ",@ImagePath=" + _DAO.FilterString(request.ImagePath);
-            SQL += ",@Address=N" + _DAO.FilterString(request.Address);
-            SQL += ",@HostNameJapanese=N" + _DAO.FilterString(request.HostNameJapanese);
+            SQL += ",@Address=" + (string.IsNullOrEmpty(request.Address) ? "null" : "N" + _DAO.FilterString(request.Address) + "");
+
+            SQL += ",@HostNameJapanese=" + (string.IsNullOrEmpty(request.HostNameJapanese) ? "null" : "N" + _DAO.FilterString(request.HostNameJapanese) + "");
+
 
             SQL += ",@appreanceScoreValue=" + _DAO.FilterString(request.appreanceScoreValue);
             SQL += ",@conversationScoreValue=" + _DAO.FilterString(request.conversationScoreValue);
             SQL += ",@beverageToleranceScoreValue=" + _DAO.FilterString(request.beverageToleranceScoreValue);
             SQL += ",@atmosphereScoreValue=" + _DAO.FilterString(request.atmosphereScoreValue);
+
             SQL += ",@MBTI=" + (!string.IsNullOrEmpty(request.MBTI)? "N" + _DAO.FilterString(request.MBTI) + "": "NULL");
             SQL += ",@Title=" + (!string.IsNullOrEmpty(request.Title) ? "N" + _DAO.FilterString(request.Title) + "" : "NULL");
+
             SQL += ",@ActionUser=N" + _DAO.FilterString(request.ActionUser);
             SQL += ",@ActionIP=" + _DAO.FilterString(request.ActionIP);
             SQL += ",@ActionPlatform=" + _DAO.FilterString(request.ActionPlatform);
