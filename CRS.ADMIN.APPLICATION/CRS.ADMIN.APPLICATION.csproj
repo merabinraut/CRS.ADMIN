@@ -458,7 +458,6 @@
     <Content Include="Views\DiscountManagement\GetCategoryDetailsList.cshtml" />
     <Content Include="Views\DiscountManagement\_ManageDiscountSubCategoryPartialView.cshtml" />
     <Content Include="Views\HostManagement\_ManageNewHostPartialView.cshtml" />
-    <Content Include="Views\ClubPlanManagement\_ManageClubPlan.cshtml" />
     <Content Include="Views\ConversionMetrixManagement\Index.cshtml" />
     <Content Include="Views\ConversionMetrixManagement\manage_activities_conversionMetrix.cshtml" />
     <Content Include="Views\ConversionMetrixManagement\_OverviewTab.cshtml" />
