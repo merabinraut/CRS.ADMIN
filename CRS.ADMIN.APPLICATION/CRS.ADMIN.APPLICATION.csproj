@@ -405,8 +405,6 @@
     <Content Include="App_Data\AmazonConfigruation.json" />
     <Content Include="Content\assets_new\images\superadmin\conversionMetrix.svg" />
     <Content Include="Views\ClubManagement\_ManageSubDomainPartialView.cshtml" />
-    <Content Include="App_Data\app_data\Configuration.json" />
-    <Content Include="App_Data\app_data\Host image 1.csv" />
     <None Include="Views\ClubManagement\_ManageLineGroupPartialView.cshtml" />
     <None Include="Views\ChargeManagement\_ManageChargeCategoryDetails.cshtml" />
     <Content Include="Content\assets\images\checked-status.svg" />
