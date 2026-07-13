@@ -3005,4 +3005,110 @@
   <data name="Plan Name English" xml:space="preserve">
     <value>プラン名（英語）</value>
   </data>
+  <data name="ConversionMetrixManagement" xml:space="preserve">
+    <value>変換マトリックスの管理</value>
+  </data>
+  <data name="Active_Log" xml:space="preserve">
+    <value>アクティブログ</value>
+  </data>
+  <data name="Reservation_Clicks" xml:space="preserve">
+    <value>予約クリック数</value>
+  </data>
+  <data name="Phone_Call_Click" xml:space="preserve">
+    <value>電話通話クリック</value>
+  </data>
+  <data name="Average_CTR" xml:space="preserve">
+    <value>平均クリック率</value>
+  </data>
+  <data name="All_Stores" xml:space="preserve">
+    <value>全店舗</value>
+  </data>
+  <data name="Store_Page" xml:space="preserve">
+    <value>ストアページ</value>
+  </data>
+  <data name="Click_Origin" xml:space="preserve">
+    <value>「原点」をクリックします</value>
+  </data>
+  <data name="Store_Performance" xml:space="preserve">
+    <value>店舗実績</value>
+  </data>
+  <data name="Booking_Store_Page" xml:space="preserve">
+    <value>予約店舗ページ</value>
+  </data>
+  <data name="Booking_Host_Details" xml:space="preserve">
+    <value>予約ホスト詳細</value>
+  </data>
+  <data name="Phone_Store_Page" xml:space="preserve">
+    <value>電話店舗ページ</value>
+  </data>
+  <data name="Phone_Host_Details" xml:space="preserve">
+    <value>電話ホスト詳細</value>
+  </data>
+  <data name="Total_Clicks" xml:space="preserve">
+    <value>合計クリック数</value>
+  </data>
+  <data name="This_Month" xml:space="preserve">
+    <value>今月</value>
+  </data>
+  <data name="Action_Type" xml:space="preserve">
+    <value>アクションの種類</value>
+  </data>
+  <data name="Source_Page" xml:space="preserve">
+    <value>ソースページ</value>
+  </data>
+  <data name="Target_Name" xml:space="preserve">
+    <value>ターゲット名</value>
+  </data>
+  <data name="User_Status" xml:space="preserve">
+    <value>ユーザーステータス</value>
+  </data>
+  <data name="Browser" xml:space="preserve">
+    <value>ブラウザ</value>
+  </data>
+  <data name="Target_Type" xml:space="preserve">
+    <value>ターゲット</value>
+  </data>
+  <data name="Select_Store" xml:space="preserve">
+    <value>ストアを選択</value>
+  </data>
+  <data name="Area" xml:space="preserve">
+    <value>エリア</value>
+  </data>
+  <data name="Search_Club" xml:space="preserve">
+    <value>クラブを探す</value>
+  </data>
+  <data name="Ranked_Clubs" xml:space="preserve">
+    <value>ランク付けされたクラブ</value>
+  </data>
+  <data name="ReservationButton" xml:space="preserve">
+    <value>予約ボタン</value>
+  </data>
+  <data name="PhoneCallButton" xml:space="preserve">
+    <value>電話ボタン</value>
+  </data>
+  <data name="NoClickDataToday" xml:space="preserve">
+    <value>今日はクリックデータがありません</value>
+  </data>
+  <data name="ActionSource_ByPage" xml:space="preserve">
+    <value>アクションソース（ページ別）</value>
+  </data>
+  <data name="ClickOrigin_ByArea" xml:space="preserve">
+    <value>原点をクリック（地域別）</value>
+  </data>
+  <data name="Today_Clicks" xml:space="preserve">
+    <value>今日のクリック数</value>
+  </data>
+  <data name="Store_Detail" xml:space="preserve">
+    <value>店舗詳細</value>
+  </data>
+  <data name="Host_Detail" xml:space="preserve">
+    <value>ホストの詳細</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="Guest" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
+  <data name="Member" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
 </root>

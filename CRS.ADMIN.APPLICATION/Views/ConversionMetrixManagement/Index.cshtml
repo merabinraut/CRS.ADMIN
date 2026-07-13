@@ -1,0 +1,213 @@
+@model CRS.ADMIN.APPLICATION.Models.ConversionMetrixManagement.ConversionMetrixOverviewModel
+@{
+    ViewBag.Title = "Conversion Metrix";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+<div class="px-8 py-4 flex flex-col gap-8">
+    @Html.AntiForgeryToken()
+    <!-- Header -->
+    <div class="flex justify-between items-center">
+        <div>
+            <div class="heading-title">@CRS.ADMIN.APPLICATION.Resources.Resource.ConversionMetrixManagement</div>
+        </div>
+        <button id="allStoresBtn" class="btn btn-secondary" type="button">
+            <i class="las la-store me-2"></i>
+            @CRS.ADMIN.APPLICATION.Resources.Resource.All_Stores
+        </button>
+    </div>
+
+    <div>
+        <div class="flex gap-[24px]" style="border-bottom:1px solid #f4f4f4;">
+            <div class="flex tab-container-plane bg-white gap-[16px]">
+
+                <button id="tab1Button"
+                        type="button"
+                        class="tab-button-plane active">
+                    @CRS.ADMIN.APPLICATION.Resources.Resource.Overview
+                </button>
+
+                <button id="tab2Button"
+                        type="button"
+                        class="tab-button-plane">
+                    @CRS.ADMIN.APPLICATION.Resources.Resource.Active_Log
+                </button>
+
+            </div>
+        </div>
+    </div>
+    <div id="tab1Content">
+        @Html.Partial("_OverviewTab", Model)
+    </div>
+
+    <!-- Tab 2 -->
+    <div id="tab2Content" style="display:none;">
+        @Html.Partial("manage_activities_conversionMetrix", Model)
+    </div>
+
+</div>
+@Html.Partial("GetStoreDetailsList",Model) 
+<script>
+    $(document).ready(function () {
+        window.selectedClubId = null;
+
+        $("#tab1Button").click(function () {
+
+            $("#tab1Content").show();
+            $("#tab2Content").hide();
+
+            $("#tab1Button").addClass("active");
+            $("#tab2Button").removeClass("active");
+        });
+
+        $("#tab2Button").click(function () {
+
+            $("#tab1Content").hide();
+            $("#tab2Content").show();
+
+            $("#tab2Button").addClass("active");
+            $("#tab1Button").removeClass("active");
+
+            if (!window.activityLogLoadedOnce && typeof window.reloadActivityLog === 'function') {
+                window.reloadActivityLog();
+                window.activityLogLoadedOnce = true;
+            }
+        });
+
+        // ✅ Open drawer — use the plain button id, no Flowbite attributes
+        $("#allStoresBtn").on('click', function (e) {
+            e.preventDefault();
+            $("#add-new-store").removeClass("translate-x-full").addClass("translate-x-0");
+            if (allClubs.length === 0) {
+                loadClubs();
+            }
+        });
+
+        // ✅ Close drawer
+        $("#CloseId").on('click', function (e) {
+            e.preventDefault();
+            $("#add-new-store").addClass("translate-x-full").removeClass("translate-x-0");
+        });
+        /* ---------- Store selector logic ---------- */
+        var topN = 10;
+        var selectedId = null;
+        var allClubs = [];   // populated from your API below
+
+        function loadClubs() {
+            $.ajax({
+                url: '/ConversionMetrixManagement/GetRankedStores',
+                type: 'GET',
+                data: { topN: topN },
+                success: function (response) {
+                    if (!response || response.success === false) {
+                        console.error('[RankedStores] server error:', response && response.message);
+                        allClubs = [];
+                        renderClubList();
+                        return;
+                    }
+                    allClubs = response.data || [];
+                    renderClubList();
+                },
+                error: function () {
+                    $('#storeClubList').html(
+                        '<p class="text-sm text-red-400 text-center py-8">Failed to load clubs.</p>'
+                    );
+                }
+            });
+        }
+
+        function renderClubList() {
+            var q = ($('#storeSearch').val() || '').toLowerCase().trim();
+            var area = $('#storeAreaFilter').val();
+
+            var filtered = allClubs.filter(function (c) {
+                var matchSearch = !q ||
+                    (c.clubName || '').toLowerCase().includes(q) ||
+                    (c.clubId || '').toLowerCase().includes(q);
+                var matchArea = !area || c.area === area;
+                return matchSearch && matchArea;
+            });
+
+
+            var html = '';
+            if (!filtered.length) {
+                html = '<p class="text-sm text-gray-400 text-center py-8">No clubs found.</p>';
+            } else {
+                $.each(filtered, function (i, c) {
+                    var rank = c.rank;
+                    var badge = rankBadgeClass(rank);
+                    var sel = (c.clubId === selectedId)
+                        ? 'bg-pink-50 ring-1 ring-pink-300 rounded-lg px-2'
+                        : '';
+                    html += '<div class="club-item flex items-center gap-3 py-3 cursor-pointer ' + sel + '" '
+                        + 'data-id="' + c.clubId + '" data-name="' + escHtml(c.clubName) + '">'
+                        + '<div class="' + badge + '">#' + rank + '</div>'
+                        + '<div class="flex-1 min-w-0">'
+                        + '<p class="text-sm font-medium text-gray-800 truncate">' + escHtml(c.clubName) + '</p>'
+                        + '<p class="text-xs text-gray-400">' + escHtml(c.clubId) + '</p>'
+                        + '</div>'
+                        + '<span class="text-sm text-gray-500 whitespace-nowrap">'
+                        + c.tapCount + 'taps'
+                        + '</span>'
+                        + '</div>';
+                });
+            }
+
+            $('#storeClubList').html(html);
+
+            $('#storeClubList .club-item').on('click', function () {
+                selectedId = $(this).data('id');
+                var name = $(this).data('name');
+
+                $("#allStoresBtn").html('<i class="las la-store me-2"></i>' + escHtml(name));
+
+                $("#add-new-store").addClass("translate-x-full").removeClass("translate-x-0");
+
+                filterPageByStore(selectedId);
+            });
+        }
+
+        function rankBadgeClass(rank) {
+            var base = 'w-9 h-9 rounded-full flex items-center justify-center text-xs font-semibold flex-shrink-0 ';
+            if (rank === 1) return base + 'bg-amber-100 text-amber-700';
+            if (rank === 2) return base + 'bg-gray-100 text-gray-600';
+            if (rank === 3) return base + 'bg-orange-100 text-orange-700';
+            return base + 'bg-gray-50 text-gray-400';
+        }
+
+        function escHtml(s) {
+            return $('<div>').text(s).html();
+        }
+
+        function filterPageByStore(storeId) {
+            window.selectedClubId = storeId;
+
+            if (typeof window.reloadOverviewSummary === 'function') {
+                window.reloadOverviewSummary();
+            }
+            if (typeof window.reloadStorePerformance === 'function') {
+                window.reloadStorePerformance();
+            }
+            // Activity Log: passes clubId through, but the underlying SP doesn't filter on it yet.
+            if (typeof window.reloadActivityLog === 'function' && window.activityLogLoadedOnce) {
+                window.reloadActivityLog();
+            }
+        }
+
+        /* ---------- Live filters ---------- */
+        $('#storeSearch').on('input', renderClubList);
+        $('#storeAreaFilter').on('change', renderClubList);
+
+        /* ---------- Top N toggle ---------- */
+        $(document).on('click', '.topn-btn', function () {
+            topN = parseInt($(this).data('topn'));
+            $('.topn-btn').removeClass('bg-secondary-color-pink text-white')
+                .addClass('text-gray-500');
+            $(this).addClass('bg-secondary-color-pink text-white')
+                .removeClass('text-gray-500');
+            $('#rankedClubTitle').text('Top ' + topN);
+            loadClubs();
+        });
+    });
+</script>
