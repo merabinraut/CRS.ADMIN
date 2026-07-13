@@ -119,6 +119,7 @@
     <Compile Include="ClubManagement\TagManagementCommon.cs" />
     <Compile Include="CommonDbResponse.cs" />
     <Compile Include="Common.cs" />
+    <Compile Include="ConversionMetrixManagement\ConversionMetrixCommon.cs" />
     <Compile Include="CustomerManagement\CustomerManagementCommon.cs" />
     <Compile Include="DiscountManagementCommon\DiscountManagementCommon.cs" />
     <Compile Include="EmailLog\EmailLogModelCommon.cs" />
