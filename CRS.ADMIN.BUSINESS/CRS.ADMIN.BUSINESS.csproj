@@ -96,6 +96,8 @@
     <Compile Include="CommissionManagement\ICommissionManagementBusiness.cs" />
     <Compile Include="CommonManagement\CommonManagementBusiness.cs" />
     <Compile Include="CommonManagement\ICommonManagementBusiness.cs" />
+    <Compile Include="ConversionMetrixManagement\ConversionMetrixBusiness.cs" />
+    <Compile Include="ConversionMetrixManagement\IConversionMetrixBusiness.cs" />
     <Compile Include="CustomerManagement\CustomerManagementBusiness.cs" />
     <Compile Include="CustomerManagement\ICustomerManagementBusiness.cs" />
     <Compile Include="EmailLog\EmailLogBusiness.cs" />

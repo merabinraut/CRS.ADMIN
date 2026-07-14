@@ -1,0 +1,466 @@
+﻿@model CRS.ADMIN.APPLICATION.Models.ConversionMetrixManagement.ConversionMetrixOverviewModel
+<div class="flex justify-between pb-[24px]">
+    @*<form action="/ConversionMetrixManagement/Index" method="get">*@
+        <div class="relative input-search-wrapper">
+            <div class="absolute inset-y-0 left-0 flex items-center pl-[16px] pointer-events-none">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21" fill="none">
+                    <path d="M17.5 18L13.875 14.375M15.8333 9.66667C15.8333 13.3486 12.8486 16.3333 9.16667 16.3333C5.48477 16.3333 2.5 13.3486 2.5 9.66667C2.5 5.98477 5.48477 3 9.16667 3C12.8486 3 15.8333 5.98477 15.8333 9.66667Z"
+                          stroke="#667085" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+            </div>
+            <input type="search"
+                   id="activityLogSearch"
+                   class="input-search block w-full "
+                   placeholder="@CRS.ADMIN.APPLICATION.Resources.Resource.Search"
+                   value="@Model.SearchFilter">
+        </div>
+    @*</form>*@
+    <div class="flex gap-6">
+        <button id="activityLogThisMonthBtn"class="h-[40px] flex items-center gap-[8px] px-[12px] border border-[#D4D4D8] rounded-[5px] text-[14px] text-gray-500 font-medium">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M5.625 2.5V3.125H3.125V16.875H16.875V3.125H14.375V2.5H13.125V3.125H6.875V2.5H5.625ZM4.375 4.375H5.625V5H6.875V4.375H13.125V5H14.375V4.375H15.625V5.625H4.375V4.375ZM4.375 6.875H15.625V15.625H4.375V6.875ZM8.125 8.125V9.375H9.375V8.125H8.125ZM10.625 8.125V9.375H11.875V8.125H10.625ZM13.125 8.125V9.375H14.375V8.125H13.125ZM5.625 10.625V11.875H6.875V10.625H5.625ZM8.125 10.625V11.875H9.375V10.625H8.125ZM10.625 10.625V11.875H11.875V10.625H10.625ZM13.125 10.625V11.875H14.375V10.625H13.125ZM5.625 13.125V14.375H14.375V13.125H5.625Z" fill="#A1A1AA" fill-opacity="0.75" />
+            </svg>
+            @CRS.ADMIN.APPLICATION.Resources.Resource.This_Month
+
+        </button>
+        @*<div class="export-button h-[40px]">
+            <img src="~/Content/assets_new/images/club/download-solid.svg">@CRS.ADMIN.APPLICATION.Resources.Resource.This_Month
+        </div>*@
+        <div class="export-button h-[40px]" onclick="exportExcel('table-id', 'Club')">
+            <img src="~/Content/assets_new/images/club/download-solid.svg">@CRS.ADMIN.APPLICATION.Resources.Resource.Export
+        </div>
+    </div>
+</div>
+
+<div class="border border-[#D0D5DD] rounded-[5px] p-[20px]">
+    <div class="mb-4 text-[#3E3E3E] text-sm font-semibold">
+        @CRS.ADMIN.APPLICATION.Resources.Resource.Filter_By
+    </div>
+    <div class="grid gap-[24px] grid-cols-3">
+        <div class="input-field-common">
+            <label for="" class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                @CRS.ADMIN.APPLICATION.Resources.Resource.Action_Type
+            </label>
+            <select id="activityLogActionType"
+                    style="width:100%;"
+                    class="text-[#B7B7B7] h-[44px] UserTypeDDL">
+                <option value="">@CRS.ADMIN.APPLICATION.Resources.Resource.All</option>
+                <option value="phone">@CRS.ADMIN.APPLICATION.Resources.Resource.PhoneCallButton</option>
+                <option value="reservation">@CRS.ADMIN.APPLICATION.Resources.Resource.ReservationButton</option>
+            </select>
+
+        </div>
+        <div class="input-field-common">
+            <label for="" class="block mb-[12px] text-sm font-medium text-secondary-100">
+                @CRS.ADMIN.APPLICATION.Resources.Resource.Target_Type
+            </label>
+            <select id="activityLogTargetType" style="width: 100%;" class="text-[#B7B7B7] h-[44px] disabled-select UserListViaTypeDDL">
+                <option value="">@CRS.ADMIN.APPLICATION.Resources.Resource.All</option>
+                <option value="store Detail">@CRS.ADMIN.APPLICATION.Resources.Resource.Store_Detail</option>
+                <option value="host Detail">@CRS.ADMIN.APPLICATION.Resources.Resource.Host_Detail</option>
+            </select>
+        </div>
+        <div class="input-field-common">
+            <label for="" class="block mb-[12px] text-sm font-medium text-secondary-100">
+                @CRS.ADMIN.APPLICATION.Resources.Resource.User_Status
+            </label>
+            <select id="activityLogUserStatus" style="width: 100%;" class="text-[#B7B7B7] h-[44px] disabled-select UserListViaTypeDDL">
+                <option value="">@CRS.ADMIN.APPLICATION.Resources.Resource.All</option>
+                <option value="Guest">@CRS.ADMIN.APPLICATION.Resources.Resource.Guest</option>
+                <option value="Member">@CRS.ADMIN.APPLICATION.Resources.Resource.Member</option>
+            </select>
+        </div>
+    </div>
+    <div class="flex gap-6 mt-4">
+        <button class="btn btn-secondary rounded-[4px] px-5" id="ActivityLogCancelBtn">
+            @CRS.ADMIN.APPLICATION.Resources.Resource.Cancel
+        </button>
+        <button class="btn btn-primary rounded-[4px] px-5" id="ActivityLogApplyBtn">
+            @CRS.ADMIN.APPLICATION.Resources.Resource.Apply
+        </button>
+    </div>
+
+</div>
+
+<div class="table-tab mt-4">
+    <div class="px-[12px] py-[16px] flex justify-between entry-export-container">
+        <div class="flex items-center select-entries" id="ShowEntries-Id">
+        </div>
+    </div>
+    <div class="relative overflow-x-auto">
+        <table class="w-full text-left club-table table-fixed" id="activityLogTable">
+            <thead class="club-table-thead">
+                <tr>
+                    <th scope="col" class="p-[12px]">
+                        <div class="flex w-max">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.SNS
+                            <div class="relative pl-[5px]">
+                                <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                            </div>
+                        </div>
+                    </th>
+                    <th scope="col" class="p-[12px]">
+                        <div class="flex w-max">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Action_Type
+                            <div class="relative pl-[5px]">
+                                <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                            </div>
+                        </div>
+                    </th>
+
+                    <th scope="col" class="p-[12px]">
+                        <div class="flex w-max">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Source_Page
+                            <div class="relative pl-[5px]">
+                                <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                            </div>
+                        </div>
+                    </th>
+                    <th scope="col" class="p-[12px]">
+                        <div class="flex w-max">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Target_Name
+                            <div class="relative pl-[5px]">
+                                <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                            </div>
+                        </div>
+                    </th>
+                    <th scope="col" class="p-[12px]">
+                        <div class="flex w-max">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.User_Status
+                            <div class="relative pl-[5px]">
+                                <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                            </div>
+                        </div>
+                    </th>
+                    <th scope="col" class="p-[12px]">
+                        <div class="flex w-max">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Prefecture
+                            <div class="relative pl-[5px]">
+                                <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                            </div>
+                        </div>
+                    </th>
+                    <th scope="col" class="p-[12px]">
+                        <div class="flex w-max">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Browser
+                            <div class="relative pl-[5px]">
+                                <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                            </div>
+                        </div>
+                    </th>
+                    <th scope="col" class="p-[12px]">
+                        <div class="flex  w-max ">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Date
+                            <div class="relative pl-[5px]">
+                                <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                            </div>
+                        </div>
+                    </th>
+                </tr>
+            </thead>
+            <tbody id="activityLogBody">
+                @{
+                    int SN = 1;
+                    foreach (var item in Model.ActivityLogModel)
+                    {
+                        <tr class="bg-white border-b ">
+                            <td class="p-[12px]">
+                                @item.SNO
+                            </td>
+                            <td class="p-[12px]">
+                                @item.ActionType
+                            </td>
+                            <td class="p-[12px]">
+                                @item.SourcePage
+                            </td>
+                            <td class="p-[12px]">
+                                @item.TargetName
+                            </td>
+                            <td class="p-[12px]">
+                                @item.UserStatus
+                            </td>
+                            <td class="p-[12px]">
+                                <div class="w-max">
+                                    @item.Prefecture
+                                </div>
+                            </td>
+                            <td class="p-[12px]">
+                                <div class="w-max">
+                                    @item.Browser
+                                </div>
+                            </td>
+                            <td class="p-[12px]">
+                                <div class="w-max">
+                                    @item.Date
+                                </div>
+                            </td>
+                        </tr>
+                        SN++;
+                    }
+                }
+            </tbody>
+        </table>
+
+    </div>
+    <div class="pagination-club">
+        <div class="show-entry" id="Entries-Id">
+        </div>
+        <div class="flex gap-[12px]">
+            <div class="btn btn-secondary-box-shadow" id="activityLogPrevBtn">
+                @CRS.ADMIN.APPLICATION.Resources.Resource.Previous
+            </div>
+            <div class="flex gap-[12px]" id="activityLogPaginationId">
+            </div>
+            <div class="btn btn-secondary-box-shadow" id="activityLogNextBtn">
+                @CRS.ADMIN.APPLICATION.Resources.Resource.Next
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    (function () {
+        var currentPage = 1;
+        var pageSize = 10;
+        var currentActionType = '';
+        var currentTargetType = '';
+        var currentUserStatus = '';
+        var currentSearch = '@Html.Raw(HttpUtility.JavaScriptStringEncode(Model.SearchFilter))';
+        var searchDebounce = null;
+        var thisMonthActive = false;
+        var fromDateMs = null;  
+        var toDateMs = null; 
+
+        function escHtml(s) {
+            return $('<div>').text(String(s || '')).html();
+        }
+
+        function formatDate(d) {
+            if (!d) return '-';
+            var dt = new Date(d);
+            if (isNaN(dt.getTime())) return escHtml(d);
+            return dt.toLocaleString();
+        }
+
+        function getThisMonthRange() {
+            var now = new Date();
+            var start = new Date(now.getFullYear(), now.getMonth(), 1, 0, 0, 0, 0);
+            var end = new Date(now.getFullYear(), now.getMonth() + 1, 0, 23, 59, 59, 999);
+            return { from: start.getTime(), to: end.getTime() };
+        }
+
+
+        function loadActivityLog(pageNo) {
+            currentPage = pageNo || 1;
+            var tzOffset = -new Date().getTimezoneOffset();
+
+            $.ajax({
+                url: '/ConversionMetrixManagement/GetActiveLog',
+                type: 'GET',
+                data: {
+                    clubId: window.selectedClubId,
+                    actionType: currentActionType,
+                    targetType: currentTargetType,
+                    userStatus: currentUserStatus,
+                    fromDateMs: fromDateMs,
+                    toDateMs: toDateMs,
+                    timezoneOffset: tzOffset,
+                    search: currentSearch,
+                    pageNo: currentPage,
+                    pageSize: pageSize
+                },
+                success: function (response) {
+                    if (!response || response.success === false) {
+                        console.error('[ActivityLog] server error:', response && response.message);
+                        renderRows([]);
+                        renderPagination(0);
+                        return;
+                    }
+                    renderRows(response.data);
+                    renderPagination(response.totalCount);
+                },
+                error: function (xhr, status, err) {
+                    console.error('[ActivityLog] AJAX error:', status, err);
+                    renderRows([]);
+                    renderPagination(0);
+                }
+            });
+        }
+        function actionTypeBadge(actionType) {
+            if (actionType === 'Phone Call') {
+                return '<span class="badge-pill" style="background:#E6F7EE;color:#1D9E75;display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:999px;font-size:12px;font-weight:600;">'
+                    + '<i class="las la-phone"></i>' + escHtml(actionType) + '</span>';
+            }
+            if (actionType === 'Reservation') {
+                return '<span class="badge-pill" style="background:#FEEAD8;color:#F89336;display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:999px;font-size:12px;font-weight:600;">'
+                    + '<i class="las la-calendar-check"></i>' + escHtml(actionType) + '</span>';
+            }
+            return '<span class="badge-pill" style="background:#F4F4F5;color:#6B7280;display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:999px;font-size:12px;font-weight:600;">'
+                + escHtml(actionType || '-') + '</span>';
+        }
+        function userStatusBadge(status, fallbackSessionId) {
+            if (status === 'Member' || status === '会員') {
+                return '<span style="color:#1D9E75;font-weight:600;font-size:12px;">'
+                    + '<i class="las la-user-check"></i> ' + escHtml(status) + '</span>';
+            }
+            if (status === 'Guest' || status === 'ゲスト') {
+                return '<span style="color:#F89336;font-weight:600;font-size:12px;">'
+                    + '<i class="las la-user"></i> ' + escHtml(status) + '</span>';
+            }
+            return '<span style="color:#9CA3AF;font-size:12px;">' + escHtml(fallbackSessionId || '-') + '</span>';
+        }
+
+
+        function renderRows(rows) {
+            if (!rows || !rows.length) {
+                $('#activityLogBody').html(
+                    '<tr><td colspan="7" class="p-[16px] text-center text-gray-400 text-[13px]">No data available.</td></tr>'
+                );
+                return;
+            }
+
+            var html = rows.map(function (r) {
+                return '<tr class="bg-white border-b">'
+                    + '<td class="p-[12px]">' + r.sn + '</td>'
+                    + '<td class="p-[12px]">' + actionTypeBadge(r.actionType) + '</td>'
+                    + '<td class="p-[12px]">' + escHtml(r.sourcePage) + '</td>'
+                    + '<td class="p-[12px]">' + escHtml(r.targetName) + '</td>'
+                    + '<td class="p-[12px]">' + userStatusBadge(r.userStatus, r.sessionId) + '</td>'
+                    + '<td class="p-[12px] truncate max-w-[150px]">' + escHtml(r.prefecture) + '</td>'
+                    + '<td class="p-[12px] truncate max-w-[250px]" title="' + escHtml(r.browser) + '">' + escHtml(r.browser) + '</td>'
+                    + '<td class="p-[12px] whitespace-nowrap">' + formatDate(r.date) + '</td>'
+                    + '</tr>';
+            }).join('');
+
+            $('#activityLogBody').html(html);
+        }
+
+        function renderPagination(totalCount) {
+            var totalPages = Math.max(1, Math.ceil(totalCount / pageSize));
+
+            $('#Entries-Id').text(
+                totalCount > 0
+                    ? ((currentPage - 1) * pageSize + 1) + '-' + Math.min(currentPage * pageSize, totalCount) + ' of ' + totalCount
+                    : '0 of 0'
+            );
+
+            var pages = getPageNumbers(currentPage, totalPages);
+            var pagesHtml = pages.map(function (p) {
+                if (p === '...') {
+                    return '<div class="px-2 text-gray-400 select-none self-center">...</div>';
+                }
+                var activeClass = p === currentPage ? 'btn-primary' : 'btn-secondary-box-shadow';
+                return '<div class="btn ' + activeClass + ' activity-log-page-btn" data-page="' + p + '">' + p + '</div>';
+            }).join('');
+
+            $('#activityLogPaginationId').html(pagesHtml);
+            $('#activityLogPrevBtn').toggleClass('disabled', currentPage <= 1);
+            $('#activityLogNextBtn').toggleClass('disabled', currentPage >= totalPages);
+        }
+
+        // Builds an array like [1, 2, 3, '...', 10] or [1, '...', 4, 5, 6, '...', 10]
+        function getPageNumbers(current, total) {
+            var delta = 2; // how many pages to show on either side of current
+            var range = [1];
+
+            for (var i = current - delta; i <= current + delta; i++) {
+                if (i > 1 && i < total) {
+                    range.push(i);
+                }
+            }
+
+            if (total > 1) {
+                range.push(total);
+            }
+
+            var withDots = [];
+            var last = null;
+            range.forEach(function (page) {
+                if (last !== null) {
+                    if (page - last === 2) {
+                        withDots.push(last + 1);
+                    } else if (page - last > 2) {
+                        withDots.push('...');
+                    }
+                }
+                withDots.push(page);
+                last = page;
+            });
+
+            return withDots;
+        }
+
+        $(document).on('click', '.activity-log-page-btn', function () {
+            loadActivityLog(parseInt($(this).data('page'), 10));
+        });
+
+        $(document).on('click', '#activityLogPrevBtn', function () {
+            if (currentPage > 1) loadActivityLog(currentPage - 1);
+        });
+
+        $(document).on('click', '#activityLogNextBtn', function () {
+            loadActivityLog(currentPage + 1);
+        });
+
+        $(document).on('click', '#ActivityLogApplyBtn', function () {
+            currentActionType = $('#activityLogActionType').val();
+            currentTargetType = $('#activityLogTargetType').val();
+            currentUserStatus = $('#activityLogUserStatus').val();
+            loadActivityLog(1);
+        });
+
+        $(document).on('click', '#ActivityLogCancelBtn', function () {
+            $('#activityLogActionType').val('');
+            $('#activityLogTargetType').val('');
+            $('#activityLogUserStatus').val('');
+            currentActionType = '';
+            currentTargetType = '';
+            currentUserStatus = '';  
+            loadActivityLog(1);
+        });
+
+        $(document).on('input', '#activityLogSearch', function () {
+            var val = $(this).val();
+            clearTimeout(searchDebounce);
+            searchDebounce = setTimeout(function () {
+                currentSearch = val;
+                loadActivityLog(1);
+            }, 300);
+        });
+        $(document).on('click', '#activityLogThisMonthBtn', function () {
+            thisMonthActive = !thisMonthActive;
+
+            if (thisMonthActive) {
+                var range = getThisMonthRange();
+                fromDateMs = range.from;
+                toDateMs = range.to;
+                $(this).addClass('bg-secondary-color-pink text-white border-secondary-color-pink')
+                    .removeClass('text-gray-500 border-[#D4D4D8]');
+            } else {
+                fromDateMs = null;
+                toDateMs = null;
+                $(this).removeClass('bg-secondary-color-pink text-white border-secondary-color-pink')
+                    .addClass('text-gray-500 border-[#D4D4D8]');
+            }
+
+            loadActivityLog(1);
+        });
+
+
+        $(document).ready(function () {
+            loadActivityLog(1);
+        });
+
+        window.reloadActivityLog = function () {
+            loadActivityLog(currentPage);
+        };
+    })();
+</script>
