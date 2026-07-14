@@ -1,5 +1,6 @@
 ﻿using CRS.ADMIN.REPOSITORY.ConversionMetrixManagement;
 using CRS.ADMIN.SHARED.ConversionMetrixManagement;
+using CRS.ADMIN.SHARED.LocationManagement;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -61,11 +62,11 @@ namespace CRS.ADMIN.BUSINESS.ConversionMetrixManagement
         #endregion
 
         #region Activity Log
-        public List<ActivityLogCommon> GetActivityLog(long? clubId, string searchFilter, string actionType, string sourcePageType, long? fromDateMs, long? toDateMs, int pageNo, int pageSize, string timeZoneOffsetValue)
+        public List<ActivityLogCommon> GetActivityLog(long? clubId, string searchFilter, string actionType, string sourcePageType, string userStatus, long? fromDateMs, long? toDateMs, int pageNo, int pageSize, string timeZoneOffsetValue)
         {
             try
             {
-                return _repo.GetActivityLog(clubId, searchFilter, actionType, sourcePageType, fromDateMs, toDateMs, pageNo, pageSize, timeZoneOffsetValue)
+                return _repo.GetActivityLog(clubId, searchFilter, actionType, sourcePageType, userStatus, fromDateMs, toDateMs, pageNo, pageSize, timeZoneOffsetValue)
                     ?? new List<ActivityLogCommon>();
             }
             catch (Exception)
@@ -102,6 +103,19 @@ namespace CRS.ADMIN.BUSINESS.ConversionMetrixManagement
                 throw;
             }
         }
+        #region Location List
+        public List<LocationCommon> GetLocationList()
+        {
+            try
+            {
+                return _repo.GetLocationList() ?? new List<LocationCommon>();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+        #endregion
 
     }
 }

@@ -3212,11 +3212,22 @@
   <data name="Host_Detail" xml:space="preserve">
     <value>Host Detail</value>
   </data>
+  <data name="Todays_Clicks" xml:space="preserve">
+    <value>Today's Click</value>
+  </data>
+  <data name="Export_CSV" xml:space="preserve">
+    <value>Export CSV</value>
+  </data>
+  <data name="Host_Detail_Page" xml:space="preserve">
+    <value>Host Detail Page</value>
+  </data>
   <data name="Guest" xml:space="preserve">
     <value>Guest</value>
   </data>
   <data name="Member" xml:space="preserve">
     <value>Member</value>
->>>>>>> 6781b19 (Feat/ConversionMetrix: Implement Convertion Metrix)
+  </data>
+  <data name="Search_By_StoreName" xml:space="preserve">
+    <value>Search</value>
   </data>
 </root>

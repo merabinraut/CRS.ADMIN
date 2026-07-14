@@ -125,6 +125,7 @@ namespace CRS.ADMIN.SHARED.ConversionMetrixManagement
     {
         public string Time { get; set; }
         public int Value { get; set; }
+        public string channel { get; set; }
     }
 
 }

@@ -1,7 +1,7 @@
 @model CRS.ADMIN.APPLICATION.Models.ConversionMetrixManagement.ConversionMetrixOverviewModel
 <div class="">
     <div class="bg-white">
-        <div id="tab1Button" class="tab-content-plane px-4">
+        <div id="tab1Content-inner" class="tab-content-plane px-4">
             <div class="grid gap-[32px]">
                 <div class="payment-details grid grid-cols-4 gap-[35px]">
                     <div class="payment-details-card">
@@ -64,7 +64,7 @@
                             <div class="bg-white">
                                 <div class=" flex justify-between items-center mb-4">
                                     <div class="text-gray-900 font-bold">
-                                        @CRS.ADMIN.APPLICATION.Resources.Resource.Today_Clicks
+                                        @CRS.ADMIN.APPLICATION.Resources.Resource.Todays_Clicks
                                     </div>
                                     <select id="clickChartFilter"
                                             class="font-bold text-[11px] cursor-pointer border border-[#D4D4D8] rounded-[5px]">
@@ -74,7 +74,7 @@
                                         <option value="reservation">
                                             @CRS.ADMIN.APPLICATION.Resources.Resource.ReservationButton
                                         </option>
-                                        <option value="phone">
+                                        <option value="phone"> 
                                             @CRS.ADMIN.APPLICATION.Resources.Resource.PhoneCallButton
                                         </option>
                                     </select>
@@ -141,7 +141,7 @@
             <input type="search"
                    id="storePerformanceSearch"
                    class="input-search block w-full "
-                   placeholder="@CRS.ADMIN.APPLICATION.Resources.Resource.Search"
+                   placeholder="@CRS.ADMIN.APPLICATION.Resources.Resource.Search_By_StoreName"
                    value="@Model.SearchFilter">
         </div>
         <div class="flex gap-6">
@@ -152,7 +152,7 @@
                 @CRS.ADMIN.APPLICATION.Resources.Resource.This_Month
             </button>
             <div class="export-button h-[40px]" onclick="exportExcel('table-id', 'Club')">
-                <img src="~/Content/assets_new/images/club/download-solid.svg">@CRS.ADMIN.APPLICATION.Resources.Resource.Export
+                <img src="~/Content/assets_new/images/club/download-solid.svg">@CRS.ADMIN.APPLICATION.Resources.Resource.Export_CSV
             </div>
         </div>
     </div>
@@ -448,14 +448,23 @@
 
         // Single combined call: today's click chart + action source + click origin
         function loadClickAnalytics(filter) {
+            console.log("Received filter:", filter);
+            console.trace("loadClickAnalytics called");
+            var normalizedFilter = (filter || 'all').toLowerCase().trim();
             var tzOffset = -new Date().getTimezoneOffset();
+            
+            console.log("normalizedFilter =", normalizedFilter);
+
+            $('#actionSourceList').html('<p class="text-[13px] text-gray-400 py-2">Loading...</p>');
+            $('#clickOriginList').html('<p class="text-[13px] text-gray-400 py-2">Loading...</p>');
 
             $.ajax({
                 url: '/ConversionMetrixManagement/GetClickAnalytics',
                 type: 'GET',
+                cache: false,
                 data: {
                     clubId: window.selectedClubId,
-                    channel: filter || 'all',
+                    channel: normalizedFilter,
                     timezoneOffset: tzOffset
                 },
                 success: function (response) {
@@ -483,6 +492,7 @@
             $.ajax({
                 url: '/ConversionMetrixManagement/GetConversionSummaryJson',
                 type: 'GET',
+                cache: false,
                 data: { clubId: window.selectedClubId },
                 success: function (response) {
                     if (!response || response.success === false) {
@@ -520,7 +530,6 @@
 
             if (chartInstance) {
                 chartInstance.destroy();
-                chartInstance = null;
             }
 
             chartInstance = new Chart(document.getElementById('Month12'), {
@@ -638,11 +647,13 @@
         function renderActionSource(data) {
             var byLabel = {};
             (data || []).forEach(function (d) {
-                byLabel[d.label] = d;
+                if (d.label) {
+                    byLabel[d.label.toLowerCase().trim()] = d;
+                }
             });
 
             var html = ACTION_SOURCE_CATEGORIES.map(function (label) {
-                var d = byLabel[label];
+                var d = byLabel[label.toLowerCase().trim()];
                 var pct = d && d.percentage ? parseFloat(d.percentage).toFixed(1) : '0.0';
                 return '<div class="mb-4">'
                     + '<div class="mb-2 flex justify-between text-[#18181B] text-[13px]">'
@@ -663,27 +674,25 @@
         var CLICK_ORIGIN_AREAS = ['Tokyo', 'Osaka', 'Aichi'];
 
         function renderClickOrigin(data) {
-            var byArea = {};
-            (data || []).forEach(function (d) {
-                byArea[d.area] = d;
-            });
+            if (!data || !data.length) {
+                $('#clickOriginList').html(
+                    '<p class="text-[13px] text-gray-400 py-2">No data available.</p>'
+                );
+                return;
+            }
 
-            var max = Math.max.apply(null, CLICK_ORIGIN_AREAS.map(function (area) {
-                return (byArea[area] && byArea[area].clicks) || 0;
-            }).concat([1])); // avoids Math.max(...[]) === -Infinity when everything is 0
+            var max = Math.max.apply(null, data.map(function (d) { return d.clicks || 0; }).concat([1]));
 
-            var html = CLICK_ORIGIN_AREAS.map(function (area, i) {
-                var d = byArea[area];
-                var clicks = d ? d.clicks : 0;
-                var pct = d && d.percentage ? parseFloat(d.percentage).toFixed(1) : '0.0';
-                var barPct = max > 0 ? Math.round((clicks / max) * 100) : 0;
+            var html = data.map(function (d, i) {
+                var pct = d.percentage ? parseFloat(d.percentage).toFixed(1) : '0.0';
+                var barPct = max > 0 ? Math.round(((d.clicks || 0) / max) * 100) : 0;
                 var color = AREA_COLORS[i % AREA_COLORS.length];
 
                 return '<div class="flex items-center gap-[10px] py-[9px]'
                     + ' border-b border-[#F4F4F5] last:border-b-0">'
                     + '<span style="width:10px;height:10px;border-radius:50%;'
                     + 'background:' + color + ';flex-shrink:0;display:inline-block;"></span>'
-                    + '<span class="flex-1 text-[13px] text-[#18181B]">' + escHtml(area) + '</span>'
+                    + '<span class="flex-1 text-[13px] text-[#18181B]">' + escHtml(d.area) + '</span>'
                     + '<div style="width:80px;background:#F4F4F5;border-radius:999px;height:4px;">'
                     + '<div style="width:' + barPct + '%;height:4px;border-radius:999px;'
                     + 'background:' + color + ';"></div>'
@@ -696,12 +705,28 @@
             $('#clickOriginList').html(html);
         }
 
-        $(document).on('change', '#clickChartFilter', function () {
-            loadClickAnalytics($(this).val());
+      
+        $(document).on('select2:select', '#clickChartFilter', function () {
+            debugger;
+            var value = $(this).val();
+            console.log("Select2 changed:", value);
+            loadClickAnalytics(value);
         });
 
         $(document).ready(function () {
-            loadClickAnalytics('all');
+
+            $(document).on('change', '#clickChartFilter', function () {
+                debugger;
+                var value = $(this).val();
+
+                console.log("Dropdown changed:", value);
+
+                loadClickAnalytics(value);
+            });
+
+
+
+            loadClickAnalytics("all");
         });
     })();
 </script>

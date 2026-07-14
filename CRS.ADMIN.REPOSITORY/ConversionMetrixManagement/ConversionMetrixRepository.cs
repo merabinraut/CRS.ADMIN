@@ -1,5 +1,6 @@
 ﻿using Aspose.Cells;
 using CRS.ADMIN.SHARED.ConversionMetrixManagement;
+using CRS.ADMIN.SHARED.LocationManagement;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -68,7 +69,7 @@ namespace CRS.ADMIN.REPOSITORY.ConversionMetrixManagement
             {
                 var sql = "EXEC [analytics].[sproc_admin_get_conversion_top_store_list]"
                     + $" @locationId={(locationId.HasValue ? locationId.Value.ToString() : "NULL")}"
-                    + $",@searchFilter={(string.IsNullOrEmpty(searchFilter) ? "NULL" : $"'{_dao.FilterString(searchFilter)}'")}"
+                    + $",@searchFilter={(string.IsNullOrEmpty(searchFilter) ? "NULL" : $"N'{_dao.FilterString(searchFilter)}'")}"
                     + $",@topCount={topCount}"
                     + $",@fromDateMs={(fromDateMs.HasValue ? fromDateMs.Value.ToString() : "NULL")}"
                     + $",@toDateMs={(toDateMs.HasValue ? toDateMs.Value.ToString() : "NULL")}"
@@ -111,16 +112,17 @@ namespace CRS.ADMIN.REPOSITORY.ConversionMetrixManagement
         #endregion
 
         #region Activity Log
-        public List<ActivityLogCommon> GetActivityLog(long? clubId, string searchFilter, string actionType, string sourcePageType,long? fromDateMs, long? toDateMs, int pageNo, int pageSize, string timeZoneOffsetValue)
+        public List<ActivityLogCommon> GetActivityLog(long? clubId, string searchFilter, string actionType, string sourcePageType,string userStatus, long? fromDateMs, long? toDateMs, int pageNo, int pageSize, string timeZoneOffsetValue)
         {
             var response = new List<ActivityLogCommon>();
             try
             {
                 var sql = "EXEC [analytics].[sproc_admin_get_conversion_activity_log]"
                     + $" @clubId={(clubId.HasValue ? clubId.Value.ToString() : "NULL")}"
-                    + $",@searchFilter={(string.IsNullOrEmpty(searchFilter) ? "NULL" : $"'{_dao.FilterString(searchFilter)}'")}"
+                    + $",@searchFilter={(string.IsNullOrEmpty(searchFilter) ? "NULL" : $"N'{_dao.FilterString(searchFilter)}'")}"
                     + $",@actionType={(string.IsNullOrEmpty(actionType) ? "NULL" : $"'{_dao.FilterString(actionType)}'")}"
                     + $",@sourcePageType={(string.IsNullOrEmpty(sourcePageType) ? "NULL" : $"'{_dao.FilterString(sourcePageType)}'")}"
+                    + $",@userStatus={(string.IsNullOrEmpty(userStatus) ? "NULL" : $"'{_dao.FilterString(userStatus)}'")}"
                     + $",@fromDateMs={(fromDateMs.HasValue ? fromDateMs.Value.ToString() : "NULL")}"
                     + $",@toDateMs={(toDateMs.HasValue ? toDateMs.Value.ToString() : "NULL")}"
                     + $",@pageNo={pageNo}"
@@ -170,7 +172,7 @@ namespace CRS.ADMIN.REPOSITORY.ConversionMetrixManagement
             {
                 var sql = "EXEC [analytics].[sproc_admin_get_conversion_store_performance]"
                     + $" @clubId={(clubId.HasValue ? clubId.Value.ToString() : "NULL")}"
-                    + $",@searchFilter={(string.IsNullOrEmpty(searchFilter) ? "NULL" : $"'{_dao.FilterString(searchFilter)}'")}"
+                    + $",@searchFilter={(string.IsNullOrEmpty(searchFilter) ? "NULL" : $"N'{_dao.FilterString(searchFilter)}'")}"
                     + $",@fromDateMs={(fromDateMs.HasValue ? fromDateMs.Value.ToString() : "NULL")}"
                     + $",@toDateMs={(toDateMs.HasValue ? toDateMs.Value.ToString() : "NULL")}"
                     + $",@pageNo={pageNo}"
@@ -273,6 +275,28 @@ namespace CRS.ADMIN.REPOSITORY.ConversionMetrixManagement
             return result;
         }
         #endregion
+        public List<LocationCommon> GetLocationList()
+        {
+            var response = new List<LocationCommon>();
+            try
+            {
+                var sql = "SELECT LocationId, LocationName FROM [hoslog.local].[dbo].[tbl_location] WHERE Status = 'A' ORDER BY LocationName";
+                var dt = ExecuteDataSetFirstTable(sql);
+                if (dt != null)
+                {
+                    foreach (DataRow item in dt.Rows)
+                    {
+                        response.Add(new LocationCommon
+                        {
+                            LocationId = _dao.ParseColumnValue(item, "LocationId")?.ToString(),
+                            LocationName = _dao.ParseColumnValue(item, "LocationName")?.ToString()
+                        });
+                    }
+                }
+            }
+            catch (Exception) { throw; }
+            return response;
+        }
         public long? ResolveClubCodeToAgentId(string clubCode)
         {
             if (string.IsNullOrEmpty(clubCode)) return null;

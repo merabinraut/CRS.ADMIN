@@ -80,25 +80,29 @@
             e.preventDefault();
             $("#add-new-store").removeClass("translate-x-full").addClass("translate-x-0");
             if (allClubs.length === 0) {
-                loadClubs();
+                loadClubs($('#storeAreaFilter').val());
             }
         });
 
-        // ✅ Close drawer
+
         $("#CloseId").on('click', function (e) {
             e.preventDefault();
             $("#add-new-store").addClass("translate-x-full").removeClass("translate-x-0");
         });
+
         /* ---------- Store selector logic ---------- */
         var topN = 10;
         var selectedId = null;
         var allClubs = [];   // populated from your API below
 
-        function loadClubs() {
+        function loadClubs(locationId ) {
             $.ajax({
                 url: '/ConversionMetrixManagement/GetRankedStores',
                 type: 'GET',
-                data: { topN: topN },
+                data: {
+                    topN: topN,
+                    locationId: locationId || null
+                },
                 success: function (response) {
                     if (!response || response.success === false) {
                         console.error('[RankedStores] server error:', response && response.message);
@@ -119,14 +123,11 @@
 
         function renderClubList() {
             var q = ($('#storeSearch').val() || '').toLowerCase().trim();
-            var area = $('#storeAreaFilter').val();
 
             var filtered = allClubs.filter(function (c) {
-                var matchSearch = !q ||
+                return !q ||
                     (c.clubName || '').toLowerCase().includes(q) ||
                     (c.clubId || '').toLowerCase().includes(q);
-                var matchArea = !area || c.area === area;
-                return matchSearch && matchArea;
             });
 
 
@@ -189,7 +190,6 @@
             if (typeof window.reloadStorePerformance === 'function') {
                 window.reloadStorePerformance();
             }
-            // Activity Log: passes clubId through, but the underlying SP doesn't filter on it yet.
             if (typeof window.reloadActivityLog === 'function' && window.activityLogLoadedOnce) {
                 window.reloadActivityLog();
             }
@@ -197,7 +197,10 @@
 
         /* ---------- Live filters ---------- */
         $('#storeSearch').on('input', renderClubList);
-        $('#storeAreaFilter').on('change', renderClubList);
+        //$('#storeAreaFilter').on('change', renderClubList);
+        $('#storeAreaFilter').on('change', function () {
+            loadClubs($(this).val());
+        });
 
         /* ---------- Top N toggle ---------- */
         $(document).on('click', '.topn-btn', function () {
@@ -207,7 +210,7 @@
             $(this).addClass('bg-secondary-color-pink text-white')
                 .removeClass('text-gray-500');
             $('#rankedClubTitle').text('Top ' + topN);
-            loadClubs();
+            loadClubs($('#storeAreaFilter').val());
         });
     });
 </script>

@@ -2982,6 +2982,16 @@ namespace CRS.ADMIN.APPLICATION.Resources
                 return ResourceManager.GetString("Export", resourceCulture);
             }
         }
+        /// <summary>
+        ///   Looks up a localized string similar to Export_CSV.
+        /// </summary>
+        public static string Export_CSV
+        {
+            get
+            {
+                return ResourceManager.GetString("Export_CSV", resourceCulture);
+            }
+        }
 
         /// <summary>
         ///   Looks up a localized string similar to Export PDF.
@@ -7034,6 +7044,16 @@ namespace CRS.ADMIN.APPLICATION.Resources
         /// <summary>
         ///   Looks up a localized string similar to Search.
         /// </summary>
+        public static string Search_By_StoreName
+        {
+            get
+            {
+                return ResourceManager.GetString("Search_By_StoreName", resourceCulture);
+            }
+        }
+        /// <summary>
+        ///   Looks up a localized string similar to Search.
+        /// </summary>
         public static string Search_Club
         {
             get
@@ -7979,6 +7999,16 @@ namespace CRS.ADMIN.APPLICATION.Resources
             get
             {
                 return ResourceManager.GetString("Today_Clicks", resourceCulture);
+            }
+        }
+        /// <summary>
+        ///   Looks up a localized string similar to Todays_Clicks.
+        /// </summary>
+        public static string Todays_Clicks
+        {
+            get
+            {
+                return ResourceManager.GetString("Todays_Clicks", resourceCulture);
             }
         }
 

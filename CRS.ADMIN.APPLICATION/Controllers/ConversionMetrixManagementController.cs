@@ -2,6 +2,7 @@
 using CRS.ADMIN.APPLICATION.Models.ConversionMetrixManagement;
 using CRS.ADMIN.BUSINESS.ConversionMetrixManagement;
 using CRS.ADMIN.SHARED.ConversionMetrixManagement;
+using CRS.ADMIN.SHARED.LocationManagement;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -63,6 +64,12 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                         ClickCount = x.TapCount
                     }).ToList();
                 }
+                var locations = _service.GetLocationList() ?? new List<LocationCommon>();
+                ViewBag.LocationList = locations.Select(x => new SelectListItem
+                {
+                    Value = x.LocationId,
+                    Text = x.LocationName
+                }).ToList();
             }
             catch (Exception ex)
             {
@@ -101,7 +108,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
 
         #region Click Analytics
         [HttpGet]
-        public JsonResult GetClickAnalytics(string clubId = null, string channel = "all", int timezoneOffset = 0)
+        public JsonResult GetClickAnalytics(string clubId = null, string channel="", int timezoneOffset = 0)
         {
             try
             {
@@ -190,12 +197,13 @@ namespace CRS.ADMIN.APPLICATION.Controllers
 
         #region Activity Log
         [HttpGet]
-        public JsonResult GetActiveLog( string clubId = null, string actionType = null, string sourcePageType = null, string search = null, long? fromDateMs = null, long? toDateMs = null, int timezoneOffset = 0, int pageNo = 1, int pageSize = 10)
+        public JsonResult GetActiveLog( string clubId = null, string actionType = null, string sourcePageType = null, string search = null, long? fromDateMs = null, long? toDateMs = null, string userStatus = null, int timezoneOffset = 0, int pageNo = 1, int pageSize = 10)
         {
             try
             {
                 if (string.IsNullOrWhiteSpace(actionType) || actionType == "All") actionType = null;
                 if (string.IsNullOrWhiteSpace(sourcePageType) || sourcePageType == "All") sourcePageType = null;
+                if (string.IsNullOrWhiteSpace(userStatus) || userStatus == "All") userStatus = null;
                 if (string.IsNullOrWhiteSpace(clubId)) clubId = null;
 
                 long? resolvedClubId = clubId != null ? _service.ResolveClubCodeToAgentId(clubId) : null;             
@@ -204,7 +212,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 var abs = Math.Abs(timezoneOffset);
                 var timeZoneOffsetValue = $"{sign}{(abs / 60):D2}:{(abs % 60):D2}";
 
-                var result = _service.GetActivityLog(resolvedClubId, search, actionType, sourcePageType, fromDateMs, toDateMs, pageNo, pageSize, timeZoneOffsetValue)
+                var result = _service.GetActivityLog(resolvedClubId, search, actionType, sourcePageType,userStatus, fromDateMs, toDateMs, pageNo, pageSize, timeZoneOffsetValue)
                     ?? new List<ActivityLogCommon>();
 
                 var mapped = result.Select(x => new

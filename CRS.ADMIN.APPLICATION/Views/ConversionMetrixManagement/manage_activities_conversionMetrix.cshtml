@@ -155,7 +155,7 @@
                             </div>
                         </div>
                     </th>
-                    <th scope="col" class="p-[12px]">
+                    @*<th scope="col" class="p-[12px]">
                         <div class="flex  w-max ">
                             @CRS.ADMIN.APPLICATION.Resources.Resource.Date
                             <div class="relative pl-[5px]">
@@ -163,7 +163,7 @@
                                 <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
                             </div>
                         </div>
-                    </th>
+                    </th>*@
                 </tr>
             </thead>
             <tbody id="activityLogBody">
@@ -197,11 +197,11 @@
                                     @item.Browser
                                 </div>
                             </td>
-                            <td class="p-[12px]">
+                            @*<td class="p-[12px]">
                                 <div class="w-max">
                                     @item.Date
                                 </div>
-                            </td>
+                            </td>*@
                         </tr>
                         SN++;
                     }
@@ -268,7 +268,7 @@
                 data: {
                     clubId: window.selectedClubId,
                     actionType: currentActionType,
-                    targetType: currentTargetType,
+                    sourcePageType: currentTargetType,
                     userStatus: currentUserStatus,
                     fromDateMs: fromDateMs,
                     toDateMs: toDateMs,
@@ -336,7 +336,7 @@
                     + '<td class="p-[12px]">' + userStatusBadge(r.userStatus, r.sessionId) + '</td>'
                     + '<td class="p-[12px] truncate max-w-[150px]">' + escHtml(r.prefecture) + '</td>'
                     + '<td class="p-[12px] truncate max-w-[250px]" title="' + escHtml(r.browser) + '">' + escHtml(r.browser) + '</td>'
-                    + '<td class="p-[12px] whitespace-nowrap">' + formatDate(r.date) + '</td>'
+                    //+ '<td class="p-[12px] whitespace-nowrap">' + formatDate(r.date) + '</td>'
                     + '</tr>';
             }).join('');
 
@@ -366,9 +366,8 @@
             $('#activityLogNextBtn').toggleClass('disabled', currentPage >= totalPages);
         }
 
-        // Builds an array like [1, 2, 3, '...', 10] or [1, '...', 4, 5, 6, '...', 10]
         function getPageNumbers(current, total) {
-            var delta = 2; // how many pages to show on either side of current
+            var delta = 2; 
             var range = [1];
 
             for (var i = current - delta; i <= current + delta; i++) {

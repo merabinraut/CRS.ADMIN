@@ -328,7 +328,7 @@
     <comment>Roles &amp; Privileges</comment>
   </data>
   <data name="All" xml:space="preserve">
-    <value>全て</value>
+    <value>すべて</value>
     <comment>Customer Management</comment>
   </data>
   <data name="AmountTransferred" xml:space="preserve">
@@ -347,7 +347,7 @@
     <comment>API Response Message</comment>
   </data>
   <data name="Apply" xml:space="preserve">
-    <value>適用する</value>
+    <value>適用</value>
     <comment>Reservation Ledger</comment>
   </data>
   <data name="Approve" xml:space="preserve">
@@ -1576,7 +1576,7 @@
   </data>
   <data name="Manage your profile security" xml:space="preserve">
     <value>プロファイルのセキュリティを管理する</value>
-    <comment>Security</comment>
+    <comment>会員</comment>
   </data>
   <data name="Manage your promotion details." xml:space="preserve">
     <value>プロモーションの詳細及び写真を管理します。</value>
@@ -2038,7 +2038,7 @@
     <comment>Inquries</comment>
   </data>
   <data name="Prefecture" xml:space="preserve">
-    <value>都道府県</value>
+    <value>エリア</value>
     <comment>ClubManagement</comment>
   </data>
   <data name="Premium" xml:space="preserve">
@@ -2046,7 +2046,7 @@
     <comment>Customer Management</comment>
   </data>
   <data name="Previous" xml:space="preserve">
-    <value>前の</value>
+    <value>前へ</value>
   </data>
   <data name="Previous Occupation" xml:space="preserve">
     <value>前職</value>
@@ -2618,7 +2618,7 @@
     <comment>Payment Management</comment>
   </data>
   <data name="Total Clicks" xml:space="preserve">
-    <value>総クリック</value>
+    <value>総クリック数</value>
     <comment>Affiliate Management</comment>
   </data>
   <data name="Total Club Plan Amount" xml:space="preserve">
@@ -3057,16 +3057,17 @@
     <value>MBTI性格</value>
   </data>
   <data name="ConversionMetrixManagement" xml:space="preserve">
-    <value>変換マトリックスの管理</value>
+    <value>コンバージョン分析</value>
   </data>
   <data name="Active_Log" xml:space="preserve">
-    <value>アクティブログ</value>
+    <value>アクティビティログ
+</value>
   </data>
   <data name="Reservation_Clicks" xml:space="preserve">
     <value>予約クリック数</value>
   </data>
   <data name="Phone_Call_Click" xml:space="preserve">
-    <value>電話通話クリック</value>
+    <value>電話クリック数</value>
   </data>
   <data name="Average_CTR" xml:space="preserve">
     <value>平均クリック率</value>
@@ -3075,13 +3076,13 @@
     <value>全店舗</value>
   </data>
   <data name="Store_Page" xml:space="preserve">
-    <value>ストアページ</value>
+    <value>店舗ページ</value>
   </data>
   <data name="Click_Origin" xml:space="preserve">
     <value>「原点」をクリックします</value>
   </data>
   <data name="Store_Performance" xml:space="preserve">
-    <value>店舗実績</value>
+    <value>店舗別パフォーマンス</value>
   </data>
   <data name="Booking_Store_Page" xml:space="preserve">
     <value>予約店舗ページ</value>
@@ -3102,13 +3103,13 @@
     <value>今月</value>
   </data>
   <data name="Action_Type" xml:space="preserve">
-    <value>アクションの種類</value>
+    <value>クリック元</value>
   </data>
   <data name="Source_Page" xml:space="preserve">
-    <value>ソースページ</value>
+    <value>発生元ページ</value>
   </data>
   <data name="Target_Name" xml:space="preserve">
-    <value>ターゲット名</value>
+    <value>対象名 (店舗/キャスト)</value>
   </data>
   <data name="User_Status" xml:space="preserve">
     <value>ユーザーステータス</value>
@@ -3117,7 +3118,7 @@
     <value>ブラウザ</value>
   </data>
   <data name="Target_Type" xml:space="preserve">
-    <value>ターゲット</value>
+    <value>対象名 (店舗/キャスト)</value>
   </data>
   <data name="Select_Store" xml:space="preserve">
     <value>ストアを選択</value>
@@ -3141,13 +3142,13 @@
     <value>今日はクリックデータがありません</value>
   </data>
   <data name="ActionSource_ByPage" xml:space="preserve">
-    <value>アクションソース（ページ別）</value>
+    <value>クリック発生元（ページ別）</value>
   </data>
   <data name="ClickOrigin_ByArea" xml:space="preserve">
-    <value>原点をクリック（地域別）</value>
+    <value>クリック発生元（地域別）</value>
   </data>
   <data name="Today_Clicks" xml:space="preserve">
-    <value>今日のクリック数</value>
+    <value>総クリック数</value>
   </data>
   <data name="Store_Detail" xml:space="preserve">
     <value>店舗詳細</value>
@@ -3155,11 +3156,22 @@
   <data name="Host_Detail" xml:space="preserve">
     <value>ホストの詳細</value>
   </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="Guest" type="System.Resources.ResXNullRef, System.Windows.Forms">
-    <value />
+  <data name="Todays_Clicks" xml:space="preserve">
+    <value>本日クリック推移</value>
   </data>
-  <data name="Member" type="System.Resources.ResXNullRef, System.Windows.Forms">
-    <value />
+  <data name="Export_CSV" xml:space="preserve">
+    <value>CSVをエクスポート</value>
+  </data>
+  <data name="Host_Detail_Page" xml:space="preserve">
+    <value>ホスト詳細ページ</value>
+  </data>
+  <data name="Guest" xml:space="preserve">
+    <value>ゲスト</value>
+  </data>
+  <data name="Member" xml:space="preserve">
+    <value>会員</value>
+  </data>
+  <data name="Search_By_StoreName" xml:space="preserve">
+    <value>店舗名で検索</value>
   </data>
 </root>
