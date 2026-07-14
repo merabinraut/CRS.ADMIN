@@ -372,6 +372,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 model = dbResponse.MapObject<ManageHostModel>();
                 model.AgentId = AgentId;
                 model.HostId = HostId;
+                model.DOB = (dbResponse.DOB == "-" || dbResponse.DOB == "--" || dbResponse.DOB == "---") ? "" : dbResponse.DOB;
 
                 if (!string.IsNullOrEmpty(model.DOB))
                 {
