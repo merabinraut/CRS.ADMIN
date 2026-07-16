@@ -33,8 +33,15 @@
 </div>
 
 <div class="border border-[#D0D5DD] rounded-[5px] p-[20px]">
-    <div class="mb-4 text-[#3E3E3E] text-sm font-semibold">
-        @CRS.ADMIN.APPLICATION.Resources.Resource.Filter_By
+    
+    <div class="mb-4 flex w-max text-[#3E3E3E] text-sm font-semibold">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M5 10H15M2.5 5H17.5M7.5 15H12.5" stroke="#3E3E3E" stroke-width="1.67" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+        <div class="ml-2">
+            @CRS.ADMIN.APPLICATION.Resources.Resource.Filter_By
+        </div>
+       
     </div>
     <div class="grid gap-[24px] grid-cols-3">
         <div class="input-field-common">
@@ -93,6 +100,14 @@
 <div class="table-tab mt-4">
     <div class="px-[12px] py-[16px] flex justify-between entry-export-container">
         <div class="flex items-center select-entries" id="ShowEntries-Id">
+            <span class="text-sm text-gray-500">Show</span>
+            <select id="activityLogPageSize" class="border border-gray-200 rounded-[5px] text-sm px-2 py-1">
+                <option value="5">5</option>
+                <option value="10" selected>10</option>
+                <option value="25">25</option>
+                <option value="50">50</option>
+            </select>
+            <span class="text-sm text-gray-500">items</span>
         </div>
     </div>
     <div class="relative overflow-x-auto">
@@ -411,8 +426,8 @@
 
             $('#Entries-Id').text(
                 totalCount > 0
-                    ? ((currentPage - 1) * pageSize + 1) + '-' + Math.min(currentPage * pageSize, totalCount) + ' of ' + totalCount
-                    : '0 of 0'
+                    ? 'Showing items ' + ((currentPage - 1) * pageSize + 1) + '-' + Math.min(currentPage * pageSize, totalCount) + ' of ' + totalCount + ' total'
+                    : 'Showing items 0 of 0 total'
             );
 
             var pages = getPageNumbers(currentPage, totalPages);
@@ -428,6 +443,11 @@
             $('#activityLogPrevBtn').toggleClass('disabled', currentPage <= 1);
             $('#activityLogNextBtn').toggleClass('disabled', currentPage >= totalPages);
         }
+
+        $(document).on('change', '#activityLogPageSize', function () {
+            pageSize = parseInt($(this).val(), 10);
+            loadActivityLog(1);
+        });
 
         function getPageNumbers(current, total) {
             var delta = 2; 

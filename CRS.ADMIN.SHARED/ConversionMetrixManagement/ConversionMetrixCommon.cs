@@ -20,7 +20,7 @@ namespace CRS.ADMIN.SHARED.ConversionMetrixManagement
         public int ReservationClicks { get; set; }
         public int PhoneClicks { get; set; }
         public int ReservationConvertedCount { get; set; }
-        public int AverageCTR { get; set; }
+        public decimal AverageCTR { get; set; }
     }
     public class ActionSourceCommon
     {
@@ -79,6 +79,7 @@ namespace CRS.ADMIN.SHARED.ConversionMetrixManagement
     }
     public class StorePerformanceCommon
     {
+        public int Sno { get; set; }
         public string ClubId { get; set; }
         public string StoreName { get; set; }
         public int BookingStorePage { get; set; }

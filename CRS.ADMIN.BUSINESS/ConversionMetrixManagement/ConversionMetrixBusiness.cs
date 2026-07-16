@@ -1,6 +1,7 @@
 ﻿using CRS.ADMIN.REPOSITORY.ConversionMetrixManagement;
 using CRS.ADMIN.SHARED.ConversionMetrixManagement;
 using CRS.ADMIN.SHARED.LocationManagement;
+using CRS.ADMIN.SHARED.PaginationManagement;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -115,6 +116,14 @@ namespace CRS.ADMIN.BUSINESS.ConversionMetrixManagement
                 throw;
             }
         }
+
+        public List<StorePerformanceCommon> GetConversionSummaryPerformanceRepost(PaginationFilterCommon dbRequest, string clubId)
+        {
+            return _repo.GetConversionSummaryPerformanceRepost(dbRequest,clubId);
+
+        }
+
+      
         #endregion
 
     }

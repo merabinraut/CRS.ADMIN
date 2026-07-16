@@ -1,8 +1,10 @@
  using CRS.ADMIN.APPLICATION.Library;
 using CRS.ADMIN.APPLICATION.Models.ConversionMetrixManagement;
+using CRS.ADMIN.APPLICATION.Models.DiscountManagement;
 using CRS.ADMIN.BUSINESS.ConversionMetrixManagement;
 using CRS.ADMIN.SHARED.ConversionMetrixManagement;
 using CRS.ADMIN.SHARED.LocationManagement;
+using CRS.ADMIN.SHARED.PaginationManagement;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -22,9 +24,24 @@ namespace CRS.ADMIN.APPLICATION.Controllers
 
         #region Index
         [HttpGet]
-        public ActionResult Index(string SearchFilter = null, string clubId = null)
+        public ActionResult Index(string SearchFilter = null, string clubId = null, int StartIndex = 1, int PageSize = 10,string ToDate="",string FromDate="")
         {
+            ViewBag.SearchFilter = SearchFilter;
             Session["CurrentURL"] = "/ConversionMetrixManagement/Index";
+            var culture = Request.Cookies["culture"]?.Value;
+            culture = string.IsNullOrEmpty(culture) ? "ja" : culture;
+            string RenderId = "";
+            ConversionMetrixOverviewModel listModel = new ConversionMetrixOverviewModel();
+            //var listModel=new ConversionMetrixOverviewModel();
+            PaginationFilterCommon dbRequest = new PaginationFilterCommon()
+            {
+                Skip = StartIndex,
+                Take = PageSize,
+                SearchFilter = !string.IsNullOrEmpty(SearchFilter) ? SearchFilter : null,
+                FromDate=FromDate,
+                ToDate=ToDate
+            };
+            var summaryPerformance = _service.GetConversionSummaryPerformanceRepost(dbRequest,clubId);
 
             var model = new ConversionMetrixOverviewModel
             {
@@ -36,6 +53,38 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 ActivityLogModel = new List<ActivityLogModel>(),
                 StoreRankingList = new List<StoreRankingModel>()
             };
+
+            model.StorePerformanceModel = summaryPerformance.MapObjects<StorePerformanceModel>();
+            model.StorePerformanceModel.ForEach(x =>
+            {
+                x.SNo = x.SNo;
+                x.StoreName = x.StoreName;
+                x.BookingStorePage = x.BookingStorePage;
+                x.BookingHostDetails = x.BookingHostDetails;
+                x.PhoneStorePage = x.PhoneStorePage;
+                x.PhoneHostDetails =x.PhoneHostDetails;
+                x.TotalClicks= x.TotalClicks;
+            });
+
+
+            if (TempData.ContainsKey("StorePerformanceModel"))
+                listModel.storePerformanceModels = TempData["StorePerformanceModel"] as StorePerformanceModel;
+           
+            ViewBag.TotalData = summaryPerformance != null && summaryPerformance.Any() ? summaryPerformance[0].TotalRecords : 0;
+
+
+            //------------------------------
+
+            //var model = new ConversionMetrixOverviewModel
+            //{
+            //    SearchFilter = SearchFilter,
+            //    ActivityLogFilterModel = new ActivityLogFilterModel(),
+            //    ConversionSummaryModel = new ConversionSummaryModel(),
+            //    StorePerformanceModel = new List<StorePerformanceModel>(),
+            //    ClickChartList = new List<ClickChartModel>(),
+            //    ActivityLogModel = new List<ActivityLogModel>(),
+            //    StoreRankingList = new List<StoreRankingModel>()
+            //};
 
             try
             {
@@ -71,10 +120,15 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                     Text = x.LocationName
                 }).ToList();
             }
+
             catch (Exception ex)
             {
                 return Json(new { success = false, message = ex.Message }, JsonRequestBehavior.AllowGet);
             }
+            ViewBag.SearchFilter = SearchFilter;
+            ViewBag.StartIndex = StartIndex;
+            ViewBag.PageSize = PageSize;
+            ViewBag.ClubId = clubId;
 
             return View(model);
         }

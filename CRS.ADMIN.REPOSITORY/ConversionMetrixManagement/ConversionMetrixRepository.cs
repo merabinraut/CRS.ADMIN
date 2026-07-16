@@ -1,6 +1,8 @@
 ﻿using Aspose.Cells;
 using CRS.ADMIN.SHARED.ConversionMetrixManagement;
 using CRS.ADMIN.SHARED.LocationManagement;
+using CRS.ADMIN.SHARED.PaginationManagement;
+using CRS.ADMIN.SHARED.PlanManagement;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -49,7 +51,7 @@ namespace CRS.ADMIN.REPOSITORY.ConversionMetrixManagement
                     response.ReservationClicks = SafeInt(_dao.ParseColumnValue(dbResponse, "reservationClickCount"));
                     response.PhoneClicks = SafeInt(_dao.ParseColumnValue(dbResponse, "phoneClickCount"));
                     response.ReservationConvertedCount = SafeInt(_dao.ParseColumnValue(dbResponse, "reservationConvertedCount"));
-                    response.AverageCTR = SafeInt(_dao.ParseColumnValue(dbResponse, "reservationConvertedPercentage"));
+                    response.AverageCTR = SafeDecimal(_dao.ParseColumnValue(dbResponse, "reservationConvertedPercentage"));
                 }
             }
             catch (Exception)
@@ -334,6 +336,55 @@ namespace CRS.ADMIN.REPOSITORY.ConversionMetrixManagement
             return (ds != null && ds.Tables.Count > 0) ? ds.Tables[0] : null;
         }
 
+        public List<StorePerformanceCommon> GetConversionSummaryPerformanceRepost(PaginationFilterCommon dbRequest, string clubId)
+        {
+            var response = new List<StorePerformanceCommon>();
 
+            var sql = "EXEC [analytics].[sproc_admin_get_conversion_store_performance]";
+
+            //sql += " @SearchFilter=" +
+            //       (!string.IsNullOrWhiteSpace(dbRequest.SearchFilter)
+            //           ? "N" + _dao.FilterString(dbRequest.SearchFilter)
+            //           : "NULL");
+
+            sql += " @SearchFilter=" + (string.IsNullOrEmpty(dbRequest.SearchFilter) ? "null" : "N'" + _dao.FilterString(dbRequest.SearchFilter) + "'");
+
+            sql += ",@pageNo=" +
+                   (dbRequest.Skip > 0 ? dbRequest.Skip.ToString() : "0");
+
+            sql += ",@pageSize=" +
+                   (dbRequest.Take > 0 ? dbRequest.Take.ToString() : "10");
+
+            sql += ",@fromDateMs=" +
+                   (!string.IsNullOrWhiteSpace(dbRequest.FromDate)
+                       ? _dao.FilterString(dbRequest.FromDate)
+                       : "NULL");
+
+            sql += ",@toDateMs=" +
+                   (!string.IsNullOrWhiteSpace(dbRequest.ToDate)
+                       ? _dao.FilterString(dbRequest.ToDate)
+                       : "NULL");
+
+            var dbResponse = _dao.ExecuteDataTable(sql);
+            if (dbResponse != null && dbResponse.Rows.Count > 0)
+            {
+                foreach (DataRow item in dbResponse.Rows)
+                {
+                    response.Add(new StorePerformanceCommon()
+                    {
+                        Sno = SafeInt(_dao.ParseColumnValue(item, "Sno")),
+                        ClubId = SafeLong(_dao.ParseColumnValue(item, "clubId"))?.ToString(),
+                        StoreName = _dao.ParseColumnValue(item, "clubName")?.ToString(),
+                        BookingStorePage = SafeInt(_dao.ParseColumnValue(item, "reservationStore")),
+                        BookingHostDetails = SafeInt(_dao.ParseColumnValue(item, "hostDetail")),
+                        PhoneStorePage = SafeInt(_dao.ParseColumnValue(item, "phoneStore")),
+                        PhoneHostDetails = SafeInt(_dao.ParseColumnValue(item, "phoneHost")),
+                        TotalClicks = SafeInt(_dao.ParseColumnValue(item, "totalCount")),
+                        TotalRecords = SafeInt(_dao.ParseColumnValue(item, "totalRecords"))
+                    });
+                }
+            }
+            return response;
+        }
     }
 }

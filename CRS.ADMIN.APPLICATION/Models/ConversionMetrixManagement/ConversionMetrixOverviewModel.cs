@@ -13,6 +13,9 @@ namespace CRS.ADMIN.APPLICATION.Models.ConversionMetrixManagement
         public List<ClickChartModel> ClickChartList { get; set; }
         public List<ActionSourceModel> ActionSourceModel { get; set; }
         public List<ClickOriginModel> ClickOriginList { get; set; }
+
+        public StorePerformanceModel storePerformanceModels { get; set; }
+
         public List<StorePerformanceModel> StorePerformanceModel { get; set; }
         public ActivityLogFilterModel ActivityLogFilterModel { get; set; }
         public List<ActivityLogModel> ActivityLogModel { get; set; }
@@ -23,7 +26,7 @@ namespace CRS.ADMIN.APPLICATION.Models.ConversionMetrixManagement
         public int TotalClicks { get; set; }
         public int ReservationClicks { get; set; }
         public int PhoneCallClicks { get; set; }
-        public int AverageCTR { get; set; }
+        public decimal AverageCTR { get; set; }
     }
     public class ActivityLogModel
     {
@@ -61,12 +64,15 @@ namespace CRS.ADMIN.APPLICATION.Models.ConversionMetrixManagement
     public class StorePerformanceModel
     {
         public int SNo { get; set; }
+        public string ClubId { get; set; }
+        public string StoreName { get; set; }
         public string ClubName { get; set; }
-        public int ReservationClick { get; set; }
-        public int ReservationDetailClick { get; set; }
-        public int PhoneCallClick { get; set; }
-        public int PhoneCallDetailClick { get; set; }
-        public int TotalClick { get; set; }
+        public int BookingStorePage { get; set; }
+        public int BookingHostDetails { get; set; }
+        public int PhoneStorePage { get; set; }
+        public int PhoneHostDetails { get; set; }
+        public int TotalClicks { get; set; }
+        public int TotalRecords { get; set; }
     }
     public class ActivityLogFilterModel
     {

@@ -1,5 +1,6 @@
 ﻿using CRS.ADMIN.SHARED.ConversionMetrixManagement;
 using CRS.ADMIN.SHARED.LocationManagement;
+using CRS.ADMIN.SHARED.PaginationManagement;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +18,6 @@ namespace CRS.ADMIN.REPOSITORY.ConversionMetrixManagement
         ClickAnalyticsResult GetClickAnalytics(string clubCode, string channel, string timeZoneOffsetValue);
         long? ResolveClubCodeToAgentId(string clubCode);
         List<LocationCommon> GetLocationList();
-
+        List<StorePerformanceCommon> GetConversionSummaryPerformanceRepost(PaginationFilterCommon dbRequest, string clubId);
     }
 }
