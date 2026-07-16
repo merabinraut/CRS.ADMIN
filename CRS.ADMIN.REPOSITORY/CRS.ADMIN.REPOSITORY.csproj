@@ -104,6 +104,7 @@
     <Compile Include="AdminPointManagement\IAdminPointManagementRepository.cs" />
     <Compile Include="AffiliateManagement\AffiliateManagementRepository.cs" />
     <Compile Include="AffiliateManagement\IAffiliateManagementRepository.cs" />
+    <Compile Include="AnalyticsDao.cs" />
     <Compile Include="ApiResponseMessage\ApiResponseMessageRepository .cs" />
     <Compile Include="ApiResponseMessage\IApiResponseMessageRepository.cs" />
     <Compile Include="BasicClubManagement\BasicClubManagementRepository.cs" />
@@ -118,6 +119,8 @@
     <Compile Include="CommissionManagement\ICommissionManagementRepository.cs" />
     <Compile Include="CommonManagement\CommonManagementRepository.cs" />
     <Compile Include="CommonManagement\ICommonManagementRepository.cs" />
+    <Compile Include="ConversionMetrixManagement\ConversionMetrixRepository.cs" />
+    <Compile Include="ConversionMetrixManagement\IConversionMetrixRepository.cs" />
     <Compile Include="CustomerManagement\CustomerManagementRepository.cs" />
     <Compile Include="CustomerManagement\ICustomerManagementRepository.cs" />
     <Compile Include="EmailLog\EmailLogRepository.cs" />

@@ -15,22 +15,22 @@ function showFilterContainer() {
 function hideFilterContainer() {
     var filterDiv = document.getElementById("filter");
     var filterContainer = document.getElementById("filter-container");
+    if (!filterDiv || !filterContainer) return;
 
-    // Hide the filter container
     filterContainer.style.display = "none";
-
-    // Show the filter div
     filterDiv.style.display = "flex";
-
-    // Add animation classes
     filterDiv.classList.add("slide-in-animation");
 }
+var filterContainerEl = document.getElementById("filter-container");
+if (filterContainerEl) {
+    filterContainerEl.addEventListener("animationend", function () {
+        this.classList.remove("slide-in-animation");
+    });
+}
 
-// Optional: Remove animation classes after animation ends
-document.getElementById("filter-container").addEventListener("animationend", function() {
-    this.classList.remove("slide-in-animation");
-});
-
-document.getElementById("filter").addEventListener("animationend", function() {
-    this.classList.remove("slide-in-animation");
-});
+var filterEl = document.getElementById("filter");
+if (filterEl) {
+    filterEl.addEventListener("animationend", function () {
+        this.classList.remove("slide-in-animation");
+    });
+}

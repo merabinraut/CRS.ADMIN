@@ -502,7 +502,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 model.Prefecture = !string.IsNullOrEmpty(model.Prefecture) ? model.Prefecture.EncryptParameter() : null;
                 model.IdentificationType = !string.IsNullOrEmpty(model.IdentificationType) ? model.IdentificationType.EncryptParameter() : null;
                 string holidays = "";
-                string[] array = model.Holiday.Split(','); ;
+                string[] array = model.Holiday.Split(','); 
                 string commaSeparatedString = string.Join(", ", array);
                 List<string> holidayList = commaSeparatedString.Split(new[] { ", " }, StringSplitOptions.RemoveEmptyEntries).ToList();
                 foreach (var holiday in holidayList)

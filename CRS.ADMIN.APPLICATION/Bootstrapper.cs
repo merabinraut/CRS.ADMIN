@@ -11,6 +11,7 @@ using CRS.ADMIN.BUSINESS.ClubManagement;
 using CRS.ADMIN.BUSINESS.ClubPlanManagement;
 using CRS.ADMIN.BUSINESS.CommissionManagement;
 using CRS.ADMIN.BUSINESS.CommonManagement;
+using CRS.ADMIN.BUSINESS.ConversionMetrixManagement;
 using CRS.ADMIN.BUSINESS.CustomerManagement;
 using CRS.ADMIN.BUSINESS.EmailLog;
 using CRS.ADMIN.BUSINESS.ErrorLog;
@@ -103,6 +104,7 @@ namespace CRS.ADMIN.APPLICATION
             container.RegisterType<IGroupManagementBusiness, GroupManagementBusiness>();
             container.RegisterType<IApiResponseMessageBusiness, ApiResponseMessageBusiness>();
             container.RegisterType<ITemplateBusiness, TemplateBusiness>();
+            container.RegisterType<IConversionMetrixBusiness, ConversionMetrixBusiness>();
 
             return container;
         }

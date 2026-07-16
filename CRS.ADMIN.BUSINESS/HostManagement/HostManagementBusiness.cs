@@ -72,5 +72,10 @@ namespace CRS.ADMIN.BUSINESS.HostManagement
         {
             return _REPO.GetInquiryDetailsAsync(inquiryId);
         }
+
+        public CommonDbResponse ManageNewHostDetails(ManageHostCommon requestCommon)
+        {
+            return _REPO.ManageNewHostDetails(requestCommon);
+        }
     }
 }

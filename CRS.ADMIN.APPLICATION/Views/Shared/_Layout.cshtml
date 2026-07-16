@@ -1,4 +1,4 @@
-﻿<!-- #region Header section -->
+<!-- #region Header section -->
 
 <!DOCTYPE html>
 <html lang="ja">
@@ -687,7 +687,7 @@
             }
             @if (ApplicationUtilities.HasMenuRight("/DiscountManagement/Index"))
             {
-                if (!string.IsNullOrEmpty(CurrentURL) && CurrentURL.Trim().ToUpper() == "/DiscountManagement/Index") { MenuActiveClass = "menuActive"; }
+                if (!string.IsNullOrEmpty(CurrentURL) && CurrentURL.Trim().ToUpper() == "/DISCOUNTMANAGEMENT/INDEX") { MenuActiveClass = "menuActive"; }
                 else { MenuActiveClass = string.Empty; }
                 <a href="@Url.Action("Index", "DiscountManagement")">
                     <div class="menuContainer @MenuActiveClass">
@@ -697,6 +697,22 @@
                         </div>
                         <div class="label">
                             @CRS.ADMIN.APPLICATION.Resources.Resource.DiscountManagement
+                        </div>
+                    </div>
+                </a>
+            }
+            @if (ApplicationUtilities.HasMenuRight("/ConversionMetrixManagement/Index"))
+            {
+                if (!string.IsNullOrEmpty(CurrentURL) && CurrentURL.Trim().ToUpper() == "/CONVERSIONMETRIXMANAGEMENT/INDEX") { MenuActiveClass = "menuActive"; }
+                else { MenuActiveClass = string.Empty; }
+                <a href="@Url.Action("Index", "ConversionMetrixManagement")">
+                    <div class="menuContainer @MenuActiveClass">
+                        <div class="menu-icon w-max">
+                            <img src="~/Content/assets_new/images/review.svg" class="image" />
+                            <img src="~/Content/assets_new/images/review-active.svg" class="active-image" />
+                        </div>
+                        <div class="label">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.ConversionMetrixManagement
                         </div>
                     </div>
                 </a>

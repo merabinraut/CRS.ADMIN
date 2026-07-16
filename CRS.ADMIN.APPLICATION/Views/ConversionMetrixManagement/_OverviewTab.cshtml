@@ -1,0 +1,748 @@
+﻿@model CRS.ADMIN.APPLICATION.Models.ConversionMetrixManagement.ConversionMetrixOverviewModel
+<div class="">
+    <div class="bg-white">
+        <div id="tab1Content-inner" class="tab-content-plane px-4">
+            <div class="grid gap-[32px]">
+                <div class="payment-details grid grid-cols-4 gap-[35px]">
+                    <div class="payment-details-card">
+                        <div class="title flex gap-[8px] mb-[12px] items-center">
+                            <div class="logo h-[32px] w-[32px] flex justify-center items-center rounded-full bg-[#D9EAFA]">
+                                <i class="las la-mouse-pointer text-lg text-[#1976D2]"></i>
+                            </div>
+                            <div class="text-lg">@CRS.ADMIN.APPLICATION.Resources.Resource.Total_Clicks</div>
+                        </div>
+                        <div class="text-2xl font-semibold mb-[50px]" id="totalClicksValue">
+                            @Model.ConversionSummaryModel.TotalClicks
+                        </div>
+                    </div>
+                    <div class="payment-details-card flex justify-between flex-col ">
+                        <div>
+                            <div class="title flex gap-[8px] mb-[12px] items-center">
+                                <div class="logo h-[32px] w-[32px] flex justify-center items-center rounded-full bg-[#FEE5CD]">
+                                    <i class="las la-globe text-lg text-[#F89336]"></i>
+                                </div>
+                                <div class="text-lg">@CRS.ADMIN.APPLICATION.Resources.Resource.Reservation_Clicks</div>
+                            </div>
+                            <div class="text-2xl font-semibold mb-[50px]" id="reservationClicksValue">
+                                @Model.ConversionSummaryModel.ReservationClicks
+                            </div>
+                        </div>
+                    </div>
+                    <div class="payment-details-card flex justify-between flex-col ">
+                        <div>
+                            <div class="title flex gap-[8px] mb-[12px] items-center">
+                                <div class="logo h-[32px] w-[32px] flex justify-center
+                                        items-center rounded-full bg-[#C4F7C6]">
+                                    <i class="las la-phone text-lg text-[#28A745]"></i>
+                                </div>
+                                <div class="text-lg"> @CRS.ADMIN.APPLICATION.Resources.Resource.Phone_Call_Click</div>
+                            </div>
+                            <div class="text-2xl font-semibold mb-[50px]" id="phoneCallClicksValue">
+                                @Model.ConversionSummaryModel.PhoneCallClicks
+                            </div>
+                        </div>
+                    </div>
+                    <div class="payment-details-card flex justify-between flex-col ">
+                        <div>
+                            <div class="title flex gap-[8px] mb-[12px] items-center">
+                                <div class="logo h-[32px] w-[32px] flex justify-center items-center rounded-full bg-[#FEEAD8]">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="17" height="11" viewBox="0 0 17 11" fill="none">
+                                        <path d="M4.5 0C3.60562 0.00237551 2.74856 0.358718 2.11614 0.991139C1.48372 1.62356 1.12738 2.48062 1.125 3.375C1.125 4.491 1.674 5.48475 2.514 6.09975C1.0305 6.8355 0 8.361 0 10.125H1.125C1.12401 9.68151 1.21063 9.24219 1.37989 8.83227C1.54915 8.42235 1.79771 8.0499 2.11131 7.73631C2.4249 7.42272 2.79735 7.17415 3.20727 7.00489C3.61719 6.83563 4.05651 6.74901 4.5 6.75C4.94349 6.74901 5.3828 6.83563 5.79273 7.00489C6.20265 7.17415 6.5751 7.42272 6.88869 7.73631C7.20228 8.0499 7.45085 8.42235 7.62011 8.83227C7.78937 9.24219 7.87599 9.68151 7.875 10.125H9C8.99901 9.68151 9.08563 9.24219 9.25489 8.83227C9.42415 8.42235 9.67272 8.0499 9.98631 7.73631C10.2999 7.42272 10.6724 7.17415 11.0823 7.00489C11.4922 6.83563 11.9315 6.74901 12.375 6.75C12.8185 6.74901 13.2578 6.83563 13.6677 7.00489C14.0776 7.17415 14.4501 7.42272 14.7637 7.73631C15.0773 8.0499 15.3258 8.42235 15.4951 8.83227C15.6644 9.24219 15.751 9.68151 15.75 10.125H16.875C16.875 8.361 15.8445 6.8355 14.361 6.09975C14.7905 5.78685 15.1402 5.37702 15.3815 4.90357C15.6229 4.43013 15.7491 3.90641 15.75 3.375C15.75 1.518 14.232 0 12.375 0C11.4806 0.00237551 10.6236 0.358718 9.99114 0.991139C9.35872 1.62356 9.00238 2.48062 9 3.375C9 4.491 9.549 5.48475 10.389 6.09975C9.56715 6.50363 8.88682 7.14684 8.4375 7.94475C7.98818 7.14684 7.30785 6.50363 6.486 6.09975C6.91553 5.78685 7.26518 5.37702 7.50653 4.90357C7.74788 4.43013 7.87412 3.90641 7.875 3.375C7.875 1.518 6.357 0 4.5 0ZM4.5 1.125C5.75025 1.125 6.75 2.12475 6.75 3.375C6.75 4.62525 5.75025 5.625 4.5 5.625C3.24975 5.625 2.25 4.62525 2.25 3.375C2.25 2.12475 3.24975 1.125 4.5 1.125ZM12.375 1.125C13.6252 1.125 14.625 2.12475 14.625 3.375C14.625 4.62525 13.6252 5.625 12.375 5.625C11.1248 5.625 10.125 4.62525 10.125 3.375C10.125 2.12475 11.1248 1.125 12.375 1.125Z" fill="#CB3F3F" />
+                                    </svg>
+                                </div>
+                                <div class="text-lg"> @CRS.ADMIN.APPLICATION.Resources.Resource.Average_CTR (CTR)</div>
+                            </div>
+                            <div class="text-2xl font-semibold mb-[30px]" id="averageCtrValue">
+                                @Model.ConversionSummaryModel.AverageCTR.ToString("F1") %
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class=" grid grid-cols-2 gap-9">
+                    <div>
+                        <div class="border border-[#E4E4E7] rounded-[10px] p-4">
+                            <div class="bg-white">
+                                <div class=" flex justify-between items-center mb-4">
+                                    <div class="text-gray-900">
+                                        @CRS.ADMIN.APPLICATION.Resources.Resource.Todays_Clicks
+                                    </div>
+                                    <select id="clickChartFilter"
+                                            class="font-bold text-[11px] cursor-pointer border border-[#D4D4D8] rounded-[5px] min-w-[100px] px-3 pr-8 h-[32px] bg-white text-ellipsis overflow-hidden whitespace-nowrap">
+                                        <option value="all">
+                                            @CRS.ADMIN.APPLICATION.Resources.Resource.All
+                                        </option>
+                                        <option value="reservation">
+                                            @CRS.ADMIN.APPLICATION.Resources.Resource.ReservationButton
+                                        </option>
+                                        <option value="phone"> 
+                                            @CRS.ADMIN.APPLICATION.Resources.Resource.PhoneCallButton
+                                        </option>
+                                    </select>
+
+                                </div>
+                            </div>
+                            <div>
+                                <div id="tab1" class="tab-content-chart">
+                                    <div style="position:relative; width:100%; height:240px;" id="clickChartWrap">
+                                        <canvas id="Month12"
+                                                role="img"
+                                                aria-label="Bar chart of today's click counts by time interval">
+                                            Today's click counts by time interval.
+                                        </canvas>
+                                    </div>
+                                    <div id="clickChartEmpty"
+                                         class="hidden items-center justify-center flex-col gap-2 text-gray-400"
+                                         style="height:240px;">
+                                        <i class="las la-chart-bar text-[32px]"></i>
+                                        <p class="text-[13px]">@CRS.ADMIN.APPLICATION.Resources.Resource.NoClickDataToday</p>
+                                    </div>
+                                    <div id="clickChartLegend" class="flex gap-4 mt-2 flex-wrap"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="border border-[#E4E4E7] rounded-[10px] px-[24px] py-[20px]">
+                            <div class="mb-4">
+                                <div class="text-gray-900">@CRS.ADMIN.APPLICATION.Resources.Resource.ActionSource_ByPage</div>
+                            </div>
+                            <div id="actionSourceList">
+                                <!-- Rendered by JS -->
+                            </div>
+
+                            <hr class="border-t border-[#F4F4F5] my-5">
+                            <div class="mb-4">
+                                <div class="text-gray-900">
+                                    @CRS.ADMIN.APPLICATION.Resources.Resource.ClickOrigin_ByArea
+                                </div>
+                            </div>
+                            <div id="clickOriginList">
+                                <!-- Rendered by JS -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="flex flex-col  gap-6 mt-4">
+    <div class="heading-title">
+        @CRS.ADMIN.APPLICATION.Resources.Resource.Store_Performance
+    </div>
+    <div class="flex justify-between pb-[24px]">
+        <div class="relative input-search-wrapper">
+            <div class="absolute inset-y-0 left-0 flex items-center pl-[16px] pointer-events-none">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21" fill="none">
+                    <path d="M17.5 18L13.875 14.375M15.8333 9.66667C15.8333 13.3486 12.8486 16.3333 9.16667 16.3333C5.48477 16.3333 2.5 13.3486 2.5 9.66667C2.5 5.98477 5.48477 3 9.16667 3C12.8486 3 15.8333 5.98477 15.8333 9.66667Z"
+                          stroke="#667085" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+            </div>
+            <input type="search"
+                   id="storePerformanceSearch"
+                   class="input-search block w-full "
+                   placeholder="@CRS.ADMIN.APPLICATION.Resources.Resource.Search_By_StoreName"
+                   value="@Model.SearchFilter">
+        </div>
+        <div class="flex gap-6">
+            <button id="thisMonthBtn" class="h-[40px] flex items-center gap-[8px] px-[12px] border border-[#D4D4D8] rounded-[5px] text-[14px] text-gray-500 font-medium">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M5.625 2.5V3.125H3.125V16.875H16.875V3.125H14.375V2.5H13.125V3.125H6.875V2.5H5.625ZM4.375 4.375H5.625V5H6.875V4.375H13.125V5H14.375V4.375H15.625V5.625H4.375V4.375ZM4.375 6.875H15.625V15.625H4.375V6.875ZM8.125 8.125V9.375H9.375V8.125H8.125ZM10.625 8.125V9.375H11.875V8.125H10.625ZM13.125 8.125V9.375H14.375V8.125H13.125ZM5.625 10.625V11.875H6.875V10.625H5.625ZM8.125 10.625V11.875H9.375V10.625H8.125ZM10.625 10.625V11.875H11.875V10.625H10.625ZM13.125 10.625V11.875H14.375V10.625H13.125ZM5.625 13.125V14.375H14.375V13.125H5.625Z" fill="#A1A1AA" fill-opacity="0.75" />
+                </svg>
+                @CRS.ADMIN.APPLICATION.Resources.Resource.This_Month
+            </button>
+            <div class="export-button h-[40px]" onclick="exportExcel('table-id', 'Club')">
+                <img src="~/Content/assets_new/images/club/download-solid.svg">@CRS.ADMIN.APPLICATION.Resources.Resource.Export_CSV
+            </div>
+        </div>
+    </div>
+</div>
+<div class="table-tab">
+    <div class="px-[12px] py-[16px] flex justify-between entry-export-container">
+        <div class="flex items-center select-entries" id="ShowEntries-Id">
+        </div>
+    </div>
+    <div class="relative overflow-x-auto">
+        <table class="w-full text-left club-table" id="table-id">
+            <thead class="club-table-thead">
+                <tr>
+                    <th scope="col" class="p-[12px]">
+                        <div class="flex w-max">
+                            S.N
+                            <div class="relative pl-[5px]">
+                                <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                            </div>
+                        </div>
+                    </th>
+                    <th scope="col" class="p-[12px]">
+                        <div class="flex w-max">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.StoreName
+                            <div class="relative pl-[5px]">
+                                <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                            </div>
+                        </div>
+                    </th>
+                    <th scope="col" class="p-[12px]">
+                        <div class="flex w-max">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Booking_Store_Page
+                            <div class="relative pl-[5px]">
+                                <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                            </div>
+                        </div>
+                    </th>
+                    <th scope="col" class="p-[12px]">
+                        <div class="flex w-max">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Booking_Host_Details
+                            <div class="relative pl-[5px]">
+                                <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                            </div>
+                        </div>
+                    </th>
+                    <th scope="col" class="p-[12px]">
+                        <div class="flex w-max">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Phone_Store_Page
+                            <div class="relative pl-[5px]">
+                                <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                            </div>
+                        </div>
+                    </th>
+                    <th scope="col" class="p-[12px]">
+                        <div class="flex w-max">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Phone_Host_Details
+                            <div class="relative pl-[5px]">
+                                <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                            </div>
+                        </div>
+                    </th>
+                    <th scope="col" class="p-[12px]">
+                        <div class="flex w-max">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Total_Clicks
+                            <div class="relative pl-[5px]">
+                                <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                            </div>
+                        </div>
+                    </th>
+                </tr>
+            </thead>
+            <tbody id="storePerformanceBody">
+                <!-- Rendered by JS -->
+            </tbody>
+        </table>
+    </div>
+    <div class="pagination-club">
+        <div class="show-entry" id="Entries-Id">
+        </div>
+        <div class="flex gap-[12px]">
+            <div class="btn btn-secondary-box-shadow" id="prev-btn">
+                @CRS.ADMIN.APPLICATION.Resources.Resource.Previous
+            </div>
+            <div class="flex gap-[12px]" id="pagination-id">
+            </div>
+            <div class="btn btn-secondary-box-shadow" id="next-btn">
+                @CRS.ADMIN.APPLICATION.Resources.Resource.Next
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+
+<script>
+    (function () {
+        var currentPage = 1;
+        var pageSize = 10;
+        var currentSearch = '';
+        var searchDebounce = null;
+        var thisMonthActive = false;
+        var fromDateMs = null;
+        var toDateMs = null;
+
+        function escHtml(s) {
+            return $('<div>').text(String(s || '')).html();
+        }
+
+        function getThisMonthRange() {
+            var now = new Date();
+            var start = new Date(now.getFullYear(), now.getMonth(), 1, 0, 0, 0, 0);
+            var end = new Date(now.getFullYear(), now.getMonth() + 1, 0, 23, 59, 59, 999);
+            return { from: start.getTime(), to: end.getTime() };
+        }
+
+        function loadStorePerformance(pageNo) {
+            currentPage = pageNo || 1;
+            var tzOffset = -new Date().getTimezoneOffset();
+
+            $.ajax({
+                url: '/ConversionMetrixManagement/GetStorePerformance',
+                type: 'GET',
+                data: {
+                    searchFilter: currentSearch,
+                    clubId: window.selectedClubId,
+                    fromDateMs: fromDateMs,
+                    toDateMs: toDateMs,
+                    pageNo: currentPage,
+                    pageSize: pageSize,
+                    timezoneOffset: tzOffset
+                },
+                success: function (response) {
+                    if (!response || response.success === false) {
+                        console.error('[StorePerformance] server error:', response && response.message);
+                        renderRows([]);
+                        renderPagination(0);
+                        return;
+                    }
+                    renderRows(response.data);
+                    renderPagination(response.totalCount);
+                },
+                error: function (xhr, status, err) {
+                    console.error('[StorePerformance] AJAX error:', status, err);
+                    renderRows([]);
+                    renderPagination(0);
+                }
+            });
+        }
+
+        function renderRows(rows) {
+            if (!rows || !rows.length) {
+                $('#storePerformanceBody').html(
+                    '<tr><td colspan="7" class="p-[16px] text-center text-gray-400 text-[13px]">No data available.</td></tr>'
+                );
+                return;
+            }
+
+            var html = rows.map(function (r) {
+                return '<tr>'
+                    + '<td class="p-[12px]">' + r.sNo + '</td>'
+                    + '<td class="p-[12px]">' + escHtml(r.clubName) + '</td>'
+                    + '<td class="p-[12px]">' + r.reservationClick + '</td>'
+                    + '<td class="p-[12px]">' + r.reservationDetailClick + '</td>'
+                    + '<td class="p-[12px]">' + r.phoneCallClick + '</td>'
+                    + '<td class="p-[12px]">' + r.phoneCallDetailClick + '</td>'
+                    + '<td class="p-[12px]">' + r.totalClick + '</td>'
+                    + '</tr>';
+            }).join('');
+
+            $('#storePerformanceBody').html(html);
+        }
+
+        function renderPagination(totalCount) {
+            var totalPages = Math.max(1, Math.ceil(totalCount / pageSize));
+
+            $('#Entries-Id').text(
+                totalCount > 0
+                    ? ((currentPage - 1) * pageSize + 1) + '-' + Math.min(currentPage * pageSize, totalCount) + ' of ' + totalCount
+                    : '0 of 0'
+            );
+
+            var pagesHtml = '';
+            var maxVisiblePages = 5;
+
+            if (totalPages <= maxVisiblePages + 2) {
+                for (var i = 1; i <= totalPages; i++) {
+                    var activeClass = i === currentPage ? 'btn-primary' : 'btn-secondary-box-shadow';
+                    pagesHtml += '<div class="btn ' + activeClass + ' page-btn" data-page="' + i + '">' + i + '</div>';
+                }
+            } else {
+                var activeClass = 1 === currentPage ? 'btn-primary' : 'btn-secondary-box-shadow';
+                pagesHtml += '<div class="btn ' + activeClass + ' page-btn" data-page="1">1</div>';
+
+                var startPage = Math.max(2, currentPage - 1);
+                var endPage = Math.min(totalPages - 1, currentPage + 1);
+
+                if (currentPage <= 3) {
+                    endPage = maxVisiblePages;
+                } else if (currentPage >= totalPages - 2) {
+                    startPage = totalPages - maxVisiblePages + 1;
+                }
+
+                if (startPage > 2) {
+                    pagesHtml += '<div class="px-2 text-gray-400 select-none self-center">...</div>';
+                }
+                for (var i = startPage; i <= endPage; i++) {
+                    var activeClass2 = i === currentPage ? 'btn-primary' : 'btn-secondary-box-shadow';
+                    pagesHtml += '<div class="btn ' + activeClass2 + ' page-btn" data-page="' + i + '">' + i + '</div>';
+                }
+                if (endPage < totalPages - 1) {
+                    pagesHtml += '<div class="px-2 text-gray-400 select-none self-center">...</div>';
+                }
+
+                var lastActiveClass = totalPages === currentPage ? 'btn-primary' : 'btn-secondary-box-shadow';
+                pagesHtml += '<div class="btn ' + lastActiveClass + ' page-btn" data-page="' + totalPages + '">' + totalPages + '</div>';
+            }
+
+            $('#pagination-id').html(pagesHtml);
+            $('#prev-btn').toggleClass('disabled opacity-50 pointer-events-none', currentPage <= 1);
+            $('#next-btn').toggleClass('disabled opacity-50 pointer-events-none', currentPage >= totalPages);
+        }
+
+        $(document).on('click', '.page-btn', function () {
+            loadStorePerformance(parseInt($(this).data('page'), 10));
+        });
+
+        $(document).on('click', '#prev-btn', function () {
+            if (currentPage > 1) loadStorePerformance(currentPage - 1);
+        });
+
+        $(document).on('click', '#next-btn', function () {
+            loadStorePerformance(currentPage + 1);
+        });
+
+        $(document).on('input', '#storePerformanceSearch', function () {
+            var val = $(this).val();
+            clearTimeout(searchDebounce);
+            searchDebounce = setTimeout(function () {
+                currentSearch = val;
+                loadStorePerformance(1);
+            }, 300);
+        });
+
+        $(document).on('click', '#thisMonthBtn', function () {
+            thisMonthActive = !thisMonthActive;
+
+            if (thisMonthActive) {
+                var range = getThisMonthRange();
+                fromDateMs = range.from;
+                toDateMs = range.to;
+                $(this).addClass('bg-secondary-color-pink text-white border-secondary-color-pink')
+                    .removeClass('text-gray-500 border-[#D4D4D8]');
+            } else {
+                fromDateMs = null;
+                toDateMs = null;
+                $(this).removeClass('bg-secondary-color-pink text-white border-secondary-color-pink')
+                    .addClass('text-gray-500 border-[#D4D4D8]');
+            }
+
+            loadStorePerformance(1);
+        });
+
+        $(document).ready(function () {
+            loadStorePerformance(1);
+        });
+
+        window.reloadStorePerformance = function () {
+            loadStorePerformance(currentPage);
+        };
+    })();
+</script>
+
+<script>
+    (function () {
+        var PINK = '#C2185B';
+        var PURPLE = '#7F77DD';
+        var AREA_COLORS = [
+            '#C2185B', '#7F77DD', '#1D9E75',
+            '#F89336', '#378ADD', '#E24B4A', '#639922'
+        ];
+        var chartInstance = null;
+
+        function escHtml(s) {
+            return $('<div>').text(String(s || '')).html();
+        }
+
+        // Single combined call: today's click chart + action source + click origin
+        function loadClickAnalytics(filter) {
+            console.log("Received filter:", filter);
+            console.trace("loadClickAnalytics called");
+            var normalizedFilter = (filter || 'all').toLowerCase().trim();
+            var tzOffset = -new Date().getTimezoneOffset();
+
+            console.log("normalizedFilter =", normalizedFilter);
+
+            $('#actionSourceList').html('<p class="text-[13px] text-gray-400 py-2">Loading...</p>');
+            $('#clickOriginList').html('<p class="text-[13px] text-gray-400 py-2">Loading...</p>');
+
+            $.ajax({
+                url: '/ConversionMetrixManagement/GetClickAnalytics',
+                type: 'GET',
+                cache: false,
+                data: {
+                    clubId: window.selectedClubId,
+                    channel: normalizedFilter,
+                    timezoneOffset: tzOffset
+                },
+                success: function (response) {
+                    if (!response || response.success === false) {
+                        console.error('[ClickAnalytics] server error:', response && response.message);
+                        showEmpty();
+                        renderActionSource([]);
+                        renderClickOrigin([]);
+                        return;
+                    }
+                    renderChart(response.chartData, filter);
+                    renderActionSource(response.actionSource);
+                    renderClickOrigin(response.clickOrigin);
+                },
+                error: function (err) {
+                    console.error('[ClickAnalytics] AJAX error:', err);
+                    showEmpty();
+                    renderActionSource([]);
+                    renderClickOrigin([]);
+                }
+            });
+        }
+
+        window.reloadOverviewSummary = function () {
+            $.ajax({
+                url: '/ConversionMetrixManagement/GetConversionSummaryJson',
+                type: 'GET',
+                cache: false,
+                data: { clubId: window.selectedClubId },
+                success: function (response) {
+                    if (!response || response.success === false) {
+                        console.error('[Summary] server error:', response && response.message);
+                        return;
+                    }
+                    $('#totalClicksValue').text(response.totalClicks);
+                    $('#reservationClicksValue').text(response.reservationClicks);
+                    $('#phoneCallClicksValue').text(response.phoneCallClicks);
+                    $('#averageCtrValue').text(parseFloat(response.averageCTR).toFixed(1) + ' %');
+                },
+                error: function () {
+                    console.error('[Summary] AJAX error');
+                }
+            });
+
+            loadClickAnalytics($('#clickChartFilter').val() || 'all');
+        };
+
+        function renderChart(res, filter) {
+            var labels = (res && res.labels) ? res.labels : [];
+            var datasets = buildDatasets(res, filter);
+
+            if (!labels.length || !datasets.length) {
+                showEmpty();
+                return;
+            }
+
+            document.getElementById('clickChartWrap').style.display = 'block';
+            var emptyEl = document.getElementById('clickChartEmpty');
+            emptyEl.classList.add('hidden');
+            emptyEl.classList.remove('flex');
+            emptyEl.style.display = '';
+            document.getElementById('clickChartLegend').style.display = 'flex';
+
+            if (chartInstance) {
+                chartInstance.destroy();
+            }
+
+            chartInstance = new Chart(document.getElementById('Month12'), {
+                type: 'bar',
+                data: { labels: labels, datasets: datasets },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            callbacks: {
+                                label: function (ctx) {
+                                    return ' ' + ctx.dataset.label + ': '
+                                        + Math.round(ctx.parsed.y) + ' Click';
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            grid: { color: 'rgba(0,0,0,0.06)', lineWidth: 0.5 },
+                            border: { color: 'rgba(0,0,0,0.06)' },
+                            ticks: {
+                                color: '#111827',
+                                font: { size: 12 },
+                                autoSkip: true,
+                                maxTicksLimit: 10,
+                                maxRotation: 0,
+                                padding: 6
+                            },
+                            title: {
+                                display: true,
+                                color: '#111827',
+                                font: { size: 12 },
+                                padding: { top: 8 }
+                            }
+                        },
+                        y: {
+                            beginAtZero: true,
+                            grid: { color: 'rgba(0,0,0,0.06)', lineWidth: 0.5 },
+                            border: { dash: [3, 3], color: 'transparent' },
+                            ticks: {
+                                color: '#111827',
+                                font: { size: 12 },
+                                stepSize: 5,
+                                padding: 8,
+                                callback: function (v) { return Math.round(v); }
+                            },
+                            title: {
+                                display: true,
+                                color: '#111827',
+                                font: { size: 12 },
+                                padding: { bottom: 8 }
+                            }
+                        }
+                    },
+                    interaction: { mode: 'index', intersect: false }
+                }
+            });
+
+            renderLegend(datasets);
+        }
+
+        function buildDatasets(res, filter) {
+            if (!res || !res.datasets) return [];
+            var colorMap = { all: PINK, reservation: PINK, phone: PURPLE };
+            var labelMap = {
+                all: '@Html.Raw(HttpUtility.JavaScriptStringEncode(CRS.ADMIN.APPLICATION.Resources.Resource.Total_Clicks))',
+                reservation: '@Html.Raw(HttpUtility.JavaScriptStringEncode(CRS.ADMIN.APPLICATION.Resources.Resource.Reservation_Clicks))',
+                phone: '@Html.Raw(HttpUtility.JavaScriptStringEncode(CRS.ADMIN.APPLICATION.Resources.Resource.Phone_Call_Click))'
+            };
+
+            var items = res.datasets;
+
+            return items.map(function (d) {
+                var c = colorMap[d.type] || PINK;
+                return {
+                    label: labelMap[d.type] || d.type,
+                    data: d.data,
+                    backgroundColor: c + '26',
+                    borderColor: c,
+                    borderWidth: 1.5,
+                    borderRadius: 4,
+                    borderSkipped: false,
+                    barPercentage: 0.6,
+                    categoryPercentage: 0.7
+                };
+            });
+        }
+
+        function showEmpty() {
+            document.getElementById('clickChartWrap').style.display = 'none';
+            var emptyEl = document.getElementById('clickChartEmpty');
+            emptyEl.classList.remove('hidden');
+            emptyEl.classList.add('flex');
+            emptyEl.style.display = 'flex';
+            document.getElementById('clickChartLegend').style.display = 'none';
+            if (chartInstance) { chartInstance.destroy(); chartInstance = null; }
+        }
+
+        // Fixed: reads color directly off each dataset instead of re-deriving
+        // it from label text (which never matched anything before).
+        function renderLegend(datasets) {
+            var totalClicksLabel = '@Html.Raw(HttpUtility.JavaScriptStringEncode(CRS.ADMIN.APPLICATION.Resources.Resource.Total_Clicks))';
+            var html = datasets
+                .filter(function (ds) {
+                    return ds.label !== totalClicksLabel;
+                })
+                .map(function (ds) {
+                    return '<span style="display:flex;align-items:center;gap:6px;font-size:12px;color:#6b7280;">'
+                        + '<span style="width:10px;height:10px;border-radius:2px;background:' + ds.borderColor + '"></span>'
+                        + ds.label
+                        + '</span>';
+                })
+                .join('');
+
+            document.getElementById('clickChartLegend').innerHTML = html;
+        }
+
+        var STR_STORE_PAGE = '@Html.Raw(HttpUtility.JavaScriptStringEncode(CRS.ADMIN.APPLICATION.Resources.Resource.Store_Page))';
+        var STR_HOST_DETAIL_PAGE = '@Html.Raw(HttpUtility.JavaScriptStringEncode(CRS.ADMIN.APPLICATION.Resources.Resource.Host_Detail_Page))';
+
+// 2. Map the hardcoded categories to their localized versions
+         var ACTION_SOURCE_MAPPING = {
+            'store page': STR_STORE_PAGE || '店舗ページ',
+            'host detail page': STR_HOST_DETAIL_PAGE || 'ホスト詳細ページ'
+         };
+
+        var ACTION_SOURCE_CATEGORIES = ['Store Page', 'Host Detail Page'];
+
+        function renderActionSource(data) {
+            var byLabel = {};
+            (data || []).forEach(function (d) {
+                if (d.label) {
+                    byLabel[d.label.toLowerCase().trim()] = d;
+                }
+            });
+
+            var html = ACTION_SOURCE_CATEGORIES.map(function (label) {
+                var key = label.toLowerCase().trim();
+                var d = byLabel[key];
+                var pct = d && d.percentage ? parseFloat(d.percentage).toFixed(1) : '0.0';
+                var displayLabel = ACTION_SOURCE_MAPPING[key] || label;
+                return '<div class="mb-4">'
+                    + '<div class="mb-2 flex justify-between text-[#18181B] text-[13px]">'
+                    + '<span>' + escHtml(displayLabel) + '</span>'
+                    + '<span>' + pct + '%</span>'
+                    + '</div>'
+                    + '<div class="w-full bg-[#F4F4F5] rounded-full h-[5px]">'
+                    + '<div class="bg-primary-100 h-[5px] rounded-full" style="width:' + pct + '%"></div>'
+                    + '</div>'
+                    + '</div>';
+            }).join('');
+
+            $('#actionSourceList').html(html);
+        }
+
+
+        var CLICK_ORIGIN_AREAS = ['Tokyo', 'Osaka', 'Aichi'];
+
+        function renderClickOrigin(data) {
+            if (!data || !data.length) {
+                $('#clickOriginList').html(
+                    '<p class="text-[13px] text-gray-400 py-2">No data available.</p>'
+                );
+                return;
+            }
+
+            var max = Math.max.apply(null, data.map(function (d) { return d.clicks || 0; }).concat([1]));
+
+            var html = data.map(function (d, i) {
+                var pct = d.percentage ? parseFloat(d.percentage).toFixed(1) : '0.0';
+                var barPct = max > 0 ? Math.round(((d.clicks || 0) / max) * 100) : 0;
+                var color = AREA_COLORS[i % AREA_COLORS.length];
+
+                return '<div class="flex items-center gap-[10px] py-[9px]'
+                    + ' border-b border-[#F4F4F5] last:border-b-0">'
+                    + '<span style="width:10px;height:10px;border-radius:50%;'
+                    + 'background:' + color + ';flex-shrink:0;display:inline-block;"></span>'
+                    + '<span class="flex-1 text-[13px] text-[#18181B]">' + escHtml(d.area) + '</span>'
+                    + '<div style="width:80px;background:#F4F4F5;border-radius:999px;height:4px;">'
+                    + '<div style="width:' + barPct + '%;height:4px;border-radius:999px;'
+                    + 'background:' + color + ';"></div>'
+                    + '</div>'
+                    + '<span class="text-[13px] font-semibold text-[#18181B]'
+                    + ' min-w-[38px] text-right">' + pct + '%</span>'
+                    + '</div>';
+            }).join('');
+
+            $('#clickOriginList').html(html);
+        }
+
+
+        $(document).on('select2:select', '#clickChartFilter', function () {
+            var value = $(this).val();
+            console.log("Select2 changed:", value);
+            loadClickAnalytics(value);
+        });
+
+        $(document).ready(function () {
+
+            $(document).on('change', '#clickChartFilter', function () {
+                var value = $(this).val();
+
+                console.log("Dropdown changed:", value);
+
+                loadClickAnalytics(value);
+            });
+
+
+
+            loadClickAnalytics("all");
+        });
+    })();
+</script>

@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -3023,5 +3023,217 @@
   <data name="Plan Name English" xml:space="preserve">
     <value>Plan Name English</value>
     <comment>Plan Management</comment>
+  </data>
+  <data name="Profile_Detail" xml:space="preserve">
+    <value>Profile Detail</value>
+    <comment>Profile Detail</comment>
+  </data>
+  <data name="Title_detail" xml:space="preserve">
+    <value>Title Detail</value>
+    <comment>Title Detail</comment>
+  </data>
+  <data name="Skills_and_assessment" xml:space="preserve">
+    <value>Skills and assessment</value>
+    <comment>Skills and assessment</comment>
+  </data>
+  <data name="Constellation" xml:space="preserve">
+    <value>Constellation</value>
+    <comment>Constellation</comment>
+  </data>
+  <data name="Cute_style" xml:space="preserve">
+    <value>Cute style</value>
+    <comment>Cute style</comment>
+  </data>
+  <data name="Appearance_and_overall_impression" xml:space="preserve">
+    <value>Appearance and overall impression</value>
+    <comment>Appearance and overall impression</comment>
+  </data>
+  <data name="Cool_style" xml:space="preserve">
+    <value>Cool style</value>
+    <comment>Cool style</comment>
+  </data>
+  <data name="Conversation_style" xml:space="preserve">
+    <value>Conversation style</value>
+    <comment>Conversation style</comment>
+  </data>
+  <data name="Listener" xml:space="preserve">
+    <value>Listener</value>
+    <comment>Listener</comment>
+  </data>
+  <data name="Speaker" xml:space="preserve">
+    <value>Speaker</value>
+    <comment>Speaker</comment>
+  </data>
+  <data name="The_atmosphere" xml:space="preserve">
+    <value>The atmosphere when we're together</value>
+    <comment>The atmosphere when we're together</comment>
+  </data>
+  <data name="healing" xml:space="preserve">
+    <value>Healing</value>
+    <comment>Healing</comment>
+  </data>
+  <data name="Liven_things_up" xml:space="preserve">
+    <value>Liven things up</value>
+    <comment>Liven things up</comment>
+  </data>
+  <data name="Alcohol_tolerance" xml:space="preserve">
+    <value>Alcohol tolerance</value>
+    <comment>Alcohol tolerance</comment>
+  </data>
+  <data name="I_can_not_drink" xml:space="preserve">
+    <value>I can't drink.</value>
+    <comment>I can't drink.</comment>
+  </data>
+  <data name="Drinkable" xml:space="preserve">
+    <value>Drinkable</value>
+    <comment>Drinkable</comment>
+  </data>
+  <data name="mbti" xml:space="preserve">
+    <value>MBTI Type</value>
+    <comment>MBTI Type</comment>
+  </data>
+  <data name="ConversionMetrixManagement" xml:space="preserve">
+    <value>Conversion Metrics</value>
+    <comment>ConversionMetrixManagement</comment>
+  </data>
+  <data name="Active_Log" xml:space="preserve">
+    <value>Active log</value>
+    <comment>ConversionMetrixManagement</comment>
+  </data>
+  <data name="Reservation_Clicks" xml:space="preserve">
+    <value>Reservation Clicks</value>
+    <comment>ConversionMetrixManagement</comment>
+  </data>
+  <data name="Phone_Call_Click" xml:space="preserve">
+    <value>Phone Call Click</value>
+    <comment>ConversionMetrixManagement</comment>
+  </data>
+  <data name="Average_CTR" xml:space="preserve">
+    <value>Average CTR</value>
+    <comment>ConversionMetrixManagement</comment>
+  </data>
+  <data name="All_Stores" xml:space="preserve">
+    <value>All Stores</value>
+    <comment>ConvesionMetrixManagement</comment>
+  </data>
+  <data name="Store_Page" xml:space="preserve">
+    <value>Store page</value>
+    <comment>ConversionMetrixManagement</comment>
+  </data>
+  <data name="Click_Origin" xml:space="preserve">
+    <value>Click Origin</value>
+    <comment>ConversionMerticManagement</comment>
+  </data>
+  <data name="Store_Performance" xml:space="preserve">
+    <value>Store performance</value>
+    <comment>ConversionMetrixManagement</comment>
+  </data>
+  <data name="Booking_Store_Page" xml:space="preserve">
+    <value>Booking Store page</value>
+    <comment>ConversionMetrixManagement</comment>
+  </data>
+  <data name="Booking_Host_Details" xml:space="preserve">
+    <value>Booking Host Details</value>
+    <comment>ConversionMetrixManagement</comment>
+  </data>
+  <data name="Phone_Store_Page" xml:space="preserve">
+    <value>Phone Store Page</value>
+    <comment>ConversionMetrixManagement</comment>
+  </data>
+  <data name="Phone_Host_Details" xml:space="preserve">
+    <value>Phone Host Details</value>
+    <comment>ConversionMetrixManagement</comment>
+  </data>
+  <data name="Total_Clicks" xml:space="preserve">
+    <value>Total Clicks</value>
+    <comment>ConversionMetrixManagement</comment>
+  </data>
+  <data name="This_Month" xml:space="preserve">
+    <value>This Month</value>
+    <comment>ConversionMetrixManagement</comment>
+  </data>
+  <data name="Action_Type" xml:space="preserve">
+    <value>Action Type</value>
+    <comment>ConversionMetrixManagement</comment>
+  </data>
+  <data name="Source_Page" xml:space="preserve">
+    <value>Source Page</value>
+    <comment>ConversionMetrixManagement</comment>
+  </data>
+  <data name="Target_Name" xml:space="preserve">
+    <value>Target Name</value>
+    <comment>Conversion Metrix Management</comment>
+  </data>
+  <data name="User_Status" xml:space="preserve">
+    <value>User Status</value>
+    <comment>Conversion Metrix Management</comment>
+  </data>
+  <data name="Browser" xml:space="preserve">
+    <value>Browser</value>
+  </data>
+  <data name="Target_Type" xml:space="preserve">
+    <value>Target Type</value>
+  </data>
+  <data name="Select_Store" xml:space="preserve">
+    <value>Select Store</value>
+    <comment>ConversionMetrixManagement</comment>
+  </data>
+  <data name="Area" xml:space="preserve">
+    <value>Area</value>
+  </data>
+  <data name="Search_Club" xml:space="preserve">
+    <value>Search Club</value>
+  </data>
+  <data name="Ranked_Clubs" xml:space="preserve">
+    <value>Ranked Clubs</value>
+    <comment>ConversionMetrixManagement</comment>
+  </data>
+  <data name="ReservationButton" xml:space="preserve">
+    <value>Reservation Button</value>
+  </data>
+  <data name="PhoneCallButton" xml:space="preserve">
+    <value>Phone Call Button</value>
+  </data>
+  <data name="NoClickDataToday" xml:space="preserve">
+    <value>No Click Data Today</value>
+  </data>
+  <data name="ActionSource_ByPage" xml:space="preserve">
+    <value>Action Source (By Page)</value>
+  </data>
+  <data name="ClickOrigin_ByArea" xml:space="preserve">
+    <value>Click Origin (By Area)</value>
+  </data>
+  <data name="Today_Clicks" xml:space="preserve">
+    <value>Today Clicks</value>
+  </data>
+  <data name="Store_Detail" xml:space="preserve">
+    <value>Store Detail</value>
+  </data>
+  <data name="Host_Detail" xml:space="preserve">
+    <value>Host Detail</value>
+  </data>
+  <data name="Todays_Clicks" xml:space="preserve">
+    <value>Today's Click</value>
+  </data>
+  <data name="Export_CSV" xml:space="preserve">
+    <value>Export CSV</value>
+  </data>
+  <data name="Host_Detail_Page" xml:space="preserve">
+    <value>Host Detail Page</value>
+  </data>
+  <data name="Guest" xml:space="preserve">
+    <value>Guest</value>
+  </data>
+  <data name="Member" xml:space="preserve">
+    <value>Member</value>
+  </data>
+  <data name="Search_By_StoreName" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="Select_Area" xml:space="preserve">
+    <value>Select Area</value>
+  </data>
+  <data name="User_Agent" xml:space="preserve">
+    <value>User Agent</value>
   </data>
 </root>

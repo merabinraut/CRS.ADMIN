@@ -499,8 +499,9 @@
 
             if (str.ToLower() != "null")
                 str = "'" + str + "'";
+         
 
-            return str.TrimEnd().TrimStart();
+                return str.TrimEnd().TrimStart();
         }
         public string FilterTable(DataTable dataTable)
         {

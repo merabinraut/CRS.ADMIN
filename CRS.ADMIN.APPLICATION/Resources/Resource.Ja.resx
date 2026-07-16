@@ -328,7 +328,7 @@
     <comment>Roles &amp; Privileges</comment>
   </data>
   <data name="All" xml:space="preserve">
-    <value>全て</value>
+    <value>すべて</value>
     <comment>Customer Management</comment>
   </data>
   <data name="AmountTransferred" xml:space="preserve">
@@ -347,7 +347,7 @@
     <comment>API Response Message</comment>
   </data>
   <data name="Apply" xml:space="preserve">
-    <value>適用する</value>
+    <value>適用</value>
     <comment>Reservation Ledger</comment>
   </data>
   <data name="Approve" xml:space="preserve">
@@ -1576,7 +1576,7 @@
   </data>
   <data name="Manage your profile security" xml:space="preserve">
     <value>プロファイルのセキュリティを管理する</value>
-    <comment>Security</comment>
+    <comment>会員</comment>
   </data>
   <data name="Manage your promotion details." xml:space="preserve">
     <value>プロモーションの詳細及び写真を管理します。</value>
@@ -2038,7 +2038,7 @@
     <comment>Inquries</comment>
   </data>
   <data name="Prefecture" xml:space="preserve">
-    <value>都道府県</value>
+    <value>エリア</value>
     <comment>ClubManagement</comment>
   </data>
   <data name="Premium" xml:space="preserve">
@@ -2046,7 +2046,7 @@
     <comment>Customer Management</comment>
   </data>
   <data name="Previous" xml:space="preserve">
-    <value>前の</value>
+    <value>前へ</value>
   </data>
   <data name="Previous Occupation" xml:space="preserve">
     <value>前職</value>
@@ -2618,7 +2618,7 @@
     <comment>Payment Management</comment>
   </data>
   <data name="Total Clicks" xml:space="preserve">
-    <value>総クリック</value>
+    <value>総クリック数</value>
     <comment>Affiliate Management</comment>
   </data>
   <data name="Total Club Plan Amount" xml:space="preserve">
@@ -3004,5 +3004,180 @@
   </data>
   <data name="Plan Name English" xml:space="preserve">
     <value>プラン名（英語）</value>
+  </data>
+  <data name="Profile_Detail" xml:space="preserve">
+    <value>プロフィール</value>
+  </data>
+  <data name="Title_detail" xml:space="preserve">
+    <value>タイトル</value>
+  </data>
+  <data name="Skills_and_assessment" xml:space="preserve">
+    <value>スキル・自己評価 (5段階評価)</value>
+  </data>
+  <data name="Constellation" xml:space="preserve">
+    <value>星座</value>
+  </data>
+  <data name="Cute_style" xml:space="preserve">
+    <value>かわいい系</value>
+  </data>
+  <data name="Appearance_and_overall_impression" xml:space="preserve">
+    <value>見た目・雰囲気の印象</value>
+  </data>
+  <data name="Cool_style" xml:space="preserve">
+    <value>かっこいい系</value>
+  </data>
+  <data name="Conversation_style" xml:space="preserve">
+    <value>会話のスタイル</value>
+  </data>
+  <data name="Listener" xml:space="preserve">
+    <value>聞き役</value>
+  </data>
+  <data name="Speaker" xml:space="preserve">
+    <value>話し役</value>
+  </data>
+  <data name="The_atmosphere" xml:space="preserve">
+    <value>一緒にいる時の空気感</value>
+  </data>
+  <data name="healing" xml:space="preserve">
+    <value>癒し</value>
+  </data>
+  <data name="Liven_things_up" xml:space="preserve">
+    <value>盛り上げ</value>
+  </data>
+  <data name="Alcohol_tolerance" xml:space="preserve">
+    <value>お酒の強さ</value>
+  </data>
+  <data name="I_can_not_drink" xml:space="preserve">
+    <value>飲めない</value>
+  </data>
+  <data name="Drinkable" xml:space="preserve">
+    <value>飲める</value>
+  </data>
+  <data name="mbti" xml:space="preserve">
+    <value>MBTI性格</value>
+  </data>
+  <data name="ConversionMetrixManagement" xml:space="preserve">
+    <value>コンバージョン分析</value>
+  </data>
+  <data name="Active_Log" xml:space="preserve">
+    <value>アクティビティログ
+</value>
+  </data>
+  <data name="Reservation_Clicks" xml:space="preserve">
+    <value>予約クリック数</value>
+  </data>
+  <data name="Phone_Call_Click" xml:space="preserve">
+    <value>電話クリック数</value>
+  </data>
+  <data name="Average_CTR" xml:space="preserve">
+    <value>平均クリック率</value>
+  </data>
+  <data name="All_Stores" xml:space="preserve">
+    <value>全店舗</value>
+  </data>
+  <data name="Store_Page" xml:space="preserve">
+    <value>店舗ページ</value>
+  </data>
+  <data name="Click_Origin" xml:space="preserve">
+    <value>「原点」をクリックします</value>
+  </data>
+  <data name="Store_Performance" xml:space="preserve">
+    <value>店舗別パフォーマンス</value>
+  </data>
+  <data name="Booking_Store_Page" xml:space="preserve">
+    <value>予約店舗ページ</value>
+  </data>
+  <data name="Booking_Host_Details" xml:space="preserve">
+    <value>予約ホスト詳細</value>
+  </data>
+  <data name="Phone_Store_Page" xml:space="preserve">
+    <value>電話店舗ページ</value>
+  </data>
+  <data name="Phone_Host_Details" xml:space="preserve">
+    <value>電話ホスト詳細</value>
+  </data>
+  <data name="Total_Clicks" xml:space="preserve">
+    <value>合計クリック数</value>
+  </data>
+  <data name="This_Month" xml:space="preserve">
+    <value>今月</value>
+  </data>
+  <data name="Action_Type" xml:space="preserve">
+    <value>クリック元</value>
+  </data>
+  <data name="Source_Page" xml:space="preserve">
+    <value>発生元ページ</value>
+  </data>
+  <data name="Target_Name" xml:space="preserve">
+    <value>対象名 (店舗/キャスト)</value>
+  </data>
+  <data name="User_Status" xml:space="preserve">
+    <value>ユーザーステータス</value>
+  </data>
+  <data name="Browser" xml:space="preserve">
+    <value>ブラウザ</value>
+  </data>
+  <data name="Target_Type" xml:space="preserve">
+    <value>対象名 (店舗/キャスト)</value>
+  </data>
+  <data name="Select_Store" xml:space="preserve">
+    <value>店舗を選択</value>
+  </data>
+  <data name="Area" xml:space="preserve">
+    <value>エリア</value>
+  </data>
+  <data name="Search_Club" xml:space="preserve">
+    <value>クラブを探す</value>
+  </data>
+  <data name="Ranked_Clubs" xml:space="preserve">
+    <value>ランク付けされたクラブ</value>
+  </data>
+  <data name="ReservationButton" xml:space="preserve">
+    <value>予約ボタン</value>
+  </data>
+  <data name="PhoneCallButton" xml:space="preserve">
+    <value>電話ボタン</value>
+  </data>
+  <data name="NoClickDataToday" xml:space="preserve">
+    <value>今日はクリックデータがありません</value>
+  </data>
+  <data name="ActionSource_ByPage" xml:space="preserve">
+    <value>クリック発生元（ページ別）</value>
+  </data>
+  <data name="ClickOrigin_ByArea" xml:space="preserve">
+    <value>クリック発生元（地域別）</value>
+  </data>
+  <data name="Today_Clicks" xml:space="preserve">
+    <value>総クリック数</value>
+  </data>
+  <data name="Store_Detail" xml:space="preserve">
+    <value>店舗詳細</value>
+  </data>
+  <data name="Host_Detail" xml:space="preserve">
+    <value>ホストの詳細</value>
+  </data>
+  <data name="Todays_Clicks" xml:space="preserve">
+    <value>本日クリック推移</value>
+  </data>
+  <data name="Export_CSV" xml:space="preserve">
+    <value>CSVをエクスポート</value>
+  </data>
+  <data name="Host_Detail_Page" xml:space="preserve">
+    <value>ホスト詳細ページ</value>
+  </data>
+  <data name="Guest" xml:space="preserve">
+    <value>ゲスト</value>
+  </data>
+  <data name="Member" xml:space="preserve">
+    <value>会員</value>
+  </data>
+  <data name="Search_By_StoreName" xml:space="preserve">
+    <value>店舗名で検索</value>
+  </data>
+  <data name="Select_Area" xml:space="preserve">
+    <value>エリアを選択</value>
+  </data>
+  <data name="User_Agent" xml:space="preserve">
+    <value>ブラウザ</value>
   </data>
 </root>
