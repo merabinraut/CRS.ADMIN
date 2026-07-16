@@ -452,7 +452,7 @@
             console.trace("loadClickAnalytics called");
             var normalizedFilter = (filter || 'all').toLowerCase().trim();
             var tzOffset = -new Date().getTimezoneOffset();
-
+            
             console.log("normalizedFilter =", normalizedFilter);
 
             $('#actionSourceList').html('<p class="text-[13px] text-gray-400 py-2">Loading...</p>');
@@ -640,8 +640,8 @@
                     return ds.label !== totalClicksLabel;
                 })
                 .map(function (ds) {
-                    return '<span style="display:flex;align-items:center;gap:6px;font-size:12px;color:#6b7280;">'
-                        + '<span style="width:10px;height:10px;border-radius:2px;background:' + ds.borderColor + '"></span>'
+                return '<span style="display:flex;align-items:center;gap:6px;font-size:12px;color:#6b7280;">'
+                    + '<span style="width:10px;height:10px;border-radius:2px;background:' + ds.borderColor + '"></span>'
                         + ds.label
                         + '</span>';
                 })
@@ -723,7 +723,7 @@
             $('#clickOriginList').html(html);
         }
 
-
+      
         $(document).on('select2:select', '#clickChartFilter', function () {
             var value = $(this).val();
             console.log("Select2 changed:", value);

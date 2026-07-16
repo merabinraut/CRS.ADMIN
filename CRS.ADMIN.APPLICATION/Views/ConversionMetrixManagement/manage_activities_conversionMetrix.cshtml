@@ -362,12 +362,13 @@
             // Fallback default style
             return '<span class="status-pill" style="' + baseStyle + 'background:#F4F4F5;color:#6B7280;">'
                 + escHtml(statusType || '-') + '</span>';
-        }
+            }
         function formatActivityId(id) {
             if (!id || id === '-') return '-';
             if (id.length <= 14) return escHtml(id);
             return escHtml(id.substring(0, 8) + '...' + id.substring(id.length - 6));
         }
+
 
         function renderRows(rows) {
             if (!rows || !rows.length) {
