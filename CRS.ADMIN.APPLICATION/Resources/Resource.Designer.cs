@@ -2214,26 +2214,6 @@ namespace CRS.ADMIN.APPLICATION.Resources
         }
 
         /// <summary>
-        ///   Looks up a localized string similar to Conversation style.
-        /// </summary>
-        public static string Conversation_style
-        {
-            get
-            {
-                return ResourceManager.GetString("Conversation_style", resourceCulture);
-            }
-        }
-        ///   Looks up a localized string similar to ConversionMetrixManagement.
-        /// </summary>
-        public static string ConversionMetrixManagement
-        {
-            get
-            {
-                return ResourceManager.GetString("ConversionMetrixManagement", resourceCulture);
-            }
-        }
-
-        /// <summary>
         ///   Looks up a localized string similar to Converted Customers.
         /// </summary>
         public static string Converted_Customers
