@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CRS.ADMIN.SHARED.PaginationManagement;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,13 +15,22 @@ namespace CRS.ADMIN.SHARED.ConversionMetrixManagement
         public int PhoneClicks { get; set; }
         public string TimeSlot { get; set; }
     }
+    public class ActivityLogFilterCommon : PaginationFilterCommon
+    {
+        public string ClubId { get; set; }
+        public string ActionType { get; set; }
+        public string TargetType { get; set; }
+        public string UserStatus { get; set; }
+
+        public string SourcePageType { get; set; }
+    }
     public class  ConversionSummaryCommon
     {
         public int TotalClicks { get; set; }
         public int ReservationClicks { get; set; }
         public int PhoneClicks { get; set; }
         public int ReservationConvertedCount { get; set; }
-        public int AverageCTR { get; set; }
+        public decimal AverageCTR { get; set; }
     }
     public class ActionSourceCommon
     {
@@ -44,6 +54,7 @@ namespace CRS.ADMIN.SHARED.ConversionMetrixManagement
         public string ClubCode { get; set; }
         public string ClubName { get; set; }
         public long? DateMs { get; set; }
+        public string ActivityId { get; set; }
 
         public string ActionType { get; set; }
         public string SourcePage { get; set; }
@@ -52,6 +63,7 @@ namespace CRS.ADMIN.SHARED.ConversionMetrixManagement
         public string UserStatus { get; set; }
         public string Prefecture { get; set; }
         public string Browser { get; set; }
+        public string UserAgent { get; set; }
         public DateTime? Date { get; set; }
         public int TotalRecords { get; set; }
     }
@@ -75,8 +87,9 @@ namespace CRS.ADMIN.SHARED.ConversionMetrixManagement
         public string ReservationId { get; set; }
         public int TotalRecords { get; set; }
     }
-    public class StorePerformanceCommon
+    public class StorePerformanceCommon 
     {
+        public int Sno { get; set; }
         public string ClubId { get; set; }
         public string StoreName { get; set; }
         public int BookingStorePage { get; set; }

@@ -125,7 +125,8 @@
 }
 
 .tab-container-plane .tab-button-plane {
-  padding: 0px 4px 18px 4px;
+    padding: 0px 4px 18px 4px;
+    color: #667085;
 }
 .tab-container-plane .active {
   padding: 0px 4px 16px 4px;

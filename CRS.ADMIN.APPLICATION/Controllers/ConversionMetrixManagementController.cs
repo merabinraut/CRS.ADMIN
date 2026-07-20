@@ -1,8 +1,12 @@
- using CRS.ADMIN.APPLICATION.Library;
+using CRS.ADMIN.APPLICATION.Library;
 using CRS.ADMIN.APPLICATION.Models.ConversionMetrixManagement;
+using CRS.ADMIN.APPLICATION.Models.DiscountManagement;
 using CRS.ADMIN.BUSINESS.ConversionMetrixManagement;
 using CRS.ADMIN.SHARED.ConversionMetrixManagement;
 using CRS.ADMIN.SHARED.LocationManagement;
+using CRS.ADMIN.SHARED.PaginationManagement;
+using DocumentFormat.OpenXml.Wordprocessing;
+using Microsoft.Office.Interop.Excel;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -11,7 +15,6 @@ using System.Web.Mvc;
 
 namespace CRS.ADMIN.APPLICATION.Controllers
 {
-    [OverrideActionFilters]
     public class ConversionMetrixManagementController : BaseController
     {
         private readonly IConversionMetrixBusiness _service;
@@ -22,13 +25,29 @@ namespace CRS.ADMIN.APPLICATION.Controllers
 
         #region Index
         [HttpGet]
-        public ActionResult Index(string SearchFilter = null, string clubId = null)
+        public ActionResult Index(ActivityLogModel Requests, string SearchFilter = null, string clubId = null, int StartIndex = 0, int PageSize = 10, string ToDate = "", string FromDate = "", string TabValue = "",
+            string actionType = null, string sourcePageType = null, string search = null, string userStatus = null, int timezoneOffset = 0, int StartIndex2 = 0, int PageSize2 = 10)
         {
+            ViewBag.SearchFilter = SearchFilter;
             Session["CurrentURL"] = "/ConversionMetrixManagement/Index";
+            var culture = Request.Cookies["culture"]?.Value;
+            culture = string.IsNullOrEmpty(culture) ? "ja" : culture;
+            string RenderId = "";
+            ConversionMetrixOverviewModel listModel = new ConversionMetrixOverviewModel();
+            //var listModel=new ConversionMetrixOverviewModel();
+            PaginationFilterCommon dbRequest = new PaginationFilterCommon()
+            {
+                Skip = StartIndex,
+                Take = PageSize,
+                SearchFilter = !string.IsNullOrEmpty(SearchFilter) ? SearchFilter : null,
+                FromDate = FromDate,
+                ToDate = ToDate
+            };
 
             var model = new ConversionMetrixOverviewModel
             {
                 SearchFilter = SearchFilter,
+                TabValue = TabValue,
                 ActivityLogFilterModel = new ActivityLogFilterModel(),
                 ConversionSummaryModel = new ConversionSummaryModel(),
                 StorePerformanceModel = new List<StorePerformanceModel>(),
@@ -36,79 +55,131 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 ActivityLogModel = new List<ActivityLogModel>(),
                 StoreRankingList = new List<StoreRankingModel>()
             };
-
-            try
+            long decryptedClubId = 0;
+            if (!string.IsNullOrEmpty(clubId))
             {
-                var summary = _service.GetConversionSummary(clubId);
-                if (summary != null)
+                var data = ApplicationUtilities.DecryptParameter(clubId);
+                decryptedClubId = Convert.ToInt64(ApplicationUtilities.DecryptParameter(clubId));
+            }
+            var locations = _service.GetLocationList() ?? new List<LocationCommon>();
+            ViewBag.LocationList = locations.Select(x => new SelectListItem
+            {
+                Value = x.LocationId,
+                Text = x.LocationName
+            }).ToList();
+            if (TabValue == "")
+            {
+                var summaryPerformance = _service.GetConversionSummaryPerformanceRepost(dbRequest, decryptedClubId.ToString());
+                model.StorePerformanceModel = summaryPerformance.MapObjects<StorePerformanceModel>();
+                model.StorePerformanceModel.ForEach(x =>
                 {
-                    model.ConversionSummaryModel = new ConversionSummaryModel
+                    x.SNo = x.SNo;
+                    x.StoreName = x.StoreName;
+                    x.BookingStorePage = x.BookingStorePage;
+                    x.BookingHostDetails = x.BookingHostDetails;
+                    x.PhoneStorePage = x.PhoneStorePage;
+                    x.PhoneHostDetails = x.PhoneHostDetails;
+                    x.TotalClicks = x.TotalClicks;
+                });
+
+
+                if (TempData.ContainsKey("StorePerformanceModel"))
+                    listModel.storePerformanceModels = TempData["StorePerformanceModel"] as StorePerformanceModel;
+
+                ViewBag.TotalData = summaryPerformance != null && summaryPerformance.Any() ? summaryPerformance[0].TotalRecords : 0;
+              
+
+                try
+                {
+                    var summary = _service.GetConversionSummary(decryptedClubId);
+                    if (summary != null)
                     {
-                        TotalClicks = summary.TotalClicks,
-                        ReservationClicks = summary.ReservationClicks,
-                        PhoneCallClicks = summary.PhoneClicks,
-                        AverageCTR = summary.AverageCTR
-                    };
+                        model.ConversionSummaryModel = new ConversionSummaryModel
+                        {
+                            TotalSumClicks = summary.TotalClicks,
+                            ReservationClicks = summary.ReservationClicks,
+                            PhoneCallClicks = summary.PhoneClicks,
+                            AverageCTR = summary.AverageCTR
+                        };
+                    }
+
+                    var rankings = _service.GetRankedStores(locationId: null, searchFilter: null, topCount: 10, fromDateMs: null, toDateMs: null, timeZoneOffsetValue: "+09:00");
+                    if (rankings != null && rankings.Any())
+                    {
+                        int rank = 1;
+                        model.StoreRankingList = rankings.Select(x => new StoreRankingModel
+                        {
+                            Rank = rank++,
+                            ClubId = ApplicationUtilities.EncryptParameter(x.ClubId.ToString()),
+                            ClubName = x.ClubName,
+                            Area = x.Area,
+                            ClickCount = x.TapCount
+                        }).ToList();
+                    }
                 }
 
-                var rankings = _service.GetRankedStores(locationId: null,  searchFilter: null, topCount: 10, fromDateMs: null, toDateMs: null, timeZoneOffsetValue: "+09:00" );
-                if (rankings != null && rankings.Any())
+                catch (Exception ex)
                 {
-                    int rank = 1;
-                    model.StoreRankingList = rankings.Select(x => new StoreRankingModel
-                    {
-                        Rank = rank++,
-                        ClubId = x.ClubId,
-                        ClubName = x.ClubName,
-                        Area = x.Area,
-                        ClickCount = x.TapCount
-                    }).ToList();
+                    return Json(new { success = false, message = ex.Message }, JsonRequestBehavior.AllowGet);
                 }
-                var locations = _service.GetLocationList() ?? new List<LocationCommon>();
-                ViewBag.LocationList = locations.Select(x => new SelectListItem
-                {
-                    Value = x.LocationId,
-                    Text = x.LocationName
-                }).ToList();
             }
-            catch (Exception ex)
+            else
             {
-                return Json(new { success = false, message = ex.Message }, JsonRequestBehavior.AllowGet);
+                ViewBag.TotalData = 0;
             }
+
+            if (TabValue == "02")
+            {
+
+                if (string.IsNullOrWhiteSpace(actionType) || actionType == "All") actionType = null;
+                if (string.IsNullOrWhiteSpace(sourcePageType) || sourcePageType == "All") sourcePageType = null;
+                if (string.IsNullOrWhiteSpace(userStatus) || userStatus == "All") userStatus = null;
+                if (string.IsNullOrWhiteSpace(clubId)) clubId = null;
+
+                var sign = timezoneOffset < 0 ? "-" : "+";
+                var abs = Math.Abs(timezoneOffset);
+                var timeZoneOffsetValue = $"{sign}{(abs / 60):D2}:{(abs % 60):D2}";
+
+                var dbResponse = Requests.MapObject<ActivityLogFilterModel>();
+                var dbRequests = Requests.MapObject<ActivityLogFilterCommon>();
+
+                dbRequests.Skip = StartIndex2;
+                dbRequests.Take = PageSize2;
+                dbRequests.ClubId = decryptedClubId.ToString();
+
+                var result = _service.GetActivityLogList(dbRequests);
+
+
+                model.ActivityLogModel = result.MapObjects<ActivityLogModel>();
+                model.ActivityLogModel.ForEach(x =>
+                {
+                    x.ClubId = x.ClubId.EncryptParameter();
+                });
+
+                ViewBag.TotalActivityData = (model.ActivityLogModel.Any() && model?.ActivityLogModel?.FirstOrDefault()?.TotalRecords != null) ? model?.ActivityLogModel[0].TotalRecords : 0;
+            }
+            else
+            {
+                ViewBag.TotalActivityData = 0;
+            }
+
+            ViewBag.ClubId = clubId;
+            ViewBag.SearchFilter = SearchFilter;
+            ViewBag.StartIndex2 = StartIndex2;
+            ViewBag.PageSize2 = PageSize2;
+            ViewBag.StartIndex = StartIndex;
+            ViewBag.PageSize = PageSize;
+            model.ActionType = actionType;
+            model.SourcePageType = sourcePageType;
+            model.UserStatus = userStatus;
 
             return View(model);
         }
         #endregion
-        #region Conversion Summary
-        [HttpGet]
-        public JsonResult GetConversionSummaryJson(string clubId = null)
-        {
-            try
-            {
-                if (string.IsNullOrWhiteSpace(clubId)) clubId = null;
-
-                var summary = _service.GetConversionSummary(clubId) ?? new ConversionSummaryCommon();
-
-                return Json(new
-                {
-                    success = true,
-                    totalClicks = summary.TotalClicks,
-                    reservationClicks = summary.ReservationClicks,
-                    phoneCallClicks = summary.PhoneClicks,
-                    reservationConvertedCount = summary.ReservationConvertedCount,
-                    averageCTR = summary.AverageCTR
-                }, JsonRequestBehavior.AllowGet);
-            }
-            catch (Exception ex)
-            {
-                return Json(new { success = false, message = ex.Message }, JsonRequestBehavior.AllowGet);
-            }
-        }
-        #endregion
 
         #region Click Analytics
-        [HttpGet]
-        public JsonResult GetClickAnalytics(string clubId = null, string channel="", int timezoneOffset = 0)
+        [HttpGet, OverrideActionFilters]
+        public JsonResult GetClickAnalytics(string clubId = null, string channel = "", int timezoneOffset = 0)
         {
             try
             {
@@ -117,7 +188,14 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 var abs = Math.Abs(timezoneOffset);
                 var tzString = $"{sign}{(abs / 60):D2}:{(abs % 60):D2}";
 
-                var result = _service.GetClickAnalytics(clubId, channel, tzString) ?? new ClickAnalyticsResult();
+                long decryptedClubId = 0;
+                if (!string.IsNullOrEmpty(clubId))
+                {
+                    var data = ApplicationUtilities.DecryptParameter(clubId);
+                    decryptedClubId = Convert.ToInt64(ApplicationUtilities.DecryptParameter(clubId));
+                }
+
+                var result = _service.GetClickAnalytics(decryptedClubId, channel, tzString) ?? new ClickAnalyticsResult();
 
                 return Json(new
                 {
@@ -156,7 +234,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
         #endregion
 
         #region Ranked Stores
-        [HttpGet]
+        [HttpGet, OverrideActionFilters]
         public JsonResult GetRankedStores(
             long? locationId = null, string search = null, int topN = 10,
             long? fromDateMs = null, long? toDateMs = null, int timezoneOffset = 0)
@@ -173,7 +251,8 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 var mapped = result.Select(x => new
                 {
                     rank = x.Rank,
-                    clubId = x.ClubCode,
+                    clubId = ApplicationUtilities.EncryptParameter(x.ClubId.ToString()),
+                    clubCode = x.ClubCode,
                     clubName = x.ClubName,
                     locationId = x.LocationId,
                     area = x.LocationName,
@@ -194,61 +273,8 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             }
         }
         #endregion
-
-        #region Activity Log
-        [HttpGet]
-        public JsonResult GetActiveLog( string clubId = null, string actionType = null, string sourcePageType = null, string search = null, long? fromDateMs = null, long? toDateMs = null, string userStatus = null, int timezoneOffset = 0, int pageNo = 1, int pageSize = 10)
-        {
-            try
-            {
-                if (string.IsNullOrWhiteSpace(actionType) || actionType == "All") actionType = null;
-                if (string.IsNullOrWhiteSpace(sourcePageType) || sourcePageType == "All") sourcePageType = null;
-                if (string.IsNullOrWhiteSpace(userStatus) || userStatus == "All") userStatus = null;
-                if (string.IsNullOrWhiteSpace(clubId)) clubId = null;
-
-                long? resolvedClubId = clubId != null ? _service.ResolveClubCodeToAgentId(clubId) : null;             
-
-                var sign = timezoneOffset < 0 ? "-" : "+";
-                var abs = Math.Abs(timezoneOffset);
-                var timeZoneOffsetValue = $"{sign}{(abs / 60):D2}:{(abs % 60):D2}";
-
-                var result = _service.GetActivityLog(resolvedClubId, search, actionType, sourcePageType,userStatus, fromDateMs, toDateMs, pageNo, pageSize, timeZoneOffsetValue)
-                    ?? new List<ActivityLogCommon>();
-
-                var mapped = result.Select(x => new
-                {
-                    sn = x.SNO,
-                    clubId = x.ClubId,
-                    clubCode = x.ClubCode,
-                    clubName = x.ClubName,
-                    actionType = x.ActionType,
-                    sourcePage = x.SourcePage,
-                    targetName = x.TargetName,
-                    sessionId = x.SessionId,
-                    userStatus = x.UserStatus,
-                    prefecture = x.Prefecture,
-                    browser = x.Browser,
-                    dateMs = x.DateMs
-                }).ToList();
-
-                return Json(new
-                {
-                    success = true,
-                    totalCount = result.Any() ? result[0].TotalRecords : 0,
-                    pageNo,
-                    pageSize,
-                    data = mapped
-                }, JsonRequestBehavior.AllowGet);
-            }
-            catch (Exception ex)
-            {
-                return Json(new { success = false, message = ex.Message },
-                    JsonRequestBehavior.AllowGet);
-            }
-        }
-        #endregion
         #region Store Performance
-        [HttpGet]
+        [HttpGet, OverrideActionFilters]
         public JsonResult GetStorePerformance(
             string searchFilter = null, string clubId = null, long? fromDateMs = null, long? toDateMs = null,
             int pageNo = 1, int pageSize = 10, int timezoneOffset = 0)

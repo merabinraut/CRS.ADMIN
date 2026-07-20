@@ -3230,4 +3230,10 @@
   <data name="Search_By_StoreName" xml:space="preserve">
     <value>Search</value>
   </data>
+  <data name="Select_Area" xml:space="preserve">
+    <value>Select Area</value>
+  </data>
+  <data name="User_Agent" xml:space="preserve">
+    <value>User Agent</value>
+  </data>
 </root>

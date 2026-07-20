@@ -3529,6 +3529,16 @@ namespace CRS.ADMIN.APPLICATION.Resources
                 return ResourceManager.GetString("Host_Detail", resourceCulture);
             }
         }
+        /// <summary>
+        ///   Looks up a localized string similar to Host Details
+        /// </summary>
+        public static string Host_Detail_Page
+        {
+            get
+            {
+                return ResourceManager.GetString("Host_Detail_Page", resourceCulture);
+            }
+        }
 
         /// <summary>
         ///   Looks up a localized string similar to Host Introduction.
@@ -7129,6 +7139,16 @@ namespace CRS.ADMIN.APPLICATION.Resources
         }
 
         /// <summary>
+        ///   Looks up a localized string similar to Select_Area.
+        /// </summary>
+        public static string Select_Area
+        {
+            get
+            {
+                return ResourceManager.GetString("Select_Area", resourceCulture);
+            }
+        }
+        /// <summary>
         ///   Looks up a localized string similar to Select Club.
         /// </summary>
         public static string Select_Club
@@ -8438,6 +8458,16 @@ namespace CRS.ADMIN.APPLICATION.Resources
             get
             {
                 return ResourceManager.GetString("User", resourceCulture);
+            }
+        }
+        /// <summary>
+        ///   Looks up a localized string similar to User.
+        /// </summary>
+        public static string User_Agent
+        {
+            get
+            {
+                return ResourceManager.GetString("User_Agent", resourceCulture);
             }
         }
 

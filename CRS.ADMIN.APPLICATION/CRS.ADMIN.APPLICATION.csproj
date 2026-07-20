@@ -460,8 +460,8 @@
     <Content Include="Views\HostManagement\_ManageNewHostPartialView.cshtml" />
     <Content Include="Views\ConversionMetrixManagement\Index.cshtml" />
     <Content Include="Views\ConversionMetrixManagement\manage_activities_conversionMetrix.cshtml" />
-    <Content Include="Views\ConversionMetrixManagement\_OverviewTab.cshtml" />
     <Content Include="Views\ConversionMetrixManagement\GetStoreDetailsList.cshtml" />
+    <Content Include="Views\ConversionMetrixManagement\_OverviewTab.cshtml" />
     <None Include="Views\PromotionManagement\_ManageAdvertisementPartialView.cshtml" />
     <None Include="Views\PromotionManagement\_AdvertisementList.cshtml" />
     <Content Include="Content\assets\images\TickIcon.svg" />
