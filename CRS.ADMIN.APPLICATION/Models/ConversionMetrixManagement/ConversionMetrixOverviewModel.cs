@@ -9,6 +9,10 @@ namespace CRS.ADMIN.APPLICATION.Models.ConversionMetrixManagement
     public class ConversionMetrixOverviewModel
     {
         public string SearchFilter { get; set; }
+        public string TabValue { get; set; }
+        public string ActionType { get; set; }
+        public string SourcePageType { get; set; }
+        public string UserStatus { get; set; }
         public ConversionSummaryModel ConversionSummaryModel { get; set; }
         public List<ClickChartModel> ClickChartList { get; set; }
         public List<ActionSourceModel> ActionSourceModel { get; set; }
@@ -23,7 +27,7 @@ namespace CRS.ADMIN.APPLICATION.Models.ConversionMetrixManagement
     }
     public class ConversionSummaryModel
     {
-        public int TotalClicks { get; set; }
+        public int TotalSumClicks { get; set; }
         public int ReservationClicks { get; set; }
         public int PhoneCallClicks { get; set; }
         public decimal AverageCTR { get; set; }
@@ -39,10 +43,16 @@ namespace CRS.ADMIN.APPLICATION.Models.ConversionMetrixManagement
         public string ClubCode { get; set; }
         public string TargetName { get; set; }
         public string UserStatus { get; set; }
+        public string SourcePageType { get; set; }
         public string Prefecture { get; set; }
         public string Browser { get; set; }
         public string UserAgent { get; set; }
         public string Date { get; set; }
+        public int TotalRecords { get; set; }
+
+
+
+
     }
     public class ClickChartModel
     {
@@ -79,6 +89,7 @@ namespace CRS.ADMIN.APPLICATION.Models.ConversionMetrixManagement
         public string ActionType { get; set; }
         public string TargetType { get; set; }
         public string UserStatus { get; set; }
+        public List<ActivityLogModel> ActivityListModel { get; set; } = new List<ActivityLogModel>();
     }
     public class StoreRankingModel
     {
@@ -89,8 +100,8 @@ namespace CRS.ADMIN.APPLICATION.Models.ConversionMetrixManagement
         public string LocationName { get; set; }
         public string ReservationClickCount { get; set; }
         public string PhoneClickCount { get; set; }
-        public string TotalCount { get; set;}
-        public long ClubId { get; set; }
+        public string TotalCount { get; set; }
+        public string ClubId { get; set; }
         public string Area { get; set; }
         public int ClickCount { get; set; }
     }

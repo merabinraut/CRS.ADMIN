@@ -12,7 +12,7 @@
                             <div class="text-lg">@CRS.ADMIN.APPLICATION.Resources.Resource.Total_Clicks</div>
                         </div>
                         <div class="text-2xl font-semibold mb-[50px]" id="totalClicksValue">
-                            @Model.ConversionSummaryModel.TotalClicks
+                            @Model.ConversionSummaryModel.TotalSumClicks
                         </div>
                     </div>
                     <div class="payment-details-card flex justify-between flex-col ">
@@ -107,7 +107,6 @@
                                 <div class="text-gray-900">@CRS.ADMIN.APPLICATION.Resources.Resource.ActionSource_ByPage</div>
                             </div>
                             <div id="actionSourceList">
-                                <!-- Rendered by JS -->
                             </div>
 
                             <hr class="border-t border-[#F4F4F5] my-5">
@@ -117,7 +116,6 @@
                                 </div>
                             </div>
                             <div id="clickOriginList">
-                                <!-- Rendered by JS -->
                             </div>
                         </div>
                     </div>
@@ -143,7 +141,7 @@
         <input type="hidden" id="ToDate" name="ToDate" />
 
         <input type="search"
-               id="default-search-conversion_list"
+               id="default-search"
                class="input-search block w-full "
                placeholder="@CRS.ADMIN.APPLICATION.Resources.Resource.Search"
                value="@ViewBag.SearchFilter"
@@ -244,7 +242,6 @@
                 </tr>
             </thead>
             <tbody>
-                @*id="storePerformanceBody"*@
                 @{
                     int sno = 1;
 
@@ -301,251 +298,74 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 
- <script>
-document.addEventListener('DOMContentLoaded', function () {
-    const page_size = @ViewBag.PageSize;
-    const total_data = @ViewBag.TotalData;
-    const start_index_val = @ViewBag.StartIndex;
-    let URL = "/ConversionMetrixManagement/Index";
-    let search_filter = $('#default-search-conversion_list').val();
-    URL = addQueryParam(URL, 'SearchFilter', search_filter);
-    LoadPagination(page_size, total_data, start_index_val, URL);
-});
-    </script>
-
-    <script>
-
-        document.addEventListener("DOMContentLoaded", function () {
-            var content = document.getElementById("long-content");
-            var btn = document.querySelector(".see-more-btn1");
+<script>
+    if ($("#TabValue").val().toLowerCase() == "") {
+        document.addEventListener('DOMContentLoaded', function () {
+            const page_size = @ViewBag.PageSize;
+            const total_data = @ViewBag.TotalData;
+            const start_index_val = @ViewBag.StartIndex;
+            let URL = "/ConversionMetrixManagement/Index";
+            let search_filter = $('#default-search').val();
+            URL = addQueryParam(URL, 'SearchFilter', search_filter);
+            LoadPagination(page_size, total_data, start_index_val, URL);
         });
-    </script>
+    }
+</script>
 
-    <style>
-        .content-container {
-            max-width: 500px;
-        }
+<script>
 
-        .see-more-btn {
-            margin-top: 10px;
-            cursor: pointer;
-        }
-    </style>
+    document.addEventListener("DOMContentLoaded", function () {
+        var content = document.getElementById("long-content");
+        var btn = document.querySelector(".see-more-btn1");
+    });
+</script>
+
+<style>
+    .content-container {
+        max-width: 500px;
+    }
+
+    .see-more-btn {
+        margin-top: 10px;
+        cursor: pointer;
+    }
+</style>
 <script>
     $('#thisMonthBtn').click(function () {
         const today = new Date();
         const firstDay = new Date(today.getFullYear(), today.getMonth(), 1);
 
-        $('#FromDate').val(firstDay.getTime()); 
-        $('#ToDate').val(today.getTime()); 
+        $('#FromDate').val(firstDay.getTime());
+        $('#ToDate').val(today.getTime());
 
         $('#filterForm').submit();
     });
 </script>
 
-    <script>
-        (function () {
-            var currentPage = 1;
-            var pageSize = 10;
-            var currentSearch = '';
-            var searchDebounce = null;
-            var thisMonthActive = false;
-            var fromDateMs = null;
-            var toDateMs = null;
+<script>
+    (function () {
+        var currentPage = 1;
+        var pageSize = 10;
+        var currentSearch = '';
+        var searchDebounce = null;
+        var thisMonthActive = false;
+        var fromDateMs = null;
+        var toDateMs = null;
 
-            function escHtml(s) {
-                return $('<div>').text(String(s || '')).html();
-            }
+        function escHtml(s) {
+            return $('<div>').text(String(s || '')).html();
+        }
 
-            function getThisMonthRange() {
-                var now = new Date();
-                var start = new Date(now.getFullYear(), now.getMonth(), 1, 0, 0, 0, 0);
-                var end = new Date(now.getFullYear(), now.getMonth() + 1, 0, 23, 59, 59, 999);
-                return { from: start.getTime(), to: end.getTime() };
-            }
-
-            //function loadStorePerformance(pageNo) {
-            //    currentPage = pageNo || 1;
-            //    var tzOffset = -new Date().getTimezoneOffset();
-
-            //    $.ajax({
-            //        url: '/ConversionMetrixManagement/GetStorePerformance',
-            //        type: 'GET',
-            //        data: {
-            //            searchFilter: currentSearch,
-            //            clubId: window.selectedClubId,
-            //            fromDateMs: fromDateMs,
-            //            toDateMs: toDateMs,
-            //            pageNo: currentPage,
-            //            pageSize: pageSize,
-            //            timezoneOffset: tzOffset
-            //        },
-            //        success: function (response) {
-            //            if (!response || response.success === false) {
-            //                console.error('[StorePerformance] server error:', response && response.message);
-            //                renderRows([]);
-            //                renderPagination(0);
-            //                return;
-            //            }
-            //            var rows = response.data || [];
-            //            if (rows.length > pageSize) {
-            //                rows = rows.slice(0, pageSize);
-            //            }
-            //            var totalCount = response.totalCount;
-            //            if (totalCount == null || totalCount < rows.length) {
-            //                totalCount = rows.length;
-            //            }
-
-            //            renderRows(rows);
-            //            renderPagination(totalCount);
-            //        },
-            //        error: function (xhr, status, err) {
-            //            console.error('[StorePerformance] AJAX error:', status, err);
-            //            renderRows([]);
-            //            renderPagination(0);
-            //        }
-            //    });
-            //}
-
-            //function renderRows(rows) {
-            //    debugger;
-            //    if (!rows || !rows.length) {
-            //        $('#storePerformanceBody').html(
-            //            '<tr><td colspan="7" class="p-[16px] text-center text-gray-400 text-[13px]">No data available.</td></tr>'
-            //        );
-            //        return;
-            //    }
-
-            //    var html = rows.map(function (r) {
-            //        return '<tr>'
-            //            + '<td class="p-[12px]">' + r.sNo + '</td>'
-            //            + '<td class="p-[12px]">' + escHtml(r.clubName) + '</td>'
-            //            + '<td class="p-[12px]">' + r.reservationClick + '</td>'
-            //            + '<td class="p-[12px]">' + r.reservationDetailClick + '</td>'
-            //            + '<td class="p-[12px]">' + r.phoneCallClick + '</td>'
-            //            + '<td class="p-[12px]">' + r.phoneCallDetailClick + '</td>'
-            //            + '<td class="p-[12px]">' + r.totalClick + '</td>'
-            //            + '</tr>';
-            //    }).join('');
-
-            //    $('#storePerformanceBody').html(html);
-            //}
-
-            //function getPageNumbers(current, total) {
-            //    debugger;
-            //    var delta = 2;
-            //    var range = [1];
-
-            //    for (var i = current - delta; i <= current + delta; i++) {
-            //        if (i > 1 && i < total) {
-            //            range.push(i);
-            //        }
-            //    }
-
-            //    if (total > 1) {
-            //        range.push(total);
-            //    }
-
-            //    var withDots = [];
-            //    var last = null;
-            //    range.forEach(function (page) {
-            //        if (last !== null) {
-            //            if (page - last === 2) {
-            //                withDots.push(last + 1);
-            //            } else if (page - last > 2) {
-            //                withDots.push('...');
-            //            }
-            //        }
-            //        withDots.push(page);
-            //        last = page;
-            //    });
-
-            //    return withDots;
-            //}
+        function getThisMonthRange() {
+            var now = new Date();
+            var start = new Date(now.getFullYear(), now.getMonth(), 1, 0, 0, 0, 0);
+            var end = new Date(now.getFullYear(), now.getMonth() + 1, 0, 23, 59, 59, 999);
+            return { from: start.getTime(), to: end.getTime() };
+        }
+</script>
 
 
-            //function renderPagination(totalCount) {
-            //    var totalPages = Math.max(1, Math.ceil(totalCount / pageSize));
-
-            //    $('#Entries-Id').text(
-            //        totalCount > 0
-            //            ? 'Showing items ' + ((currentPage - 1) * pageSize + 1) + '-' + Math.min(currentPage * pageSize, totalCount) + ' of ' + totalCount + ' total'
-            //            : 'Showing items 0 of 0 total'
-            //    );
-
-            //    var pages = getPageNumbers(currentPage, totalPages);
-            //    var pagesHtml = pages.map(function (p) {
-            //        if (p === '...') {
-            //            return '<div class="px-2 text-gray-400 select-none self-center">...</div>';
-            //        }
-            //        var activeClass = p === currentPage ? 'btn-primary' : 'btn-secondary-box-shadow';
-            //        return '<div class="btn ' + activeClass + ' page-btn" data-page="' + p + '">' + p + '</div>';
-            //    }).join('');
-
-            //    $('#pagination-id').html(pagesHtml);
-            //    $('#prev-btn').toggleClass('disabled opacity-50 pointer-events-none', currentPage <= 1);
-            //    $('#next-btn').toggleClass('disabled opacity-50 pointer-events-none', currentPage >= totalPages);
-            //}
-
-            //$(document).on('change', '#storePerformancePageSize', function () {
-            //    pageSize = parseInt($(this).val(), 10);
-            //    loadStorePerformance(1);
-            //});
-
-            //$(document).on('click', '.page-btn', function () {
-            //    loadStorePerformance(parseInt($(this).data('page'), 10));
-            //});
-
-            //$(document).on('click', '#prev-btn', function () {
-            //    if (currentPage > 1) loadStorePerformance(currentPage - 1);
-            //});
-
-            //$(document).on('click', '#next-btn', function () {
-            //    loadStorePerformance(currentPage + 1);
-            //});
-
-        //    $(document).on('input', '#storePerformanceSearch', function () {
-        //        var val = $(this).val();
-        //        clearTimeout(searchDebounce);
-        //        searchDebounce = setTimeout(function () {
-        //            currentSearch = val;
-        //            loadStorePerformance(1);
-        //        }, 300);
-        //    });
-
-        //    $(document).on('click', '#thisMonthBtn', function () {
-        //        thisMonthActive = !thisMonthActive;
-
-        //        if (thisMonthActive) {
-        //            var range = getThisMonthRange();
-        //            fromDateMs = range.from;
-        //            toDateMs = range.to;
-        //            $(this).addClass('bg-secondary-color-pink text-white border-secondary-color-pink')
-        //                .removeClass('text-gray-500 border-[#D4D4D8]');
-        //        } else {
-        //            fromDateMs = null;
-        //            toDateMs = null;
-        //            $(this).removeClass('bg-secondary-color-pink text-white border-secondary-color-pink')
-        //                .addClass('text-gray-500 border-[#D4D4D8]');
-        //        }
-
-        //        loadStorePerformance(1);
-        //    });
-
-        //    $(document).ready(function () {
-        //        loadStorePerformance(1);
-        //    });
-
-        //    window.reloadStorePerformance = function () {
-        //        loadStorePerformance(currentPage);
-        //    };
-            //})();
-
-
-          
-    </script>
-
-    <script>
+<script>
     (function () {
         var PINK = '#C2185B';
         var PURPLE = '#7F77DD';
@@ -559,8 +379,17 @@ document.addEventListener('DOMContentLoaded', function () {
             return $('<div>').text(String(s || '')).html();
         }
 
+        function getQueryParam(name) {
+            const match = window.location.search.match(
+                new RegExp("[?&]" + name + "=([^&]+)")
+            );
+
+            return match ? decodeURIComponent(match[1]) : null;
+        }
+
         // Single combined call: today's click chart + action source + click origin
         function loadClickAnalytics(filter) {
+           
             console.log("Received filter:", filter);
             console.trace("loadClickAnalytics called");
             var normalizedFilter = (filter || 'all').toLowerCase().trim();
@@ -571,12 +400,13 @@ document.addEventListener('DOMContentLoaded', function () {
             $('#actionSourceList').html('<p class="text-[13px] text-gray-400 py-2">Loading...</p>');
             $('#clickOriginList').html('<p class="text-[13px] text-gray-400 py-2">Loading...</p>');
 
+            const clubId = getQueryParam("clubId");
             $.ajax({
                 url: '/ConversionMetrixManagement/GetClickAnalytics',
                 type: 'GET',
                 cache: false,
                 data: {
-                    clubId: window.selectedClubId,
+                    clubId: clubId,
                     channel: normalizedFilter,
                     timezoneOffset: tzOffset
                 },
@@ -747,10 +577,11 @@ document.addEventListener('DOMContentLoaded', function () {
         // Fixed: reads color directly off each dataset instead of re-deriving
         // it from label text (which never matched anything before).
         function renderLegend(datasets) {
+            
             var totalClicksLabel = '@Html.Raw(HttpUtility.JavaScriptStringEncode(CRS.ADMIN.APPLICATION.Resources.Resource.Total_Clicks))';
             var html = datasets
                 .filter(function (ds) {
-                    return ds.label !== totalClicksLabel;
+                    //return ds.label !== totalClicksLabel;
                 })
                 .map(function (ds) {
                 return '<span style="display:flex;align-items:center;gap:6px;font-size:12px;color:#6b7280;">'
@@ -858,4 +689,4 @@ document.addEventListener('DOMContentLoaded', function () {
             loadClickAnalytics("all");
         });
     })();
-    </script>
+</script>

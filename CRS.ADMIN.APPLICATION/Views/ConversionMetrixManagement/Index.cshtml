@@ -13,19 +13,20 @@
             <div class="heading-title">@CRS.ADMIN.APPLICATION.Resources.Resource.ConversionMetrixManagement</div>
         </div>
         <button id="allStoresBtn" class="btn btn-secondary font-normal" type="button">
-            
+
             @CRS.ADMIN.APPLICATION.Resources.Resource.All_Stores
             <div class="ml-2">
                 <svg width="9" height="6" viewBox="0 0 9 6" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M4.33008 6L-5.01156e-05 8.15666e-07L8.6602 5.85621e-08L4.33008 6Z" fill="#7B7B7B" />
                 </svg>
             </div>
-            
+
 
         </button>
     </div>
 
     <div>
+        @Html.HiddenFor(model => model.TabValue)
         <div class="flex gap-[24px]" style="border-bottom:1px solid #f4f4f4;">
             <div class="flex tab-container-plane bg-white gap-[16px]">
 
@@ -42,43 +43,104 @@
             </div>
         </div>
     </div>
-    <div id="tab1Content">
+    <div id="tab1Content" class="pane active">
         @Html.Partial("_OverviewTab", Model)
     </div>
 
     <!-- Tab 2 -->
-    <div id="tab2Content" style="display:none;">
+    <div id="tab2Content" style="display:none;" class="pane">
         @Html.Partial("manage_activities_conversionMetrix", Model)
     </div>
 
 </div>
-@Html.Partial("GetStoreDetailsList",Model) 
+@Html.Partial("GetStoreDetailsList", Model)
+
 <script>
     $(document).ready(function () {
         window.selectedClubId = null;
+        var dataaaa = $("#TabValue").val();
+        console.log("TabValue:" + dataaaa);
 
-        $("#tab1Button").click(function () {
-
-            $("#tab1Content").show();
-            $("#tab2Content").hide();
-
-            $("#tab1Button").addClass("active");
-            $("#tab2Button").removeClass("active");
-        });
-
-        $("#tab2Button").click(function () {
-
-            $("#tab1Content").hide();
+        if ($("#TabValue").val().toLowerCase() == "02") {
             $("#tab2Content").show();
+            $("#tab1Content").hide();
 
             $("#tab2Button").addClass("active");
             $("#tab1Button").removeClass("active");
+            $("#tab1Button").click(function () {
+                changeTabV1('all', 'tab1Link');
 
-            if (!window.activityLogLoadedOnce && typeof window.reloadActivityLog === 'function') {
-                window.reloadActivityLog();
-                window.activityLogLoadedOnce = true;
+                const page_size = @ViewBag.PageSize;
+                const total_data = @ViewBag.TotalData;
+                const start_index_val = @ViewBag.StartIndex;
+                let URL = "/ConversionMetrixManagement/Index";
+                let search_filter = $('#default-search').val();
+                URL = addQueryParam(URL, 'SearchFilter', search_filter);
+                dynamicStartIndexLabel = "StartIndex";
+                dynamicPageSizeLabel = "PageSize";
+                LoadPagination(page_size, total_data, start_index_val, URL);
+            });
+        }
+        else {
+            $("#tab2Content").hide();
+            $("#tab1Content").show();
+
+            $("#tab1Button").addClass("active");
+            $("#tab2Button").removeClass("active");
+            $("#tab2Button").click(function () {
+                changeTabV1('all', 'tab2Link');
+                const page_size2 = @ViewBag.PageSize2;
+                const total_data2 = @ViewBag.TotalActivityData;
+                const start_index_val2 = @ViewBag.StartIndex2;
+                let URL2    = "/ConversionMetrixManagement/Index";
+                let search_filter2 = $('#default-search').val();
+                URL2 = addQueryParam2(URL2, 'SearchFilter', search_filter2, 'TabValue', '02');
+                dynamicStartIndexLabel = "StartIndex2";
+                dynamicPageSizeLabel = "PageSize2";
+                LoadPagination(page_size2, total_data2, start_index_val2, URL2, 'pagination-id-2', 'prev-btn-2', 'next-btn-2', 'ShowEntries-Id-2', 'Entries-Id-2');
+            });
+        }
+
+        function changeTabV1(selectedTabId, selectedLinkId)
+        {
+             let URL;
+             if (selectedLinkId === 'tab2Link') {
+                const page_size2 = @ViewBag.PageSize2;
+                const total_data2 = @ViewBag.TotalActivityData;
+                const start_index_val2 = @ViewBag.StartIndex2;
+                 let URL2 = "/ConversionMetrixManagement/Index";
+                let search_filter2 = $('#default-search').val();
+                URL2 = addQueryParam2(URL2, 'TabValue', '02', 'SearchFilter', search_filter2 );
+                window.location.href = URL2
+             }
+             else
+             {
+                const page_size = @ViewBag.PageSize;
+                const total_data = @ViewBag.TotalData;
+                const start_index_val = @ViewBag.StartIndex;
+                let URL1 = "/ConversionMetrixManagement/Index";
+                let search_filter1 = $('#default-search').val();
+                URL = addQueryParam2(URL1, 'TabValue', '', 'SearchFilter', search_filter1 );
+                window.location.href = URL
+             }
+
+        }
+
+
+        function addQueryParam2(url, paramName, paramValue, paramName2, paramValue2) {
+            // Add the first query parameter
+            if (paramValue != null && paramValue != "") {
+                // Check if it's the first parameter, if so, use "?" else use "&"
+                url += url.includes('?') ? `&${paramName}=${paramValue}` : `?${paramName}=${paramValue}`;
             }
-        });
+
+            // Add the second query parameter
+            if (paramValue2 != null && paramValue2 != "") {
+                url += url.includes('?') ? `&${paramName2}=${paramValue2}` : `?${paramName2}=${paramValue2}`;
+            }
+
+            return url;
+        }
 
         // ✅ Open drawer — use the plain button id, no Flowbite attributes
         $("#allStoresBtn").on('click', function (e) {
@@ -100,7 +162,7 @@
         var selectedId = null;
         var allClubs = [];   // populated from your API below
 
-        function loadClubs(locationId ) {
+        function loadClubs(locationId) {
             $.ajax({
                 url: '/ConversionMetrixManagement/GetRankedStores',
                 type: 'GET',
@@ -127,6 +189,7 @@
         }
 
         function renderClubList() {
+
             var q = ($('#storeSearch').val() || '').toLowerCase().trim();
 
             var filtered = allClubs.filter(function (c) {
@@ -151,7 +214,7 @@
                         + '<div class="' + badge + '">#' + rank + '</div>'
                         + '<div class="flex-1 min-w-0">'
                         + '<p class="text-sm font-medium text-gray-800 truncate">' + escHtml(c.clubName) + '</p>'
-                        + '<p class="text-xs text-gray-400">' + escHtml(c.clubId) + '</p>'
+                        + '<p class="text-xs text-gray-400">' + escHtml(c.clubCode) + '</p>'
                         + '</div>'
                         + '<span class="text-sm text-gray-500 whitespace-nowrap">'
                         + c.tapCount + '\u30bf\u30c3\u30d7'
@@ -187,17 +250,12 @@
         }
 
         function filterPageByStore(storeId) {
-            window.selectedClubId = storeId;
+            var url = new window.URL(window.location.href);
 
-            if (typeof window.reloadOverviewSummary === 'function') {
-                window.reloadOverviewSummary();
-            }
-            if (typeof window.reloadStorePerformance === 'function') {
-                window.reloadStorePerformance();
-            }
-            if (typeof window.reloadActivityLog === 'function' && window.activityLogLoadedOnce) {
-                window.reloadActivityLog();
-            }
+            url.searchParams.set("clubId", storeId);
+
+            window.location.href = url.toString();
+
         }
 
         /* ---------- Live filters ---------- */

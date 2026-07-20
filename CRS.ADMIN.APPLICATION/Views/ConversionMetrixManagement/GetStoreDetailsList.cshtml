@@ -32,9 +32,6 @@
                 </div>
                 <!-- Area Filter -->
                 <div class="flex items-center gap-2 min-w-[180px]">
-                    @*<label class="text-sm text-gray-500 whitespace-nowrap">
-                        @CRS.ADMIN.APPLICATION.Resources.Resource.Area
-                </label>*@
                     <select id="storeAreaFilter"
                             class="flex-1 border border-gray-200 rounded-lg px-3 py-2
                text-sm focus:outline-none focus:ring-2 focus:ring-pink-400">
@@ -49,42 +46,21 @@
                     </select>
                 </div>
             </div>
-            @*<div class="mt-4">
-            <div class="flex rounded-lg overflow-hidden w-[240px]">
-                <button type="button" data-topn="10"
-                        class="topn-btn flex py-2 px-4 text-sm font-medium
-            bg-secondary-color-pink text-white">
-                    Top 10
-                </button>
-                <button type="button" data-topn="50"
-                        class="topn-btn flex py-2 px-4 text-sm text-gray-500">
-                    Top 50
-                </button>
-                <button type="button" data-topn="100"
-                        class="topn-btn flex py-2 px-4 text-sm text-gray-500">
-                    Top 100
-                </button>
-            </div>
-        </div>*@
             <div class="mt-4">
-                <!-- Outer container -->
                 <div class="inline-flex items-center bg-white border border-gray-100 rounded-lg p-1 gap-1">
 
-                    <!-- Top 10 (Selected by default) -->
                     <button type="button" data-topn="10"
                             class="topn-btn py-1.5 px-4 text-sm font-medium rounded-[6px] transition-all duration-150
                 bg-secondary-color-pink text-white text-center">
                         Top 10
                     </button>
 
-                    <!-- Top 50 (Unselected) -->
                     <button type="button" data-topn="50"
                             class="topn-btn py-1.5 px-4 text-sm font-medium rounded-[6px] transition-all duration-150
                 text-[#18181B] text-center bg-transparent">
                         Top 50
                     </button>
 
-                    <!-- Top 100 (Unselected) -->
                     <button type="button" data-topn="100"
                             class="topn-btn py-1.5 px-4 text-sm font-medium rounded-[6px] transition-all duration-150
                 text-[#18181B] text-center bg-transparent">

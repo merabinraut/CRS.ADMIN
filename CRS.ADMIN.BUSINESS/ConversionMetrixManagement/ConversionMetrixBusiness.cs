@@ -10,17 +10,17 @@ using System.Threading.Tasks;
 
 namespace CRS.ADMIN.BUSINESS.ConversionMetrixManagement
 {
-    public class ConversionMetrixBusiness :IConversionMetrixBusiness
+    public class ConversionMetrixBusiness : IConversionMetrixBusiness
     {
         private readonly IConversionMetrixRepository _repo;
         public ConversionMetrixBusiness(ConversionMetrixRepository conversionMetrixRepository) => this._repo = conversionMetrixRepository;
 
         #region Conversion Summary
-        public ConversionSummaryCommon GetConversionSummary(string clubCode)
+        public ConversionSummaryCommon GetConversionSummary(long clubId)
         {
             try
             {
-                var data = _repo.GetConversionSummary(clubCode);
+                var data = _repo.GetConversionSummary(clubId);
                 return data ?? new ConversionSummaryCommon();
             }
             catch (Exception)
@@ -31,11 +31,11 @@ namespace CRS.ADMIN.BUSINESS.ConversionMetrixManagement
         #endregion
 
         #region Click Analytics
-        public ClickAnalyticsResult GetClickAnalytics(string clubCode, string channel, string timeZoneOffsetValue)
+        public ClickAnalyticsResult GetClickAnalytics(long clubId, string channel, string timeZoneOffsetValue)
         {
             try
             {
-                return _repo.GetClickAnalytics(clubCode, channel, timeZoneOffsetValue) ?? new ClickAnalyticsResult();
+                return _repo.GetClickAnalytics(clubId, channel, timeZoneOffsetValue) ?? new ClickAnalyticsResult();
             }
             catch (Exception)
             {
@@ -63,11 +63,25 @@ namespace CRS.ADMIN.BUSINESS.ConversionMetrixManagement
         #endregion
 
         #region Activity Log
-        public List<ActivityLogCommon> GetActivityLog(long? clubId, string searchFilter, string actionType, string sourcePageType, string userStatus, long? fromDateMs, long? toDateMs, int pageNo, int pageSize, string timeZoneOffsetValue)
+        public List<ActivityLogCommon> GetActivityLog(long? clubId, string searchFilter, string actionType, string sourcePageType, string userStatus, string fromDateMs, string toDateMs, int pageNo, int pageSize, string timeZoneOffsetValue)
         {
             try
             {
                 return _repo.GetActivityLog(clubId, searchFilter, actionType, sourcePageType, userStatus, fromDateMs, toDateMs, pageNo, pageSize, timeZoneOffsetValue)
+                    ?? new List<ActivityLogCommon>();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+        #endregion
+        #region Activity Log
+        public List<ActivityLogCommon> GetActivityLogList(ActivityLogFilterCommon request)
+        {
+            try
+            {
+                return _repo.GetActivityLogList(request)
                     ?? new List<ActivityLogCommon>();
             }
             catch (Exception)
@@ -119,11 +133,11 @@ namespace CRS.ADMIN.BUSINESS.ConversionMetrixManagement
 
         public List<StorePerformanceCommon> GetConversionSummaryPerformanceRepost(PaginationFilterCommon dbRequest, string clubId)
         {
-            return _repo.GetConversionSummaryPerformanceRepost(dbRequest,clubId);
+            return _repo.GetConversionSummaryPerformanceRepost(dbRequest, clubId);
 
         }
 
-      
+
         #endregion
 
     }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CRS.ADMIN.SHARED.PaginationManagement;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,6 +14,15 @@ namespace CRS.ADMIN.SHARED.ConversionMetrixManagement
         public int ReservationsClicks { get; set; }
         public int PhoneClicks { get; set; }
         public string TimeSlot { get; set; }
+    }
+    public class ActivityLogFilterCommon : PaginationFilterCommon
+    {
+        public string ClubId { get; set; }
+        public string ActionType { get; set; }
+        public string TargetType { get; set; }
+        public string UserStatus { get; set; }
+
+        public string SourcePageType { get; set; }
     }
     public class  ConversionSummaryCommon
     {
@@ -77,7 +87,7 @@ namespace CRS.ADMIN.SHARED.ConversionMetrixManagement
         public string ReservationId { get; set; }
         public int TotalRecords { get; set; }
     }
-    public class StorePerformanceCommon
+    public class StorePerformanceCommon 
     {
         public int Sno { get; set; }
         public string ClubId { get; set; }
