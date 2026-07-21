@@ -5787,6 +5787,16 @@ namespace CRS.ADMIN.APPLICATION.Resources
         /// <summary>
         ///   Looks up a localized string similar to Phone Number.
         /// </summary>
+        public static string Phone
+        {
+            get
+            {
+                return ResourceManager.GetString("Phone", resourceCulture);
+            }
+        }
+        /// <summary>
+        ///   Looks up a localized string similar to Phone Number.
+        /// </summary>
         public static string Phone_Number
         {
             get
@@ -6768,6 +6778,16 @@ namespace CRS.ADMIN.APPLICATION.Resources
             }
         }
 
+        /// <summary>
+        ///   Looks up a localized string similar to Reservations.
+        /// </summary>
+        public static string Reservation
+        {
+            get
+            {
+                return ResourceManager.GetString("Reservation", resourceCulture);
+            }
+        }
         /// <summary>
         ///   Looks up a localized string similar to Reservations.
         /// </summary>
@@ -8150,6 +8170,16 @@ namespace CRS.ADMIN.APPLICATION.Resources
             get
             {
                 return ResourceManager.GetString("Total Clicks", resourceCulture);
+            }
+        }
+        /// <summary>
+        ///   Looks up a localized string similar to Total Clicks.
+        /// </summary>
+        public static string Total_number_of_clicks
+        {
+            get
+            {
+                return ResourceManager.GetString("Total_number_of_clicks", resourceCulture);
             }
         }
 

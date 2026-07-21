@@ -30,7 +30,7 @@
                 <img src="~/Content/assets_new/images/club/download-solid.svg">@CRS.ADMIN.APPLICATION.Resources.Resource.This_Month
             </div>*@
         <div class="export-button h-[40px]" onclick="exportExcel('table-id', 'Club')">
-            <img src="~/Content/assets_new/images/club/download-solid.svg">@CRS.ADMIN.APPLICATION.Resources.Resource.Export
+            <img src="~/Content/assets_new/images/club/download-solid.svg">@CRS.ADMIN.APPLICATION.Resources.Resource.Export_CSV
         </div>
     </div>
 </div>
@@ -224,11 +224,32 @@
                     {
                         <tr class="bg-white border-b ">
                             <td class="p-[12px]">
+
                                 @item.SNO
                             </td>
+
                             <td class="p-[12px]">
-                                @item.ActionType
+                                @if (!string.IsNullOrEmpty(item.ActionType) && item.ActionType.ToLower() == "phone")
+                                {
+                                    <span class="badge badge-success approved items-center gap-1">
+                                        <i class="las la-phone"></i> @CRS.ADMIN.APPLICATION.Resources.Resource.Phone
+                                    </span>
+                                }
+                                else if (!string.IsNullOrEmpty(item.ActionType) && item.ActionType.ToLower() == "reservation")
+                                {
+                                    <span class="badge badge-warning pending items-center gap-1">
+                                        <div class="flex gap-1">
+                                            <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M6 1.5C3.5185 1.5 1.5 3.5185 1.5 6C1.5 8.4815 3.5185 10.5 6 10.5C8.4815 10.5 10.5 8.4815 10.5 6C10.5 3.5185 8.4815 1.5 6 1.5ZM6.1525 2.2615C6.5125 2.2765 6.857 2.329 7.1835 2.4375L7.008 2.6835L7.148 2.9765L6.961 3.3515L7.758 3.457L8.051 4.8165L8.6955 5.6955L9.2695 6.0585L9.047 5.4375L9.258 5.1795L9.6915 5.297C9.734 5.524 9.75 5.7615 9.75 6C9.75 6.0555 9.741 6.11 9.7385 6.164L9.7035 6.094L9.34 6.246L9.246 6.4805L9.047 6.5505L9.117 7.1605L9.2695 7.383L9.1645 7.676L8.6015 8.566L8.5545 8.742C7.86179 9.39003 6.94857 9.75038 6 9.75C5.45567 9.75111 4.91768 9.63317 4.42372 9.40446C3.92977 9.17576 3.4918 8.8418 3.1405 8.426L2.6135 7.125L2.918 6.6095L2.461 6.3515L2.9765 6.1055L3 5.824L2.8475 5.426L3.1405 5.461L3.4335 5.906L3.7035 6.035L3.621 5.73L3.9025 5.449L4.3595 5.7775L4.6055 5.578L4.5 5.0625L4.8635 4.547L4.8165 4.0315L5.2615 3.7615L4.957 3.0115L5.801 2.965L6.2695 2.367L6.1525 2.262V2.2615ZM5.625 5.8475L4.629 6.5975L4.699 7.535L4.957 7.758L5.5315 7.453L5.824 7.535L6.328 8.074L6.633 7.992L6.949 7.242L6.75 6.727L6.3515 5.953L6.0585 6.422L5.625 5.8475ZM7.5 7.43L7.43 7.4535L7.4065 7.934L7.242 8.1565L7.4295 8.3325L7.6645 8.063L7.5 7.43ZM7.09 8.3445L6.6095 8.895L6.7385 9.0355L7.301 8.4965L7.09 8.3445Z" fill="#E75F0F" />
+                                            </svg>
+                                            @CRS.ADMIN.APPLICATION.Resources.Resource.Reservation
+                                        </div>
+                                        @*<i class="fa-solid fa-calendar-check"></i>*@
+                                        
+                                    </span>
+                                }
                             </td>
+
                             <td class="p-[12px] border-b border-gray-100">
                                 <div class="flex flex-col gap-1">
                                     <span class="text-[14px] font-medium text-gray-900">@item.SourcePage</span>
@@ -241,13 +262,24 @@
                             <td class="p-[12px] text-center border-b border-gray-100">
                                 <div class="flex flex-col items-center justify-center gap-1">
                                     <div>
-                                        <script>document.write(userStatusBadge('@item.UserStatus'));</script>
+                                        @if (!string.IsNullOrEmpty(item.UserStatus) && item.UserStatus.ToLower() == "member")
+                                        {
+                                            <span class="badge badge-success approved items-center gap-1">
+                                                @CRS.ADMIN.APPLICATION.Resources.Resource.Member
+                                            </span>
+                                        }
+                                        else if (!string.IsNullOrEmpty(item.UserStatus) && item.UserStatus.ToLower() == "guest")
+                                        {
+                                            <span class="badge badge-warning pending items-center gap-1">
+                                                @CRS.ADMIN.APPLICATION.Resources.Resource.Guest
+                                            </span>
+                                        }
                                     </div>
 
                                     <span class="text-[13px] text-[#2D3748] font-mono" title="@item.ActivityId">
                                         @(string.IsNullOrEmpty(item.ActivityId) ? "-" : item.ActivityId.Length > 14
-                                                ? item.ActivityId.Substring(0, 8) + "..." + item.ActivityId.Substring(item.ActivityId.Length - 6)
-                                                : item.ActivityId)
+                                            ? item.ActivityId.Substring(0, 8) + "..." + item.ActivityId.Substring(item.ActivityId.Length - 6)
+                                            : item.ActivityId)
                                     </span>
                                 </div>
                             </td>
@@ -257,10 +289,15 @@
                                 </div>
                             </td>
                             <td class="p-[12px]">
+
                                 <div class="w-max">
+
                                     @item.UserAgent
+
                                 </div>
+
                             </td>
+
                         </tr>
                     }
                 }
