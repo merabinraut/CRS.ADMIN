@@ -183,6 +183,7 @@ namespace CRS.ADMIN.REPOSITORY.ConversionMetrixManagement
                             ClubId = SafeLong(_dao.ParseColumnValue(item, "clubId")),
                             ClubCode = _dao.ParseColumnValue(item, "clubCode")?.ToString(),
                             ActivityId = _dao.ParseColumnValue(item, "activityId")?.ToString(),
+                            CustomerlocationJson = _dao.ParseColumnValue(item,"customerLocationJson")?.ToString(),
                             ClubName = _dao.ParseColumnValue(item, "clubName")?.ToString(),
                             ActionType = _dao.ParseColumnValue(item, "actionType")?.ToString(),
                             SourcePage = _dao.ParseColumnValue(item, "sourcePage")?.ToString(),

@@ -55,6 +55,7 @@ namespace CRS.ADMIN.SHARED.ConversionMetrixManagement
         public string ClubName { get; set; }
         public long? DateMs { get; set; }
         public string ActivityId { get; set; }
+        public string CustomerlocationJson { get; set; }
 
         public string ActionType { get; set; }
         public string SourcePage { get; set; }

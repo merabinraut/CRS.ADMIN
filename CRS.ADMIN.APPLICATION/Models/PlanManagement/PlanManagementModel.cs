@@ -84,7 +84,11 @@ namespace CRS.ADMIN.APPLICATION.Models.PlanManagement
         [DisplayName("Number of People")]
         [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Required")]
         public int NoOfPeople { get; set; }
+
+        [DisplayName("Remarks")]
+        [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Required")]
         public string Remarks { get; set; }
+        
         public string PlanStatus { get; set; }
         public string ExtraField1 { get; set; }
         public string ExtraField2 { get; set; }
