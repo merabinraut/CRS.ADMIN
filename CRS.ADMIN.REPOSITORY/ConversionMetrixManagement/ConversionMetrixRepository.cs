@@ -84,6 +84,7 @@ namespace CRS.ADMIN.REPOSITORY.ConversionMetrixManagement
                             ClubId = SafeLong(_dao.ParseColumnValue(item, "clubId")) ?? 0,
                             ClubCode = _dao.ParseColumnValue(item, "clubCode")?.ToString(),
                             ClubName = _dao.ParseColumnValue(item, "clubName")?.ToString(),
+                            ClubNameJp = _dao.ParseColumnValue(item,"clubNameJp")?.ToString(),
                             LocationId = SafeLong(_dao.ParseColumnValue(item, "locationId")),
                             LocationName = _dao.ParseColumnValue(item, "LocationName")?.ToString(),
                             ReservationClickCount = SafeInt(_dao.ParseColumnValue(item, "reservationClickCount")),
@@ -234,6 +235,7 @@ namespace CRS.ADMIN.REPOSITORY.ConversionMetrixManagement
                         {
                             ClubId = SafeLong(_dao.ParseColumnValue(item, "clubId"))?.ToString(),
                             StoreName = _dao.ParseColumnValue(item, "clubName")?.ToString(),
+                            LocationName =_dao.ParseColumnValue(item,"LocationName")?.ToString(),
                             BookingStorePage = SafeInt(_dao.ParseColumnValue(item, "reservationStore")),
                             BookingHostDetails = SafeInt(_dao.ParseColumnValue(item, "hostDetail")),
                             PhoneStorePage = SafeInt(_dao.ParseColumnValue(item, "phoneStore")),
@@ -405,6 +407,7 @@ namespace CRS.ADMIN.REPOSITORY.ConversionMetrixManagement
                         Sno = SafeInt(_dao.ParseColumnValue(item, "Sno")),
                         ClubId = SafeLong(_dao.ParseColumnValue(item, "clubId"))?.ToString(),
                         StoreName = _dao.ParseColumnValue(item, "clubName")?.ToString(),
+                        LocationName = _dao.ParseColumnValue(item,"LocationName")?.ToString(),
                         BookingStorePage = SafeInt(_dao.ParseColumnValue(item, "reservationStore")),
                         BookingHostDetails = SafeInt(_dao.ParseColumnValue(item, "hostDetail")),
                         PhoneStorePage = SafeInt(_dao.ParseColumnValue(item, "phoneStore")),

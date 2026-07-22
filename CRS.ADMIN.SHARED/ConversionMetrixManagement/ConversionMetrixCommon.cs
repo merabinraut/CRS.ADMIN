@@ -93,6 +93,7 @@ namespace CRS.ADMIN.SHARED.ConversionMetrixManagement
         public int Sno { get; set; }
         public string ClubId { get; set; }
         public string StoreName { get; set; }
+        public string LocationName { get; set; }
         public int BookingStorePage { get; set; }
         public int BookingHostDetails { get; set; }
         public int PhoneStorePage { get; set; }
@@ -120,6 +121,7 @@ namespace CRS.ADMIN.SHARED.ConversionMetrixManagement
         public long ClubId { get; set; }
         public string ClubCode { get; set; }
         public string ClubName { get; set; }
+        public string ClubNameJp { get; set; }
         public long? LocationId { get; set; }
         public string LocationName { get; set; }
         public int ReservationClickCount { get; set; }

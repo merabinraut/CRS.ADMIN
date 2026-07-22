@@ -78,6 +78,7 @@ namespace CRS.ADMIN.APPLICATION.Models.ConversionMetrixManagement
         public string ClubId { get; set; }
         public string StoreName { get; set; }
         public string ClubName { get; set; }
+        public string LocationName { get; set; }
         public int BookingStorePage { get; set; }
         public int BookingHostDetails { get; set; }
         public int PhoneStorePage { get; set; }
@@ -96,6 +97,7 @@ namespace CRS.ADMIN.APPLICATION.Models.ConversionMetrixManagement
     {
         public int Rank { get; set; }
         public string ClubName { get; set; }
+        public string ClubNameJp { get; set; }
         public string ClubCode { get; set; }
         public string LocationId { get; set; }
         public string LocationName { get; set; }

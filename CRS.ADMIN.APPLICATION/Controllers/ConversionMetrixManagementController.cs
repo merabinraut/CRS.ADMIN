@@ -75,6 +75,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 {
                     x.SNo = x.SNo;
                     x.StoreName = x.StoreName;
+                    x.LocationName = x.LocationName;
                     x.BookingStorePage = x.BookingStorePage;
                     x.BookingHostDetails = x.BookingHostDetails;
                     x.PhoneStorePage = x.PhoneStorePage;
@@ -112,6 +113,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                             Rank = rank++,
                             ClubId = ApplicationUtilities.EncryptParameter(x.ClubId.ToString()),
                             ClubName = x.ClubName,
+                            ClubNameJp = x.ClubNameJp,
                             Area = x.Area,
                             ClickCount = x.TapCount
                         }).ToList();
@@ -253,6 +255,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                     rank = x.Rank,
                     clubId = ApplicationUtilities.EncryptParameter(x.ClubId.ToString()),
                     clubCode = x.ClubCode,
+                    clubNameJp = x.ClubNameJp,
                     clubName = x.ClubName,
                     locationId = x.LocationId,
                     area = x.LocationName,
@@ -295,6 +298,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 {
                     sNo = (pageNo - 1) * pageSize + i + 1,
                     clubName = x.StoreName,
+                    locationName = x.LocationName,
                     reservationClick = x.BookingStorePage,
                     reservationDetailClick = x.BookingHostDetails,
                     phoneCallClick = x.PhoneStorePage,

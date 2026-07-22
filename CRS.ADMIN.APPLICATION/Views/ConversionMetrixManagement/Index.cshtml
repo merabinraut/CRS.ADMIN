@@ -195,6 +195,7 @@
             var filtered = allClubs.filter(function (c) {
                 return !q ||
                     (c.clubName || '').toLowerCase().includes(q) ||
+                    (c.clubNameJp || '').toLowerCase().includes(q) ||
                     (c.clubId || '').toLowerCase().includes(q);
             });
 
@@ -204,16 +205,22 @@
                 html = '<p class="text-sm text-gray-400 text-center py-8">No clubs found.</p>';
             } else {
                 $.each(filtered, function (i, c) {
+                    var clubName = c.clubName || "";
+                    var clubNameJp = c.clubNameJp || "";
+                    var displayName = clubName;
+                    if (clubNameJp) {
+                        displayName += " (" + clubNameJp + ")";
+                    }
                     var rank = c.rank;
                     var badge = rankBadgeClass(rank);
                     var sel = (c.clubId === selectedId)
                         ? 'bg-pink-50 ring-1 ring-pink-300 rounded-lg px-2'
                         : '';
                     html += '<div class="club-item flex items-center gap-3 py-3 cursor-pointer ' + sel + '" '
-                        + 'data-id="' + c.clubId + '" data-name="' + escHtml(c.clubName) + '">'
+                        + 'data-id="' + c.clubId + '" data-name="' + escHtml(displayName) + '">'
                         + '<div class="' + badge + '">#' + rank + '</div>'
                         + '<div class="flex-1 min-w-0">'
-                        + '<p class="text-sm font-medium text-gray-800 truncate">' + escHtml(c.clubName) + '</p>'
+                        + '<p class="text-sm font-medium text-gray-800 truncate">' + escHtml(displayName) + '</p>'
                         + '<p class="text-xs text-gray-400">' + escHtml(c.clubCode) + '</p>'
                         + '</div>'
                         + '<span class="text-sm text-gray-500 whitespace-nowrap">'
