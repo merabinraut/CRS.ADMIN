@@ -13,6 +13,8 @@ namespace CRS.ADMIN.APPLICATION.Models.ConversionMetrixManagement
         public string ActionType { get; set; }
         public string SourcePageType { get; set; }
         public string UserStatus { get; set; }
+        public string clubId { get; set; }
+        public string clubName { get; set; }
         public ConversionSummaryModel ConversionSummaryModel { get; set; }
         public List<ClickChartModel> ClickChartList { get; set; }
         public List<ActionSourceModel> ActionSourceModel { get; set; }
@@ -49,6 +51,8 @@ namespace CRS.ADMIN.APPLICATION.Models.ConversionMetrixManagement
         public string UserAgent { get; set; }
         public string Date { get; set; }
         public int TotalRecords { get; set; }
+        public string TabValue { get; set; }
+        public string FromDate { get; set; }
 
 
 

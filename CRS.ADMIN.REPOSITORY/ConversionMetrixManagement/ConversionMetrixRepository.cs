@@ -409,11 +409,29 @@ namespace CRS.ADMIN.REPOSITORY.ConversionMetrixManagement
                         PhoneStorePage = SafeInt(_dao.ParseColumnValue(item, "phoneStore")),
                         PhoneHostDetails = SafeInt(_dao.ParseColumnValue(item, "phoneHost")),
                         TotalClicks = SafeInt(_dao.ParseColumnValue(item, "totalCount")),
-                        TotalRecords = SafeInt(_dao.ParseColumnValue(item, "totalRecords"))
+                        TotalRecords = SafeInt(_dao.ParseColumnValue(item, "totalRecords")),
+                        LocationName = _dao.ParseColumnValue(item, "LocationName").ToString()
                     });
                 }
             }
             return response;
+        }
+
+        public StorePerformanceCommon GetClubName(string clubId)
+        {
+            var response = new StorePerformanceCommon();
+
+            var sql = "EXEC [analytics].[sproc_admin_get_club_detail]";
+            sql += " @clubId=" + clubId;
+            var dbResponse = _dao.ExecuteDataRow(sql);
+            if (dbResponse != null)
+            {
+                response.ClubId = _dao.ParseColumnValue(dbResponse, "clubId").ToString();
+                response.StoreName = _dao.ParseColumnValue(dbResponse, "clubName").ToString();
+                response.LocationName = _dao.ParseColumnValue(dbResponse, "LocationDisplayName").ToString();              
+            }
+            return response;
+
         }
     }
 }

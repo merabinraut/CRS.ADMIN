@@ -137,6 +137,11 @@ namespace CRS.ADMIN.BUSINESS.ConversionMetrixManagement
 
         }
 
+        public StorePerformanceCommon GetClubName(string clubId)
+        {
+            return _repo.GetClubName(clubId);
+        }
+
 
         #endregion
 

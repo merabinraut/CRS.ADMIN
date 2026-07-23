@@ -33,6 +33,7 @@
                             </div>
                         </div>
                     </div>
+                    @*<input type="hidden" value="@Model.clubId" name="clubId" id="clubId" />*@
                     <div class="payment-details-card flex justify-between flex-col ">
                         <div>
                             <div class="title flex gap-[8px] mb-[12px] items-center">
@@ -303,14 +304,19 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 
 <script>
-    if ($("#TabValue").val().toLowerCase() == "") {
+    let tabValue = "@ViewBag.TabValue" ?? "";
+ if (tabValue == "") {
+    //if ($("#TabValue").val().toLowerCase() == "") {
         document.addEventListener('DOMContentLoaded', function () {
             const page_size = @ViewBag.PageSize;
             const total_data = @ViewBag.TotalData;
             const start_index_val = @ViewBag.StartIndex;
-            let URL = "/ConversionMetrixManagement/Index";
+             const clubId = '@Model.clubId';
+            let URL = "/ConversionMetrixManagement/Index?clubId=" + clubId;
             let search_filter = $('#default-search').val();
             URL = addQueryParam(URL, 'SearchFilter', search_filter);
+            URL= addQueryParam(URL, 'StartIndex2', 0);
+
             LoadPagination(page_size, total_data, start_index_val, URL);
         });
     }

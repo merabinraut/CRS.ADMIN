@@ -1,38 +1,58 @@
 ﻿@model CRS.ADMIN.APPLICATION.Models.ConversionMetrixManagement.ConversionMetrixOverviewModel
 
-
 <div class="flex justify-between pb-[24px]">
-    <form action="/ConversionMetrixManagement/Index" method="get">
-        <div class="relative input-search-wrapper flex justify-between">
+    <form action="/ConversionMetrixManagement/Index"
+          method="get"
+          class="flex justify-between items-center w-full" id="filterFormActivity">
+
+        <!-- Left Side -->
+        <div class="relative input-search-wrapper">
             <div class="absolute inset-y-0 left-0 flex items-center pl-[16px] pointer-events-none">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21" fill="none">
                     <path d="M17.5 18L13.875 14.375M15.8333 9.66667C15.8333 13.3486 12.8486 16.3333 9.16667 16.3333C5.48477 16.3333 2.5 13.3486 2.5 9.66667C2.5 5.98477 5.48477 3 9.16667 3C12.8486 3 15.8333 5.98477 15.8333 9.66667Z"
                           stroke="#667085" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round" />
                 </svg>
             </div>
+
             <input type="search"
-                   id="default-search"
-                   class="input-search block w-full "
+                   id="default-search-activity"
+                   class="input-search block w-full"
                    placeholder="@CRS.ADMIN.APPLICATION.Resources.Resource.Search_By_StoreName"
-                   value="@Model.SearchFilter"
+                   value="@ViewBag.SearchFilter"
                    name="SearchFilter">
         </div>
-    </form>
-    <div class="flex gap-6">
-        <button id="activityLogThisMonthBtn" class="h-[40px] flex items-center gap-[8px] px-[12px] border border-[#D4D4D8] rounded-[5px] text-[14px] text-gray-500 font-medium">
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M5.625 2.5V3.125H3.125V16.875H16.875V3.125H14.375V2.5H13.125V3.125H6.875V2.5H5.625ZM4.375 4.375H5.625V5H6.875V4.375H13.125V5H14.375V4.375H15.625V5.625H4.375V4.375ZM4.375 6.875H15.625V15.625H4.375V6.875ZM8.125 8.125V9.375H9.375V8.125H8.125ZM10.625 8.125V9.375H11.875V8.125H10.625ZM13.125 8.125V9.375H14.375V8.125H13.125ZM5.625 10.625V11.875H6.875V10.625H5.625ZM8.125 10.625V11.875H9.375V10.625H8.125ZM10.625 10.625V11.875H11.875V10.625H10.625ZM13.125 10.625V11.875H14.375V10.625H13.125ZM5.625 13.125V14.375H14.375V13.125H5.625Z" fill="#A1A1AA" fill-opacity="0.75" />
-            </svg>
-            @CRS.ADMIN.APPLICATION.Resources.Resource.This_Month
 
-        </button>
-        @*<div class="export-button h-[40px]">
-                <img src="~/Content/assets_new/images/club/download-solid.svg">@CRS.ADMIN.APPLICATION.Resources.Resource.This_Month
-            </div>*@
-        <div class="export-button h-[40px]" onclick="exportExcel('table-id', 'Club')">
-            <img src="~/Content/assets_new/images/club/download-solid.svg">@CRS.ADMIN.APPLICATION.Resources.Resource.Export_CSV
+        <!-- Right Side -->
+        <input type="hidden" id="clubId" name="clubId" value="@ViewBag.ClubId" />
+        <input type="hidden" id="searchFilter" name="SearchFilter" value="@ViewBag.SearchFilter" />
+        <input type="hidden" id="searchFilter2" name="SearchFilter2" value="@ViewBag.SearchFilter2" />
+        <input type="hidden" id="startIndex" name="StartIndex" value="@ViewBag.StartIndex" />
+        <input type="hidden" id="pageSize" name="PageSize" value="@ViewBag.PageSize" />
+        <input type="hidden" id="startIndex2" name="StartIndex2" value="@ViewBag.StartIndex2" />
+        <input type="hidden" id="pageSize2" name="PageSize2" value="@ViewBag.PageSize2" />
+        <input type="hidden" id="TabValue" name="TabValue" value="@ViewBag.TabValue" />
+        <input type="hidden" id="FromDateMs" name="FromDateMs" />
+        <input type="hidden" id="ToDateMs" name="ToDateMs" />
+
+
+        <div class="flex items-center gap-6 ml-auto">
+            <button type="button"
+                    id="activityLogThisMonthBtn"
+                    class="h-[40px] flex items-center gap-[8px] px-[12px] border border-[#D4D4D8] rounded-[5px] text-[14px] text-gray-500 font-medium">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M5.625 2.5V3.125H3.125V16.875H16.875V3.125H14.375V2.5H13.125V3.125H6.875V2.5H5.625ZM4.375 4.375H5.625V5H6.875V4.375H13.125V5H14.375V4.375H15.625V5.625H4.375V4.375ZM4.375 6.875H15.625V15.625H4.375V6.875ZM8.125 8.125V9.375H9.375V8.125H8.125ZM10.625 8.125V9.375H11.875V8.125H10.625ZM13.125 8.125V9.375H14.375V8.125H13.125ZM5.625 10.625V11.875H6.875V10.625H5.625ZM8.125 10.625V11.875H9.375V10.625H8.125ZM10.625 10.625V11.875H11.875V10.625H10.625ZM13.125 10.625V11.875H14.375V10.625H13.125ZM5.625 13.125V14.375H14.375V13.125H5.625Z"
+                          fill="#A1A1AA" fill-opacity="0.75" />
+                </svg>
+                @CRS.ADMIN.APPLICATION.Resources.Resource.This_Month
+            </button>
+
+            <div class="export-button h-[40px]" onclick="exportExcel('table-id', 'Club')">
+                <img src="~/Content/assets_new/images/club/download-solid.svg">
+                @CRS.ADMIN.APPLICATION.Resources.Resource.Export_CSV
+            </div>
         </div>
-    </div>
+
+    </form>
 </div>
 
 <div class="border border-[#D0D5DD] rounded-[5px] p-[20px]">
@@ -47,11 +67,14 @@
 
     </div>
     <form id="filterForm" method="get" action="@Url.Action("Index", "ConversionMetrixManagement")">
-        <input type="hidden" name="TabValue" id="TabValue" value="02" />
-        <input type="hidden" name="ClubId" id="ClubId" value="@ViewBag.ClubId " />
-        <input type="hidden" name="StartIndex2" id="StartIndex2" value="@ViewBag.StartIndex2" />
-        <input type="hidden" name="PageSize2" id="PageSize2" value="@ViewBag.PageSize2" />
-        <input type="hidden" name="SearchFilter" id="SearchFilter" value="@ViewBag.SearchFilter" />
+
+        @*<input type="hidden" name="TabValue" id="TabValue" value="02" />
+        <input type="hidden" name="ClubId" id="ClubId" />
+        <input type="hidden" name="StartIndex2" id="StartIndex2" />
+        <input type="hidden" name="PageSize2" id="PageSize2" />
+        <input type="hidden" name="SearchFilter" id="SearchFilter" />*@
+
+
         <div class="grid gap-[24px] grid-cols-3">
             <div class="input-field-common">
                 <label class="block mb-[12px] text-sm font-medium text-secondary-100">
@@ -245,7 +268,7 @@
                                             @CRS.ADMIN.APPLICATION.Resources.Resource.Reservation
                                         </div>
                                         @*<i class="fa-solid fa-calendar-check"></i>*@
-                                        
+
                                     </span>
                                 }
                             </td>
@@ -320,19 +343,21 @@
     </div>
 </div>
 
+
 <script>
-    if ($("#TabValue").val().toLowerCase() == "02") {
+    let tabValue = "@ViewBag.TabValue" ?? "";
+    if (tabValue == "02") {
         document.addEventListener('DOMContentLoaded', function () {
-           
             const page_size2 = @ViewBag.PageSize2;
             const total_data2 = @ViewBag.TotalActivityData;
             const start_index_val2 = @ViewBag.StartIndex2;
-            let URL2 = "/ConversionMetrixManagement/Index";
+            var clubId =  '@Model.clubId';
+            let URL2 = "/ConversionMetrixManagement/Index?clubId=" + clubId;
             let search_filter2 = $('#default-search').val();
             URL2 = addQueryParam2(URL2, 'SearchFilter', search_filter2, 'TabValue', '02');
             dynamicStartIndexLabel = "StartIndex2";
             dynamicPageSizeLabel = "PageSize2";
-          
+
             LoadPagination(page_size2, total_data2, start_index_val2, URL2, 'pagination-id-2', 'prev-btn-2', 'next-btn-2', 'ShowEntries-Id-2', 'Entries-Id-2');
         });
     }
@@ -351,4 +376,23 @@
 
         return url;
     }
+    </script>
+<script>
+    $('#activityLogThisMonthBtn').click(function () {
+        const today = new Date();
+        const firstDay = new Date(today.getFullYear(), today.getMonth(), 1);
+        $('#FromDateMs').val(firstDay.getTime());
+        $('#ToDateMs').val(today.getTime());
+
+        $('#ClubId').val('@ViewBag.ClubId');
+        $('#SearchFilter').val('@ViewBag.SearchFilter');
+        $('#SearchFilter2').val('@ViewBag.SearchFilter2');
+        $('#StartIndex').val('@ViewBag.StartIndex');
+        $('#PageSize').val('@ViewBag.PageSize');
+        $('#StartIndex2').val('@ViewBag.StartIndex2');
+        $('#PageSize2').val('@ViewBag.PageSize2');
+        $('#TabValue').val('@ViewBag.TabValue');
+
+       $('#filterFormActivity').submit();
+    });
 </script>
