@@ -55,6 +55,7 @@ namespace CRS.ADMIN.SHARED.ConversionMetrixManagement
         public string ClubName { get; set; }
         public long? DateMs { get; set; }
         public string ActivityId { get; set; }
+        public string CustomerlocationJson { get; set; }
 
         public string ActionType { get; set; }
         public string SourcePage { get; set; }
@@ -120,6 +121,7 @@ namespace CRS.ADMIN.SHARED.ConversionMetrixManagement
         public long ClubId { get; set; }
         public string ClubCode { get; set; }
         public string ClubName { get; set; }
+        public string ClubNameJp { get; set; }
         public long? LocationId { get; set; }
         public string LocationName { get; set; }
         public int ReservationClickCount { get; set; }

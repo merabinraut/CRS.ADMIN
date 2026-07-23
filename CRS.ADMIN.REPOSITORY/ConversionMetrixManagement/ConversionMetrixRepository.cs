@@ -84,6 +84,7 @@ namespace CRS.ADMIN.REPOSITORY.ConversionMetrixManagement
                             ClubId = SafeLong(_dao.ParseColumnValue(item, "clubId")) ?? 0,
                             ClubCode = _dao.ParseColumnValue(item, "clubCode")?.ToString(),
                             ClubName = _dao.ParseColumnValue(item, "clubName")?.ToString(),
+                            ClubNameJp = _dao.ParseColumnValue(item,"clubNameJp")?.ToString(),
                             LocationId = SafeLong(_dao.ParseColumnValue(item, "locationId")),
                             LocationName = _dao.ParseColumnValue(item, "LocationName")?.ToString(),
                             ReservationClickCount = SafeInt(_dao.ParseColumnValue(item, "reservationClickCount")),
@@ -183,6 +184,7 @@ namespace CRS.ADMIN.REPOSITORY.ConversionMetrixManagement
                             ClubId = SafeLong(_dao.ParseColumnValue(item, "clubId")),
                             ClubCode = _dao.ParseColumnValue(item, "clubCode")?.ToString(),
                             ActivityId = _dao.ParseColumnValue(item, "activityId")?.ToString(),
+                            CustomerlocationJson = _dao.ParseColumnValue(item,"customerLocationJson")?.ToString(),
                             ClubName = _dao.ParseColumnValue(item, "clubName")?.ToString(),
                             ActionType = _dao.ParseColumnValue(item, "actionType")?.ToString(),
                             SourcePage = _dao.ParseColumnValue(item, "sourcePage")?.ToString(),
@@ -233,6 +235,7 @@ namespace CRS.ADMIN.REPOSITORY.ConversionMetrixManagement
                         {
                             ClubId = SafeLong(_dao.ParseColumnValue(item, "clubId"))?.ToString(),
                             StoreName = _dao.ParseColumnValue(item, "clubName")?.ToString(),
+                            LocationName =_dao.ParseColumnValue(item,"LocationName")?.ToString(),
                             BookingStorePage = SafeInt(_dao.ParseColumnValue(item, "reservationStore")),
                             BookingHostDetails = SafeInt(_dao.ParseColumnValue(item, "hostDetail")),
                             PhoneStorePage = SafeInt(_dao.ParseColumnValue(item, "phoneStore")),
@@ -404,13 +407,13 @@ namespace CRS.ADMIN.REPOSITORY.ConversionMetrixManagement
                         Sno = SafeInt(_dao.ParseColumnValue(item, "Sno")),
                         ClubId = SafeLong(_dao.ParseColumnValue(item, "clubId"))?.ToString(),
                         StoreName = _dao.ParseColumnValue(item, "clubName")?.ToString(),
+                        LocationName = _dao.ParseColumnValue(item,"LocationName")?.ToString(),
                         BookingStorePage = SafeInt(_dao.ParseColumnValue(item, "reservationStore")),
                         BookingHostDetails = SafeInt(_dao.ParseColumnValue(item, "hostDetail")),
                         PhoneStorePage = SafeInt(_dao.ParseColumnValue(item, "phoneStore")),
                         PhoneHostDetails = SafeInt(_dao.ParseColumnValue(item, "phoneHost")),
                         TotalClicks = SafeInt(_dao.ParseColumnValue(item, "totalCount")),
                         TotalRecords = SafeInt(_dao.ParseColumnValue(item, "totalRecords")),
-                        LocationName = _dao.ParseColumnValue(item, "LocationName").ToString()
                     });
                 }
             }

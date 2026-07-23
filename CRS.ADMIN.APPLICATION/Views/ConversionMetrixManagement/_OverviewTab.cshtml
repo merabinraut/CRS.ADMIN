@@ -131,177 +131,189 @@
     </div>
 </div>
 @*-------------------------------------------------------------------------------*@
-<div class="flex gap-6">
-
-
-</div>
-<form action="/ConversionMetrixManagement/Index" method="get" id="filterForm">
-    <div class="relative input-search-wrapper flex justify-between mt-6">
-        <div class="absolute inset-y-0 left-0 flex items-center pl-[16px] pointer-events-none">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21" fill="none">
-                <path d="M17.5 18L13.875 14.375M15.8333 9.66667C15.8333 13.3486 12.8486 16.3333 9.16667 16.3333C5.48477 16.3333 2.5 13.3486 2.5 9.66667C2.5 5.98477 5.48477 3 9.16667 3C12.8486 3 15.8333 5.98477 15.8333 9.66667Z"
-                      stroke="#667085" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round" />
-            </svg>
-        </div>
-        <input type="hidden" id="FromDate" name="FromDate" />
-        <input type="hidden" id="ToDate" name="ToDate" />
-
-        <input type="search"
-               id="default-search"
-               class="input-search block w-full "
-               placeholder="@CRS.ADMIN.APPLICATION.Resources.Resource.Search_By_StoreName"
-               value="@ViewBag.SearchFilter"
-               name="SearchFilter">
-
-        <div class="flex gap-6">
-            <button id="thisMonthBtn" class="h-[40px] flex items-center gap-[8px] px-[12px] border border-[#D4D4D8] rounded-[5px] text-[14px] text-gray-500 font-medium">
-                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M5.625 2.5V3.125H3.125V16.875H16.875V3.125H14.375V2.5H13.125V3.125H6.875V2.5H5.625ZM4.375 4.375H5.625V5H6.875V4.375H13.125V5H14.375V4.375H15.625V5.625H4.375V4.375ZM4.375 6.875H15.625V15.625H4.375V6.875ZM8.125 8.125V9.375H9.375V8.125H8.125ZM10.625 8.125V9.375H11.875V8.125H10.625ZM13.125 8.125V9.375H14.375V8.125H13.125ZM5.625 10.625V11.875H6.875V10.625H5.625ZM8.125 10.625V11.875H9.375V10.625H8.125ZM10.625 10.625V11.875H11.875V10.625H10.625ZM13.125 10.625V11.875H14.375V10.625H13.125ZM5.625 13.125V14.375H14.375V13.125H5.625Z" fill="#A1A1AA" fill-opacity="0.75" />
-                </svg>
-                @CRS.ADMIN.APPLICATION.Resources.Resource.This_Month
-            </button>
-            <div class="export-button h-[40px]" onclick="exportExcel('table-id', 'Club')">
-                <img src="~/Content/assets_new/images/club/download-solid.svg">@CRS.ADMIN.APPLICATION.Resources.Resource.Export_CSV
-            </div>
-        </div>
-    </div>
-</form>
-
-
 <div class="flex gap-6 mt-4">
 
 
 </div>
-<div class="table-tab" id="all">
-    <div class="px-[16px] py-[12px] flex justify-between entry-export-container">
-        <div class="flex items-center select-entries" id="ShowEntries-Id">
-        </div>
-    </div>
-    <div class="relative overflow-x-auto">
-        <table class="w-full text-left club-table" id="table-id">
-            <thead class="club-table-thead">
-                <tr>
-                    <th scope="col" class="p-[12px]">
-                        <div class="flex w-max">
-                            S.N
-                            <div class="relative pl-[5px]">
-                                <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
-                                <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
-                            </div>
-                        </div>
-                    </th>
-                    <th scope="col" class="p-[12px]">
-                        <div class="flex w-max">
-                            @CRS.ADMIN.APPLICATION.Resources.Resource.StoreName
-                            <div class="relative pl-[5px]">
-                                <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
-                                <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
-                            </div>
-                        </div>
-                    </th>
-                    <th scope="col" class="p-[12px]">
-                        <div class="flex w-max">
-                            @CRS.ADMIN.APPLICATION.Resources.Resource.Booking_Store_Page
-                            <div class="relative pl-[5px]">
-                                <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
-                                <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
-                            </div>
-                        </div>
-                    </th>
-                    <th scope="col" class="p-[12px]">
-                        <div class="flex w-max">
-                            @CRS.ADMIN.APPLICATION.Resources.Resource.Booking_Host_Details
-                            <div class="relative pl-[5px]">
-                                <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
-                                <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
-                            </div>
-                        </div>
-                    </th>
-                    <th scope="col" class="p-[12px]">
-                        <div class="flex w-max">
-                            @CRS.ADMIN.APPLICATION.Resources.Resource.Phone_Store_Page
-                            <div class="relative pl-[5px]">
-                                <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
-                                <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
-                            </div>
-                        </div>
-                    </th>
-                    <th scope="col" class="p-[12px]">
-                        <div class="flex w-max">
-                            @CRS.ADMIN.APPLICATION.Resources.Resource.Phone_Host_Details
-                            <div class="relative pl-[5px]">
-                                <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
-                                <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
-                            </div>
-                        </div>
-                    </th>
-                    <th scope="col" class="p-[12px]">
-                        <div class="flex w-max">
-                            @CRS.ADMIN.APPLICATION.Resources.Resource.Total_number_of_clicks
-                            <div class="relative pl-[5px]">
-                                <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
-                                <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
-                            </div>
-                        </div>
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                @{
-                    int sno = 1;
-
-                    foreach (var item in Model.StorePerformanceModel)
-                    {
-                        <tr class="bg-white border-b ">
-                            <td class="p-[12px]">
-                                @sno
-                            </td>
-
-                            <td class="p-[12px]">
-                                @item.StoreName
-                            </td>
-                            <td class="p-[12px]">
-                                @item.BookingStorePage
-                            </td>
-
-                            <td class="p-[12px]">
-                                @item.BookingHostDetails
-                            </td>
-
-                            <td class="p-[12px]">
-                                @item.PhoneStorePage
-                            </td>
-                            <td class="p-[12px]">
-                                @item.PhoneHostDetails
-                            </td>
-                            <td class="p-[12px]">
-                                @item.TotalClicks
-                            </td>
-                        </tr>
-                        sno++;
-                    }
-
-                }
-            </tbody>
-        </table>
-    </div>
-    <div class="pagination-club">
-        <div class="show-entry" id="Entries-Id">
-        </div>
-        <div class="flex gap-[12px]">
-            <div class="btn btn-secondary-box-shadow" id="prev-btn">
-                @CRS.ADMIN.APPLICATION.Resources.Resource.Previous
-            </div>
-            <div class="flex gap-[12px]" id="pagination-id">
-            </div>
-            <div class="btn btn-secondary-box-shadow" id="next-btn">
-                @CRS.ADMIN.APPLICATION.Resources.Resource.Next
-            </div>
-        </div>
+<div class="flex justify-between items-center">
+    <div>
+        <div class="heading-title">@CRS.ADMIN.APPLICATION.Resources.Resource.Store_Performance</div>
     </div>
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+    <form action="/ConversionMetrixManagement/Index" method="get" id="filterForm">
+        <div class="relative input-search-wrapper flex justify-between mt-6">
+            <div class="absolute inset-y-0 left-0 flex items-center pl-[16px] pointer-events-none">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21" fill="none">
+                    <path d="M17.5 18L13.875 14.375M15.8333 9.66667C15.8333 13.3486 12.8486 16.3333 9.16667 16.3333C5.48477 16.3333 2.5 13.3486 2.5 9.66667C2.5 5.98477 5.48477 3 9.16667 3C12.8486 3 15.8333 5.98477 15.8333 9.66667Z"
+                          stroke="#667085" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+            </div>
+            <input type="hidden" id="FromDate" name="FromDate" />
+            <input type="hidden" id="ToDate" name="ToDate" />
+
+            <input type="search"
+                   id="default-search"
+                   class="input-search block w-full "
+                   placeholder="@CRS.ADMIN.APPLICATION.Resources.Resource.Search_By_StoreName"
+                   value="@ViewBag.SearchFilter"
+                   name="SearchFilter">
+
+            <div class="flex gap-6">
+                <button id="thisMonthBtn" class="h-[40px] flex items-center gap-[8px] px-[12px] border border-[#D4D4D8] rounded-[5px] text-[14px] text-gray-500 font-medium">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M5.625 2.5V3.125H3.125V16.875H16.875V3.125H14.375V2.5H13.125V3.125H6.875V2.5H5.625ZM4.375 4.375H5.625V5H6.875V4.375H13.125V5H14.375V4.375H15.625V5.625H4.375V4.375ZM4.375 6.875H15.625V15.625H4.375V6.875ZM8.125 8.125V9.375H9.375V8.125H8.125ZM10.625 8.125V9.375H11.875V8.125H10.625ZM13.125 8.125V9.375H14.375V8.125H13.125ZM5.625 10.625V11.875H6.875V10.625H5.625ZM8.125 10.625V11.875H9.375V10.625H8.125ZM10.625 10.625V11.875H11.875V10.625H10.625ZM13.125 10.625V11.875H14.375V10.625H13.125ZM5.625 13.125V14.375H14.375V13.125H5.625Z" fill="#A1A1AA" fill-opacity="0.75" />
+                    </svg>
+                    @CRS.ADMIN.APPLICATION.Resources.Resource.This_Month
+                </button>
+                <div class="export-button h-[40px]" onclick="exportExcel('table-id', 'Club')">
+                    <img src="~/Content/assets_new/images/club/download-solid.svg">@CRS.ADMIN.APPLICATION.Resources.Resource.Export_CSV
+                </div>
+            </div>
+        </div>
+    </form>
+
+
+    <div class="flex gap-6 mt-4">
+
+
+    </div>
+    <div class="table-tab" id="all">
+        <div class="px-[16px] py-[12px] flex justify-between entry-export-container">
+            <div class="flex items-center select-entries" id="ShowEntries-Id">
+            </div>
+        </div>
+        <div class="relative overflow-x-auto">
+            <table class="w-full text-left club-table" id="table-id">
+                <thead class="club-table-thead">
+                    <tr>
+                        <th scope="col" class="p-[12px]">
+                            <div class="flex w-max">
+                                S.N
+                                <div class="relative pl-[5px]">
+                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                </div>
+                            </div>
+                        </th>
+                        <th scope="col" class="p-[12px]">
+                            <div class="flex w-max">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.StoreName
+                                <div class="relative pl-[5px]">
+                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                </div>
+                            </div>
+                        </th>
+                        <th scope="col" class="p-[12px]">
+                            <div class="flex w-max">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Booking_Store_Page
+                                <div class="relative pl-[5px]">
+                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                </div>
+                            </div>
+                        </th>
+                        <th scope="col" class="p-[12px]">
+                            <div class="flex w-max">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Booking_Host_Details
+                                <div class="relative pl-[5px]">
+                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                </div>
+                            </div>
+                        </th>
+                        <th scope="col" class="p-[12px]">
+                            <div class="flex w-max">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Phone_Store_Page
+                                <div class="relative pl-[5px]">
+                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                </div>
+                            </div>
+                        </th>
+                        <th scope="col" class="p-[12px]">
+                            <div class="flex w-max">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Phone_Host_Details
+                                <div class="relative pl-[5px]">
+                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                </div>
+                            </div>
+                        </th>
+                        <th scope="col" class="p-[12px]">
+                            <div class="flex w-max">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Total_number_of_clicks
+                                <div class="relative pl-[5px]">
+                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                </div>
+                            </div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        int sno = 1;
+
+                        foreach (var item in Model.StorePerformanceModel)
+                        {
+                            <tr class="bg-white border-b ">
+                                <td class="p-[12px]">
+                                    @sno
+                                </td>
+
+                                <td class="p-[12px]">
+                                    @item.StoreName
+                                    @if (!string.IsNullOrWhiteSpace(item.LocationName))
+                                    {
+                                        <span class="text-gray-500">
+                                            (@item.LocationName)
+                                        </span>
+                                    }
+                                </td>
+                                <td class="p-[12px]">
+                                    @item.BookingStorePage
+                                </td>
+
+                                <td class="p-[12px]">
+                                    @item.BookingHostDetails
+                                </td>
+
+                                <td class="p-[12px]">
+                                    @item.PhoneStorePage
+                                </td>
+                                <td class="p-[12px]">
+                                    @item.PhoneHostDetails
+                                </td>
+                                <td class="p-[12px]">
+                                    @item.TotalClicks
+                                </td>
+                            </tr>
+                            sno++;
+                        }
+
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div class="pagination-club">
+            <div class="show-entry" id="Entries-Id">
+            </div>
+            <div class="flex gap-[12px]">
+                <div class="btn btn-secondary-box-shadow" id="prev-btn">
+                    @CRS.ADMIN.APPLICATION.Resources.Resource.Previous
+                </div>
+                <div class="flex gap-[12px]" id="pagination-id">
+                </div>
+                <div class="btn btn-secondary-box-shadow" id="next-btn">
+                    @CRS.ADMIN.APPLICATION.Resources.Resource.Next
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 
 <script>
     let tabValue = "@ViewBag.TabValue" ?? "";
@@ -320,62 +332,62 @@
             LoadPagination(page_size, total_data, start_index_val, URL);
         });
     }
-</script>
+    </script>
 
-<script>
+    <script>
 
-    document.addEventListener("DOMContentLoaded", function () {
-        var content = document.getElementById("long-content");
-        var btn = document.querySelector(".see-more-btn1");
-    });
-</script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var content = document.getElementById("long-content");
+            var btn = document.querySelector(".see-more-btn1");
+        });
+    </script>
 
-<style>
-    .content-container {
-        max-width: 500px;
-    }
-
-    .see-more-btn {
-        margin-top: 10px;
-        cursor: pointer;
-    }
-</style>
-<script>
-    $('#thisMonthBtn').click(function () {
-        const today = new Date();
-        const firstDay = new Date(today.getFullYear(), today.getMonth(), 1);
-
-        $('#FromDate').val(firstDay.getTime());
-        $('#ToDate').val(today.getTime());
-
-        $('#filterForm').submit();
-    });
-</script>
-
-<script>
-    (function () {
-        var currentPage = 1;
-        var pageSize = 10;
-        var currentSearch = '';
-        var searchDebounce = null;
-        var thisMonthActive = false;
-        var fromDateMs = null;
-        var toDateMs = null;
-
-        function escHtml(s) {
-            return $('<div>').text(String(s || '')).html();
+    <style>
+        .content-container {
+            max-width: 500px;
         }
 
-        function getThisMonthRange() {
-            var now = new Date();
-            var start = new Date(now.getFullYear(), now.getMonth(), 1, 0, 0, 0, 0);
-            var end = new Date(now.getFullYear(), now.getMonth() + 1, 0, 23, 59, 59, 999);
-            return { from: start.getTime(), to: end.getTime() };
+        .see-more-btn {
+            margin-top: 10px;
+            cursor: pointer;
         }
-</script>
+    </style>
+    <script>
+        $('#thisMonthBtn').click(function () {
+            const today = new Date();
+            const firstDay = new Date(today.getFullYear(), today.getMonth(), 1);
+
+            $('#FromDate').val(firstDay.getTime());
+            $('#ToDate').val(today.getTime());
+
+            $('#filterForm').submit();
+        });
+    </script>
+
+    <script>
+        (function () {
+            var currentPage = 1;
+            var pageSize = 10;
+            var currentSearch = '';
+            var searchDebounce = null;
+            var thisMonthActive = false;
+            var fromDateMs = null;
+            var toDateMs = null;
+
+            function escHtml(s) {
+                return $('<div>').text(String(s || '')).html();
+            }
+
+            function getThisMonthRange() {
+                var now = new Date();
+                var start = new Date(now.getFullYear(), now.getMonth(), 1, 0, 0, 0, 0);
+                var end = new Date(now.getFullYear(), now.getMonth() + 1, 0, 23, 59, 59, 999);
+                return { from: start.getTime(), to: end.getTime() };
+            }
+    </script>
 
 
-<script>
+    <script>
     (function () {
         var PINK = '#C2185B';
         var PURPLE = '#7F77DD';
@@ -399,7 +411,7 @@
 
         // Single combined call: today's click chart + action source + click origin
         function loadClickAnalytics(filter) {
-           
+
             console.log("Received filter:", filter);
             console.trace("loadClickAnalytics called");
             var normalizedFilter = (filter || 'all').toLowerCase().trim();
@@ -587,7 +599,7 @@
         // Fixed: reads color directly off each dataset instead of re-deriving
         // it from label text (which never matched anything before).
         function renderLegend(datasets) {
-            
+
             var totalClicksLabel = '@Html.Raw(HttpUtility.JavaScriptStringEncode(CRS.ADMIN.APPLICATION.Resources.Resource.Total_Clicks))';
             var html = datasets
                 .filter(function (ds) {
@@ -699,4 +711,4 @@
             loadClickAnalytics("all");
         });
     })();
-</script>
+    </script>
