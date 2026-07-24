@@ -16,10 +16,11 @@ namespace CRS.ADMIN.REPOSITORY.ConversionMetrixManagement
     public class ConversionMetrixRepository : IConversionMetrixRepository
     {
         private readonly AnalyticsDao _dao;
+        private readonly RepositoryDao _repositoryDao;
         public ConversionMetrixRepository()
         {
             _dao = new AnalyticsDao();
-
+            _repositoryDao = new RepositoryDao();
         }
 
         #region Conversion Summary
@@ -183,6 +184,7 @@ namespace CRS.ADMIN.REPOSITORY.ConversionMetrixManagement
                             SNO = SafeInt(_dao.ParseColumnValue(item, "sn")),
                             ClubId = SafeLong(_dao.ParseColumnValue(item, "clubId")),
                             ClubCode = _dao.ParseColumnValue(item, "clubCode")?.ToString(),
+                            HostCode = _dao.ParseColumnValue(item, "hostCode")?.ToString(),
                             ActivityId = _dao.ParseColumnValue(item, "activityId")?.ToString(),
                             CustomerlocationJson = _dao.ParseColumnValue(item,"customerLocationJson")?.ToString(),
                             ClubName = _dao.ParseColumnValue(item, "clubName")?.ToString(),
@@ -424,9 +426,9 @@ namespace CRS.ADMIN.REPOSITORY.ConversionMetrixManagement
         {
             var response = new StorePerformanceCommon();
 
-            var sql = "EXEC [analytics].[sproc_admin_get_club_detail]";
+            var sql = "EXEC [dbo].[sproc_admin_get_club_detail]";
             sql += " @clubId=" + clubId;
-            var dbResponse = _dao.ExecuteDataRow(sql);
+            var dbResponse = _repositoryDao.ExecuteDataRow(sql);
             if (dbResponse != null)
             {
                 response.ClubId = _dao.ParseColumnValue(dbResponse, "clubId").ToString();

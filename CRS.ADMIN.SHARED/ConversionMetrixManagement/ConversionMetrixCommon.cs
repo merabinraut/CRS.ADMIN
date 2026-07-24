@@ -52,6 +52,7 @@ namespace CRS.ADMIN.SHARED.ConversionMetrixManagement
         public int SNO { get; set; }
         public long? ClubId { get; set; }
         public string ClubCode { get; set; }
+        public string HostCode { get; set; }
         public string ClubName { get; set; }
         public long? DateMs { get; set; }
         public string ActivityId { get; set; }

@@ -66,13 +66,18 @@
         </div>
 
     </div>
-    <form id="filterForm" method="get" action="@Url.Action("Index", "ConversionMetrixManagement")">
+    <form id="filterForm2" method="get" action="@Url.Action("Index", "ConversionMetrixManagement")">
 
-        <input type="hidden" name="TabValue" id="TabValue" value="02" />
-        <input type="hidden" name="ClubId" id="ClubId" />
-        <input type="hidden" name="StartIndex2" id="StartIndex2" />
-        <input type="hidden" name="PageSize2" id="PageSize2" />
-        <input type="hidden" name="SearchFilter" id="SearchFilter" />
+        <input type="hidden" id="ClubId" name="clubId" value="@ViewBag.ClubId" />
+        <input type="hidden" id="SearchFilter" name="SearchFilter" value="@ViewBag.SearchFilter" />
+        <input type="hidden" id="SearchFilter2" name="SearchFilter2" value="@ViewBag.SearchFilter2" />
+        <input type="hidden" id="StartIndex" name="StartIndex" value="@ViewBag.StartIndex" />
+        <input type="hidden" id="PageSize" name="PageSize" value="@ViewBag.PageSize" />
+        <input type="hidden" id="StartIndex2" name="StartIndex2" value="@ViewBag.StartIndex2" />
+        <input type="hidden" id="PageSize2" name="PageSize2" value="@ViewBag.PageSize2" />
+        <input type="hidden" id="TabValue" name="TabValue" value="@ViewBag.TabValue" />
+        <input type="hidden" id="FromDateMs" name="FromDateMs" />
+        <input type="hidden" id="ToDateMs" name="ToDateMs" />
 
 
         <div class="grid gap-[24px] grid-cols-3">
@@ -85,9 +90,9 @@
                     m => m.ActionType,
                     new List<SelectListItem>
                     {
-                        new SelectListItem { Text = "All", Value = "" },
-                        new SelectListItem { Text = "Phone", Value = "phone" },
-                        new SelectListItem { Text = "Reservation", Value = "reservation" }
+                        new SelectListItem { Text =  @CRS.ADMIN.APPLICATION.Resources.Resource.All, Value = "" },
+                        new SelectListItem { Text = @CRS.ADMIN.APPLICATION.Resources.Resource.Phone, Value = "phone" },
+                        new SelectListItem { Text = @CRS.ADMIN.APPLICATION.Resources.Resource.Reservation, Value = "reservation" }
                     },
                     new
                     {
@@ -106,13 +111,13 @@
                     m => m.SourcePageType,
                     new List<SelectListItem>
                     {
-                        new SelectListItem { Text = "All", Value = "" },
-                        new SelectListItem { Text = "Store Detail", Value = "store_detail" },
-                        new SelectListItem { Text = "Host Detail", Value = "host_detail" }
+                        new SelectListItem { Text =@CRS.ADMIN.APPLICATION.Resources.Resource.All, Value = "" },
+                        new SelectListItem { Text =@CRS.ADMIN.APPLICATION.Resources.Resource.Store_Detail, Value = "store_detail" },
+                        new SelectListItem { Text = @CRS.ADMIN.APPLICATION.Resources.Resource.Host_Detail, Value = "host_detail" }
                     },
                     new
                     {
-                        @id = "TargetType",
+                        @id = "SourcePageType",
                         @class = "text-[#B7B7B7] h-[44px] UserTypeDDL",
                         style = "width:100%;"
                     })
@@ -135,7 +140,7 @@
                      },
                      new
                      {
-                         @id = "TargetType",
+                         @id = "UserStatus",
                          @class = "text-[#B7B7B7] h-[44px] UserTypeDDL",
                          style = "width:100%;"
                      })
@@ -150,7 +155,7 @@
                 <i class="las la-times text-[16px]"></i>
                 Cancel
             </button>
-            <button type="submit"
+            <button type="button"
                     class="flex items-center justify-center gap-2 bg-secondary-color-pink text-white rounded-[6px] px-6 py-2 text-sm font-medium transition-colors"
                     id="ActivityLogApplyBtn">
                 <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -276,7 +281,7 @@
                                     <td class="p-[12px] border-b border-gray-100">
                                         <div class="flex flex-col gap-1">
                                             <span class="text-[14px] font-medium text-gray-900">@item.SourcePage</span>
-                                            <span class="text-[12px] text-gray-500">ID: @item.ClubCode</span>
+                                            <span class="text-[12px] text-gray-500">ID:   @(item.SourcePage.ToUpper() == "STORE PAGE" ? item.ClubCode : item.HostCode)</span>
                                         </div>
                                     </td>
                                     @using Newtonsoft.Json.Linq
@@ -395,8 +400,9 @@
 
 
 <script>
-    let tabValue = "@ViewBag.TabValue" ?? "";
+    @*let tabValue = "@ViewBag.TabValue" ?? "";
     if (tabValue == "02") {
+        debugger;
         document.addEventListener('DOMContentLoaded', function () {
             const page_size2 = @ViewBag.PageSize2;
             const total_data2 = @ViewBag.TotalActivityData;
@@ -425,8 +431,58 @@
         }
 
         return url;
+    }*@
+    document.addEventListener('DOMContentLoaded', function () {
+    const tabValue = '@ViewBag.TabValue';
+
+    if (tabValue !== '02') {
+        return;
     }
-    </script>
+
+    const pageSize2 = @ViewBag.PageSize2;
+    const totalData2 = @ViewBag.TotalActivityData;
+    const startIndex2 = @ViewBag.StartIndex2;
+
+    const params = new URLSearchParams(window.location.search);
+
+    params.set('clubId', '@Model.clubId');
+    params.set('TabValue', '02');
+
+    const searchFilter =
+        document.getElementById('default-search-activity')?.value?.trim() || '';
+
+    if (searchFilter) {
+        params.set('SearchFilter', searchFilter);
+    } else {
+        params.delete('SearchFilter');
+    }
+
+    params.delete('StartIndex2');
+    params.delete('PageSize2');
+
+    const paginationUrl =
+        '/ConversionMetrixManagement/Index?' + params.toString();
+
+    dynamicStartIndexLabel = 'StartIndex2';
+    dynamicPageSizeLabel = 'PageSize2';
+
+    LoadPagination(
+        pageSize2,
+        totalData2,
+        startIndex2,
+        paginationUrl,
+        'pagination-id-2',
+        'prev-btn-2',
+        'next-btn-2',
+        'ShowEntries-Id-2',
+        'Entries-Id-2'
+    );
+});
+</script>
+
+
+
+
 <script>
     $('#activityLogThisMonthBtn').click(function () {
         const today = new Date();
@@ -444,5 +500,32 @@
         $('#TabValue').val('@ViewBag.TabValue');
 
        $('#filterFormActivity').submit();
+    });
+</script>
+
+<script>
+    $('#ActivityLogApplyBtn').click(function () {
+        debugger;
+        const today = new Date();
+        const firstDay = new Date(today.getFullYear(), today.getMonth(), 1);
+        $('#FromDateMs').val(firstDay.getTime());
+        $('#ToDateMs').val(today.getTime());
+
+        $('#ClubId').val('@ViewBag.ClubId');
+        $('#SearchFilter').val('@ViewBag.SearchFilter');
+        $('#SearchFilter2').val('@ViewBag.SearchFilter2');
+        $('#StartIndex').val('@ViewBag.StartIndex');
+        $('#PageSize').val('@ViewBag.PageSize');
+        $('#StartIndex2').val('@ViewBag.StartIndex2');
+        $('#PageSize2').val('@ViewBag.PageSize2');
+        $('#TabValue').val('@ViewBag.TabValue');
+
+        $('#ActionType').val($('#ActionType').val());
+        $('#SourcePageType').val($('#SourcePageType').val());
+        $('#UserStatus').val($('#UserStatus').val());
+
+        var actionSource = $('#ActionType').val();
+  
+        $('#filterForm2').submit();
     });
 </script>

@@ -56,306 +56,309 @@
 @Html.Partial("GetStoreDetailsList", Model)
 
 @*<script>
-    $(document).ready(function () {
+        $(document).ready(function () {
 
 
-        window.selectedClubId = null;
+            window.selectedClubId = null;
 
-        let tabValue = "@ViewBag.TabValue" ?? "";
-        if (tabValue == "02") {
-            $("#tab2Content").show();
-            $("#tab1Content").hide();
+            let tabValue = "@ViewBag.TabValue" ?? "";
+            if (tabValue == "02") {
+                $("#tab2Content").show();
+                $("#tab1Content").hide();
 
-            $("#tab2Button").addClass("active");
-            $("#tab1Button").removeClass("active");
-            $("#tab1Button").click(function () {
-                changeTabV1('all', 'tab1Link');
-                debugger;
-                const page_size = @ViewBag.PageSize;
-                const total_data = @ViewBag.TotalData;
-                const start_index_val = @ViewBag.StartIndex;
-                const clubId = '@Model.clubId';
-                let URL2 = "/ConversionMetrixManagement/Index?clubId=" + clubId;
-                let search_filter = $('#default-search').val();
-                URL = addQueryParam2(URL2, 'SearchFilter', search_filter2);
+                $("#tab2Button").addClass("active");
+                $("#tab1Button").removeClass("active");
+                $("#tab1Button").click(function () {
+                    changeTabV1('all', 'tab1Link');
+                    debugger;
+                    const page_size = @ViewBag.PageSize;
+                    const total_data = @ViewBag.TotalData;
+                    const start_index_val = @ViewBag.StartIndex;
+                    const clubId = '@Model.clubId';
+                    let URL2 = "/ConversionMetrixManagement/Index?clubId=" + clubId;
+                    let search_filter = $('#default-search').val();
+                    URL = addQueryParam2(URL2, 'SearchFilter', search_filter2);
 
-                //URL = addQueryParam(URL, 'SearchFilter', search_filter);
+                    //URL = addQueryParam(URL, 'SearchFilter', search_filter);
 
-                dynamicStartIndexLabel = "StartIndex";
-                dynamicPageSizeLabel = "PageSize";
-                LoadPagination(page_size, total_data, start_index_val, URL);
-            });
-        }
-        else {
-            $("#tab2Content").hide();
-            $("#tab1Content").show();
-
-            $("#tab1Button").addClass("active");
-            $("#tab2Button").removeClass("active");
-            $("#tab2Button").click(function () {
-                changeTabV1('all', 'tab2Link');
-                const page_size2 = @ViewBag.PageSize2;
-                const total_data2 = @ViewBag.TotalActivityData;
-                const start_index_val2 = @ViewBag.StartIndex2;
-                const clubId = '@Model.clubId';
-                let URL2 = "/ConversionMetrixManagement/Index?clubId=" + clubId;
-                let search_filter2 = $('#default-search-activity').val();
-                URL2 = addQueryParam2(URL2,'SearchFilter', search_filter2, 'TabValue', '02');
-                debugger
-
-                dynamicStartIndexLabel = "StartIndex2";
-                dynamicPageSizeLabel = "PageSize2";
-                LoadPagination(page_size2, total_data2, start_index_val2, URL2, 'pagination-id-2', 'prev-btn-2', 'next-btn-2', 'ShowEntries-Id-2', 'Entries-Id-2');
-            });
-        }
-
-        function changeTabV1(selectedTabId, selectedLinkId)
-        {
-             let URL;
-             if (selectedLinkId === 'tab2Link') {
-                const page_size2 = @ViewBag.PageSize2;
-                const total_data2 = @ViewBag.TotalActivityData;
-                const start_index_val2 = @ViewBag.StartIndex2;
-                const clubId = '@ViewBag.ClubId';
-                let URL2 = "/ConversionMetrixManagement/Index?clubId=" + clubId;
-                 let search_filter2 = $('#default-search-activity').val();
-            debugger;
-
-                URL = addQueryParam2(URL2, 'SearchFilter', search_filter2, 'TabValue', '02');
-                window.location.href = URL
-
-             }
-             else
-             {
-                const page_size = @ViewBag.PageSize;
-                const total_data = @ViewBag.TotalData;
-                const start_index_val = @ViewBag.StartIndex;
-                const clubId = '@ViewBag.ClubId';
-                let URL1 = "/ConversionMetrixManagement/Index?clubId=" + clubId;
-                let search_filter1 = $('#default-search').val();
-                URL = addQueryParam2(URL1, 'TabValue', '', 'SearchFilter', search_filter1);
-                window.location.href = URL
-             }
-
-        }
-
-
-        function addQueryParam2(url, paramName, paramValue, paramName2, paramValue2) {
-            // Add the first query parameter
-            if (paramValue != null && paramValue != "") {
-                // Check if it's the first parameter, if so, use "?" else use "&"
-                url += url.includes('?') ? `&${paramName}=${paramValue}` : `?${paramName}=${paramValue}`;
+                    dynamicStartIndexLabel = "StartIndex";
+                    dynamicPageSizeLabel = "PageSize";
+                    LoadPagination(page_size, total_data, start_index_val, URL);
+                });
             }
+            else {
+                $("#tab2Content").hide();
+                $("#tab1Content").show();
 
-            // Add the second query parameter
-            if (paramValue2 != null && paramValue2 != "") {
-                url += url.includes('?') ? `&${paramName2}=${paramValue2}` : `?${paramName2}=${paramValue2}`;
-            }
+                $("#tab1Button").addClass("active");
+                $("#tab2Button").removeClass("active");
+                $("#tab2Button").click(function () {
+                    changeTabV1('all', 'tab2Link');
+                    const page_size2 = @ViewBag.PageSize2;
+                    const total_data2 = @ViewBag.TotalActivityData;
+                    const start_index_val2 = @ViewBag.StartIndex2;
+                    const clubId = '@Model.clubId';
+                    let URL2 = "/ConversionMetrixManagement/Index?clubId=" + clubId;
+                    let search_filter2 = $('#default-search-activity').val();
+                    URL2 = addQueryParam2(URL2,'SearchFilter', search_filter2, 'TabValue', '02');
+                    debugger
 
-            return url;
-        }
-
-        // ✅ Open drawer — use the plain button id, no Flowbite attributes
-        $("#allStoresBtn").on('click', function (e) {
-            e.preventDefault();
-            $("#add-new-store").removeClass("translate-x-full").addClass("translate-x-0");
-            if (allClubs.length === 0) {
-                loadClubs($('#storeAreaFilter').val());
-            }
-        });
-
-
-        $("#CloseId").on('click', function (e) {
-            e.preventDefault();
-            $("#add-new-store").addClass("translate-x-full").removeClass("translate-x-0");
-        });
-
-        /* ---------- Store selector logic ---------- */
-        var topN = 10;
-        var selectedId = null;
-        var allClubs = [];   // populated from your API below
-
-        function loadClubs(locationId) {
-            $.ajax({
-                url: '/ConversionMetrixManagement/GetRankedStores',
-                type: 'GET',
-                data: {
-                    topN: topN,
-                    locationId: locationId || null
-                },
-                success: function (response) {
-                    if (!response || response.success === false) {
-                        console.error('[RankedStores] server error:', response && response.message);
-                        allClubs = [];
-                        renderClubList();
-                        return;
-                    }
-                    allClubs = response.data || [];
-                    renderClubList();
-                },
-                error: function () {
-                    $('#storeClubList').html(
-                        '<p class="text-sm text-red-400 text-center py-8">Failed to load clubs.</p>'
-                    );
-                }
-            });
-        }
-
-        function renderClubList() {
-
-            var q = ($('#storeSearch').val() || '').toLowerCase().trim();
-
-            var filtered = allClubs.filter(function (c) {
-                return !q ||
-                    (c.clubName || '').toLowerCase().includes(q) ||
-                    (c.clubNameJp || '').toLowerCase().includes(q) ||
-                    (c.clubId || '').toLowerCase().includes(q);
-            });
-
-
-            var html = '';
-            if (!filtered.length) {
-                html = '<p class="text-sm text-gray-400 text-center py-8">No clubs found.</p>';
-            } else {
-                $.each(filtered, function (i, c) {
-                    var clubName = c.clubName || "";
-                    var clubNameJp = c.clubNameJp || "";
-                    var displayName = clubName;
-                    if (clubNameJp) {
-                        displayName += " (" + clubNameJp + ")";
-                    }
-                    var rank = c.rank;
-                    var badge = rankBadgeClass(rank);
-                    var sel = (c.clubId === selectedId)
-                        ? 'bg-pink-50 ring-1 ring-pink-300 rounded-lg px-2'
-                        : '';
-                    html += '<div class="club-item flex items-center gap-3 py-3 cursor-pointer ' + sel + '" '
-                        + 'data-id="' + c.clubId + '" data-name="' + escHtml(displayName) + '">'
-                        + '<div class="' + badge + '">#' + rank + '</div>'
-                        + '<div class="flex-1 min-w-0">'
-                        + '<p class="text-sm font-medium text-gray-800 truncate">' + escHtml(displayName) + '</p>'
-                        + '<p class="text-xs text-gray-400">' + escHtml(c.clubCode) + '</p>'
-                        + '</div>'
-                        + '<span class="text-sm text-gray-500 whitespace-nowrap">'
-                        + c.tapCount + '\u30bf\u30c3\u30d7'
-                        + '</span>'
-                        + '</div>';
+                    dynamicStartIndexLabel = "StartIndex2";
+                    dynamicPageSizeLabel = "PageSize2";
+                    LoadPagination(page_size2, total_data2, start_index_val2, URL2, 'pagination-id-2', 'prev-btn-2', 'next-btn-2', 'ShowEntries-Id-2', 'Entries-Id-2');
                 });
             }
 
-            $('#storeClubList').html(html);
+            function changeTabV1(selectedTabId, selectedLinkId)
+            {
+                 let URL;
+                 if (selectedLinkId === 'tab2Link') {
+                    const page_size2 = @ViewBag.PageSize2;
+                    const total_data2 = @ViewBag.TotalActivityData;
+                    const start_index_val2 = @ViewBag.StartIndex2;
+                    const clubId = '@ViewBag.ClubId';
+                    let URL2 = "/ConversionMetrixManagement/Index?clubId=" + clubId;
+                     let search_filter2 = $('#default-search-activity').val();
+                debugger;
 
-            $('#storeClubList .club-item').on('click', function () {
-                selectedId = $(this).data('id');
-                var name = $(this).data('name');
+                    URL = addQueryParam2(URL2, 'SearchFilter', search_filter2, 'TabValue', '02');
+                    window.location.href = URL
 
-                $("#allStoresBtn").html('<i class="las la-store me-2"></i>' + escHtml(name));
+                 }
+                 else
+                 {
+                    const page_size = @ViewBag.PageSize;
+                    const total_data = @ViewBag.TotalData;
+                    const start_index_val = @ViewBag.StartIndex;
+                    const clubId = '@ViewBag.ClubId';
+                    let URL1 = "/ConversionMetrixManagement/Index?clubId=" + clubId;
+                    let search_filter1 = $('#default-search').val();
+                    URL = addQueryParam2(URL1, 'TabValue', '', 'SearchFilter', search_filter1);
+                    window.location.href = URL
+                 }
 
-                $("#add-new-store").addClass("translate-x-full").removeClass("translate-x-0");
+            }
 
-                filterPageByStore(selectedId);
+
+            function addQueryParam2(url, paramName, paramValue, paramName2, paramValue2) {
+                // Add the first query parameter
+                if (paramValue != null && paramValue != "") {
+                    // Check if it's the first parameter, if so, use "?" else use "&"
+                    url += url.includes('?') ? `&${paramName}=${paramValue}` : `?${paramName}=${paramValue}`;
+                }
+
+                // Add the second query parameter
+                if (paramValue2 != null && paramValue2 != "") {
+                    url += url.includes('?') ? `&${paramName2}=${paramValue2}` : `?${paramName2}=${paramValue2}`;
+                }
+
+                return url;
+            }
+
+            // ✅ Open drawer — use the plain button id, no Flowbite attributes
+            $("#allStoresBtn").on('click', function (e) {
+                e.preventDefault();
+                $("#add-new-store").removeClass("translate-x-full").addClass("translate-x-0");
+                if (allClubs.length === 0) {
+                    loadClubs($('#storeAreaFilter').val());
+                }
             });
-        }
 
-        function rankBadgeClass(rank) {
-            var base = 'w-[32px] h-[32px] rounded-[4px] flex items-center justify-center text-[11px] flex-shrink-0 ';
-            if (rank === 1) return base + 'bg-gradient-to-b from-[#FFE590] to-[#D5B528] text-white';
-            if (rank === 2) return base + 'bg-gradient-to-b from-[#E4DDDD] to-[#898989] text-white';
-            if (rank === 3) return base + 'bg-gradient-to-b from-[#514708] to-[#542A09] text-white';
-            return base + 'bg-[#C08C8C] text-white opacity-60';
-        }
 
-        function escHtml(s) {
-            return $('<div>').text(s).html();
-        }
+            $("#CloseId").on('click', function (e) {
+                e.preventDefault();
+                $("#add-new-store").addClass("translate-x-full").removeClass("translate-x-0");
+            });
 
-        function filterPageByStore(storeId) {
-            var url = new window.URL(window.location.href);
+            /* ---------- Store selector logic ---------- */
+            var topN = 10;
+            var selectedId = null;
+            var allClubs = [];   // populated from your API below
 
-            url.searchParams.set("clubId", storeId);
+            function loadClubs(locationId) {
+                $.ajax({
+                    url: '/ConversionMetrixManagement/GetRankedStores',
+                    type: 'GET',
+                    data: {
+                        topN: topN,
+                        locationId: locationId || null
+                    },
+                    success: function (response) {
+                        if (!response || response.success === false) {
+                            console.error('[RankedStores] server error:', response && response.message);
+                            allClubs = [];
+                            renderClubList();
+                            return;
+                        }
+                        allClubs = response.data || [];
+                        renderClubList();
+                    },
+                    error: function () {
+                        $('#storeClubList').html(
+                            '<p class="text-sm text-red-400 text-center py-8">Failed to load clubs.</p>'
+                        );
+                    }
+                });
+            }
 
-            window.location.href = url.toString();
+            function renderClubList() {
 
-        }
+                var q = ($('#storeSearch').val() || '').toLowerCase().trim();
 
-        /* ---------- Live filters ---------- */
-        $('#storeSearch').on('input', renderClubList);
-        //$('#storeAreaFilter').on('change', renderClubList);
-        $('#storeAreaFilter').on('change', function () {
-            loadClubs($(this).val());
+                var filtered = allClubs.filter(function (c) {
+                    return !q ||
+                        (c.clubName || '').toLowerCase().includes(q) ||
+                        (c.clubNameJp || '').toLowerCase().includes(q) ||
+                        (c.clubId || '').toLowerCase().includes(q);
+                });
+
+
+                var html = '';
+                if (!filtered.length) {
+                    html = '<p class="text-sm text-gray-400 text-center py-8">No clubs found.</p>';
+                } else {
+                    $.each(filtered, function (i, c) {
+                        var clubName = c.clubName || "";
+                        var clubNameJp = c.clubNameJp || "";
+                        var displayName = clubName;
+                        if (clubNameJp) {
+                            displayName += " (" + clubNameJp + ")";
+                        }
+                        var rank = c.rank;
+                        var badge = rankBadgeClass(rank);
+                        var sel = (c.clubId === selectedId)
+                            ? 'bg-pink-50 ring-1 ring-pink-300 rounded-lg px-2'
+                            : '';
+                        html += '<div class="club-item flex items-center gap-3 py-3 cursor-pointer ' + sel + '" '
+                            + 'data-id="' + c.clubId + '" data-name="' + escHtml(displayName) + '">'
+                            + '<div class="' + badge + '">#' + rank + '</div>'
+                            + '<div class="flex-1 min-w-0">'
+                            + '<p class="text-sm font-medium text-gray-800 truncate">' + escHtml(displayName) + '</p>'
+                            + '<p class="text-xs text-gray-400">' + escHtml(c.clubCode) + '</p>'
+                            + '</div>'
+                            + '<span class="text-sm text-gray-500 whitespace-nowrap">'
+                            + c.tapCount + '\u30bf\u30c3\u30d7'
+                            + '</span>'
+                            + '</div>';
+                    });
+                }
+
+                $('#storeClubList').html(html);
+
+                $('#storeClubList .club-item').on('click', function () {
+                    selectedId = $(this).data('id');
+                    var name = $(this).data('name');
+
+                    $("#allStoresBtn").html('<i class="las la-store me-2"></i>' + escHtml(name));
+
+                    $("#add-new-store").addClass("translate-x-full").removeClass("translate-x-0");
+
+                    filterPageByStore(selectedId);
+                });
+            }
+
+            function rankBadgeClass(rank) {
+                var base = 'w-[32px] h-[32px] rounded-[4px] flex items-center justify-center text-[11px] flex-shrink-0 ';
+                if (rank === 1) return base + 'bg-gradient-to-b from-[#FFE590] to-[#D5B528] text-white';
+                if (rank === 2) return base + 'bg-gradient-to-b from-[#E4DDDD] to-[#898989] text-white';
+                if (rank === 3) return base + 'bg-gradient-to-b from-[#514708] to-[#542A09] text-white';
+                return base + 'bg-[#C08C8C] text-white opacity-60';
+            }
+
+            function escHtml(s) {
+                return $('<div>').text(s).html();
+            }
+
+            function filterPageByStore(storeId) {
+                var url = new window.URL(window.location.href);
+
+                url.searchParams.set("clubId", storeId);
+
+                window.location.href = url.toString();
+
+            }
+
+            /* ---------- Live filters ---------- */
+            $('#storeSearch').on('input', renderClubList);
+            //$('#storeAreaFilter').on('change', renderClubList);
+            $('#storeAreaFilter').on('change', function () {
+                loadClubs($(this).val());
+            });
+
+            /* ---------- Top N toggle ---------- */
+            $(document).on('click', '.topn-btn', function () {
+                topN = parseInt($(this).data('topn'));
+
+                // Reset all buttons to inactive/transparent style
+                $('.topn-btn')
+                    .removeClass('bg-secondary-color-pink text-white')
+                    .addClass('text-[#18181B] bg-transparent');
+
+                // Apply active pink style to clicked button
+                $(this)
+                    .removeClass('text-[#18181B] bg-transparent')
+                    .addClass('bg-secondary-color-pink text-white');
+
+                $('#rankedClubTitle').text('Top ' + topN + '(\u30bf\u30c3\u30d7\u6570\u9806)'); // "タップ" in Unicode escape
+                loadClubs($('#storeAreaFilter').val());
+            });
         });
 
-        /* ---------- Top N toggle ---------- */
-        $(document).on('click', '.topn-btn', function () {
-            topN = parseInt($(this).data('topn'));
+        //on submit
+        function submitActivitySearch() {
+        var baseUrl = '@Url.Action("Index", "ConversionMetrixManagement")';
 
-            // Reset all buttons to inactive/transparent style
-            $('.topn-btn')
-                .removeClass('bg-secondary-color-pink text-white')
-                .addClass('text-[#18181B] bg-transparent');
-
-            // Apply active pink style to clicked button
-            $(this)
-                .removeClass('text-[#18181B] bg-transparent')
-                .addClass('bg-secondary-color-pink text-white');
-
-            $('#rankedClubTitle').text('Top ' + topN + '(\u30bf\u30c3\u30d7\u6570\u9806)'); // "タップ" in Unicode escape
-            loadClubs($('#storeAreaFilter').val());
-        });
-    });
-
-    //on submit
-    function submitActivitySearch() {
-    var baseUrl = '@Url.Action("Index", "ConversionMetrixManagement")';
-
-    var clubId = $("#CurrentClubId").val();
-    var searchFilter = $.trim(
-        $("#default-search-activity").val() || ""
-    );
-
-    var queryParams = [];
-
-    if (clubId) {
-        queryParams.push(
-            "clubId=" + encodeURIComponent(clubId)
+        var clubId = $("#CurrentClubId").val();
+        var searchFilter = $.trim(
+            $("#default-search-activity").val() || ""
         );
+
+        var queryParams = [];
+
+        if (clubId) {
+            queryParams.push(
+                "clubId=" + encodeURIComponent(clubId)
+            );
+        }
+
+        // Always preserve the second tab
+        queryParams.push("TabValue=02");
+
+        if (searchFilter) {
+            queryParams.push(
+                "SearchFilter=" + encodeURIComponent(searchFilter)
+            );
+        }
+
+        window.location.href =
+            baseUrl + "?" + queryParams.join("&");
     }
 
-    // Always preserve the second tab
-    queryParams.push("TabValue=02");
-
-    if (searchFilter) {
-        queryParams.push(
-            "SearchFilter=" + encodeURIComponent(searchFilter)
-        );
-    }
-
-    window.location.href =
-        baseUrl + "?" + queryParams.join("&");
-}
-
-$("#default-search-activity").on("keydown", function (event) {
-    if (event.key === "Enter" || event.keyCode === 13) {
-        event.preventDefault();
-        submitActivitySearch();
-    }
-});
-
-    $("#default-search-activity").on("keydown", function (e) {
-        if (e.key === "Enter") {
-            e.preventDefault();
+    $("#default-search-activity").on("keydown", function (event) {
+        if (event.key === "Enter" || event.keyCode === 13) {
+            event.preventDefault();
             submitActivitySearch();
         }
     });
-</script>*@
+
+        $("#default-search-activity").on("keydown", function (e) {
+            if (e.key === "Enter") {
+                e.preventDefault();
+                submitActivitySearch();
+            }
+        });
+    </script>*@
 
 <script>
     $(document).ready(function () {
-
+        debugger;
         window.selectedClubId = null;
 
         let tabValue = "@ViewBag.TabValue" ?? "";
         const clubId = '@ViewBag.clubId';
+        const actionType = '@ViewBag.ActionType';
+        const sourcePageType = '@ViewBag.SourcePageType';
+        const UserStatus = '@ViewBag.UserStatus';
 
         if (tabValue == "02") {
             $("#tab2Content").show();
@@ -372,7 +375,7 @@ $("#default-search-activity").on("keydown", function (event) {
             const total_data2 = @ViewBag.TotalActivityData;
             const start_index_val2 = @ViewBag.StartIndex2;
             let search_filter2 = $('#default-search-activity').val();
-            let URL2 = addQueryParam2("/ConversionMetrixManagement/Index?clubId=" + clubId,
+            let URL2 = addQueryParam2("/ConversionMetrixManagement/Index?clubId=" + clubId + "&&actionType=" + actionType + "&&sourcePageType=" + sourcePageType + "&&UserStatus" + UserStatus,
                 'SearchFilter', search_filter2, 'TabValue', '02');
 
             LoadPagination(page_size2, total_data2, start_index_val2, URL2,
@@ -432,7 +435,7 @@ $("#default-search-activity").on("keydown", function (event) {
             if (paramValue2 != null && paramValue2 != "") {
                 url += url.includes('?') ? `&${paramName2}=${paramValue2}` : `?${paramName2}=${paramValue2}`;
             }
-
+            debugger;
             return url;
         }
 

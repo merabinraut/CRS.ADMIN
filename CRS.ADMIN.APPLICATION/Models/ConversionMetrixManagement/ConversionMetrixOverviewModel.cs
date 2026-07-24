@@ -44,6 +44,7 @@ namespace CRS.ADMIN.APPLICATION.Models.ConversionMetrixManagement
         public string CustomerLocationJson { get; set; }
         public string ClubId { get; set; }
         public string ClubCode { get; set; }
+        public string HostCode { get; set; }
         public string TargetName { get; set; }
         public string UserStatus { get; set; }
         public string SourcePageType { get; set; }

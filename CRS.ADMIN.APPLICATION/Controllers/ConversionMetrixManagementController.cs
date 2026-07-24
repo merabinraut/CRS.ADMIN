@@ -156,6 +156,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 dbRequests.ClubId = decryptedClubId.ToString();
                 FromDate = FromDateMs;
                 ToDate = ToDateMs;
+     
 
                 var result = _service.GetActivityLogList(dbRequests);
 
@@ -184,6 +185,11 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             model.ActionType = actionType;
             model.SourcePageType = sourcePageType;
             model.UserStatus = userStatus;
+
+            ViewBag.ActionType = actionType;
+            ViewBag.SourcePageType = sourcePageType;
+            ViewBag.UserStatus = userStatus;
+
             model.clubId = Requests.ClubId;
             model.clubName = clubName;
             model.TabValue = TabValue;
