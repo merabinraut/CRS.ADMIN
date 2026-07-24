@@ -375,7 +375,7 @@
             const total_data2 = @ViewBag.TotalActivityData;
             const start_index_val2 = @ViewBag.StartIndex2;
             let search_filter2 = $('#default-search-activity').val();
-            let URL2 = addQueryParam2("/ConversionMetrixManagement/Index?clubId=" + clubId + "&&actionType=" + actionType + "&&sourcePageType=" + sourcePageType + "&&UserStatus" + UserStatus,
+            let URL2 = addQueryParam2("/ConversionMetrixManagement/Index?clubId=" + clubId + "&&actionType=" + actionType + "&&sourcePageType=" + sourcePageType + "&&UserStatus=" + UserStatus,
                 'SearchFilter', search_filter2, 'TabValue', '02');
 
             LoadPagination(page_size2, total_data2, start_index_val2, URL2,
