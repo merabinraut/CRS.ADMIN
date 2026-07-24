@@ -491,6 +491,7 @@
             var filtered = allClubs.filter(function (c) {
                 return !q ||
                     (c.clubName || '').toLowerCase().includes(q) ||
+                    (c.locationName || '').toLowerCase().includes(q) ||
                     (c.clubId || '').toLowerCase().includes(q);
             });
 
@@ -504,11 +505,17 @@
                     var sel = (c.clubId === selectedId)
                         ? 'bg-pink-50 ring-1 ring-pink-300 rounded-lg px-2'
                         : '';
+                        var locationName = c.area || "";
+                        var displayName = c.clubName || "";
+                        
+                        if (locationName) {
+                            displayName += " " + locationName + "";
+                        }
                     html += '<div class="club-item flex items-center gap-3 py-3 cursor-pointer ' + sel + '" '
-                        + 'data-id="' + c.clubId + '" data-name="' + escHtml(c.clubName) + '">'
+                        + 'data-id="' + c.clubId + '" data-name="' + escHtml(displayName) + '">'
                         + '<div class="' + badge + '">#' + rank + '</div>'
                         + '<div class="flex-1 min-w-0">'
-                        + '<p class="text-sm font-medium text-gray-800 truncate">' + escHtml(c.clubName) + '</p>'
+                        + '<p class="text-sm font-medium text-gray-800 truncate">' + escHtml(displayName) + '</p>'
                         + '<p class="text-xs text-gray-400">' + escHtml(c.clubCode) + '</p>'
                         + '</div>'
                         + '<span class="text-sm text-gray-500 whitespace-nowrap">'
