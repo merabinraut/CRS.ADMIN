@@ -16,9 +16,11 @@ namespace CRS.ADMIN.REPOSITORY.ConversionMetrixManagement
     public class ConversionMetrixRepository : IConversionMetrixRepository
     {
         private readonly AnalyticsDao _dao;
+        private readonly RepositoryDao _repositoryDao;
         public ConversionMetrixRepository()
         {
             _dao = new AnalyticsDao();
+            _repositoryDao = new RepositoryDao();
 
         }
 
@@ -424,9 +426,9 @@ namespace CRS.ADMIN.REPOSITORY.ConversionMetrixManagement
         {
             var response = new StorePerformanceCommon();
 
-            var sql = "EXEC [analytics].[sproc_admin_get_club_detail]";
+            var sql = "EXEC [dbo].[sproc_admin_get_club_detail]";
             sql += " @clubId=" + clubId;
-            var dbResponse = _dao.ExecuteDataRow(sql);
+            var dbResponse = _repositoryDao.ExecuteDataRow(sql);
             if (dbResponse != null)
             {
                 response.ClubId = _dao.ParseColumnValue(dbResponse, "clubId").ToString();
