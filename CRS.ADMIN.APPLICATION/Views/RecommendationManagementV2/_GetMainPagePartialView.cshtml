@@ -1,19 +1,12 @@
 ﻿@model CRS.ADMIN.APPLICATION.Models.RecommendationManagementV2.CommonRecommendationModel
 @{
-    ViewBag.Title = "Index";
-    Layout = "~/Views/Shared/_Layout.cshtml";
     string approved = "Approved";
     string pending = "Pending";
     string rejected = "Rejected";
 }
 <div class="px-8 py-4 flex flex-col gap-8">
     @Html.AntiForgeryToken()
-    <div class="flex justify-between items-center">
-        <div>
-            <div class="heading-title">@CRS.ADMIN.APPLICATION.Resources.Resource.Recommendation_Requests</div>
-            <div class="span-title-light-gray">@CRS.ADMIN.APPLICATION.Resources.Resource.RecommendationSupportMsg</div>
-        </div>
-    </div>
+
     <div class="overall-recommendation">
         <div class="payment-details flex gap-[45px]">
             <div class="payment-details-card w-[268px]">
@@ -37,13 +30,8 @@
                 <div class="text-2xl font-semibold mb-[30px]">
                     301
                 </div>
-
-                @*<hr class="bg-[#F4F4F4] mb-[12px]" />
-
-                    <div class="text-center text-xs cursor-pointer text-[#1C2434]">
-                        @CRS.ADMIN.APPLICATION.Resources.Resource.View_All <i class="las la-angle-right"></i>
-                    </div>*@
             </div>
+
             <div class="payment-details-card w-[268px] flex justify-between flex-col ">
                 <div>
                     <div class="title flex gap-[8px] mb-[12px] items-center">
@@ -69,12 +57,9 @@
                     </div>
                 </div>
                 <div>
-                    @*<hr class="bg-[#F4F4F4] mb-[12px]" />
-                        <div class="text-center text-xs cursor-pointer text-[#1C2434]">
-                            @CRS.ADMIN.APPLICATION.Resources.Resource.View_All <i class="las la-angle-right"></i>
-                        </div>*@
                 </div>
             </div>
+
             <div class="payment-details-card w-[268px] flex justify-between flex-col ">
                 <div>
                     <div class="title flex gap-[8px] mb-[12px] items-center">
@@ -100,13 +85,10 @@
                     </div>
                 </div>
                 <div>
-                    @*<hr class="bg-[#F4F4F4] mb-[12px]" />
 
-                        <div class="text-center text-xs cursor-pointer text-[#1C2434]">
-                            @CRS.ADMIN.APPLICATION.Resources.Resource.View_All <i class="las la-angle-right"></i>
-                        </div>*@
                 </div>
             </div>
+
             <div class="payment-details-card w-[268px] flex justify-between flex-col ">
                 <div>
                     <div class="title flex gap-[8px] mb-[12px] items-center">
@@ -132,16 +114,17 @@
                     </div>
                 </div>
                 <div>
-                    @*<hr class="bg-[#F4F4F4] mb-[12px]" />
-                        <div class="text-center text-xs cursor-pointer text-[#1C2434]">
-                            @CRS.ADMIN.APPLICATION.Resources.Resource.View_All<i class="las la-angle-right"></i>
-                        </div>*@
+
                 </div>
             </div>
         </div>
     </div>
+
     <div class="divider-common m-0 h-[1px]">
+
     </div>
+
+
     <div class="flex flex-col gap-4">
         <div class="">
             <div class="flex gap-[24px]" style="border-bottom: 1px solid #f4f4f4;">
@@ -158,7 +141,6 @@
         <div class="">
             <div class="bg-white">
                 <div id="tab1" class="tab-content-plane hidden">
-                    <!--Request tab here-->
                     <div class="flex justify-between mb-4">
                         <form>
                             <div class="relative input-search-wrapper">
@@ -177,244 +159,25 @@
                             <img src="/Content/assets_new/images/club/download-solid.svg" /> @CRS.ADMIN.APPLICATION.Resources.Resource.Export
                         </div>
                     </div>
-                    <div class="table-tab">
+                    <div class="table-tab-1">
                         <div class="px-[12px] py-[16px] flex justify-between entry-export-container">
-                            @*<div class="flex items-center select-entries">
-                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Show&nbsp;
-                                    <select id="countries" class="w-full select-entires " style="width: 100%; ">
-                                        <option value="5" selected>5</option>
-                                        <option value="10">10</option>
-                                        <option value="15">15</option>
-                                        <option value="20">100</option>
-                                    </select>&nbsp;@CRS.ADMIN.APPLICATION.Resources.Resource.Entries
-                                </div>*@
+
                         </div>
                         <div class="relative overflow-x-auto">
-                            <table class="w-full  text-left club-table">
-                                <thead class="club-table-thead">
-                                    <tr>
-                                        <th scope="col" class="p-[12px]">
-                                            <div class="flex">
-                                                S.N
-                                                <div class="relative pl-[5px]">
-                                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
-                                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
-                                                </div>
-                                            </div>
-                                        </th>
-                                        <th scope="col" class="p-[12px]">
-                                            <div class="flex">
-                                                @CRS.ADMIN.APPLICATION.Resources.Resource.Club_Profile
-                                                <div class="relative pl-[5px]">
-                                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
-                                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
-                                                </div>
-                                            </div>
-                                        </th>
-                                        <th scope="col" class="p-[12px]">
-                                            <div class="flex">
-                                                @CRS.ADMIN.APPLICATION.Resources.Resource.Location
-                                                <div class="relative pl-[5px]">
-                                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
-                                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
-                                                </div>
-                                            </div>
-                                        </th>
-                                        <th scope="col" class="p-[12px]">
-                                            <div class="flex">
-                                                @CRS.ADMIN.APPLICATION.Resources.Resource.Status
-                                                <div class="relative pl-[5px]">
-                                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
-                                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
-                                                </div>
-                                            </div>
-                                        </th>
-                                        <th scope="col" class="p-[12px]">
-                                            <div class="flex">
-                                                @CRS.ADMIN.APPLICATION.Resources.Resource.Requested_Date
-                                                <div class="relative pl-[5px]">
-                                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
-                                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
-                                                </div>
-                                            </div>
-                                        </th>
-                                        <th scope="col" class="p-[12px]">
-                                            <div class="flex">
-                                                @CRS.ADMIN.APPLICATION.Resources.Resource.Updated_Date
-                                                <div class="relative pl-[5px]">
-                                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
-                                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
-                                                </div>
-                                            </div>
-                                        </th>
-                                        <th scope="col" class="p-[12px]">
-                                            <div class="flex">
-                                                @CRS.ADMIN.APPLICATION.Resources.Resource.Display_Page
-                                                <div class="relative pl-[5px]">
-                                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
-                                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
-                                                </div>
-                                            </div>
-                                        </th>
-                                        <th scope="col" class="p-[12px]">
-                                            <div class="flex">
-                                                @CRS.ADMIN.APPLICATION.Resources.Resource.Action
-                                                <div class="relative pl-[5px]">
-                                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
-                                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
-                                                </div>
-                                            </div>
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @{
-                                        int sno1 = 1;
-                                        foreach (var item in Model.GetClubRecommendationrequestList)
-                                        {
-                                            <tr class="bg-white border-b ">
-                                                <td class="p-[12px]">
-                                                    @sno1
-                                                </td>
-                                                <td class="p-[12px]">
-                                                    <div class="round-image-text flex gap-[12px] w-max ">
-                                                        <img class="w-[32px] h-[32px] rounded-full" src="@item.ClubLogo" />
+                        @*<table>
 
-                                                        <div class="flex justify-between w-full">
-                                                            <div class="text-image grid flex-none">
-                                                                <div class="text-sm font-semibold text-[#101828] ">@item.ClubName</div>
-                                                                <div class="platinum ">@item.ClubCategory</div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td class="p-[12px]">
-                                                    <div class="w-max">
-                                                        @item.LocationName
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    @if (!string.IsNullOrEmpty(item.Status) && item.Status.Trim().ToUpper() == "APPROVED")
-                                                    {
-                                                        <div class="approved">
-                                                            @approved
-                                                        </div>
-                                                    }
-                                                    else if (!string.IsNullOrEmpty(item.Status) && item.Status.Trim().ToUpper() == "PENDING")
-                                                    {
-                                                        <div class="pending">
-                                                            @pending
-                                                        </div>
-                                                    }
-                                                    else
-                                                    {
-                                                        <div class="rejected">
-                                                            @rejected
-                                                        </div>
-                                                    }
-                                                </td>
-                                                <td class="p-[12px]">
-                                                    <div class="w-max">
-                                                        @item.RequestedDate
-                                                    </div>
-                                                </td>
-                                                <td class="p-[12px]">
-                                                    <div class="w-max">
-                                                        @item.UpdatedDate
-                                                    </div>
-                                                </td>
-                                                <td class="p-[12px]">
-                                                    <div class="w-max">
-                                                        @item.DisplayPage
-                                                    </div>
-                                                </td>
-                                                <td class="p-[12px]">
-                                                    <div class="flex gap-2 items-center">
-                                                        @{
-                                                            if (!string.IsNullOrEmpty(item.DisplayPage) && item.DisplayPage.Trim().ToUpper() == "MAIN PAGE")
-                                                            {
-                                                                if (!string.IsNullOrEmpty(item.Status) && item.Status.Trim().ToUpper() == "PENDING")
-                                                                {
-                                                                    <i class="fa-regular fa-pen-to-square text-[20px] text-[#989898] cursor-pointer" onclick="GotoMainPageRecommendationReqUpdate('@item.ClubId','@item.LocationId','@item.DisplayId','@item.RecommendationHoldId')"></i>
-                                                                    @*<i class="las la-window-close text-[24px] text-[#CB3F3F] cursor-pointer " data-modal-target="popup-modal-reject-mainpage" data-modal-toggle="popup-modal-reject-mainpage" alt="" onclick="rejectMainPage('@item.RecommendationHoldId','@item.ClubId','@item.DisplayId','@item.LocationId')"></i>
-                                                                        <img src="/Content/assets_new/images/check-square.svg"
-                                                                             data-modal-target="popup-modal-accept"
-                                                                             data-modal-toggle="popup-modal-accept" alt="" class="cursor-pointer" onclick="acceptMainPage('@item.RecommendationHoldId','@item.ClubId','@item.DisplayId','@item.LocationId')">*@
-                                                                }
-
-                                                            }
-                                                            else if (!string.IsNullOrEmpty(item.DisplayPage) && item.DisplayPage.Trim().ToUpper() == "SEARCH RESULT PAGE")
-                                                            {
-                                                                if (!string.IsNullOrEmpty(item.Status) && item.Status.Trim().ToUpper() == "PENDING")
-                                                                {
-                                                                    <i class="las la-window-close text-[24px] text-[#CB3F3F] cursor-pointer " data-modal-target="popup-modal-reject" data-modal-toggle="popup-modal-reject" alt="" onclick="rejectReq('@item.RecommendationHoldId','@item.ClubId','@item.DisplayId','@item.LocationId')"></i>
-                                                                    <img src="/Content/assets_new/images/check-square.svg"
-                                                                         data-modal-target="popup-modal-accept"
-                                                                         data-modal-toggle="popup-modal-accept" alt="" class="cursor-pointer" onclick="acceptReq('@item.RecommendationHoldId','@item.ClubId','@item.DisplayId','@item.LocationId')">
-
-                                                                }
-                                                            }
-                                                            else
-                                                            {
-                                                                if (!string.IsNullOrEmpty(item.Status) && item.Status.Trim().ToUpper() == "PENDING")
-                                                                {
-                                                                    <i class="las la-window-close text-[24px] text-[#CB3F3F] cursor-pointer " data-modal-target="popup-modal-reject" data-modal-toggle="popup-modal-reject" alt="" onclick="rejectReq('@item.RecommendationHoldId','@item.ClubId','@item.DisplayId','@item.LocationId')"></i>
-                                                                    <img src="/Content/assets_new/images/check-square.svg"
-                                                                         data-modal-target="popup-modal-accept"
-                                                                         data-modal-toggle="popup-modal-accept" alt="" class="cursor-pointer" onclick="acceptReq('@item.RecommendationHoldId','@item.ClubId','@item.DisplayId','@item.LocationId')">
-                                                                }
-                                                            }
-                                                        }
-
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            sno1++;
-                                        }
-                                    }
-                                </tbody>
-                            </table>
+                        </table>*@
                         </div>
                         <div class="pagination-club">
-                            @*<div class="show-entry"> @CRS.ADMIN.APPLICATION.Resources.Resource.Showing 1 to 5 of 301  @CRS.ADMIN.APPLICATION.Resources.Resource.Entries</div>
-                                <div class="flex gap-[12px]">
-                                    <div class="btn btn-secondary-box-shadow "> @CRS.ADMIN.APPLICATION.Resources.Resource.Previous</div>
-                                    <div class="flex gap-[12px]">
-                                        <div class="pagination-number active">
-                                            1
-                                        </div>
-                                        <div class="pagination-number">
-                                            2
-                                        </div>
-                                        <div class="pagination-number">
-                                            3
-                                        </div>
-                                        <div class="pagination-number">
-                                            ..
-                                        </div>
-                                        <div class="pagination-number">
-                                            10
-                                        </div>
-                                    </div>
-                                    <div class="btn btn-secondary-box-shadow "> @CRS.ADMIN.APPLICATION.Resources.Resource.Next</div>
-                                </div>*@
+
                         </div>
                     </div>
                 </div>
+
+
                 <div id="tab2" class="tab-content-plane  ">
                     <!--configure tab here-->
-                    <div class="table-tab">
-                        @*<div class="px-[12px] py-[16px] flex justify-between entry-export-container">
-                                <div class="flex items-center select-entries">
-                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Show&nbsp;
-                                    <select id="countries" class="w-full select-entires " style="width: 100%; ">
-                                        <option value="5" selected>5</option>
-                                        <option value="10">10</option>
-                                        <option value="15">15</option>
-                                        <option value="20">100</option>
-                                    </select>&nbsp; @CRS.ADMIN.APPLICATION.Resources.Resource.Entries
-                                </div>
-                            </div>*@
+                    <div class="table-tab-1">
                         <div class="relative overflow-x-auto">
                             <table class="w-full  text-left club-table">
                                 <thead class="club-table-thead">
@@ -448,7 +211,7 @@
                                         </th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                @*<tbody>
                                     @{
                                         int sno = 1;
                                         foreach (var item in Model.GetLocationList)
@@ -469,16 +232,16 @@
                                             sno++;
                                         }
                                     }
-                                </tbody>
+                                </tbody>*@
                             </table>
-                        </div>                    
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<!--accept pop up modal for search and home page recommendation request-->
+
 <div id="popup-modal-accept" tabindex="-1"
      class="fixed top-0 left-0 right-0 z-50 hidden p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
     <div class="relative w-full max-w-md max-h-full">
@@ -548,9 +311,11 @@
         </div>
     </div>
 </div>
-@section scripts{
+
+@section script{
     <script>
         function getActiveButtonValue() {
+            debugger;
             const activeButton = document.querySelector('.tab-link.active');
             const overallRecommendationDiv = document.querySelector('.overall-recommendation');
             if (activeButton) {
@@ -563,10 +328,10 @@
                 }
             }
         }
-
-        // Run the function when the page is loaded
         document.addEventListener('DOMContentLoaded', getActiveButtonValue);
     </script>
+
+
     <script>
         function GotoDisplayPageView(locationid) {
             window.location.href = "/RecommendationManagementV2/DisplayPageView?locationId=" + locationid;
@@ -623,4 +388,5 @@
             });
         }
     </script>
+
 }

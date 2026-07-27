@@ -1,0 +1,162 @@
+﻿
+@model CRS.ADMIN.APPLICATION.Models.RecommendationManagementV2.CommonRecommendationModel
+@{
+    ViewBag.Title = "IndexCopy";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    string approved = "Approved";
+    string pending = "Pending";
+    string rejected = "Rejected";
+
+    var _manageRecommendation = Model.addEditorPick as CRS.ADMIN.APPLICATION.Models.RecommendationManagementV2.AddEditorPick;
+
+}
+
+<div class="px-8 py-4">
+    @Html.AntiForgeryToken()
+    <div class="flex flex-col  gap-6">
+        <div class="flex justify-between items-center">
+            <div>
+                <div class="heading-title">@CRS.ADMIN.APPLICATION.Resources.Resource.Recommendation_Requests</div>
+                <div class="span-title-light-gray">@CRS.ADMIN.APPLICATION.Resources.Resource.RecommendationSupportMsg</div>
+            </div>
+        </div>
+
+        <div id="tab1" class="tab-content-plane ">
+            <div class="flex flex-col gap-8">
+                <div id="tab1" class="tab-content">
+                    <div class="flex gap-4 mb-8 border-b ">
+
+                        <div id="tabMainLink" class="styleCss px-1 pb-4 cursor-pointer active" onclick="changeTabV1('all', 'tabMainLink')">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Main_Page
+                        </div>
+
+                        <div id="tabEditorLink" class="styleCss px-1 pb-4 cursor-pointer" onclick="changeTabV1('request1','tabEditorLink')">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Editors_Pick
+                        </div>
+                    </div>
+                    <div class="flex justify-between pb-[24px]">
+
+                    </div>
+
+                    <div class="pane active table-tab" id="all">
+                        @if (!string.IsNullOrEmpty(Convert.ToString(Model.GetClubRecommendationrequestList)))
+                        {
+                            @Html.Partial("_GetMainPagePartialView", Model)
+                        }
+                    </div>
+                    <div class="pane" id="request1" style="display: none;">
+                        bcd
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="flex justify-between pb-[24px]">
+
+
+</div>
+
+<script>
+          $(document).ready(function () {
+          $('select').select2({
+              minimumResultsForSearch: Infinity
+          })
+          var PopUpRenderValue = '@ViewBag.PopUpRenderValue';
+          var PopUpClubManageValue = '@ViewBag.PopUpClubManageValue';
+          if (PopUpRenderValue != null && PopUpRenderValue != "" && PopUpRenderValue == "Manage") {
+              var element = document.getElementById('add-new-host-club');
+              element.classList.remove('translate-x-full');
+              }
+          else if (PopUpClubManageValue == "ManageClubPlan") {
+              element1 = document.getElementById('add-manage-club-own-plan');
+              element1.classList.remove('translate-x-full');
+          }
+              let tabValue = "@ViewBag.TabValue" ?? "";
+              if (tabValue === "02") {
+                  const link1 = document.getElementById('tabMainLink');
+                  const link2 = document.getElementById('tabEditorLink');
+                  link1.style.color = '';
+                  link1.style.borderBottom = '';
+                  link2.style.color = '#D75A8B';
+                  link2.style.borderBottom = '#D75A8B 2px solid';
+                  document.getElementById('request1').style.display = 'block';
+                  document.getElementById('all').style.display = 'none';
+
+              }
+              else {
+                  const link1 = document.getElementById('tabMainLink');
+                  const link2 = document.getElementById('tabEditorLink');
+                  link1.style.color = '#D75A8B';
+                  link1.style.borderBottom = '#D75A8B 2px solid';
+                  link2.style.color = '';
+                  link2.style.borderBottom = '';
+                  document.getElementById('request1').style.display = 'none';
+                  document.getElementById('all').style.display = 'block';
+
+              }
+      });
+</script>
+
+
+<script>
+
+    document.getElementById('tabMainLink').style.color = '#D75A8B';
+    document.getElementById('tabMainLink').style.borderBottom = '#D75A8B 2px solid';
+
+    function changeTabV1(selectedTabId, selectedLinkId) {
+        const tabLinks = document.querySelectorAll('.styleCss');
+        const tabContents = document.querySelectorAll('.pane');
+        tabLinks.forEach(link => {
+            if (link.id === selectedLinkId) {
+                link.classList.add('active');
+            } else {
+                link.classList.remove('active');
+            }
+        });
+
+        tabContents.forEach(content => {
+            if (content.id === selectedTabId) {
+                content.style.display = 'block';
+            } else {
+                content.style.display = 'none';
+            }
+        });
+        if (selectedLinkId === 'tabMainLink') {
+            const link1 = document.getElementById('tabMainLink');
+            const link2 = document.getElementById('tabEditorLink');
+            link1.style.color = '#D75A8B';
+            link1.style.borderBottom = '#D75A8B 2px solid';
+            link2.style.color = '';
+            link2.style.borderBottom = '';
+            let URL2 = "/RecommendationManagementV2/IndexCopy";
+            let search_filter2 = $('#default-search-plan_list').val();
+            URL = addQueryParam3(URL2, 'TabValue', '', 'SearchFilter', search_filter2);
+            window.location.href = URL
+        }
+        else if (selectedLinkId === 'tabEditorLink') {
+            const link1 = document.getElementById('tabMainLink');
+            const link2 = document.getElementById('tabEditorLink');
+            link1.style.color = '';
+            link1.style.borderBottom = '';
+            link2.style.color = '#D75A8B';
+            link2.style.borderBottom = '#D75A8B 2px solid';
+            let URL2 = "/RecommendationManagementV2/IndexCopy";
+            let search_filter2 = $('#default-search-plan-request').val();
+            URL = addQueryParam3(URL2, 'TabValue', '02', 'SearchFilter', search_filter2);
+            window.location.href = URL
+        }
+    }
+    function addQueryParam3(url, paramName, paramValue, paramName2, paramValue2) {
+        if (paramValue != null && paramValue != "") {
+            url += url.includes('?') ? `&${paramName}=${paramValue}` : `?${paramName}=${paramValue}`;
+        }
+        if (paramValue2 != null && paramValue2 != "") {
+            url += url.includes('?') ? `&${paramName2}=${paramValue2}` : `?${paramName2}=${paramValue2}`;
+        }
+
+        return url;
+    }
+</script>

@@ -167,5 +167,28 @@ namespace CRS.ADMIN.BUSINESS.RecommendationManagement_V2
         {
             return _repo.RemoveMainPageSingleHostRecommendationReq(recommendationHoldId, clubId, recommendationHoldHostId, commonRequest);
         }
+
+        #region "Editor's Pick"
+        public List<RecommendationEditorPickResponseListModelCommon> GetEditorPickList(string locationId = "", string SearchFilter = "", int pageNo = 1, int pageSize = 10) //, int pageNo = 1, int pageSize = 10
+        {
+            return _repo.GetEditorPickList(locationId, SearchFilter, pageNo, pageSize); //, pageNo, pageSize
+        }
+
+        public ManageEditorPickCommon GetEditorPickDetail(string editorPickId = "", string locationId = "")
+        {
+            return _repo.GetEditorPickDetail(editorPickId, locationId);
+        }
+
+        public CommonDbResponse ManageEditorPick(ManageEditorPickCommon commonModel)
+        {
+            return _repo.ManageEditorPick(commonModel);
+        }
+
+        public CommonDbResponse DeleteEditorPick(string editorPickId, Common commonRequest)
+        {
+            return _repo.DeleteEditorPick(editorPickId, commonRequest);
+        }
+        #endregion
+
     }
 }

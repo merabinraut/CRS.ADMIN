@@ -187,6 +187,26 @@ namespace CRS.ADMIN.APPLICATION.Resources
                 return ResourceManager.GetString("ActionSource_ByPage", resourceCulture);
             }
         }
+        /// <summary>
+        ///   Looks up a localized string similar to Add.
+        /// </summary>
+        public static string Add
+        {
+            get
+            {
+                return ResourceManager.GetString("Add", resourceCulture);
+            }
+        }
+        /// <summary>
+        ///   Looks up a localized string similar to Add Editor&apos;s Pick.
+        /// </summary>
+        public static string Add_Editor
+        {
+            get
+            {
+                return ResourceManager.GetString("Add_Editor", resourceCulture);
+            }
+        }
 
         /// <summary>
         ///   Looks up a localized string similar to Add Group.
@@ -209,6 +229,7 @@ namespace CRS.ADMIN.APPLICATION.Resources
                 return ResourceManager.GetString("Add New", resourceCulture);
             }
         }
+
 
         /// <summary>
         ///   Looks up a localized string similar to Additional Field.
@@ -2698,6 +2719,28 @@ namespace CRS.ADMIN.APPLICATION.Resources
         }
 
         /// <summary>
+        ///   Looks up a localized string similar to Tags.
+        /// </summary>
+        public static string Editor_Tags
+        {
+            get
+            {
+                return ResourceManager.GetString("Editor_Tags", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Editor&apos;s Pick.
+        /// </summary>
+        public static string Editors_Pick
+        {
+            get
+            {
+                return ResourceManager.GetString("Editors_Pick", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   Looks up a localized string similar to Email.
         /// </summary>
         public static string Email
@@ -2881,6 +2924,17 @@ namespace CRS.ADMIN.APPLICATION.Resources
             get
             {
                 return ResourceManager.GetString("Enter Street", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Enter a tag and press Enter..
+        /// </summary>
+        public static string Enter_Tag
+        {
+            get
+            {
+                return ResourceManager.GetString("Enter_Tag", resourceCulture);
             }
         }
 
@@ -3100,6 +3154,17 @@ namespace CRS.ADMIN.APPLICATION.Resources
             get
             {
                 return ResourceManager.GetString("Firstname Placeholder", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Free-text tag.
+        /// </summary>
+        public static string Free_Tag
+        {
+            get
+            {
+                return ResourceManager.GetString("Free_Tag", resourceCulture);
             }
         }
 
@@ -4279,6 +4344,17 @@ namespace CRS.ADMIN.APPLICATION.Resources
         }
 
         /// <summary>
+        ///   Looks up a localized string similar to Main Page.
+        /// </summary>
+        public static string Main_Page
+        {
+            get
+            {
+                return ResourceManager.GetString("Main_Page", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   Looks up a localized string similar to Male.
         /// </summary>
         public static string Male
@@ -4451,6 +4527,16 @@ namespace CRS.ADMIN.APPLICATION.Resources
             get
             {
                 return ResourceManager.GetString("Manage Commissions Type", resourceCulture);
+            }
+        }
+        /// <summary>
+        ///   Looks up a localized string similar to Manage Editor’s Pick Info.
+        /// </summary>
+        public static string Manage_Editor
+        {
+            get
+            {
+                return ResourceManager.GetString("Manage_Editor", resourceCulture);
             }
         }
 
@@ -6383,6 +6469,18 @@ namespace CRS.ADMIN.APPLICATION.Resources
                 return ResourceManager.GetString("Ratings By", resourceCulture);
             }
         }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Reason for recommendation.
+        /// </summary>
+        public static string Reason_Recommendation
+        {
+            get
+            {
+                return ResourceManager.GetString("Reason_Recommendation", resourceCulture);
+            }
+        }
+
 
         /// <summary>
         ///   Looks up a localized string similar to Received.
@@ -8747,5 +8845,10 @@ namespace CRS.ADMIN.APPLICATION.Resources
                 return ResourceManager.GetString("Yes", resourceCulture);
             }
         }
+
+        
+
+        
+
     }
 }

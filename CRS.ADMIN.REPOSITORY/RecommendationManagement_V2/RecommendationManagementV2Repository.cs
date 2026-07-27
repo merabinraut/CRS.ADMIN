@@ -657,5 +657,89 @@ namespace CRS.ADMIN.REPOSITORY.RecommendationManagement_V2
             return _dao.ParseCommonDbResponse(sp_name);
         }
         #endregion
+
+        #region "Editor's Pick"
+        public List<RecommendationEditorPickResponseListModelCommon> GetEditorPickList(string locationId = "", string SearchFilter = "", int pageNo = 1, int pageSize = 10) //, int pageNo = 1, int pageSize = 10
+        {
+            List<RecommendationEditorPickResponseListModelCommon> responseInfo = new List<RecommendationEditorPickResponseListModelCommon>();
+            string sp_name = "EXEC sproc_admin_recommendation_editor_pick_get"; 
+            sp_name += !string.IsNullOrEmpty(locationId) ? " @LocationId=" + _dao.FilterString(locationId) : null;
+            sp_name += !string.IsNullOrEmpty(SearchFilter) ? ",@SearchFilter=" + _dao.FilterString(SearchFilter) : null;
+            //sp_name += ",@PageNo=" + pageNo;
+            //sp_name += ",@PageSize=" + pageSize;
+            var dbResponseInfo = _dao.ExecuteDataTable(sp_name);
+            if (dbResponseInfo != null)
+            {
+                foreach (DataRow row in dbResponseInfo.Rows)
+                {
+                    responseInfo.Add(new RecommendationEditorPickResponseListModelCommon()
+                    {
+                        EditorPickId = row["editorPickSno"].ToString(),
+                        ClubId = row["ClubId"].ToString(),
+                        LocationId = row["LocationId"].ToString(),
+                        Description = row["Description"].ToString(),
+                        Tags = row["Tags"].ToString(),
+                        UpdatedDate = row["UpdatedDate"].ToString()
+                    });
+                }
+            }
+            return responseInfo;
+        }
+
+        public ManageEditorPickCommon GetEditorPickDetail(string editorPickId = "", string locationId = "")
+        {
+            string sp_name = "EXEC sproc_admin_recommendation_editor_pick_get"; 
+            sp_name += !string.IsNullOrEmpty(editorPickId) ? ",@editorPickId=" + _dao.FilterString(editorPickId) : null;
+            sp_name += !string.IsNullOrEmpty(locationId) ? ",@LocationId=" + _dao.FilterString(locationId) : null;
+            var dbResponse = _dao.ExecuteDataRow(sp_name);
+            if (dbResponse != null)
+            {
+                return new ManageEditorPickCommon()
+                {
+                    EditorPickId = _dao.ParseColumnValue(dbResponse, "editorPickSno").ToString(),
+                    ClubId = _dao.ParseColumnValue(dbResponse, "ClubId").ToString(),
+                    LocationId = _dao.ParseColumnValue(dbResponse, "LocationId").ToString(),
+                    Description = _dao.ParseColumnValue(dbResponse, "Description").ToString(),
+                    FreeTextTag = _dao.ParseColumnValue(dbResponse, "Tags").ToString(),
+                };
+            }
+            return new ManageEditorPickCommon();
+        }
+
+        public CommonDbResponse ManageEditorPick(ManageEditorPickCommon commonModel)
+        {
+            string sp_name = "";
+            if (string.IsNullOrEmpty(commonModel.EditorPickId))
+            {
+                sp_name = "EXEC sproc_admin_recommendation_editor_pick_create";
+                
+            }
+            else
+            {
+                sp_name = "EXEC sproc_admin_recommendation_editor_pick_update"; 
+                sp_name += " @editorPickId=" + _dao.FilterParameter(commonModel.EditorPickId);
+            }
+            sp_name += " @locationId=" + _dao.FilterString(commonModel.LocationId);
+            sp_name += ",@clubId=" + _dao.FilterString(commonModel.ClubId);
+            sp_name += ",@description=" + _dao.FilterString(commonModel.Description);
+            sp_name += ",@tags=" + _dao.FilterString(commonModel.FreeTextTag);
+            sp_name += ",@ActionUser=" + _dao.FilterString(commonModel.ActionUser);
+            sp_name += ",@ActionIp=" + _dao.FilterString(commonModel.ActionIP);
+            return _dao.ParseCommonDbResponse(sp_name);
+        }
+
+        public CommonDbResponse DeleteEditorPick(string editorPickId, Common commonRequest)
+        {
+            string sp_name = "EXEC sproc_admin_recommendation_editor_pick_delete"; // delete editor pick
+            sp_name += " @editorPickId=" + _dao.FilterString(editorPickId);
+            sp_name += ",@ActionUser=" + _dao.FilterString(commonRequest.ActionUser);
+            sp_name += ",@ActionIp=" + _dao.FilterString(commonRequest.ActionIP);
+            return _dao.ParseCommonDbResponse(sp_name);
+        }
+        #endregion
+
+
+
+
     }
 }

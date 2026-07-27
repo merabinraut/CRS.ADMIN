@@ -3174,4 +3174,28 @@
   <data name="Search_By_StoreName" xml:space="preserve">
     <value>店舗名で検索</value>
   </data>
+  <data name="Main_Page" xml:space="preserve">
+    <value>メインページ</value>
+  </data>
+  <data name="Editors_Pick" xml:space="preserve">
+    <value>編集者のおすすめ </value>
+  </data>
+  <data name="Add_Editor" xml:space="preserve">
+    <value>編集者のおすすめを追加</value>
+  </data>
+  <data name="Reason_Recommendation" xml:space="preserve">
+    <value>推薦の理由</value>
+  </data>
+  <data name="Free_Tag" xml:space="preserve">
+    <value>フリーワードタグ</value>
+  </data>
+  <data name="Manage_Editor" xml:space="preserve">
+    <value>編集者のお気に入り情報を管理する</value>
+  </data>
+  <data name="Enter_Tag" xml:space="preserve">
+    <value>タグを入力してEnter</value>
+  </data>
+  <data name="Editor_Tags" xml:space="preserve">
+    <value>フリーワードタグ</value>
+  </data>
 </root>

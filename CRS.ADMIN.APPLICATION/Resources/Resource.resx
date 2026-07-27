@@ -3230,4 +3230,36 @@
   <data name="Search_By_StoreName" xml:space="preserve">
     <value>Search</value>
   </data>
+  <data name="Main_Page" xml:space="preserve">
+    <value>Main Page</value>
+    <comment> Main Page</comment>
+  </data>
+  <data name="Editors_Pick" xml:space="preserve">
+    <value>Editor's Pick</value>
+    <comment>Editor's Pick</comment>
+  </data>
+  <data name="Add_Editor" xml:space="preserve">
+    <value>Add Editor's Pick</value>
+    <comment>Add Editor's Pick</comment>
+  </data>
+  <data name="Reason_Recommendation" xml:space="preserve">
+    <value>Reason for recommendation</value>
+    <comment>Reason for recommendation</comment>
+  </data>
+  <data name="Free_Tag" xml:space="preserve">
+    <value>Free-text tag</value>
+    <comment>Free-text tag</comment>
+  </data>
+  <data name="Manage_Editor" xml:space="preserve">
+    <value>Manage Editor’s Pick Info</value>
+    <comment>Manage Editor’s Pick Info</comment>
+  </data>
+  <data name="Enter_Tag" xml:space="preserve">
+    <value>Enter a tag and press Enter.</value>
+    <comment>Enter a tag and press Enter.</comment>
+  </data>
+  <data name="Editor_Tags" xml:space="preserve">
+    <value>Tags</value>
+    <comment>Tags</comment>
+  </data>
 </root>

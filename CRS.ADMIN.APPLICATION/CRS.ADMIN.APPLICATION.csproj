@@ -2850,6 +2850,10 @@
     <Content Include="Views\StaticDataManagement\StaticDataIndex.cshtml" />
     <Content Include="Views\StaticDataManagement\_ManageStaticData.cshtml" />
     <Content Include="Views\StaticDataManagement\_ManageStaticDataType.cshtml" />
+    <Content Include="Views\RecommendationManagementV2\IndexCopy.cshtml" />
+    <Content Include="Views\RecommendationManagementV2\_ManageEditorPick.cshtml" />
+    <Content Include="Views\RecommendationManagementV2\IndexCopyV2.cshtml" />
+    <Content Include="Views\RecommendationManagementV2\_GetMainPagePartialView.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
