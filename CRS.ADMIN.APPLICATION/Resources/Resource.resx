@@ -3262,4 +3262,19 @@
     <value>Tags</value>
     <comment>Tags</comment>
   </data>
+  <data name="Select_Area" xml:space="preserve">
+    <value>Select Area</value>
+  </data>
+  <data name="User_Agent" xml:space="preserve">
+    <value>User Agent</value>
+  </data>
+  <data name="Total_number_of_clicks" xml:space="preserve">
+    <value>Total Clicks</value>
+  </data>
+  <data name="Phone" xml:space="preserve">
+    <value>Phone</value>
+  </data>
+  <data name="Reservation" xml:space="preserve">
+    <value>Reservation</value>
+  </data>
 </root>

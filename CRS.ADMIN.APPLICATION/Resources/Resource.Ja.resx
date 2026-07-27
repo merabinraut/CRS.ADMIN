@@ -1736,7 +1736,7 @@
     <comment>Roles &amp; Privileges</comment>
   </data>
   <data name="Next" xml:space="preserve">
-    <value>次</value>
+    <value>次へ</value>
   </data>
   <data name="Nickname" xml:space="preserve">
     <value>ニックネーム</value>
@@ -3070,7 +3070,7 @@
     <value>電話クリック数</value>
   </data>
   <data name="Average_CTR" xml:space="preserve">
-    <value>平均クリック率</value>
+    <value>平均クリック率 (CTR)</value>
   </data>
   <data name="All_Stores" xml:space="preserve">
     <value>全店舗</value>
@@ -3121,7 +3121,7 @@
     <value>対象名 (店舗/キャスト)</value>
   </data>
   <data name="Select_Store" xml:space="preserve">
-    <value>ストアを選択</value>
+    <value>店舗を選択</value>
   </data>
   <data name="Area" xml:space="preserve">
     <value>エリア</value>
@@ -3197,5 +3197,20 @@
   </data>
   <data name="Editor_Tags" xml:space="preserve">
     <value>フリーワードタグ</value>
+  </data>
+  <data name="Select_Area" xml:space="preserve">
+    <value>エリアを選択</value>
+  </data>
+  <data name="User_Agent" xml:space="preserve">
+    <value>ブラウザ</value>
+  </data>
+  <data name="Total_number_of_clicks" xml:space="preserve">
+    <value>合計クリック数</value>
+  </data>
+  <data name="Phone" xml:space="preserve">
+    <value>電話</value>
+  </data>
+  <data name="Reservation" xml:space="preserve">
+    <value>予約</value>
   </data>
 </root>

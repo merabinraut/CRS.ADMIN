@@ -26,19 +26,16 @@
                     <i class="las la-search absolute left-3 top-1/2 -translate-y-1/2
                text-gray-400 text-[18px]"></i>
                     <input id="storeSearch" type="text"
-                           placeholder="@CRS.ADMIN.APPLICATION.Resources.Resource.Search_Club"
+                           placeholder="@CRS.ADMIN.APPLICATION.Resources.Resource.Search_By_StoreName"
                            class="w-full border border-gray-200 rounded-lg py-2 pl-9 pr-3
                   text-sm focus:outline-none focus:ring-2 focus:ring-pink-400" />
                 </div>
                 <!-- Area Filter -->
                 <div class="flex items-center gap-2 min-w-[180px]">
-                    <label class="text-sm text-gray-500 whitespace-nowrap">
-                        @CRS.ADMIN.APPLICATION.Resources.Resource.Area
-                    </label>
                     <select id="storeAreaFilter"
                             class="flex-1 border border-gray-200 rounded-lg px-3 py-2
                text-sm focus:outline-none focus:ring-2 focus:ring-pink-400">
-                        <option value="">@CRS.ADMIN.APPLICATION.Resources.Resource.All</option>
+                        <option value="">@CRS.ADMIN.APPLICATION.Resources.Resource.Select_Area</option>
                         @if (ViewBag.LocationList != null)
                         {
                             foreach (var location in ViewBag.LocationList as IEnumerable<SelectListItem>)
@@ -50,27 +47,32 @@
                 </div>
             </div>
             <div class="mt-4">
-                <div class="flex border border-gray-200 rounded-lg overflow-hidden w-[240px]">
+                <div class="inline-flex items-center bg-white border border-gray-100 rounded-lg p-1 gap-1">
+
                     <button type="button" data-topn="10"
-                            class="topn-btn flex py-2 px-4 text-sm font-medium
-                bg-secondary-color-pink text-white hover:bg-gray-50">
+                            class="topn-btn py-1.5 px-4 text-sm font-medium rounded-[6px] transition-all duration-150
+                bg-secondary-color-pink text-white text-center">
                         Top 10
                     </button>
+
                     <button type="button" data-topn="50"
-                            class="topn-btn flex py-2 px-4 text-sm text-gray-500
-                border-l border-gray-200 hover:bg-gray-50">
+                            class="topn-btn py-1.5 px-4 text-sm font-medium rounded-[6px] transition-all duration-150
+                text-[#18181B] text-center bg-transparent">
                         Top 50
                     </button>
+
                     <button type="button" data-topn="100"
-                            class="topn-btn flex py-2 px-4 text-sm text-gray-500
-                border-l border-gray-200 hover:bg-gray-50">
+                            class="topn-btn py-1.5 px-4 text-sm font-medium rounded-[6px] transition-all duration-150
+                text-[#18181B] text-center bg-transparent">
                         Top 100
                     </button>
+
                 </div>
             </div>
+
             <div class="mt-4 ml-2">
                 <h2 class="text-xs text-gray-400 uppercase tracking-wide mb-3">
-                    <span id="rankedClubTitle">Top 10</span>
+                    <span id="rankedClubTitle">Top 10 (タップ数順)</span>
                 </h2>
                 <div id="storeClubList" class="flex flex-col divide-y divide-gray-100"></div>
             </div>
