@@ -280,7 +280,7 @@
 
                             <td class="p-[12px] border-b border-gray-100">
                                 <div class="flex flex-col gap-1">
-                                    <span class="text-[14px] font-medium text-gray-900">@item.SourcePage</span>
+                                    <span class="text-[14px] font-medium text-gray-900"> @(item.SourcePage.ToUpper() == "STORE PAGE" ? "店舗ページ" : item.SourcePage.ToUpper() == "HOST DETAIL PAGE" ? "ホスト詳細" : "")</span>
                                     <span class="text-[12px] text-gray-500">ID:   @(item.SourcePage.ToUpper() == "STORE PAGE" ? item.ClubCode : item.HostCode)</span>
                                 </div>
                             </td>
@@ -310,17 +310,15 @@
                                     }
                                 </td>*@
 
-                        <td class="p-[12px]">
-                            @(item.SourcePage.ToUpper() == "STORE PAGE"? $"{item.TargetName} ({item.Prefecture})": item.TargetName)
+                            <td class="p-[12px]">
+                                @(item.SourcePage.ToUpper() == "STORE PAGE"? $"{item.TargetName} ({item.Prefecture})": item.TargetName)
+                                @*@item.TargetName
 
-
-                            @*@item.TargetName
-
-                            @if (!string.IsNullOrEmpty(item.Prefecture))
-                            {
-                                <span>(@item.Prefecture)</span>
-                            }*@
-                        </td>
+                                    @if (!string.IsNullOrEmpty(item.Prefecture))
+                                    {
+                                        <span>(@item.Prefecture)</span>
+                                    }*@
+                            </td>
 
                             <td class="p-[12px] text-center border-b border-gray-100">
                                 <div class="flex flex-col items-center justify-center gap-1">
