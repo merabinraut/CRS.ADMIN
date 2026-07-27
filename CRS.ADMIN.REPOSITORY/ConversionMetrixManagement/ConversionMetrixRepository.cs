@@ -16,10 +16,11 @@ namespace CRS.ADMIN.REPOSITORY.ConversionMetrixManagement
     public class ConversionMetrixRepository : IConversionMetrixRepository
     {
         private readonly AnalyticsDao _dao;
+        private readonly RepositoryDao _repositoryDao;
         public ConversionMetrixRepository()
         {
             _dao = new AnalyticsDao();
-
+            _repositoryDao = new RepositoryDao();
         }
 
         #region Conversion Summary
@@ -84,6 +85,7 @@ namespace CRS.ADMIN.REPOSITORY.ConversionMetrixManagement
                             ClubId = SafeLong(_dao.ParseColumnValue(item, "clubId")) ?? 0,
                             ClubCode = _dao.ParseColumnValue(item, "clubCode")?.ToString(),
                             ClubName = _dao.ParseColumnValue(item, "clubName")?.ToString(),
+                            ClubNameJp = _dao.ParseColumnValue(item, "clubNameJp")?.ToString(),
                             LocationId = SafeLong(_dao.ParseColumnValue(item, "locationId")),
                             LocationName = _dao.ParseColumnValue(item, "LocationName")?.ToString(),
                             ReservationClickCount = SafeInt(_dao.ParseColumnValue(item, "reservationClickCount")),
@@ -170,7 +172,7 @@ namespace CRS.ADMIN.REPOSITORY.ConversionMetrixManagement
                     + $",@toDateMs={(string.IsNullOrEmpty(request.ToDate) ? "NULL" : $"'{_dao.FilterString(request.ToDate)}'")}"
                     + $",@pageNo={request.Skip}"
                     + $",@pageSize={request.Take}";
-                    //+ $",@timeZoneOffsetValue={(string.IsNullOrEmpty(timeZoneOffsetValue) ? "NULL" : $"'{_dao.FilterString(timeZoneOffsetValue)}'")}";
+                //+ $",@timeZoneOffsetValue={(string.IsNullOrEmpty(timeZoneOffsetValue) ? "NULL" : $"'{_dao.FilterString(timeZoneOffsetValue)}'")}";
 
                 var dbResponse = _dao.ExecuteDataTable(sql);
                 if (dbResponse != null)
@@ -182,7 +184,9 @@ namespace CRS.ADMIN.REPOSITORY.ConversionMetrixManagement
                             SNO = SafeInt(_dao.ParseColumnValue(item, "sn")),
                             ClubId = SafeLong(_dao.ParseColumnValue(item, "clubId")),
                             ClubCode = _dao.ParseColumnValue(item, "clubCode")?.ToString(),
+                            HostCode = _dao.ParseColumnValue(item, "hostCode")?.ToString(),
                             ActivityId = _dao.ParseColumnValue(item, "activityId")?.ToString(),
+                            CustomerlocationJson = _dao.ParseColumnValue(item, "customerLocationJson")?.ToString(),
                             ClubName = _dao.ParseColumnValue(item, "clubName")?.ToString(),
                             ActionType = _dao.ParseColumnValue(item, "actionType")?.ToString(),
                             SourcePage = _dao.ParseColumnValue(item, "sourcePage")?.ToString(),
@@ -233,6 +237,7 @@ namespace CRS.ADMIN.REPOSITORY.ConversionMetrixManagement
                         {
                             ClubId = SafeLong(_dao.ParseColumnValue(item, "clubId"))?.ToString(),
                             StoreName = _dao.ParseColumnValue(item, "clubName")?.ToString(),
+                            LocationName = _dao.ParseColumnValue(item, "LocationName")?.ToString(),
                             BookingStorePage = SafeInt(_dao.ParseColumnValue(item, "reservationStore")),
                             BookingHostDetails = SafeInt(_dao.ParseColumnValue(item, "hostDetail")),
                             PhoneStorePage = SafeInt(_dao.ParseColumnValue(item, "phoneStore")),
@@ -313,7 +318,8 @@ namespace CRS.ADMIN.REPOSITORY.ConversionMetrixManagement
             var response = new List<LocationCommon>();
             try
             {
-                var sql = "SELECT LocationId, LocationName FROM [hoslog.local].[dbo].[tbl_location] WHERE Status = 'A' ORDER BY LocationName";
+                var environment = ConfigurationManager.AppSettings["DBEnvironmentConversionMetrix"];
+                var sql = $"SELECT LocationId, LocationName FROM [{environment}].[dbo].[tbl_location] WHERE Status = 'A' ORDER BY LocationName";
                 var dt = ExecuteDataSetFirstTable(sql);
                 if (dt != null)
                 {
@@ -334,7 +340,8 @@ namespace CRS.ADMIN.REPOSITORY.ConversionMetrixManagement
         {
             if (string.IsNullOrEmpty(clubCode)) return null;
 
-            var lookupSql = "SELECT AgentId FROM [hoslog.local].[dbo].[tbl_club_details]"
+            var environment = ConfigurationManager.AppSettings["DBEnvironmentConversionMetrix"];
+            var lookupSql = $"SELECT AgentId FROM [{environment}].[dbo].[tbl_club_details]"
                 + $" WHERE clubCode = '{_dao.FilterString(clubCode)}'";
 
             var lookupRow = _dao.ExecuteDataRow(lookupSql);
@@ -404,16 +411,34 @@ namespace CRS.ADMIN.REPOSITORY.ConversionMetrixManagement
                         Sno = SafeInt(_dao.ParseColumnValue(item, "Sno")),
                         ClubId = SafeLong(_dao.ParseColumnValue(item, "clubId"))?.ToString(),
                         StoreName = _dao.ParseColumnValue(item, "clubName")?.ToString(),
+                        LocationName = _dao.ParseColumnValue(item, "LocationName")?.ToString(),
                         BookingStorePage = SafeInt(_dao.ParseColumnValue(item, "reservationStore")),
                         BookingHostDetails = SafeInt(_dao.ParseColumnValue(item, "hostDetail")),
                         PhoneStorePage = SafeInt(_dao.ParseColumnValue(item, "phoneStore")),
                         PhoneHostDetails = SafeInt(_dao.ParseColumnValue(item, "phoneHost")),
                         TotalClicks = SafeInt(_dao.ParseColumnValue(item, "totalCount")),
-                        TotalRecords = SafeInt(_dao.ParseColumnValue(item, "totalRecords"))
+                        TotalRecords = SafeInt(_dao.ParseColumnValue(item, "totalRecords")),
                     });
                 }
             }
             return response;
+        }
+
+        public StorePerformanceCommon GetClubName(string clubId)
+        {
+            var response = new StorePerformanceCommon();
+
+            var sql = "EXEC [dbo].[sproc_admin_get_club_detail]";
+            sql += " @clubId=" + clubId;
+            var dbResponse = _repositoryDao.ExecuteDataRow(sql);
+            if (dbResponse != null)
+            {
+                response.ClubId = _dao.ParseColumnValue(dbResponse, "clubId").ToString();
+                response.StoreName = _dao.ParseColumnValue(dbResponse, "clubName").ToString();
+                response.LocationName = _dao.ParseColumnValue(dbResponse, "LocationDisplayName").ToString();
+            }
+            return response;
+
         }
     }
 }

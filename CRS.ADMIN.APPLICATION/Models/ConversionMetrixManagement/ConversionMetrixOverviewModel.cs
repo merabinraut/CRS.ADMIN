@@ -13,6 +13,8 @@ namespace CRS.ADMIN.APPLICATION.Models.ConversionMetrixManagement
         public string ActionType { get; set; }
         public string SourcePageType { get; set; }
         public string UserStatus { get; set; }
+        public string clubId { get; set; }
+        public string clubName { get; set; }
         public ConversionSummaryModel ConversionSummaryModel { get; set; }
         public List<ClickChartModel> ClickChartList { get; set; }
         public List<ActionSourceModel> ActionSourceModel { get; set; }
@@ -39,8 +41,10 @@ namespace CRS.ADMIN.APPLICATION.Models.ConversionMetrixManagement
         public string ActionType { get; set; }
         public string SessionId { get; set; }
         public string SourcePage { get; set; }
+        public string CustomerLocationJson { get; set; }
         public string ClubId { get; set; }
         public string ClubCode { get; set; }
+        public string HostCode { get; set; }
         public string TargetName { get; set; }
         public string UserStatus { get; set; }
         public string SourcePageType { get; set; }
@@ -49,6 +53,8 @@ namespace CRS.ADMIN.APPLICATION.Models.ConversionMetrixManagement
         public string UserAgent { get; set; }
         public string Date { get; set; }
         public int TotalRecords { get; set; }
+        public string TabValue { get; set; }
+        public string FromDate { get; set; }
 
 
 
@@ -77,6 +83,7 @@ namespace CRS.ADMIN.APPLICATION.Models.ConversionMetrixManagement
         public string ClubId { get; set; }
         public string StoreName { get; set; }
         public string ClubName { get; set; }
+        public string LocationName { get; set; }
         public int BookingStorePage { get; set; }
         public int BookingHostDetails { get; set; }
         public int PhoneStorePage { get; set; }
@@ -95,6 +102,7 @@ namespace CRS.ADMIN.APPLICATION.Models.ConversionMetrixManagement
     {
         public int Rank { get; set; }
         public string ClubName { get; set; }
+        public string ClubNameJp { get; set; }
         public string ClubCode { get; set; }
         public string LocationId { get; set; }
         public string LocationName { get; set; }

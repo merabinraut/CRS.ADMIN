@@ -20,5 +20,6 @@ namespace CRS.ADMIN.REPOSITORY.ConversionMetrixManagement
         long? ResolveClubCodeToAgentId(string clubCode);
         List<LocationCommon> GetLocationList();
         List<StorePerformanceCommon> GetConversionSummaryPerformanceRepost(PaginationFilterCommon dbRequest, string clubId);
+        StorePerformanceCommon GetClubName(string clubId);
     }
 }

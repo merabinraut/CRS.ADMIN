@@ -25,7 +25,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
 
         #region Index
         [HttpGet]
-        public ActionResult Index(ActivityLogModel Requests, string SearchFilter = null, string clubId = null, int StartIndex = 0, int PageSize = 10, string ToDate = "", string FromDate = "", string TabValue = "",
+        public ActionResult Index(ActivityLogModel Requests,string clubId ="", string SearchFilter = null, int StartIndex = 0, int PageSize = 10, string ToDate = "", string FromDate = "", string ToDateMs = "", string FromDateMs = "", string TabValue = "",
             string actionType = null, string sourcePageType = null, string search = null, string userStatus = null, int timezoneOffset = 0, int StartIndex2 = 0, int PageSize2 = 10)
         {
             ViewBag.SearchFilter = SearchFilter;
@@ -34,6 +34,12 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             culture = string.IsNullOrEmpty(culture) ? "ja" : culture;
             string RenderId = "";
             ConversionMetrixOverviewModel listModel = new ConversionMetrixOverviewModel();
+            Requests.ClubId = !string.IsNullOrEmpty(clubId) ? clubId : Requests.ClubId;
+            var dbClubResp = new StorePerformanceCommon();
+            if (!string.IsNullOrEmpty(Requests.ClubId))
+            {
+                 dbClubResp = _service.GetClubName(Requests.ClubId.DecryptParameter());
+            }
             //var listModel=new ConversionMetrixOverviewModel();
             PaginationFilterCommon dbRequest = new PaginationFilterCommon()
             {
@@ -56,10 +62,11 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 StoreRankingList = new List<StoreRankingModel>()
             };
             long decryptedClubId = 0;
-            if (!string.IsNullOrEmpty(clubId))
+            var clubName = "";
+            if (!string.IsNullOrEmpty(Requests.ClubId))
             {
-                var data = ApplicationUtilities.DecryptParameter(clubId);
-                decryptedClubId = Convert.ToInt64(ApplicationUtilities.DecryptParameter(clubId));
+                var data = ApplicationUtilities.DecryptParameter(Requests.ClubId);
+                decryptedClubId = Convert.ToInt64(ApplicationUtilities.DecryptParameter(Requests.ClubId));
             }
             var locations = _service.GetLocationList() ?? new List<LocationCommon>();
             ViewBag.LocationList = locations.Select(x => new SelectListItem
@@ -75,6 +82,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 {
                     x.SNo = x.SNo;
                     x.StoreName = x.StoreName;
+                    x.LocationName = x.LocationName;
                     x.BookingStorePage = x.BookingStorePage;
                     x.BookingHostDetails = x.BookingHostDetails;
                     x.PhoneStorePage = x.PhoneStorePage;
@@ -86,9 +94,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 if (TempData.ContainsKey("StorePerformanceModel"))
                     listModel.storePerformanceModels = TempData["StorePerformanceModel"] as StorePerformanceModel;
 
-                ViewBag.TotalData = summaryPerformance != null && summaryPerformance.Any() ? summaryPerformance[0].TotalRecords : 0;
-              
-
+                ViewBag.TotalData = summaryPerformance != null && summaryPerformance.Any() ? summaryPerformance[0].TotalRecords : 0;  
                 try
                 {
                     var summary = _service.GetConversionSummary(decryptedClubId);
@@ -112,6 +118,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                             Rank = rank++,
                             ClubId = ApplicationUtilities.EncryptParameter(x.ClubId.ToString()),
                             ClubName = x.ClubName,
+                            ClubNameJp = x.ClubNameJp,
                             Area = x.Area,
                             ClickCount = x.TapCount
                         }).ToList();
@@ -134,7 +141,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 if (string.IsNullOrWhiteSpace(actionType) || actionType == "All") actionType = null;
                 if (string.IsNullOrWhiteSpace(sourcePageType) || sourcePageType == "All") sourcePageType = null;
                 if (string.IsNullOrWhiteSpace(userStatus) || userStatus == "All") userStatus = null;
-                if (string.IsNullOrWhiteSpace(clubId)) clubId = null;
+                if (string.IsNullOrWhiteSpace(Requests.ClubId)) Requests.ClubId = null;
 
                 var sign = timezoneOffset < 0 ? "-" : "+";
                 var abs = Math.Abs(timezoneOffset);
@@ -145,7 +152,11 @@ namespace CRS.ADMIN.APPLICATION.Controllers
 
                 dbRequests.Skip = StartIndex2;
                 dbRequests.Take = PageSize2;
+                dbRequests.SearchFilter = SearchFilter;
                 dbRequests.ClubId = decryptedClubId.ToString();
+                FromDate = FromDateMs;
+                ToDate = ToDateMs;
+     
 
                 var result = _service.GetActivityLogList(dbRequests);
 
@@ -162,16 +173,27 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             {
                 ViewBag.TotalActivityData = 0;
             }
-
-            ViewBag.ClubId = clubId;
+            ViewBag.ClubName =!string.IsNullOrEmpty($"{dbClubResp.StoreName} {dbClubResp.LocationName}") ? $"{dbClubResp.StoreName} {dbClubResp.LocationName}": null;
+            ViewBag.ClubId = Requests.ClubId;
             ViewBag.SearchFilter = SearchFilter;
-            ViewBag.StartIndex2 = StartIndex2;
+            ViewBag.SearchFilter2 = SearchFilter;
+            ViewBag.StartIndex2 =  StartIndex2;
             ViewBag.PageSize2 = PageSize2;
             ViewBag.StartIndex = StartIndex;
             ViewBag.PageSize = PageSize;
+            ViewBag.TabValue = TabValue;
             model.ActionType = actionType;
             model.SourcePageType = sourcePageType;
             model.UserStatus = userStatus;
+
+            ViewBag.ActionType = actionType;
+            ViewBag.SourcePageType = sourcePageType;
+            ViewBag.UserStatus = userStatus;
+
+            model.clubId = Requests.ClubId;
+            model.clubName = clubName;
+            model.TabValue = TabValue;
+            
 
             return View(model);
         }
@@ -253,6 +275,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                     rank = x.Rank,
                     clubId = ApplicationUtilities.EncryptParameter(x.ClubId.ToString()),
                     clubCode = x.ClubCode,
+                    clubNameJp = x.ClubNameJp,
                     clubName = x.ClubName,
                     locationId = x.LocationId,
                     area = x.LocationName,
@@ -295,6 +318,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 {
                     sNo = (pageNo - 1) * pageSize + i + 1,
                     clubName = x.StoreName,
+                    locationName = x.LocationName,
                     reservationClick = x.BookingStorePage,
                     reservationDetailClick = x.BookingHostDetails,
                     phoneCallClick = x.PhoneStorePage,

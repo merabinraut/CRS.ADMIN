@@ -19,7 +19,12 @@
                         <div>
                             <div class="title flex gap-[8px] mb-[12px] items-center">
                                 <div class="logo h-[32px] w-[32px] flex justify-center items-center rounded-full bg-[#FEE5CD]">
-                                    <i class="las la-globe text-lg text-[#F89336]"></i>
+                                    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M9 16.5C13.1421 16.5 16.5 13.1421 16.5 9C16.5 4.85786 13.1421 1.5 9 1.5C4.85786 1.5 1.5 4.85786 1.5 9C1.5 13.1421 4.85786 16.5 9 16.5Z" stroke="#F89336" stroke-linecap="round" stroke-linejoin="round" />
+                                        <path d="M9 1.5C7.07418 3.52212 6 6.20756 6 9C6 11.7924 7.07418 14.4779 9 16.5C10.9258 14.4779 12 11.7924 12 9C12 6.20756 10.9258 3.52212 9 1.5Z" stroke="#F89336" stroke-linecap="round" stroke-linejoin="round" />
+                                        <path d="M1.5 9H16.5" stroke="#F89336" stroke-linecap="round" stroke-linejoin="round" />
+                                    </svg>
+
                                 </div>
                                 <div class="text-lg">@CRS.ADMIN.APPLICATION.Resources.Resource.Reservation_Clicks</div>
                             </div>
@@ -28,6 +33,7 @@
                             </div>
                         </div>
                     </div>
+                    @*<input type="hidden" value="@Model.clubId" name="clubId" id="clubId" />*@
                     <div class="payment-details-card flex justify-between flex-col ">
                         <div>
                             <div class="title flex gap-[8px] mb-[12px] items-center">
@@ -46,11 +52,13 @@
                         <div>
                             <div class="title flex gap-[8px] mb-[12px] items-center">
                                 <div class="logo h-[32px] w-[32px] flex justify-center items-center rounded-full bg-[#FEEAD8]">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="17" height="11" viewBox="0 0 17 11" fill="none">
-                                        <path d="M4.5 0C3.60562 0.00237551 2.74856 0.358718 2.11614 0.991139C1.48372 1.62356 1.12738 2.48062 1.125 3.375C1.125 4.491 1.674 5.48475 2.514 6.09975C1.0305 6.8355 0 8.361 0 10.125H1.125C1.12401 9.68151 1.21063 9.24219 1.37989 8.83227C1.54915 8.42235 1.79771 8.0499 2.11131 7.73631C2.4249 7.42272 2.79735 7.17415 3.20727 7.00489C3.61719 6.83563 4.05651 6.74901 4.5 6.75C4.94349 6.74901 5.3828 6.83563 5.79273 7.00489C6.20265 7.17415 6.5751 7.42272 6.88869 7.73631C7.20228 8.0499 7.45085 8.42235 7.62011 8.83227C7.78937 9.24219 7.87599 9.68151 7.875 10.125H9C8.99901 9.68151 9.08563 9.24219 9.25489 8.83227C9.42415 8.42235 9.67272 8.0499 9.98631 7.73631C10.2999 7.42272 10.6724 7.17415 11.0823 7.00489C11.4922 6.83563 11.9315 6.74901 12.375 6.75C12.8185 6.74901 13.2578 6.83563 13.6677 7.00489C14.0776 7.17415 14.4501 7.42272 14.7637 7.73631C15.0773 8.0499 15.3258 8.42235 15.4951 8.83227C15.6644 9.24219 15.751 9.68151 15.75 10.125H16.875C16.875 8.361 15.8445 6.8355 14.361 6.09975C14.7905 5.78685 15.1402 5.37702 15.3815 4.90357C15.6229 4.43013 15.7491 3.90641 15.75 3.375C15.75 1.518 14.232 0 12.375 0C11.4806 0.00237551 10.6236 0.358718 9.99114 0.991139C9.35872 1.62356 9.00238 2.48062 9 3.375C9 4.491 9.549 5.48475 10.389 6.09975C9.56715 6.50363 8.88682 7.14684 8.4375 7.94475C7.98818 7.14684 7.30785 6.50363 6.486 6.09975C6.91553 5.78685 7.26518 5.37702 7.50653 4.90357C7.74788 4.43013 7.87412 3.90641 7.875 3.375C7.875 1.518 6.357 0 4.5 0ZM4.5 1.125C5.75025 1.125 6.75 2.12475 6.75 3.375C6.75 4.62525 5.75025 5.625 4.5 5.625C3.24975 5.625 2.25 4.62525 2.25 3.375C2.25 2.12475 3.24975 1.125 4.5 1.125ZM12.375 1.125C13.6252 1.125 14.625 2.12475 14.625 3.375C14.625 4.62525 13.6252 5.625 12.375 5.625C11.1248 5.625 10.125 4.62525 10.125 3.375C10.125 2.12475 11.1248 1.125 12.375 1.125Z" fill="#CB3F3F" />
+                                    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M16 0C19.1645 0 22.2579 0.938384 24.8891 2.69649C27.5203 4.45459 29.5711 6.95345 30.7821 9.87706C31.9931 12.8007 32.3099 16.0177 31.6926 19.1214C31.0752 22.2251 29.5513 25.0761 27.3137 27.3137C25.0761 29.5513 22.2251 31.0752 19.1214 31.6926C16.0177 32.3099 12.8007 31.9931 9.87706 30.7821C6.95345 29.5711 4.45459 27.5203 2.69649 24.8891C0.938384 22.2579 0 19.1645 0 16C0 11.7565 1.68571 7.68687 4.68629 4.68629C7.68687 1.68571 11.7565 0 16 0Z" fill="#FFCACA" />
+                                        <path d="M12.0625 10.9375C11.1681 10.9399 10.3111 11.2962 9.67864 11.9286C9.04622 12.5611 8.68988 13.4181 8.6875 14.3125C8.6875 15.4285 9.2365 16.4223 10.0765 17.0373C8.593 17.773 7.5625 19.2985 7.5625 21.0625H8.6875C8.68651 20.619 8.77313 20.1797 8.94239 19.7698C9.11165 19.3599 9.36021 18.9874 9.67381 18.6738C9.9874 18.3602 10.3599 18.1117 10.7698 17.9424C11.1797 17.7731 11.619 17.6865 12.0625 17.6875C12.506 17.6865 12.9453 17.7731 13.3552 17.9424C13.7651 18.1117 14.1376 18.3602 14.4512 18.6738C14.7648 18.9874 15.0133 19.3599 15.1826 19.7698C15.3519 20.1797 15.4385 20.619 15.4375 21.0625H16.5625C16.5615 20.619 16.6481 20.1797 16.8174 19.7698C16.9867 19.3599 17.2352 18.9874 17.5488 18.6738C17.8624 18.3602 18.2349 18.1117 18.6448 17.9424C19.0547 17.7731 19.494 17.6865 19.9375 17.6875C20.381 17.6865 20.8203 17.7731 21.2302 17.9424C21.6401 18.1117 22.0126 18.3602 22.3262 18.6738C22.6398 18.9874 22.8883 19.3599 23.0576 19.7698C23.2269 20.1797 23.3135 20.619 23.3125 21.0625H24.4375C24.4375 19.2985 23.407 17.773 21.9235 17.0373C22.353 16.7243 22.7027 16.3145 22.944 15.8411C23.1854 15.3676 23.3116 14.8439 23.3125 14.3125C23.3125 12.4555 21.7945 10.9375 19.9375 10.9375C19.0431 10.9399 18.1861 11.2962 17.5536 11.9286C16.9212 12.5611 16.5649 13.4181 16.5625 14.3125C16.5625 15.4285 17.1115 16.4223 17.9515 17.0373C17.1297 17.4411 16.4493 18.0843 16 18.8823C15.5507 18.0843 14.8703 17.4411 14.0485 17.0373C14.478 16.7243 14.8277 16.3145 15.069 15.8411C15.3104 15.3676 15.4366 14.8439 15.4375 14.3125C15.4375 12.4555 13.9195 10.9375 12.0625 10.9375ZM12.0625 12.0625C13.3127 12.0625 14.3125 13.0622 14.3125 14.3125C14.3125 15.5627 13.3127 16.5625 12.0625 16.5625C10.8122 16.5625 9.8125 15.5627 9.8125 14.3125C9.8125 13.0622 10.8122 12.0625 12.0625 12.0625ZM19.9375 12.0625C21.1877 12.0625 22.1875 13.0622 22.1875 14.3125C22.1875 15.5627 21.1877 16.5625 19.9375 16.5625C18.6873 16.5625 17.6875 15.5627 17.6875 14.3125C17.6875 13.0622 18.6873 12.0625 19.9375 12.0625Z" fill="#CB3F3F" />
                                     </svg>
+
                                 </div>
-                                <div class="text-lg"> @CRS.ADMIN.APPLICATION.Resources.Resource.Average_CTR (CTR)</div>
+                                <div class="text-lg"> @CRS.ADMIN.APPLICATION.Resources.Resource.Average_CTR</div>
                             </div>
                             <div class="text-2xl font-semibold mb-[30px]" id="averageCtrValue">
                                 @Model.ConversionSummaryModel.AverageCTR.ToString("F1") %
@@ -83,10 +91,8 @@
                             </div>
                             <div>
                                 <div id="tab1" class="tab-content-chart">
-                                    <div style="position:relative; width:100%; height:240px;" id="clickChartWrap">
-                                        <canvas id="Month12"
-                                                role="img"
-                                                aria-label="Bar chart of today's click counts by time interval">
+                                    <div style="position:relative; width:100%; height:340px;" id="clickChartWrap">
+                                        <canvas id="Month12" role="img" aria-label="Bar chart of today's click counts by time interval">
                                             Today's click counts by time interval.
                                         </canvas>
                                     </div>
@@ -125,247 +131,262 @@
     </div>
 </div>
 @*-------------------------------------------------------------------------------*@
-<div class="flex gap-6">
+<div class="flex gap-6 mt-4">
 
 
 </div>
-<form action="/ConversionMetrixManagement/Index" method="get" id="filterForm">
-    <div class="relative input-search-wrapper flex justify-between mt-6">
-        <div class="absolute inset-y-0 left-0 flex items-center pl-[16px] pointer-events-none">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21" fill="none">
-                <path d="M17.5 18L13.875 14.375M15.8333 9.66667C15.8333 13.3486 12.8486 16.3333 9.16667 16.3333C5.48477 16.3333 2.5 13.3486 2.5 9.66667C2.5 5.98477 5.48477 3 9.16667 3C12.8486 3 15.8333 5.98477 15.8333 9.66667Z"
-                      stroke="#667085" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round" />
-            </svg>
-        </div>
-        <input type="hidden" id="FromDate" name="FromDate" />
-        <input type="hidden" id="ToDate" name="ToDate" />
+<div class="flex justify-between items-center">
+    <div>
+        <div class="heading-title">@CRS.ADMIN.APPLICATION.Resources.Resource.Store_Performance</div>
+    </div>
+</div>
 
-        <input type="search"
-               id="default-search"
-               class="input-search block w-full "
-               placeholder="@CRS.ADMIN.APPLICATION.Resources.Resource.Search"
-               value="@ViewBag.SearchFilter"
-               name="SearchFilter">
-
-        <div class="flex gap-6">
-            <button id="thisMonthBtn" class="h-[40px] flex items-center gap-[8px] px-[12px] border border-[#D4D4D8] rounded-[5px] text-[14px] text-gray-500 font-medium">
-                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M5.625 2.5V3.125H3.125V16.875H16.875V3.125H14.375V2.5H13.125V3.125H6.875V2.5H5.625ZM4.375 4.375H5.625V5H6.875V4.375H13.125V5H14.375V4.375H15.625V5.625H4.375V4.375ZM4.375 6.875H15.625V15.625H4.375V6.875ZM8.125 8.125V9.375H9.375V8.125H8.125ZM10.625 8.125V9.375H11.875V8.125H10.625ZM13.125 8.125V9.375H14.375V8.125H13.125ZM5.625 10.625V11.875H6.875V10.625H5.625ZM8.125 10.625V11.875H9.375V10.625H8.125ZM10.625 10.625V11.875H11.875V10.625H10.625ZM13.125 10.625V11.875H14.375V10.625H13.125ZM5.625 13.125V14.375H14.375V13.125H5.625Z" fill="#A1A1AA" fill-opacity="0.75" />
+    <form action="/ConversionMetrixManagement/Index" method="get" id="filterForm">
+        <div class="relative input-search-wrapper flex justify-between mt-6">
+            <div class="absolute inset-y-0 left-0 flex items-center pl-[16px] pointer-events-none">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21" fill="none">
+                    <path d="M17.5 18L13.875 14.375M15.8333 9.66667C15.8333 13.3486 12.8486 16.3333 9.16667 16.3333C5.48477 16.3333 2.5 13.3486 2.5 9.66667C2.5 5.98477 5.48477 3 9.16667 3C12.8486 3 15.8333 5.98477 15.8333 9.66667Z"
+                          stroke="#667085" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round" />
                 </svg>
-                @CRS.ADMIN.APPLICATION.Resources.Resource.This_Month
-            </button>
-            <div class="export-button h-[40px]" onclick="exportExcel('table-id', 'Club')">
-                <img src="~/Content/assets_new/images/club/download-solid.svg">@CRS.ADMIN.APPLICATION.Resources.Resource.Export_CSV
+            </div>
+            <input type="hidden" id="FromDate" name="FromDate" />
+            <input type="hidden" id="ToDate" name="ToDate" />
+
+            <input type="search"
+                   id="default-search"
+                   class="input-search block w-full "
+                   placeholder="@CRS.ADMIN.APPLICATION.Resources.Resource.Search_By_StoreName"
+                   value="@ViewBag.SearchFilter"
+                   name="SearchFilter">
+
+            <div class="flex gap-6">
+                <button id="thisMonthBtn" class="h-[40px] flex items-center gap-[8px] px-[12px] border border-[#D4D4D8] rounded-[5px] text-[14px] text-gray-500 font-medium">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M5.625 2.5V3.125H3.125V16.875H16.875V3.125H14.375V2.5H13.125V3.125H6.875V2.5H5.625ZM4.375 4.375H5.625V5H6.875V4.375H13.125V5H14.375V4.375H15.625V5.625H4.375V4.375ZM4.375 6.875H15.625V15.625H4.375V6.875ZM8.125 8.125V9.375H9.375V8.125H8.125ZM10.625 8.125V9.375H11.875V8.125H10.625ZM13.125 8.125V9.375H14.375V8.125H13.125ZM5.625 10.625V11.875H6.875V10.625H5.625ZM8.125 10.625V11.875H9.375V10.625H8.125ZM10.625 10.625V11.875H11.875V10.625H10.625ZM13.125 10.625V11.875H14.375V10.625H13.125ZM5.625 13.125V14.375H14.375V13.125H5.625Z" fill="#A1A1AA" fill-opacity="0.75" />
+                    </svg>
+                    @CRS.ADMIN.APPLICATION.Resources.Resource.This_Month
+                </button>
+                <div class="export-button h-[40px]" onclick="exportExcel('table-id', 'Club')">
+                    <img src="~/Content/assets_new/images/club/download-solid.svg">@CRS.ADMIN.APPLICATION.Resources.Resource.Export_CSV
+                </div>
             </div>
         </div>
+    </form>
+
+
+    <div class="flex gap-6 mt-4">
+
+
     </div>
-</form>
-
-
-
-<div class="flex gap-6">
-
-
-</div>
-<div class="table-tab" id="all">
-    <div class="px-[16px] py-[12px] flex justify-between entry-export-container">
-        <div class="flex items-center select-entries" id="ShowEntries-Id">
+    <div class="table-tab" id="all">
+        <div class="px-[16px] py-[12px] flex justify-between entry-export-container">
+            <div class="flex items-center select-entries" id="ShowEntries-Id">
+            </div>
         </div>
-    </div>
-    <div class="relative overflow-x-auto">
-        <table class="w-full text-left club-table" id="table-id">
-            <thead class="club-table-thead">
-                <tr>
-                    <th scope="col" class="p-[12px]">
-                        <div class="flex w-max">
-                            S.N
-                            <div class="relative pl-[5px]">
-                                <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
-                                <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+        <div class="relative overflow-x-auto">
+            <table class="w-full text-left club-table" id="table-id">
+                <thead class="club-table-thead">
+                    <tr>
+                        <th scope="col" class="p-[12px]">
+                            <div class="flex w-max">
+                                S.N
+                                <div class="relative pl-[5px]">
+                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                </div>
                             </div>
-                        </div>
-                    </th>
-                    <th scope="col" class="p-[12px]">
-                        <div class="flex w-max">
-                            @CRS.ADMIN.APPLICATION.Resources.Resource.StoreName
-                            <div class="relative pl-[5px]">
-                                <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
-                                <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                        </th>
+                        <th scope="col" class="p-[12px]">
+                            <div class="flex w-max">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.StoreName
+                                <div class="relative pl-[5px]">
+                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                </div>
                             </div>
-                        </div>
-                    </th>
-                    <th scope="col" class="p-[12px]">
-                        <div class="flex w-max">
-                            @CRS.ADMIN.APPLICATION.Resources.Resource.Booking_Store_Page
-                            <div class="relative pl-[5px]">
-                                <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
-                                <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                        </th>
+                        <th scope="col" class="p-[12px]">
+                            <div class="flex w-max">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Booking_Store_Page
+                                <div class="relative pl-[5px]">
+                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                </div>
                             </div>
-                        </div>
-                    </th>
-                    <th scope="col" class="p-[12px]">
-                        <div class="flex w-max">
-                            @CRS.ADMIN.APPLICATION.Resources.Resource.Booking_Host_Details
-                            <div class="relative pl-[5px]">
-                                <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
-                                <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                        </th>
+                        <th scope="col" class="p-[12px]">
+                            <div class="flex w-max">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Booking_Host_Details
+                                <div class="relative pl-[5px]">
+                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                </div>
                             </div>
-                        </div>
-                    </th>
-                    <th scope="col" class="p-[12px]">
-                        <div class="flex w-max">
-                            @CRS.ADMIN.APPLICATION.Resources.Resource.Phone_Store_Page
-                            <div class="relative pl-[5px]">
-                                <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
-                                <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                        </th>
+                        <th scope="col" class="p-[12px]">
+                            <div class="flex w-max">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Phone_Store_Page
+                                <div class="relative pl-[5px]">
+                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                </div>
                             </div>
-                        </div>
-                    </th>
-                    <th scope="col" class="p-[12px]">
-                        <div class="flex w-max">
-                            @CRS.ADMIN.APPLICATION.Resources.Resource.Phone_Host_Details
-                            <div class="relative pl-[5px]">
-                                <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
-                                <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                        </th>
+                        <th scope="col" class="p-[12px]">
+                            <div class="flex w-max">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Phone_Host_Details
+                                <div class="relative pl-[5px]">
+                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                </div>
                             </div>
-                        </div>
-                    </th>
-                    <th scope="col" class="p-[12px]">
-                        <div class="flex w-max">
-                            @CRS.ADMIN.APPLICATION.Resources.Resource.Total_Clicks
-                            <div class="relative pl-[5px]">
-                                <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
-                                <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                        </th>
+                        <th scope="col" class="p-[12px]">
+                            <div class="flex w-max">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Total_number_of_clicks
+                                <div class="relative pl-[5px]">
+                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                </div>
                             </div>
-                        </div>
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                @{
-                    int sno = 1;
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        int sno = 1;
 
-                    foreach (var item in Model.StorePerformanceModel)
-                    {
-                        <tr class="bg-white border-b ">
-                            <td class="p-[12px]">
-                                @sno
-                            </td>
+                        foreach (var item in Model.StorePerformanceModel)
+                        {
+                            <tr class="bg-white border-b ">
+                                <td class="p-[12px]">
+                                    @sno
+                                </td>
 
-                            <td class="p-[12px]">
-                                @item.StoreName
-                            </td>
-                            <td class="p-[12px]">
-                                @item.BookingStorePage
-                            </td>
+                                <td class="p-[12px]">
+                                    @item.StoreName
+                                    @if (!string.IsNullOrWhiteSpace(item.LocationName))
+                                    {
+                                        <span class="text-gray-500">
+                                            (@item.LocationName)
+                                        </span>
+                                    }
+                                </td>
+                                <td class="p-[12px]">
+                                    @item.BookingStorePage
+                                </td>
 
-                            <td class="p-[12px]">
-                                @item.BookingHostDetails
-                            </td>
+                                <td class="p-[12px]">
+                                    @item.BookingHostDetails
+                                </td>
 
-                            <td class="p-[12px]">
-                                @item.PhoneStorePage
-                            </td>
-                            <td class="p-[12px]">
-                                @item.PhoneHostDetails
-                            </td>
-                            <td class="p-[12px]">
-                                @item.TotalClicks
-                            </td>
-                        </tr>
-                        sno++;
+                                <td class="p-[12px]">
+                                    @item.PhoneStorePage
+                                </td>
+                                <td class="p-[12px]">
+                                    @item.PhoneHostDetails
+                                </td>
+                                <td class="p-[12px]">
+                                    @item.TotalClicks
+                                </td>
+                            </tr>
+                            sno++;
+                        }
+
                     }
-
-                }
-            </tbody>
-        </table>
-    </div>
-    <div class="pagination-club">
-        <div class="show-entry" id="Entries-Id">
+                </tbody>
+            </table>
         </div>
-        <div class="flex gap-[12px]">
-            <div class="btn btn-secondary-box-shadow" id="prev-btn">
-                @CRS.ADMIN.APPLICATION.Resources.Resource.Previous
+        <div class="pagination-club">
+            <div class="show-entry" id="Entries-Id">
             </div>
-            <div class="flex gap-[12px]" id="pagination-id">
-            </div>
-            <div class="btn btn-secondary-box-shadow" id="next-btn">
-                @CRS.ADMIN.APPLICATION.Resources.Resource.Next
+            <div class="flex gap-[12px]">
+                <div class="btn btn-secondary-box-shadow" id="prev-btn">
+                    @CRS.ADMIN.APPLICATION.Resources.Resource.Previous
+                </div>
+                <div class="flex gap-[12px]" id="pagination-id">
+                </div>
+                <div class="btn btn-secondary-box-shadow" id="next-btn">
+                    @CRS.ADMIN.APPLICATION.Resources.Resource.Next
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 
 <script>
-    if ($("#TabValue").val().toLowerCase() == "") {
+    let tabValue = "@ViewBag.TabValue" ?? "";
+ if (tabValue == "") {
         document.addEventListener('DOMContentLoaded', function () {
             const page_size = @ViewBag.PageSize;
             const total_data = @ViewBag.TotalData;
             const start_index_val = @ViewBag.StartIndex;
-            let URL = "/ConversionMetrixManagement/Index";
+             const clubId = '@Model.clubId';
+            let URL = "/ConversionMetrixManagement/Index?clubId=" + clubId;
             let search_filter = $('#default-search').val();
             URL = addQueryParam(URL, 'SearchFilter', search_filter);
+            URL= addQueryParam(URL, 'StartIndex2', 0);
+
             LoadPagination(page_size, total_data, start_index_val, URL);
         });
     }
-</script>
+    </script>
 
-<script>
+    <script>
 
-    document.addEventListener("DOMContentLoaded", function () {
-        var content = document.getElementById("long-content");
-        var btn = document.querySelector(".see-more-btn1");
-    });
-</script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var content = document.getElementById("long-content");
+            var btn = document.querySelector(".see-more-btn1");
+        });
+    </script>
 
-<style>
-    .content-container {
-        max-width: 500px;
-    }
-
-    .see-more-btn {
-        margin-top: 10px;
-        cursor: pointer;
-    }
-</style>
-<script>
-    $('#thisMonthBtn').click(function () {
-        const today = new Date();
-        const firstDay = new Date(today.getFullYear(), today.getMonth(), 1);
-
-        $('#FromDate').val(firstDay.getTime());
-        $('#ToDate').val(today.getTime());
-
-        $('#filterForm').submit();
-    });
-</script>
-
-<script>
-    (function () {
-        var currentPage = 1;
-        var pageSize = 10;
-        var currentSearch = '';
-        var searchDebounce = null;
-        var thisMonthActive = false;
-        var fromDateMs = null;
-        var toDateMs = null;
-
-        function escHtml(s) {
-            return $('<div>').text(String(s || '')).html();
+    <style>
+        .content-container {
+            max-width: 500px;
         }
 
-        function getThisMonthRange() {
-            var now = new Date();
-            var start = new Date(now.getFullYear(), now.getMonth(), 1, 0, 0, 0, 0);
-            var end = new Date(now.getFullYear(), now.getMonth() + 1, 0, 23, 59, 59, 999);
-            return { from: start.getTime(), to: end.getTime() };
+        .see-more-btn {
+            margin-top: 10px;
+            cursor: pointer;
         }
-</script>
+    </style>
+    <script>
+        $('#thisMonthBtn').click(function () {
+            const today = new Date();
+            const firstDay = new Date(today.getFullYear(), today.getMonth(), 1);
+
+            $('#FromDate').val(firstDay.getTime());
+            $('#ToDate').val(today.getTime());
+
+            $('#filterForm').submit();
+        });
+    </script>
+
+    <script>
+        (function () {
+            var currentPage = 1;
+            var pageSize = 10;
+            var currentSearch = '';
+            var searchDebounce = null;
+            var thisMonthActive = false;
+            var fromDateMs = null;
+            var toDateMs = null;
+
+            function escHtml(s) {
+                return $('<div>').text(String(s || '')).html();
+            }
+
+            function getThisMonthRange() {
+                var now = new Date();
+                var start = new Date(now.getFullYear(), now.getMonth(), 1, 0, 0, 0, 0);
+                var end = new Date(now.getFullYear(), now.getMonth() + 1, 0, 23, 59, 59, 999);
+                return { from: start.getTime(), to: end.getTime() };
+            }
+    </script>
 
 
-<script>
+    <script>
     (function () {
         var PINK = '#C2185B';
         var PURPLE = '#7F77DD';
@@ -389,7 +410,7 @@
 
         // Single combined call: today's click chart + action source + click origin
         function loadClickAnalytics(filter) {
-           
+
             console.log("Received filter:", filter);
             console.trace("loadClickAnalytics called");
             var normalizedFilter = (filter || 'all').toLowerCase().trim();
@@ -500,7 +521,7 @@
                                 color: '#111827',
                                 font: { size: 12 },
                                 autoSkip: true,
-                                maxTicksLimit: 10,
+                                maxTicksLimit: 24,
                                 maxRotation: 0,
                                 padding: 6
                             },
@@ -577,7 +598,7 @@
         // Fixed: reads color directly off each dataset instead of re-deriving
         // it from label text (which never matched anything before).
         function renderLegend(datasets) {
-            
+
             var totalClicksLabel = '@Html.Raw(HttpUtility.JavaScriptStringEncode(CRS.ADMIN.APPLICATION.Resources.Resource.Total_Clicks))';
             var html = datasets
                 .filter(function (ds) {
@@ -689,4 +710,4 @@
             loadClickAnalytics("all");
         });
     })();
-</script>
+    </script>
