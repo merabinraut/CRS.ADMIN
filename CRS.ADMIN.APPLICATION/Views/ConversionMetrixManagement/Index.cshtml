@@ -351,7 +351,6 @@
 
 <script>
     $(document).ready(function () {
-        debugger;
         window.selectedClubId = null;
 
         let tabValue = "@ViewBag.TabValue" ?? "";
@@ -435,7 +434,6 @@
             if (paramValue2 != null && paramValue2 != "") {
                 url += url.includes('?') ? `&${paramName2}=${paramValue2}` : `?${paramName2}=${paramValue2}`;
             }
-            debugger;
             return url;
         }
 
