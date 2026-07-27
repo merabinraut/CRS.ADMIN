@@ -36,7 +36,7 @@
                     @CRS.ADMIN.APPLICATION.Resources.Resource.Overview
                 </button>
 
-                <button id="tab2Button" class="tab-button-plane tab-link">
+                <button id="tab2Button" type="button" class="tab-button-plane tab-link">
                     @CRS.ADMIN.APPLICATION.Resources.Resource.Active_Log
                 </button>
 
@@ -364,7 +364,7 @@
             $("#tab1Content").hide();
 
             $("#tab2Button").addClass("active");
-            $("#tab1Button").removeClass("active");
+            $("#tab1Button").removeClass("active").css("color", "#9CA3AF");
 
             // ✅ Initialize pagination for the ACTIVE tab (Activity Log) on load
             dynamicStartIndexLabel = "StartIndex2";
@@ -385,7 +385,7 @@
             $("#tab1Content").show();
 
             $("#tab1Button").addClass("active");
-            $("#tab2Button").removeClass("active");
+            $("#tab2Button").removeClass("active").css("color", "#9CA3AF");
 
             // ✅ Initialize pagination for the ACTIVE tab (Overview) on load
             dynamicStartIndexLabel = "StartIndex";
