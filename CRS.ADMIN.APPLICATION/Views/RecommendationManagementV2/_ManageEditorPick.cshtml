@@ -1,9 +1,9 @@
 ﻿@model CRS.ADMIN.APPLICATION.Models.RecommendationManagementV2.AddEditorPick
 
 @*@{
-    var locationItems = ViewBag.LocationDDL as IEnumerable<System.Web.Mvc.SelectListItem> ?? System.Linq.Enumerable.Empty<System.Web.Mvc.SelectListItem>();
-    var storeItems = ViewBag.StoreDDL as IEnumerable<System.Web.Mvc.SelectListItem> ?? System.Linq.Enumerable.Empty<System.Web.Mvc.SelectListItem>();
-}*@
+        var locationItems = ViewBag.LocationDDL as IEnumerable<System.Web.Mvc.SelectListItem> ?? System.Linq.Enumerable.Empty<System.Web.Mvc.SelectListItem>();
+        var storeItems = ViewBag.StoreDDL as IEnumerable<System.Web.Mvc.SelectListItem> ?? System.Linq.Enumerable.Empty<System.Web.Mvc.SelectListItem>();
+    }*@
 
 <div id="add-manage-editor-page"
      class="drawer-close-disable  flex justify-end fixed top-0 right-0 z-40 h-screen overflow-y-auto transition-transform translate-x-full "
@@ -26,55 +26,69 @@
 
             <div class="p-[24px]">
                 <div class=" py-4 grid gap-5">
+                    @{
+                        bool isEditMode = !string.IsNullOrWhiteSpace(Model.EditorPickId?.ToString());
+                    }
+
+                    <input type="hidden" name="EditorPickId" id="EditorPickId" value="@Model.EditorPickId" />
 
                     <div class="input-field-common">
-                        <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
+                        <label class="block mb-[12px] text-sm font-medium text-secondary-text-2">
                             @CRS.ADMIN.APPLICATION.Resources.Resource.Location
                         </label>
-                        <select id="location" name="location" class="default_select select-common block w-full" style="width: 100%;">
-                            @foreach (var item in ViewBag.LocationDDLList as IEnumerable<SelectListItem>)
+
+                        <select id="large1"
+                                name="LocationDDL1"
+                                class="default_select select-common block w-full LocationDDL1"
+                                style="width:100%;"
+                                @(isEditMode ? "disabled" : "")>
+                            @{
+                                var selectedLocation = Model.LocationDDL1 as string;
+                            }
+
+                            @foreach (var location in ViewBag.LocationList as IEnumerable<SelectListItem>)
                             {
-                                var selectedId = Model.location as string;
-                                if (item.Value == selectedId)
-                                {
-                                    <option value="@item.Value" selected>@item.Text</option>
-                                }
-                                else
-                                {
-                                    <option value="@item.Value">
-                                        @item.Text
-                                    </option>
-                                }
+                                <option value="@location.Value"
+                                        @(location.Value == selectedLocation ? "selected" : null)>
+                                    @location.Text
+                                </option>
                             }
                         </select>
-                        <span class="error">
-                            @Html.ValidationMessageFor(m => m.location)
-                        </span>
+
+                        <span class="error"></span>
                     </div>
+
                     <div class="input-field-common">
-                        <label class="block mb-[12px] text-sm font-medium text-secondary-text-2 ">
-                            @CRS.ADMIN.APPLICATION.Resources.Resource.StoreName
+                        <label class="block mb-[12px] text-sm font-medium text-secondary-text-2">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Club
                         </label>
-                        <select name="ClubId" class="default_select select-common block w-full" style="width: 100%;">
-                            @foreach (var item in ViewBag.ClubStoreDDL as IEnumerable<SelectListItem>)
+
+                        <select id="large2"
+                                name="ClubDDLList"
+                                class="default_select select-common block w-full ClubDDLList"
+                                style="width:100%;"
+                                @(isEditMode ? "disabled" : "")>
+
+                            <option value="">@CRS.ADMIN.APPLICATION.Resources.Resource.Select_Club</option>
+
+                            @{
+                                var selectedClub = Model.ClubDDLList as string;
+                            }
+
+                            @if (ViewBag.ClubList != null)
                             {
-                                var selectedId = Model.ClubId as string;
-                                if (item.Value == selectedId)
+                                foreach (var club in (IEnumerable<SelectListItem>)ViewBag.ClubList)
                                 {
-                                    <option value="@item.Value" selected>@item.Text</option>
-                                }
-                                else
-                                {
-                                    <option value="@item.Value">
-                                        @item.Text
+                                    <option value="@club.Value"
+                                            @(club.Value == selectedClub ? "selected" : null)>
+                                        @club.Text
                                     </option>
                                 }
                             }
                         </select>
-                        <span class="error">
-                            @Html.ValidationMessageFor(m => m.ClubId)
-                        </span>
+                        <span class="error"></span>
                     </div>
+
 
                     <div class="input-field-common">
                         <label class="block mb-[12px] text-sm font-medium text-secondary-100 ">
@@ -95,12 +109,10 @@
                             @Html.ValidationMessageFor(m => m.freeTextTag)
                         </span>
                     </div>
-
-
                     <div class="flex justify-end ">
                         <div class="flex gap-6">
                             <button class="resetForm btn btn-primary-normal rounded-[4px] px-8 text-sm"
-                                    data-drawer-hide="add-manage-editor-page" id="CancelId" type="button">
+                                    data-drawer-hide="add-manage-editor-page" id="CancelEditorId" type="button">
                                 @CRS.ADMIN.APPLICATION.Resources.Resource.Cancel
                             </button>
                             <button class="resetForm btn btn-primary-default px-8 rounded-[4px]  text-sm leading-[10px]"
@@ -114,3 +126,36 @@
         }
     </div>
 </div>
+<script>
+    $("#ManageRecommendation").on("submit", function (e) {
+        var location = $(".LocationDDL1").val();
+        var club = $(".ClubDDLList").val();
+        var isValid = true;
+        if (!location || location.trim() === "") {
+            $(".LocationDDL1").closest(".input-field-common").find(".error").text("Location is required.");
+            isValid = false;
+        } else {
+            $(".LocationDDL1").closest(".input-field-common").find(".error").text("");
+        }
+        if (!club || club.trim() === "") {
+            $(".ClubDDLList").closest(".input-field-common").find(".error").text("Club is required.");
+            isValid = false;
+        } else {
+            $(".ClubDDLList").closest(".input-field-common").find(".error").text("");
+        }
+        if (!isValid) {
+            e.preventDefault();
+            return false;
+        }
+    });
+</script>
+
+
+<script>
+    $(document).on("change", ".LocationDDL1, .ClubDDLList", function () {
+        var value = $(this).val();
+        if (value && value.trim() !== "") {
+            $(this).closest(".input-field-common").find(".error").text("");
+        }
+    });
+</script>

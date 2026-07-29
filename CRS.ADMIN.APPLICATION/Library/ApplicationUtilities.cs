@@ -633,6 +633,7 @@ namespace CRS.ADMIN.APPLICATION.Library
         }
         public static string DecryptParameter(this string textToDecrypt)
         {
+            if (string.IsNullOrEmpty(textToDecrypt)) return "";
             StringCipher cipher = new StringCipher(GetSessionValue<string>("SessionGuid"));
             //StringCipher cipher = new StringCipher("needtochange");
             try

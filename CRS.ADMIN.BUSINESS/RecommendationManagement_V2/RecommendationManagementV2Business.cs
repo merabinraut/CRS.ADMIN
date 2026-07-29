@@ -188,6 +188,11 @@ namespace CRS.ADMIN.BUSINESS.RecommendationManagement_V2
         {
             return _repo.DeleteEditorPick(editorPickId, commonRequest);
         }
+
+        public ManageEditorPickCommon GetEditorPickUpdateDetail(string editorPickId, string locationId)
+        {
+            return _repo.GetEditorPickUpdateDetail(editorPickId, locationId);
+        }
         #endregion
 
     }

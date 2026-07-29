@@ -1,626 +1,293 @@
-﻿@model CRS.ADMIN.APPLICATION.Models.RecommendationManagementV2.CommonRecommendationModel
+﻿
+@model CRS.ADMIN.APPLICATION.Models.RecommendationManagementV2.CommonRecommendationModel
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "IndexCopy";
     Layout = "~/Views/Shared/_Layout.cshtml";
     string approved = "Approved";
     string pending = "Pending";
     string rejected = "Rejected";
+
+    var _manageRecommendation = Model.addEditorPick as CRS.ADMIN.APPLICATION.Models.RecommendationManagementV2.AddEditorPick;
+
 }
-<div class="px-8 py-4 flex flex-col gap-8">
+
+<div class="px-8 py-4">
     @Html.AntiForgeryToken()
-    <div class="flex justify-between items-center">
-        <div>
-            <div class="heading-title">@CRS.ADMIN.APPLICATION.Resources.Resource.Recommendation_Requests</div>
-            <div class="span-title-light-gray">@CRS.ADMIN.APPLICATION.Resources.Resource.RecommendationSupportMsg</div>
-        </div>
-    </div>
-    <div class="overall-recommendation">
-        <div class="payment-details flex gap-[45px]">
-            <div class="payment-details-card w-[268px]">
-                <div class="title flex gap-[8px] mb-[12px] items-center">
-                    <div class="logo h-[32px] w-[32px] flex justify-center
-                    items-center rounded-full bg-[#D9EAFA]">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 20 20" fill="none">
-                            <g clip-path="url(#clip0_6409_24911)">
-                                <path d="M17.5 0.5625H2.5C1.4375 0.5625 0.5625 1.4375 0.5625 2.5V17.5C0.5625 18.5625 1.4375 19.4688 2.53125 19.4688H17.5312C18.5938 19.4688 19.5 18.5938 19.5 17.5V2.5C19.4688 1.4375 18.5625 0.5625 17.5 0.5625ZM7.4375 11.7188V7.125H12.5625V11.6875H7.4375V11.7188ZM12.5625 13.125V18.0625H7.4375V13.125H12.5625ZM1.96875 7.125H6.0625V11.6875H1.96875V7.125ZM13.9688 7.125H18.0625V11.6875H13.9688V7.125ZM2.5 1.96875H17.5C17.8125 1.96875 18.0625 2.21875 18.0625 2.53125V5.75H1.96875V2.5C1.96875 2.1875 2.1875 1.96875 2.5 1.96875ZM1.96875 17.5V13.125H6.0625V18.0625H2.5C2.1875 18.0625 1.96875 17.8125 1.96875 17.5ZM17.5 18.0625H13.9688V13.125H18.0625V17.5C18.0625 17.8125 17.8125 18.0625 17.5 18.0625Z"
-                                      fill="#1976D2" />
-                            </g>
-                            <defs>
-                                <clipPath id="clip0_6409_24911">
-                                    <rect width="20" height="20" fill="white" />
-                                </clipPath>
-                            </defs>
-                        </svg>
-                    </div>
-                    <div class="text-lg font-semibold">@CRS.ADMIN.APPLICATION.Resources.Resource.Total_Requests</div>
-                </div>
-                <div class="text-2xl font-semibold mb-[30px]">
-                    301
-                </div>
-
-                @*<hr class="bg-[#F4F4F4] mb-[12px]" />
-
-                    <div class="text-center text-xs cursor-pointer text-[#1C2434]">
-                        @CRS.ADMIN.APPLICATION.Resources.Resource.View_All <i class="las la-angle-right"></i>
-                    </div>*@
-            </div>
-            <div class="payment-details-card w-[268px] flex justify-between flex-col ">
-                <div>
-                    <div class="title flex gap-[8px] mb-[12px] items-center">
-                        <div class="logo h-[32px] w-[32px] flex justify-center
-                    items-center rounded-full bg-[#FEE5CD ]">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 20 20"
-                                 fill="none">
-                                <g clip-path="url(#clip0_6409_24911)">
-                                    <path d="M17.5 0.5625H2.5C1.4375 0.5625 0.5625 1.4375 0.5625 2.5V17.5C0.5625 18.5625 1.4375 19.4688 2.53125 19.4688H17.5312C18.5938 19.4688 19.5 18.5938 19.5 17.5V2.5C19.4688 1.4375 18.5625 0.5625 17.5 0.5625ZM7.4375 11.7188V7.125H12.5625V11.6875H7.4375V11.7188ZM12.5625 13.125V18.0625H7.4375V13.125H12.5625ZM1.96875 7.125H6.0625V11.6875H1.96875V7.125ZM13.9688 7.125H18.0625V11.6875H13.9688V7.125ZM2.5 1.96875H17.5C17.8125 1.96875 18.0625 2.21875 18.0625 2.53125V5.75H1.96875V2.5C1.96875 2.1875 2.1875 1.96875 2.5 1.96875ZM1.96875 17.5V13.125H6.0625V18.0625H2.5C2.1875 18.0625 1.96875 17.8125 1.96875 17.5ZM17.5 18.0625H13.9688V13.125H18.0625V17.5C18.0625 17.8125 17.8125 18.0625 17.5 18.0625Z"
-                                          fill="#F89336" />
-                                </g>
-                                <defs>
-                                    <clipPath id="clip0_6409_24911">
-                                        <rect width="20" height="20" fill="white" />
-                                    </clipPath>
-                                </defs>
-                            </svg>
-                        </div>
-                        <div class="text-lg font-semibold">@CRS.ADMIN.APPLICATION.Resources.Resource.Pending_Requests</div>
-                    </div>
-                    <div class="text-2xl font-semibold mb-[30px]">
-                        209
-                    </div>
-                </div>
-                <div>
-                    @*<hr class="bg-[#F4F4F4] mb-[12px]" />
-                        <div class="text-center text-xs cursor-pointer text-[#1C2434]">
-                            @CRS.ADMIN.APPLICATION.Resources.Resource.View_All <i class="las la-angle-right"></i>
-                        </div>*@
-                </div>
-            </div>
-            <div class="payment-details-card w-[268px] flex justify-between flex-col ">
-                <div>
-                    <div class="title flex gap-[8px] mb-[12px] items-center">
-                        <div class="logo h-[32px] w-[32px] flex justify-center
-                    items-center rounded-full bg-[#C4F7C6 ]">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 20 20"
-                                 fill="none">
-                                <g clip-path="url(#clip0_6409_24911)">
-                                    <path d="M17.5 0.5625H2.5C1.4375 0.5625 0.5625 1.4375 0.5625 2.5V17.5C0.5625 18.5625 1.4375 19.4688 2.53125 19.4688H17.5312C18.5938 19.4688 19.5 18.5938 19.5 17.5V2.5C19.4688 1.4375 18.5625 0.5625 17.5 0.5625ZM7.4375 11.7188V7.125H12.5625V11.6875H7.4375V11.7188ZM12.5625 13.125V18.0625H7.4375V13.125H12.5625ZM1.96875 7.125H6.0625V11.6875H1.96875V7.125ZM13.9688 7.125H18.0625V11.6875H13.9688V7.125ZM2.5 1.96875H17.5C17.8125 1.96875 18.0625 2.21875 18.0625 2.53125V5.75H1.96875V2.5C1.96875 2.1875 2.1875 1.96875 2.5 1.96875ZM1.96875 17.5V13.125H6.0625V18.0625H2.5C2.1875 18.0625 1.96875 17.8125 1.96875 17.5ZM17.5 18.0625H13.9688V13.125H18.0625V17.5C18.0625 17.8125 17.8125 18.0625 17.5 18.0625Z"
-                                          fill="#28A745" />
-                                </g>
-                                <defs>
-                                    <clipPath id="clip0_6409_24911">
-                                        <rect width="20" height="20" fill="white" />
-                                    </clipPath>
-                                </defs>
-                            </svg>
-                        </div>
-                        <div class="text-lg font-semibold">@CRS.ADMIN.APPLICATION.Resources.Resource.Approved_Requests</div>
-                    </div>
-                    <div class="text-2xl font-semibold mb-[30px]">
-                        90
-                    </div>
-                </div>
-                <div>
-                    @*<hr class="bg-[#F4F4F4] mb-[12px]" />
-
-                        <div class="text-center text-xs cursor-pointer text-[#1C2434]">
-                            @CRS.ADMIN.APPLICATION.Resources.Resource.View_All <i class="las la-angle-right"></i>
-                        </div>*@
-                </div>
-            </div>
-            <div class="payment-details-card w-[268px] flex justify-between flex-col ">
-                <div>
-                    <div class="title flex gap-[8px] mb-[12px] items-center">
-                        <div class="logo h-[32px] w-[32px] flex justify-center
-                    items-center rounded-full bg-[#FFCACA]">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 20 20"
-                                 fill="none">
-                                <g clip-path="url(#clip0_6409_24911)">
-                                    <path d="M17.5 0.5625H2.5C1.4375 0.5625 0.5625 1.4375 0.5625 2.5V17.5C0.5625 18.5625 1.4375 19.4688 2.53125 19.4688H17.5312C18.5938 19.4688 19.5 18.5938 19.5 17.5V2.5C19.4688 1.4375 18.5625 0.5625 17.5 0.5625ZM7.4375 11.7188V7.125H12.5625V11.6875H7.4375V11.7188ZM12.5625 13.125V18.0625H7.4375V13.125H12.5625ZM1.96875 7.125H6.0625V11.6875H1.96875V7.125ZM13.9688 7.125H18.0625V11.6875H13.9688V7.125ZM2.5 1.96875H17.5C17.8125 1.96875 18.0625 2.21875 18.0625 2.53125V5.75H1.96875V2.5C1.96875 2.1875 2.1875 1.96875 2.5 1.96875ZM1.96875 17.5V13.125H6.0625V18.0625H2.5C2.1875 18.0625 1.96875 17.8125 1.96875 17.5ZM17.5 18.0625H13.9688V13.125H18.0625V17.5C18.0625 17.8125 17.8125 18.0625 17.5 18.0625Z"
-                                          fill="#CB3F3F" />
-                                </g>
-                                <defs>
-                                    <clipPath id="clip0_6409_24911">
-                                        <rect width="20" height="20" fill="white" />
-                                    </clipPath>
-                                </defs>
-                            </svg>
-                        </div>
-                        <div class="text-lg font-semibold">@CRS.ADMIN.APPLICATION.Resources.Resource.Rejected_Requests</div>
-                    </div>
-                    <div class="text-2xl font-semibold mb-[30px]">
-                        90
-                    </div>
-                </div>
-                <div>
-                    @*<hr class="bg-[#F4F4F4] mb-[12px]" />
-                        <div class="text-center text-xs cursor-pointer text-[#1C2434]">
-                            @CRS.ADMIN.APPLICATION.Resources.Resource.View_All<i class="las la-angle-right"></i>
-                        </div>*@
-                </div>
+    <div class="flex flex-col  gap-6">
+        <div class="flex justify-between items-center">
+            <div>
+                <div class="heading-title">@CRS.ADMIN.APPLICATION.Resources.Resource.Recommendation_Requests</div>
+                <div class="span-title-light-gray">@CRS.ADMIN.APPLICATION.Resources.Resource.RecommendationSupportMsg</div>
             </div>
         </div>
-    </div>
-    <div class="divider-common m-0 h-[1px]">
-    </div>
-    <div class="flex flex-col gap-4">
-        <div class="">
-            <div class="flex gap-[24px]" style="border-bottom: 1px solid #f4f4f4;">
-                <div class="flex tab-container-plane bg-white gap-[16px]">
-                    <div onclick="getActiveButtonValue()">
-                        <button id="tab1Button" class="tab-button-plane tab-link">@CRS.ADMIN.APPLICATION.Resources.Resource.Requests</button>
-                    </div>
-                    <div onclick="getActiveButtonValue()">
-                        <button id="tab2Button" class="tab-button-plane tab-link active">@CRS.ADMIN.APPLICATION.Resources.Resource.Configure</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="">
-            <div class="bg-white">
-                <div id="tab1" class="tab-content-plane hidden">
-                    <!--Request tab here-->
-                    <div class="flex justify-between mb-4">
-                        <form>
-                            <div class="relative input-search-wrapper">
-                                <div class="absolute inset-y-0 left-0 flex items-center pl-[16px] pointer-events-none">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21" fill="none">
-                                        <path d="M17.5 18L13.875 14.375M15.8333 9.66667C15.8333 13.3486 12.8486 16.3333 9.16667 16.3333C5.48477 16.3333 2.5 13.3486 2.5 9.66667C2.5 5.98477 5.48477 3 9.16667 3C12.8486 3 15.8333 5.98477 15.8333 9.66667Z"
-                                              stroke="#667085" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round">
-                                        </path>
-                                    </svg>
-                                </div>
-                                <input type="search" id="default-search" class="input-search block w-full " placeholder="Search"
-                                       required="">
-                            </div>
-                        </form>
-                        <div class="export-button h-[40px]">
-                            <img src="/Content/assets_new/images/club/download-solid.svg" /> @CRS.ADMIN.APPLICATION.Resources.Resource.Export
+
+        <div id="tabV1" class="tab-content-planeV3">
+            <div class="flex flex-col gap-8">
+                <div id="tabV1" class="tab-content">
+                    <div class="flex gap-4 mb-8 border-b ">
+
+                        <div id="tabMainLink" class="styleCss px-1 pb-4 cursor-pointer active" onclick="changeTabV1('all', 'tabMainLink')">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Main_Page
+                        </div>
+
+                        <div id="tabEditorLink" class="styleCss px-1 pb-4 cursor-pointer" onclick="changeTabV1('request1','tabEditorLink')">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Editors_Pick
                         </div>
                     </div>
-                    <div class="table-tab">
-                        <div class="px-[12px] py-[16px] flex justify-between entry-export-container">
-                            @*<div class="flex items-center select-entries">
-                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Show&nbsp;
-                                    <select id="countries" class="w-full select-entires " style="width: 100%; ">
-                                        <option value="5" selected>5</option>
-                                        <option value="10">10</option>
-                                        <option value="15">15</option>
-                                        <option value="20">100</option>
-                                    </select>&nbsp;@CRS.ADMIN.APPLICATION.Resources.Resource.Entries
-                                </div>*@
-                        </div>
-                        <div class="relative overflow-x-auto">
-                            <table class="w-full  text-left club-table">
-                                <thead class="club-table-thead">
-                                    <tr>
-                                        <th scope="col" class="p-[12px]">
-                                            <div class="flex">
-                                                S.N
-                                                <div class="relative pl-[5px]">
-                                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
-                                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
-                                                </div>
-                                            </div>
-                                        </th>
-                                        <th scope="col" class="p-[12px]">
-                                            <div class="flex">
-                                                @CRS.ADMIN.APPLICATION.Resources.Resource.Club_Profile
-                                                <div class="relative pl-[5px]">
-                                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
-                                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
-                                                </div>
-                                            </div>
-                                        </th>
-                                        <th scope="col" class="p-[12px]">
-                                            <div class="flex">
-                                                @CRS.ADMIN.APPLICATION.Resources.Resource.Location
-                                                <div class="relative pl-[5px]">
-                                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
-                                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
-                                                </div>
-                                            </div>
-                                        </th>
-                                        <th scope="col" class="p-[12px]">
-                                            <div class="flex">
-                                                @CRS.ADMIN.APPLICATION.Resources.Resource.Status
-                                                <div class="relative pl-[5px]">
-                                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
-                                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
-                                                </div>
-                                            </div>
-                                        </th>
-                                        <th scope="col" class="p-[12px]">
-                                            <div class="flex">
-                                                @CRS.ADMIN.APPLICATION.Resources.Resource.Requested_Date
-                                                <div class="relative pl-[5px]">
-                                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
-                                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
-                                                </div>
-                                            </div>
-                                        </th>
-                                        <th scope="col" class="p-[12px]">
-                                            <div class="flex">
-                                                @CRS.ADMIN.APPLICATION.Resources.Resource.Updated_Date
-                                                <div class="relative pl-[5px]">
-                                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
-                                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
-                                                </div>
-                                            </div>
-                                        </th>
-                                        <th scope="col" class="p-[12px]">
-                                            <div class="flex">
-                                                @CRS.ADMIN.APPLICATION.Resources.Resource.Display_Page
-                                                <div class="relative pl-[5px]">
-                                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
-                                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
-                                                </div>
-                                            </div>
-                                        </th>
-                                        <th scope="col" class="p-[12px]">
-                                            <div class="flex">
-                                                @CRS.ADMIN.APPLICATION.Resources.Resource.Action
-                                                <div class="relative pl-[5px]">
-                                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
-                                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
-                                                </div>
-                                            </div>
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @{
-                                        int sno1 = 1;
-                                        foreach (var item in Model.GetClubRecommendationrequestList)
-                                        {
-                                            <tr class="bg-white border-b ">
-                                                <td class="p-[12px]">
-                                                    @sno1
-                                                </td>
-                                                <td class="p-[12px]">
-                                                    <div class="round-image-text flex gap-[12px] w-max ">
-                                                        <img class="w-[32px] h-[32px] rounded-full" src="@item.ClubLogo" />
+                    <div class="flex justify-between pb-[24px]">
 
-                                                        <div class="flex justify-between w-full">
-                                                            <div class="text-image grid flex-none">
-                                                                <div class="text-sm font-semibold text-[#101828] ">@item.ClubName</div>
-                                                                <div class="platinum ">@item.ClubCategory</div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td class="p-[12px]">
-                                                    <div class="w-max">
-                                                        @item.LocationName
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    @if (!string.IsNullOrEmpty(item.Status) && item.Status.Trim().ToUpper() == "APPROVED")
-                                                    {
-                                                        <div class="approved">
-                                                            @approved
-                                                        </div>
-                                                    }
-                                                    else if (!string.IsNullOrEmpty(item.Status) && item.Status.Trim().ToUpper() == "PENDING")
-                                                    {
-                                                        <div class="pending">
-                                                            @pending
-                                                        </div>
-                                                    }
-                                                    else
-                                                    {
-                                                        <div class="rejected">
-                                                            @rejected
-                                                        </div>
-                                                    }
-                                                </td>
-                                                <td class="p-[12px]">
-                                                    <div class="w-max">
-                                                        @item.RequestedDate
-                                                    </div>
-                                                </td>
-                                                <td class="p-[12px]">
-                                                    <div class="w-max">
-                                                        @item.UpdatedDate
-                                                    </div>
-                                                </td>
-                                                <td class="p-[12px]">
-                                                    <div class="w-max">
-                                                        @item.DisplayPage
-                                                    </div>
-                                                </td>
-                                                <td class="p-[12px]">
-                                                    <div class="flex gap-2 items-center">
-                                                        @{
-                                                            if (!string.IsNullOrEmpty(item.DisplayPage) && item.DisplayPage.Trim().ToUpper() == "MAIN PAGE")
-                                                            {
-                                                                if (!string.IsNullOrEmpty(item.Status) && item.Status.Trim().ToUpper() == "PENDING")
-                                                                {
-                                                                    <i class="fa-regular fa-pen-to-square text-[20px] text-[#989898] cursor-pointer" onclick="GotoMainPageRecommendationReqUpdate('@item.ClubId','@item.LocationId','@item.DisplayId','@item.RecommendationHoldId')"></i>
-                                                                    @*<i class="las la-window-close text-[24px] text-[#CB3F3F] cursor-pointer " data-modal-target="popup-modal-reject-mainpage" data-modal-toggle="popup-modal-reject-mainpage" alt="" onclick="rejectMainPage('@item.RecommendationHoldId','@item.ClubId','@item.DisplayId','@item.LocationId')"></i>
-                                                                        <img src="/Content/assets_new/images/check-square.svg"
-                                                                             data-modal-target="popup-modal-accept"
-                                                                             data-modal-toggle="popup-modal-accept" alt="" class="cursor-pointer" onclick="acceptMainPage('@item.RecommendationHoldId','@item.ClubId','@item.DisplayId','@item.LocationId')">*@
-                                                                }
-
-                                                            }
-                                                            else if (!string.IsNullOrEmpty(item.DisplayPage) && item.DisplayPage.Trim().ToUpper() == "SEARCH RESULT PAGE")
-                                                            {
-                                                                if (!string.IsNullOrEmpty(item.Status) && item.Status.Trim().ToUpper() == "PENDING")
-                                                                {
-                                                                    <i class="las la-window-close text-[24px] text-[#CB3F3F] cursor-pointer " data-modal-target="popup-modal-reject" data-modal-toggle="popup-modal-reject" alt="" onclick="rejectReq('@item.RecommendationHoldId','@item.ClubId','@item.DisplayId','@item.LocationId')"></i>
-                                                                    <img src="/Content/assets_new/images/check-square.svg"
-                                                                         data-modal-target="popup-modal-accept"
-                                                                         data-modal-toggle="popup-modal-accept" alt="" class="cursor-pointer" onclick="acceptReq('@item.RecommendationHoldId','@item.ClubId','@item.DisplayId','@item.LocationId')">
-
-                                                                }
-                                                            }
-                                                            else
-                                                            {
-                                                                if (!string.IsNullOrEmpty(item.Status) && item.Status.Trim().ToUpper() == "PENDING")
-                                                                {
-                                                                    <i class="las la-window-close text-[24px] text-[#CB3F3F] cursor-pointer " data-modal-target="popup-modal-reject" data-modal-toggle="popup-modal-reject" alt="" onclick="rejectReq('@item.RecommendationHoldId','@item.ClubId','@item.DisplayId','@item.LocationId')"></i>
-                                                                    <img src="/Content/assets_new/images/check-square.svg"
-                                                                         data-modal-target="popup-modal-accept"
-                                                                         data-modal-toggle="popup-modal-accept" alt="" class="cursor-pointer" onclick="acceptReq('@item.RecommendationHoldId','@item.ClubId','@item.DisplayId','@item.LocationId')">
-                                                                }
-                                                            }
-                                                        }
-
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            sno1++;
-                                        }
-                                    }
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="pagination-club">
-                            @*<div class="show-entry"> @CRS.ADMIN.APPLICATION.Resources.Resource.Showing 1 to 5 of 301  @CRS.ADMIN.APPLICATION.Resources.Resource.Entries</div>
-                                <div class="flex gap-[12px]">
-                                    <div class="btn btn-secondary-box-shadow "> @CRS.ADMIN.APPLICATION.Resources.Resource.Previous</div>
-                                    <div class="flex gap-[12px]">
-                                        <div class="pagination-number active">
-                                            1
-                                        </div>
-                                        <div class="pagination-number">
-                                            2
-                                        </div>
-                                        <div class="pagination-number">
-                                            3
-                                        </div>
-                                        <div class="pagination-number">
-                                            ..
-                                        </div>
-                                        <div class="pagination-number">
-                                            10
-                                        </div>
-                                    </div>
-                                    <div class="btn btn-secondary-box-shadow "> @CRS.ADMIN.APPLICATION.Resources.Resource.Next</div>
-                                </div>*@
-                        </div>
                     </div>
-                </div>
-                <div id="tab2" class="tab-content-plane  ">
-                    <!--configure tab here-->
-                    <div class="table-tab">
-                        @*<div class="px-[12px] py-[16px] flex justify-between entry-export-container">
-                                <div class="flex items-center select-entries">
-                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Show&nbsp;
-                                    <select id="countries" class="w-full select-entires " style="width: 100%; ">
-                                        <option value="5" selected>5</option>
-                                        <option value="10">10</option>
-                                        <option value="15">15</option>
-                                        <option value="20">100</option>
-                                    </select>&nbsp; @CRS.ADMIN.APPLICATION.Resources.Resource.Entries
-                                </div>
-                            </div>*@
-                        <div class="relative overflow-x-auto">
-                            <table class="w-full  text-left club-table">
-                                <thead class="club-table-thead">
-                                    <tr>
-                                        <th scope="col" class="p-[12px]">
-                                            <div class="flex">
-                                                S.N
-                                                <div class="relative pl-[5px]">
-                                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
-                                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
-                                                </div>
-                                            </div>
-                                        </th>
-                                        <th scope="col" class="p-[12px]">
-                                            <div class="flex">
-                                                @CRS.ADMIN.APPLICATION.Resources.Resource.Location
-                                                <div class="relative pl-[5px]">
-                                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
-                                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
-                                                </div>
-                                            </div>
-                                        </th>
-                                        <th scope="col" class="p-[12px]">
-                                            <div class="flex justify-center">
-                                                @CRS.ADMIN.APPLICATION.Resources.Resource.Action
-                                                <div class="relative pl-[5px]">
-                                                    <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
-                                                    <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
-                                                </div>
-                                            </div>
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @{
-                                        int sno = 1;
-                                        foreach (var item in Model.GetLocationList)
-                                        {
-                                            <tr class="bg-white border-b ">
-                                                <td class="p-[12px]">
-                                                    @sno
-                                                </td>
-                                                <td class="p-[12px]">
-                                                    @item.LocationName
-                                                </td>
-                                                <td class="p-[12px]">
-                                                    <div class="flex gap-2 items-center justify-center">
-                                                        <i class="las la-eye text-[24px] text-[#e3ab00] cursor-pointer" onclick="GotoDisplayPageView('@item.LocationId')"></i>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            sno++;
-                                        }
-                                    }
-                                </tbody>
-                            </table>
-                        </div>                    
+
+                    <div class="pane active table-tab" id="all">
+                        @if (!string.IsNullOrEmpty(Convert.ToString(Model.GetClubRecommendationrequestList)))
+                        {
+                            @Html.Partial("_GetMainPagePartialView", Model)
+                        }
+                    </div>
+                    <div class="pane" id="request1" style="display: none;">
+                        @if (!string.IsNullOrEmpty(Convert.ToString(Model.GetRecommendationEditorPickResponseList)))
+                        {
+                            @Html.Partial("_GetEditorPickPartialView", Model)
+                        }
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<!--accept pop up modal for search and home page recommendation request-->
-<div id="popup-modal-accept" tabindex="-1"
-     class="fixed top-0 left-0 right-0 z-50 hidden p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
-    <div class="relative w-full max-w-md max-h-full">
-        <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-            <div class="p-6 text-start">
-                <div class=" pb-[11px] border-b border-[rgba(44, 44, 44, 0.08)] text-base font-semibold text-secondary-100">
-                    @CRS.ADMIN.APPLICATION.Resources.Resource.Confirmation
-                    <button type="button"
-                            class="absolute top-4 right-3 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
-                            data-modal-hide="popup-modal-accept">
-                        <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-                             viewBox="0 0 14 14">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                  d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
-                        </svg>
-                    </button>
-                </div>
-                <div>
-                    <div class="pt-[20px] text-base  text-secondary-100">
-                        @CRS.ADMIN.APPLICATION.Resources.Resource.RecommendationAcceptWarnMsg
+
+
+<div class="flex justify-between pb-[24px]">
+
+
+</div>
+
+<div id="delete-editor-pick-confirmation1" tabindex="-1" aria-hidden="false" class="fixed top-0 left-0 right-0 z-50 hidden w-full
+     p-4 overflow-x-hidden overflow-y-auto
+     md:inset-0 h-[calc(100%-1rem)] max-h-full " style="align-items: flex-start;">
+    <div class="relative max-w-2xl max-h-full w-[412px] px-4 pt-[40px] pb-[46px] mt-24">
+        <!-- Modal content -->
+        <div class="relative bg-white rounded-lg shadow">
+            <!-- Modal header -->
+            <button type="button"
+                    class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center absolute top-[24px] right-[20px] "
+                    data-modal-hide="delete-editor-pick-confirmation1">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="25" viewBox="0 0 24 25" fill="none">
+                    <rect y="0.621094" width="24" height="24" rx="12" fill="#FAFAFA" />
+                    <path d="M5.41406 4.95703L4.33594 6.03516L10.9219 12.6211L4.33594 19.207L5.41406 20.2852L12 13.6992L18.5859 20.2852L19.6641 19.207L13.0781 12.6211L19.6641 6.03516L18.5859 4.95703L12 11.543L5.41406 4.95703Z"
+                          fill="#7A7A7A" />
+                </svg>
+            </button>
+            <!-- Modal body -->
+            <div class="grid gap-6 px-[20px] py-8">
+                <div class="text-[#333] font-semibold pb-[11px] border-b border-[#eeeeee]">@CRS.ADMIN.APPLICATION.Resources.Resource.Confirmation</div>
+                <div class="grid gap-[20px] text-[#062937] mb-[45px]">
+                    <div class="text-[14px] text-secondary-text-2 text-start" id="confirmationRequestMessage">
+                        @CRS.ADMIN.APPLICATION.Resources.Resource.PlanRequestConfirmationMessage
                     </div>
+                </div>
+                <div class="flex justify-end">
                     <div class="flex gap-2 justify-end mt-[45px]">
-                        <input id="ConfirmationRecommendationHoldId" value="" hidden />
-                        <input id="ConfirmationClubId" value="" hidden />
-                        <input id="ConfirmationDisplayId" value="" hidden />
-                        <input id="ConfirmationLocationId" value="" hidden />
-                        <div class="btn btn-secondary w-[110px]" data-modal-hide="popup-modal-accept">@CRS.ADMIN.APPLICATION.Resources.Resource.Cancel</div>
-                        <div class="btn btn-primary w-[110px]" onclick="acceptSearchAndHomePageReq()">@CRS.ADMIN.APPLICATION.Resources.Resource.Confirm</div>
+                        <input id="request_ids" value="" hidden />
+                        <div class="btn btn-secondary w-[110px]" id="approve_ids1" data-modal-hide="delete-editor-pick-confirmation1">@CRS.ADMIN.APPLICATION.Resources.Resource.clubNo</div>
+                        <div class="btn btn-primary w-[110px]" onclick="DeleteEditorPickerFunction()" data-vals1="" data-vals2="" data-vals3="" id="approve_ids1">@CRS.ADMIN.APPLICATION.Resources.Resource.clubYes</div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<!--reject pop up modal for search and home page recommendation request-->
-<div id="popup-modal-reject" tabindex="-1"
-     class="fixed top-0 left-0 right-0 z-50 hidden p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
-    <div class="relative w-full max-w-md max-h-full">
-        <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-            <div class="p-6 text-start">
-                <div class=" pb-[11px] border-b border-[rgba(44, 44, 44, 0.08)] text-base font-semibold text-secondary-100">
-                    @CRS.ADMIN.APPLICATION.Resources.Resource.Confirmation
-                    <button type="button"
-                            class="absolute top-4 right-3 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
-                            data-modal-hide="popup-modal-reject">
-                        <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-                             viewBox="0 0 14 14">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                  d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
-                        </svg>
-                    </button>
-                </div>
-                <div>
-                    <div class="pt-[20px] text-base  text-secondary-100">
-                        @CRS.ADMIN.APPLICATION.Resources.Resource.RecommendationAcceptWarnMsg
-                    </div>
-                    <div class="flex gap-2 justify-end mt-[45px]">
-                        <input id="ConfirmationRecommendationHoldId" value="" hidden />
-                        <input id="ConfirmationClubId" value="" hidden />
-                        <input id="ConfirmationDisplayId" value="" hidden />
-                        <input id="ConfirmationLocationId" value="" hidden />
-                        <div class="btn btn-secondary w-[110px]" data-modal-hide="popup-modal-reject">@CRS.ADMIN.APPLICATION.Resources.Resource.Cancel</div>
-                        <div class="btn btn-primary w-[110px]" onclick="rejectSearchAndHomePageReq()" id="btn_submit">@CRS.ADMIN.APPLICATION.Resources.Resource.Confirm</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+
+@Html.Partial("_ManageEditorPick", _manageRecommendation)
+
+
 @section scripts{
-    <script>
-        function getActiveButtonValue() {
-            const activeButton = document.querySelector('.tab-link.active');
-            const overallRecommendationDiv = document.querySelector('.overall-recommendation');
-            if (activeButton) {
-                const activeButtonValue = activeButton.textContent;
 
-                if (activeButtonValue === "Configure") {
-                    overallRecommendationDiv.style.display = 'none';
+    <script>
+    $(document).ready(function () {
+        $('select').select2({
+            minimumResultsForSearch: Infinity
+        })
+             $('#large1[name="NewDiscountCategoryDDL"]').select2({
+                 width: 'resolve'
+             });
+             $('#large1[name="ClubDDLList"]').select2({
+                 width: 'resolve'
+             });
+             $('#large1[name="LocationDDL1"]').select2({
+                 width: 'resolve'
+             });
+             var RequestVerificationToken = $('input[name="__RequestVerificationToken"]').val();
+
+             $('.LocationDDL1').change(function () {
+                  $(".ClubDDLList").empty().prepend("<option value='' disabled selected>@CRS.ADMIN.APPLICATION.Resources.Resource.Select_Club</option>");
+                 var locationId = document.getElementsByName("LocationDDL1")[0].value;
+                 var agentId = document.getElementsByName("ClubDDLList")[0].value;
+               if (!Boolean(locationId)) {
+                       toastr.info('Location is required');
+                   return false;
+               }
+               $.ajax({
+                    type: 'POST',
+                    async: true,
+                    url: '@Url.Action("GetClubListByLocation")',
+                    dataType: 'json',
+                   data: { '__RequestVerificationToken': RequestVerificationToken, locationId ,agentId },
+                   success: function (data) {
+                       $.each(data.clubLists, function (i, ClubDDLList) {
+                           $(".ClubDDLList").append('<option value="' + ClubDDLList.Value + '">' + ClubDDLList.Text + '</option>');
+                        });
+
+                    },
+                    error: function (ex) {
+                       toastr.info('Failed to retrive club.');
+                    }
+                });
+                return false;
+             });
+
+
+
+          var PopUpRenderValue = '@ViewBag.PopUpRenderValue';
+        var PopUpClubManageValue = '@ViewBag.PopUpClubManageValue';
+        if (PopUpRenderValue != null && PopUpRenderValue != "" && PopUpRenderValue == "ManageEditorPick") {
+              var element = document.getElementById('add-manage-editor-page');
+                element.classList.remove('translate-x-full');
+              }
+          //else if (PopUpClubManageValue == "ManageClubPlan") {
+          //    element1 = document.getElementById('add-manage-club-own-plan');
+          //    element1.classList.remove('translate-x-full');
+          //}
+              let tabValue = "@ViewBag.TabValue" ?? "";
+              if (tabValue === "02") {
+                  const link1 = document.getElementById('tabMainLink');
+                  const link2 = document.getElementById('tabEditorLink');
+                  link1.style.color = '';
+                  link1.style.borderBottom = '';
+                  link2.style.color = '#D75A8B';
+                  link2.style.borderBottom = '#D75A8B 2px solid';
+                  document.getElementById('request1').style.display = 'block';
+                  document.getElementById('all').style.display = 'none';
+
+              }
+              else {
+                  const link1 = document.getElementById('tabMainLink');
+                  const link2 = document.getElementById('tabEditorLink');
+                  link1.style.color = '#D75A8B';
+                  link1.style.borderBottom = '#D75A8B 2px solid';
+                  link2.style.color = '';
+                  link2.style.borderBottom = '';
+                  document.getElementById('request1').style.display = 'none';
+                  document.getElementById('all').style.display = 'block';
+
+              }
+      });
+    </script>
+    <script>
+     document.addEventListener('DOMContentLoaded', function () {
+             const page_size = @ViewBag.PageSize;
+             const total_data = @ViewBag.TotalData;
+             const start_index_val = @ViewBag.StartIndex;
+         let URL = "/RecommendationManagementV2/Index?TabValue=02";
+            let search_filter = $('#default-search-plan_list').val();
+             URL = addQueryParam(URL, 'SearchFilter', search_filter);
+             LoadPagination(page_size, total_data, start_index_val, URL);
+         });
+    </script>
+
+    <script>
+
+        document.getElementById('tabMainLink').style.color = '#D75A8B';
+        document.getElementById('tabMainLink').style.borderBottom = '#D75A8B 2px solid';
+
+        function changeTabV1(selectedTabId, selectedLinkId) {
+            const tabLinks = document.querySelectorAll('.styleCss');
+            const tabContents = document.querySelectorAll('.pane');
+            tabLinks.forEach(link => {
+                if (link.id === selectedLinkId) {
+                    link.classList.add('active');
                 } else {
-                    overallRecommendationDiv.style.display = 'block';
+                    link.classList.remove('active');
                 }
+            });
+
+            tabContents.forEach(content => {
+                if (content.id === selectedTabId) {
+                    content.style.display = 'block';
+                } else {
+                    content.style.display = 'none';
+                }
+            });
+            if (selectedLinkId === 'tabMainLink') {
+                const link1 = document.getElementById('tabMainLink');
+                const link2 = document.getElementById('tabEditorLink');
+                link1.style.color = '#D75A8B';
+                link1.style.borderBottom = '#D75A8B 2px solid';
+                link2.style.color = '';
+                link2.style.borderBottom = '';
+                let URL2 = "/RecommendationManagementV2/Index";
+                let search_filter2 = $('#default-search-plan_list').val();
+                URL = addQueryParam3(URL2, 'TabValue', '', 'SearchFilter', search_filter2);
+                window.location.href = URL
+            }
+            else if (selectedLinkId === 'tabEditorLink') {
+                const link1 = document.getElementById('tabMainLink');
+                const link2 = document.getElementById('tabEditorLink');
+                link1.style.color = '';
+                link1.style.borderBottom = '';
+                link2.style.color = '#D75A8B';
+                link2.style.borderBottom = '#D75A8B 2px solid';
+                let URL2 = "/RecommendationManagementV2/Index";
+                let search_filter2 = $('#default-search-plan-request').val();
+                URL = addQueryParam3(URL2, 'TabValue', '02', 'SearchFilter', search_filter2);
+                window.location.href = URL
             }
         }
+        function addQueryParam3(url, paramName, paramValue, paramName2, paramValue2) {
+            if (paramValue != null && paramValue != "") {
+                url += url.includes('?') ? `&${paramName}=${paramValue}` : `?${paramName}=${paramValue}`;
+            }
+            if (paramValue2 != null && paramValue2 != "") {
+                url += url.includes('?') ? `&${paramName2}=${paramValue2}` : `?${paramName2}=${paramValue2}`;
+            }
 
-        // Run the function when the page is loaded
-        document.addEventListener('DOMContentLoaded', getActiveButtonValue);
-    </script>
-    <script>
-        function GotoDisplayPageView(locationid) {
-            window.location.href = "/RecommendationManagementV2/DisplayPageView?locationId=" + locationid;
+            return url;
         }
-        function GotoMainPageRecommendationReqUpdate(clubid, locationid, displayid, recommendationHoldid) {
-            window.location.href = "/RecommendationManagementV2/ManageMainPageRecommendationReqForUpdate?clubid=" + clubid + '&locationid=' + locationid + '&displayid=' + displayid + '&recommendationholdid=' + recommendationHoldid;
-        }
-        function rejectSearchAndHomePageReq() {
-            let recommendationHoldId = $('#ConfirmationRecommendationHoldId').val(), clubid = $('#ConfirmationClubId').val(), displayid = $('#ConfirmationDisplayId').val(), locationid = $('#ConfirmationLocationId').val();
-            $.ajax({
-                type: 'POST',
-                async: true,
-                url: "/RecommendationManagementV2/RejectHomeAndSearchPageRecommendationRequest?recommendationHoldId=" + recommendationHoldId + "&displayid=" + displayid + "&clubid=" + clubid + '&locationid=' + locationid,
-                dataType: 'json',
-                data: {
-                    __RequestVerificationToken: $('input[name="__RequestVerificationToken"]').val(),
-                },
-                success: function (responseData) {
-                    window.location.reload();
-                },
-                error: function (ex) {
 
-                }
+    function DeletePickerFunction(id, status) {
+      const $modal = $("#delete-editor-pick-confirmation1");
+      const $message = $("#confirmationRequestMessage");
+      const $approveBtn = $("#approve_ids1");
+      //const contentApprove = "Are you sure you want to delete this club plan ?";
+      const contentApprove = "Are you sure you want to delete";
+        $message.text(contentApprove);
+        $approveBtn.attr({
+            "data-vals1": id
+    });
+        $modal.removeClass("hidden").attr("aria-hidden", "false");
+    }
+
+    function DeleteEditorPickerFunction() {
+        const id = $('#approve_ids1').attr('data-vals1');
+        let search_filter2 = $('#default-search-plan-request').val();
+        const start_index_val2 = 0;//@ViewBag.StartIndex;
+        const page_size2 = 10;//@ViewBag.PageSize;
+        window.location.href = '/RecommendationManagementV2/DeleteEditorPickDetail'
+            + '?editorpickid=' + id
+            + '&SearchFilter=' + search_filter2
+            + '&StartIndex=' + start_index_val2
+            + '&PageSize=' + page_size2;
+        }
+
+
+        document.getElementById('CancelEditorId').addEventListener('click',
+            function (event) {
+                event.preventDefault();
+                window.location.reload();
             });
-        }
-        function rejectReq(recommendationHoldId, clubid, displayid, locationid) {
-            $('#ConfirmationRecommendationHoldId').val(recommendationHoldId);
-            $('#ConfirmationClubId').val(clubid);
-            $('#ConfirmationDisplayId').val(displayid);
-            $('#ConfirmationLocationId').val(locationid);
-        }
-        function acceptReq(recommendationHoldId, clubid, displayid, locationid) {
-            $('#ConfirmationRecommendationHoldId').val(recommendationHoldId);
-            $('#ConfirmationClubId').val(clubid);
-            $('#ConfirmationDisplayId').val(displayid);
-            $('#ConfirmationLocationId').val(locationid);
-        }
-        function acceptSearchAndHomePageReq() {
-            let recommendationHoldId = $('#ConfirmationRecommendationHoldId').val(), clubid = $('#ConfirmationClubId').val(), displayid = $('#ConfirmationDisplayId').val(), locationid = $('#ConfirmationLocationId').val();
-            $.ajax({
-                type: 'POST',
-                async: true,
-                url: "/RecommendationManagementV2/ApproveHomeAndSearchPageRecommendationReq?recommendationHoldId=" + recommendationHoldId + "&displayid=" + displayid + "&clubid=" + clubid + '&locationid=' + locationid,
-                dataType: 'json',
-                data: {
-                    __RequestVerificationToken: $('input[name="__RequestVerificationToken"]').val(),
-                },
-                success: function (responseData) {
-                    window.location.reload();
-                },
-                error: function (ex) {
-
-                }
-            });
-        }
     </script>
+
+
+
 }
+

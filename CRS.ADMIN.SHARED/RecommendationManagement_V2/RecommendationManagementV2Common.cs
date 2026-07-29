@@ -239,7 +239,7 @@ namespace CRS.ADMIN.SHARED.RecommendationManagement_V2
     #endregion
 
     #region "Manage Editor's Pick Response"
-    public class RecommendationEditorPickResponseListModelCommon
+    public class RecommendationEditorPickResponseListModelCommon : PaginationResponseCommon
     {
         public string EditorPickId { get; set; }
         public string ClubId { get; set; }

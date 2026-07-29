@@ -44,6 +44,7 @@ namespace CRS.ADMIN.REPOSITORY.RecommendationManagement_V2
         ManageEditorPickCommon GetEditorPickDetail(string editorPickId = "", string locationId = "");
         CommonDbResponse ManageEditorPick(ManageEditorPickCommon commonModel);
         CommonDbResponse DeleteEditorPick(string editorPickId, Common commonRequest);
+        ManageEditorPickCommon GetEditorPickUpdateDetail(string editorPickId, string locationId);
         #endregion
     }
 }

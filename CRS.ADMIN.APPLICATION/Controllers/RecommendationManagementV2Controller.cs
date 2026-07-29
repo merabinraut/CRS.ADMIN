@@ -1,25 +1,31 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Linq;
-using System.Net.Http;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using System.Web;
-using System.Web.Mvc;
-using CRS.ADMIN.APPLICATION.CustomHelpers;
+﻿using CRS.ADMIN.APPLICATION.CustomHelpers;
 using CRS.ADMIN.APPLICATION.Helper;
 using CRS.ADMIN.APPLICATION.Library;
+using CRS.ADMIN.APPLICATION.Models.PlanManagement;
 using CRS.ADMIN.APPLICATION.Models.RecommendationManagementV2;
+using CRS.ADMIN.APPLICATION.Models.TagManagement;
 using CRS.ADMIN.BUSINESS.RecommendationManagement_V2;
 using CRS.ADMIN.SHARED;
 using CRS.ADMIN.SHARED.PaginationManagement;
 using CRS.ADMIN.SHARED.RecommendationManagement_V2;
 using DocumentFormat.OpenXml.EMMA;
 using DocumentFormat.OpenXml.Office2010.Excel;
+using DocumentFormat.OpenXml.Spreadsheet;
+using DocumentFormat.OpenXml.Wordprocessing;
 using Microsoft.Ajax.Utilities;
 using Microsoft.Office.Interop.Excel;
 using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Configuration;
+using System.Drawing.Printing;
+using System.Linq;
+using System.Net.Http;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
+using System.Web;
+using System.Web.Mvc;
 using WebGrease.Css.Ast;
 using static Google.Apis.Requests.BatchRequest;
 
@@ -34,7 +40,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
         }
         #region "Recommendation Request and Location Management"
 
-        public ActionResult Index()
+        public ActionResult IndexV2()
         {
 
             Session["CurrentURL"] = "/RecommendationManagementV2/Index";
@@ -1407,21 +1413,22 @@ namespace CRS.ADMIN.APPLICATION.Controllers
         }
         #endregion
         [OverrideActionFilters]
-        public ActionResult IndexCopy(CommonRecommendationModel req, string tabValue = "")
-        {        
-            Session["CurrentURL"] = "/RecommendationManagementV2/IndexCopy";
+        public ActionResult Index(CommonRecommendationModel req, string tabValue = "", string SearchFilter = "", int StartIndex = 0, int PageSize = 10)
+        {
+            Session["CurrentURL"] = "/RecommendationManagementV2/Index";
             var culture = Request.Cookies["culture"]?.Value;
             CommonRecommendationModel responseInfo = new CommonRecommendationModel();
             var dbLocationRes = _business.GetLocationList();
             responseInfo.GetLocationList = dbLocationRes.MapObjects<LocationListModel>();
             string RenderId = "";
-            ViewBag.LocationDDLList = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("LOCATIONDDL", "", culture) as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---");
-            ViewBag.ClubStoreDDL = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("CLUBSTOREDDL", "", culture) as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---");
-
+          
             foreach (var item in responseInfo.GetLocationList)
             {
                 item.LocationId = item.LocationId.EncryptParameter();
             }
+
+            string defaultSelectedLocationId = string.Empty;
+            string defaultSelectedClubId = string.Empty;
 
             if (tabValue == "")
             {
@@ -1438,7 +1445,13 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             }
             if (tabValue == "02")
             {
-                var dbEditorPickResponse = _business.GetEditorPickList();
+                var request = new PaginationFilterCommon()
+                {
+                    SearchFilter=SearchFilter,
+                    Skip=StartIndex,
+                    Take=PageSize
+                };
+                var dbEditorPickResponse = _business.GetEditorPickList("", SearchFilter, request.Skip, request.Take);
                 responseInfo.GetRecommendationEditorPickResponseList =
                     dbEditorPickResponse.MapObjects<RecommendationEditorPickResponseList>();
 
@@ -1448,62 +1461,108 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                     item.ClubId = item.ClubId.EncryptParameter();
                     item.LocationId = item.LocationId.EncryptParameter();
                     item.ClubLogo = ImageHelper.ProcessedImage(item.ClubLogo);
+                    item.TotalRecords = item.TotalRecords;
                 }
+                ViewBag.TotalData = responseInfo.GetRecommendationEditorPickResponseList != null && responseInfo.GetRecommendationEditorPickResponseList.Any() ? responseInfo.GetRecommendationEditorPickResponseList[0].TotalRecords : 0;
 
+                if (TempData.ContainsKey("ClubPlanManagementModel")) responseInfo.addEditorPick = TempData["ClubPlanManagementModel"] as AddEditorPick;
                 if (TempData.ContainsKey("EditorPickRendorId")) RenderId = TempData["EditorPickRendorId"].ToString();
                 ViewBag.PopUpRenderValue = !string.IsNullOrEmpty(RenderId) ? RenderId : null;
-            }  
+                defaultSelectedLocationId = !string.IsNullOrEmpty(responseInfo.addEditorPick.LocationDDL1) ? responseInfo.addEditorPick.LocationDDL1 : string.Empty;
+                defaultSelectedClubId = !string.IsNullOrEmpty(responseInfo.addEditorPick.ClubId) ? responseInfo.addEditorPick.ClubId : string.Empty;
+            }
             responseInfo.tabValue = tabValue;
             responseInfo.listType = tabValue;
+            ViewBag.SearchFilter = SearchFilter;
+            ViewBag.StartIndex = StartIndex;
+            ViewBag.PageSize = PageSize;
             ViewBag.TabValue = tabValue;
+            ViewBag.LocationList = ApplicationUtilities.SetDDLValue(ApplicationUtilities
+            .LoadDropdownList("LocationDdl") as Dictionary<string, string>, defaultSelectedLocationId, culture.ToLower() == "ja" ? "場所を選択" : "Select Location");
+            ViewBag.ClubList = ApplicationUtilities.SetDDLValue(ApplicationUtilities
+            .LoadDropdownList("ClubList", defaultSelectedLocationId?.DecryptParameter()) as Dictionary<string, string>, defaultSelectedClubId, culture.ToLower() == "ja" ? "クラブを選択" : "Select Club");
             return View(responseInfo);
         }
 
-        [HttpGet]
-        public ActionResult ManageRecommendationV2()
+        [HttpPost, OverrideActionFilters, ValidateAntiForgeryToken]
+        public async Task<JsonResult> GetClubListByLocation(string locationId, string agentId)
         {
+            var lId = !string.IsNullOrEmpty(locationId) ? locationId.DecryptParameter() : null;
+            if (string.IsNullOrEmpty(lId)) { return null; }
+            var clubLists = ApplicationUtilities.SetDDLValue(ApplicationUtilities
+                .LoadDropdownList("ClubList", lId) as Dictionary<string, string>, null);
+            return Json(new { clubLists }, JsonRequestBehavior.AllowGet);
+        }
+
+
+        [HttpGet]
+        public ActionResult ManageRecommendationV2(string editorPickId, string locationId)
+        {
+            editorPickId = !string.IsNullOrEmpty(editorPickId) ? editorPickId.DecryptParameter() : null;
+            locationId = !string.IsNullOrEmpty(locationId) ? locationId.DecryptParameter() : null;
+            if (string.IsNullOrEmpty(editorPickId) && string.IsNullOrEmpty(locationId))
+            {
+                this.AddNotificationMessage(new NotificationModel()
+                {
+                    NotificationType = NotificationMessage.INFORMATION,
+                    Message = "Invalid request",
+                    Title = NotificationMessage.INFORMATION.ToString(),
+                });
+                return RedirectToAction("Index", "RecommendationManagementV2", new { TabValue = "02" });
+            }
+            var dbResponse = _business.GetEditorPickUpdateDetail(editorPickId, locationId);
+            var resp = new AddEditorPick()
+            {
+                EditorPickId = dbResponse.EditorPickId.EncryptParameter(),
+                ClubId = !string.IsNullOrEmpty(dbResponse.ClubId) ? dbResponse.ClubId.EncryptParameter() : null,
+                ClubDDLList = !string.IsNullOrEmpty(dbResponse.ClubId) ? dbResponse.ClubId.EncryptParameter() : null,
+                LocationDDL1 = !string.IsNullOrEmpty(dbResponse.LocationId) ? dbResponse.LocationId.EncryptParameter() : null,
+                location = !string.IsNullOrEmpty(dbResponse.LocationId) ? dbResponse.LocationId.EncryptParameter() : null,
+                freeTextTag = dbResponse.FreeTextTag,
+                reasonForRecommendation = dbResponse.Description,
+
+            };
+
+            TempData["ClubPlanManagementModel"] = resp;
             TempData["EditorPickRendorId"] = "ManageEditorPick";
-            return RedirectToAction("IndexCopy", "RecommendationManagementV2");
+            return RedirectToAction("Index", "RecommendationManagementV2", new { tabValue = "02" });
         }
 
         [HttpPost]
-        public ActionResult ManageRecommendationV2(AddEditorPick req)
+        public ActionResult ManageRecommendationV2(AddEditorPick req, string ClubDDLList, string LocationDDL1, string EditorPickId = "")
         {
             var commonModel = new ManageEditorPickCommon
             {
-                LocationId = !string.IsNullOrEmpty(req.location) ? req.location.DecryptParameter() : null,
-                ClubId = req.ClubId.DecryptParameter(),
+                LocationId = !string.IsNullOrEmpty(LocationDDL1) ? LocationDDL1.DecryptParameter() : null,
+                ClubId = !string.IsNullOrEmpty(ClubDDLList) ? ClubDDLList.DecryptParameter() : null,
+                EditorPickId = !string.IsNullOrEmpty(EditorPickId) ? EditorPickId.DecryptParameter() : null,
                 Description = req.reasonForRecommendation,
                 FreeTextTag = req.freeTextTag,
-
                 ActionUser = ApplicationUtilities.GetSessionValue("Username").ToString(),
-                ActionIP = ApplicationUtilities.GetIP()
+                ActionIP = ApplicationUtilities.GetIP(),
             };
             var dbResponse = _business.ManageEditorPick(commonModel);
-            TempData["EditorPickRendorId"] = "ManageEditorPick";
-
-            if (dbResponse != null)
+            if (dbResponse.Code == 0)
             {
-                if (dbResponse.Code == ResponseCode.Success)
+                this.AddNotificationMessage(new NotificationModel()
                 {
-                    AddNotificationMessage(new NotificationModel()
-                    {
-                        NotificationType = NotificationMessage.SUCCESS,
-                        Message = dbResponse.Message,
-                        Title = NotificationMessage.SUCCESS.ToString()
-                    });
-                }
-                else
-                {
-                    AddNotificationMessage(new NotificationModel()
-                    {
-                        NotificationType = NotificationMessage.INFORMATION,
-                        Message = dbResponse.Message,
-                        Title = NotificationMessage.INFORMATION.ToString()
-                    });
-                }
+                    NotificationType = NotificationMessage.SUCCESS,
+                    Message = dbResponse.Message,
+                    Title = NotificationMessage.SUCCESS.ToString()
+                });
+                string apiUrl = ConfigurationManager.AppSettings["RevalidateApiUrl"];
+                string apiResponse = ExternalApiCallHelpers.CallApi(apiUrl, HttpMethod.Get);
+                return RedirectToAction("Index", "RecommendationManagementV2", new { TabValue = "02" });
             }
-            return RedirectToAction("IndexCopy", "RecommendationManagementV2");
+            AddNotificationMessage(new NotificationModel()
+            {
+                NotificationType = NotificationMessage.ERROR,
+                Message = dbResponse.Message,
+                Title = NotificationMessage.ERROR.ToString()
+            });
+            //TempData["ClubPlanManagementModel"] = req;
+            //TempData["EditorPickRendorId"] = "ManageEditorPick";
+            return RedirectToAction("Index", "RecommendationManagementV2", new { tabValue = "02" });
         }
 
 
@@ -1549,51 +1608,39 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             return Json(appModel, JsonRequestBehavior.AllowGet);
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteEditorPick(string editorpickid = "")
+        [HttpGet]
+        public ActionResult DeleteEditorPickDetail(string editorpickid = "",string SearchFilter="",int StartIndex =0 ,int PageSize=10)
         {
             var commonRequest = new Common()
             {
                 ActionUser = ApplicationUtilities.GetSessionValue("Username").ToString(),
                 ActionIP = ApplicationUtilities.GetIP()
             };
-
             var editorPickId = !string.IsNullOrEmpty(editorpickid)
                 ? editorpickid.DecryptParameter()
                 : null;
-
 
             var dbResponse = _business.DeleteEditorPick(
                 editorPickId,
                 commonRequest);
 
-            if (dbResponse != null)
+            if (dbResponse.Code == ResponseCode.Success)
             {
-                if (dbResponse.Code == ResponseCode.Success)
+                AddNotificationMessage(new NotificationModel()
                 {
-                    AddNotificationMessage(new NotificationModel()
-                    {
-                        NotificationType = NotificationMessage.SUCCESS,
-                        Message = dbResponse.Message,
-                        Title = NotificationMessage.SUCCESS.ToString()
-                    });
-                }
-                else
-                {
-                    AddNotificationMessage(new NotificationModel()
-                    {
-                        NotificationType = NotificationMessage.INFORMATION,
-                        Message = dbResponse.Message,
-                        Title = NotificationMessage.INFORMATION.ToString()
-                    });
-                }
+                    NotificationType = NotificationMessage.SUCCESS,
+                    Message = dbResponse.Message,
+                    Title = NotificationMessage.SUCCESS.ToString()
+                });
+                return RedirectToAction("Index", "RecommendationManagementV2", new { tabValue = "02" });
             }
-
-            return Json(dbResponse.SetMessageInTempData(this));
+            AddNotificationMessage(new NotificationModel()
+            {
+                NotificationType = NotificationMessage.ERROR,
+                Message = dbResponse.Message,
+                Title = NotificationMessage.ERROR.ToString()
+            });
+            return RedirectToAction("Index", "RecommendationManagementV2", new { tabValue = "02" });
         }
-
-        //RecommendationManagementV2/ManageRecommendationV2
-
     }
 }

@@ -849,7 +849,6 @@
 @section scripts{
     <script>
         $(document).ready(function () {
-            debugger;
     $('select').select2({
         minimumResultsForSearch: Infinity
     })
@@ -892,7 +891,6 @@
 
 
     <script>
-        debugger;
         document.getElementById('tab1Link').style.color = '#D75A8B';
         document.getElementById('tab1Link').style.borderBottom = '#D75A8B 2px solid';
 
@@ -1074,7 +1072,7 @@
         }
         function EditEditorPick(editorpickId) {
             console.log(editorpickId, "editorid");
-            @* window.location.href = "/ReccommendationMangementV2/ManageEditorPick?editorPickId=" + editorpickId; *@
+             window.location.href = "/ReccommendationMangementV2/ManageEditorPick?editorPickId=" + editorpickId; 
         }
         function DeleteEditorPick(editorpickId) {
            const modal = document.getElementById("delete-editor-confirmation");

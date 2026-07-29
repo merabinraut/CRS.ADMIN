@@ -285,6 +285,7 @@ namespace CRS.ADMIN.APPLICATION.Models.RecommendationManagementV2
         public string Description { get; set; }
         public string Tags { get; set; }
         public string UpdatedDate { get; set; }
+        public int TotalRecords { get; set; }
     }
 
     public class AddEditorPick
@@ -292,8 +293,15 @@ namespace CRS.ADMIN.APPLICATION.Models.RecommendationManagementV2
         public string EditorPickId { get; set; }
         public string location { get; set; }
         public string ClubId { get; set; }
+        [Required(ErrorMessage = "Reason For Recommendation is required.")]
         public string reasonForRecommendation { get; set; }
+        [Required(ErrorMessage = "Free Text Tag is required.")]
         public string freeTextTag { get; set; }
+
+        [Required(ErrorMessage = "Location is required.")]
+        public string LocationDDL1 { get; set; }
+        [Required(ErrorMessage = "Club is required.")]
+        public string ClubDDLList { get; set; }
     }
     #endregion
 }

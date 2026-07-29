@@ -661,25 +661,36 @@ namespace CRS.ADMIN.REPOSITORY.RecommendationManagement_V2
         #region "Editor's Pick"
         public List<RecommendationEditorPickResponseListModelCommon> GetEditorPickList(string locationId = "", string SearchFilter = "", int pageNo = 1, int pageSize = 10) //, int pageNo = 1, int pageSize = 10
         {
-            List<RecommendationEditorPickResponseListModelCommon> responseInfo = new List<RecommendationEditorPickResponseListModelCommon>();
-            string sp_name = "EXEC sproc_admin_recommendation_editor_pick_get"; 
-            sp_name += !string.IsNullOrEmpty(locationId) ? " @LocationId=" + _dao.FilterString(locationId) : null;
-            sp_name += !string.IsNullOrEmpty(SearchFilter) ? ",@SearchFilter=" + _dao.FilterString(SearchFilter) : null;
-            //sp_name += ",@PageNo=" + pageNo;
-            //sp_name += ",@PageSize=" + pageSize;
+            List<RecommendationEditorPickResponseListModelCommon> responseInfo = new List<RecommendationEditorPickResponseListModelCommon>(); 
+            string sp_name = "EXEC sproc_admin_recommendation_editor_pick_get";
+            List<string> parameters = new List<string>();
+            if (!string.IsNullOrWhiteSpace(locationId))
+            {
+                parameters.Add("@LocationId=" + _dao.FilterString(locationId));
+            }
+            if (!string.IsNullOrWhiteSpace(SearchFilter))
+            {
+                parameters.Add("@search=" + _dao.FilterString(SearchFilter));
+            }
+            parameters.Add("@PageNo=" + pageNo);
+            parameters.Add("@PageSize=" + pageSize);
+            sp_name += " " + string.Join(",", parameters);
             var dbResponseInfo = _dao.ExecuteDataTable(sp_name);
             if (dbResponseInfo != null)
             {
                 foreach (DataRow row in dbResponseInfo.Rows)
                 {
-                    responseInfo.Add(new RecommendationEditorPickResponseListModelCommon()
+                    responseInfo.Add(new RecommendationEditorPickResponseListModelCommon
                     {
-                        EditorPickId = row["editorPickSno"].ToString(),
-                        ClubId = row["ClubId"].ToString(),
-                        LocationId = row["LocationId"].ToString(),
-                        Description = row["Description"].ToString(),
-                        Tags = row["Tags"].ToString(),
-                        UpdatedDate = row["UpdatedDate"].ToString()
+                        EditorPickId = row["editorPickSno"]?.ToString(),
+                        ClubId = row["ClubId"]?.ToString(),
+                        ClubName = row["ClubName"]?.ToString(),
+                        ClubLogo = row["ClubLogo"]?.ToString(),
+                        LocationId = row["LocationId"]?.ToString(),
+                        Description = row["Description"]?.ToString(),
+                        Tags = row["Tags"]?.ToString(),
+                        UpdatedDate = row["UpdatedDate"]?.ToString(),
+                        TotalRecords = Convert.ToInt32(row["TotalRecords"].ToString())
                     });
                 }
             }
@@ -719,12 +730,13 @@ namespace CRS.ADMIN.REPOSITORY.RecommendationManagement_V2
                 sp_name = "EXEC sproc_admin_recommendation_editor_pick_update"; 
                 sp_name += " @editorPickId=" + _dao.FilterParameter(commonModel.EditorPickId);
             }
-            sp_name += " @locationId=" + _dao.FilterString(commonModel.LocationId);
+            sp_name += ",@locationId=" + _dao.FilterString(commonModel.LocationId);
             sp_name += ",@clubId=" + _dao.FilterString(commonModel.ClubId);
-            sp_name += ",@description=" + _dao.FilterString(commonModel.Description);
-            sp_name += ",@tags=" + _dao.FilterString(commonModel.FreeTextTag);
+            sp_name += ",@description=" + (!string.IsNullOrEmpty(commonModel.Description) ? "N" + _dao.FilterString(commonModel.Description) : _dao.FilterString(commonModel.Description));
+            sp_name += ",@tags=" + (!string.IsNullOrEmpty(commonModel.FreeTextTag) ? "N" + _dao.FilterString(commonModel.FreeTextTag) : _dao.FilterString(commonModel.FreeTextTag));
             sp_name += ",@ActionUser=" + _dao.FilterString(commonModel.ActionUser);
             sp_name += ",@ActionIp=" + _dao.FilterString(commonModel.ActionIP);
+            sp_name += ",@ActionPlatform=" + _dao.FilterString("web");
             return _dao.ParseCommonDbResponse(sp_name);
         }
 
@@ -735,6 +747,26 @@ namespace CRS.ADMIN.REPOSITORY.RecommendationManagement_V2
             sp_name += ",@ActionUser=" + _dao.FilterString(commonRequest.ActionUser);
             sp_name += ",@ActionIp=" + _dao.FilterString(commonRequest.ActionIP);
             return _dao.ParseCommonDbResponse(sp_name);
+        }
+
+        public ManageEditorPickCommon GetEditorPickUpdateDetail(string editorPickId, string locationId)
+        {
+            string sp_name = "EXEC sproc_admin_recommendation_editor_pick_detail";
+            sp_name += " @editorPickId=" + _dao.FilterString(editorPickId);
+            sp_name += !string.IsNullOrEmpty(locationId) ? ",@LocationId=" + _dao.FilterString(locationId) : null;
+            var dbResponse = _dao.ExecuteDataRow(sp_name);
+            if (dbResponse != null)
+            {
+                return new ManageEditorPickCommon()
+                {
+                    EditorPickId = _dao.ParseColumnValue(dbResponse, "editorPickSno").ToString(),
+                    ClubId = _dao.ParseColumnValue(dbResponse, "ClubId").ToString(),
+                    LocationId = _dao.ParseColumnValue(dbResponse, "LocationId").ToString(),
+                    Description = _dao.ParseColumnValue(dbResponse, "Description").ToString(),
+                    FreeTextTag = _dao.ParseColumnValue(dbResponse, "Tags").ToString(),
+                };
+            }
+            return new ManageEditorPickCommon();
         }
         #endregion
 
