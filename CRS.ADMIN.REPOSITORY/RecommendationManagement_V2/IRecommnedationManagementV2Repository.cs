@@ -38,5 +38,13 @@ namespace CRS.ADMIN.REPOSITORY.RecommendationManagement_V2
         CommonDbResponse RejectMainPageRecommendationRequest(string recommendationHoldId, string clubId, string locationId, string displayId, Common commonRequest);
         CommonDbResponse RemoveHomeAndSearchPageSingleHostRecommendationReq(string recommendationHoldId, string clubId, string recommendationHoldHostId, Common commonRequest);
         CommonDbResponse RemoveMainPageSingleHostRecommendationReq(string recommendationHoldId, string clubId, string recommendationHoldHostId, Common commonRequest);
+        
+        #region "Editor's Pick"
+        List<RecommendationEditorPickResponseListModelCommon> GetEditorPickList(string locationId = "", string SearchFilter = "", int pageNo = 1, int pageSize = 10); 
+        ManageEditorPickCommon GetEditorPickDetail(string editorPickId = "", string locationId = "");
+        CommonDbResponse ManageEditorPick(ManageEditorPickCommon commonModel);
+        CommonDbResponse DeleteEditorPick(string editorPickId, Common commonRequest);
+        ManageEditorPickCommon GetEditorPickUpdateDetail(string editorPickId, string locationId);
+        #endregion
     }
 }

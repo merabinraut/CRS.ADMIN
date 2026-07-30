@@ -2811,7 +2811,7 @@
     <Content Include="Views\RecommendationManagement\ClubRequestView.cshtml" />
     <Content Include="Views\RecommendationManagement\ManageClubRecommendationRequest.cshtml" />
     <Content Include="Views\RecommendationManagement\ManageGroup.cshtml" />
-    <Content Include="Views\RecommendationManagementV2\Index.cshtml" />
+    <Content Include="Views\RecommendationManagementV2\Index_update.cshtml" />
     <Content Include="Views\RecommendationManagementV2\DisplayPageView.cshtml" />
     <Content Include="Views\RecommendationManagementV2\GroupView.cshtml" />
     <Content Include="Views\RecommendationManagementV2\ClubListView.cshtml" />
@@ -2850,6 +2850,11 @@
     <Content Include="Views\StaticDataManagement\StaticDataIndex.cshtml" />
     <Content Include="Views\StaticDataManagement\_ManageStaticData.cshtml" />
     <Content Include="Views\StaticDataManagement\_ManageStaticDataType.cshtml" />
+    <Content Include="Views\RecommendationManagementV2\Index.cshtml" />
+    <Content Include="Views\RecommendationManagementV2\_ManageEditorPick.cshtml" />
+    <Content Include="Views\RecommendationManagementV2\IndexCopyV2.cshtml" />
+    <Content Include="Views\RecommendationManagementV2\_GetMainPagePartialView.cshtml" />
+    <Content Include="Views\RecommendationManagementV2\_GetEditorPickPartialView.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

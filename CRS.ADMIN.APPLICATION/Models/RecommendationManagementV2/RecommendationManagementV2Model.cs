@@ -7,6 +7,9 @@ namespace CRS.ADMIN.APPLICATION.Models.RecommendationManagementV2
 {
     public class CommonRecommendationModel
     {
+        public string tabValue { get; set; } = "";
+        public string listType { get; set; }
+
         public List<LocationListModel> GetLocationList { get; set; }
         public List<DisplayPageListModel> GetDisplayPageList { get; set; }
         public List<GroupListModel> GetGroupList { get; set; }
@@ -19,6 +22,10 @@ namespace CRS.ADMIN.APPLICATION.Models.RecommendationManagementV2
         public List<ClubRecommendationManagementListModel> GetClubRecommendationrequestList { get; set; }
         public List<SearchAndHomePageRecommendationReqHostListModel> GetHomeAndSearchRecommendationHostList { get; set; }
         public List<MainPageClubRecommendationReqHostListModel> GetMainPageClubRecommendationReHostList { get; set; }
+        public List<RecommendationEditorPickResponseList> GetRecommendationEditorPickResponseList { get; set; }
+        public AddEditorPick addEditorPick { get; set; } = new AddEditorPick();
+
+
     }
 
     #region "Search And Home Page Recommendation Request Host List"
@@ -262,6 +269,39 @@ namespace CRS.ADMIN.APPLICATION.Models.RecommendationManagementV2
         public string RecommendationHostHoldId { get; set; }
         public string HostDisplayOrderHoldId { get; set; }
         public string HostName { get; set; }
+    }
+    #endregion
+
+    #region Manage Recommendation Editor's Pick
+    public class RecommendationEditorPickResponseList
+    {
+
+        public string EditorPickId { get; set; }
+        public string ClubId { get; set; }
+        public string LocationId { get; set; }
+        public string ClubName { get; set; }
+        public string ClubLogo { get; set; }
+        public string ClubCategory { get; set; }
+        public string Description { get; set; }
+        public string Tags { get; set; }
+        public string UpdatedDate { get; set; }
+        public int TotalRecords { get; set; }
+    }
+
+    public class AddEditorPick
+    {
+        public string EditorPickId { get; set; }
+        public string location { get; set; }
+        public string ClubId { get; set; }
+        [Required(ErrorMessage = "Reason For Recommendation is required.")]
+        public string reasonForRecommendation { get; set; }
+        [Required(ErrorMessage = "Free Text Tag is required.")]
+        public string freeTextTag { get; set; }
+
+        [Required(ErrorMessage = "Location is required.")]
+        public string LocationDDL1 { get; set; }
+        [Required(ErrorMessage = "Club is required.")]
+        public string ClubDDLList { get; set; }
     }
     #endregion
 }

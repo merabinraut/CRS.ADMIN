@@ -1,4 +1,5 @@
-﻿using CRS.ADMIN.SHARED.PaginationManagement;
+﻿using System.ComponentModel.DataAnnotations;
+using CRS.ADMIN.SHARED.PaginationManagement;
 
 namespace CRS.ADMIN.SHARED.RecommendationManagement_V2
 {
@@ -236,4 +237,30 @@ namespace CRS.ADMIN.SHARED.RecommendationManagement_V2
         public string UpdatedDate { get; set; }
     }
     #endregion
+
+    #region "Manage Editor's Pick Response"
+    public class RecommendationEditorPickResponseListModelCommon : PaginationResponseCommon
+    {
+        public string EditorPickId { get; set; }
+        public string ClubId { get; set; }
+        public string LocationId { get; set; }
+        public string ClubName { get; set; }
+        public string ClubLogo { get; set; }
+        public string ClubCategory { get; set; }
+        public string Description { get; set; }
+        public string Tags { get; set; }
+        public string UpdatedDate { get; set; }
+    }
+
+    public class ManageEditorPickCommon : Common
+    {
+        public string EditorPickId { get; set; }
+        public string ClubId { get; set; }
+        public string LocationId { get; set; }
+        public string FreeTextTag { get; set; }
+        public string Description { get; set; }
+    }
+    #endregion
+
+
 }

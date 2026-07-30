@@ -1,22 +1,32 @@
 ﻿using CRS.ADMIN.APPLICATION.CustomHelpers;
 using CRS.ADMIN.APPLICATION.Helper;
 using CRS.ADMIN.APPLICATION.Library;
+using CRS.ADMIN.APPLICATION.Models.PlanManagement;
 using CRS.ADMIN.APPLICATION.Models.RecommendationManagementV2;
+using CRS.ADMIN.APPLICATION.Models.TagManagement;
 using CRS.ADMIN.BUSINESS.RecommendationManagement_V2;
 using CRS.ADMIN.SHARED;
 using CRS.ADMIN.SHARED.PaginationManagement;
 using CRS.ADMIN.SHARED.RecommendationManagement_V2;
+using DocumentFormat.OpenXml.EMMA;
 using DocumentFormat.OpenXml.Office2010.Excel;
+using DocumentFormat.OpenXml.Spreadsheet;
+using DocumentFormat.OpenXml.Wordprocessing;
+using Microsoft.Ajax.Utilities;
+using Microsoft.Office.Interop.Excel;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Configuration;
+using System.Drawing.Printing;
 using System.Linq;
 using System.Net.Http;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using WebGrease.Css.Ast;
 using static Google.Apis.Requests.BatchRequest;
 
 namespace CRS.ADMIN.APPLICATION.Controllers
@@ -30,8 +40,9 @@ namespace CRS.ADMIN.APPLICATION.Controllers
         }
         #region "Recommendation Request and Location Management"
 
-        public ActionResult Index()
+        public ActionResult IndexV2()
         {
+
             Session["CurrentURL"] = "/RecommendationManagementV2/Index";
             CommonRecommendationModel responseInfo = new CommonRecommendationModel();
             var dbLocationRes = _business.GetLocationList();
@@ -53,6 +64,8 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             return View(responseInfo);
         }
         #endregion
+
+
 
         #region "Display Pages"
         public ActionResult DisplayPageView(string locationid = "")
@@ -113,7 +126,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             ViewBag.GroupShuffling = GroupList;
             ViewBag.SetShufflingTime = SetShufflingTime;
             ViewBag.DisplayOrderDDL = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("DISPLAYORDERDDL", "", "") as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---"); ;
-            ViewBag.DisplayOrderDDLKey= responseInfo.ManageGroup.DisplayOrderId;
+            ViewBag.DisplayOrderDDLKey = responseInfo.ManageGroup.DisplayOrderId;
             TempData["OriginalUrl"] = Request.Url.ToString();
             ViewBag.LocationId = locationid;
             ViewBag.IsBackAllowed = true;
@@ -151,7 +164,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
 
                         //string apiUrl = "https://cus.hoslog.jp/api/revalidate?tag=hostDetail,clubHosts";
                         string apiUrl = ConfigurationManager.AppSettings["RevalidateApiUrl"];
-                        string apiResponse =  ExternalApiCallHelpers.CallApi(apiUrl, HttpMethod.Get);
+                        string apiResponse = ExternalApiCallHelpers.CallApi(apiUrl, HttpMethod.Get);
 
 
                         return RedirectToAction("GroupView", new { pageid = pageid, locationId = locationId });
@@ -188,11 +201,11 @@ namespace CRS.ADMIN.APPLICATION.Controllers
         }
 
         [HttpPost, ValidateAntiForgeryToken]
-        public ActionResult DeleteGroup( string groupid = "",string locationid = "")
+        public ActionResult DeleteGroup(string groupid = "", string locationid = "")
         {
             if (!string.IsNullOrEmpty(locationid)) locationid = locationid.DecryptParameter();
-            if (!string.IsNullOrEmpty(groupid)) groupid = groupid.DecryptParameter();           
-            if (string.IsNullOrEmpty(locationid)|| string.IsNullOrEmpty(groupid))
+            if (!string.IsNullOrEmpty(groupid)) groupid = groupid.DecryptParameter();
+            if (string.IsNullOrEmpty(locationid) || string.IsNullOrEmpty(groupid))
             {
                 AddNotificationMessage(new NotificationModel()
                 {
@@ -393,7 +406,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 return RedirectToAction("Index", "RecommendationManagementV2");
             }
             ViewBag.ClubLocation = ApplicationUtilities.LoadDropdownList("LOCATIONDDL", id, "") as Dictionary<string, string>;
-            ViewBag.ClubDDL = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("CLUBLIST", id, "") as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---"  );
+            ViewBag.ClubDDL = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("CLUBLIST", id, "") as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---");
             ViewBag.HostDDLBYClubId = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("HOSTDDLBYCLUBID", "", "") as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---");
             var Response = new ManageHomePageRequest()
             {
@@ -681,13 +694,13 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             #region "Get All Required DDL"
             ViewBag.ClubLocation = ApplicationUtilities.LoadDropdownList("LOCATIONDDL", LocationId, "") as Dictionary<string, string>;
             ViewBag.GroupDDLByLocationId = ApplicationUtilities.LoadDropdownList("GROUPDDLBYLOCATIONID", Groupid, "") as Dictionary<string, string>;
-                        
+
             ViewBag.HostDDLBYClubId = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("HOSTDDLBYCLUBID", "", "") as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---");
             #endregion
 
             #region "Get Recommendation Detail"
             TempData["OriginalUrl"] = Request.Url.ToString();
-            
+
             return View(responseInfo);
             #endregion           
         }
@@ -1112,8 +1125,8 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             string DisplayId = "";
             if (!string.IsNullOrEmpty(recommendationholdid)) RecommendationHoldId = recommendationholdid.DecryptParameter();
             if (!string.IsNullOrEmpty(clubid)) ClubId = clubid.DecryptParameter();
-            if (!string.IsNullOrEmpty(locationid)) LocationId = locationid.DecryptParameter();
             if (!string.IsNullOrEmpty(displayid)) DisplayId = displayid.DecryptParameter();
+            if (!string.IsNullOrEmpty(locationid)) LocationId = locationid.DecryptParameter();
             var responseInfo = new CommonDbResponse();
             var commonRequest = new Common()
             {
@@ -1307,11 +1320,11 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             string GroupId = "";
             string RecommendationHoldId = "";
             string ClubId = "";
-            string DisplayIdHold = "";
+            string DisplayId = "";
             string LocationId = "";
             if (!string.IsNullOrEmpty(recommendationholdid)) RecommendationHoldId = recommendationholdid.DecryptParameter();
             if (!string.IsNullOrEmpty(clubid)) ClubId = clubid.DecryptParameter();
-            if (!string.IsNullOrEmpty(displayid)) DisplayIdHold = displayid.DecryptParameter();
+            if (!string.IsNullOrEmpty(displayid)) DisplayId = displayid.DecryptParameter();
             if (!string.IsNullOrEmpty(locationid)) LocationId = locationid.DecryptParameter();
             if (!string.IsNullOrEmpty(groupid)) GroupId = groupid.DecryptParameter();
             var responseInfo = new CommonDbResponse();
@@ -1320,7 +1333,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 ActionIP = ApplicationUtilities.GetIP(),
                 ActionUser = ApplicationUtilities.GetSessionValue("Username").ToString(),
             };
-            var dbResponseInfo = _business.ApproveMainPageRecommendationReq(RecommendationHoldId, ClubId, DisplayIdHold, LocationId, GroupId, commonRequest);
+            var dbResponseInfo = _business.ApproveMainPageRecommendationReq(RecommendationHoldId, ClubId, DisplayId, LocationId, GroupId, commonRequest);
             responseInfo = dbResponseInfo;
             if (dbResponseInfo != null && dbResponseInfo.Code == ResponseCode.Success)
             {
@@ -1399,5 +1412,237 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             return View();
         }
         #endregion
+        [OverrideActionFilters]
+        public ActionResult Index(CommonRecommendationModel req, string tabValue = "", string SearchFilter = "", int StartIndex = 0, int PageSize = 10)
+        {
+            Session["CurrentURL"] = "/RecommendationManagementV2/Index";
+            var culture = Request.Cookies["culture"]?.Value;
+            CommonRecommendationModel responseInfo = new CommonRecommendationModel();
+            var dbLocationRes = _business.GetLocationList();
+            responseInfo.GetLocationList = dbLocationRes.MapObjects<LocationListModel>();
+            string RenderId = "";
+          
+            foreach (var item in responseInfo.GetLocationList)
+            {
+                item.LocationId = item.LocationId.EncryptParameter();
+            }
+
+            string defaultSelectedLocationId = string.Empty;
+            string defaultSelectedClubId = string.Empty;
+
+            if (tabValue == "")
+            {
+                var dbClubRecommendationReq = _business.GetClubRecommendationReqList();
+                responseInfo.GetClubRecommendationrequestList = dbClubRecommendationReq.MapObjects<ClubRecommendationManagementListModel>();
+                foreach (var item in responseInfo.GetClubRecommendationrequestList)
+                {
+                    item.RecommendationHoldId = item.RecommendationHoldId.EncryptParameter();
+                    item.ClubId = item.ClubId.EncryptParameter();
+                    item.DisplayId = item.DisplayId.EncryptParameter();
+                    item.LocationId = item.LocationId.EncryptParameter();
+                    item.ClubLogo = ImageHelper.ProcessedImage(item.ClubLogo);
+                }
+            }
+            if (tabValue == "02")
+            {
+                var request = new PaginationFilterCommon()
+                {
+                    SearchFilter=SearchFilter,
+                    Skip=StartIndex,
+                    Take=PageSize
+                };
+                var dbEditorPickResponse = _business.GetEditorPickList("", SearchFilter, request.Skip, request.Take);
+                responseInfo.GetRecommendationEditorPickResponseList =
+                    dbEditorPickResponse.MapObjects<RecommendationEditorPickResponseList>();
+
+                foreach (var item in responseInfo.GetRecommendationEditorPickResponseList)
+                {
+                    item.EditorPickId = item.EditorPickId.EncryptParameter();
+                    item.ClubId = item.ClubId.EncryptParameter();
+                    item.LocationId = item.LocationId.EncryptParameter();
+                    item.ClubLogo = ImageHelper.ProcessedImage(item.ClubLogo);
+                    item.TotalRecords = item.TotalRecords;
+                }
+                ViewBag.TotalData = responseInfo.GetRecommendationEditorPickResponseList != null && responseInfo.GetRecommendationEditorPickResponseList.Any() ? responseInfo.GetRecommendationEditorPickResponseList[0].TotalRecords : 0;
+
+                if (TempData.ContainsKey("ClubPlanManagementModel")) responseInfo.addEditorPick = TempData["ClubPlanManagementModel"] as AddEditorPick;
+                if (TempData.ContainsKey("EditorPickRendorId")) RenderId = TempData["EditorPickRendorId"].ToString();
+                ViewBag.PopUpRenderValue = !string.IsNullOrEmpty(RenderId) ? RenderId : null;
+                defaultSelectedLocationId = !string.IsNullOrEmpty(responseInfo.addEditorPick.LocationDDL1) ? responseInfo.addEditorPick.LocationDDL1 : string.Empty;
+                defaultSelectedClubId = !string.IsNullOrEmpty(responseInfo.addEditorPick.ClubId) ? responseInfo.addEditorPick.ClubId : string.Empty;
+            }
+            responseInfo.tabValue = tabValue;
+            responseInfo.listType = tabValue;
+            ViewBag.SearchFilter = SearchFilter;
+            ViewBag.StartIndex = StartIndex;
+            ViewBag.PageSize = PageSize;
+            ViewBag.TabValue = tabValue;
+            ViewBag.LocationList = ApplicationUtilities.SetDDLValue(ApplicationUtilities
+            .LoadDropdownList("LocationDdl") as Dictionary<string, string>, defaultSelectedLocationId, culture.ToLower() == "ja" ? "場所を選択" : "Select Location");
+            ViewBag.ClubList = ApplicationUtilities.SetDDLValue(ApplicationUtilities
+            .LoadDropdownList("ClubList", defaultSelectedLocationId?.DecryptParameter()) as Dictionary<string, string>, defaultSelectedClubId, culture.ToLower() == "ja" ? "クラブを選択" : "Select Club");
+            ViewBag.IsBackAllowed = true;
+            ViewBag.BackButtonURL = "/RecommendationManagementV2/Index?TabValue=";
+            return View(responseInfo);
+        }
+
+        [HttpPost, OverrideActionFilters, ValidateAntiForgeryToken]
+        public async Task<JsonResult> GetClubListByLocation(string locationId, string agentId)
+        {
+            var lId = !string.IsNullOrEmpty(locationId) ? locationId.DecryptParameter() : null;
+            if (string.IsNullOrEmpty(lId)) { return null; }
+            var clubLists = ApplicationUtilities.SetDDLValue(ApplicationUtilities
+                .LoadDropdownList("ClubList", lId) as Dictionary<string, string>, null);
+            return Json(new { clubLists }, JsonRequestBehavior.AllowGet);
+        }
+
+
+        [HttpGet]
+        public ActionResult ManageRecommendationV2(string editorPickId, string locationId)
+        {
+            editorPickId = !string.IsNullOrEmpty(editorPickId) ? editorPickId.DecryptParameter() : null;
+            locationId = !string.IsNullOrEmpty(locationId) ? locationId.DecryptParameter() : null;
+            if (string.IsNullOrEmpty(editorPickId) && string.IsNullOrEmpty(locationId))
+            {
+                this.AddNotificationMessage(new NotificationModel()
+                {
+                    NotificationType = NotificationMessage.INFORMATION,
+                    Message = "Invalid request",
+                    Title = NotificationMessage.INFORMATION.ToString(),
+                });
+                return RedirectToAction("Index", "RecommendationManagementV2", new { TabValue = "02" });
+            }
+            var dbResponse = _business.GetEditorPickUpdateDetail(editorPickId, locationId);
+            var resp = new AddEditorPick()
+            {
+                EditorPickId = dbResponse.EditorPickId.EncryptParameter(),
+                ClubId = !string.IsNullOrEmpty(dbResponse.ClubId) ? dbResponse.ClubId.EncryptParameter() : null,
+                ClubDDLList = !string.IsNullOrEmpty(dbResponse.ClubId) ? dbResponse.ClubId.EncryptParameter() : null,
+                LocationDDL1 = !string.IsNullOrEmpty(dbResponse.LocationId) ? dbResponse.LocationId.EncryptParameter() : null,
+                location = !string.IsNullOrEmpty(dbResponse.LocationId) ? dbResponse.LocationId.EncryptParameter() : null,
+                freeTextTag = dbResponse.FreeTextTag,
+                reasonForRecommendation = dbResponse.Description,
+
+            };
+
+            TempData["ClubPlanManagementModel"] = resp;
+            TempData["EditorPickRendorId"] = "ManageEditorPick";
+            return RedirectToAction("Index", "RecommendationManagementV2", new { tabValue = "02" });
+        }
+
+        [HttpPost]
+        public ActionResult ManageRecommendationV2(AddEditorPick req, string ClubDDLList, string LocationDDL1, string EditorPickId = "")
+        {
+            var commonModel = new ManageEditorPickCommon
+            {
+                LocationId = !string.IsNullOrEmpty(LocationDDL1) ? LocationDDL1.DecryptParameter() : null,
+                ClubId = !string.IsNullOrEmpty(ClubDDLList) ? ClubDDLList.DecryptParameter() : null,
+                EditorPickId = !string.IsNullOrEmpty(EditorPickId) ? EditorPickId.DecryptParameter() : null,
+                Description = req.reasonForRecommendation,
+                FreeTextTag = req.freeTextTag,
+                ActionUser = ApplicationUtilities.GetSessionValue("Username").ToString(),
+                ActionIP = ApplicationUtilities.GetIP(),
+            };
+            var dbResponse = _business.ManageEditorPick(commonModel);
+            if (dbResponse.Code == 0)
+            {
+                this.AddNotificationMessage(new NotificationModel()
+                {
+                    NotificationType = NotificationMessage.SUCCESS,
+                    Message = dbResponse.Message,
+                    Title = NotificationMessage.SUCCESS.ToString()
+                });
+                string apiUrl = ConfigurationManager.AppSettings["RevalidateApiUrl"];
+                string apiResponse = ExternalApiCallHelpers.CallApi(apiUrl, HttpMethod.Get);
+                return RedirectToAction("Index", "RecommendationManagementV2", new { TabValue = "02" });
+            }
+            AddNotificationMessage(new NotificationModel()
+            {
+                NotificationType = NotificationMessage.ERROR,
+                Message = dbResponse.Message,
+                Title = NotificationMessage.ERROR.ToString()
+            });
+            //TempData["ClubPlanManagementModel"] = req;
+            //TempData["EditorPickRendorId"] = "ManageEditorPick";
+            return RedirectToAction("Index", "RecommendationManagementV2", new { tabValue = "02" });
+        }
+
+
+        [HttpGet]
+        public ActionResult GetEditorPickList(string locationid = "", string SearchFilter = "", int pageNo = 1, int pageSize = 10)
+        {
+            var locationId = !string.IsNullOrEmpty(locationid)
+                ? locationid.DecryptParameter()
+                : null;
+
+            ViewBag.SearchFilter = SearchFilter;
+
+            var dbList = _business.GetEditorPickList(locationId, SearchFilter, pageNo, pageSize);
+
+            foreach (var item in dbList)
+            {
+                item.EditorPickId = item.EditorPickId.EncryptParameter();
+                item.LocationId = item.LocationId.EncryptParameter();
+                item.ClubId = item.ClubId.EncryptParameter();
+                item.ClubLogo = ImageHelper.ProcessedImage(item.ClubLogo);
+            }
+
+            var appList = dbList.MapObjects<RecommendationEditorPickResponseList>();
+
+            return Json(appList, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public ActionResult GetEditorPickDetail(string editorpickid = "", string locationid = "")
+        {
+            var editorPickId = !string.IsNullOrEmpty(editorpickid)
+                ? editorpickid.DecryptParameter()
+                : null;
+
+            var locationId = !string.IsNullOrEmpty(locationid)
+                ? locationid.DecryptParameter()
+                : null;
+
+            var dbModel = _business.GetEditorPickDetail(editorPickId, locationId);
+
+            var appModel = dbModel.MapObject<AddEditorPick>();
+
+            return Json(appModel, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public ActionResult DeleteEditorPickDetail(string editorpickid = "",string SearchFilter="",int StartIndex =0 ,int PageSize=10)
+        {
+            var commonRequest = new Common()
+            {
+                ActionUser = ApplicationUtilities.GetSessionValue("Username").ToString(),
+                ActionIP = ApplicationUtilities.GetIP()
+            };
+            var editorPickId = !string.IsNullOrEmpty(editorpickid)
+                ? editorpickid.DecryptParameter()
+                : null;
+
+            var dbResponse = _business.DeleteEditorPick(
+                editorPickId,
+                commonRequest);
+
+            if (dbResponse.Code == ResponseCode.Success)
+            {
+                AddNotificationMessage(new NotificationModel()
+                {
+                    NotificationType = NotificationMessage.SUCCESS,
+                    Message = dbResponse.Message,
+                    Title = NotificationMessage.SUCCESS.ToString()
+                });
+                return RedirectToAction("Index", "RecommendationManagementV2", new { tabValue = "02" });
+            }
+            AddNotificationMessage(new NotificationModel()
+            {
+                NotificationType = NotificationMessage.ERROR,
+                Message = dbResponse.Message,
+                Title = NotificationMessage.ERROR.ToString()
+            });
+            return RedirectToAction("Index", "RecommendationManagementV2", new { tabValue = "02" });
+        }
     }
 }
