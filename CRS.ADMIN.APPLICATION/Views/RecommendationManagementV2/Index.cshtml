@@ -24,7 +24,7 @@
         <div id="tabV1" class="tab-content-planeV3">
             <div class="flex flex-col gap-8">
                 <div id="tabV1" class="tab-content">
-                    <div class="flex gap-4 mb-8 border-b ">
+                    <div class="flex gap-4 mb-8 border-b">
 
                         <div id="tabMainLink" class="styleCss px-1 pb-4 cursor-pointer active" onclick="changeTabV1('all', 'tabMainLink')">
                             @CRS.ADMIN.APPLICATION.Resources.Resource.Main_Page
@@ -34,16 +34,17 @@
                             @CRS.ADMIN.APPLICATION.Resources.Resource.Editors_Pick
                         </div>
                     </div>
-                    <div class="flex justify-between pb-[24px]">
+                    <div class="flex justify-between pb-[10px]">
 
                     </div>
 
-                    <div class="pane active table-tab" id="all">
+                    <div class="pane active table-tab gap-1 " id="all">
                         @if (!string.IsNullOrEmpty(Convert.ToString(Model.GetClubRecommendationrequestList)))
                         {
                             @Html.Partial("_GetMainPagePartialView", Model)
                         }
                     </div>
+        
                     <div class="pane" id="request1" style="display: none;">
                         @if (!string.IsNullOrEmpty(Convert.ToString(Model.GetRecommendationEditorPickResponseList)))
                         {
@@ -57,7 +58,7 @@
 </div>
 
 
-<div class="flex justify-between pb-[24px]">
+<div class="flex justify-between pb-[10px]">
 
 
 </div>
