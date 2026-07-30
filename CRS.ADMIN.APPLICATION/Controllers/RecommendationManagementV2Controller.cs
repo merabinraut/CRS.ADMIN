@@ -1481,6 +1481,8 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             .LoadDropdownList("LocationDdl") as Dictionary<string, string>, defaultSelectedLocationId, culture.ToLower() == "ja" ? "場所を選択" : "Select Location");
             ViewBag.ClubList = ApplicationUtilities.SetDDLValue(ApplicationUtilities
             .LoadDropdownList("ClubList", defaultSelectedLocationId?.DecryptParameter()) as Dictionary<string, string>, defaultSelectedClubId, culture.ToLower() == "ja" ? "クラブを選択" : "Select Club");
+            ViewBag.IsBackAllowed = true;
+            ViewBag.BackButtonURL = "/RecommendationManagementV2/Index?TabValue=";
             return View(responseInfo);
         }
 
