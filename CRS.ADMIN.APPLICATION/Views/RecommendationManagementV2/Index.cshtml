@@ -44,7 +44,7 @@
                             @Html.Partial("_GetMainPagePartialView", Model)
                         }
                     </div>
-        
+
                     <div class="pane" id="request1" style="display: none;">
                         @if (!string.IsNullOrEmpty(Convert.ToString(Model.GetRecommendationEditorPickResponseList)))
                         {
@@ -84,7 +84,7 @@
                 <div class="text-[#333] font-semibold pb-[11px] border-b border-[#eeeeee]">@CRS.ADMIN.APPLICATION.Resources.Resource.Confirmation</div>
                 <div class="grid gap-[20px] text-[#062937] mb-[45px]">
                     <div class="text-[14px] text-secondary-text-2 text-start" id="confirmationRequestMessage">
-                        @CRS.ADMIN.APPLICATION.Resources.Resource.PlanRequestConfirmationMessage
+                        エディターピックを削除しますか？
                     </div>
                 </div>
                 <div class="flex justify-end">
@@ -266,11 +266,10 @@
         }
 
     function DeletePickerFunction(id, status) {
-      const $modal = $("#delete-editor-pick-confirmation1");
-      const $message = $("#confirmationRequestMessage");
-      const $approveBtn = $("#approve_ids1");
-      //const contentApprove = "Are you sure you want to delete this club plan ?";
-      const contentApprove = "Are you sure you want to delete";
+        const $modal = $("#delete-editor-pick-confirmation1");
+        const $message = $("#confirmationRequestMessage");
+        const $approveBtn = $("#approve_ids1");
+        const contentApprove = "エディターピックを削除しますか？";
         $message.text(contentApprove);
         $approveBtn.attr({
             "data-vals1": id
@@ -281,8 +280,8 @@
     function DeleteEditorPickerFunction() {
         const id = $('#approve_ids1').attr('data-vals1');
         let search_filter2 = $('#default-search-plan-request').val();
-        const start_index_val2 = 0;//@ViewBag.StartIndex;
-        const page_size2 = 10;//@ViewBag.PageSize;
+        const start_index_val2 = @ViewBag.StartIndex;
+        const page_size2 = @ViewBag.PageSize;
         window.location.href = '/RecommendationManagementV2/DeleteEditorPickDetail'
             + '?editorpickid=' + id
             + '&SearchFilter=' + search_filter2
