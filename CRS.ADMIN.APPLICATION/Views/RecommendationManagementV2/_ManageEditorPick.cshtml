@@ -4,7 +4,41 @@
         var locationItems = ViewBag.LocationDDL as IEnumerable<System.Web.Mvc.SelectListItem> ?? System.Linq.Enumerable.Empty<System.Web.Mvc.SelectListItem>();
         var storeItems = ViewBag.StoreDDL as IEnumerable<System.Web.Mvc.SelectListItem> ?? System.Linq.Enumerable.Empty<System.Web.Mvc.SelectListItem>();
     }*@
+<style>
+    .tag-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 10px;
+    }
 
+    .tag-item {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 6px 12px;
+        background: #EFF6FF;
+        border: 1px solid #DBEAFE;
+        color: #2563EB;
+        border-radius: 6px;
+        font-size: 13px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all .2s ease;
+        user-select: none;
+    }
+
+        .tag-item:hover {
+            background: #DBEAFE;
+            color: #1D4ED8;
+        }
+
+        .tag-item.active {
+            background: #DBEAFE;
+            border-color: #93C5FD;
+            color: #1D4ED8;
+        }
+</style>
 <div id="add-manage-editor-page"
      class="drawer-close-disable  flex justify-end fixed top-0 right-0 z-40 h-screen overflow-y-auto transition-transform translate-x-full "
      tabindex="-1" aria-labelledby="drawer-right-label">
@@ -34,7 +68,7 @@
 
                     <div class="input-field-common">
                         <label class="block mb-[12px] text-sm font-medium text-secondary-text-2">
-                            @CRS.ADMIN.APPLICATION.Resources.Resource.Location
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Location <span class="text-red-500">*</span>
                         </label>
 
                         <select id="large1"
@@ -60,14 +94,19 @@
 
                     <div class="input-field-common">
                         <label class="block mb-[12px] text-sm font-medium text-secondary-text-2">
-                            @CRS.ADMIN.APPLICATION.Resources.Resource.Club
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Club <span class="text-red-500">*</span>
                         </label>
 
+                        @*<select id="large2"
+                            name="ClubDDLList"
+                            class="default_select select-common block w-full ClubDDLList"
+                            style="width:100%;"
+                            @(isEditMode ? "disabled" : "")>*@
                         <select id="large2"
                                 name="ClubDDLList"
                                 class="default_select select-common block w-full ClubDDLList"
                                 style="width:100%;"
-                                @(isEditMode ? "disabled" : "")>
+                                @((isEditMode || string.IsNullOrEmpty(Model.LocationDDL1)) ? "disabled" : "")>
 
                             <option value="">@CRS.ADMIN.APPLICATION.Resources.Resource.Select_Club</option>
 
@@ -92,7 +131,7 @@
 
                     <div class="input-field-common">
                         <label class="block mb-[12px] text-sm font-medium text-secondary-100 ">
-                            @CRS.ADMIN.APPLICATION.Resources.Resource.Reason_Recommendation
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Reason_Recommendation <span class="text-red-500">*</span>
                         </label>
                         @Html.TextBoxFor(model => model.reasonForRecommendation, new { @class = "w-full rounded-[4px]", @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.Reason_Recommendation, @style = "border-radius:4px !important", @onkeypress = "return isAlphabetWithSpace(event)", autocomplete = "off", @maxLength = "50" })
                         <span class="error">
@@ -100,14 +139,44 @@
                         </span>
                     </div>
 
+                    @*<div class="input-field-common">
+                            <label class="block mb-[12px] text-sm font-medium text-secondary-100 ">
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Free_Tag
+                            </label>
+                            @Html.TextBoxFor(model => model.freeTextTag, new { @class = "w-full rounded-[4px]", @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.Free_Tag, @style = "border-radius:4px !important", @onkeypress = "return isAlphabetWithSpace(event)", autocomplete = "off", @maxLength = "50" })
+                            <span class="error">
+                                @Html.ValidationMessageFor(m => m.freeTextTag)
+                            </span>
+                        </div>*@
                     <div class="input-field-common">
-                        <label class="block mb-[12px] text-sm font-medium text-secondary-100 ">
-                            @CRS.ADMIN.APPLICATION.Resources.Resource.Free_Tag
+                        <label class="block mb-[12px] text-sm font-medium text-secondary-100">
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.Free_Tag <span class="text-red-500">*</span>
                         </label>
-                        @Html.TextBoxFor(model => model.freeTextTag, new { @class = "w-full rounded-[4px]", @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.Free_Tag, @style = "border-radius:4px !important", @onkeypress = "return isAlphabetWithSpace(event)", autocomplete = "off", @maxLength = "50" })
+
+                        @Html.TextBoxFor(model => model.freeTextTag,
+                            new
+                            {
+                                @class = "w-full rounded-[4px]",
+                                @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.Free_Tag,
+                                @style = "border-radius:4px !important",
+                                autocomplete = "off",
+                                @maxlength = "200",
+                                id = "freeTextTag"
+                            })
+
                         <span class="error">
                             @Html.ValidationMessageFor(m => m.freeTextTag)
                         </span>
+
+                        <!-- Suggested Tags -->
+                        <div class="tag-container mt-3">
+                            <span class="tag-item">大箱</span>
+                            <span class="tag-item">在籍多い</span>
+                            <span class="tag-item">口コミ多数</span>
+                            <span class="tag-item">予約殺到中</span>
+                            <span class="tag-item">明朗会計</span>
+                            <span class="tag-item">初回案内が丁寧</span>
+                        </div>
                     </div>
                     <div class="flex justify-end ">
                         <div class="flex gap-6">
@@ -148,8 +217,41 @@
             return false;
         }
     });
-</script>
 
+    $(document).on("click", ".tag-item", function () {
+
+        var tag = $(this).text();
+        var textbox = $("#freeTextTag");
+
+        var value = textbox.val().replace(/[,\s]+$/, "");
+
+        if (value === "") {
+            textbox.val(tag + ", ");
+        } else {
+
+            var tags = value.split(",").map(x => x.trim());
+
+            if (!tags.includes(tag)) {
+                textbox.val(value + ", " + tag + ", ");
+            }
+        }
+
+        textbox.focus();
+    });
+
+    $("#freeTextTag").on("keydown", function (e) {
+
+        if (e.key === "Enter") {
+            e.preventDefault();
+
+            let value = $(this).val().replace(/[,\s]+$/, "");
+
+            if (value !== "") {
+                $(this).val(value + ", ");
+            }
+        }
+    });
+</script>
 
 <script>
     $(document).on("change", ".LocationDDL1, .ClubDDLList", function () {

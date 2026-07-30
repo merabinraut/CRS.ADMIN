@@ -119,8 +119,18 @@
              });
              var RequestVerificationToken = $('input[name="__RequestVerificationToken"]').val();
 
-             $('.LocationDDL1').change(function () {
-                  $(".ClubDDLList").empty().prepend("<option value='' disabled selected>@CRS.ADMIN.APPLICATION.Resources.Resource.Select_Club</option>");
+            $('.LocationDDL1').change(function () {
+                if ($(this).val() !== "") {
+                    $(".ClubDDLList").prop("disabled", false);
+                } else {
+                    $(".ClubDDLList")
+                        .prop("disabled", true)
+                        .val("")
+                        .trigger("change");
+                }
+
+
+                 $(".ClubDDLList").empty().prepend("<option value='' disabled selected>@CRS.ADMIN.APPLICATION.Resources.Resource.Select_Club</option>");
                  var locationId = document.getElementsByName("LocationDDL1")[0].value;
                  var agentId = document.getElementsByName("ClubDDLList")[0].value;
                if (!Boolean(locationId)) {
@@ -148,7 +158,7 @@
 
 
 
-          var PopUpRenderValue = '@ViewBag.PopUpRenderValue';
+        var PopUpRenderValue = '@ViewBag.PopUpRenderValue';
         var PopUpClubManageValue = '@ViewBag.PopUpClubManageValue';
         if (PopUpRenderValue != null && PopUpRenderValue != "" && PopUpRenderValue == "ManageEditorPick") {
               var element = document.getElementById('add-manage-editor-page');

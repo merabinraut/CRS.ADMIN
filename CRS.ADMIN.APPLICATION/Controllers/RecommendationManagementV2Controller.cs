@@ -1496,10 +1496,9 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             return Json(new { clubLists }, JsonRequestBehavior.AllowGet);
         }
 
-
         [HttpGet]
         public ActionResult ManageRecommendationV2(string editorPickId, string locationId)
-        {
+        {          
             editorPickId = !string.IsNullOrEmpty(editorPickId) ? editorPickId.DecryptParameter() : null;
             locationId = !string.IsNullOrEmpty(locationId) ? locationId.DecryptParameter() : null;
             if (string.IsNullOrEmpty(editorPickId) && string.IsNullOrEmpty(locationId))
@@ -1517,12 +1516,11 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             {
                 EditorPickId = dbResponse.EditorPickId.EncryptParameter(),
                 ClubId = !string.IsNullOrEmpty(dbResponse.ClubId) ? dbResponse.ClubId.EncryptParameter() : null,
-                ClubDDLList = !string.IsNullOrEmpty(dbResponse.ClubId) ? dbResponse.ClubId.EncryptParameter() : null,
+                ClubDDLList =!string.IsNullOrEmpty(dbResponse.ClubId) ? dbResponse.ClubId.EncryptParameter()  : null,
                 LocationDDL1 = !string.IsNullOrEmpty(dbResponse.LocationId) ? dbResponse.LocationId.EncryptParameter() : null,
                 location = !string.IsNullOrEmpty(dbResponse.LocationId) ? dbResponse.LocationId.EncryptParameter() : null,
                 freeTextTag = dbResponse.FreeTextTag,
                 reasonForRecommendation = dbResponse.Description,
-
             };
 
             TempData["ClubPlanManagementModel"] = resp;
@@ -1539,7 +1537,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 ClubId = !string.IsNullOrEmpty(ClubDDLList) ? ClubDDLList.DecryptParameter() : null,
                 EditorPickId = !string.IsNullOrEmpty(EditorPickId) ? EditorPickId.DecryptParameter() : null,
                 Description = req.reasonForRecommendation,
-                FreeTextTag = req.freeTextTag,
+                FreeTextTag = req.freeTextTag?.Trim().TrimEnd(',', ' '),
                 ActionUser = ApplicationUtilities.GetSessionValue("Username").ToString(),
                 ActionIP = ApplicationUtilities.GetIP(),
             };
