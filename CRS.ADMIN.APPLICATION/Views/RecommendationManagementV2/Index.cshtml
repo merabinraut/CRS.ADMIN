@@ -231,17 +231,17 @@
         $("#selectedLocationId").change(function () {
             debugger;
              var locationId = $(this).val();
-             var pageSize = '@ViewBag.PageSize';
+             @*var pageSize = '@ViewBag.PageSize';
              var totalData = '@ViewBag.TotalData';
              var startIndex = '@ViewBag.StartIndex';
-             var searchFilter = '@ViewBag.SearchFilter';
-             window.location.href =
+             var searchFilter = '@ViewBag.SearchFilter';*@
+            window.location.href =
                 '/RecommendationManagementV2/Index?' +
                 'locationId=' + encodeURIComponent(locationId) +
-                '&TabValue=02' +
-                '&PageSize=' + encodeURIComponent(pageSize) +
-                '&StartIndex=' + encodeURIComponent(startIndex) +
-                '&SearchFilter=' + encodeURIComponent(searchFilter);
+                '&TabValue=02';
+                //'&PageSize=' + encodeURIComponent(pageSize) +
+                //'&StartIndex=' + encodeURIComponent(startIndex) +
+                //'&SearchFilter=' + encodeURIComponent(searchFilter);
              });
     </script>
 
