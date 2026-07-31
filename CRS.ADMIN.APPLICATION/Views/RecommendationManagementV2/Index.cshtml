@@ -118,25 +118,21 @@
 
 
 @section scripts{
-
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            debugger;
+             const page_size = @ViewBag.PageSize;
+             const total_data = @ViewBag.TotalData;
+             const start_index_val = @ViewBag.StartIndex;
+             //var selectedLocation = @ViewBag.selectedLocation;
+             let URL = "/RecommendationManagementV2/Index?TabValue=02";
+             let search_filter = $('#default-search-plan_list').val();
+             URL = addQueryParam(URL, 'SearchFilter', search_filter);
+             LoadPagination(page_size, total_data, start_index_val, URL);
+         });
+    </script>
     <script>
         $(document).ready(function () {
-            $("#selectedLocationId").change(function () {
-            var locationId = $(this).val();
-            var pageSize = '@ViewBag.PageSize';
-            var totalData = '@ViewBag.TotalData';
-            var startIndex = '@ViewBag.StartIndex';
-            var searchFilter = '@ViewBag.SearchFilter';
-            window.location.href =
-                '/RecommendationManagementV2/Index?' +
-                'locationId=' + encodeURIComponent(locationId) +
-                '&TabValue=02' +
-                '&PageSize=' + encodeURIComponent(pageSize) +
-                '&StartIndex=' + encodeURIComponent(startIndex) +
-                '&SearchFilter=' + encodeURIComponent(searchFilter);
-});
-
-
 
         $('select').select2({
             minimumResultsForSearch: Infinity
@@ -230,17 +226,23 @@
               }
       });
     </script>
+
     <script>
-     document.addEventListener('DOMContentLoaded', function () {
-             const page_size = @ViewBag.PageSize;
-             const total_data = @ViewBag.TotalData;
-         const start_index_val = @ViewBag.StartIndex;
-             var selectedLocation = @ViewBag.selectedLocation;
-            let URL = "/RecommendationManagementV2/Index?TabValue=02&locationId=" + encodeURIComponent(selectedLocation);
-             let search_filter = $('#default-search-plan_list').val();
-             URL = addQueryParam(URL, 'SearchFilter', search_filter);
-             LoadPagination(page_size, total_data, start_index_val, URL);
-         });
+        $("#selectedLocationId").change(function () {
+            debugger;
+             var locationId = $(this).val();
+             var pageSize = '@ViewBag.PageSize';
+             var totalData = '@ViewBag.TotalData';
+             var startIndex = '@ViewBag.StartIndex';
+             var searchFilter = '@ViewBag.SearchFilter';
+             window.location.href =
+                '/RecommendationManagementV2/Index?' +
+                'locationId=' + encodeURIComponent(locationId) +
+                '&TabValue=02' +
+                '&PageSize=' + encodeURIComponent(pageSize) +
+                '&StartIndex=' + encodeURIComponent(startIndex) +
+                '&SearchFilter=' + encodeURIComponent(searchFilter);
+             });
     </script>
 
     <script>
