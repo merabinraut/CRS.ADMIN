@@ -3277,4 +3277,12 @@
   <data name="Reservation" xml:space="preserve">
     <value>Reservation</value>
   </data>
+  <data name="EditorsPickClub_Name" xml:space="preserve">
+    <value>Club Name</value>
+    <comment>EditorsPickClubName</comment>
+  </data>
+  <data name="EditorsAction" xml:space="preserve">
+    <value>Action</value>
+    <comment>Editor's Action Name</comment>
+  </data>
 </root>

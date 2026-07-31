@@ -3213,4 +3213,10 @@
   <data name="Reservation" xml:space="preserve">
     <value>予約</value>
   </data>
+  <data name="EditorsPickClub_Name" xml:space="preserve">
+    <value>クラブプロファイル</value>
+  </data>
+  <data name="EditorsAction" xml:space="preserve">
+    <value>操作</value>
+  </data>
 </root>

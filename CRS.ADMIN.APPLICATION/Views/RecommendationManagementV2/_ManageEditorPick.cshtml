@@ -95,13 +95,7 @@
                     <div class="input-field-common">
                         <label class="block mb-[12px] text-sm font-medium text-secondary-text-2">
                             @CRS.ADMIN.APPLICATION.Resources.Resource.Club <span class="text-red-500">*</span>
-                        </label>
-
-                        @*<select id="large2"
-                            name="ClubDDLList"
-                            class="default_select select-common block w-full ClubDDLList"
-                            style="width:100%;"
-                            @(isEditMode ? "disabled" : "")>*@
+                        </label>    
                         <select id="large2"
                                 name="ClubDDLList"
                                 class="default_select select-common block w-full ClubDDLList"
@@ -128,7 +122,6 @@
                         <span class="error"></span>
                     </div>
 
-
                     <div class="input-field-common">
                         <label class="block mb-[12px] text-sm font-medium text-secondary-100 ">
                             @CRS.ADMIN.APPLICATION.Resources.Resource.Reason_Recommendation <span class="text-red-500">*</span>
@@ -139,15 +132,6 @@
                         </span>
                     </div>
 
-                    @*<div class="input-field-common">
-                            <label class="block mb-[12px] text-sm font-medium text-secondary-100 ">
-                                @CRS.ADMIN.APPLICATION.Resources.Resource.Free_Tag
-                            </label>
-                            @Html.TextBoxFor(model => model.freeTextTag, new { @class = "w-full rounded-[4px]", @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.Free_Tag, @style = "border-radius:4px !important", @onkeypress = "return isAlphabetWithSpace(event)", autocomplete = "off", @maxLength = "50" })
-                            <span class="error">
-                                @Html.ValidationMessageFor(m => m.freeTextTag)
-                            </span>
-                        </div>*@
                     <div class="input-field-common">
                         <label class="block mb-[12px] text-sm font-medium text-secondary-100">
                             @CRS.ADMIN.APPLICATION.Resources.Resource.Free_Tag <span class="text-red-500">*</span>
@@ -160,7 +144,7 @@
                                 @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.Free_Tag,
                                 @style = "border-radius:4px !important",
                                 autocomplete = "off",
-                                @maxlength = "200",
+                                @maxlength = "50",
                                 id = "freeTextTag"
                             })
 
@@ -219,35 +203,89 @@
     });
 
     $(document).on("click", ".tag-item", function () {
-
-        var tag = $(this).text();
-        var textbox = $("#freeTextTag");
-
-        var value = textbox.val().replace(/[,\s]+$/, "");
-
-        if (value === "") {
-            textbox.val(tag + ", ");
-        } else {
-
-            var tags = value.split(",").map(x => x.trim());
-
-            if (!tags.includes(tag)) {
-                textbox.val(value + ", " + tag + ", ");
-            }
+        var tag = $(this).text().trim();
+        if (tag.length > 20) {
+            return;
         }
 
+        var textbox = $("#freeTextTag");
+        var value = textbox.val().replace(/[,\s]+$/, "");
+
+        var tags = value === ""
+            ? []
+            : value.split(",").map(x => x.trim()).filter(x => x !== "");
+
+        if (tags.length >= 4) {
+            return;
+        }
+        if (!tags.includes(tag)) {
+            tags.push(tag);
+            textbox.val(tags.join(", ") + ", ");
+        }
         textbox.focus();
     });
 
     $("#freeTextTag").on("keydown", function (e) {
 
+        let textbox = $(this);
+        let value = textbox.val();
+
+        let tags = value
+            .split(",")
+            .map(x => x.trim())
+            .filter(x => x !== "");
+
+        let currentTag = value.split(",").pop().trim();
+        const allowedKeys = [
+            "Backspace",
+            "Delete",
+            "ArrowLeft",
+            "ArrowRight",
+            "ArrowUp",
+            "ArrowDown",
+            "Tab",
+            "Home",
+            "End"
+        ];
+
+        if (
+            tags.length >= 4 &&
+            currentTag === "" &&
+            e.key.length === 1 &&
+            !allowedKeys.includes(e.key)
+        ) {
+            e.preventDefault();
+            return;
+        }
+        if (
+            e.key.length === 1 &&
+            e.key !== "," &&
+            currentTag.length >= 20
+        ) {
+            e.preventDefault();
+            return;
+        }
         if (e.key === "Enter") {
             e.preventDefault();
 
-            let value = $(this).val().replace(/[,\s]+$/, "");
+            if (tags.length > 4) {
+                tags = tags.slice(0, 4);
+            }
 
-            if (value !== "") {
-                $(this).val(value + ", ");
+            textbox.val(tags.join(", ") + (tags.length ? ", " : ""));
+        }
+
+        // Prevent creating more than 4 tags
+        if (e.key === ",") {
+
+            if (tags.length >= 4) {
+                e.preventDefault();
+                return;
+            }
+
+            if (currentTag.length === 0) {
+                e.preventDefault();
+                return;
             }
         }
     });
