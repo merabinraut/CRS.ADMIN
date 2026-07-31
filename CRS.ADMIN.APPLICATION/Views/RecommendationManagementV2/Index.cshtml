@@ -10,6 +10,20 @@
     var _manageRecommendation = Model.addEditorPick as CRS.ADMIN.APPLICATION.Models.RecommendationManagementV2.AddEditorPick;
 
 }
+<style>
+    #storeAreaFilter {
+        width: 250px;
+        border: 1px solid #D75A8B !important;
+        border-radius: 8px;
+        background-color: #fff;
+    }
+
+        #storeAreaFilter:focus {
+            border: 1px solid #D75A8B !important;
+            box-shadow: 0 0 0 2px rgba(215, 90, 139, 0.2);
+            outline: none;
+        }
+</style>
 
 <div class="px-8 py-4">
     @Html.AntiForgeryToken()
@@ -19,6 +33,7 @@
                 <div class="heading-title">@CRS.ADMIN.APPLICATION.Resources.Resource.Recommendation_Requests</div>
                 <div class="span-title-light-gray">@CRS.ADMIN.APPLICATION.Resources.Resource.RecommendationSupportMsg</div>
             </div>
+
         </div>
 
         <div id="tabV1" class="tab-content-planeV3">
@@ -82,9 +97,9 @@
             <!-- Modal body -->
             <div class="grid gap-6 px-[20px] py-8">
                 <div class="text-[#333] font-semibold pb-[11px] border-b border-[#eeeeee]">@CRS.ADMIN.APPLICATION.Resources.Resource.Confirmation</div>
-                <div class="grid gap-[20px] text-[#062937] mb-[45px]">
-                    <div class="text-[14px] text-secondary-text-2 text-start" id="confirmationRequestMessage">
-                        エディターピックを削除しますか？
+                <div class="grid gap-[20px] text-[#062937] mb-[-45px]">
+                    <div class="text-[14px] text-secondary-text-2 text-start" id="confirmationRqestMessage">
+                        以下のクラブをエディターズピックから削除しますか？
                     </div>
                 </div>
                 <div class="flex justify-end">
@@ -105,7 +120,24 @@
 @section scripts{
 
     <script>
-    $(document).ready(function () {
+        $(document).ready(function () {
+            $("#selectedLocationId").change(function () {
+            var locationId = $(this).val();
+            var pageSize = '@ViewBag.PageSize';
+            var totalData = '@ViewBag.TotalData';
+            var startIndex = '@ViewBag.StartIndex';
+            var searchFilter = '@ViewBag.SearchFilter';
+            window.location.href =
+                '/RecommendationManagementV2/Index?' +
+                'locationId=' + encodeURIComponent(locationId) +
+                '&TabValue=02' +
+                '&PageSize=' + encodeURIComponent(pageSize) +
+                '&StartIndex=' + encodeURIComponent(startIndex) +
+                '&SearchFilter=' + encodeURIComponent(searchFilter);
+});
+
+
+
         $('select').select2({
             minimumResultsForSearch: Infinity
         })
@@ -158,7 +190,6 @@
              });
 
 
-
         var PopUpRenderValue = '@ViewBag.PopUpRenderValue';
         var PopUpClubManageValue = '@ViewBag.PopUpClubManageValue';
         if (PopUpRenderValue != null && PopUpRenderValue != "" && PopUpRenderValue == "ManageEditorPick") {
@@ -169,8 +200,11 @@
           //    element1 = document.getElementById('add-manage-club-own-plan');
           //    element1.classList.remove('translate-x-full');
           //}
-              let tabValue = "@ViewBag.TabValue" ?? "";
-              if (tabValue === "02") {
+        let tabValue = "@ViewBag.TabValue" ?? "";
+        const divArea = document.getElementById('divStoreAreaList');
+
+        if (tabValue === "02") {
+                  divArea.style.display = 'block';
                   const link1 = document.getElementById('tabMainLink');
                   const link2 = document.getElementById('tabEditorLink');
                   link1.style.color = '';
@@ -181,7 +215,9 @@
                   document.getElementById('all').style.display = 'none';
 
               }
-              else {
+        else {
+                  divArea.style.display = 'none';
+
                   const link1 = document.getElementById('tabMainLink');
                   const link2 = document.getElementById('tabEditorLink');
                   link1.style.color = '#D75A8B';
@@ -198,9 +234,10 @@
      document.addEventListener('DOMContentLoaded', function () {
              const page_size = @ViewBag.PageSize;
              const total_data = @ViewBag.TotalData;
-             const start_index_val = @ViewBag.StartIndex;
-         let URL = "/RecommendationManagementV2/Index?TabValue=02";
-            let search_filter = $('#default-search-plan_list').val();
+         const start_index_val = @ViewBag.StartIndex;
+             var selectedLocation = @ViewBag.selectedLocation;
+            let URL = "/RecommendationManagementV2/Index?TabValue=02&locationId=" + encodeURIComponent(selectedLocation);
+             let search_filter = $('#default-search-plan_list').val();
              URL = addQueryParam(URL, 'SearchFilter', search_filter);
              LoadPagination(page_size, total_data, start_index_val, URL);
          });
@@ -265,17 +302,18 @@
             return url;
         }
 
-    function DeletePickerFunction(id, status) {
-        const $modal = $("#delete-editor-pick-confirmation1");
-        const $message = $("#confirmationRequestMessage");
-        const $approveBtn = $("#approve_ids1");
-        const contentApprove = "エディターピックを削除しますか？";
-        $message.text(contentApprove);
-        $approveBtn.attr({
+        function DeletePickerFunction(id, status) {
+             const $modal = $("#delete-editor-pick-confirmation1");
+             const $message = $("#confirmationRqestMessage");
+             const $approveBtn = $("#approve_ids1");
+             //const contentApprove = $message.text().trim();
+             const contentApprove = " 以下のクラブをエディターズピックから削除しますか？";
+             $message.text(contentApprove);
+             $approveBtn.attr({
             "data-vals1": id
-    });
-        $modal.removeClass("hidden").attr("aria-hidden", "false");
-    }
+            });
+                $modal.removeClass("hidden").attr("aria-hidden", "false");
+            }
 
     function DeleteEditorPickerFunction() {
         const id = $('#approve_ids1').attr('data-vals1');

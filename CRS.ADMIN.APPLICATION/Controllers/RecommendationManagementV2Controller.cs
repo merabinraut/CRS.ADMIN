@@ -1412,8 +1412,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             return View();
         }
         #endregion
-        [OverrideActionFilters]
-        public ActionResult Index(CommonRecommendationModel req, string tabValue = "", string SearchFilter = "", int StartIndex = 0, int PageSize = 10)
+        public ActionResult Index(CommonRecommendationModel req, string tabValue = "", string SearchFilter = "", int StartIndex = 0, int PageSize = 10,string locationId = "")
         {
             Session["CurrentURL"] = "/RecommendationManagementV2/Index";
             var culture = Request.Cookies["culture"]?.Value;
@@ -1429,6 +1428,8 @@ namespace CRS.ADMIN.APPLICATION.Controllers
 
             string defaultSelectedLocationId = string.Empty;
             string defaultSelectedClubId = string.Empty;
+
+           locationId= !string.IsNullOrEmpty(locationId) ? locationId.DecryptParameter() : null;
 
             if (tabValue == "")
             {
@@ -1449,9 +1450,9 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 {
                     SearchFilter=SearchFilter,
                     Skip=StartIndex,
-                    Take=PageSize
+                    Take=PageSize,                   
                 };
-                var dbEditorPickResponse = _business.GetEditorPickList("", SearchFilter, request.Skip, request.Take);
+                var dbEditorPickResponse = _business.GetEditorPickList(locationId, SearchFilter, request.Skip, request.Take);
                 responseInfo.GetRecommendationEditorPickResponseList =
                     dbEditorPickResponse.MapObjects<RecommendationEditorPickResponseList>();
 
@@ -1473,14 +1474,24 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             }
             responseInfo.tabValue = tabValue;
             responseInfo.listType = tabValue;
+            responseInfo.selectedLocation = locationId.EncryptParameter();
             ViewBag.SearchFilter = SearchFilter;
             ViewBag.StartIndex = StartIndex;
             ViewBag.PageSize = PageSize;
             ViewBag.TabValue = tabValue;
+            ViewBag.selectedLocation = locationId.EncryptParameter();
+
             ViewBag.LocationList = ApplicationUtilities.SetDDLValue(ApplicationUtilities
             .LoadDropdownList("LocationDdl") as Dictionary<string, string>, defaultSelectedLocationId, culture.ToLower() == "ja" ? "場所を選択" : "Select Location");
+
+            ViewBag.SelectedLocationList = ApplicationUtilities.SetDDLValue(ApplicationUtilities
+                        .LoadDropdownList("LocationDdl") as Dictionary<string, string>, defaultSelectedLocationId, culture.ToLower() == "ja" ? "場所を選択" : "Select Location");
+
+
             ViewBag.ClubList = ApplicationUtilities.SetDDLValue(ApplicationUtilities
             .LoadDropdownList("ClubList", defaultSelectedLocationId?.DecryptParameter()) as Dictionary<string, string>, defaultSelectedClubId, culture.ToLower() == "ja" ? "クラブを選択" : "Select Club");
+           
+
             ViewBag.IsBackAllowed = true;
             ViewBag.BackButtonURL = "/RecommendationManagementV2/Index?TabValue=";
             return View(responseInfo);
@@ -1497,7 +1508,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
         }
 
         [HttpGet]
-        public ActionResult ManageRecommendationV2(string editorPickId, string locationId)
+        public ActionResult ManageRecommendationV2(string editorPickId="", string locationId="")
         {          
             editorPickId = !string.IsNullOrEmpty(editorPickId) ? editorPickId.DecryptParameter() : null;
             locationId = !string.IsNullOrEmpty(locationId) ? locationId.DecryptParameter() : null;
@@ -1550,8 +1561,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                     Message = dbResponse.Message,
                     Title = NotificationMessage.SUCCESS.ToString()
                 });
-                string apiUrl = ConfigurationManager.AppSettings["RevalidateApiUrl"];
-                string apiResponse = ExternalApiCallHelpers.CallApi(apiUrl, HttpMethod.Get);
+
                 return RedirectToAction("Index", "RecommendationManagementV2", new { TabValue = "02" });
             }
             AddNotificationMessage(new NotificationModel()

@@ -54,7 +54,7 @@ namespace CRS.ADMIN.REPOSITORY.RecommendationManagement_V2
                         GroupId = row["GroupId"].ToString(),
                         GroupName = row["GroupName"].ToString(),
                         Descriptions = row["Description"].ToString(),
-                        RequestedDate =!string.IsNullOrEmpty(row["CreatedDate"].ToString()) ? DateTime.Parse(row["CreatedDate"].ToString()).ToString("yyyy'年'MM'月'dd'日' HH:mm:ss") : row["CreatedDate"].ToString(),
+                        RequestedDate = !string.IsNullOrEmpty(row["CreatedDate"].ToString()) ? DateTime.Parse(row["CreatedDate"].ToString()).ToString("yyyy'年'MM'月'dd'日' HH:mm:ss") : row["CreatedDate"].ToString(),
                         TotalClubs = row["TotalClubs"].ToString(),
                         DisplayOrderId = row["DisplayOrderId"].ToString(),
                         CreatedBy = row["CreatedBy"].ToString(),
@@ -78,7 +78,7 @@ namespace CRS.ADMIN.REPOSITORY.RecommendationManagement_V2
             return _dao.ParseCommonDbResponse(sp_name);
         }
 
-        public CommonDbResponse DeleteGroup(string groupid , string locationid , Common commonRequest)
+        public CommonDbResponse DeleteGroup(string groupid, string locationid, Common commonRequest)
         {
             string sp_name = "EXEC sproc_admin_mainpage_group_delete ";
             sp_name += " @groupid=" + _dao.FilterString(groupid);
@@ -166,12 +166,12 @@ namespace CRS.ADMIN.REPOSITORY.RecommendationManagement_V2
                         HostName = row["HostName"].ToString(),
                         ClubCategory = row["ClubCategory"].ToString(),
                         DisplayPageLabel = row["DisplayPageLabel"].ToString(),
-                        RequestedDate = row["RequestedDate"].ToString() != "-" ? DateTime.Parse(row["RequestedDate"].ToString()).ToString("yyyy'年'MM'月'dd'日' HH:mm:ss") : row["RequestedDate"].ToString()  ,
+                        RequestedDate = row["RequestedDate"].ToString() != "-" ? DateTime.Parse(row["RequestedDate"].ToString()).ToString("yyyy'年'MM'月'dd'日' HH:mm:ss") : row["RequestedDate"].ToString(),
                         ClubId = row["ClubId"].ToString(),
                         DisplayId = row["DisplayId"].ToString(),
                         RecommendationId = row["RecommendationId"].ToString(),
                         Status = row["Status"].ToString(),
-                        UpdatedDate =row["UpdatedDate"].ToString() != "-" ? DateTime.Parse(row["UpdatedDate"].ToString()).ToString("yyyy'年'MM'月'dd'日' HH:mm:ss") : row["UpdatedDate"].ToString()
+                        UpdatedDate = row["UpdatedDate"].ToString() != "-" ? DateTime.Parse(row["UpdatedDate"].ToString()).ToString("yyyy'年'MM'月'dd'日' HH:mm:ss") : row["UpdatedDate"].ToString()
                     });
                 }
             }
@@ -221,7 +221,7 @@ namespace CRS.ADMIN.REPOSITORY.RecommendationManagement_V2
                     {
                         ClubName = row["ClubName"].ToString(),
                         ClubLogo = row["ClubLogo"].ToString(),
-                        TotalRecords =Convert.ToInt32( row["TotalRecords"].ToString()),
+                        TotalRecords = Convert.ToInt32(row["TotalRecords"].ToString()),
                         HostName = row["HostName"].ToString(),
                         ClubCategory = row["ClubCategory"].ToString(),
                         DisplayPageLabel = row["DisplayPageLabel"].ToString(),
@@ -286,7 +286,7 @@ namespace CRS.ADMIN.REPOSITORY.RecommendationManagement_V2
                         DisplayId = row["DisplayId"].ToString(),
                         RecommendationId = row["RecommendationId"].ToString(),
                         Status = row["Status"].ToString(),
-                        UpdatedDate =row["UpdatedDate"].ToString()!="-"? DateTime.Parse(row["UpdatedDate"].ToString()).ToString("yyyy'年'MM'月'dd'日' HH:mm:ss") : row["UpdatedDate"].ToString(),
+                        UpdatedDate = row["UpdatedDate"].ToString() != "-" ? DateTime.Parse(row["UpdatedDate"].ToString()).ToString("yyyy'年'MM'月'dd'日' HH:mm:ss") : row["UpdatedDate"].ToString(),
                     });
                 }
             }
@@ -403,8 +403,8 @@ namespace CRS.ADMIN.REPOSITORY.RecommendationManagement_V2
                         RecommendationHostId = row["RecommendationHostId"].ToString(),
                         HostImage = row["HostImage"].ToString(),
                         HostName = row["HostName"].ToString(),
-                        CreatedOn = row["CreatedOn"].ToString() != "-"  ? DateTime.Parse(row["CreatedOn"].ToString()).ToString("yyyy'年'MM'月'dd'日' HH:mm:ss") : row["CreatedOn"].ToString(),
-                        UpdatedOn = row["UpdatedOn"].ToString() != "-" ? DateTime.Parse(row["UpdatedOn"].ToString()).ToString("yyyy'年'MM'月'dd'日' HH:mm:ss") : row["UpdatedOn"].ToString() ,
+                        CreatedOn = row["CreatedOn"].ToString() != "-" ? DateTime.Parse(row["CreatedOn"].ToString()).ToString("yyyy'年'MM'月'dd'日' HH:mm:ss") : row["CreatedOn"].ToString(),
+                        UpdatedOn = row["UpdatedOn"].ToString() != "-" ? DateTime.Parse(row["UpdatedOn"].ToString()).ToString("yyyy'年'MM'月'dd'日' HH:mm:ss") : row["UpdatedOn"].ToString(),
                         DisplayOrder = row["DisplayOrder"].ToString(),
                     });
                 }
@@ -659,22 +659,23 @@ namespace CRS.ADMIN.REPOSITORY.RecommendationManagement_V2
         #endregion
 
         #region "Editor's Pick"
-        public List<RecommendationEditorPickResponseListModelCommon> GetEditorPickList(string locationId = "", string SearchFilter = "", int pageNo = 1, int pageSize = 10) //, int pageNo = 1, int pageSize = 10
+
+        public List<RecommendationEditorPickResponseListModelCommon> GetEditorPickList(string locationId = "", string SearchFilter = "",int pageNo = 1,int pageSize = 10)
         {
-            List<RecommendationEditorPickResponseListModelCommon> responseInfo = new List<RecommendationEditorPickResponseListModelCommon>(); 
+            List<RecommendationEditorPickResponseListModelCommon> responseInfo = new List<RecommendationEditorPickResponseListModelCommon>();
             string sp_name = "EXEC sproc_admin_recommendation_editor_pick_get";
             List<string> parameters = new List<string>();
-            if (!string.IsNullOrWhiteSpace(locationId))
-            {
-                parameters.Add("@LocationId=" + _dao.FilterString(locationId));
-            }
-            if (!string.IsNullOrWhiteSpace(SearchFilter))
-            {
-                parameters.Add("@search=" + _dao.FilterString(SearchFilter));
-            }
+            parameters.Add("@LocationId=" +
+                (string.IsNullOrWhiteSpace(locationId)
+                    ? "NULL"
+                    : _dao.FilterString(locationId)));
+            parameters.Add("@search=" +
+                (string.IsNullOrWhiteSpace(SearchFilter)
+                    ? "NULL"
+                    : "N" + _dao.FilterString(SearchFilter)));
             parameters.Add("@PageNo=" + pageNo);
             parameters.Add("@PageSize=" + pageSize);
-            sp_name += " " + string.Join(",", parameters);
+            sp_name += " " + string.Join(", ", parameters);
             var dbResponseInfo = _dao.ExecuteDataTable(sp_name);
             if (dbResponseInfo != null)
             {
@@ -690,7 +691,7 @@ namespace CRS.ADMIN.REPOSITORY.RecommendationManagement_V2
                         Description = row["Description"]?.ToString(),
                         Tags = row["Tags"]?.ToString(),
                         UpdatedDate = row["UpdatedDate"]?.ToString(),
-                        TotalRecords = Convert.ToInt32(row["TotalRecords"].ToString())
+                        TotalRecords = Convert.ToInt32(row["TotalRecords"])
                     });
                 }
             }
@@ -699,7 +700,7 @@ namespace CRS.ADMIN.REPOSITORY.RecommendationManagement_V2
 
         public ManageEditorPickCommon GetEditorPickDetail(string editorPickId = "", string locationId = "")
         {
-            string sp_name = "EXEC sproc_admin_recommendation_editor_pick_get"; 
+            string sp_name = "EXEC sproc_admin_recommendation_editor_pick_get";
             sp_name += !string.IsNullOrEmpty(editorPickId) ? ",@editorPickId=" + _dao.FilterString(editorPickId) : null;
             sp_name += !string.IsNullOrEmpty(locationId) ? ",@LocationId=" + _dao.FilterString(locationId) : null;
             var dbResponse = _dao.ExecuteDataRow(sp_name);
@@ -723,13 +724,13 @@ namespace CRS.ADMIN.REPOSITORY.RecommendationManagement_V2
             if (string.IsNullOrEmpty(commonModel.EditorPickId))
             {
                 sp_name = "EXEC sproc_admin_recommendation_editor_pick_create";
-                
+
             }
             else
             {
-                sp_name = "EXEC sproc_admin_recommendation_editor_pick_update"; 
-                sp_name += " @editorPickId=" + _dao.FilterParameter(commonModel.EditorPickId);
+                sp_name = "EXEC sproc_admin_recommendation_editor_pick_update";
             }
+            sp_name += " @editorPickId=" + _dao.FilterParameter(commonModel.EditorPickId);
             sp_name += ",@locationId=" + _dao.FilterString(commonModel.LocationId);
             sp_name += ",@clubId=" + _dao.FilterString(commonModel.ClubId);
             sp_name += ",@description=" + (!string.IsNullOrEmpty(commonModel.Description) ? "N" + _dao.FilterString(commonModel.Description) : _dao.FilterString(commonModel.Description));

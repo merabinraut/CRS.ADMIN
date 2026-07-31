@@ -68,12 +68,14 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 var data = ApplicationUtilities.DecryptParameter(Requests.ClubId);
                 decryptedClubId = Convert.ToInt64(ApplicationUtilities.DecryptParameter(Requests.ClubId));
             }
+
             var locations = _service.GetLocationList() ?? new List<LocationCommon>();
             ViewBag.LocationList = locations.Select(x => new SelectListItem
             {
                 Value = x.LocationId,
                 Text = x.LocationName
             }).ToList();
+
             if (TabValue == "")
             {
                 var summaryPerformance = _service.GetConversionSummaryPerformanceRepost(dbRequest, decryptedClubId.ToString());

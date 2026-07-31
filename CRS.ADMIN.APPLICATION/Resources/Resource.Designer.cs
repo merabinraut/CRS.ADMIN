@@ -2741,6 +2741,28 @@ namespace CRS.ADMIN.APPLICATION.Resources
         }
 
         /// <summary>
+        ///   Looks up a localized string similar to Club Names.
+        /// </summary>
+        public static string EditorsPickClub_Name
+        {
+            get
+            {
+                return ResourceManager.GetString("EditorsPickClub_Name", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Action.
+        /// </summary>
+        public static string EditorsAction
+        {
+            get
+            {
+                return ResourceManager.GetString("EditorsAction", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   Looks up a localized string similar to Email.
         /// </summary>
         public static string Email
@@ -8906,9 +8928,9 @@ namespace CRS.ADMIN.APPLICATION.Resources
             }
         }
 
-        
 
-        
+
+
 
     }
 }

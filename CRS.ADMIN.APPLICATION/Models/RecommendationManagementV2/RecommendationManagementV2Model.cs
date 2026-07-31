@@ -9,7 +9,7 @@ namespace CRS.ADMIN.APPLICATION.Models.RecommendationManagementV2
     {
         public string tabValue { get; set; } = "";
         public string listType { get; set; }
-
+        public string selectedLocation { get; set; }
         public List<LocationListModel> GetLocationList { get; set; }
         public List<DisplayPageListModel> GetDisplayPageList { get; set; }
         public List<GroupListModel> GetGroupList { get; set; }
@@ -295,7 +295,6 @@ namespace CRS.ADMIN.APPLICATION.Models.RecommendationManagementV2
         public string ClubId { get; set; }
         [Required(ErrorMessage = "Reason For Recommendation is required.")]
         public string reasonForRecommendation { get; set; }
-        [Required(ErrorMessage = "Free Text Tag is required.")]
         public string freeTextTag { get; set; }
 
         [Required(ErrorMessage = "Location is required.")]

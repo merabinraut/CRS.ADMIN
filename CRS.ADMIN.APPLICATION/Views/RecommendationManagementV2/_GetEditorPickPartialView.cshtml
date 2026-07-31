@@ -15,38 +15,54 @@
         white-space: nowrap;
     }
 </style>
-<div class="divider-common m-0 h-[1px]">
+<div class="relative">
 
-</div>
-<form action="/RecommendationManagementV2/Index" method="get">
-    <input type="hidden" name="TabValue" value="02" />
-    <div class="relative input-search-wrapper flex justify-between">
-        <div class="absolute inset-y-0 left-0 flex items-center pl-[16px] pointer-events-none">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21" fill="none">
-                <path d="M17.5 18L13.875 14.375M15.8333 9.66667C15.8333 13.3486 12.8486 16.3333 9.16667 16.3333C5.48477 16.3333 2.5 13.3486 2.5 9.66667C2.5 5.98477 5.48477 3 9.16667 3C12.8486 3 15.8333 5.98477 15.8333 9.66667Z"
-                      stroke="#667085" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round" />
-            </svg>
+    <form action="/RecommendationManagementV2/Index" method="get">
+        <div class="absolute -top-40 right-0 flex items-end justify-end gap-2"
+             id="divStoreAreaList">
+            <select id="selectedLocationId" name="selectedLocation"
+                    class="appearance-none w-[200px] rounded-[8px] px-3 py-2 bg-white text-sm border border-black "
+                    -webkit-appearance:none; -moz-appearance:none; appearance:none;">
+                @{
+                    var selectedLocation = @ViewBag.selectedLocation as string;
+                }         
+                @foreach (var location in ViewBag.SelectedLocationList as IEnumerable<SelectListItem>)
+                {
+                    <option value="@location.Value"
+                            @(location.Value == selectedLocation ? "selected" : null)>
+                        @location.Text
+                    </option>
+                }
+
+            </select>
         </div>
-        <input type="search"
-               id="default-search-editor-pick"
-               class="input-search block w-full "
-               placeholder="@CRS.ADMIN.APPLICATION.Resources.Resource.Search"
-               value="@ViewBag.SearchFilter"
-               name="SearchFilter">
+        <input type="hidden" name="TabValue" value="02" />
 
-        <div class="flex gap-6 bg-blue">
-            <div class="btn btn-primary gap-[8px] h-[40px]" data-drawer-target="add-manage-editor-page"
-                 data-drawer-show="add-manage-editor-page" data-drawer-placement="right" data-drawer-backdrop="false"
-                 aria-controls="drawer-disabled-backdrop">
-                <img src="~/Content/assets_new/images/plus-circle-solid.svg" />
-                @CRS.ADMIN.APPLICATION.Resources.Resource.Add_Editor
+        <div class="relative input-search-wrapper flex justify-between mb-5">
+            <div class="absolute inset-y-0 left-0 flex items-center pl-[16px] pointer-events-none">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21" fill="none">
+                    <path d="M17.5 18L13.875 14.375M15.8333 9.66667C15.8333 13.3486 12.8486 16.3333 9.16667 16.3333C5.48477 16.3333 2.5 13.3486 2.5 9.66667C2.5 5.98477 5.48477 3 9.16667 3C12.8486 3 15.8333 5.98477 15.8333 9.66667Z"
+                          stroke="#667085" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
             </div>
+            <input type="search"
+                   id="default-search-editor-pick"
+                   class="input-search block w-full "
+                   placeholder="@CRS.ADMIN.APPLICATION.Resources.Resource.Search"
+                   value="@ViewBag.SearchFilter"
+                   name="SearchFilter">
+
+            <div class="flex gap-6 bg-blue">
+                <div class="btn btn-primary gap-[8px] h-[40px]" data-drawer-target="add-manage-editor-page"
+                     data-drawer-show="add-manage-editor-page" data-drawer-placement="right" data-drawer-backdrop="false"
+                     aria-controls="drawer-disabled-backdrop">
+                    <img src="~/Content/assets_new/images/plus-circle-solid.svg" />
+                    @CRS.ADMIN.APPLICATION.Resources.Resource.Add_Editor
+                </div>
+            </div>
+
         </div>
-
-    </div>
-</form>
-<div class="divider-common m-0 h-[1px]">
-
+    </form>
 </div>
 <div class="table-tab" id="all">
     <div class="px-[16px] py-[12px] flex justify-between entry-export-container">
@@ -68,7 +84,7 @@
                     </th>
                     <th scope="col" class="p-[12px]">
                         <div class="flex">
-                            @CRS.ADMIN.APPLICATION.Resources.Resource.Club_Profile
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.EditorsPickClub_Name
                             <div class="relative pl-[5px]">
                                 <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
                                 <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
@@ -106,7 +122,7 @@
 
                     <th scope="col" class="p-[12px]">
                         <div class="flex">
-                            @CRS.ADMIN.APPLICATION.Resources.Resource.Action
+                            @CRS.ADMIN.APPLICATION.Resources.Resource.EditorsAction
                             <div class="relative pl-[5px]">
                                 <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
                                 <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
@@ -164,10 +180,10 @@
                             </td>
                             <td class="p-[12px]">
                                 <div class="flex gap-2 items-center">
-                                    <i class="fa-regular fa-pen-to-square text-[20px] text-[#989898] cursor-pointer" onclick="EditEditorPick('@item.EditorPickId')"></i>
-                                <div>        
-                                   <i class=" las la-trash-alt text-[20px] cursor-pointer text-[#CB3F3F]" onclick="DeletePickerFunction('@item.EditorPickId','D');" data-modal-target="delete-editor-pick-confirmation1" data-modal-toggle="delete-editor-pick-confirmation1"></i>
-                                </div>
+                                    <i class="fa-regular fa-pen-to-square text-[20px] text-[#989898] cursor-pointer" onclick="EditEditorPick('@item.EditorPickId','@item.LocationId')"></i>
+                                    <div>
+                                        <i class=" las la-trash-alt text-[20px] cursor-pointer text-[#CB3F3F]" onclick="DeletePickerFunction('@item.EditorPickId','D');" data-modal-target="delete-editor-pick-confirmation1" data-modal-toggle="delete-editor-pick-confirmation1"></i>
+                                    </div>
                                 </div>
                             </td>
                         </tr>
@@ -195,11 +211,10 @@
 
 
 <script>
-    function EditEditorPick(editorpickId) {
-        console.log(editorpickId, "editorid");
-        window.location.href = "/RecommendationManagementV2/ManageRecommendationV2?editorPickId=" + editorpickId;
+    function EditEditorPick(editorpickId, locationId) {
+        window.location.href = "/RecommendationManagementV2/ManageRecommendationV2?editorPickId=" + editorpickId + "&locationId=" + locationId;
     }
-
+  
     //function DeleteEditorPickDetail(editorpickId) {
     //    const modal = document.getElementById("delete-editor-pick-confirmation");
     //    if (modal) {
