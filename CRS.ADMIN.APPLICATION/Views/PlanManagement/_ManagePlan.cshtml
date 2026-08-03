@@ -348,7 +348,7 @@
                         <label class="block mb-[12px] text-sm font-medium text-secondary-100 ">
                             @CRS.ADMIN.APPLICATION.Resources.Resource.Remarks
                         </label>
-                        @Html.TextAreaFor(model => model.Remarks, new { @class = "w-full", @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.Remarks, @onkeypress = "return isNumberWithDot(event)", autocomplete = "off", @maxLength = 200 })
+                        @Html.TextAreaFor(model => model.Remarks, new { @class = "w-full", @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.Remarks, @onkeypress = "return isNumberWithDot(event)", autocomplete = "off", @maxLength = 200, @required = "required" })
                         <span class="error">
                             @Html.ValidationMessageFor(m => m.Remarks)
                         </span>
