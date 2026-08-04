@@ -180,6 +180,19 @@
     </div>
 </div>
 <script>
+
+    $(document).on("input", "#freeTextTag", function () {
+
+        var value = $(this).val();
+        var chars = Array.from(value);
+
+        if (chars.length > 50) {
+            $(this).val(chars.slice(0, 50).join(""));
+        }
+
+    });
+
+
     $("#ManageRecommendation").on("submit", function (e) {
         var location = $(".LocationDDL1").val();
         var club = $(".ClubDDLList").val();
