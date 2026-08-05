@@ -25,25 +25,46 @@
     var selectedBirthPlace = ViewBag.BirthPlaceDDLKey as string;
     var selectedBloodGroup = ViewBag.BloodGroupDDLKey as string;
 
-    //DateTime date = (!string.IsNullOrEmpty(Model.DOB) && Model.DOB.Trim().ToUpper() != "YYYY-MM-DD")
-    //    ? Convert.ToDateTime(Model.DOB)
-    //    : DateTime.Now;
-    DateTime date;
 
-    if (!string.IsNullOrWhiteSpace(Model.DOB) &&
-        Model.DOB.Trim().ToUpper() != "YYYY-MM-DD" &&
-        DateTime.TryParse(Model.DOB, out date))
-    {
-        // date parsed successfully
-    }
-    else
-    {
-        date = DateTime.Now;
-    }
+    string yearValue = "";
+    string monthValue = "";
+    string dayValue = "";
 
-    int splitYear = date.Year;
-    int splitMonth = date.Month;
-    int splitDay = date.Day;
+    if (!string.IsNullOrWhiteSpace(Model.DOB))
+    {
+        var dob = Model.DOB.Trim();
+
+        if (dob != "YYYY-MM-DD")
+        {
+            var parts = dob.Split('-');
+
+            if (parts.Length == 3)
+            {
+                // Year
+                if (!string.IsNullOrWhiteSpace(parts[0]) &&
+                    int.TryParse(parts[0], out _))
+                {
+                    yearValue = parts[0];
+                }
+
+                // Month
+                if (!string.IsNullOrWhiteSpace(parts[1]) &&
+                    int.TryParse(parts[1], out int month) &&
+                    month >= 1 && month <= 12)
+                {
+                    monthValue = month.ToString();
+                }
+
+                // Day
+                if (!string.IsNullOrWhiteSpace(parts[2]) &&
+                    int.TryParse(parts[2], out int day) &&
+                    day >= 1 && day <= 31)
+                {
+                    dayValue = day.ToString();
+                }
+            }
+        }
+    }
 }
 
 <style>
@@ -347,24 +368,19 @@
                         </label>
 
                         <div class="select-date-common flex gap-[16px]">
+                       
                             <select class="select-common block w-[100px]" name="BirthYearKey">
                                 <option value="">YYYY</option>
 
                                 @{
-                                    DateTime currentDate = DateTime.Now;
-                                    int currentYear = currentDate.Year;
+                                    int currentYear = DateTime.Now.Year;
                                     int startYear = currentYear - 200;
 
                                     for (int year = currentYear; year >= startYear; year--)
                                     {
-                                        if ((!string.IsNullOrEmpty(Model.DOB) && Model.DOB.Trim().ToUpper() != "YYYY-MM-DD") && splitYear == year)
-                                        {
-                                            <option value="@year" selected>@year</option>
-                                        }
-                                        else
-                                        {
-                                            <option value="@year">@year</option>
-                                        }
+                                        <option value="@year" selected="@(yearValue == year.ToString())">
+                                            @year
+                                        </option>
                                     }
                                 }
                             </select>
@@ -374,14 +390,9 @@
 
                                 @for (int month = 1; month <= 12; month++)
                                 {
-                                    if ((!string.IsNullOrEmpty(Model.DOB) && Model.DOB.Trim().ToUpper() != "YYYY-MM-DD") && splitMonth == month)
-                                    {
-                                        <option value="@month" selected>@month</option>
-                                    }
-                                    else
-                                    {
-                                        <option value="@month">@month</option>
-                                    }
+                                    <option value="@month" selected="@(monthValue == month.ToString())">
+                                        @month.ToString("00")
+                                    </option>
                                 }
                             </select>
 
@@ -390,14 +401,9 @@
 
                                 @for (int day = 1; day <= 31; day++)
                                 {
-                                    if ((!string.IsNullOrEmpty(Model.DOB) && Model.DOB.Trim().ToUpper() != "YYYY-MM-DD") && splitDay == day)
-                                    {
-                                        <option value="@day" selected>@day</option>
-                                    }
-                                    else
-                                    {
-                                        <option value="@day">@day</option>
-                                    }
+                                    <option value="@day" selected="@(dayValue == day.ToString())">
+                                        @day.ToString("00")
+                                    </option>
                                 }
                             </select>
                         </div>
