@@ -464,6 +464,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             {
                 return !string.IsNullOrWhiteSpace(value) && value != "--";
             }
+
             //requestModel.DOB =
             //    IsValidValue(BirthYearKey) ||
             //    IsValidValue(BirthMonthKey) ||
