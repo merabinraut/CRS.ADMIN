@@ -341,7 +341,11 @@ namespace CRS.ADMIN.REPOSITORY.HostManagement
 
 
 
+            //SQL += ",@DOB=" + _DAO.FilterString(request.DOB);
             SQL += ",@DOB=" + _DAO.FilterString(request.DOB);
+            SQL += ",@year=" + _DAO.FilterString(request.year);
+            SQL += ",@month=" + _DAO.FilterString(request.month);
+            SQL += ",@date=" + _DAO.FilterString(request.date);
 
             SQL += ",@ConstellationGroup=N" + _DAO.FilterString(request.ConstellationGroup);
             SQL += ",@Height=" + (string.IsNullOrEmpty(request.Height) ? "null" : "N" + _DAO.FilterString(request.Height) + "");

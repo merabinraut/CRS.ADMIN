@@ -441,7 +441,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 model.Address = dbResponse.Address.EncryptParameter();
                 model.MBTI = dbResponse.MBTI;
                 model.Title = dbResponse.Title;
-        
+
 
                 TempData["RenderId"] = "ManageHost";
                 TempData["ManageHostModel"] = model;
@@ -464,12 +464,12 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             {
                 return !string.IsNullOrWhiteSpace(value) && value != "--";
             }
-            requestModel.DOB =
-                IsValidValue(BirthYearKey) &&
-                IsValidValue(BirthMonthKey) &&
-                IsValidValue(BirthDayKey)
-                    ? $"{BirthYearKey}-{BirthMonthKey}-{BirthDayKey}"
-                    : null;
+            //requestModel.DOB =
+            //    IsValidValue(BirthYearKey) ||
+            //    IsValidValue(BirthMonthKey) ||
+            //    IsValidValue(BirthDayKey)
+            //        ? $"{BirthYearKey}-{BirthMonthKey}-{BirthDayKey}"
+            //        : null;
 
             requestModel.ConstellationGroup = ZodiacSignsDDLKey;
             requestModel.BloodType = BloodGroupDDLKey;
@@ -515,7 +515,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 var requestCommon = requestModel.MapObject<ManageHostCommon>();
                 requestCommon.AgentId = !string.IsNullOrEmpty(requestModel.AgentId) ? requestModel.AgentId.DecryptParameter() : null;
                 ActionResult redirectresult = null;
-                
+
                 if (string.IsNullOrEmpty(requestCommon.AgentId))
                 {
                     this.AddNotificationMessage(new NotificationModel()
@@ -536,7 +536,10 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 if (!string.IsNullOrEmpty(requestCommon.Address))
                     requestCommon.Address = BirthPlaceDDLKey?.DecryptParameter();
 
-                requestCommon.DOB = requestModel.DOB;
+                requestCommon.DOB = null;
+                requestCommon.year = string.IsNullOrEmpty(BirthYearKey) ? "" : BirthYearKey;
+                requestCommon.month = string.IsNullOrEmpty(BirthMonthKey) ? "" : BirthMonthKey.PadLeft(2, '0');
+                requestCommon.date = string.IsNullOrEmpty(BirthDayKey) ? "" : BirthDayKey.PadLeft(2, '0');
                 requestCommon.ActionUser = ApplicationUtilities.GetSessionValue("Username").ToString();
                 requestCommon.ActionIP = ApplicationUtilities.GetIP();
                 requestCommon.ImagePath = requestModel.HostLogo;
