@@ -126,7 +126,7 @@
                         <label class="block mb-[12px] text-sm font-medium text-secondary-100 ">
                             @CRS.ADMIN.APPLICATION.Resources.Resource.Reason_Recommendation <span class="text-red-500">*</span>
                         </label>
-                        @Html.TextBoxFor(model => model.reasonForRecommendation, new { @class = "w-full rounded-[4px]", @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.Reason_Recommendation, @style = "border-radius:4px !important", @onkeypress = "return isAlphabetWithSpace(event)", autocomplete = "off", @maxLength = "50" })
+                        @Html.TextBoxFor(model => model.reasonForRecommendation, new { @class = "w-full rounded-[4px]", @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.Reason_Recommendation, @style = "border-radius:4px !important", @onkeypress = "return isAlphabetWithSpace(event)", autocomplete = "off", @maxLength = "200" })
                         <span class="error">
                             @Html.ValidationMessageFor(m => m.reasonForRecommendation)
                         </span>
@@ -180,6 +180,19 @@
     </div>
 </div>
 <script>
+
+    $(document).on("input", "#freeTextTag", function () {
+
+        var value = $(this).val();
+        var chars = Array.from(value);
+
+        if (chars.length > 50) {
+            $(this).val(chars.slice(0, 50).join(""));
+        }
+
+    });
+
+
     $("#ManageRecommendation").on("submit", function (e) {
         var location = $(".LocationDDL1").val();
         var club = $(".ClubDDLList").val();
