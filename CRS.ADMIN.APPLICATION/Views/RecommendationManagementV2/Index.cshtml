@@ -120,11 +120,15 @@
 @section scripts{
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-             const page_size = @ViewBag.PageSize;
-             const total_data = @ViewBag.TotalData;
-             const start_index_val = @ViewBag.StartIndex;
-             //var selectedLocation = @ViewBag.selectedLocation;
-             let URL = "/RecommendationManagementV2/Index?TabValue=02";
+            const page_size = @ViewBag.PageSize;
+            const total_data = @ViewBag.TotalData;
+            const start_index_val = @ViewBag.StartIndex;
+
+            var selectedLocation = '@ViewBag.selectedLocation';
+
+            //let URL = "/RecommendationManagementV2/Index?TabValue=02";
+            let URL = "/RecommendationManagementV2/Index?TabValue=02&locationId="
+                + encodeURIComponent(selectedLocation);
              let search_filter = $('#default-search-plan_list').val();
              URL = addQueryParam(URL, 'SearchFilter', search_filter);
              LoadPagination(page_size, total_data, start_index_val, URL);
@@ -197,7 +201,6 @@
           //}
         let tabValue = "@ViewBag.TabValue" ?? "";
         const divArea = document.getElementById('divStoreAreaList');
-
         if (tabValue === "02") {
                   divArea.style.display = 'block';
                   const link1 = document.getElementById('tabMainLink');
