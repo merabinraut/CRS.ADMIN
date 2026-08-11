@@ -32,6 +32,9 @@ namespace CRS.ADMIN.SHARED.HostManagement
         public string Position { get; set; }
         public string Rank { get; set; }
         public string DOB { get; set; }
+        public string year { get; set; }
+        public string month { get; set; }
+        public string date { get; set; }
         public string ConstellationGroup { get; set; }
         public string Height { get; set; }
         public string BloodType { get; set; }
