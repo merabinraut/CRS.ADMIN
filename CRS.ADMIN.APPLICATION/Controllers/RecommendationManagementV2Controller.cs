@@ -1503,7 +1503,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             var lId = !string.IsNullOrEmpty(locationId) ? locationId.DecryptParameter() : null;
             if (string.IsNullOrEmpty(lId)) { return null; }
             var clubLists = ApplicationUtilities.SetDDLValue(ApplicationUtilities
-                .LoadDropdownList("ClubList", lId) as Dictionary<string, string>, null);
+                .LoadDropdownList("CLUBLISTBYLOCATION", lId) as Dictionary<string, string>, null);
             return Json(new { clubLists }, JsonRequestBehavior.AllowGet);
         }
 
