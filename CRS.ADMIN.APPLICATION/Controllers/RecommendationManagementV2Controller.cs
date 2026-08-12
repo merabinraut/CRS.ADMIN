@@ -1503,7 +1503,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             var lId = !string.IsNullOrEmpty(locationId) ? locationId.DecryptParameter() : null;
             if (string.IsNullOrEmpty(lId)) { return null; }
             var clubLists = ApplicationUtilities.SetDDLValue(ApplicationUtilities
-                .LoadDropdownList("ClubList", lId) as Dictionary<string, string>, null);
+                .LoadDropdownList("CLUBLISTBYLOCATION", lId) as Dictionary<string, string>, null);
             return Json(new { clubLists }, JsonRequestBehavior.AllowGet);
         }
 
@@ -1561,7 +1561,9 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                     Message = dbResponse.Message,
                     Title = NotificationMessage.SUCCESS.ToString()
                 });
-
+                string apiUrl = ConfigurationManager.AppSettings["RevalidateApiUrl"];
+                var editorsPickUrl = apiUrl?.Replace("tag=all", "tag=editorRecommendedStores");
+                string apiResponse = ExternalApiCallHelpers.CallApi(editorsPickUrl, HttpMethod.Get);
                 return RedirectToAction("Index", "RecommendationManagementV2", new { TabValue = "02" });
             }
             AddNotificationMessage(new NotificationModel()
@@ -1642,6 +1644,9 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                     Message = dbResponse.Message,
                     Title = NotificationMessage.SUCCESS.ToString()
                 });
+                string apiUrl = ConfigurationManager.AppSettings["RevalidateApiUrl"];
+                var editorsPickUrl = apiUrl?.Replace("tag=all", "tag=editorRecommendedStores");
+                string apiResponse = ExternalApiCallHelpers.CallApi(editorsPickUrl, HttpMethod.Get);
                 return RedirectToAction("Index", "RecommendationManagementV2", new { tabValue = "02" });
             }
             AddNotificationMessage(new NotificationModel()
