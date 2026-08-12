@@ -1023,6 +1023,10 @@ namespace CRS.ADMIN.APPLICATION.Library
                     dbResponse = _CommonBuss.GetDropDown("004", search1, search2);
                     dbResponse.ForEach(item => { response.Add(item.Key.EncryptParameter(), item.Value); });
                     return response;
+                case "CLUBLISTBYLOCATION":
+                    dbResponse = _CommonBuss.GetDropDown("056", search1, search2);
+                    dbResponse.ForEach(item => { response.Add(item.Key.EncryptParameter(), item.Value); });
+                    return response;
                 case "CLUBCOMMISSIONDETAIL":
                     dbResponse = _CommonBuss.GetDropDown("005", search1, search2);
                     dbResponse.ForEach(item => { response.Add(item.Key.EncryptParameter(), item.Value); });

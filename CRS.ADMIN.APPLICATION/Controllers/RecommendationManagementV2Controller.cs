@@ -1489,7 +1489,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
 
 
             ViewBag.ClubList = ApplicationUtilities.SetDDLValue(ApplicationUtilities
-            .LoadDropdownList("ClubList", defaultSelectedLocationId?.DecryptParameter()) as Dictionary<string, string>, defaultSelectedClubId, culture.ToLower() == "ja" ? "クラブを選択" : "Select Club");
+            .LoadDropdownList("CLUBLISTBYLOCATION", defaultSelectedLocationId?.DecryptParameter()) as Dictionary<string, string>, defaultSelectedClubId, culture.ToLower() == "ja" ? "クラブを選択" : "Select Club");
            
 
             ViewBag.IsBackAllowed = true;
