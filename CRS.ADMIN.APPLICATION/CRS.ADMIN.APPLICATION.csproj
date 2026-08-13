@@ -2855,6 +2855,7 @@
     <Content Include="Views\RecommendationManagementV2\IndexCopyV2.cshtml" />
     <Content Include="Views\RecommendationManagementV2\_GetMainPagePartialView.cshtml" />
     <Content Include="Views\RecommendationManagementV2\_GetEditorPickPartialView.cshtml" />
+    <Content Include="Views\RecommendationManagementV2\_GetMainPagePartialView - Copy.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -61,6 +61,7 @@ namespace CRS.ADMIN.REPOSITORY.RecommendationManagement_V2
                         CreatedIp = row["CreatedIp"].ToString(),
                         LocationId = row["LocationId"].ToString(),
                         Status = row["Status"].ToString(),
+                        TotalRecords = Convert.ToInt32(_dao.ParseColumnValue(row, "totalRecords"))
                     });
                 }
             }

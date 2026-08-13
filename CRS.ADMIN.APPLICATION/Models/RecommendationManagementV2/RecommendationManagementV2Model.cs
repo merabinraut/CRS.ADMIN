@@ -104,6 +104,7 @@ namespace CRS.ADMIN.APPLICATION.Models.RecommendationManagementV2
         public string CreatedIp { get; set; }
         public string LocationId { get; set; }
         public string RequestedDate { get; set; }
+        public int TotalRecords { get; set; }
     }
 
     public class ManageGroup

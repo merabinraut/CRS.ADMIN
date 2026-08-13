@@ -33,7 +33,33 @@
                 <div class="heading-title">@CRS.ADMIN.APPLICATION.Resources.Resource.Recommendation_Requests</div>
                 <div class="span-title-light-gray">@CRS.ADMIN.APPLICATION.Resources.Resource.RecommendationSupportMsg</div>
             </div>
+            @if (Model.tabValue == "" || Model.tabValue == "01")
+            {
+                <div class="relative">
 
+                    <form action="/RecommendationManagementV2/Index" method="get">
+                        <div class="absolute -top-0 right-0 flex items-end justify-end gap-2"
+                             id="divStoreAreaList2">
+                            <select id="selectedLocationId2"
+                                    name="selectedLocation"
+                                    class="block appearance-none w-[200px] rounded-[8px] px-3 py-2 bg-white text-sm border border-black">
+                                @{
+                                    var selectedLocation = @ViewBag.selectedLocation as string;
+                                }
+                                @foreach (var location in ViewBag.SelectedLocationList as IEnumerable<SelectListItem>)
+                                {
+                                    <option value="@location.Value"
+                                            @(location.Value == selectedLocation ? "selected" : null)>
+                                        @location.Text
+                                    </option>
+                                }
+
+                            </select>
+                        </div>
+                        <input type="hidden" name="TabValue" value="01" />
+                    </form>
+                </div>
+            }
         </div>
 
         <div id="tabV1" class="tab-content-planeV3">
@@ -54,7 +80,8 @@
                     </div>
 
                     <div class="pane active table-tab gap-1 " id="all">
-                        @if (!string.IsNullOrEmpty(Convert.ToString(Model.GetClubRecommendationrequestList)))
+                        @*@if (!string.IsNullOrEmpty(Convert.ToString(Model.GetClubRecommendationrequestList)))*@
+                        @if (Model.tabValue == "" || Model.tabValue == "01")
                         {
                             @Html.Partial("_GetMainPagePartialView", Model)
                         }
@@ -243,7 +270,14 @@
                 //'&PageSize=' + encodeURIComponent(pageSize) +
                 //'&StartIndex=' + encodeURIComponent(startIndex) +
                 //'&SearchFilter=' + encodeURIComponent(searchFilter);
-             });
+        });
+
+        $("#selectedLocationId2").change(function () {
+              var locationId = $(this).val();
+             window.location.href =
+                 '/RecommendationManagementV2/Index?' +
+                 'locationId=' + encodeURIComponent(locationId);
+         });
     </script>
 
     <script>
