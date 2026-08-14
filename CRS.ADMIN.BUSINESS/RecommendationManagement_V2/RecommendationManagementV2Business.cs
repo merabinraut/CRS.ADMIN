@@ -59,7 +59,7 @@ namespace CRS.ADMIN.BUSINESS.RecommendationManagement_V2
             return _repo.GetClubRequestListByMainPage(locationId, groupId, SearchFilter);
         }
 
-        public List<SearchPageClubRequestListModelCommon> GetClubRequestListBySearchPage(string locationId,PaginationFilterCommon objPaginationFilterCommon )
+        public List<SearchPageClubRequestListModelCommon> GetClubRequestListBySearchPage(string locationId, PaginationFilterCommon objPaginationFilterCommon)
         {
             return _repo.GetClubRequestListBySearchPage(locationId, objPaginationFilterCommon);
         }
@@ -69,9 +69,9 @@ namespace CRS.ADMIN.BUSINESS.RecommendationManagement_V2
             return _repo.GetDisplayPageList();
         }
 
-        public List<GroupListModelCommon> GetGroupList(string LocationId, string SearchFilter = "")
+        public List<GroupListModelCommon> GetGroupList(string LocationId, string SearchFilter = "", int skip = 0, int take = 10, string groupId = "")
         {
-            return _repo.GetGroupList(LocationId, SearchFilter);
+            return _repo.GetGroupList(LocationId, SearchFilter, skip, take, groupId);
         }
 
         public List<LocationListModelCommon> GetLocationList()

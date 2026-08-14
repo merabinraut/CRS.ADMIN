@@ -133,6 +133,67 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             ViewBag.BackButtonURL = "/RecommendationManagementV2/DisplayPageView?locationid=" + locationid;
             return View(responseInfo);
         }
+
+        [HttpGet]
+        public ActionResult ManageGroup(string groupId, string locationId)
+        {
+            var culture = Request.Cookies["culture"]?.Value;
+            culture = string.IsNullOrEmpty(culture) ? "ja" : culture;
+
+            var model = new ManageGroup();
+
+            var decryptedLocationId = !string.IsNullOrEmpty(locationId) ? locationId.DecryptParameter() : null;
+            var decryptedGroupId = !string.IsNullOrEmpty(groupId) ? groupId.DecryptParameter() : null;
+            if (string.IsNullOrEmpty(decryptedLocationId))
+            {
+                AddNotificationMessage(new NotificationModel()
+                {
+                    NotificationType = NotificationMessage.INFORMATION,
+                    Message = "Invalid location.",
+                    Title = NotificationMessage.INFORMATION.ToString()
+                });
+                return RedirectToAction("Index", new { locationId = locationId });
+            }
+
+            if (string.IsNullOrEmpty(decryptedGroupId))
+            {
+                AddNotificationMessage(new NotificationModel()
+                {
+                    NotificationType = NotificationMessage.INFORMATION,
+                    Message = "Invalid group.",
+                    Title = NotificationMessage.INFORMATION.ToString()
+                });
+                return RedirectToAction("Index", new { locationId = locationId });
+            }
+
+            var dbResponseInfo = _business.GetGroupList(decryptedLocationId, "", 0, 10, decryptedGroupId);
+            if (dbResponseInfo != null && !string.IsNullOrEmpty(dbResponseInfo.FirstOrDefault()?.GroupId))
+            {
+                model = new ManageGroup
+                {
+                    locationId = dbResponseInfo.FirstOrDefault()?.LocationId.EncryptParameter(),
+                    groupId = dbResponseInfo.FirstOrDefault()?.GroupId.EncryptParameter(),
+                    GroupName = dbResponseInfo.FirstOrDefault()?.GroupName,
+                    Description = dbResponseInfo.FirstOrDefault()?.Descriptions,
+                    DisplayOrderId = dbResponseInfo.FirstOrDefault()?.DisplayOrderId?.EncryptParameter()
+                };
+
+                TempData["ManageGroupModel"] = model;
+                TempData["RenderId"] = "Manage";
+                return RedirectToAction("Index", new { locationId = model.locationId });
+            }
+            else
+            {
+                AddNotificationMessage(new NotificationModel()
+                {
+                    NotificationType = NotificationMessage.INFORMATION,
+                    Message = "Invalid group.",
+                    Title = NotificationMessage.INFORMATION.ToString()
+                });
+                return RedirectToAction("Index", new { locationId = locationId });
+            }
+        }
+
         [HttpPost, ValidateAntiForgeryToken]
         public ActionResult ManageGroup(ManageGroup Model, string displayOrderId = "")
         {
@@ -140,16 +201,28 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             Uri redirectURL = new Uri(originalUrl);
             string query = redirectURL.Query;
             var queryParams = HttpUtility.ParseQueryString(query);
-            string locationId = queryParams["locationId"];
+            //string locationId = queryParams["locationId"];
             string pageid = queryParams["displaypageid"];
             if (ModelState.IsValid)
             {
+                var decryptedGroupId = !string.IsNullOrEmpty(Model.groupId) ? Model.groupId.DecryptParameter() : null;
+                if (!string.IsNullOrEmpty(Model.groupId) && string.IsNullOrEmpty(decryptedGroupId))
+                {
+                    AddNotificationMessage(new NotificationModel()
+                    {
+                        NotificationType = NotificationMessage.INFORMATION,
+                        Message = "Invalid group.",
+                        Title = NotificationMessage.INFORMATION.ToString()
+                    });
+                    return RedirectToAction("Index", new { locationId = Model.locationId });
+                }
                 ManageGroupCommon commonModel = Model.MapObject<ManageGroupCommon>();
                 commonModel.ActionUser = ApplicationUtilities.GetSessionValue("Username").ToString();
                 commonModel.ActionIP = ApplicationUtilities.GetIP();
-                commonModel.LocationId = locationId.DecryptParameter();
+                commonModel.LocationId = Model.locationId.DecryptParameter();
                 if (!string.IsNullOrEmpty(displayOrderId?.DecryptParameter())) ModelState.Remove("DisplayOrderId");
                 commonModel.DisplayOrderId = displayOrderId?.DecryptParameter();
+                commonModel.GroupId = string.IsNullOrEmpty(decryptedGroupId) ? string.Empty : decryptedGroupId;
                 if (!string.IsNullOrEmpty(displayOrderId))
                 {
                     var dbGroupResponseInfo = _business.ManageGroup(commonModel);
@@ -166,7 +239,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                         string apiUrl = ConfigurationManager.AppSettings["RevalidateApiUrl"];
                         string apiResponse = ExternalApiCallHelpers.CallApi(apiUrl, HttpMethod.Get);
 
-                        return RedirectToAction("Index", new { locationId = locationId });
+                        return RedirectToAction("Index", new { locationId = Model.locationId });
                     }
                     else
                     {
@@ -178,7 +251,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                         });
                         TempData["ManageGroupModel"] = Model;
                         TempData["RenderId"] = "Manage";
-                        return RedirectToAction("Index", new { locationId = locationId });
+                        return RedirectToAction("Index", new { locationId = Model.locationId });
                     }
                 }
                 else
@@ -191,12 +264,12 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                     });
                     TempData["ManageGroupModel"] = Model;
                     TempData["RenderId"] = "Manage";
-                    return RedirectToAction("Index", new { locationId = locationId });
+                    return RedirectToAction("Index", new { locationId = Model.locationId });
                 }
             }
             TempData["ManageGroupModel"] = Model;
             TempData["RenderId"] = "Manage";
-            return RedirectToAction("Index", new { locationId = locationId });
+            return RedirectToAction("Index", new { locationId = Model.locationId });
         }
 
         [HttpPost, ValidateAntiForgeryToken]
@@ -1411,7 +1484,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             return View();
         }
         #endregion
-        public ActionResult Index(CommonRecommendationModel req, string tabValue = "", string SearchFilter = "", int StartIndex = 0, int PageSize = 10, string locationId = "")
+        public ActionResult Index(CommonRecommendationModel req, string tabValue = "", string SearchFilter = "", int StartIndex = 0, int PageSize = 10, string locationId = "", int StartIndex2 = 0, int PageSize2 = 10)
         {
             Session["CurrentURL"] = "/RecommendationManagementV2/Index";
             var culture = Request.Cookies["culture"]?.Value;
@@ -1432,11 +1505,15 @@ namespace CRS.ADMIN.APPLICATION.Controllers
 
             if (tabValue == "" || tabValue == "01")
             {
-                if (TempData.ContainsKey("ManageGroupModel")) responseInfo.ManageGroup = TempData["ManageGroupModel"] as ManageGroup;
+                if (TempData.ContainsKey("ManageGroupModel"))
+                {
+                    responseInfo.ManageGroup = TempData["ManageGroupModel"] as ManageGroup;
+                    ViewBag.DisplayOrderDDLKey = responseInfo.ManageGroup.DisplayOrderId;
+                }
                 else responseInfo.ManageGroup = new ManageGroup();
                 if (TempData.ContainsKey("RenderId")) RenderId = TempData["RenderId"].ToString();
                 ViewBag.PopUpRenderValue = !string.IsNullOrEmpty(RenderId) ? RenderId : null;
-                var dbResponseInfo = _business.GetGroupList(locationId, SearchFilter);
+                var dbResponseInfo = _business.GetGroupList(locationId, SearchFilter, StartIndex2, PageSize2);
                 responseInfo.GetGroupList = dbResponseInfo.MapObjects<GroupListModel>();
                 foreach (var item in responseInfo.GetGroupList)
                 {
@@ -1462,22 +1539,16 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 ViewBag.GroupShuffling = GroupList;
                 ViewBag.SetShufflingTime = SetShufflingTime;
                 ViewBag.DisplayOrderDDL = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("DISPLAYORDERDDL", "", "") as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---"); ;
-                ViewBag.DisplayOrderDDLKey = responseInfo.ManageGroup.DisplayOrderId;
+                //ViewBag.DisplayOrderDDLKey = responseInfo.ManageGroup.DisplayOrderId;
                 TempData["OriginalUrl"] = Request.Url.ToString();
                 ViewBag.LocationId = locationId.EncryptParameter();
-                ViewBag.TotalData = responseInfo.GetGroupList != null && responseInfo.GetGroupList.Any() ? responseInfo.GetGroupList[0].TotalRecords : 0;
+                ViewBag.TotalData2 = responseInfo.GetGroupList != null && responseInfo.GetGroupList.Any() ? responseInfo.GetGroupList[0].TotalRecords : 0;
                 defaultSelectedLocationId = responseInfo.GetGroupList != null && responseInfo.GetGroupList.Any() ? responseInfo.GetGroupList[0].LocationId : string.Empty;
                 locationId = defaultSelectedLocationId;
-                //var dbClubRecommendationReq = _business.GetClubRecommendationReqList();
-                //responseInfo.GetClubRecommendationrequestList = dbClubRecommendationReq.MapObjects<ClubRecommendationManagementListModel>();
-                //foreach (var item in responseInfo.GetClubRecommendationrequestList)
-                //{
-                //    item.RecommendationHoldId = item.RecommendationHoldId.EncryptParameter();
-                //    item.ClubId = item.ClubId.EncryptParameter();
-                //    item.DisplayId = item.DisplayId.EncryptParameter();
-                //    item.LocationId = item.LocationId.EncryptParameter();
-                //    item.ClubLogo = ImageHelper.ProcessedImage(item.ClubLogo);
-                //}
+            }
+            else
+            {
+                ViewBag.TotalData2 = 0;
             }
             if (tabValue == "02")
             {
@@ -1507,12 +1578,19 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 defaultSelectedLocationId = !string.IsNullOrEmpty(responseInfo.addEditorPick.LocationDDL1) ? responseInfo.addEditorPick.LocationDDL1 : string.Empty;
                 defaultSelectedClubId = !string.IsNullOrEmpty(responseInfo.addEditorPick.ClubId) ? responseInfo.addEditorPick.ClubId : string.Empty;
             }
+            else
+            {
+                ViewBag.TotalData = 0;
+            }
+            ViewBag.StartIndex = StartIndex;
+            ViewBag.PageSize = PageSize;
+            ViewBag.StartIndex2 = StartIndex2;
+            ViewBag.PageSize2 = PageSize2;
+
             responseInfo.tabValue = tabValue;
             responseInfo.listType = tabValue;
             responseInfo.selectedLocation = locationId.EncryptParameter();
             ViewBag.SearchFilter = SearchFilter;
-            ViewBag.StartIndex = StartIndex;
-            ViewBag.PageSize = PageSize;
             ViewBag.TabValue = tabValue;
             ViewBag.selectedLocation = locationId.EncryptParameter();
 
@@ -1527,7 +1605,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             .LoadDropdownList("CLUBLIST", defaultSelectedLocationId?.DecryptParameter(), defaultSelectedClubIdDecrypted) as Dictionary<string, string>, defaultSelectedClubIdDecrypted, culture.ToLower() == "ja" ? "クラブを選択" : "--- Select Club ---");
 
 
-            ViewBag.IsBackAllowed = true;
+            ViewBag.IsBackAllowed = false;
             ViewBag.BackButtonURL = "/RecommendationManagementV2/Index?TabValue=";
             return View(responseInfo);
         }

@@ -7,34 +7,9 @@
     string pending = "Pending";
 }
 
-@*<div class="relative">
-
-    <form action="/RecommendationManagementV2/Index" method="get">
-        <div class="absolute -top-0 right-0 flex items-end justify-end gap-2"
-             id="divStoreAreaList2">
-            <select id="selectedLocationId2"
-                    name="selectedLocation"
-                    class="block appearance-none w-[200px] rounded-[8px] px-3 py-2 bg-white text-sm border border-black">
-                @{
-                    var selectedLocation = @ViewBag.selectedLocation as string;
-                }
-                @foreach (var location in ViewBag.SelectedLocationList as IEnumerable<SelectListItem>)
-                {
-                    <option value="@location.Value"
-                            @(location.Value == selectedLocation ? "selected" : null)>
-                        @location.Text
-                    </option>
-                }
-
-            </select>
-        </div>
-        <input type="hidden" name="TabValue" value="01" />
-    </form>
-</div>*@
-
 <div class="px-8 py-4 flex flex-col gap-8">
     <div class="flex justify-between mb-4">
-        <form action="/RecommendationManagementV2/GroupView" method="get">
+        <form action="/RecommendationManagementV2/Index?TabValue=01" method="get">
             <div class="relative input-search-wrapper">
                 <div class="absolute inset-y-0 left-0 flex items-center pl-[16px] pointer-events-none">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21" fill="none">
@@ -61,17 +36,17 @@
     </div>
     <div class="table-tab">
         <div class="px-[12px] py-[16px] flex justify-between entry-export-container">
-            <div class="flex items-center select-entries" id="ShowEntries-Id">
+            <div class="flex items-center select-entries" id="ShowEntries-Id-2">
             </div>
             @*<div class="flex items-center select-entries">
-                @CRS.ADMIN.APPLICATION.Resources.Resource.Show&nbsp;
-                <select id="countries" class="w-full select-entires " style="width: 100%; ">
-                    <option value="5" selected>5</option>
-                    <option value="10">10</option>
-                    <option value="15">15</option>
-                    <option value="20">100</option>
-                </select>&nbsp;@CRS.ADMIN.APPLICATION.Resources.Resource.Entries
-            </div>*@
+                    @CRS.ADMIN.APPLICATION.Resources.Resource.Show&nbsp;
+                    <select id="countries" class="w-full select-entires " style="width: 100%; ">
+                        <option value="5" selected>5</option>
+                        <option value="10">10</option>
+                        <option value="15">15</option>
+                        <option value="20">100</option>
+                    </select>&nbsp;@CRS.ADMIN.APPLICATION.Resources.Resource.Entries
+                </div>*@
         </div>
         <div class="relative overflow-x-auto">
             <table class="w-full  text-left club-table">
@@ -104,9 +79,18 @@
                                 </div>
                             </div>
                         </th>
+                        @*<th scope="col" class="p-[12px]">
+                                <div class="flex">
+                                    @CRS.ADMIN.APPLICATION.Resources.Resource.Status
+                                    <div class="relative pl-[5px]">
+                                        <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
+                                        <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
+                                    </div>
+                                </div>
+                            </th>*@
                         <th scope="col" class="p-[12px]">
                             <div class="flex">
-                                @CRS.ADMIN.APPLICATION.Resources.Resource.Status
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.Requested_Date
                                 <div class="relative pl-[5px]">
                                     <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
                                     <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
@@ -115,7 +99,7 @@
                         </th>
                         <th scope="col" class="p-[12px]">
                             <div class="flex">
-                                @CRS.ADMIN.APPLICATION.Resources.Resource.Requested_Date
+                                @CRS.ADMIN.APPLICATION.Resources.Resource.UpdatedDate
                                 <div class="relative pl-[5px]">
                                     <i class="fa-solid fa-chevron-up text-[8px] absolute top-[2px] text-[#545659]"></i>
                                     <i class="fa-solid fa-chevron-down text-[8px] absolute top-[8px] let-[5px] text-[#c3b6b9]"></i>
@@ -159,24 +143,27 @@
                                         @item.TotalClubs
                                     </div>
                                 </td>
-                                <td class="p-[12px]">
-                                    <div class="plan-a">
-                                        @if (item.Status == "A")
-                                        {
-                                            @approved
-                                        }
-                                        else if (item.Status == "P")
-                                        {
-                                            @pending
-                                        }
-                                        else
-                                        {
-                                            @rejected
-                                        }
-                                    </div>
-                                </td>
+                                @*<td class="p-[12px]">
+                                        <div class="plan-a">
+                                            @if (item.Status == "A")
+                                            {
+                                                @approved
+                                            }
+                                            else if (item.Status == "P")
+                                            {
+                                                @pending
+                                            }
+                                            else
+                                            {
+                                                @rejected
+                                            }
+                                        </div>
+                                    </td>*@
                                 <td class="p-[12px]">
                                     @item.RequestedDate
+                                </td>
+                                <td class="p-[12px]">
+                                    @item.UpdatedDate
                                 </td>
                                 <td class="p-[12px]">
                                     @item.Descriptions
@@ -192,6 +179,11 @@
 
                                         }
                                         <i class="las la-eye text-[24px] text-[#e3ab00] cursor-pointer" onclick="GotoClubRecommendation('@item.GroupId')"></i>
+                                        <div onclick="ManageGroup('@item.GroupId','@ViewBag.LocationId')" style="cursor: pointer;">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                                <path d="M18.75 3.02344C18.1758 3.02344 17.6133 3.24609 17.1797 3.67969L9.75 11.0859L9.58594 11.25L9.53906 11.4844L9.02344 14.1094L8.78906 15.2109L9.89062 14.9766L12.5156 14.4609L12.75 14.4141L12.9141 14.25L20.3203 6.82031C21.1846 5.95605 21.1846 4.54395 20.3203 3.67969C19.8867 3.24609 19.3242 3.02344 18.75 3.02344ZM18.75 4.47656C18.9258 4.47656 19.0986 4.56738 19.2656 4.73438C19.5996 5.06836 19.5996 5.43164 19.2656 5.76562L12 13.0312L10.7109 13.2891L10.9688 12L18.2344 4.73438C18.4014 4.56738 18.5742 4.47656 18.75 4.47656ZM3 6V21H18V11.1094L16.5 12.6094V19.5H4.5V7.5H11.3906L12.8906 6H3Z" fill="#989898" />
+                                            </svg>
+                                        </div>
                                     </div>
                                 </td>
                             </tr>
@@ -202,43 +194,43 @@
             </table>
         </div>
         <div class="pagination-club">
-            <div class="show-entry" id="Entries-Id">
+            <div class="show-entry" id="Entries-Id-2">
             </div>
             <div class="flex gap-[12px]">
-                <div class="btn btn-secondary-box-shadow" id="prev-btn">
+                <div class="btn btn-secondary-box-shadow" id="prev-btn-2">
                     @CRS.ADMIN.APPLICATION.Resources.Resource.Previous
                 </div>
-                <div class="flex gap-[12px]" id="pagination-id">
+                <div class="flex gap-[12px]" id="pagination-id-2">
                 </div>
-                <div class="btn btn-secondary-box-shadow" id="next-btn">
+                <div class="btn btn-secondary-box-shadow" id="next-btn-2">
                     @CRS.ADMIN.APPLICATION.Resources.Resource.Next
                 </div>
             </div>
         </div>
         @*<div class="pagination-club">
-            <div class="show-entry">@CRS.ADMIN.APPLICATION.Resources.Resource.Showing 1 to 5 of 301 @CRS.ADMIN.APPLICATION.Resources.Resource.Entries</div>
-            <div class="flex gap-[12px]">
-                <div class="btn btn-secondary-box-shadow ">@CRS.ADMIN.APPLICATION.Resources.Resource.Previous</div>
+                <div class="show-entry">@CRS.ADMIN.APPLICATION.Resources.Resource.Showing 1 to 5 of 301 @CRS.ADMIN.APPLICATION.Resources.Resource.Entries</div>
                 <div class="flex gap-[12px]">
-                    <div class="pagination-number active">
-                        1
+                    <div class="btn btn-secondary-box-shadow ">@CRS.ADMIN.APPLICATION.Resources.Resource.Previous</div>
+                    <div class="flex gap-[12px]">
+                        <div class="pagination-number active">
+                            1
+                        </div>
+                        <div class="pagination-number">
+                            2
+                        </div>
+                        <div class="pagination-number">
+                            3
+                        </div>
+                        <div class="pagination-number">
+                            ..
+                        </div>
+                        <div class="pagination-number">
+                            10
+                        </div>
                     </div>
-                    <div class="pagination-number">
-                        2
-                    </div>
-                    <div class="pagination-number">
-                        3
-                    </div>
-                    <div class="pagination-number">
-                        ..
-                    </div>
-                    <div class="pagination-number">
-                        10
-                    </div>
+                    <div class="btn btn-secondary-box-shadow ">@CRS.ADMIN.APPLICATION.Resources.Resource.Next</div>
                 </div>
-                <div class="btn btn-secondary-box-shadow ">@CRS.ADMIN.APPLICATION.Resources.Resource.Next</div>
-            </div>
-        </div>*@
+            </div>*@
     </div>
 </div>
 <!-- add manage-groupfrom -->
@@ -428,6 +420,10 @@
 
                 }
             });
-        }
+    }
+
+    function ManageGroup(groupId, locationId) {
+        window.location.href = '/RecommendationManagementV2/ManageGroup?groupId=' + groupId + '&locationId=' + locationId;
+    }
 
 </script>

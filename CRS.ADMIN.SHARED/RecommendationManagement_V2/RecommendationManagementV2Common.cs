@@ -51,11 +51,13 @@ namespace CRS.ADMIN.SHARED.RecommendationManagement_V2
         public string CreatedIp { get; set; }
         public string LocationId { get; set; }
         public string RequestedDate { get; set; }
+        public string UpdatedDate { get; set; }
         public int TotalRecords { get; set; }
     }
 
     public class ManageGroupCommon : Common
     {
+        public string GroupId { get; set; }
         public string GroupName { get; set; }
         public string Description { get; set; }
         public string DisplayOrderId { get; set; }

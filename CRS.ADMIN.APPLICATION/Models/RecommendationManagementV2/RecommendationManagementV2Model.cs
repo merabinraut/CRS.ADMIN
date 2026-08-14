@@ -104,11 +104,15 @@ namespace CRS.ADMIN.APPLICATION.Models.RecommendationManagementV2
         public string CreatedIp { get; set; }
         public string LocationId { get; set; }
         public string RequestedDate { get; set; }
+        public string UpdatedDate { get; set; }
         public int TotalRecords { get; set; }
     }
 
     public class ManageGroup
     {
+        [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Required")]
+        public string locationId { get; set; }
+        public string groupId { get; set; }
         [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Required")]
         public string GroupName { get; set; }
         [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "Required")]

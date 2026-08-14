@@ -38,12 +38,15 @@ namespace CRS.ADMIN.REPOSITORY.RecommendationManagement_V2
         #endregion
 
         #region "Manage Group"
-        public List<GroupListModelCommon> GetGroupList(string LocationId, string SearchFilter = "")
+        public List<GroupListModelCommon> GetGroupList(string LocationId, string SearchFilter = "", int skip = 0, int take = 10, string groupId = "")
         {
             List<GroupListModelCommon> responseInfo = new List<GroupListModelCommon>();
             string sp_name = "EXEC sproc_recommendation_group_management @Flag = 'grgl'";
             sp_name += ",@LocationId=" + _dao.FilterString(LocationId);
             sp_name += !string.IsNullOrEmpty(SearchFilter) ? ",@SearchField=N" + _dao.FilterString(SearchFilter) : null;
+            sp_name += !string.IsNullOrEmpty(groupId) ? ",@GroupId=N" + _dao.FilterString(groupId) : null;
+            sp_name += ",@Skip=" + skip;
+            sp_name += ",@Take=" + take;
             var dbResponseInfo = _dao.ExecuteDataTable(sp_name);
             if (dbResponseInfo != null)
             {
@@ -55,6 +58,7 @@ namespace CRS.ADMIN.REPOSITORY.RecommendationManagement_V2
                         GroupName = row["GroupName"].ToString(),
                         Descriptions = row["Description"].ToString(),
                         RequestedDate = !string.IsNullOrEmpty(row["CreatedDate"].ToString()) ? DateTime.Parse(row["CreatedDate"].ToString()).ToString("yyyy'年'MM'月'dd'日' HH:mm:ss") : row["CreatedDate"].ToString(),
+                        UpdatedDate = !string.IsNullOrEmpty(row["UpdatedDate"].ToString()) ? DateTime.Parse(row["UpdatedDate"].ToString()).ToString("yyyy'年'MM'月'dd'日' HH:mm:ss") : row["UpdatedDate"].ToString(),
                         TotalClubs = row["TotalClubs"].ToString(),
                         DisplayOrderId = row["DisplayOrderId"].ToString(),
                         CreatedBy = row["CreatedBy"].ToString(),
@@ -69,7 +73,9 @@ namespace CRS.ADMIN.REPOSITORY.RecommendationManagement_V2
         }
         public CommonDbResponse ManageGroup(ManageGroupCommon commonModel)
         {
-            string sp_name = "EXEC sproc_recommendation_group_management @Flag = 'cg'";
+            string sp_name = "EXEC sproc_recommendation_group_management ";
+            sp_name += string.IsNullOrEmpty(commonModel.GroupId) ? "@Flag = 'cg'" : "@Flag = 'ug'";
+            sp_name += string.IsNullOrEmpty(commonModel.GroupId) ? string.Empty : ",@GroupId=N" + _dao.FilterString(commonModel.GroupId);
             sp_name += ",@GroupName=N" + _dao.FilterString(commonModel.GroupName);
             sp_name += ",@Description=N" + _dao.FilterString(commonModel.Description);
             sp_name += ",@DisplayOrderId=" + _dao.FilterString(commonModel.DisplayOrderId);
@@ -661,7 +667,7 @@ namespace CRS.ADMIN.REPOSITORY.RecommendationManagement_V2
 
         #region "Editor's Pick"
 
-        public List<RecommendationEditorPickResponseListModelCommon> GetEditorPickList(string locationId = "", string SearchFilter = "",int pageNo = 1,int pageSize = 10)
+        public List<RecommendationEditorPickResponseListModelCommon> GetEditorPickList(string locationId = "", string SearchFilter = "", int pageNo = 1, int pageSize = 10)
         {
             List<RecommendationEditorPickResponseListModelCommon> responseInfo = new List<RecommendationEditorPickResponseListModelCommon>();
             string sp_name = "EXEC sproc_admin_recommendation_editor_pick_get";
