@@ -166,8 +166,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                         string apiUrl = ConfigurationManager.AppSettings["RevalidateApiUrl"];
                         string apiResponse = ExternalApiCallHelpers.CallApi(apiUrl, HttpMethod.Get);
 
-
-                        return RedirectToAction("GroupView", new { pageid = pageid, locationId = locationId });
+                        return RedirectToAction("Index", new { locationId = locationId });
                     }
                     else
                     {
@@ -179,7 +178,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                         });
                         TempData["ManageGroupModel"] = Model;
                         TempData["RenderId"] = "Manage";
-                        return RedirectToAction("GroupView", new { pageid = pageid, locationId = locationId });
+                        return RedirectToAction("Index", new { locationId = locationId });
                     }
                 }
                 else
@@ -192,12 +191,12 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                     });
                     TempData["ManageGroupModel"] = Model;
                     TempData["RenderId"] = "Manage";
-                    return RedirectToAction("GroupView", new { pageid = pageid, locationId = locationId });
+                    return RedirectToAction("Index", new { locationId = locationId });
                 }
             }
             TempData["ManageGroupModel"] = Model;
             TempData["RenderId"] = "Manage";
-            return RedirectToAction("GroupView", new { pageid = pageid, locationId = locationId });
+            return RedirectToAction("Index", new { locationId = locationId });
         }
 
         [HttpPost, ValidateAntiForgeryToken]
@@ -275,7 +274,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                         Message = dbResponseInfo.Message ?? "Shuffling Time Updated",
                         Title = NotificationMessage.SUCCESS.ToString()
                     });
-                    return RedirectToAction("GroupView", new { pageid = pageid, locationId = locationId });
+                    return RedirectToAction("Index", new { locationId = locationId });
                 }
                 else
                 {
@@ -287,7 +286,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                     });
                     TempData["ManageShufflingTime"] = list;
                     TempData["RenderId"] = "ManageShuffle";
-                    return RedirectToAction("GroupView", new { pageid = pageid, locationId = locationId });
+                    return RedirectToAction("Index", new { locationId = locationId });
                 }
             }
             AddNotificationMessage(new NotificationModel()
@@ -382,7 +381,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             ViewBag.SearchFilter = SearchFilter;
             TempData["OriginalUrl"] = Request.Url.ToString();
             ViewBag.IsBackAllowed = true;
-            ViewBag.BackButtonURL = "/RecommendationManagementV2/GroupView?locationid=" + locationid;
+            ViewBag.BackButtonURL = "/RecommendationManagementV2/Index?locationid=" + locationid;
             return View(responseinfo);
         }
         #endregion
@@ -1465,8 +1464,10 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 ViewBag.DisplayOrderDDL = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("DISPLAYORDERDDL", "", "") as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---"); ;
                 ViewBag.DisplayOrderDDLKey = responseInfo.ManageGroup.DisplayOrderId;
                 TempData["OriginalUrl"] = Request.Url.ToString();
-                ViewBag.LocationId = locationId;
+                ViewBag.LocationId = locationId.EncryptParameter();
                 ViewBag.TotalData = responseInfo.GetGroupList != null && responseInfo.GetGroupList.Any() ? responseInfo.GetGroupList[0].TotalRecords : 0;
+                defaultSelectedLocationId = responseInfo.GetGroupList != null && responseInfo.GetGroupList.Any() ? responseInfo.GetGroupList[0].LocationId : string.Empty;
+                locationId = defaultSelectedLocationId;
                 //var dbClubRecommendationReq = _business.GetClubRecommendationReqList();
                 //responseInfo.GetClubRecommendationrequestList = dbClubRecommendationReq.MapObjects<ClubRecommendationManagementListModel>();
                 //foreach (var item in responseInfo.GetClubRecommendationrequestList)

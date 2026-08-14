@@ -377,7 +377,89 @@
             });
     </script>
 
+    <script>
+        $(document).ready(function () {
+            $('select').select2({
+                minimumResultsForSearch: Infinity
+            })
+            var popUpRenderValue = '@ViewBag.PopUpRenderValue';
+            if (popUpRenderValue != null && popUpRenderValue != "" && popUpRenderValue == "Manage") {
+                var element = document.getElementById('manage-group');
+                element.classList.remove('translate-x-full');
+            } else if (popUpRenderValue != null && popUpRenderValue != "" && popUpRenderValue == "ManageShufflingTime") {
+                var element = document.getElementById('configure-setting');
+                element.classList.remove('translate-x-full');
+            }
+        });
+        function AddGroup() {
+            document.getElementById("ManageGroupForm").submit();
+        }
+        function CancelFunction() {
+            location.reload();
+        }
+        document.getElementById('CancelId').addEventListener('click',
+            function (event) {
+                event.preventDefault();
+                window.location.reload();
+            });
+    </script>
+    <script>
+        document.getElementById('UpdateShuffleTimeId').addEventListener('click',
+            function (event) {
+                event.preventDefault();
+                var dataToUpdate = [];
+                $(".btn-gray-white").each(function () {
+                    var displayId = $(this).prev().attr('id');
+                    var displayTime = $(this).val();
+                    var inputData = {
+                        DisplayId: displayId,
+                        DisplayTime: displayTime
+                    };
+                    dataToUpdate.push(inputData);
+                });
+                // Convert the array to a colon-separated string
+                var dataString = dataToUpdate.map(function (item) {
+                    if (item.DisplayId === undefined && item.DisplayTime === '') {
 
+                    } else {
+                        return item.DisplayId + ':' + item.DisplayTime;
+                    }
+
+                }).join(',');
+                dataString = dataString.slice(2, -1);
+                $('#dataStringId').val(dataString);
+                $("#ManageShuffleForm").submit();
+            });
+        document.getElementById('CancelId').addEventListener('click',
+            function (event) {
+                event.preventDefault();
+                window.location.reload();
+            });
+    </script>
+    <script>
+        function GotoClubRecommendation(groupid) {
+            window.location.href = "/RecommendationManagementV2/ClubListForMainPage?groupid=" + groupid + "&locationid=" + '@ViewBag.LocationId';
+        }
+
+        function DeleteGroup(groupid) {
+            $.ajax({
+                type: 'POST',
+                async: true,
+                url: "/RecommendationManagementV2/DeleteGroup?groupid=" + groupid + "&locationid=" + '@ViewBag.LocationId',
+                dataType: 'json',
+                data: {
+                    __RequestVerificationToken: $('input[name="__RequestVerificationToken"]').val(),
+                },
+                success: function (responseData) {
+                    window.location.reload();
+                },
+                error: function (ex) {
+
+                }
+            });
+        }
+
+    </script>
 
 }
 
