@@ -16,23 +16,44 @@
         @using (Html.BeginForm("ManageGroup", "RecommendationManagementV2", FormMethod.Post, new { @id = "ManageGroupForm", enctype = "multipart/form-data" }))
         {
             @Html.AntiForgeryToken()
+            <input name="locationId" type="hidden" value="@ViewBag.selectedLocation" />
+            if (!string.IsNullOrEmpty(Model.groupId))
+            {
+                @Html.HiddenFor(model => model.groupId)
+                @Html.HiddenFor(model => model.GroupName)
+            }
             <div class="p-[24px]">
                 <div class=" py-4 grid gap-5">
                     <div class="input-field-common">
                         <label class="block mb-[12px] text-sm font-medium text-secondary-100 ">
                             @CRS.ADMIN.APPLICATION.Resources.Resource.Group_Name
                         </label>
-                        @Html.TextBoxFor(model => model.GroupName, new
-                       {
-                           @class = "w-full rounded-[4px]",
-                           @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.Group_Name,
-                           @style = "border-radius:4px !important",
-                           @autocomplete = "off",
-                           @maxLength = "50"
-                       })
-                        <span class="error">
-                            @Html.ValidationMessageFor(m => m.GroupName)
-                        </span>
+                        @if (string.IsNullOrEmpty(Model.groupId))
+                        {
+                            @Html.TextBoxFor(model => model.GroupName, new
+                           {
+                               @class = "w-full rounded-[4px]",
+                               @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.Group_Name,
+                               @style = "border-radius:4px !important",
+                               @autocomplete = "off",
+                               @maxLength = "50"
+                           })
+                            <span class="error">
+                                @Html.ValidationMessageFor(m => m.GroupName)
+                            </span>
+                        }
+                        else
+                        {
+                            @Html.TextBoxFor(model => model.GroupName, new
+                           {
+                               @class = "w-full rounded-[4px]",
+                               @placeholder = @CRS.ADMIN.APPLICATION.Resources.Resource.Group_Name,
+                               @style = "border-radius:4px !important",
+                               @autocomplete = "off",
+                               @maxLength = "50",
+                               @disabled = "disabled"
+                           })
+                        }
                         @*<input type="text" class="w-full rounded-[4px]" style="border-radius:4px !important"
                             placeholder="Enter Group Name" name="GroupName" value="@Model.GroupName" required>*@
                     </div>
