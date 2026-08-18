@@ -1541,10 +1541,10 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 ViewBag.DisplayOrderDDL = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("DISPLAYORDERDDL", "", "") as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---"); ;
                 //ViewBag.DisplayOrderDDLKey = responseInfo.ManageGroup.DisplayOrderId;
                 TempData["OriginalUrl"] = Request.Url.ToString();
-                ViewBag.LocationId = locationId.EncryptParameter();
                 ViewBag.TotalData2 = responseInfo.GetGroupList != null && responseInfo.GetGroupList.Any() ? responseInfo.GetGroupList[0].TotalRecords : 0;
                 defaultSelectedLocationId = responseInfo.GetGroupList != null && responseInfo.GetGroupList.Any() ? responseInfo.GetGroupList[0].LocationId : string.Empty;
                 locationId = defaultSelectedLocationId;
+                ViewBag.LocationId = locationId.EncryptParameter();
             }
             else
             {
