@@ -33,7 +33,33 @@
                 <div class="heading-title">@CRS.ADMIN.APPLICATION.Resources.Resource.Recommendation_Requests</div>
                 <div class="span-title-light-gray">@CRS.ADMIN.APPLICATION.Resources.Resource.RecommendationSupportMsg</div>
             </div>
+            @if (Model.tabValue == "" || Model.tabValue == "01")
+            {
+                <div class="relative">
 
+                    <form action="/RecommendationManagementV2/Index" method="get">
+                        <div class="absolute -top-0 right-0 flex items-end justify-end gap-2"
+                             id="divStoreAreaList2">
+                            <select id="selectedLocationId2"
+                                    name="selectedLocation"
+                                    class="block appearance-none w-[200px] rounded-[8px] px-3 py-2 bg-white text-sm border border-black">
+                                @{
+                                    var selectedLocation = @ViewBag.selectedLocation as string;
+                                }
+                                @foreach (var location in ViewBag.SelectedLocationList as IEnumerable<SelectListItem>)
+                                {
+                                    <option value="@location.Value"
+                                            @(location.Value == selectedLocation ? "selected" : null)>
+                                        @location.Text
+                                    </option>
+                                }
+
+                            </select>
+                        </div>
+                        <input type="hidden" name="TabValue" value="01" />
+                    </form>
+                </div>
+            }
         </div>
 
         <div id="tabV1" class="tab-content-planeV3">
@@ -54,7 +80,8 @@
                     </div>
 
                     <div class="pane active table-tab gap-1 " id="all">
-                        @if (!string.IsNullOrEmpty(Convert.ToString(Model.GetClubRecommendationrequestList)))
+                        @*@if (!string.IsNullOrEmpty(Convert.ToString(Model.GetClubRecommendationrequestList)))*@
+                        @if (Model.tabValue == "" || Model.tabValue == "01")
                         {
                             @Html.Partial("_GetMainPagePartialView", Model)
                         }
@@ -120,18 +147,36 @@
 @section scripts{
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            const page_size = @ViewBag.PageSize;
-            const total_data = @ViewBag.TotalData;
-            const start_index_val = @ViewBag.StartIndex;
+            let tabValue = "@ViewBag.TabValue" ?? "";
+            if (tabValue === "02") {
+                const page_size = @ViewBag.PageSize;
+                const total_data = @ViewBag.TotalData;
+                const start_index_val = @ViewBag.StartIndex;
 
-            var selectedLocation = '@ViewBag.selectedLocation';
+                var selectedLocation = '@ViewBag.selectedLocation';
 
-            //let URL = "/RecommendationManagementV2/Index?TabValue=02";
-            let URL = "/RecommendationManagementV2/Index?TabValue=02&locationId="
-                + encodeURIComponent(selectedLocation);
-             let search_filter = $('#default-search-plan_list').val();
-             URL = addQueryParam(URL, 'SearchFilter', search_filter);
-             LoadPagination(page_size, total_data, start_index_val, URL);
+                //let URL = "/RecommendationManagementV2/Index?TabValue=02";
+                let URL = "/RecommendationManagementV2/Index?TabValue=02&locationId="
+                    + encodeURIComponent(selectedLocation);
+                let search_filter = $('#default-search-plan_list').val();
+                URL = addQueryParam(URL, 'SearchFilter', search_filter);
+                LoadPagination(page_size, total_data, start_index_val, URL);
+            }
+            else {
+                const page_size2 = @ViewBag.PageSize2;
+                const total_data2 = @ViewBag.TotalData2;
+                const start_index_val2 = @ViewBag.StartIndex2;
+
+                var selectedLocation2 = '@ViewBag.selectedLocation';
+
+                let URL2 = "/RecommendationManagementV2/Index?TabValue=01&locationId="
+                    + encodeURIComponent(selectedLocation2);
+                let search_filter2 = $('#default-search').val();
+                URL2 = addQueryParam2(URL2, 'SearchFilter', search_filter2, 'TabValue', '01');
+                dynamicStartIndexLabel = "StartIndex2";
+                dynamicPageSizeLabel = "PageSize2";
+                LoadPagination(page_size2, total_data2, start_index_val2, URL2, 'pagination-id-2', 'prev-btn-2', 'next-btn-2', 'ShowEntries-Id-2', 'Entries-Id-2');
+            }
          });
     </script>
     <script>
@@ -243,7 +288,14 @@
                 //'&PageSize=' + encodeURIComponent(pageSize) +
                 //'&StartIndex=' + encodeURIComponent(startIndex) +
                 //'&SearchFilter=' + encodeURIComponent(searchFilter);
-             });
+        });
+
+        $("#selectedLocationId2").change(function () {
+              var locationId = $(this).val();
+             window.location.href =
+                 '/RecommendationManagementV2/Index?' +
+                 'locationId=' + encodeURIComponent(locationId);
+         });
     </script>
 
     <script>
@@ -343,7 +395,104 @@
             });
     </script>
 
+    <script>
+        $(document).ready(function () {
+            $('select').select2({
+                minimumResultsForSearch: Infinity
+            })
+            var popUpRenderValue = '@ViewBag.PopUpRenderValue';
+            if (popUpRenderValue != null && popUpRenderValue != "" && popUpRenderValue == "Manage") {
+                var element = document.getElementById('manage-group');
+                element.classList.remove('translate-x-full');
+            } else if (popUpRenderValue != null && popUpRenderValue != "" && popUpRenderValue == "ManageShufflingTime") {
+                var element = document.getElementById('configure-setting');
+                element.classList.remove('translate-x-full');
+            }
+        });
+        function AddGroup() {
+            document.getElementById("ManageGroupForm").submit();
+        }
+        function CancelFunction() {
+            location.reload();
+        }
+        document.getElementById('CancelId').addEventListener('click',
+            function (event) {
+                event.preventDefault();
+                window.location.reload();
+            });
+    </script>
+    <script>
+        document.getElementById('UpdateShuffleTimeId').addEventListener('click',
+            function (event) {
+                event.preventDefault();
+                var dataToUpdate = [];
+                $(".btn-gray-white").each(function () {
+                    var displayId = $(this).prev().attr('id');
+                    var displayTime = $(this).val();
+                    var inputData = {
+                        DisplayId: displayId,
+                        DisplayTime: displayTime
+                    };
+                    dataToUpdate.push(inputData);
+                });
+                // Convert the array to a colon-separated string
+                var dataString = dataToUpdate.map(function (item) {
+                    if (item.DisplayId === undefined && item.DisplayTime === '') {
 
+                    } else {
+                        return item.DisplayId + ':' + item.DisplayTime;
+                    }
+
+                }).join(',');
+                dataString = dataString.slice(2, -1);
+                $('#dataStringId').val(dataString);
+                $("#ManageShuffleForm").submit();
+            });
+        document.getElementById('CancelId').addEventListener('click',
+            function (event) {
+                event.preventDefault();
+                window.location.reload();
+            });
+    </script>
+    <script>
+        function GotoClubRecommendation(groupid) {
+            window.location.href = "/RecommendationManagementV2/ClubListForMainPage?groupid=" + groupid + "&locationid=" + '@ViewBag.LocationId';
+        }
+
+        function DeleteGroup(groupid) {
+            $.ajax({
+                type: 'POST',
+                async: true,
+                url: "/RecommendationManagementV2/DeleteGroup?groupid=" + groupid + "&locationid=" + '@ViewBag.LocationId',
+                dataType: 'json',
+                data: {
+                    __RequestVerificationToken: $('input[name="__RequestVerificationToken"]').val(),
+                },
+                success: function (responseData) {
+                    window.location.reload();
+                },
+                error: function (ex) {
+
+                }
+            });
+        }
+
+        function addQueryParam2(url, paramName, paramValue, paramName2, paramValue2) {
+            // Add the first query parameter
+            if (paramValue != null && paramValue != "") {
+                // Check if it's the first parameter, if so, use "?" else use "&"
+                url += url.includes('?') ? `&${paramName}=${paramValue}` : `?${paramName}=${paramValue}`;
+            }
+
+            // Add the second query parameter
+            if (paramValue2 != null && paramValue2 != "") {
+                url += url.includes('?') ? `&${paramName2}=${paramValue2}` : `?${paramName2}=${paramValue2}`;
+            }
+
+            return url;
+        }
+
+    </script>
 
 }
 
