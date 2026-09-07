@@ -41,4 +41,10 @@ namespace CRS.ADMIN.SHARED.ReservationLedger
         public string Id { get; set; }
         public string InvoiceId { get; set; }
     }
+
+    public class ReferralReservationRewardRequestCommon :Common
+    {
+        public string reservationId { get; set; }
+        public string customerId { get; set; }
+    }
 }

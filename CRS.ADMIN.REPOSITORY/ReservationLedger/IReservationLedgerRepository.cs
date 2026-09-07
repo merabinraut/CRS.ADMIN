@@ -2,6 +2,7 @@
 using CRS.ADMIN.SHARED.PaginationManagement;
 using CRS.ADMIN.SHARED.ReservationLedger;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace CRS.ADMIN.REPOSITORY.ReservationLedger
 {
@@ -10,5 +11,9 @@ namespace CRS.ADMIN.REPOSITORY.ReservationLedger
         List<ReservationLedgerCommon> GetReservationLedgerList(PaginationFilterCommon Request, string ClubId = "", string Date = "");
         List<ReservationLedgerDetailCommon> GetReservationLedgerDetail(PaginationFilterCommon Request, string ClubId, string Date);
         CommonDbResponse VerifyCode(string reservationId, string agentId, string code, Common requestCommon);
+
+        #region Referral Reward Management
+        CommonDbResponse ReferralReservationReward(ReferralReservationRewardRequestCommon request);
+        #endregion
     }
 }

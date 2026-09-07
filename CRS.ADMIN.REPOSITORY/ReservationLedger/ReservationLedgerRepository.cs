@@ -1,11 +1,9 @@
 ﻿using CRS.ADMIN.SHARED;
 using CRS.ADMIN.SHARED.PaginationManagement;
 using CRS.ADMIN.SHARED.ReservationLedger;
-using DocumentFormat.OpenXml.Office2016.Excel;
-using DocumentFormat.OpenXml.VariantTypes;
 using System.Collections.Generic;
-using System.Data.SqlClient;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace CRS.ADMIN.REPOSITORY.ReservationLedger
 {
@@ -61,5 +59,19 @@ namespace CRS.ADMIN.REPOSITORY.ReservationLedger
             SQL += ",@ActionPlatform=admin";
             return _dao.ParseCommonDbResponse(SQL);
         }
+
+        #region Referral Reward Management
+        public CommonDbResponse ReferralReservationReward(ReferralReservationRewardRequestCommon request)
+        {
+            string SQL = "[dbo].[cproc_customer_referral_process_reservation_reward] ";
+            SQL += " @reservationId=" + _dao.FilterString(request.reservationId);
+            SQL += ",@customerId=" + _dao.FilterString(request.customerId);
+            SQL += ",@actionUser=" + _dao.FilterString(request.ActionUser);
+            SQL += ",@actionPlatform=" + _dao.FilterString(request.ActionPlatform);
+            SQL += ",@actionIP=" + _dao.FilterString(request.ActionIP);
+
+            return _dao.ParseCommonDbResponse(SQL);
+        }
+        #endregion
     }
 }

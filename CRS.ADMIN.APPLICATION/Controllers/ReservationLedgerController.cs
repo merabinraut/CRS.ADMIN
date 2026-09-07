@@ -5,6 +5,7 @@ using CRS.ADMIN.BUSINESS.ReservationLedger;
 using CRS.ADMIN.SHARED;
 using CRS.ADMIN.SHARED.PaginationManagement;
 using CRS.ADMIN.SHARED.PaymentManagement;
+using CRS.ADMIN.SHARED.ReservationLedger;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -41,7 +42,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                     x.AdminPayment = Convert.ToInt64(x.AdminPayment).ToString("N0");
                 }
             );
-            ViewBag.ClubDDL = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("CLUBLIST","",culture) as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---");
+            ViewBag.ClubDDL = ApplicationUtilities.SetDDLValue(ApplicationUtilities.LoadDropdownList("CLUBLIST", "", culture) as Dictionary<string, string>, null, culture.ToLower() == "ja" ? "--- 選択 ---" : "--- Select ---");
             ViewBag.ClubIdKey = ClubId;
             ViewBag.LedgerList = responseInfo;
             ViewBag.SearchText = SearchText;
@@ -82,9 +83,9 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 {
                     x.ClubId = x.ClubId.EncryptParameter();
                     x.InvoiceId = x.InvoiceId;
-                    x.Id = x.Id.EncryptParameter();                   
+                    x.Id = x.Id.EncryptParameter();
                     x.CustomerImage = ImageHelper.ProcessedImage(x.CustomerImage);
-                    x.VisitDate = !string.IsNullOrEmpty(x.VisitDate) ? DateTime.Parse(x.VisitDate).ToString("yyyy'年'MM'月'dd'日'"):x.VisitDate;
+                    x.VisitDate = !string.IsNullOrEmpty(x.VisitDate) ? DateTime.Parse(x.VisitDate).ToString("yyyy'年'MM'月'dd'日'") : x.VisitDate;
                     x.CreatedDate = !string.IsNullOrEmpty(x.CreatedDate) ? DateTime.Parse(x.CreatedDate).ToString("yyyy'年'MM'月'dd'日'") : x.CreatedDate;
                     x.PlanAmount = Convert.ToInt64(x.PlanAmount).ToString("N0");
                     x.TotalPlanAmount = Convert.ToInt64(x.TotalPlanAmount).ToString("N0");
@@ -145,10 +146,25 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             var commonRequest = new Common()
             {
                 ActionIP = ApplicationUtilities.GetIP(),
-                ActionUser = ApplicationUtilities.GetSessionValue("Username").ToString()
-            };        
+                ActionUser = ApplicationUtilities.GetSessionValue("Username").ToString(),
+                ActionPlatform = "OldAdminWeb"
+            };
             var dbResponse = _business.VerifyCode(rId, aId, code, commonRequest);
             response = dbResponse;
+
+            if (!string.IsNullOrEmpty(dbResponse.Extra3) && dbResponse.Extra3.Trim() == "1")
+            {
+                var referralRequest = new ReferralReservationRewardRequestCommon
+                {
+                    reservationId = dbResponse.Extra2,
+                    customerId = dbResponse.Extra1,
+                    ActionUser = commonRequest.ActionUser,
+                    ActionPlatform = commonRequest.ActionPlatform,
+                    ActionIP = commonRequest.ActionIP
+                };
+                _business.ReferralReservationReward(referralRequest);
+            }
+
             this.AddNotificationMessage(new NotificationModel()
             {
                 NotificationType = response.Code == CRS.ADMIN.SHARED.ResponseCode.Success ? NotificationMessage.SUCCESS : NotificationMessage.INFORMATION,
