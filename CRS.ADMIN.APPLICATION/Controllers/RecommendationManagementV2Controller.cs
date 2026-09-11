@@ -1508,7 +1508,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             string defaultSelectedLocationId = string.Empty;
             string defaultSelectedClubId = string.Empty;
 
-            locationId = !string.IsNullOrEmpty(locationId) ? locationId.DecryptParameter() : null;
+            locationId = !string.IsNullOrEmpty(locationId) ? locationId.DecryptParameter() : responseInfo.GetLocationList.FirstOrDefault().LocationId.DecryptParameter();
 
             if (tabValue == "" || tabValue == "01")
             {
@@ -1549,7 +1549,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 //ViewBag.DisplayOrderDDLKey = responseInfo.ManageGroup.DisplayOrderId;
                 TempData["OriginalUrl"] = Request.Url.ToString();
                 ViewBag.TotalData2 = responseInfo.GetGroupList != null && responseInfo.GetGroupList.Any() ? responseInfo.GetGroupList[0].TotalRecords : 0;
-                defaultSelectedLocationId = responseInfo.GetGroupList != null && responseInfo.GetGroupList.Any() ? responseInfo.GetGroupList[0].LocationId : string.Empty;
+                defaultSelectedLocationId = responseInfo.GetGroupList != null && responseInfo.GetGroupList.Any() ? responseInfo.GetGroupList[0].LocationId : locationId ?? string.Empty;
                 locationId = defaultSelectedLocationId;
                 ViewBag.LocationId = locationId.EncryptParameter();
             }
@@ -1582,7 +1582,7 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                 if (TempData.ContainsKey("ClubPlanManagementModel")) responseInfo.addEditorPick = TempData["ClubPlanManagementModel"] as AddEditorPick;
                 if (TempData.ContainsKey("EditorPickRendorId")) RenderId = TempData["EditorPickRendorId"].ToString();
                 ViewBag.PopUpRenderValue = !string.IsNullOrEmpty(RenderId) ? RenderId : null;
-                defaultSelectedLocationId = !string.IsNullOrEmpty(responseInfo.addEditorPick.LocationDDL1) ? responseInfo.addEditorPick.LocationDDL1 : string.Empty;
+                defaultSelectedLocationId = !string.IsNullOrEmpty(responseInfo.addEditorPick.LocationDDL1) ? responseInfo.addEditorPick.LocationDDL1 : locationId ?? string.Empty;
                 defaultSelectedClubId = !string.IsNullOrEmpty(responseInfo.addEditorPick.ClubId) ? responseInfo.addEditorPick.ClubId : string.Empty;
             }
             else
