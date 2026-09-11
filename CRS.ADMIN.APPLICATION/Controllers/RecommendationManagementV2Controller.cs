@@ -267,6 +267,13 @@ namespace CRS.ADMIN.APPLICATION.Controllers
                     return RedirectToAction("Index", new { locationId = Model.locationId });
                 }
             }
+
+            AddNotificationMessage(new NotificationModel()
+            {
+                NotificationType = NotificationMessage.INFORMATION,
+                Message = "Please select all required fields.",
+                Title = NotificationMessage.INFORMATION.ToString()
+            });
             TempData["ManageGroupModel"] = Model;
             TempData["RenderId"] = "Manage";
             return RedirectToAction("Index", new { locationId = Model.locationId });
@@ -1589,10 +1596,17 @@ namespace CRS.ADMIN.APPLICATION.Controllers
 
             responseInfo.tabValue = tabValue;
             responseInfo.listType = tabValue;
-            responseInfo.selectedLocation = locationId.EncryptParameter();
+
+            if (string.IsNullOrEmpty(ViewBag.LocationId))
+            {
+                defaultSelectedLocationId = responseInfo.GetLocationList.FirstOrDefault().LocationId;
+                ViewBag.LocationId = defaultSelectedLocationId;
+            }
+
+            responseInfo.selectedLocation = !string.IsNullOrEmpty(locationId) ? locationId.EncryptParameter() : defaultSelectedLocationId;
             ViewBag.SearchFilter = SearchFilter;
             ViewBag.TabValue = tabValue;
-            ViewBag.selectedLocation = locationId.EncryptParameter();
+            ViewBag.selectedLocation = !string.IsNullOrEmpty(locationId) ? locationId.EncryptParameter() : defaultSelectedLocationId;
 
             ViewBag.LocationList = ApplicationUtilities.SetDDLValue(ApplicationUtilities
             .LoadDropdownList("LocationDdl") as Dictionary<string, string>, defaultSelectedLocationId, culture.ToLower() == "ja" ? "場所を選択" : "Select Location");
@@ -1603,7 +1617,6 @@ namespace CRS.ADMIN.APPLICATION.Controllers
             var defaultSelectedClubIdDecrypted = defaultSelectedClubId.DecryptParameter();
             ViewBag.ClubList = ApplicationUtilities.SetDDLValue(ApplicationUtilities
             .LoadDropdownList("CLUBLIST", defaultSelectedLocationId?.DecryptParameter(), defaultSelectedClubIdDecrypted) as Dictionary<string, string>, defaultSelectedClubIdDecrypted, culture.ToLower() == "ja" ? "クラブを選択" : "--- Select Club ---");
-
 
             ViewBag.IsBackAllowed = false;
             ViewBag.BackButtonURL = "/RecommendationManagementV2/Index?TabValue=";
