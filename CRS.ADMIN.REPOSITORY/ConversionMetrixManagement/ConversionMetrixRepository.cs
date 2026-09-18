@@ -142,7 +142,7 @@ namespace CRS.ADMIN.REPOSITORY.ConversionMetrixManagement
                             Prefecture = _dao.ParseColumnValue(item, "prefecture")?.ToString(),
                             Browser = _dao.ParseColumnValue(item, "browser")?.ToString(),
                             UserAgent = _dao.ParseColumnValue(item, "userAgent")?.ToString(),
-                            DateMs = SafeLong(_dao.ParseColumnValue(item, "activityDateMS")),
+                            DateMs = _dao.ParseColumnValue(item, "activityDateMS").ToString(),
                             TotalRecords = SafeInt(_dao.ParseColumnValue(item, "totalRecords"))
                         });
                     }
@@ -196,7 +196,7 @@ namespace CRS.ADMIN.REPOSITORY.ConversionMetrixManagement
                             Prefecture = _dao.ParseColumnValue(item, "prefecture")?.ToString(),
                             Browser = _dao.ParseColumnValue(item, "browser")?.ToString(),
                             UserAgent = _dao.ParseColumnValue(item, "userAgent")?.ToString(),
-                            DateMs = SafeLong(_dao.ParseColumnValue(item, "activityDateMS")),
+                            DateMs = _dao.ParseColumnValue(item, "activityDateMS")?.ToString(),
                             TotalRecords = SafeInt(_dao.ParseColumnValue(item, "totalRecords"))
                         });
                     }
