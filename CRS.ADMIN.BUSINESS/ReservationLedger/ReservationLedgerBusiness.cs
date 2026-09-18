@@ -13,16 +13,23 @@ namespace CRS.ADMIN.BUSINESS.ReservationLedger
 
         public List<ReservationLedgerDetailCommon> GetReservationLedgerDetail(PaginationFilterCommon Request, string ClubId, string Date)
         {
-            return _repo.GetReservationLedgerDetail(Request, ClubId, Date);  
+            return _repo.GetReservationLedgerDetail(Request, ClubId, Date);
         }
 
         public List<ReservationLedgerCommon> GetReservationLedgerList(PaginationFilterCommon Request, string ClubId = "", string Date = "")
         {
-           return _repo.GetReservationLedgerList(Request, ClubId, Date);
+            return _repo.GetReservationLedgerList(Request, ClubId, Date);
         }
         public CommonDbResponse VerifyCode(string reservationId, string agentId, string code, Common requestCommon)
         {
-           return _repo.VerifyCode(reservationId,  agentId,  code, requestCommon);
+            return _repo.VerifyCode(reservationId, agentId, code, requestCommon);
         }
+
+        #region Referral Reward Management
+        public CommonDbResponse ReferralReservationReward(ReferralReservationRewardRequestCommon request)
+        {
+            return _repo.ReferralReservationReward(request);
+        }
+        #endregion
     }
 }

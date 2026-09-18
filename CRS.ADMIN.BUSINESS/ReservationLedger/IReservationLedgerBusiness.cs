@@ -10,5 +10,9 @@ namespace CRS.ADMIN.BUSINESS.ReservationLedger
         List<ReservationLedgerCommon> GetReservationLedgerList(PaginationFilterCommon Request, string ClubId = "", string Date = "");
         List<ReservationLedgerDetailCommon> GetReservationLedgerDetail(PaginationFilterCommon Request, string ClubId, string Date);
         CommonDbResponse VerifyCode(string reservationId, string agentId, string code, Common requestCommon);
+
+        #region Referral Reward Management
+        CommonDbResponse ReferralReservationReward(ReferralReservationRewardRequestCommon request);
+        #endregion
     }
 }
