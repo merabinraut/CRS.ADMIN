@@ -52,6 +52,7 @@ namespace CRS.ADMIN.APPLICATION.Models.ConversionMetrixManagement
         public string Browser { get; set; }
         public string UserAgent { get; set; }
         public string Date { get; set; }
+        public string DateMs { get; set; }
         public int TotalRecords { get; set; }
         public string TabValue { get; set; }
         public string FromDate { get; set; }
